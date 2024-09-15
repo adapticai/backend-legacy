@@ -18,6 +18,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Pull latest changes
+        run: git pull
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
