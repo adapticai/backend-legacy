@@ -1,0 +1,392 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../src/generated/typegraphql-prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  USER
+}
+
+enum AssetType {
+  STOCK
+  OPTION
+  CRYPTO
+  CURRENCY
+  COMMODITY
+  ETF
+}
+
+enum TradeAction {
+  BUY
+  SELL
+}
+
+enum OrderType {
+  MARKET
+  LIMIT
+  STOP
+  STOP_LIMIT
+}
+
+enum OrderStatus {
+  PENDING
+  FILLED
+  CANCELLED
+  REJECTED
+}
+
+enum AlertType {
+  SUCCESS
+  WARNING
+  ERROR
+  INFO
+}
+
+enum NewsSentiment {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+}
+
+enum EventImportance {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum SubscriptionPlan {
+  FREE
+  PRO
+  BUSINESS
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String   @db.Uuid
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@index([userId])
+  @@map(name: "sessions")
+}
+
+model User {
+  id               String            @id @default(uuid()) @db.Uuid
+  name             String?
+  email            String?           @unique
+  emailVerified    DateTime?
+  image            String?
+  createdAt        DateTime          @default(now()) @map(name: "created_at")
+  updatedAt        DateTime          @default(now()) @map(name: "updated_at")
+  role             UserRole          @default(USER)
+  workspaces       WorkspaceUser[]
+  bio              String?
+  jobTitle         String?
+  currentWorkspace String?
+  customer         Customer?         @relation(fields: [customerId], references: [id])
+  customerId       Int?
+  accounts         Account[]
+  sessions         Session[]
+  authenticators   Authenticator[]
+  plan             SubscriptionPlan?
+
+  // New relations
+  holdings          Holding[]
+  trades            Trade[]
+  orders            Order[]
+  aiRecommendations AIRecommendation[]
+  riskAllocations   RiskAllocation[]
+  alerts            Alert[]
+
+  @@map(name: "users")
+}
+
+model Authenticator {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid
+  credentialID String   @unique
+  publicKey    String
+  counter      Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+
+  @@index([userId])
+  @@map(name: "authenticators")
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.Text
+  access_token      String?  @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.Text
+  session_state     String?
+  createdAt         DateTime @default(now()) @map(name: "created_at")
+  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map(name: "accounts")
+}
+
+model VerificationToken {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map(name: "verification_tokens")
+}
+
+model Workspace {
+  id                    String                @id @default(uuid()) @db.Uuid
+  name                  String
+  slug                  String                @unique
+  description           String?
+  descriptionShort      String?
+  image                 String?
+  colors                Json?
+  website               String?
+  emailDomain           String?
+  addUsersByEmailDomain Boolean?
+  industry              String?
+  foundingYear          Int?
+  legalName             String?
+  address               String?
+  streetAddress         String?
+  postalCode            String?
+  city                  City?                 @relation(fields: [cityId], references: [id])
+  state                 State?                @relation(fields: [stateId], references: [id])
+  country               Country?              @relation(fields: [countryId], references: [id])
+  telephone             String?
+  email                 String?
+  sameAs                String[]
+  headquarters          String?
+  locations             Location[]
+  areasOfFocus          String[]
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  environmentVariables  EnvironmentVariable[]
+  users                 WorkspaceUser[]
+  stateId               String?
+  countryId             String?
+  cityId                String?
+
+  @@unique([name, slug])
+}
+
+model Location {
+  id          String     @id @default(uuid()) @db.Uuid
+  label       String
+  value       String
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId String?    @db.Uuid
+}
+
+model City {
+  id        String      @id @default(cuid())
+  name      String
+  workspace Workspace[]
+}
+
+model Country {
+  id        String      @id @default(cuid())
+  name      String
+  states    State[]
+  workspace Workspace[]
+}
+
+model State {
+  id        String      @id @default(cuid())
+  name      String
+  workspace Workspace[]
+  country   Country?    @relation(fields: [countryId], references: [id])
+  countryId String?
+}
+
+model WorkspaceUser {
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  workspaceId String    @db.Uuid
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  role        UserRole  @default(USER)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, workspaceId])
+}
+
+model EnvironmentVariable {
+  id          String    @id @default(uuid()) @db.Uuid
+  key         String
+  value       String
+  description String?
+  workspaceId String    @db.Uuid
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
+
+  @@unique([workspaceId, key])
+}
+
+model Customer {
+  id                     Int               @id @default(autoincrement())
+  authUserId             String
+  name                   String?
+  plan                   SubscriptionPlan?
+  stripeCustomerId       String?           @unique
+  stripeSubscriptionId   String?           @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @default(now())
+  users                  User[]
+
+  @@index([authUserId])
+}
+
+model Asset {
+  id              String             @id @default(uuid()) @db.Uuid
+  symbol          String             @unique
+  name            String
+  type            AssetType
+  logoUrl         String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  holdings        Holding[]
+  trades          Trade[]
+  orders          Order[]
+  recommendations AIRecommendation[]
+}
+
+model Holding {
+  id           String   @id @default(uuid()) @db.Uuid
+  userId       String   @db.Uuid
+  assetId      String   @db.Uuid
+  quantity     Float
+  averagePrice Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, assetId])
+}
+
+model Trade {
+  id        String      @id @default(uuid()) @db.Uuid
+  userId    String      @db.Uuid
+  assetId   String      @db.Uuid
+  action    TradeAction
+  quantity  Float
+  price     Float
+  total     Float
+  timestamp DateTime    @default(now())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+}
+
+model Order {
+  id        String      @id @default(uuid()) @db.Uuid
+  userId    String      @db.Uuid
+  assetId   String      @db.Uuid
+  type      OrderType
+  action    TradeAction
+  quantity  Float
+  price     Float
+  status    OrderStatus
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+}
+
+model AIRecommendation {
+  id         String      @id @default(uuid()) @db.Uuid
+  userId     String      @db.Uuid
+  assetId    String      @db.Uuid
+  action     TradeAction
+  confidence Float
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+}
+
+model RiskAllocation {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @db.Uuid
+  assetType  AssetType
+  allocation Float
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, assetType])
+}
+
+model Alert {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid
+  message   String
+  type      AlertType
+  isRead    Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model News {
+  id          String        @id @default(uuid()) @db.Uuid
+  title       String
+  content     String?
+  source      String
+  url         String?
+  sentiment   NewsSentiment
+  publishedAt DateTime
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model EconomicEvent {
+  id          String          @id @default(uuid()) @db.Uuid
+  title       String
+  description String?
+  date        DateTime
+  importance  EventImportance
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}

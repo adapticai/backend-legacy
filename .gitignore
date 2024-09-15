@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+src/generated/
+
+# Environment variables
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# MacOS files
+.DS_Store
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Prisma files
+prisma/migrations/
+prisma/*.db
+
+# Docker
+docker-compose.override.yml
+docker-compose.yml
+
+# VSCode settings
+.vscode/
+
+# Lock files
+# package-lock.json
+# yarn.lock
