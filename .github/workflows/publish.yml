@@ -144,6 +144,11 @@ jobs:
             git commit -m "ci: bump version to $NEW_VERSION"
           fi
 
+      - name: Pull latest changes
+        if: env.should_publish == 'true'
+        run: |
+          git pull --rebase origin main
+
       - name: Push changes
         if: env.should_publish == 'true'
         run: |
