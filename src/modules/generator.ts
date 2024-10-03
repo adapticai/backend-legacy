@@ -708,7 +708,7 @@ ${selectionSet}        }
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOne${capitalModelName}: ${capitalModelName}Type }>({ mutation: CREATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOne${capitalModelName}) {
         return response.data.createOne${capitalModelName};
@@ -750,7 +750,7 @@ ${constructVariablesObject(
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createMany${capitalModelName}: { count: number } }>({ mutation: CREATE_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createMany${capitalModelName}) {
         return response.data.createMany${capitalModelName};
@@ -801,7 +801,7 @@ ${constructVariablesObject(
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOne${capitalModelName}: ${capitalModelName}Type }>({ mutation: UPDATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOne${capitalModelName}) {
         return response.data.updateOne${capitalModelName};
@@ -834,7 +834,7 @@ ${selectionSet}      }
     };
 
     try {
-      const response = await client.mutate<{ deleteOne${capitalModelName}: ${capitalModelName}Type }>({ mutation: DELETE_ONE_${capitalModelName.toUpperCase()}, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_${capitalModelName.toUpperCase()}, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOne${capitalModelName}) {
         return response.data.deleteOne${capitalModelName};
@@ -872,7 +872,7 @@ ${constructVariablesObject(
   )}      },
   };
     try {
-      const response = await client.query<{ ${modelName}: ${capitalModelName}Type }>({ query: GET_ONE_${capitalModelName.toUpperCase()}, variables });
+      const response = await client.query({ query: GET_ONE_${capitalModelName.toUpperCase()}, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.${modelName} ?? null;
     } catch (error) {
@@ -894,7 +894,7 @@ ${selectionSet}      }
       }\`;
 
     try {
-      const response = await client.query<{ ${pluralModelName}: ${capitalModelName}Type[] }>({ query: GET_ALL_${capitalModelName.toUpperCase()} });
+      const response = await client.query({ query: GET_ALL_${capitalModelName.toUpperCase()} });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.${pluralModelName} ?? null;
     } catch (error) {
@@ -931,7 +931,7 @@ ${constructVariablesObject(
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ ${pluralModelName}: ${capitalModelName}Type[] }>({ query: FIND_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.${pluralModelName}) {
         return response.data.${pluralModelName};
