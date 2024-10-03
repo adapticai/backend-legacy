@@ -23,75 +23,17 @@ export const EnvironmentVariable = {
           key
           value
           description
-          workspaceId
-          workspace {
+          portfolioId
+          portfolio {
             id
             name
-            slug
             description
-            descriptionShort
-            image
-            colors
-            website
-            emailDomain
-            addUsersByEmailDomain
-            industry
-            foundingYear
-            legalName
-            address
-            streetAddress
-            postalCode
-            city {
-              id
-              name
-              workspace {
-                id
-              }
-            }
-            state {
-              id
-              name
-              workspace {
-                id
-              }
-              country {
-                id
-                name
-                states {
-                  id
-                }
-                workspace {
-                  id
-                }
-              }
-              countryId
-            }
-            country {
-              id
-            }
-            telephone
-            email
-            sameAs
-            headquarters
-            locations {
-              id
-              label
-              value
-              workspace {
-                id
-              }
-              workspaceId
-            }
-            areasOfFocus
             createdAt
             updatedAt
-            environmentVariables {
-              id
-            }
-            users {
+            portfolioUsers {
               id
               userId
-              workspaceId
+              portfolioId
               user {
                 id
                 name
@@ -101,12 +43,9 @@ export const EnvironmentVariable = {
                 createdAt
                 updatedAt
                 role
-                workspaces {
-                  id
-                }
                 bio
                 jobTitle
-                currentWorkspace
+                currentPortfolio
                 customer {
                   id
                 }
@@ -139,17 +78,212 @@ export const EnvironmentVariable = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
               }
-              workspace {
+              portfolio {
                 id
               }
               role
               createdAt
               updatedAt
             }
-            stateId
-            countryId
-            cityId
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolioAllocations {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            environmentVariables {
+              id
+            }
           }
           createdAt
           updatedAt
@@ -162,80 +296,103 @@ export const EnvironmentVariable = {
           key: props.key !== undefined ? props.key : undefined,
   value: props.value !== undefined ? props.value : undefined,
   description: props.description !== undefined ? props.description : undefined,
-  workspace: props.workspace ? {
+  portfolio: props.portfolio ? {
     connectOrCreate: {
       where: {
-        id: props.workspace.id !== undefined ? props.workspace.id : undefined,
-        slug: props.workspace.slug !== undefined ? props.workspace.slug : undefined,
-        name: props.workspace.name !== undefined ? {
-            equals: props.workspace.name 
-           } : undefined,
-        email: props.workspace.email !== undefined ? {
-            equals: props.workspace.email 
+        id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        name: props.portfolio.name !== undefined ? {
+            equals: props.portfolio.name 
            } : undefined,
       },
       create: {
-        name: props.workspace.name !== undefined ? props.workspace.name : undefined,
-        slug: props.workspace.slug !== undefined ? props.workspace.slug : undefined,
-        description: props.workspace.description !== undefined ? props.workspace.description : undefined,
-        descriptionShort: props.workspace.descriptionShort !== undefined ? props.workspace.descriptionShort : undefined,
-        image: props.workspace.image !== undefined ? props.workspace.image : undefined,
-        colors: props.workspace.colors !== undefined ? props.workspace.colors : undefined,
-        website: props.workspace.website !== undefined ? props.workspace.website : undefined,
-        emailDomain: props.workspace.emailDomain !== undefined ? props.workspace.emailDomain : undefined,
-        addUsersByEmailDomain: props.workspace.addUsersByEmailDomain !== undefined ? props.workspace.addUsersByEmailDomain : undefined,
-        industry: props.workspace.industry !== undefined ? props.workspace.industry : undefined,
-        foundingYear: props.workspace.foundingYear !== undefined ? props.workspace.foundingYear : undefined,
-        legalName: props.workspace.legalName !== undefined ? props.workspace.legalName : undefined,
-        address: props.workspace.address !== undefined ? props.workspace.address : undefined,
-        streetAddress: props.workspace.streetAddress !== undefined ? props.workspace.streetAddress : undefined,
-        postalCode: props.workspace.postalCode !== undefined ? props.workspace.postalCode : undefined,
-        telephone: props.workspace.telephone !== undefined ? props.workspace.telephone : undefined,
-        email: props.workspace.email !== undefined ? props.workspace.email : undefined,
-        sameAs: props.workspace.sameAs !== undefined ? props.workspace.sameAs : undefined,
-        headquarters: props.workspace.headquarters !== undefined ? props.workspace.headquarters : undefined,
-        areasOfFocus: props.workspace.areasOfFocus !== undefined ? props.workspace.areasOfFocus : undefined,
-    city: props.workspace.city ? {
-      connectOrCreate: {
+        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
+    portfolioUsers: props.portfolio.portfolioUsers ? {
+      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
         where: {
-          id: props.workspace.city.id !== undefined ? props.workspace.city.id : undefined,
-          name: props.workspace.city.name !== undefined ? {
-              equals: props.workspace.city.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          name: props.workspace.city.name !== undefined ? props.workspace.city.name : undefined,
+          role: item.role !== undefined ? item.role : undefined,
         },
-      }
+      }))
     } : undefined,
-    state: props.workspace.state ? {
-      connectOrCreate: {
+    holdings: props.portfolio.holdings ? {
+      connectOrCreate: props.portfolio.holdings.map((item: any) => ({
         where: {
-          id: props.workspace.state.id !== undefined ? props.workspace.state.id : undefined,
-          name: props.workspace.state.name !== undefined ? {
-              equals: props.workspace.state.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          name: props.workspace.state.name !== undefined ? props.workspace.state.name : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
         },
-      }
+      }))
     } : undefined,
-    country: props.workspace.country ? {
-      connectOrCreate: {
+    trades: props.portfolio.trades ? {
+      connectOrCreate: props.portfolio.trades.map((item: any) => ({
         where: {
-          id: props.workspace.country.id !== undefined ? props.workspace.country.id : undefined,
-          name: props.workspace.country.name !== undefined ? {
-              equals: props.workspace.country.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          name: props.workspace.country.name !== undefined ? props.workspace.country.name : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
-      }
+      }))
     } : undefined,
-    locations: props.workspace.locations ? {
-      connectOrCreate: props.workspace.locations.map((item: any) => ({
+    orders: props.portfolio.orders ? {
+      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.portfolio.riskAllocations ? {
+      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.portfolio.alerts ? {
+      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.portfolio.performanceMetrics ? {
+      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -245,13 +402,13 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    users: props.workspace.users ? {
-      connectOrCreate: props.workspace.users.map((item: any) => ({
+    portfolioAllocations: props.portfolio.portfolioAllocations ? {
+      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          role: item.role !== undefined ? item.role : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -297,7 +454,7 @@ export const EnvironmentVariable = {
   key: prop.key !== undefined ? prop.key : undefined,
   value: prop.value !== undefined ? prop.value : undefined,
   description: prop.description !== undefined ? prop.description : undefined,
-  workspaceId: prop.workspaceId !== undefined ? prop.workspaceId : undefined,
+  portfolioId: prop.portfolioId !== undefined ? prop.portfolioId : undefined,
       })),
     };
 
@@ -332,75 +489,17 @@ export const EnvironmentVariable = {
           key
           value
           description
-          workspaceId
-          workspace {
+          portfolioId
+          portfolio {
             id
             name
-            slug
             description
-            descriptionShort
-            image
-            colors
-            website
-            emailDomain
-            addUsersByEmailDomain
-            industry
-            foundingYear
-            legalName
-            address
-            streetAddress
-            postalCode
-            city {
-              id
-              name
-              workspace {
-                id
-              }
-            }
-            state {
-              id
-              name
-              workspace {
-                id
-              }
-              country {
-                id
-                name
-                states {
-                  id
-                }
-                workspace {
-                  id
-                }
-              }
-              countryId
-            }
-            country {
-              id
-            }
-            telephone
-            email
-            sameAs
-            headquarters
-            locations {
-              id
-              label
-              value
-              workspace {
-                id
-              }
-              workspaceId
-            }
-            areasOfFocus
             createdAt
             updatedAt
-            environmentVariables {
-              id
-            }
-            users {
+            portfolioUsers {
               id
               userId
-              workspaceId
+              portfolioId
               user {
                 id
                 name
@@ -410,12 +509,9 @@ export const EnvironmentVariable = {
                 createdAt
                 updatedAt
                 role
-                workspaces {
-                  id
-                }
                 bio
                 jobTitle
-                currentWorkspace
+                currentPortfolio
                 customer {
                   id
                 }
@@ -448,17 +544,212 @@ export const EnvironmentVariable = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
               }
-              workspace {
+              portfolio {
                 id
               }
               role
               createdAt
               updatedAt
             }
-            stateId
-            countryId
-            cityId
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolioAllocations {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            environmentVariables {
+              id
+            }
           }
           createdAt
           updatedAt
@@ -473,145 +764,186 @@ export const EnvironmentVariable = {
   description: props.description !== undefined ? {
             set: props.description 
            } : undefined,
-  workspace: props.workspace ? {
+  portfolio: props.portfolio ? {
     upsert: {
       where: {
-        id: props.workspace.id !== undefined ? {
-            equals: props.workspace.id 
+        id: props.portfolio.id !== undefined ? {
+            equals: props.portfolio.id 
            } : undefined,
-        name: props.workspace.name !== undefined ? {
-            equals: props.workspace.name 
-           } : undefined,
-        slug: props.workspace.slug !== undefined ? {
-            equals: props.workspace.slug 
-           } : undefined,
-        email: props.workspace.email !== undefined ? {
-            equals: props.workspace.email 
+        name: props.portfolio.name !== undefined ? {
+            equals: props.portfolio.name 
            } : undefined,
       },
       update: {
-        name: props.workspace.name !== undefined ? {
-            set: props.workspace.name  
+        name: props.portfolio.name !== undefined ? {
+            set: props.portfolio.name  
            } : undefined,
-        slug: props.workspace.slug !== undefined ? {
-            set: props.workspace.slug  
+        description: props.portfolio.description !== undefined ? {
+            set: props.portfolio.description  
            } : undefined,
-        description: props.workspace.description !== undefined ? {
-            set: props.workspace.description  
-           } : undefined,
-        descriptionShort: props.workspace.descriptionShort !== undefined ? {
-            set: props.workspace.descriptionShort  
-           } : undefined,
-        image: props.workspace.image !== undefined ? {
-            set: props.workspace.image  
-           } : undefined,
-        colors: props.workspace.colors !== undefined ? {
-            set: props.workspace.colors  
-           } : undefined,
-        website: props.workspace.website !== undefined ? {
-            set: props.workspace.website  
-           } : undefined,
-        emailDomain: props.workspace.emailDomain !== undefined ? {
-            set: props.workspace.emailDomain  
-           } : undefined,
-        addUsersByEmailDomain: props.workspace.addUsersByEmailDomain !== undefined ? {
-            set: props.workspace.addUsersByEmailDomain  
-           } : undefined,
-        industry: props.workspace.industry !== undefined ? {
-            set: props.workspace.industry  
-           } : undefined,
-        foundingYear: props.workspace.foundingYear !== undefined ? {
-            set: props.workspace.foundingYear  
-           } : undefined,
-        legalName: props.workspace.legalName !== undefined ? {
-            set: props.workspace.legalName  
-           } : undefined,
-        address: props.workspace.address !== undefined ? {
-            set: props.workspace.address  
-           } : undefined,
-        streetAddress: props.workspace.streetAddress !== undefined ? {
-            set: props.workspace.streetAddress  
-           } : undefined,
-        postalCode: props.workspace.postalCode !== undefined ? {
-            set: props.workspace.postalCode  
-           } : undefined,
-        telephone: props.workspace.telephone !== undefined ? {
-            set: props.workspace.telephone  
-           } : undefined,
-        email: props.workspace.email !== undefined ? {
-            set: props.workspace.email  
-           } : undefined,
-        sameAs: props.workspace.sameAs !== undefined ? {
-            set: props.workspace.sameAs  
-           } : undefined,
-        headquarters: props.workspace.headquarters !== undefined ? {
-            set: props.workspace.headquarters  
-           } : undefined,
-        areasOfFocus: props.workspace.areasOfFocus !== undefined ? {
-            set: props.workspace.areasOfFocus  
-           } : undefined,
-    city: props.workspace.city ? {
-      upsert: {
+    portfolioUsers: props.portfolio.portfolioUsers ? {
+      upsert: props.portfolio.portfolioUsers.map((item: any) => ({
         where: {
-          id: props.workspace.city.id !== undefined ? {
-              equals: props.workspace.city.id 
-             } : undefined,
-          name: props.workspace.city.name !== undefined ? {
-              equals: props.workspace.city.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          name: props.workspace.city.name !== undefined ? {
-              set: props.workspace.city.name  
+          role: item.role !== undefined ? {
+              set: item.role  
              } : undefined,
         },
         create: {
-          name: props.workspace.city.name !== undefined ? props.workspace.city.name : undefined,
+          role: item.role !== undefined ? item.role : undefined,
         },
-      }
+      }))
     } : undefined,
-    state: props.workspace.state ? {
-      upsert: {
+    holdings: props.portfolio.holdings ? {
+      upsert: props.portfolio.holdings.map((item: any) => ({
         where: {
-          id: props.workspace.state.id !== undefined ? {
-              equals: props.workspace.state.id 
-             } : undefined,
-          name: props.workspace.state.name !== undefined ? {
-              equals: props.workspace.state.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          name: props.workspace.state.name !== undefined ? {
-              set: props.workspace.state.name  
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          averagePrice: item.averagePrice !== undefined ? {
+              set: item.averagePrice  
              } : undefined,
         },
         create: {
-          name: props.workspace.state.name !== undefined ? props.workspace.state.name : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
         },
-      }
+      }))
     } : undefined,
-    country: props.workspace.country ? {
-      upsert: {
+    trades: props.portfolio.trades ? {
+      upsert: props.portfolio.trades.map((item: any) => ({
         where: {
-          id: props.workspace.country.id !== undefined ? {
-              equals: props.workspace.country.id 
-             } : undefined,
-          name: props.workspace.country.name !== undefined ? {
-              equals: props.workspace.country.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          name: props.workspace.country.name !== undefined ? {
-              set: props.workspace.country.name  
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
              } : undefined,
         },
         create: {
-          name: props.workspace.country.name !== undefined ? props.workspace.country.name : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
-      }
+      }))
     } : undefined,
-    locations: props.workspace.locations ? {
-      upsert: props.workspace.locations.map((item: any) => ({
+    orders: props.portfolio.orders ? {
+      upsert: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      upsert: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.portfolio.riskAllocations ? {
+      upsert: props.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.portfolio.alerts ? {
+      upsert: props.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.portfolio.performanceMetrics ? {
+      upsert: props.portfolio.performanceMetrics.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -629,84 +961,111 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    users: props.workspace.users ? {
-      upsert: props.workspace.users.map((item: any) => ({
+    portfolioAllocations: props.portfolio.portfolioAllocations ? {
+      upsert: props.portfolio.portfolioAllocations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          role: item.role !== undefined ? {
-              set: item.role  
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
              } : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
+    portfolioUsers: props.portfolio.portfolioUsers ? {
+      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
           role: item.role !== undefined ? item.role : undefined,
         },
       }))
     } : undefined,
-      },
-      create: {
-        name: props.workspace.name !== undefined ? props.workspace.name : undefined,
-        slug: props.workspace.slug !== undefined ? props.workspace.slug : undefined,
-        description: props.workspace.description !== undefined ? props.workspace.description : undefined,
-        descriptionShort: props.workspace.descriptionShort !== undefined ? props.workspace.descriptionShort : undefined,
-        image: props.workspace.image !== undefined ? props.workspace.image : undefined,
-        colors: props.workspace.colors !== undefined ? props.workspace.colors : undefined,
-        website: props.workspace.website !== undefined ? props.workspace.website : undefined,
-        emailDomain: props.workspace.emailDomain !== undefined ? props.workspace.emailDomain : undefined,
-        addUsersByEmailDomain: props.workspace.addUsersByEmailDomain !== undefined ? props.workspace.addUsersByEmailDomain : undefined,
-        industry: props.workspace.industry !== undefined ? props.workspace.industry : undefined,
-        foundingYear: props.workspace.foundingYear !== undefined ? props.workspace.foundingYear : undefined,
-        legalName: props.workspace.legalName !== undefined ? props.workspace.legalName : undefined,
-        address: props.workspace.address !== undefined ? props.workspace.address : undefined,
-        streetAddress: props.workspace.streetAddress !== undefined ? props.workspace.streetAddress : undefined,
-        postalCode: props.workspace.postalCode !== undefined ? props.workspace.postalCode : undefined,
-        telephone: props.workspace.telephone !== undefined ? props.workspace.telephone : undefined,
-        email: props.workspace.email !== undefined ? props.workspace.email : undefined,
-        sameAs: props.workspace.sameAs !== undefined ? props.workspace.sameAs : undefined,
-        headquarters: props.workspace.headquarters !== undefined ? props.workspace.headquarters : undefined,
-        areasOfFocus: props.workspace.areasOfFocus !== undefined ? props.workspace.areasOfFocus : undefined,
-    city: props.workspace.city ? {
-      connectOrCreate: {
+    holdings: props.portfolio.holdings ? {
+      connectOrCreate: props.portfolio.holdings.map((item: any) => ({
         where: {
-          id: props.workspace.city.id !== undefined ? props.workspace.city.id : undefined,
-          name: props.workspace.city.name !== undefined ? {
-              equals: props.workspace.city.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          name: props.workspace.city.name !== undefined ? props.workspace.city.name : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
         },
-      }
+      }))
     } : undefined,
-    state: props.workspace.state ? {
-      connectOrCreate: {
+    trades: props.portfolio.trades ? {
+      connectOrCreate: props.portfolio.trades.map((item: any) => ({
         where: {
-          id: props.workspace.state.id !== undefined ? props.workspace.state.id : undefined,
-          name: props.workspace.state.name !== undefined ? {
-              equals: props.workspace.state.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          name: props.workspace.state.name !== undefined ? props.workspace.state.name : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
-      }
+      }))
     } : undefined,
-    country: props.workspace.country ? {
-      connectOrCreate: {
+    orders: props.portfolio.orders ? {
+      connectOrCreate: props.portfolio.orders.map((item: any) => ({
         where: {
-          id: props.workspace.country.id !== undefined ? props.workspace.country.id : undefined,
-          name: props.workspace.country.name !== undefined ? {
-              equals: props.workspace.country.name 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          name: props.workspace.country.name !== undefined ? props.workspace.country.name : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
-      }
+      }))
     } : undefined,
-    locations: props.workspace.locations ? {
-      connectOrCreate: props.workspace.locations.map((item: any) => ({
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.portfolio.riskAllocations ? {
+      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.portfolio.alerts ? {
+      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.portfolio.performanceMetrics ? {
+      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -716,13 +1075,13 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    users: props.workspace.users ? {
-      connectOrCreate: props.workspace.users.map((item: any) => ({
+    portfolioAllocations: props.portfolio.portfolioAllocations ? {
+      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          role: item.role !== undefined ? item.role : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -762,75 +1121,17 @@ export const EnvironmentVariable = {
           key
           value
           description
-          workspaceId
-          workspace {
+          portfolioId
+          portfolio {
             id
             name
-            slug
             description
-            descriptionShort
-            image
-            colors
-            website
-            emailDomain
-            addUsersByEmailDomain
-            industry
-            foundingYear
-            legalName
-            address
-            streetAddress
-            postalCode
-            city {
-              id
-              name
-              workspace {
-                id
-              }
-            }
-            state {
-              id
-              name
-              workspace {
-                id
-              }
-              country {
-                id
-                name
-                states {
-                  id
-                }
-                workspace {
-                  id
-                }
-              }
-              countryId
-            }
-            country {
-              id
-            }
-            telephone
-            email
-            sameAs
-            headquarters
-            locations {
-              id
-              label
-              value
-              workspace {
-                id
-              }
-              workspaceId
-            }
-            areasOfFocus
             createdAt
             updatedAt
-            environmentVariables {
-              id
-            }
-            users {
+            portfolioUsers {
               id
               userId
-              workspaceId
+              portfolioId
               user {
                 id
                 name
@@ -840,12 +1141,9 @@ export const EnvironmentVariable = {
                 createdAt
                 updatedAt
                 role
-                workspaces {
-                  id
-                }
                 bio
                 jobTitle
-                currentWorkspace
+                currentPortfolio
                 customer {
                   id
                 }
@@ -878,17 +1176,212 @@ export const EnvironmentVariable = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
               }
-              workspace {
+              portfolio {
                 id
               }
               role
               createdAt
               updatedAt
             }
-            stateId
-            countryId
-            cityId
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolioAllocations {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            environmentVariables {
+              id
+            }
           }
           createdAt
           updatedAt
@@ -929,75 +1422,17 @@ export const EnvironmentVariable = {
           key
           value
           description
-          workspaceId
-          workspace {
+          portfolioId
+          portfolio {
             id
             name
-            slug
             description
-            descriptionShort
-            image
-            colors
-            website
-            emailDomain
-            addUsersByEmailDomain
-            industry
-            foundingYear
-            legalName
-            address
-            streetAddress
-            postalCode
-            city {
-              id
-              name
-              workspace {
-                id
-              }
-            }
-            state {
-              id
-              name
-              workspace {
-                id
-              }
-              country {
-                id
-                name
-                states {
-                  id
-                }
-                workspace {
-                  id
-                }
-              }
-              countryId
-            }
-            country {
-              id
-            }
-            telephone
-            email
-            sameAs
-            headquarters
-            locations {
-              id
-              label
-              value
-              workspace {
-                id
-              }
-              workspaceId
-            }
-            areasOfFocus
             createdAt
             updatedAt
-            environmentVariables {
-              id
-            }
-            users {
+            portfolioUsers {
               id
               userId
-              workspaceId
+              portfolioId
               user {
                 id
                 name
@@ -1007,12 +1442,9 @@ export const EnvironmentVariable = {
                 createdAt
                 updatedAt
                 role
-                workspaces {
-                  id
-                }
                 bio
                 jobTitle
-                currentWorkspace
+                currentPortfolio
                 customer {
                   id
                 }
@@ -1045,17 +1477,212 @@ export const EnvironmentVariable = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
               }
-              workspace {
+              portfolio {
                 id
               }
               role
               createdAt
               updatedAt
             }
-            stateId
-            countryId
-            cityId
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolioAllocations {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            environmentVariables {
+              id
+            }
           }
           createdAt
           updatedAt
@@ -1089,75 +1716,17 @@ export const EnvironmentVariable = {
           key
           value
           description
-          workspaceId
-          workspace {
+          portfolioId
+          portfolio {
             id
             name
-            slug
             description
-            descriptionShort
-            image
-            colors
-            website
-            emailDomain
-            addUsersByEmailDomain
-            industry
-            foundingYear
-            legalName
-            address
-            streetAddress
-            postalCode
-            city {
-              id
-              name
-              workspace {
-                id
-              }
-            }
-            state {
-              id
-              name
-              workspace {
-                id
-              }
-              country {
-                id
-                name
-                states {
-                  id
-                }
-                workspace {
-                  id
-                }
-              }
-              countryId
-            }
-            country {
-              id
-            }
-            telephone
-            email
-            sameAs
-            headquarters
-            locations {
-              id
-              label
-              value
-              workspace {
-                id
-              }
-              workspaceId
-            }
-            areasOfFocus
             createdAt
             updatedAt
-            environmentVariables {
-              id
-            }
-            users {
+            portfolioUsers {
               id
               userId
-              workspaceId
+              portfolioId
               user {
                 id
                 name
@@ -1167,12 +1736,9 @@ export const EnvironmentVariable = {
                 createdAt
                 updatedAt
                 role
-                workspaces {
-                  id
-                }
                 bio
                 jobTitle
-                currentWorkspace
+                currentPortfolio
                 customer {
                   id
                 }
@@ -1205,17 +1771,212 @@ export const EnvironmentVariable = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
               }
-              workspace {
+              portfolio {
                 id
               }
               role
               createdAt
               updatedAt
             }
-            stateId
-            countryId
-            cityId
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolioAllocations {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            environmentVariables {
+              id
+            }
           }
           createdAt
           updatedAt
@@ -1246,75 +2007,17 @@ export const EnvironmentVariable = {
           key
           value
           description
-          workspaceId
-          workspace {
+          portfolioId
+          portfolio {
             id
             name
-            slug
             description
-            descriptionShort
-            image
-            colors
-            website
-            emailDomain
-            addUsersByEmailDomain
-            industry
-            foundingYear
-            legalName
-            address
-            streetAddress
-            postalCode
-            city {
-              id
-              name
-              workspace {
-                id
-              }
-            }
-            state {
-              id
-              name
-              workspace {
-                id
-              }
-              country {
-                id
-                name
-                states {
-                  id
-                }
-                workspace {
-                  id
-                }
-              }
-              countryId
-            }
-            country {
-              id
-            }
-            telephone
-            email
-            sameAs
-            headquarters
-            locations {
-              id
-              label
-              value
-              workspace {
-                id
-              }
-              workspaceId
-            }
-            areasOfFocus
             createdAt
             updatedAt
-            environmentVariables {
-              id
-            }
-            users {
+            portfolioUsers {
               id
               userId
-              workspaceId
+              portfolioId
               user {
                 id
                 name
@@ -1324,12 +2027,9 @@ export const EnvironmentVariable = {
                 createdAt
                 updatedAt
                 role
-                workspaces {
-                  id
-                }
                 bio
                 jobTitle
-                currentWorkspace
+                currentPortfolio
                 customer {
                   id
                 }
@@ -1362,17 +2062,212 @@ export const EnvironmentVariable = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
               }
-              workspace {
+              portfolio {
                 id
               }
               role
               createdAt
               updatedAt
             }
-            stateId
-            countryId
-            cityId
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolioAllocations {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            environmentVariables {
+              id
+            }
           }
           createdAt
           updatedAt

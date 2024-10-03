@@ -32,66 +32,9 @@ export const Session = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -146,6 +89,7 @@ export const Session = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -153,6 +97,43 @@ export const Session = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -171,7 +152,13 @@ export const Session = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -179,6 +166,7 @@ export const Session = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -187,16 +175,43 @@ export const Session = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -208,6 +223,9 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -215,12 +233,16 @@ export const Session = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -230,6 +252,7 @@ export const Session = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -237,16 +260,52 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -278,18 +337,8 @@ export const Session = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentWorkspace: props.user.currentWorkspace !== undefined ? props.user.currentWorkspace : undefined,
+        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    workspaces: props.user.workspaces ? {
-      connectOrCreate: props.user.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -362,6 +411,7 @@ export const Session = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -410,6 +460,27 @@ export const Session = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    portfolios: props.user.portfolios ? {
+      connectOrCreate: props.user.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
         },
       }))
     } : undefined,
@@ -498,66 +569,9 @@ export const Session = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -612,6 +626,7 @@ export const Session = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -619,6 +634,43 @@ export const Session = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -637,7 +689,13 @@ export const Session = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -645,6 +703,7 @@ export const Session = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -653,16 +712,43 @@ export const Session = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -674,6 +760,9 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -681,12 +770,16 @@ export const Session = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -696,6 +789,7 @@ export const Session = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -703,16 +797,52 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -762,27 +892,12 @@ export const Session = {
         jobTitle: props.user.jobTitle !== undefined ? {
             set: props.user.jobTitle  
            } : undefined,
-        currentWorkspace: props.user.currentWorkspace !== undefined ? {
-            set: props.user.currentWorkspace  
+        currentPortfolio: props.user.currentPortfolio !== undefined ? {
+            set: props.user.currentPortfolio  
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
            } : undefined,
-    workspaces: props.user.workspaces ? {
-      upsert: props.user.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     customer: props.user.customer ? {
       upsert: {
         where: {
@@ -941,6 +1056,9 @@ export const Session = {
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
              } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
         },
         create: {
           action: item.action !== undefined ? item.action : undefined,
@@ -948,6 +1066,7 @@ export const Session = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1043,6 +1162,40 @@ export const Session = {
         },
       }))
     } : undefined,
+    portfolios: props.user.portfolios ? {
+      upsert: props.user.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          role: item.role !== undefined ? {
+              set: item.role  
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      upsert: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1052,18 +1205,8 @@ export const Session = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentWorkspace: props.user.currentWorkspace !== undefined ? props.user.currentWorkspace : undefined,
+        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    workspaces: props.user.workspaces ? {
-      connectOrCreate: props.user.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1136,6 +1279,7 @@ export const Session = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1187,6 +1331,27 @@ export const Session = {
         },
       }))
     } : undefined,
+    portfolios: props.user.portfolios ? {
+      connectOrCreate: props.user.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -1232,66 +1397,9 @@ export const Session = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -1346,6 +1454,7 @@ export const Session = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -1353,6 +1462,43 @@ export const Session = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1371,7 +1517,13 @@ export const Session = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -1379,6 +1531,7 @@ export const Session = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1387,16 +1540,43 @@ export const Session = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1408,6 +1588,9 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1415,12 +1598,16 @@ export const Session = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1430,6 +1617,7 @@ export const Session = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1437,16 +1625,52 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -1499,66 +1723,9 @@ export const Session = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -1613,6 +1780,7 @@ export const Session = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -1620,6 +1788,43 @@ export const Session = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1638,7 +1843,13 @@ export const Session = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -1646,6 +1857,7 @@ export const Session = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1654,16 +1866,43 @@ export const Session = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1675,6 +1914,9 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1682,12 +1924,16 @@ export const Session = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1697,6 +1943,7 @@ export const Session = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1704,16 +1951,52 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -1759,66 +2042,9 @@ export const Session = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -1873,6 +2099,7 @@ export const Session = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -1880,6 +2107,43 @@ export const Session = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1898,7 +2162,13 @@ export const Session = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -1906,6 +2176,7 @@ export const Session = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1914,16 +2185,43 @@ export const Session = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1935,6 +2233,9 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1942,12 +2243,16 @@ export const Session = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1957,6 +2262,7 @@ export const Session = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1964,16 +2270,52 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -2016,66 +2358,9 @@ export const Session = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -2130,6 +2415,7 @@ export const Session = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -2137,6 +2423,43 @@ export const Session = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -2155,7 +2478,13 @@ export const Session = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -2163,6 +2492,7 @@ export const Session = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -2171,16 +2501,43 @@ export const Session = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -2192,6 +2549,9 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -2199,12 +2559,16 @@ export const Session = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -2214,6 +2578,7 @@ export const Session = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -2221,16 +2586,52 @@ export const Session = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }

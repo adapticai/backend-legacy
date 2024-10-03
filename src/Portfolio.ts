@@ -1,40 +1,33 @@
 
 
-import { Asset as AssetType } from './generated/typegraphql-prisma/models/Asset';
+import { Portfolio as PortfolioType } from './generated/typegraphql-prisma/models/Portfolio';
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the Asset model.
+ * CRUD operations for the Portfolio model.
  */
 
-export const Asset = {
+export const Portfolio = {
   /**
-   * Create a new Asset record.
+   * Create a new Portfolio record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
-   * @returns The created Asset or null.
+   * @returns The created Portfolio or null.
    */
-  async create(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
-    const CREATE_ONE_ASSET = gql`
-      mutation createOneAsset($data: AssetCreateInput!) {
-        createOneAsset(data: $data) {
+  async create(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
+    const CREATE_ONE_PORTFOLIO = gql`
+      mutation createOnePortfolio($data: PortfolioCreateInput!) {
+        createOnePortfolio(data: $data) {
           id
-          symbol
           name
-          type
-          logoUrl
+          description
           createdAt
           updatedAt
-          holdings {
+          portfolioUsers {
             id
             userId
             portfolioId
-            assetId
-            quantity
-            averagePrice
-            createdAt
-            updatedAt
             user {
               id
               name
@@ -108,6 +101,22 @@ export const Asset = {
               plan
               holdings {
                 id
+                userId
+                portfolioId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                user {
+                  id
+                }
+                portfolio {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -209,17 +218,6 @@ export const Asset = {
               }
               portfolios {
                 id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
               }
               performanceMetrics {
                 id
@@ -239,13 +237,50 @@ export const Asset = {
             }
             portfolio {
               id
+            }
+            role
+            createdAt
+            updatedAt
+          }
+          holdings {
+            id
+          }
+          trades {
+            id
+          }
+          orders {
+            id
+          }
+          aiRecommendations {
+            id
+          }
+          riskAllocations {
+            id
+          }
+          alerts {
+            id
+          }
+          performanceMetrics {
+            id
+          }
+          portfolioAllocations {
+            id
+            portfolioId
+            assetId
+            allocation
+            createdAt
+            updatedAt
+            portfolio {
+              id
+            }
+            asset {
+              id
+              symbol
               name
-              description
+              type
+              logoUrl
               createdAt
               updatedAt
-              portfolioUsers {
-                id
-              }
               holdings {
                 id
               }
@@ -258,72 +293,37 @@ export const Asset = {
               aiRecommendations {
                 id
               }
-              riskAllocations {
+              news {
                 id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
                 assetId
-                allocation
+                title
+                content
+                source
+                url
+                sentiment
+                publishedAt
                 createdAt
                 updatedAt
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
               }
-              environmentVariables {
+              PortfolioAllocation {
                 id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
               }
             }
-            asset {
+          }
+          environmentVariables {
+            id
+            key
+            value
+            description
+            portfolioId
+            portfolio {
               id
             }
-          }
-          trades {
-            id
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          news {
-            id
-            assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
             createdAt
             updatedAt
-            asset {
-              id
-            }
-          }
-          PortfolioAllocation {
-            id
           }
         }
       }
@@ -331,10 +331,40 @@ export const Asset = {
 
     const variables = {
       data: {
-          symbol: props.symbol !== undefined ? props.symbol : undefined,
-  name: props.name !== undefined ? props.name : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
+          name: props.name !== undefined ? props.name : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  portfolioUsers: props.portfolioUsers ? {
+    connectOrCreate: props.portfolioUsers.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
   holdings: props.holdings ? {
     connectOrCreate: props.holdings.map((item: any) => ({
       where: {
@@ -365,17 +395,19 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -416,17 +448,19 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -490,17 +524,19 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -537,62 +573,160 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
       },
     }))
   } : undefined,
-  news: props.news ? {
-    connectOrCreate: props.news.map((item: any) => ({
+  riskAllocations: props.riskAllocations ? {
+    connectOrCreate: props.riskAllocations.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        title: item.title !== undefined ? {
-            equals: item.title 
-           } : undefined,
       },
       create: {
-        title: item.title !== undefined ? item.title : undefined,
-        content: item.content !== undefined ? item.content : undefined,
-        source: item.source !== undefined ? item.source : undefined,
-        url: item.url !== undefined ? item.url : undefined,
-        sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-        publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        assetType: item.assetType !== undefined ? item.assetType : undefined,
+        allocation: item.allocation !== undefined ? item.allocation : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
       },
     }))
   } : undefined,
-  PortfolioAllocation: props.PortfolioAllocation ? {
-    connectOrCreate: props.PortfolioAllocation.map((item: any) => ({
+  alerts: props.alerts ? {
+    connectOrCreate: props.alerts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      create: {
+        message: item.message !== undefined ? item.message : undefined,
+        type: item.type !== undefined ? item.type : undefined,
+        isRead: item.isRead !== undefined ? item.isRead : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  performanceMetrics: props.performanceMetrics ? {
+    connectOrCreate: props.performanceMetrics.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      create: {
+        label: item.label !== undefined ? item.label : undefined,
+        value: item.value !== undefined ? item.value : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  portfolioAllocations: props.portfolioAllocations ? {
+    connectOrCreate: props.portfolioAllocations.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
       create: {
         allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
+      },
+    }))
+  } : undefined,
+  environmentVariables: props.environmentVariables ? {
+    connectOrCreate: props.environmentVariables.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      create: {
+        key: item.key !== undefined ? item.key : undefined,
+        value: item.value !== undefined ? item.value : undefined,
+        description: item.description !== undefined ? item.description : undefined,
       },
     }))
   } : undefined,
@@ -603,85 +737,76 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAsset: AssetType }>({ mutation: CREATE_ONE_ASSET, variables: filteredVariables });
+      const response = await client.mutate<{ createOnePortfolio: PortfolioType }>({ mutation: CREATE_ONE_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneAsset) {
-        return response.data.createOneAsset;
+      if (response && response.data && response.data.createOnePortfolio) {
+        return response.data.createOnePortfolio;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneAsset:', error);
+      console.error('Error in createOnePortfolio:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple Asset records.
+   * Create multiple Portfolio records.
    * @param props - Array of properties for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AssetType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
-    const CREATE_MANY_ASSET = gql`
-      mutation createManyAsset($data: [AssetCreateManyInput!]!) {
-        createManyAsset(data: $data) {
+  async createMany(props: PortfolioType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    const CREATE_MANY_PORTFOLIO = gql`
+      mutation createManyPortfolio($data: [PortfolioCreateManyInput!]!) {
+        createManyPortfolio(data: $data) {
           count
         }
       }`;
 
     const variables = {
       data: props.map(prop => ({
-  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
   name: prop.name !== undefined ? prop.name : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  logoUrl: prop.logoUrl !== undefined ? prop.logoUrl : undefined,
+  description: prop.description !== undefined ? prop.description : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAsset: { count: number } }>({ mutation: CREATE_MANY_ASSET, variables: filteredVariables });
+      const response = await client.mutate<{ createManyPortfolio: { count: number } }>({ mutation: CREATE_MANY_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyAsset) {
-        return response.data.createManyAsset;
+      if (response && response.data && response.data.createManyPortfolio) {
+        return response.data.createManyPortfolio;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyAsset:', error);
+      console.error('Error in createManyPortfolio:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single Asset record.
+   * Update a single Portfolio record.
    * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The updated Asset or null.
+   * @returns The updated Portfolio or null.
    */
-  async update(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
-    const UPDATE_ONE_ASSET = gql`
-      mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
-        updateOneAsset(data: $data, where: $where) {
+  async update(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
+    const UPDATE_ONE_PORTFOLIO = gql`
+      mutation updateOnePortfolio($data: PortfolioUpdateInput!, $where: PortfolioWhereUniqueInput!) {
+        updateOnePortfolio(data: $data, where: $where) {
           id
-          symbol
           name
-          type
-          logoUrl
+          description
           createdAt
           updatedAt
-          holdings {
+          portfolioUsers {
             id
             userId
             portfolioId
-            assetId
-            quantity
-            averagePrice
-            createdAt
-            updatedAt
             user {
               id
               name
@@ -755,6 +880,22 @@ export const Asset = {
               plan
               holdings {
                 id
+                userId
+                portfolioId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                user {
+                  id
+                }
+                portfolio {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -856,17 +997,6 @@ export const Asset = {
               }
               portfolios {
                 id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
               }
               performanceMetrics {
                 id
@@ -886,13 +1016,50 @@ export const Asset = {
             }
             portfolio {
               id
+            }
+            role
+            createdAt
+            updatedAt
+          }
+          holdings {
+            id
+          }
+          trades {
+            id
+          }
+          orders {
+            id
+          }
+          aiRecommendations {
+            id
+          }
+          riskAllocations {
+            id
+          }
+          alerts {
+            id
+          }
+          performanceMetrics {
+            id
+          }
+          portfolioAllocations {
+            id
+            portfolioId
+            assetId
+            allocation
+            createdAt
+            updatedAt
+            portfolio {
+              id
+            }
+            asset {
+              id
+              symbol
               name
-              description
+              type
+              logoUrl
               createdAt
               updatedAt
-              portfolioUsers {
-                id
-              }
               holdings {
                 id
               }
@@ -905,72 +1072,37 @@ export const Asset = {
               aiRecommendations {
                 id
               }
-              riskAllocations {
+              news {
                 id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
                 assetId
-                allocation
+                title
+                content
+                source
+                url
+                sentiment
+                publishedAt
                 createdAt
                 updatedAt
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
               }
-              environmentVariables {
+              PortfolioAllocation {
                 id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
               }
             }
-            asset {
+          }
+          environmentVariables {
+            id
+            key
+            value
+            description
+            portfolioId
+            portfolio {
               id
             }
-          }
-          trades {
-            id
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          news {
-            id
-            assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
             createdAt
             updatedAt
-            asset {
-              id
-            }
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;
@@ -983,12 +1115,101 @@ export const Asset = {
            } : undefined,
       },
       data: {
-  type: props.type !== undefined ? {
-            set: props.type 
+  description: props.description !== undefined ? {
+            set: props.description 
            } : undefined,
-  logoUrl: props.logoUrl !== undefined ? {
-            set: props.logoUrl 
+  portfolioUsers: props.portfolioUsers ? {
+    upsert: props.portfolioUsers.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        role: item.role !== undefined ? {
+            set: item.role  
            } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? {
+              set: item.user.currentPortfolio  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
   holdings: props.holdings ? {
     upsert: props.holdings.map((item: any) => ({
       where: {
@@ -1056,27 +1277,35 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
+          id: item.asset.id !== undefined ? {
+              equals: item.asset.id 
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          symbol: item.asset.symbol !== undefined ? {
+              set: item.asset.symbol  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          name: item.asset.name !== undefined ? {
+              set: item.asset.name  
+             } : undefined,
+          type: item.asset.type !== undefined ? {
+              set: item.asset.type  
+             } : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? {
+              set: item.asset.logoUrl  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1106,17 +1335,19 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1202,27 +1433,35 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
+          id: item.asset.id !== undefined ? {
+              equals: item.asset.id 
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          symbol: item.asset.symbol !== undefined ? {
+              set: item.asset.symbol  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          name: item.asset.name !== undefined ? {
+              set: item.asset.name  
+             } : undefined,
+          type: item.asset.type !== undefined ? {
+              set: item.asset.type  
+             } : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? {
+              set: item.asset.logoUrl  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1327,17 +1566,19 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1444,27 +1685,35 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
+          id: item.asset.id !== undefined ? {
+              equals: item.asset.id 
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          symbol: item.asset.symbol !== undefined ? {
+              set: item.asset.symbol  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          name: item.asset.name !== undefined ? {
+              set: item.asset.name  
+             } : undefined,
+          type: item.asset.type !== undefined ? {
+              set: item.asset.type  
+             } : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? {
+              set: item.asset.logoUrl  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1497,17 +1746,19 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1581,27 +1832,35 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
+          id: item.asset.id !== undefined ? {
+              equals: item.asset.id 
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          symbol: item.asset.symbol !== undefined ? {
+              set: item.asset.symbol  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          name: item.asset.name !== undefined ? {
+              set: item.asset.name  
+             } : undefined,
+          type: item.asset.type !== undefined ? {
+              set: item.asset.type  
+             } : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? {
+              set: item.asset.logoUrl  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
@@ -1631,63 +1890,319 @@ export const Asset = {
         },
       }
     } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
       },
     }))
   } : undefined,
-  news: props.news ? {
-    upsert: props.news.map((item: any) => ({
+  riskAllocations: props.riskAllocations ? {
+    upsert: props.riskAllocations.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        title: item.title !== undefined ? {
-            equals: item.title 
-           } : undefined,
       },
       update: {
-        title: item.title !== undefined ? {
-            set: item.title  
+        assetType: item.assetType !== undefined ? {
+            set: item.assetType  
            } : undefined,
-        content: item.content !== undefined ? {
-            set: item.content  
+        allocation: item.allocation !== undefined ? {
+            set: item.allocation  
            } : undefined,
-        source: item.source !== undefined ? {
-            set: item.source  
-           } : undefined,
-        url: item.url !== undefined ? {
-            set: item.url  
-           } : undefined,
-        sentiment: item.sentiment !== undefined ? {
-            set: item.sentiment  
-           } : undefined,
-        publishedAt: item.publishedAt !== undefined ? {
-            set: item.publishedAt  
-           } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? {
+              set: item.user.currentPortfolio  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
-        title: item.title !== undefined ? item.title : undefined,
-        content: item.content !== undefined ? item.content : undefined,
-        source: item.source !== undefined ? item.source : undefined,
-        url: item.url !== undefined ? item.url : undefined,
-        sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-        publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        assetType: item.assetType !== undefined ? item.assetType : undefined,
+        allocation: item.allocation !== undefined ? item.allocation : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
       },
     }))
   } : undefined,
-  PortfolioAllocation: props.PortfolioAllocation ? {
-    upsert: props.PortfolioAllocation.map((item: any) => ({
+  alerts: props.alerts ? {
+    upsert: props.alerts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        message: item.message !== undefined ? {
+            set: item.message  
+           } : undefined,
+        type: item.type !== undefined ? {
+            set: item.type  
+           } : undefined,
+        isRead: item.isRead !== undefined ? {
+            set: item.isRead  
+           } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? {
+              set: item.user.currentPortfolio  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        message: item.message !== undefined ? item.message : undefined,
+        type: item.type !== undefined ? item.type : undefined,
+        isRead: item.isRead !== undefined ? item.isRead : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  performanceMetrics: props.performanceMetrics ? {
+    upsert: props.performanceMetrics.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        label: item.label !== undefined ? {
+            set: item.label  
+           } : undefined,
+        value: item.value !== undefined ? {
+            set: item.value  
+           } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? {
+              set: item.user.currentPortfolio  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        label: item.label !== undefined ? item.label : undefined,
+        value: item.value !== undefined ? item.value : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  portfolioAllocations: props.portfolioAllocations ? {
+    upsert: props.portfolioAllocations.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -1695,47 +2210,80 @@ export const Asset = {
         allocation: item.allocation !== undefined ? {
             set: item.allocation  
            } : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
+          id: item.asset.id !== undefined ? {
+              equals: item.asset.id 
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          symbol: item.asset.symbol !== undefined ? {
+              set: item.asset.symbol  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          name: item.asset.name !== undefined ? {
+              set: item.asset.name  
+             } : undefined,
+          type: item.asset.type !== undefined ? {
+              set: item.asset.type  
+             } : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? {
+              set: item.asset.logoUrl  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
       },
       create: {
         allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
+    asset: item.asset ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
         },
       }
     } : undefined,
+      },
+    }))
+  } : undefined,
+  environmentVariables: props.environmentVariables ? {
+    upsert: props.environmentVariables.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        key: item.key !== undefined ? {
+            set: item.key  
+           } : undefined,
+        value: item.value !== undefined ? {
+            set: item.value  
+           } : undefined,
+        description: item.description !== undefined ? {
+            set: item.description  
+           } : undefined,
+      },
+      create: {
+        key: item.key !== undefined ? item.key : undefined,
+        value: item.value !== undefined ? item.value : undefined,
+        description: item.description !== undefined ? item.description : undefined,
       },
     }))
   } : undefined,
@@ -1745,45 +2293,38 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAsset: AssetType }>({ mutation: UPDATE_ONE_ASSET, variables: filteredVariables });
+      const response = await client.mutate<{ updateOnePortfolio: PortfolioType }>({ mutation: UPDATE_ONE_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneAsset) {
-        return response.data.updateOneAsset;
+      if (response && response.data && response.data.updateOnePortfolio) {
+        return response.data.updateOnePortfolio;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneAsset:', error);
+      console.error('Error in updateOnePortfolio:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single Asset record.
+   * Delete a single Portfolio record.
    * @param id - Unique identifier of the record to delete.
    * @param client - Apollo Client instance.
-   * @returns The deleted Asset or null.
+   * @returns The deleted Portfolio or null.
    */
-  async delete(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
-    const DELETE_ONE_ASSET = gql`
-      mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
-        deleteOneAsset(where: $where) {
+  async delete(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
+    const DELETE_ONE_PORTFOLIO = gql`
+      mutation deleteOnePortfolio($where: PortfolioWhereUniqueInput!) {
+        deleteOnePortfolio(where: $where) {
           id
-          symbol
           name
-          type
-          logoUrl
+          description
           createdAt
           updatedAt
-          holdings {
+          portfolioUsers {
             id
             userId
             portfolioId
-            assetId
-            quantity
-            averagePrice
-            createdAt
-            updatedAt
             user {
               id
               name
@@ -1857,6 +2398,22 @@ export const Asset = {
               plan
               holdings {
                 id
+                userId
+                portfolioId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                user {
+                  id
+                }
+                portfolio {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -1958,17 +2515,6 @@ export const Asset = {
               }
               portfolios {
                 id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
               }
               performanceMetrics {
                 id
@@ -1988,13 +2534,50 @@ export const Asset = {
             }
             portfolio {
               id
+            }
+            role
+            createdAt
+            updatedAt
+          }
+          holdings {
+            id
+          }
+          trades {
+            id
+          }
+          orders {
+            id
+          }
+          aiRecommendations {
+            id
+          }
+          riskAllocations {
+            id
+          }
+          alerts {
+            id
+          }
+          performanceMetrics {
+            id
+          }
+          portfolioAllocations {
+            id
+            portfolioId
+            assetId
+            allocation
+            createdAt
+            updatedAt
+            portfolio {
+              id
+            }
+            asset {
+              id
+              symbol
               name
-              description
+              type
+              logoUrl
               createdAt
               updatedAt
-              portfolioUsers {
-                id
-              }
               holdings {
                 id
               }
@@ -2007,72 +2590,37 @@ export const Asset = {
               aiRecommendations {
                 id
               }
-              riskAllocations {
+              news {
                 id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
                 assetId
-                allocation
+                title
+                content
+                source
+                url
+                sentiment
+                publishedAt
                 createdAt
                 updatedAt
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
               }
-              environmentVariables {
+              PortfolioAllocation {
                 id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
               }
             }
-            asset {
+          }
+          environmentVariables {
+            id
+            key
+            value
+            description
+            portfolioId
+            portfolio {
               id
             }
-          }
-          trades {
-            id
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          news {
-            id
-            assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
             createdAt
             updatedAt
-            asset {
-              id
-            }
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;
@@ -2084,45 +2632,38 @@ export const Asset = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAsset: AssetType }>({ mutation: DELETE_ONE_ASSET, variables });
+      const response = await client.mutate<{ deleteOnePortfolio: PortfolioType }>({ mutation: DELETE_ONE_PORTFOLIO, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneAsset) {
-        return response.data.deleteOneAsset;
+      if (response && response.data && response.data.deleteOnePortfolio) {
+        return response.data.deleteOnePortfolio;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneAsset:', error);
+      console.error('Error in deleteOnePortfolio:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single Asset record by ID.
+   * Retrieve a single Portfolio record by ID.
    * @param id - Unique identifier of the record.
    * @param client - Apollo Client instance.
-   * @returns The retrieved Asset or null.
+   * @returns The retrieved Portfolio or null.
    */
-  async get(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
-    const GET_ONE_ASSET = gql`
-      query getOneAsset($where: AssetWhereUniqueInput!) {
-        Asset(where: $where) {
+  async get(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
+    const GET_ONE_PORTFOLIO = gql`
+      query getOnePortfolio($where: PortfolioWhereUniqueInput!) {
+        Portfolio(where: $where) {
           id
-          symbol
           name
-          type
-          logoUrl
+          description
           createdAt
           updatedAt
-          holdings {
+          portfolioUsers {
             id
             userId
             portfolioId
-            assetId
-            quantity
-            averagePrice
-            createdAt
-            updatedAt
             user {
               id
               name
@@ -2196,6 +2737,22 @@ export const Asset = {
               plan
               holdings {
                 id
+                userId
+                portfolioId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                user {
+                  id
+                }
+                portfolio {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -2297,17 +2854,6 @@ export const Asset = {
               }
               portfolios {
                 id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
               }
               performanceMetrics {
                 id
@@ -2327,13 +2873,50 @@ export const Asset = {
             }
             portfolio {
               id
+            }
+            role
+            createdAt
+            updatedAt
+          }
+          holdings {
+            id
+          }
+          trades {
+            id
+          }
+          orders {
+            id
+          }
+          aiRecommendations {
+            id
+          }
+          riskAllocations {
+            id
+          }
+          alerts {
+            id
+          }
+          performanceMetrics {
+            id
+          }
+          portfolioAllocations {
+            id
+            portfolioId
+            assetId
+            allocation
+            createdAt
+            updatedAt
+            portfolio {
+              id
+            }
+            asset {
+              id
+              symbol
               name
-              description
+              type
+              logoUrl
               createdAt
               updatedAt
-              portfolioUsers {
-                id
-              }
               holdings {
                 id
               }
@@ -2346,72 +2929,37 @@ export const Asset = {
               aiRecommendations {
                 id
               }
-              riskAllocations {
+              news {
                 id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
                 assetId
-                allocation
+                title
+                content
+                source
+                url
+                sentiment
+                publishedAt
                 createdAt
                 updatedAt
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
               }
-              environmentVariables {
+              PortfolioAllocation {
                 id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
               }
             }
-            asset {
+          }
+          environmentVariables {
+            id
+            key
+            value
+            description
+            portfolioId
+            portfolio {
               id
             }
-          }
-          trades {
-            id
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          news {
-            id
-            assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
             createdAt
             updatedAt
-            asset {
-              id
-            }
-          }
-          PortfolioAllocation {
-            id
           }
         }
       }`;
@@ -2421,40 +2969,33 @@ export const Asset = {
       },
   };
     try {
-      const response = await client.query<{ Asset: AssetType }>({ query: GET_ONE_ASSET, variables });
+      const response = await client.query<{ Portfolio: PortfolioType }>({ query: GET_ONE_PORTFOLIO, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Asset ?? null;
+      return response.data?.Portfolio ?? null;
     } catch (error) {
-      console.error('Error in getOneAsset:', error);
+      console.error('Error in getOnePortfolio:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve all Assets records.
+   * Retrieve all Portfolios records.
    * @param client - Apollo Client instance.
-   * @returns An array of Asset records or null.
+   * @returns An array of Portfolio records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[] | null> {
-    const GET_ALL_ASSET = gql`
-      query getAllAsset {
-        Assets {
+  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType[] | null> {
+    const GET_ALL_PORTFOLIO = gql`
+      query getAllPortfolio {
+        Portfolios {
           id
-          symbol
           name
-          type
-          logoUrl
+          description
           createdAt
           updatedAt
-          holdings {
+          portfolioUsers {
             id
             userId
             portfolioId
-            assetId
-            quantity
-            averagePrice
-            createdAt
-            updatedAt
             user {
               id
               name
@@ -2528,6 +3069,22 @@ export const Asset = {
               plan
               holdings {
                 id
+                userId
+                portfolioId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                user {
+                  id
+                }
+                portfolio {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -2629,17 +3186,6 @@ export const Asset = {
               }
               portfolios {
                 id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
               }
               performanceMetrics {
                 id
@@ -2659,13 +3205,50 @@ export const Asset = {
             }
             portfolio {
               id
+            }
+            role
+            createdAt
+            updatedAt
+          }
+          holdings {
+            id
+          }
+          trades {
+            id
+          }
+          orders {
+            id
+          }
+          aiRecommendations {
+            id
+          }
+          riskAllocations {
+            id
+          }
+          alerts {
+            id
+          }
+          performanceMetrics {
+            id
+          }
+          portfolioAllocations {
+            id
+            portfolioId
+            assetId
+            allocation
+            createdAt
+            updatedAt
+            portfolio {
+              id
+            }
+            asset {
+              id
+              symbol
               name
-              description
+              type
+              logoUrl
               createdAt
               updatedAt
-              portfolioUsers {
-                id
-              }
               holdings {
                 id
               }
@@ -2678,112 +3261,70 @@ export const Asset = {
               aiRecommendations {
                 id
               }
-              riskAllocations {
+              news {
                 id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
                 assetId
-                allocation
+                title
+                content
+                source
+                url
+                sentiment
+                publishedAt
                 createdAt
                 updatedAt
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
               }
-              environmentVariables {
+              PortfolioAllocation {
                 id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
               }
             }
-            asset {
+          }
+          environmentVariables {
+            id
+            key
+            value
+            description
+            portfolioId
+            portfolio {
               id
             }
-          }
-          trades {
-            id
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          news {
-            id
-            assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
             createdAt
             updatedAt
-            asset {
-              id
-            }
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;
 
     try {
-      const response = await client.query<{ Assets: AssetType[] }>({ query: GET_ALL_ASSET });
+      const response = await client.query<{ Portfolios: PortfolioType[] }>({ query: GET_ALL_PORTFOLIO });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Assets ?? null;
+      return response.data?.Portfolios ?? null;
     } catch (error) {
-      console.error('Error in getAllAsset:', error);
+      console.error('Error in getAllPortfolio:', error);
       throw error;
     }
   },
 
   /**
-   * Find multiple Asset records based on conditions.
+   * Find multiple Portfolio records based on conditions.
    * @param where - Conditions to find records.
    * @param client - Apollo Client instance.
-   * @returns An array of found Asset records or null.
+   * @returns An array of found Portfolio records or null.
    */
-  async findMany(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[]> {
-    const FIND_MANY_ASSET = gql`
-      query findManyAsset($where: AssetWhereInput!) {
-        Assets(where: $where) {
+  async findMany(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType[]> {
+    const FIND_MANY_PORTFOLIO = gql`
+      query findManyPortfolio($where: PortfolioWhereInput!) {
+        Portfolios(where: $where) {
           id
-          symbol
           name
-          type
-          logoUrl
+          description
           createdAt
           updatedAt
-          holdings {
+          portfolioUsers {
             id
             userId
             portfolioId
-            assetId
-            quantity
-            averagePrice
-            createdAt
-            updatedAt
             user {
               id
               name
@@ -2857,6 +3398,22 @@ export const Asset = {
               plan
               holdings {
                 id
+                userId
+                portfolioId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                user {
+                  id
+                }
+                portfolio {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -2958,17 +3515,6 @@ export const Asset = {
               }
               portfolios {
                 id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
               }
               performanceMetrics {
                 id
@@ -2988,13 +3534,50 @@ export const Asset = {
             }
             portfolio {
               id
+            }
+            role
+            createdAt
+            updatedAt
+          }
+          holdings {
+            id
+          }
+          trades {
+            id
+          }
+          orders {
+            id
+          }
+          aiRecommendations {
+            id
+          }
+          riskAllocations {
+            id
+          }
+          alerts {
+            id
+          }
+          performanceMetrics {
+            id
+          }
+          portfolioAllocations {
+            id
+            portfolioId
+            assetId
+            allocation
+            createdAt
+            updatedAt
+            portfolio {
+              id
+            }
+            asset {
+              id
+              symbol
               name
-              description
+              type
+              logoUrl
               createdAt
               updatedAt
-              portfolioUsers {
-                id
-              }
               holdings {
                 id
               }
@@ -3007,72 +3590,37 @@ export const Asset = {
               aiRecommendations {
                 id
               }
-              riskAllocations {
+              news {
                 id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
                 assetId
-                allocation
+                title
+                content
+                source
+                url
+                sentiment
+                publishedAt
                 createdAt
                 updatedAt
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
               }
-              environmentVariables {
+              PortfolioAllocation {
                 id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
               }
             }
-            asset {
+          }
+          environmentVariables {
+            id
+            key
+            value
+            description
+            portfolioId
+            portfolio {
               id
             }
-          }
-          trades {
-            id
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          news {
-            id
-            assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
             createdAt
             updatedAt
-            asset {
-              id
-            }
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;
@@ -3091,15 +3639,15 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Assets: AssetType[] }>({ query: FIND_MANY_ASSET, variables: filteredVariables });
+      const response = await client.query<{ Portfolios: PortfolioType[] }>({ query: FIND_MANY_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Assets) {
-        return response.data.Assets;
+      if (response && response.data && response.data.Portfolios) {
+        return response.data.Portfolios;
       } else {
-       return [] as AssetType[];
+       return [] as PortfolioType[];
       }
     } catch (error) {
-      console.error('Error in findManyAsset:', error);
+      console.error('Error in findManyPortfolio:', error);
       throw error;
     }
   }

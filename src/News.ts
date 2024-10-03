@@ -20,6 +20,7 @@ export const News = {
       mutation createOneNews($data: NewsCreateInput!) {
         createOneNews(data: $data) {
           id
+          assetId
           title
           content
           source
@@ -28,6 +29,219 @@ export const News = {
           publishedAt
           createdAt
           updatedAt
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            news {
+              id
+            }
+            PortfolioAllocation {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+          }
         }
       }
    `;
@@ -40,6 +254,83 @@ export const News = {
   url: props.url !== undefined ? props.url : undefined,
   sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
   publishedAt: props.publishedAt !== undefined ? props.publishedAt : undefined,
+  asset: props.asset ? {
+    connectOrCreate: {
+      where: {
+        id: props.asset.id !== undefined ? props.asset.id : undefined,
+        name: props.asset.name !== undefined ? {
+            equals: props.asset.name 
+           } : undefined,
+      },
+      create: {
+        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
+        name: props.asset.name !== undefined ? props.asset.name : undefined,
+        type: props.asset.type !== undefined ? props.asset.type : undefined,
+        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
+    holdings: props.asset.holdings ? {
+      connectOrCreate: props.asset.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.asset.trades ? {
+      connectOrCreate: props.asset.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.asset.orders ? {
+      connectOrCreate: props.asset.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
 
       },
     };
@@ -76,6 +367,7 @@ export const News = {
 
     const variables = {
       data: props.map(prop => ({
+  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
   title: prop.title !== undefined ? prop.title : undefined,
   content: prop.content !== undefined ? prop.content : undefined,
   source: prop.source !== undefined ? prop.source : undefined,
@@ -113,6 +405,7 @@ export const News = {
       mutation updateOneNews($data: NewsUpdateInput!, $where: NewsWhereUniqueInput!) {
         updateOneNews(data: $data, where: $where) {
           id
+          assetId
           title
           content
           source
@@ -121,6 +414,219 @@ export const News = {
           publishedAt
           createdAt
           updatedAt
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            news {
+              id
+            }
+            PortfolioAllocation {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+          }
       }
       }`;
 
@@ -141,6 +647,218 @@ export const News = {
   sentiment: props.sentiment !== undefined ? {
             set: props.sentiment 
            } : undefined,
+  asset: props.asset ? {
+    upsert: {
+      where: {
+        id: props.asset.id !== undefined ? {
+            equals: props.asset.id 
+           } : undefined,
+        name: props.asset.name !== undefined ? {
+            equals: props.asset.name 
+           } : undefined,
+      },
+      update: {
+        symbol: props.asset.symbol !== undefined ? {
+            set: props.asset.symbol  
+           } : undefined,
+        name: props.asset.name !== undefined ? {
+            set: props.asset.name  
+           } : undefined,
+        type: props.asset.type !== undefined ? {
+            set: props.asset.type  
+           } : undefined,
+        logoUrl: props.asset.logoUrl !== undefined ? {
+            set: props.asset.logoUrl  
+           } : undefined,
+    holdings: props.asset.holdings ? {
+      upsert: props.asset.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          averagePrice: item.averagePrice !== undefined ? {
+              set: item.averagePrice  
+             } : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.asset.trades ? {
+      upsert: props.asset.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.asset.orders ? {
+      upsert: props.asset.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.asset.aiRecommendations ? {
+      upsert: props.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
+        name: props.asset.name !== undefined ? props.asset.name : undefined,
+        type: props.asset.type !== undefined ? props.asset.type : undefined,
+        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
+    holdings: props.asset.holdings ? {
+      connectOrCreate: props.asset.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.asset.trades ? {
+      connectOrCreate: props.asset.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.asset.orders ? {
+      connectOrCreate: props.asset.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
       },
     };
 
@@ -171,6 +889,7 @@ export const News = {
       mutation deleteOneNews($where: NewsWhereUniqueInput!) {
         deleteOneNews(where: $where) {
           id
+          assetId
           title
           content
           source
@@ -179,6 +898,219 @@ export const News = {
           publishedAt
           createdAt
           updatedAt
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            news {
+              id
+            }
+            PortfolioAllocation {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+          }
       }
       }`;
 
@@ -213,6 +1145,7 @@ export const News = {
       query getOneNews($where: NewsWhereUniqueInput!) {
         News(where: $where) {
           id
+          assetId
           title
           content
           source
@@ -221,6 +1154,219 @@ export const News = {
           publishedAt
           createdAt
           updatedAt
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            news {
+              id
+            }
+            PortfolioAllocation {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+          }
         }
       }`;
 
@@ -248,6 +1394,7 @@ export const News = {
       query getAllNews {
         News {
           id
+          assetId
           title
           content
           source
@@ -256,6 +1403,219 @@ export const News = {
           publishedAt
           createdAt
           updatedAt
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            news {
+              id
+            }
+            PortfolioAllocation {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+          }
       }
       }`;
 
@@ -280,6 +1640,7 @@ export const News = {
       query findManyNews($where: NewsWhereInput!) {
         News(where: $where) {
           id
+          assetId
           title
           content
           source
@@ -288,6 +1649,219 @@ export const News = {
           publishedAt
           createdAt
           updatedAt
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                portfolios {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            news {
+              id
+            }
+            PortfolioAllocation {
+              id
+              portfolioId
+              assetId
+              allocation
+              createdAt
+              updatedAt
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+          }
       }
       }`;
 

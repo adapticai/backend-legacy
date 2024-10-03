@@ -38,66 +38,9 @@ export const Customer = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
             }
@@ -148,6 +91,7 @@ export const Customer = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -155,6 +99,43 @@ export const Customer = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -173,7 +154,13 @@ export const Customer = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -181,6 +168,7 @@ export const Customer = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -189,16 +177,43 @@ export const Customer = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -210,6 +225,9 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -217,12 +235,16 @@ export const Customer = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -232,6 +254,7 @@ export const Customer = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -239,16 +262,52 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -283,18 +342,8 @@ export const Customer = {
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentWorkspace: item.currentWorkspace !== undefined ? item.currentWorkspace : undefined,
+        currentPortfolio: item.currentPortfolio !== undefined ? item.currentPortfolio : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
-    workspaces: item.workspaces ? {
-      connectOrCreate: item.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     accounts: item.accounts ? {
       connectOrCreate: item.accounts.map((item: any) => ({
         where: {
@@ -359,6 +408,7 @@ export const Customer = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -407,6 +457,27 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    portfolios: item.portfolios ? {
+      connectOrCreate: item.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: item.performanceMetrics ? {
+      connectOrCreate: item.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
         },
       }))
     } : undefined,
@@ -505,66 +576,9 @@ export const Customer = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
             }
@@ -615,6 +629,7 @@ export const Customer = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -622,6 +637,43 @@ export const Customer = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -640,7 +692,13 @@ export const Customer = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -648,6 +706,7 @@ export const Customer = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -656,16 +715,43 @@ export const Customer = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -677,6 +763,9 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -684,12 +773,16 @@ export const Customer = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -699,6 +792,7 @@ export const Customer = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -706,16 +800,52 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -774,27 +904,12 @@ export const Customer = {
         jobTitle: item.jobTitle !== undefined ? {
             set: item.jobTitle  
            } : undefined,
-        currentWorkspace: item.currentWorkspace !== undefined ? {
-            set: item.currentWorkspace  
+        currentPortfolio: item.currentPortfolio !== undefined ? {
+            set: item.currentPortfolio  
            } : undefined,
         plan: item.plan !== undefined ? {
             set: item.plan  
            } : undefined,
-    workspaces: item.workspaces ? {
-      upsert: item.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     accounts: item.accounts ? {
       upsert: item.accounts.map((item: any) => ({
         where: {
@@ -928,6 +1043,9 @@ export const Customer = {
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
              } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
         },
         create: {
           action: item.action !== undefined ? item.action : undefined,
@@ -935,6 +1053,7 @@ export const Customer = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1030,6 +1149,40 @@ export const Customer = {
         },
       }))
     } : undefined,
+    portfolios: item.portfolios ? {
+      upsert: item.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          role: item.role !== undefined ? {
+              set: item.role  
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: item.performanceMetrics ? {
+      upsert: item.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: item.name !== undefined ? item.name : undefined,
@@ -1039,18 +1192,8 @@ export const Customer = {
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentWorkspace: item.currentWorkspace !== undefined ? item.currentWorkspace : undefined,
+        currentPortfolio: item.currentPortfolio !== undefined ? item.currentPortfolio : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
-    workspaces: item.workspaces ? {
-      connectOrCreate: item.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     accounts: item.accounts ? {
       connectOrCreate: item.accounts.map((item: any) => ({
         where: {
@@ -1115,6 +1258,7 @@ export const Customer = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1163,6 +1307,27 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    portfolios: item.portfolios ? {
+      connectOrCreate: item.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: item.performanceMetrics ? {
+      connectOrCreate: item.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
         },
       }))
     } : undefined,
@@ -1217,66 +1382,9 @@ export const Customer = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
             }
@@ -1327,6 +1435,7 @@ export const Customer = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -1334,6 +1443,43 @@ export const Customer = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1352,7 +1498,13 @@ export const Customer = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -1360,6 +1512,7 @@ export const Customer = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1368,16 +1521,43 @@ export const Customer = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1389,6 +1569,9 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1396,12 +1579,16 @@ export const Customer = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1411,6 +1598,7 @@ export const Customer = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1418,16 +1606,52 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -1484,66 +1708,9 @@ export const Customer = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
             }
@@ -1594,6 +1761,7 @@ export const Customer = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -1601,6 +1769,43 @@ export const Customer = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1619,7 +1824,13 @@ export const Customer = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -1627,6 +1838,7 @@ export const Customer = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1635,16 +1847,43 @@ export const Customer = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1656,6 +1895,9 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1663,12 +1905,16 @@ export const Customer = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1678,6 +1924,7 @@ export const Customer = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1685,16 +1932,52 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -1745,66 +2028,9 @@ export const Customer = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
             }
@@ -1855,6 +2081,7 @@ export const Customer = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -1862,6 +2089,43 @@ export const Customer = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1880,7 +2144,13 @@ export const Customer = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -1888,6 +2158,7 @@ export const Customer = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1896,16 +2167,43 @@ export const Customer = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1917,6 +2215,9 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1924,12 +2225,16 @@ export const Customer = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1939,6 +2244,7 @@ export const Customer = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1946,16 +2252,52 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }
@@ -2002,66 +2344,9 @@ export const Customer = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
             }
@@ -2112,6 +2397,7 @@ export const Customer = {
             holdings {
               id
               userId
+              portfolioId
               assetId
               quantity
               averagePrice
@@ -2119,6 +2405,43 @@ export const Customer = {
               updatedAt
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -2137,7 +2460,13 @@ export const Customer = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
                   id
                 }
               }
@@ -2145,6 +2474,7 @@ export const Customer = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -2153,16 +2483,43 @@ export const Customer = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
                 id
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
             }
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -2174,6 +2531,9 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -2181,12 +2541,16 @@ export const Customer = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -2196,6 +2560,7 @@ export const Customer = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -2203,16 +2568,52 @@ export const Customer = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
                 id
               }
             }

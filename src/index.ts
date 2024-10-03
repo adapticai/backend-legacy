@@ -7,23 +7,22 @@ import { Account } from './Account';
 import { Alert } from './Alert';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
-import { City } from './City';
-import { Country } from './Country';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
 import { EnvironmentVariable } from './EnvironmentVariable';
 import { Holding } from './Holding';
-import { Location } from './Location';
 import { News } from './News';
 import { Order } from './Order';
+import { PerformanceMetric } from './PerformanceMetric';
+import { Portfolio } from './Portfolio';
+import { PortfolioAllocation } from './PortfolioAllocation';
+import { PortfolioUser } from './PortfolioUser';
 import { RiskAllocation } from './RiskAllocation';
 import { Session } from './Session';
-import { State } from './State';
 import { Trade } from './Trade';
+import { TradeStep } from './TradeStep';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
-import { Workspace } from './Workspace';
-import { WorkspaceUser } from './WorkspaceUser';
 
 const adaptic = {
   aIRecommendation: AIRecommendation,
@@ -31,23 +30,22 @@ const adaptic = {
   alert: Alert,
   asset: Asset,
   authenticator: Authenticator,
-  city: City,
-  country: Country,
   customer: Customer,
   economicEvent: EconomicEvent,
   environmentVariable: EnvironmentVariable,
   holding: Holding,
-  location: Location,
   news: News,
   order: Order,
+  performanceMetric: PerformanceMetric,
+  portfolio: Portfolio,
+  portfolioAllocation: PortfolioAllocation,
+  portfolioUser: PortfolioUser,
   riskAllocation: RiskAllocation,
   session: Session,
-  state: State,
   trade: Trade,
+  tradeStep: TradeStep,
   user: User,
   verificationToken: VerificationToken,
-  workspace: Workspace,
-  workspaceUser: WorkspaceUser,
 };
 
 export default adaptic;

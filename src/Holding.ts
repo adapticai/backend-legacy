@@ -21,6 +21,7 @@ export const Holding = {
         createOneHolding(data: $data) {
           id
           userId
+          portfolioId
           assetId
           quantity
           averagePrice
@@ -35,66 +36,9 @@ export const Holding = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -160,6 +104,7 @@ export const Holding = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -168,8 +113,46 @@ export const Holding = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -188,7 +171,35 @@ export const Holding = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
                   id
                 }
               }
@@ -196,6 +207,7 @@ export const Holding = {
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -207,6 +219,9 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -214,12 +229,16 @@ export const Holding = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -229,6 +248,7 @@ export const Holding = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -236,10 +256,14 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
@@ -248,7 +272,42 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+          }
+          portfolio {
+            id
           }
           asset {
             id
@@ -278,18 +337,8 @@ export const Holding = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentWorkspace: props.user.currentWorkspace !== undefined ? props.user.currentWorkspace : undefined,
+        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    workspaces: props.user.workspaces ? {
-      connectOrCreate: props.user.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -362,6 +411,7 @@ export const Holding = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -413,6 +463,147 @@ export const Holding = {
         },
       }))
     } : undefined,
+    portfolios: props.user.portfolios ? {
+      connectOrCreate: props.user.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  portfolio: props.portfolio ? {
+    connectOrCreate: {
+      where: {
+        id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        name: props.portfolio.name !== undefined ? {
+            equals: props.portfolio.name 
+           } : undefined,
+      },
+      create: {
+        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
+    portfolioUsers: props.portfolio.portfolioUsers ? {
+      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.portfolio.trades ? {
+      connectOrCreate: props.portfolio.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.portfolio.orders ? {
+      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.portfolio.riskAllocations ? {
+      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.portfolio.alerts ? {
+      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.portfolio.performanceMetrics ? {
+      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    portfolioAllocations: props.portfolio.portfolioAllocations ? {
+      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    environmentVariables: props.portfolio.environmentVariables ? {
+      connectOrCreate: props.portfolio.environmentVariables.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -440,6 +631,7 @@ export const Holding = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -457,14 +649,42 @@ export const Holding = {
         },
       }))
     } : undefined,
-    recommendations: props.asset.recommendations ? {
-      connectOrCreate: props.asset.recommendations.map((item: any) => ({
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
           action: item.action !== undefined ? item.action : undefined,
           confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    news: props.asset.news ? {
+      connectOrCreate: props.asset.news.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          title: item.title !== undefined ? {
+              equals: item.title 
+             } : undefined,
+        },
+        create: {
+          title: item.title !== undefined ? item.title : undefined,
+          content: item.content !== undefined ? item.content : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
+          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        },
+      }))
+    } : undefined,
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -508,6 +728,7 @@ export const Holding = {
     const variables = {
       data: props.map(prop => ({
   userId: prop.userId !== undefined ? prop.userId : undefined,
+  portfolioId: prop.portfolioId !== undefined ? prop.portfolioId : undefined,
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
   quantity: prop.quantity !== undefined ? prop.quantity : undefined,
   averagePrice: prop.averagePrice !== undefined ? prop.averagePrice : undefined,
@@ -543,6 +764,7 @@ export const Holding = {
         updateOneHolding(data: $data, where: $where) {
           id
           userId
+          portfolioId
           assetId
           quantity
           averagePrice
@@ -557,66 +779,9 @@ export const Holding = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -682,6 +847,7 @@ export const Holding = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -690,8 +856,46 @@ export const Holding = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -710,7 +914,35 @@ export const Holding = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
                   id
                 }
               }
@@ -718,6 +950,7 @@ export const Holding = {
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -729,6 +962,9 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -736,12 +972,16 @@ export const Holding = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -751,6 +991,7 @@ export const Holding = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -758,10 +999,14 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
@@ -770,7 +1015,42 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+          }
+          portfolio {
+            id
           }
           asset {
             id
@@ -818,27 +1098,12 @@ export const Holding = {
         jobTitle: props.user.jobTitle !== undefined ? {
             set: props.user.jobTitle  
            } : undefined,
-        currentWorkspace: props.user.currentWorkspace !== undefined ? {
-            set: props.user.currentWorkspace  
+        currentPortfolio: props.user.currentPortfolio !== undefined ? {
+            set: props.user.currentPortfolio  
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
            } : undefined,
-    workspaces: props.user.workspaces ? {
-      upsert: props.user.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     customer: props.user.customer ? {
       upsert: {
         where: {
@@ -997,6 +1262,9 @@ export const Holding = {
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
              } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
         },
         create: {
           action: item.action !== undefined ? item.action : undefined,
@@ -1004,6 +1272,7 @@ export const Holding = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1099,6 +1368,40 @@ export const Holding = {
         },
       }))
     } : undefined,
+    portfolios: props.user.portfolios ? {
+      upsert: props.user.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          role: item.role !== undefined ? {
+              set: item.role  
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      upsert: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1108,18 +1411,8 @@ export const Holding = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentWorkspace: props.user.currentWorkspace !== undefined ? props.user.currentWorkspace : undefined,
+        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    workspaces: props.user.workspaces ? {
-      connectOrCreate: props.user.workspaces.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1192,6 +1485,7 @@ export const Holding = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1243,6 +1537,356 @@ export const Holding = {
         },
       }))
     } : undefined,
+    portfolios: props.user.portfolios ? {
+      connectOrCreate: props.user.portfolios.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  portfolio: props.portfolio ? {
+    upsert: {
+      where: {
+        id: props.portfolio.id !== undefined ? {
+            equals: props.portfolio.id 
+           } : undefined,
+        name: props.portfolio.name !== undefined ? {
+            equals: props.portfolio.name 
+           } : undefined,
+      },
+      update: {
+        name: props.portfolio.name !== undefined ? {
+            set: props.portfolio.name  
+           } : undefined,
+        description: props.portfolio.description !== undefined ? {
+            set: props.portfolio.description  
+           } : undefined,
+    portfolioUsers: props.portfolio.portfolioUsers ? {
+      upsert: props.portfolio.portfolioUsers.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          role: item.role !== undefined ? {
+              set: item.role  
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.portfolio.trades ? {
+      upsert: props.portfolio.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.portfolio.orders ? {
+      upsert: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      upsert: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.portfolio.riskAllocations ? {
+      upsert: props.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.portfolio.alerts ? {
+      upsert: props.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.portfolio.performanceMetrics ? {
+      upsert: props.portfolio.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    portfolioAllocations: props.portfolio.portfolioAllocations ? {
+      upsert: props.portfolio.portfolioAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    environmentVariables: props.portfolio.environmentVariables ? {
+      upsert: props.portfolio.environmentVariables.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          key: item.key !== undefined ? {
+              set: item.key  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+          description: item.description !== undefined ? {
+              set: item.description  
+             } : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
+    portfolioUsers: props.portfolio.portfolioUsers ? {
+      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.portfolio.trades ? {
+      connectOrCreate: props.portfolio.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.portfolio.orders ? {
+      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.portfolio.riskAllocations ? {
+      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.portfolio.alerts ? {
+      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.portfolio.performanceMetrics ? {
+      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    portfolioAllocations: props.portfolio.portfolioAllocations ? {
+      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    environmentVariables: props.portfolio.environmentVariables ? {
+      connectOrCreate: props.portfolio.environmentVariables.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -1290,6 +1934,9 @@ export const Holding = {
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
              } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
         },
         create: {
           action: item.action !== undefined ? item.action : undefined,
@@ -1297,6 +1944,7 @@ export const Holding = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1331,8 +1979,8 @@ export const Holding = {
         },
       }))
     } : undefined,
-    recommendations: props.asset.recommendations ? {
-      upsert: props.asset.recommendations.map((item: any) => ({
+    aiRecommendations: props.asset.aiRecommendations ? {
+      upsert: props.asset.aiRecommendations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1347,6 +1995,59 @@ export const Holding = {
         create: {
           action: item.action !== undefined ? item.action : undefined,
           confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    news: props.asset.news ? {
+      upsert: props.asset.news.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          title: item.title !== undefined ? {
+              equals: item.title 
+             } : undefined,
+        },
+        update: {
+          title: item.title !== undefined ? {
+              set: item.title  
+             } : undefined,
+          content: item.content !== undefined ? {
+              set: item.content  
+             } : undefined,
+          source: item.source !== undefined ? {
+              set: item.source  
+             } : undefined,
+          url: item.url !== undefined ? {
+              set: item.url  
+             } : undefined,
+          sentiment: item.sentiment !== undefined ? {
+              set: item.sentiment  
+             } : undefined,
+          publishedAt: item.publishedAt !== undefined ? {
+              set: item.publishedAt  
+             } : undefined,
+        },
+        create: {
+          title: item.title !== undefined ? item.title : undefined,
+          content: item.content !== undefined ? item.content : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
+          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        },
+      }))
+    } : undefined,
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -1367,6 +2068,7 @@ export const Holding = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1384,14 +2086,42 @@ export const Holding = {
         },
       }))
     } : undefined,
-    recommendations: props.asset.recommendations ? {
-      connectOrCreate: props.asset.recommendations.map((item: any) => ({
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
           action: item.action !== undefined ? item.action : undefined,
           confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    news: props.asset.news ? {
+      connectOrCreate: props.asset.news.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          title: item.title !== undefined ? {
+              equals: item.title 
+             } : undefined,
+        },
+        create: {
+          title: item.title !== undefined ? item.title : undefined,
+          content: item.content !== undefined ? item.content : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
+          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        },
+      }))
+    } : undefined,
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -1429,6 +2159,7 @@ export const Holding = {
         deleteOneHolding(where: $where) {
           id
           userId
+          portfolioId
           assetId
           quantity
           averagePrice
@@ -1443,66 +2174,9 @@ export const Holding = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -1568,6 +2242,7 @@ export const Holding = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1576,8 +2251,46 @@ export const Holding = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1596,7 +2309,35 @@ export const Holding = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
                   id
                 }
               }
@@ -1604,6 +2345,7 @@ export const Holding = {
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1615,6 +2357,9 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1622,12 +2367,16 @@ export const Holding = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1637,6 +2386,7 @@ export const Holding = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1644,10 +2394,14 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
@@ -1656,7 +2410,42 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+          }
+          portfolio {
+            id
           }
           asset {
             id
@@ -1696,6 +2485,7 @@ export const Holding = {
         Holding(where: $where) {
           id
           userId
+          portfolioId
           assetId
           quantity
           averagePrice
@@ -1710,66 +2500,9 @@ export const Holding = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -1835,6 +2568,7 @@ export const Holding = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -1843,8 +2577,46 @@ export const Holding = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -1863,7 +2635,35 @@ export const Holding = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
                   id
                 }
               }
@@ -1871,6 +2671,7 @@ export const Holding = {
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -1882,6 +2683,9 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -1889,12 +2693,16 @@ export const Holding = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -1904,6 +2712,7 @@ export const Holding = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -1911,10 +2720,14 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
@@ -1923,7 +2736,42 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+          }
+          portfolio {
+            id
           }
           asset {
             id
@@ -1956,6 +2804,7 @@ export const Holding = {
         Holdings {
           id
           userId
+          portfolioId
           assetId
           quantity
           averagePrice
@@ -1970,66 +2819,9 @@ export const Holding = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -2095,6 +2887,7 @@ export const Holding = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -2103,8 +2896,46 @@ export const Holding = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -2123,7 +2954,35 @@ export const Holding = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
                   id
                 }
               }
@@ -2131,6 +2990,7 @@ export const Holding = {
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -2142,6 +3002,9 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -2149,12 +3012,16 @@ export const Holding = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -2164,6 +3031,7 @@ export const Holding = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -2171,10 +3039,14 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
@@ -2183,7 +3055,42 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+          }
+          portfolio {
+            id
           }
           asset {
             id
@@ -2213,6 +3120,7 @@ export const Holding = {
         Holdings(where: $where) {
           id
           userId
+          portfolioId
           assetId
           quantity
           averagePrice
@@ -2227,66 +3135,9 @@ export const Holding = {
             createdAt
             updatedAt
             role
-            workspaces {
-              id
-              userId
-              workspaceId
-              user {
-                id
-              }
-              workspace {
-                id
-                name
-                slug
-                description
-                descriptionShort
-                image
-                colors
-                website
-                emailDomain
-                addUsersByEmailDomain
-                industry
-                foundingYear
-                legalName
-                address
-                streetAddress
-                postalCode
-                city {
-                  id
-                }
-                state {
-                  id
-                }
-                country {
-                  id
-                }
-                telephone
-                email
-                sameAs
-                headquarters
-                locations {
-                  id
-                }
-                areasOfFocus
-                createdAt
-                updatedAt
-                environmentVariables {
-                  id
-                }
-                users {
-                  id
-                }
-                stateId
-                countryId
-                cityId
-              }
-              role
-              createdAt
-              updatedAt
-            }
             bio
             jobTitle
-            currentWorkspace
+            currentPortfolio
             customer {
               id
               authUserId
@@ -2352,6 +3203,7 @@ export const Holding = {
             trades {
               id
               userId
+              portfolioId
               assetId
               action
               quantity
@@ -2360,8 +3212,46 @@ export const Holding = {
               timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
+              }
+              portfolio {
+                id
+                name
+                description
+                createdAt
+                updatedAt
+                portfolioUsers {
+                  id
+                }
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
               }
               asset {
                 id
@@ -2380,7 +3270,35 @@ export const Holding = {
                 orders {
                   id
                 }
-                recommendations {
+                aiRecommendations {
+                  id
+                }
+                news {
+                  id
+                }
+                PortfolioAllocation {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
                   id
                 }
               }
@@ -2388,6 +3306,7 @@ export const Holding = {
             orders {
               id
               userId
+              portfolioId
               assetId
               type
               action
@@ -2399,6 +3318,9 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
               asset {
                 id
               }
@@ -2406,12 +3328,16 @@ export const Holding = {
             aiRecommendations {
               id
               userId
+              portfolioId
               assetId
               action
               confidence
               createdAt
               updatedAt
               user {
+                id
+              }
+              portfolio {
                 id
               }
               asset {
@@ -2421,6 +3347,7 @@ export const Holding = {
             riskAllocations {
               id
               userId
+              portfolioId
               assetType
               allocation
               createdAt
@@ -2428,10 +3355,14 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
             alerts {
               id
               userId
+              portfolioId
               message
               type
               isRead
@@ -2440,7 +3371,42 @@ export const Holding = {
               user {
                 id
               }
+              portfolio {
+                id
+              }
             }
+            portfolios {
+              id
+              userId
+              portfolioId
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+          }
+          portfolio {
+            id
           }
           asset {
             id

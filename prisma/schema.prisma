@@ -12,6 +12,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// ### Enums
 enum UserRole {
   OWNER
   ADMIN
@@ -30,6 +31,30 @@ enum AssetType {
 enum TradeAction {
   BUY
   SELL
+}
+
+enum TradeStepAction {
+  ENTER
+  HEDGE
+  EXIT
+}
+
+enum TradeStepSide {
+  BUY
+  SELL
+}
+
+enum TradeStepStatus {
+  STAGED
+  EXECUTED
+  COMPLETED
+}
+
+enum TradeStatus {
+  STAGED
+  ACTIVE
+  PARTIAL
+  COMPLETED
 }
 
 enum OrderType {
@@ -71,6 +96,7 @@ enum SubscriptionPlan {
   BUSINESS
 }
 
+/// ### Models
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
@@ -93,10 +119,9 @@ model User {
   createdAt        DateTime          @default(now()) @map(name: "created_at")
   updatedAt        DateTime          @default(now()) @map(name: "updated_at")
   role             UserRole          @default(USER)
-  workspaces       WorkspaceUser[]
   bio              String?
   jobTitle         String?
-  currentWorkspace String?
+  currentPortfolio String?
   customer         Customer?         @relation(fields: [customerId], references: [id])
   customerId       Int?
   accounts         Account[]
@@ -104,13 +129,15 @@ model User {
   authenticators   Authenticator[]
   plan             SubscriptionPlan?
 
-  // New relations
-  holdings          Holding[]
-  trades            Trade[]
-  orders            Order[]
-  aiRecommendations AIRecommendation[]
-  riskAllocations   RiskAllocation[]
-  alerts            Alert[]
+  // Relations
+  holdings           Holding[]
+  trades             Trade[]
+  orders             Order[]
+  aiRecommendations  AIRecommendation[]
+  riskAllocations    RiskAllocation[]
+  alerts             Alert[]
+  portfolios         PortfolioUser[]
+  performanceMetrics PerformanceMetric[]
 
   @@map(name: "users")
 }
@@ -162,83 +189,40 @@ model VerificationToken {
   @@map(name: "verification_tokens")
 }
 
-model Workspace {
-  id                    String                @id @default(uuid()) @db.Uuid
-  name                  String
-  slug                  String                @unique
-  description           String?
-  descriptionShort      String?
-  image                 String?
-  colors                Json?
-  website               String?
-  emailDomain           String?
-  addUsersByEmailDomain Boolean?
-  industry              String?
-  foundingYear          Int?
-  legalName             String?
-  address               String?
-  streetAddress         String?
-  postalCode            String?
-  city                  City?                 @relation(fields: [cityId], references: [id])
-  state                 State?                @relation(fields: [stateId], references: [id])
-  country               Country?              @relation(fields: [countryId], references: [id])
-  telephone             String?
-  email                 String?
-  sameAs                String[]
-  headquarters          String?
-  locations             Location[]
-  areasOfFocus          String[]
-  createdAt             DateTime              @default(now())
-  updatedAt             DateTime              @updatedAt
-  environmentVariables  EnvironmentVariable[]
-  users                 WorkspaceUser[]
-  stateId               String?
-  countryId             String?
-  cityId                String?
+model Portfolio {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
 
-  @@unique([name, slug])
+  // Relations
+  portfolioUsers       PortfolioUser[]
+  holdings             Holding[]
+  trades               Trade[]
+  orders               Order[]
+  aiRecommendations    AIRecommendation[]
+  riskAllocations      RiskAllocation[]
+  alerts               Alert[]
+  performanceMetrics   PerformanceMetric[]
+  portfolioAllocations PortfolioAllocation[]
+  environmentVariables EnvironmentVariable[]
+
+  @@map(name: "portfolios")
 }
 
-model Location {
-  id          String     @id @default(uuid()) @db.Uuid
-  label       String
-  value       String
-  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
-  workspaceId String?    @db.Uuid
-}
-
-model City {
-  id        String      @id @default(cuid())
-  name      String
-  workspace Workspace[]
-}
-
-model Country {
-  id        String      @id @default(cuid())
-  name      String
-  states    State[]
-  workspace Workspace[]
-}
-
-model State {
-  id        String      @id @default(cuid())
-  name      String
-  workspace Workspace[]
-  country   Country?    @relation(fields: [countryId], references: [id])
-  countryId String?
-}
-
-model WorkspaceUser {
+model PortfolioUser {
   id          String    @id @default(uuid()) @db.Uuid
   userId      String    @db.Uuid
-  workspaceId String    @db.Uuid
+  portfolioId String    @db.Uuid
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
   role        UserRole  @default(USER)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
 
-  @@unique([userId, workspaceId])
+  @@unique([userId, portfolioId])
+  @@map(name: "portfolio_users")
 }
 
 model EnvironmentVariable {
@@ -246,12 +230,13 @@ model EnvironmentVariable {
   key         String
   value       String
   description String?
-  workspaceId String    @db.Uuid
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
+  portfolioId String    @db.Uuid
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
 
-  @@unique([workspaceId, key])
+  @@unique([portfolioId, key])
+  @@map(name: "environment_variables")
 }
 
 model Customer {
@@ -271,114 +256,177 @@ model Customer {
 }
 
 model Asset {
-  id              String             @id @default(uuid()) @db.Uuid
-  symbol          String             @unique
-  name            String
-  type            AssetType
-  logoUrl         String?
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
-  holdings        Holding[]
-  trades          Trade[]
-  orders          Order[]
-  recommendations AIRecommendation[]
+  id                  String                @id @default(uuid()) @db.Uuid
+  symbol              String                @unique
+  name                String
+  type                AssetType
+  logoUrl             String?
+  createdAt           DateTime              @default(now()) @map(name: "created_at")
+  updatedAt           DateTime              @default(now()) @map(name: "updated_at")
+  holdings            Holding[]
+  trades              Trade[]
+  orders              Order[]
+  aiRecommendations   AIRecommendation[]
+  news                News[]
+  PortfolioAllocation PortfolioAllocation[]
+
+  @@map(name: "assets")
 }
 
 model Holding {
   id           String   @id @default(uuid()) @db.Uuid
   userId       String   @db.Uuid
+  portfolioId  String   @db.Uuid
   assetId      String   @db.Uuid
   quantity     Float
   averagePrice Float
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  updatedAt    DateTime @default(now()) @map(name: "updated_at")
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  asset     Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, assetId])
+  @@unique([userId, portfolioId, assetId])
+  @@map(name: "holdings")
 }
 
 model Trade {
-  id        String      @id @default(uuid()) @db.Uuid
-  userId    String      @db.Uuid
-  assetId   String      @db.Uuid
-  action    TradeAction
-  quantity  Float
-  price     Float
-  total     Float
-  timestamp DateTime    @default(now())
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id          String      @id @default(uuid()) @db.Uuid
+  userId      String      @db.Uuid
+  portfolioId String      @db.Uuid
+  assetId     String      @db.Uuid
+  action      TradeAction
+  quantity    Float
+  price       Float
+  total       Float
+  timestamp   DateTime    @default(now()) @map(name: "timestamp")
+  createdAt   DateTime    @default(now()) @map(name: "created_at")
+  updatedAt   DateTime    @default(now()) @map(name: "updated_at")
+  status      TradeStatus @default(STAGED)
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  // Relations
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio   @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  asset     Asset       @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  steps     TradeStep[]
+
+  @@map(name: "trades")
+}
+
+model TradeStep {
+  id            String          @id @default(uuid()) @db.Uuid
+  tradeId       String          @db.Uuid
+  sequence      Int
+  action        TradeStepAction
+  hedgeType     String?
+  hedgePrice    Float?
+  buyPrice      Float?
+  sellPrice     Float?
+  qty           Float
+  side          TradeStepSide
+  type          OrderType
+  stopLoss      Float?
+  targetPrice   Float?
+  note          String
+  executionTime DateTime?
+  status        TradeStepStatus
+  fee           Float?
+
+  // Relations
+  trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+
+  @@map(name: "trade_steps")
 }
 
 model Order {
-  id        String      @id @default(uuid()) @db.Uuid
-  userId    String      @db.Uuid
-  assetId   String      @db.Uuid
-  type      OrderType
-  action    TradeAction
-  quantity  Float
-  price     Float
-  status    OrderStatus
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id          String      @id @default(uuid()) @db.Uuid
+  userId      String      @db.Uuid
+  portfolioId String      @db.Uuid
+  assetId     String      @db.Uuid
+  type        OrderType
+  action      TradeAction
+  quantity    Float
+  price       Float
+  status      OrderStatus
+  createdAt   DateTime    @default(now()) @map(name: "created_at")
+  updatedAt   DateTime    @default(now()) @map(name: "updated_at")
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  asset     Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@map(name: "orders")
 }
 
 model AIRecommendation {
-  id         String      @id @default(uuid()) @db.Uuid
-  userId     String      @db.Uuid
-  assetId    String      @db.Uuid
-  action     TradeAction
-  confidence Float
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id          String      @id @default(uuid()) @db.Uuid
+  userId      String      @db.Uuid
+  portfolioId String      @db.Uuid
+  assetId     String      @db.Uuid
+  action      TradeAction
+  confidence  Float
+  createdAt   DateTime    @default(now()) @map(name: "created_at")
+  updatedAt   DateTime    @default(now()) @map(name: "updated_at")
 
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  asset     Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@map(name: "ai_recommendations")
 }
 
 model RiskAllocation {
-  id         String    @id @default(uuid()) @db.Uuid
-  userId     String    @db.Uuid
-  assetType  AssetType
-  allocation Float
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  portfolioId String    @db.Uuid
+  assetType   AssetType
+  allocation  Float
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, assetType])
+  @@unique([userId, portfolioId, assetType])
+  @@map(name: "risk_allocations")
 }
 
 model Alert {
-  id        String    @id @default(uuid()) @db.Uuid
-  userId    String    @db.Uuid
-  message   String
-  type      AlertType
-  isRead    Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id          String    @id @default(uuid()) @db.Uuid
+  userId      String    @db.Uuid
+  portfolioId String    @db.Uuid
+  message     String
+  type        AlertType
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  @@map(name: "alerts")
 }
 
 model News {
   id          String        @id @default(uuid()) @db.Uuid
+  assetId     String        @db.Uuid
   title       String
   content     String?
   source      String
   url         String?
   sentiment   NewsSentiment
-  publishedAt DateTime
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  publishedAt DateTime      @map(name: "published_at")
+  createdAt   DateTime      @default(now()) @map(name: "created_at")
+  updatedAt   DateTime      @default(now()) @map(name: "updated_at")
+  asset       Asset         @relation(fields: [assetId], references: [id])
+
+  @@map(name: "news")
 }
 
 model EconomicEvent {
@@ -387,6 +435,40 @@ model EconomicEvent {
   description String?
   date        DateTime
   importance  EventImportance
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  createdAt   DateTime        @default(now()) @map(name: "created_at")
+  updatedAt   DateTime        @default(now()) @map(name: "updated_at")
+
+  @@map(name: "economic_events")
+}
+
+model PortfolioAllocation {
+  id          String   @id @default(uuid()) @db.Uuid
+  portfolioId String   @db.Uuid
+  assetId     String   @db.Uuid
+  allocation  Float
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  // Relations
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  asset     Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([portfolioId, assetId])
+  @@map(name: "portfolio_allocations")
+}
+
+model PerformanceMetric {
+  id          String   @id @default(uuid()) @db.Uuid
+  userId      String   @db.Uuid
+  portfolioId String   @db.Uuid
+  label       String
+  value       String
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  // Relations
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+
+  @@map(name: "performance_metrics")
 }

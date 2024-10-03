@@ -1,124 +1,66 @@
 
 
-import { AIRecommendation as AIRecommendationType } from './generated/typegraphql-prisma/models/AIRecommendation';
+import { PortfolioAllocation as PortfolioAllocationType } from './generated/typegraphql-prisma/models/PortfolioAllocation';
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the AIRecommendation model.
+ * CRUD operations for the PortfolioAllocation model.
  */
 
-export const AIRecommendation = {
+export const PortfolioAllocation = {
   /**
-   * Create a new AIRecommendation record.
+   * Create a new PortfolioAllocation record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
-   * @returns The created AIRecommendation or null.
+   * @returns The created PortfolioAllocation or null.
    */
-  async create(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
-    const CREATE_ONE_AIRECOMMENDATION = gql`
-      mutation createOneAIRecommendation($data: AIRecommendationCreateInput!) {
-        createOneAIRecommendation(data: $data) {
+  async create(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType> {
+    const CREATE_ONE_PORTFOLIOALLOCATION = gql`
+      mutation createOnePortfolioAllocation($data: PortfolioAllocationCreateInput!) {
+        createOnePortfolioAllocation(data: $data) {
           id
-          userId
           portfolioId
           assetId
-          action
-          confidence
+          allocation
           createdAt
           updatedAt
-          user {
+          portfolio {
             id
             name
-            email
-            emailVerified
-            image
+            description
             createdAt
             updatedAt
-            role
-            bio
-            jobTitle
-            currentPortfolio
-            customer {
-              id
-              authUserId
-              name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            holdings {
+            portfolioUsers {
               id
               userId
               portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
               user {
                 id
-              }
-              portfolio {
-                id
                 name
-                description
+                email
+                emailVerified
+                image
                 createdAt
                 updatedAt
-                portfolioUsers {
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
                   id
                 }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
                 holdings {
                   id
                 }
@@ -137,15 +79,34 @@ export const AIRecommendation = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
               }
               asset {
                 id
@@ -244,6 +205,22 @@ export const AIRecommendation = {
             }
             aiRecommendations {
               id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             riskAllocations {
               id
@@ -276,20 +253,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -305,9 +268,21 @@ export const AIRecommendation = {
                 id
               }
             }
-          }
-          portfolio {
-            id
+            portfolioAllocations {
+              id
+            }
+            environmentVariables {
+              id
+              key
+              value
+              description
+              portfolioId
+              portfolio {
+                id
+              }
+              createdAt
+              updatedAt
+            }
           }
           asset {
             id
@@ -318,175 +293,7 @@ export const AIRecommendation = {
 
     const variables = {
       data: {
-          action: props.action !== undefined ? props.action : undefined,
-  confidence: props.confidence !== undefined ? props.confidence : undefined,
-  user: props.user ? {
-    connectOrCreate: {
-      where: {
-        id: props.user.id !== undefined ? props.user.id : undefined,
-        email: props.user.email !== undefined ? props.user.email : undefined,
-        name: props.user.name !== undefined ? {
-            equals: props.user.name 
-           } : undefined,
-      },
-      create: {
-        name: props.user.name !== undefined ? props.user.name : undefined,
-        email: props.user.email !== undefined ? props.user.email : undefined,
-        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
-        image: props.user.image !== undefined ? props.user.image : undefined,
-        role: props.user.role !== undefined ? props.user.role : undefined,
-        bio: props.user.bio !== undefined ? props.user.bio : undefined,
-        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
-        plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    customer: props.user.customer ? {
-      connectOrCreate: {
-        where: {
-          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
-          name: props.user.customer.name !== undefined ? {
-              equals: props.user.customer.name 
-             } : undefined,
-        },
-        create: {
-          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
-          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
-          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
-        },
-      }
-    } : undefined,
-    accounts: props.user.accounts ? {
-      connectOrCreate: props.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: props.user.sessions ? {
-      connectOrCreate: props.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: props.user.authenticators ? {
-      connectOrCreate: props.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.user.holdings ? {
-      connectOrCreate: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    trades: props.user.trades ? {
-      connectOrCreate: props.user.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      connectOrCreate: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: props.user.riskAllocations ? {
-      connectOrCreate: props.user.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.user.performanceMetrics ? {
-      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
+          allocation: props.allocation !== undefined ? props.allocation : undefined,
   portfolio: props.portfolio ? {
     connectOrCreate: {
       where: {
@@ -548,6 +355,17 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
     riskAllocations: props.portfolio.riskAllocations ? {
       connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
         where: {
@@ -579,16 +397,6 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -660,6 +468,17 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
     news: props.asset.news ? {
       connectOrCreate: props.asset.news.map((item: any) => ({
         where: {
@@ -678,16 +497,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
@@ -698,170 +507,110 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAIRecommendation: AIRecommendationType }>({ mutation: CREATE_ONE_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.mutate<{ createOnePortfolioAllocation: PortfolioAllocationType }>({ mutation: CREATE_ONE_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneAIRecommendation) {
-        return response.data.createOneAIRecommendation;
+      if (response && response.data && response.data.createOnePortfolioAllocation) {
+        return response.data.createOnePortfolioAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneAIRecommendation:', error);
+      console.error('Error in createOnePortfolioAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple AIRecommendation records.
+   * Create multiple PortfolioAllocation records.
    * @param props - Array of properties for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AIRecommendationType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
-    const CREATE_MANY_AIRECOMMENDATION = gql`
-      mutation createManyAIRecommendation($data: [AIRecommendationCreateManyInput!]!) {
-        createManyAIRecommendation(data: $data) {
+  async createMany(props: PortfolioAllocationType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    const CREATE_MANY_PORTFOLIOALLOCATION = gql`
+      mutation createManyPortfolioAllocation($data: [PortfolioAllocationCreateManyInput!]!) {
+        createManyPortfolioAllocation(data: $data) {
           count
         }
       }`;
 
     const variables = {
       data: props.map(prop => ({
-  userId: prop.userId !== undefined ? prop.userId : undefined,
   portfolioId: prop.portfolioId !== undefined ? prop.portfolioId : undefined,
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
-  action: prop.action !== undefined ? prop.action : undefined,
-  confidence: prop.confidence !== undefined ? prop.confidence : undefined,
+  allocation: prop.allocation !== undefined ? prop.allocation : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAIRecommendation: { count: number } }>({ mutation: CREATE_MANY_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.mutate<{ createManyPortfolioAllocation: { count: number } }>({ mutation: CREATE_MANY_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyAIRecommendation) {
-        return response.data.createManyAIRecommendation;
+      if (response && response.data && response.data.createManyPortfolioAllocation) {
+        return response.data.createManyPortfolioAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyAIRecommendation:', error);
+      console.error('Error in createManyPortfolioAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single AIRecommendation record.
+   * Update a single PortfolioAllocation record.
    * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The updated AIRecommendation or null.
+   * @returns The updated PortfolioAllocation or null.
    */
-  async update(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
-    const UPDATE_ONE_AIRECOMMENDATION = gql`
-      mutation updateOneAIRecommendation($data: AIRecommendationUpdateInput!, $where: AIRecommendationWhereUniqueInput!) {
-        updateOneAIRecommendation(data: $data, where: $where) {
+  async update(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType> {
+    const UPDATE_ONE_PORTFOLIOALLOCATION = gql`
+      mutation updateOnePortfolioAllocation($data: PortfolioAllocationUpdateInput!, $where: PortfolioAllocationWhereUniqueInput!) {
+        updateOnePortfolioAllocation(data: $data, where: $where) {
           id
-          userId
           portfolioId
           assetId
-          action
-          confidence
+          allocation
           createdAt
           updatedAt
-          user {
+          portfolio {
             id
             name
-            email
-            emailVerified
-            image
+            description
             createdAt
             updatedAt
-            role
-            bio
-            jobTitle
-            currentPortfolio
-            customer {
-              id
-              authUserId
-              name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            holdings {
+            portfolioUsers {
               id
               userId
               portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
               user {
                 id
-              }
-              portfolio {
-                id
                 name
-                description
+                email
+                emailVerified
+                image
                 createdAt
                 updatedAt
-                portfolioUsers {
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
                   id
                 }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
                 holdings {
                   id
                 }
@@ -880,15 +629,34 @@ export const AIRecommendation = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
               }
               asset {
                 id
@@ -987,6 +755,22 @@ export const AIRecommendation = {
             }
             aiRecommendations {
               id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             riskAllocations {
               id
@@ -1019,20 +803,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -1048,9 +818,21 @@ export const AIRecommendation = {
                 id
               }
             }
-          }
-          portfolio {
-            id
+            portfolioAllocations {
+              id
+            }
+            environmentVariables {
+              id
+              key
+              value
+              description
+              portfolioId
+              portfolio {
+                id
+              }
+              createdAt
+              updatedAt
+            }
           }
           asset {
             id
@@ -1063,507 +845,6 @@ export const AIRecommendation = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
-  action: props.action !== undefined ? {
-            set: props.action 
-           } : undefined,
-  user: props.user ? {
-    upsert: {
-      where: {
-        id: props.user.id !== undefined ? {
-            equals: props.user.id 
-           } : undefined,
-        name: props.user.name !== undefined ? {
-            equals: props.user.name 
-           } : undefined,
-        email: props.user.email !== undefined ? {
-            equals: props.user.email 
-           } : undefined,
-      },
-      update: {
-        name: props.user.name !== undefined ? {
-            set: props.user.name  
-           } : undefined,
-        email: props.user.email !== undefined ? {
-            set: props.user.email  
-           } : undefined,
-        emailVerified: props.user.emailVerified !== undefined ? {
-            set: props.user.emailVerified  
-           } : undefined,
-        image: props.user.image !== undefined ? {
-            set: props.user.image  
-           } : undefined,
-        role: props.user.role !== undefined ? {
-            set: props.user.role  
-           } : undefined,
-        bio: props.user.bio !== undefined ? {
-            set: props.user.bio  
-           } : undefined,
-        jobTitle: props.user.jobTitle !== undefined ? {
-            set: props.user.jobTitle  
-           } : undefined,
-        currentPortfolio: props.user.currentPortfolio !== undefined ? {
-            set: props.user.currentPortfolio  
-           } : undefined,
-        plan: props.user.plan !== undefined ? {
-            set: props.user.plan  
-           } : undefined,
-    customer: props.user.customer ? {
-      upsert: {
-        where: {
-          id: props.user.customer.id !== undefined ? {
-              equals: props.user.customer.id 
-             } : undefined,
-          name: props.user.customer.name !== undefined ? {
-              equals: props.user.customer.name 
-             } : undefined,
-        },
-        update: {
-          authUserId: props.user.customer.authUserId !== undefined ? {
-              set: props.user.customer.authUserId  
-             } : undefined,
-          name: props.user.customer.name !== undefined ? {
-              set: props.user.customer.name  
-             } : undefined,
-          plan: props.user.customer.plan !== undefined ? {
-              set: props.user.customer.plan  
-             } : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
-              set: props.user.customer.stripeCustomerId  
-             } : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
-              set: props.user.customer.stripeSubscriptionId  
-             } : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
-              set: props.user.customer.stripePriceId  
-             } : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? {
-              set: props.user.customer.stripeCurrentPeriodEnd  
-             } : undefined,
-        },
-        create: {
-          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
-          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
-          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
-        },
-      }
-    } : undefined,
-    accounts: props.user.accounts ? {
-      upsert: props.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          provider: item.provider !== undefined ? {
-              set: item.provider  
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              set: item.providerAccountId  
-             } : undefined,
-          refresh_token: item.refresh_token !== undefined ? {
-              set: item.refresh_token  
-             } : undefined,
-          access_token: item.access_token !== undefined ? {
-              set: item.access_token  
-             } : undefined,
-          expires_at: item.expires_at !== undefined ? {
-              set: item.expires_at  
-             } : undefined,
-          token_type: item.token_type !== undefined ? {
-              set: item.token_type  
-             } : undefined,
-          scope: item.scope !== undefined ? {
-              set: item.scope  
-             } : undefined,
-          id_token: item.id_token !== undefined ? {
-              set: item.id_token  
-             } : undefined,
-          session_state: item.session_state !== undefined ? {
-              set: item.session_state  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: props.user.sessions ? {
-      upsert: props.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          sessionToken: item.sessionToken !== undefined ? {
-              set: item.sessionToken  
-             } : undefined,
-          expires: item.expires !== undefined ? {
-              set: item.expires  
-             } : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: props.user.authenticators ? {
-      upsert: props.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          credentialID: item.credentialID !== undefined ? {
-              set: item.credentialID  
-             } : undefined,
-          publicKey: item.publicKey !== undefined ? {
-              set: item.publicKey  
-             } : undefined,
-          counter: item.counter !== undefined ? {
-              set: item.counter  
-             } : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.user.holdings ? {
-      upsert: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    trades: props.user.trades ? {
-      upsert: props.user.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          total: item.total !== undefined ? {
-              set: item.total  
-             } : undefined,
-          timestamp: item.timestamp !== undefined ? {
-              set: item.timestamp  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      upsert: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: props.user.riskAllocations ? {
-      upsert: props.user.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      upsert: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    portfolios: props.user.portfolios ? {
-      upsert: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.user.performanceMetrics ? {
-      upsert: props.user.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        name: props.user.name !== undefined ? props.user.name : undefined,
-        email: props.user.email !== undefined ? props.user.email : undefined,
-        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
-        image: props.user.image !== undefined ? props.user.image : undefined,
-        role: props.user.role !== undefined ? props.user.role : undefined,
-        bio: props.user.bio !== undefined ? props.user.bio : undefined,
-        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
-        plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    customer: props.user.customer ? {
-      connectOrCreate: {
-        where: {
-          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
-          name: props.user.customer.name !== undefined ? {
-              equals: props.user.customer.name 
-             } : undefined,
-        },
-        create: {
-          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
-          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
-          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
-        },
-      }
-    } : undefined,
-    accounts: props.user.accounts ? {
-      connectOrCreate: props.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: props.user.sessions ? {
-      connectOrCreate: props.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: props.user.authenticators ? {
-      connectOrCreate: props.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.user.holdings ? {
-      connectOrCreate: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    trades: props.user.trades ? {
-      connectOrCreate: props.user.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      connectOrCreate: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: props.user.riskAllocations ? {
-      connectOrCreate: props.user.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.user.performanceMetrics ? {
-      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
   portfolio: props.portfolio ? {
     upsert: {
       where: {
@@ -1681,6 +962,25 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      upsert: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
     riskAllocations: props.portfolio.riskAllocations ? {
       upsert: props.portfolio.riskAllocations.map((item: any) => ({
         where: {
@@ -1739,21 +1039,6 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      upsert: props.portfolio.portfolioAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -1834,6 +1119,17 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
+    aiRecommendations: props.portfolio.aiRecommendations ? {
+      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
     riskAllocations: props.portfolio.riskAllocations ? {
       connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
         where: {
@@ -1865,16 +1161,6 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -2001,6 +1287,25 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
+    aiRecommendations: props.asset.aiRecommendations ? {
+      upsert: props.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
     news: props.asset.news ? {
       upsert: props.asset.news.map((item: any) => ({
         where: {
@@ -2036,21 +1341,6 @@ export const AIRecommendation = {
           url: item.url !== undefined ? item.url : undefined,
           sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
           publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -2100,6 +1390,17 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
     news: props.asset.news ? {
       connectOrCreate: props.asset.news.map((item: any) => ({
         where: {
@@ -2118,16 +1419,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
@@ -2137,129 +1428,71 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAIRecommendation: AIRecommendationType }>({ mutation: UPDATE_ONE_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.mutate<{ updateOnePortfolioAllocation: PortfolioAllocationType }>({ mutation: UPDATE_ONE_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneAIRecommendation) {
-        return response.data.updateOneAIRecommendation;
+      if (response && response.data && response.data.updateOnePortfolioAllocation) {
+        return response.data.updateOnePortfolioAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneAIRecommendation:', error);
+      console.error('Error in updateOnePortfolioAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single AIRecommendation record.
+   * Delete a single PortfolioAllocation record.
    * @param id - Unique identifier of the record to delete.
    * @param client - Apollo Client instance.
-   * @returns The deleted AIRecommendation or null.
+   * @returns The deleted PortfolioAllocation or null.
    */
-  async delete(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
-    const DELETE_ONE_AIRECOMMENDATION = gql`
-      mutation deleteOneAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
-        deleteOneAIRecommendation(where: $where) {
+  async delete(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType> {
+    const DELETE_ONE_PORTFOLIOALLOCATION = gql`
+      mutation deleteOnePortfolioAllocation($where: PortfolioAllocationWhereUniqueInput!) {
+        deleteOnePortfolioAllocation(where: $where) {
           id
-          userId
           portfolioId
           assetId
-          action
-          confidence
+          allocation
           createdAt
           updatedAt
-          user {
+          portfolio {
             id
             name
-            email
-            emailVerified
-            image
+            description
             createdAt
             updatedAt
-            role
-            bio
-            jobTitle
-            currentPortfolio
-            customer {
-              id
-              authUserId
-              name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            holdings {
+            portfolioUsers {
               id
               userId
               portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
               user {
                 id
-              }
-              portfolio {
-                id
                 name
-                description
+                email
+                emailVerified
+                image
                 createdAt
                 updatedAt
-                portfolioUsers {
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
                   id
                 }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
                 holdings {
                   id
                 }
@@ -2278,15 +1511,34 @@ export const AIRecommendation = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
               }
               asset {
                 id
@@ -2385,6 +1637,22 @@ export const AIRecommendation = {
             }
             aiRecommendations {
               id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             riskAllocations {
               id
@@ -2417,20 +1685,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -2446,9 +1700,21 @@ export const AIRecommendation = {
                 id
               }
             }
-          }
-          portfolio {
-            id
+            portfolioAllocations {
+              id
+            }
+            environmentVariables {
+              id
+              key
+              value
+              description
+              portfolioId
+              portfolio {
+                id
+              }
+              createdAt
+              updatedAt
+            }
           }
           asset {
             id
@@ -2463,129 +1729,71 @@ export const AIRecommendation = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAIRecommendation: AIRecommendationType }>({ mutation: DELETE_ONE_AIRECOMMENDATION, variables });
+      const response = await client.mutate<{ deleteOnePortfolioAllocation: PortfolioAllocationType }>({ mutation: DELETE_ONE_PORTFOLIOALLOCATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneAIRecommendation) {
-        return response.data.deleteOneAIRecommendation;
+      if (response && response.data && response.data.deleteOnePortfolioAllocation) {
+        return response.data.deleteOnePortfolioAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneAIRecommendation:', error);
+      console.error('Error in deleteOnePortfolioAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single AIRecommendation record by ID.
+   * Retrieve a single PortfolioAllocation record by ID.
    * @param id - Unique identifier of the record.
    * @param client - Apollo Client instance.
-   * @returns The retrieved AIRecommendation or null.
+   * @returns The retrieved PortfolioAllocation or null.
    */
-  async get(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
-    const GET_ONE_AIRECOMMENDATION = gql`
-      query getOneAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
-        AIRecommendation(where: $where) {
+  async get(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType> {
+    const GET_ONE_PORTFOLIOALLOCATION = gql`
+      query getOnePortfolioAllocation($where: PortfolioAllocationWhereUniqueInput!) {
+        PortfolioAllocation(where: $where) {
           id
-          userId
           portfolioId
           assetId
-          action
-          confidence
+          allocation
           createdAt
           updatedAt
-          user {
+          portfolio {
             id
             name
-            email
-            emailVerified
-            image
+            description
             createdAt
             updatedAt
-            role
-            bio
-            jobTitle
-            currentPortfolio
-            customer {
-              id
-              authUserId
-              name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            holdings {
+            portfolioUsers {
               id
               userId
               portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
               user {
                 id
-              }
-              portfolio {
-                id
                 name
-                description
+                email
+                emailVerified
+                image
                 createdAt
                 updatedAt
-                portfolioUsers {
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
                   id
                 }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
                 holdings {
                   id
                 }
@@ -2604,15 +1812,34 @@ export const AIRecommendation = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
               }
               asset {
                 id
@@ -2711,6 +1938,22 @@ export const AIRecommendation = {
             }
             aiRecommendations {
               id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             riskAllocations {
               id
@@ -2743,20 +1986,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -2772,9 +2001,21 @@ export const AIRecommendation = {
                 id
               }
             }
-          }
-          portfolio {
-            id
+            portfolioAllocations {
+              id
+            }
+            environmentVariables {
+              id
+              key
+              value
+              description
+              portfolioId
+              portfolio {
+                id
+              }
+              createdAt
+              updatedAt
+            }
           }
           asset {
             id
@@ -2787,124 +2028,66 @@ export const AIRecommendation = {
       },
   };
     try {
-      const response = await client.query<{ AIRecommendation: AIRecommendationType }>({ query: GET_ONE_AIRECOMMENDATION, variables });
+      const response = await client.query<{ PortfolioAllocation: PortfolioAllocationType }>({ query: GET_ONE_PORTFOLIOALLOCATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.AIRecommendation ?? null;
+      return response.data?.PortfolioAllocation ?? null;
     } catch (error) {
-      console.error('Error in getOneAIRecommendation:', error);
+      console.error('Error in getOnePortfolioAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve all AIRecommendations records.
+   * Retrieve all PortfolioAllocations records.
    * @param client - Apollo Client instance.
-   * @returns An array of AIRecommendation records or null.
+   * @returns An array of PortfolioAllocation records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType[] | null> {
-    const GET_ALL_AIRECOMMENDATION = gql`
-      query getAllAIRecommendation {
-        AIRecommendations {
+  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType[] | null> {
+    const GET_ALL_PORTFOLIOALLOCATION = gql`
+      query getAllPortfolioAllocation {
+        PortfolioAllocations {
           id
-          userId
           portfolioId
           assetId
-          action
-          confidence
+          allocation
           createdAt
           updatedAt
-          user {
+          portfolio {
             id
             name
-            email
-            emailVerified
-            image
+            description
             createdAt
             updatedAt
-            role
-            bio
-            jobTitle
-            currentPortfolio
-            customer {
-              id
-              authUserId
-              name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            holdings {
+            portfolioUsers {
               id
               userId
               portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
               user {
                 id
-              }
-              portfolio {
-                id
                 name
-                description
+                email
+                emailVerified
+                image
                 createdAt
                 updatedAt
-                portfolioUsers {
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
                   id
                 }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
                 holdings {
                   id
                 }
@@ -2923,15 +2106,34 @@ export const AIRecommendation = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
               }
               asset {
                 id
@@ -3030,6 +2232,22 @@ export const AIRecommendation = {
             }
             aiRecommendations {
               id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             riskAllocations {
               id
@@ -3062,20 +2280,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -3091,9 +2295,21 @@ export const AIRecommendation = {
                 id
               }
             }
-          }
-          portfolio {
-            id
+            portfolioAllocations {
+              id
+            }
+            environmentVariables {
+              id
+              key
+              value
+              description
+              portfolioId
+              portfolio {
+                id
+              }
+              createdAt
+              updatedAt
+            }
           }
           asset {
             id
@@ -3102,125 +2318,67 @@ export const AIRecommendation = {
       }`;
 
     try {
-      const response = await client.query<{ AIRecommendations: AIRecommendationType[] }>({ query: GET_ALL_AIRECOMMENDATION });
+      const response = await client.query<{ PortfolioAllocations: PortfolioAllocationType[] }>({ query: GET_ALL_PORTFOLIOALLOCATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.AIRecommendations ?? null;
+      return response.data?.PortfolioAllocations ?? null;
     } catch (error) {
-      console.error('Error in getAllAIRecommendation:', error);
+      console.error('Error in getAllPortfolioAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Find multiple AIRecommendation records based on conditions.
+   * Find multiple PortfolioAllocation records based on conditions.
    * @param where - Conditions to find records.
    * @param client - Apollo Client instance.
-   * @returns An array of found AIRecommendation records or null.
+   * @returns An array of found PortfolioAllocation records or null.
    */
-  async findMany(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType[]> {
-    const FIND_MANY_AIRECOMMENDATION = gql`
-      query findManyAIRecommendation($where: AIRecommendationWhereInput!) {
-        AIRecommendations(where: $where) {
+  async findMany(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType[]> {
+    const FIND_MANY_PORTFOLIOALLOCATION = gql`
+      query findManyPortfolioAllocation($where: PortfolioAllocationWhereInput!) {
+        PortfolioAllocations(where: $where) {
           id
-          userId
           portfolioId
           assetId
-          action
-          confidence
+          allocation
           createdAt
           updatedAt
-          user {
+          portfolio {
             id
             name
-            email
-            emailVerified
-            image
+            description
             createdAt
             updatedAt
-            role
-            bio
-            jobTitle
-            currentPortfolio
-            customer {
-              id
-              authUserId
-              name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            holdings {
+            portfolioUsers {
               id
               userId
               portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
               user {
                 id
-              }
-              portfolio {
-                id
                 name
-                description
+                email
+                emailVerified
+                image
                 createdAt
                 updatedAt
-                portfolioUsers {
+                role
+                bio
+                jobTitle
+                currentPortfolio
+                customer {
                   id
                 }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
                 holdings {
                   id
                 }
@@ -3239,15 +2397,34 @@ export const AIRecommendation = {
                 alerts {
                   id
                 }
+                portfolios {
+                  id
+                }
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
+              }
+              portfolio {
+                id
+              }
+              role
+              createdAt
+              updatedAt
+            }
+            holdings {
+              id
+              userId
+              portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
               }
               asset {
                 id
@@ -3346,6 +2523,22 @@ export const AIRecommendation = {
             }
             aiRecommendations {
               id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             riskAllocations {
               id
@@ -3378,20 +2571,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -3407,9 +2586,21 @@ export const AIRecommendation = {
                 id
               }
             }
-          }
-          portfolio {
-            id
+            portfolioAllocations {
+              id
+            }
+            environmentVariables {
+              id
+              key
+              value
+              description
+              portfolioId
+              portfolio {
+                id
+              }
+              createdAt
+              updatedAt
+            }
           }
           asset {
             id
@@ -3428,15 +2619,15 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ AIRecommendations: AIRecommendationType[] }>({ query: FIND_MANY_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.query<{ PortfolioAllocations: PortfolioAllocationType[] }>({ query: FIND_MANY_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.AIRecommendations) {
-        return response.data.AIRecommendations;
+      if (response && response.data && response.data.PortfolioAllocations) {
+        return response.data.PortfolioAllocations;
       } else {
-       return [] as AIRecommendationType[];
+       return [] as PortfolioAllocationType[];
       }
     } catch (error) {
-      console.error('Error in findManyAIRecommendation:', error);
+      console.error('Error in findManyPortfolioAllocation:', error);
       throw error;
     }
   }

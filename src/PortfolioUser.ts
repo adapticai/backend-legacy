@@ -1,35 +1,27 @@
 
 
-import { Order as OrderType } from './generated/typegraphql-prisma/models/Order';
+import { PortfolioUser as PortfolioUserType } from './generated/typegraphql-prisma/models/PortfolioUser';
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the Order model.
+ * CRUD operations for the PortfolioUser model.
  */
 
-export const Order = {
+export const PortfolioUser = {
   /**
-   * Create a new Order record.
+   * Create a new PortfolioUser record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
-   * @returns The created Order or null.
+   * @returns The created PortfolioUser or null.
    */
-  async create(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
-    const CREATE_ONE_ORDER = gql`
-      mutation createOneOrder($data: OrderCreateInput!) {
-        createOneOrder(data: $data) {
+  async create(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType> {
+    const CREATE_ONE_PORTFOLIOUSER = gql`
+      mutation createOnePortfolioUser($data: PortfolioUserCreateInput!) {
+        createOnePortfolioUser(data: $data) {
           id
           userId
           portfolioId
-          assetId
-          type
-          action
-          quantity
-          price
-          status
-          createdAt
-          updatedAt
           user {
             id
             name
@@ -225,6 +217,25 @@ export const Order = {
             }
             orders {
               id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -278,17 +289,6 @@ export const Order = {
             }
             portfolios {
               id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
             }
             performanceMetrics {
               id
@@ -309,20 +309,16 @@ export const Order = {
           portfolio {
             id
           }
-          asset {
-            id
-          }
+          role
+          createdAt
+          updatedAt
         }
       }
    `;
 
     const variables = {
       data: {
-          type: props.type !== undefined ? props.type : undefined,
-  action: props.action !== undefined ? props.action : undefined,
-  quantity: props.quantity !== undefined ? props.quantity : undefined,
-  price: props.price !== undefined ? props.price : undefined,
-  status: props.status !== undefined ? props.status : undefined,
+          role: props.role !== undefined ? props.role : undefined,
   user: props.user ? {
     connectOrCreate: {
       where: {
@@ -429,6 +425,20 @@ export const Order = {
         },
       }))
     } : undefined,
+    orders: props.user.orders ? {
+      connectOrCreate: props.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
     aiRecommendations: props.user.aiRecommendations ? {
       connectOrCreate: props.user.aiRecommendations.map((item: any) => ({
         where: {
@@ -463,16 +473,6 @@ export const Order = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -498,16 +498,6 @@ export const Order = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     holdings: props.portfolio.holdings ? {
       connectOrCreate: props.portfolio.holdings.map((item: any) => ({
         where: {
@@ -530,6 +520,20 @@ export const Order = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.portfolio.orders ? {
+      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
       }))
@@ -604,87 +608,6 @@ export const Order = {
       },
     }
   } : undefined,
-  asset: props.asset ? {
-    connectOrCreate: {
-      where: {
-        id: props.asset.id !== undefined ? props.asset.id : undefined,
-        name: props.asset.name !== undefined ? {
-            equals: props.asset.name 
-           } : undefined,
-      },
-      create: {
-        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
-        name: props.asset.name !== undefined ? props.asset.name : undefined,
-        type: props.asset.type !== undefined ? props.asset.type : undefined,
-        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
-    holdings: props.asset.holdings ? {
-      connectOrCreate: props.asset.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    trades: props.asset.trades ? {
-      connectOrCreate: props.asset.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.asset.aiRecommendations ? {
-      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    news: props.asset.news ? {
-      connectOrCreate: props.asset.news.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          title: item.title !== undefined ? {
-              equals: item.title 
-             } : undefined,
-        },
-        create: {
-          title: item.title !== undefined ? item.title : undefined,
-          content: item.content !== undefined ? item.content : undefined,
-          source: item.source !== undefined ? item.source : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
 
       },
     };
@@ -692,29 +615,29 @@ export const Order = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneOrder: OrderType }>({ mutation: CREATE_ONE_ORDER, variables: filteredVariables });
+      const response = await client.mutate<{ createOnePortfolioUser: PortfolioUserType }>({ mutation: CREATE_ONE_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneOrder) {
-        return response.data.createOneOrder;
+      if (response && response.data && response.data.createOnePortfolioUser) {
+        return response.data.createOnePortfolioUser;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneOrder:', error);
+      console.error('Error in createOnePortfolioUser:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple Order records.
+   * Create multiple PortfolioUser records.
    * @param props - Array of properties for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: OrderType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
-    const CREATE_MANY_ORDER = gql`
-      mutation createManyOrder($data: [OrderCreateManyInput!]!) {
-        createManyOrder(data: $data) {
+  async createMany(props: PortfolioUserType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    const CREATE_MANY_PORTFOLIOUSER = gql`
+      mutation createManyPortfolioUser($data: [PortfolioUserCreateManyInput!]!) {
+        createManyPortfolioUser(data: $data) {
           count
         }
       }`;
@@ -723,53 +646,40 @@ export const Order = {
       data: props.map(prop => ({
   userId: prop.userId !== undefined ? prop.userId : undefined,
   portfolioId: prop.portfolioId !== undefined ? prop.portfolioId : undefined,
-  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  action: prop.action !== undefined ? prop.action : undefined,
-  quantity: prop.quantity !== undefined ? prop.quantity : undefined,
-  price: prop.price !== undefined ? prop.price : undefined,
-  status: prop.status !== undefined ? prop.status : undefined,
+  role: prop.role !== undefined ? prop.role : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyOrder: { count: number } }>({ mutation: CREATE_MANY_ORDER, variables: filteredVariables });
+      const response = await client.mutate<{ createManyPortfolioUser: { count: number } }>({ mutation: CREATE_MANY_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyOrder) {
-        return response.data.createManyOrder;
+      if (response && response.data && response.data.createManyPortfolioUser) {
+        return response.data.createManyPortfolioUser;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyOrder:', error);
+      console.error('Error in createManyPortfolioUser:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single Order record.
+   * Update a single PortfolioUser record.
    * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The updated Order or null.
+   * @returns The updated PortfolioUser or null.
    */
-  async update(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
-    const UPDATE_ONE_ORDER = gql`
-      mutation updateOneOrder($data: OrderUpdateInput!, $where: OrderWhereUniqueInput!) {
-        updateOneOrder(data: $data, where: $where) {
+  async update(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType> {
+    const UPDATE_ONE_PORTFOLIOUSER = gql`
+      mutation updateOnePortfolioUser($data: PortfolioUserUpdateInput!, $where: PortfolioUserWhereUniqueInput!) {
+        updateOnePortfolioUser(data: $data, where: $where) {
           id
           userId
           portfolioId
-          assetId
-          type
-          action
-          quantity
-          price
-          status
-          createdAt
-          updatedAt
           user {
             id
             name
@@ -965,6 +875,25 @@ export const Order = {
             }
             orders {
               id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -1018,17 +947,6 @@ export const Order = {
             }
             portfolios {
               id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
             }
             performanceMetrics {
               id
@@ -1049,9 +967,9 @@ export const Order = {
           portfolio {
             id
           }
-          asset {
-            id
-          }
+          role
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -1060,14 +978,8 @@ export const Order = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
-  type: props.type !== undefined ? {
-            set: props.type 
-           } : undefined,
-  action: props.action !== undefined ? {
-            set: props.action 
-           } : undefined,
-  status: props.status !== undefined ? {
-            set: props.status 
+  role: props.role !== undefined ? {
+            set: props.role 
            } : undefined,
   user: props.user ? {
     upsert: {
@@ -1301,6 +1213,37 @@ export const Order = {
         },
       }))
     } : undefined,
+    orders: props.user.orders ? {
+      upsert: props.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
     aiRecommendations: props.user.aiRecommendations ? {
       upsert: props.user.aiRecommendations.map((item: any) => ({
         where: {
@@ -1359,21 +1302,6 @@ export const Order = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    portfolios: props.user.portfolios ? {
-      upsert: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
         },
       }))
     } : undefined,
@@ -1494,6 +1422,20 @@ export const Order = {
         },
       }))
     } : undefined,
+    orders: props.user.orders ? {
+      connectOrCreate: props.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
     aiRecommendations: props.user.aiRecommendations ? {
       connectOrCreate: props.user.aiRecommendations.map((item: any) => ({
         where: {
@@ -1528,16 +1470,6 @@ export const Order = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -1569,21 +1501,6 @@ export const Order = {
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
            } : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      upsert: props.portfolio.portfolioUsers.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     holdings: props.portfolio.holdings ? {
       upsert: props.portfolio.holdings.map((item: any) => ({
         where: {
@@ -1634,6 +1551,37 @@ export const Order = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.portfolio.orders ? {
+      upsert: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
       }))
@@ -1760,16 +1708,6 @@ export const Order = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     holdings: props.portfolio.holdings ? {
       connectOrCreate: props.portfolio.holdings.map((item: any) => ({
         where: {
@@ -1792,6 +1730,20 @@ export const Order = {
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.portfolio.orders ? {
+      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
       }))
@@ -1866,269 +1818,38 @@ export const Order = {
       },
     }
   } : undefined,
-  asset: props.asset ? {
-    upsert: {
-      where: {
-        id: props.asset.id !== undefined ? {
-            equals: props.asset.id 
-           } : undefined,
-        name: props.asset.name !== undefined ? {
-            equals: props.asset.name 
-           } : undefined,
-      },
-      update: {
-        symbol: props.asset.symbol !== undefined ? {
-            set: props.asset.symbol  
-           } : undefined,
-        name: props.asset.name !== undefined ? {
-            set: props.asset.name  
-           } : undefined,
-        type: props.asset.type !== undefined ? {
-            set: props.asset.type  
-           } : undefined,
-        logoUrl: props.asset.logoUrl !== undefined ? {
-            set: props.asset.logoUrl  
-           } : undefined,
-    holdings: props.asset.holdings ? {
-      upsert: props.asset.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    trades: props.asset.trades ? {
-      upsert: props.asset.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          total: item.total !== undefined ? {
-              set: item.total  
-             } : undefined,
-          timestamp: item.timestamp !== undefined ? {
-              set: item.timestamp  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.asset.aiRecommendations ? {
-      upsert: props.asset.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    news: props.asset.news ? {
-      upsert: props.asset.news.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          title: item.title !== undefined ? {
-              equals: item.title 
-             } : undefined,
-        },
-        update: {
-          title: item.title !== undefined ? {
-              set: item.title  
-             } : undefined,
-          content: item.content !== undefined ? {
-              set: item.content  
-             } : undefined,
-          source: item.source !== undefined ? {
-              set: item.source  
-             } : undefined,
-          url: item.url !== undefined ? {
-              set: item.url  
-             } : undefined,
-          sentiment: item.sentiment !== undefined ? {
-              set: item.sentiment  
-             } : undefined,
-          publishedAt: item.publishedAt !== undefined ? {
-              set: item.publishedAt  
-             } : undefined,
-        },
-        create: {
-          title: item.title !== undefined ? item.title : undefined,
-          content: item.content !== undefined ? item.content : undefined,
-          source: item.source !== undefined ? item.source : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
-        name: props.asset.name !== undefined ? props.asset.name : undefined,
-        type: props.asset.type !== undefined ? props.asset.type : undefined,
-        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
-    holdings: props.asset.holdings ? {
-      connectOrCreate: props.asset.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    trades: props.asset.trades ? {
-      connectOrCreate: props.asset.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.asset.aiRecommendations ? {
-      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    news: props.asset.news ? {
-      connectOrCreate: props.asset.news.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          title: item.title !== undefined ? {
-              equals: item.title 
-             } : undefined,
-        },
-        create: {
-          title: item.title !== undefined ? item.title : undefined,
-          content: item.content !== undefined ? item.content : undefined,
-          source: item.source !== undefined ? item.source : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
       },
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneOrder: OrderType }>({ mutation: UPDATE_ONE_ORDER, variables: filteredVariables });
+      const response = await client.mutate<{ updateOnePortfolioUser: PortfolioUserType }>({ mutation: UPDATE_ONE_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneOrder) {
-        return response.data.updateOneOrder;
+      if (response && response.data && response.data.updateOnePortfolioUser) {
+        return response.data.updateOnePortfolioUser;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneOrder:', error);
+      console.error('Error in updateOnePortfolioUser:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single Order record.
+   * Delete a single PortfolioUser record.
    * @param id - Unique identifier of the record to delete.
    * @param client - Apollo Client instance.
-   * @returns The deleted Order or null.
+   * @returns The deleted PortfolioUser or null.
    */
-  async delete(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
-    const DELETE_ONE_ORDER = gql`
-      mutation deleteOneOrder($where: OrderWhereUniqueInput!) {
-        deleteOneOrder(where: $where) {
+  async delete(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType> {
+    const DELETE_ONE_PORTFOLIOUSER = gql`
+      mutation deleteOnePortfolioUser($where: PortfolioUserWhereUniqueInput!) {
+        deleteOnePortfolioUser(where: $where) {
           id
           userId
           portfolioId
-          assetId
-          type
-          action
-          quantity
-          price
-          status
-          createdAt
-          updatedAt
           user {
             id
             name
@@ -2324,6 +2045,25 @@ export const Order = {
             }
             orders {
               id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -2377,17 +2117,6 @@ export const Order = {
             }
             portfolios {
               id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
             }
             performanceMetrics {
               id
@@ -2408,9 +2137,9 @@ export const Order = {
           portfolio {
             id
           }
-          asset {
-            id
-          }
+          role
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -2421,40 +2150,32 @@ export const Order = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneOrder: OrderType }>({ mutation: DELETE_ONE_ORDER, variables });
+      const response = await client.mutate<{ deleteOnePortfolioUser: PortfolioUserType }>({ mutation: DELETE_ONE_PORTFOLIOUSER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneOrder) {
-        return response.data.deleteOneOrder;
+      if (response && response.data && response.data.deleteOnePortfolioUser) {
+        return response.data.deleteOnePortfolioUser;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneOrder:', error);
+      console.error('Error in deleteOnePortfolioUser:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single Order record by ID.
+   * Retrieve a single PortfolioUser record by ID.
    * @param id - Unique identifier of the record.
    * @param client - Apollo Client instance.
-   * @returns The retrieved Order or null.
+   * @returns The retrieved PortfolioUser or null.
    */
-  async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
-    const GET_ONE_ORDER = gql`
-      query getOneOrder($where: OrderWhereUniqueInput!) {
-        Order(where: $where) {
+  async get(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType> {
+    const GET_ONE_PORTFOLIOUSER = gql`
+      query getOnePortfolioUser($where: PortfolioUserWhereUniqueInput!) {
+        PortfolioUser(where: $where) {
           id
           userId
           portfolioId
-          assetId
-          type
-          action
-          quantity
-          price
-          status
-          createdAt
-          updatedAt
           user {
             id
             name
@@ -2650,6 +2371,25 @@ export const Order = {
             }
             orders {
               id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -2703,17 +2443,6 @@ export const Order = {
             }
             portfolios {
               id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
             }
             performanceMetrics {
               id
@@ -2734,9 +2463,9 @@ export const Order = {
           portfolio {
             id
           }
-          asset {
-            id
-          }
+          role
+          createdAt
+          updatedAt
         }
       }`;
 
@@ -2745,35 +2474,27 @@ export const Order = {
       },
   };
     try {
-      const response = await client.query<{ Order: OrderType }>({ query: GET_ONE_ORDER, variables });
+      const response = await client.query<{ PortfolioUser: PortfolioUserType }>({ query: GET_ONE_PORTFOLIOUSER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Order ?? null;
+      return response.data?.PortfolioUser ?? null;
     } catch (error) {
-      console.error('Error in getOneOrder:', error);
+      console.error('Error in getOnePortfolioUser:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve all Orders records.
+   * Retrieve all PortfolioUsers records.
    * @param client - Apollo Client instance.
-   * @returns An array of Order records or null.
+   * @returns An array of PortfolioUser records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<OrderType[] | null> {
-    const GET_ALL_ORDER = gql`
-      query getAllOrder {
-        Orders {
+  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType[] | null> {
+    const GET_ALL_PORTFOLIOUSER = gql`
+      query getAllPortfolioUser {
+        PortfolioUsers {
           id
           userId
           portfolioId
-          assetId
-          type
-          action
-          quantity
-          price
-          status
-          createdAt
-          updatedAt
           user {
             id
             name
@@ -2969,6 +2690,25 @@ export const Order = {
             }
             orders {
               id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -3022,17 +2762,6 @@ export const Order = {
             }
             portfolios {
               id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
             }
             performanceMetrics {
               id
@@ -3053,43 +2782,35 @@ export const Order = {
           portfolio {
             id
           }
-          asset {
-            id
-          }
+          role
+          createdAt
+          updatedAt
       }
       }`;
 
     try {
-      const response = await client.query<{ Orders: OrderType[] }>({ query: GET_ALL_ORDER });
+      const response = await client.query<{ PortfolioUsers: PortfolioUserType[] }>({ query: GET_ALL_PORTFOLIOUSER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Orders ?? null;
+      return response.data?.PortfolioUsers ?? null;
     } catch (error) {
-      console.error('Error in getAllOrder:', error);
+      console.error('Error in getAllPortfolioUser:', error);
       throw error;
     }
   },
 
   /**
-   * Find multiple Order records based on conditions.
+   * Find multiple PortfolioUser records based on conditions.
    * @param where - Conditions to find records.
    * @param client - Apollo Client instance.
-   * @returns An array of found Order records or null.
+   * @returns An array of found PortfolioUser records or null.
    */
-  async findMany(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType[]> {
-    const FIND_MANY_ORDER = gql`
-      query findManyOrder($where: OrderWhereInput!) {
-        Orders(where: $where) {
+  async findMany(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType[]> {
+    const FIND_MANY_PORTFOLIOUSER = gql`
+      query findManyPortfolioUser($where: PortfolioUserWhereInput!) {
+        PortfolioUsers(where: $where) {
           id
           userId
           portfolioId
-          assetId
-          type
-          action
-          quantity
-          price
-          status
-          createdAt
-          updatedAt
           user {
             id
             name
@@ -3285,6 +3006,25 @@ export const Order = {
             }
             orders {
               id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -3338,17 +3078,6 @@ export const Order = {
             }
             portfolios {
               id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
             }
             performanceMetrics {
               id
@@ -3369,9 +3098,9 @@ export const Order = {
           portfolio {
             id
           }
-          asset {
-            id
-          }
+          role
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -3386,15 +3115,15 @@ export const Order = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Orders: OrderType[] }>({ query: FIND_MANY_ORDER, variables: filteredVariables });
+      const response = await client.query<{ PortfolioUsers: PortfolioUserType[] }>({ query: FIND_MANY_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Orders) {
-        return response.data.Orders;
+      if (response && response.data && response.data.PortfolioUsers) {
+        return response.data.PortfolioUsers;
       } else {
-       return [] as OrderType[];
+       return [] as PortfolioUserType[];
       }
     } catch (error) {
-      console.error('Error in findManyOrder:', error);
+      console.error('Error in findManyPortfolioUser:', error);
       throw error;
     }
   }
