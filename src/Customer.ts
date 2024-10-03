@@ -106,7 +106,7 @@ export const Customer = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -644,7 +644,7 @@ export const Customer = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -1450,7 +1450,7 @@ export const Customer = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -1776,7 +1776,7 @@ export const Customer = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2096,7 +2096,7 @@ export const Customer = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2412,7 +2412,7 @@ export const Customer = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {

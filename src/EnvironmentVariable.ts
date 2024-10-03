@@ -30,7 +30,7 @@ export const EnvironmentVariable = {
             description
             createdAt
             updatedAt
-            portfolioUsers {
+            users {
               id
               userId
               portfolioId
@@ -307,8 +307,8 @@ export const EnvironmentVariable = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+    users: props.portfolio.users ? {
+      connectOrCreate: props.portfolio.users.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -496,7 +496,7 @@ export const EnvironmentVariable = {
             description
             createdAt
             updatedAt
-            portfolioUsers {
+            users {
               id
               userId
               portfolioId
@@ -781,8 +781,8 @@ export const EnvironmentVariable = {
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
            } : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      upsert: props.portfolio.portfolioUsers.map((item: any) => ({
+    users: props.portfolio.users ? {
+      upsert: props.portfolio.users.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -980,8 +980,8 @@ export const EnvironmentVariable = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+    users: props.portfolio.users ? {
+      connectOrCreate: props.portfolio.users.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1128,7 +1128,7 @@ export const EnvironmentVariable = {
             description
             createdAt
             updatedAt
-            portfolioUsers {
+            users {
               id
               userId
               portfolioId
@@ -1429,7 +1429,7 @@ export const EnvironmentVariable = {
             description
             createdAt
             updatedAt
-            portfolioUsers {
+            users {
               id
               userId
               portfolioId
@@ -1723,7 +1723,7 @@ export const EnvironmentVariable = {
             description
             createdAt
             updatedAt
-            portfolioUsers {
+            users {
               id
               userId
               portfolioId
@@ -2014,7 +2014,7 @@ export const EnvironmentVariable = {
             description
             createdAt
             updatedAt
-            portfolioUsers {
+            users {
               id
               userId
               portfolioId

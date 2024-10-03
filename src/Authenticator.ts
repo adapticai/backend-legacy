@@ -104,7 +104,7 @@ export const Authenticator = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -642,7 +642,7 @@ export const Authenticator = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -1465,7 +1465,7 @@ export const Authenticator = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -1791,7 +1791,7 @@ export const Authenticator = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2110,7 +2110,7 @@ export const Authenticator = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2426,7 +2426,7 @@ export const Authenticator = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {

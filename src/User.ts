@@ -107,7 +107,7 @@ export const User = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
                 userId
                 portfolioId
@@ -860,7 +860,7 @@ export const User = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
                 userId
                 portfolioId
@@ -2136,7 +2136,7 @@ export const User = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
                 userId
                 portfolioId
@@ -2475,7 +2475,7 @@ export const User = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
                 userId
                 portfolioId
@@ -2809,7 +2809,7 @@ export const User = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
                 userId
                 portfolioId
@@ -3138,7 +3138,7 @@ export const User = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
                 userId
                 portfolioId

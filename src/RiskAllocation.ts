@@ -115,7 +115,7 @@ export const RiskAllocation = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -498,8 +498,8 @@ export const RiskAllocation = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+    users: props.portfolio.users ? {
+      connectOrCreate: props.portfolio.users.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -773,7 +773,7 @@ export const RiskAllocation = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -1496,8 +1496,8 @@ export const RiskAllocation = {
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
            } : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      upsert: props.portfolio.portfolioUsers.map((item: any) => ({
+    users: props.portfolio.users ? {
+      upsert: props.portfolio.users.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1699,8 +1699,8 @@ export const RiskAllocation = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    portfolioUsers: props.portfolio.portfolioUsers ? {
-      connectOrCreate: props.portfolio.portfolioUsers.map((item: any) => ({
+    users: props.portfolio.users ? {
+      connectOrCreate: props.portfolio.users.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1933,7 +1933,7 @@ export const RiskAllocation = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2259,7 +2259,7 @@ export const RiskAllocation = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2578,7 +2578,7 @@ export const RiskAllocation = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2894,7 +2894,7 @@ export const RiskAllocation = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {

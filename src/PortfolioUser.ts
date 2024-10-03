@@ -111,7 +111,7 @@ export const PortfolioUser = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -769,7 +769,7 @@ export const PortfolioUser = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -1939,7 +1939,7 @@ export const PortfolioUser = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2265,7 +2265,7 @@ export const PortfolioUser = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2584,7 +2584,7 @@ export const PortfolioUser = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {
@@ -2900,7 +2900,7 @@ export const PortfolioUser = {
                 description
                 createdAt
                 updatedAt
-                portfolioUsers {
+                users {
                   id
                 }
                 holdings {

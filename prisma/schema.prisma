@@ -192,12 +192,13 @@ model VerificationToken {
 model Portfolio {
   id          String   @id @default(uuid()) @db.Uuid
   name        String
+  slug        String   @unique
   description String?
   createdAt   DateTime @default(now()) @map(name: "created_at")
   updatedAt   DateTime @default(now()) @map(name: "updated_at")
 
   // Relations
-  portfolioUsers       PortfolioUser[]
+  users                PortfolioUser[]
   holdings             Holding[]
   trades               Trade[]
   orders               Order[]

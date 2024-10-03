@@ -24,7 +24,7 @@ export const Portfolio = {
           description
           createdAt
           updatedAt
-          portfolioUsers {
+          users {
             id
             userId
             portfolioId
@@ -333,8 +333,8 @@ export const Portfolio = {
       data: {
           name: props.name !== undefined ? props.name : undefined,
   description: props.description !== undefined ? props.description : undefined,
-  portfolioUsers: props.portfolioUsers ? {
-    connectOrCreate: props.portfolioUsers.map((item: any) => ({
+  users: props.users ? {
+    connectOrCreate: props.users.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -803,7 +803,7 @@ export const Portfolio = {
           description
           createdAt
           updatedAt
-          portfolioUsers {
+          users {
             id
             userId
             portfolioId
@@ -1118,8 +1118,8 @@ export const Portfolio = {
   description: props.description !== undefined ? {
             set: props.description 
            } : undefined,
-  portfolioUsers: props.portfolioUsers ? {
-    upsert: props.portfolioUsers.map((item: any) => ({
+  users: props.users ? {
+    upsert: props.users.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -2321,7 +2321,7 @@ export const Portfolio = {
           description
           createdAt
           updatedAt
-          portfolioUsers {
+          users {
             id
             userId
             portfolioId
@@ -2660,7 +2660,7 @@ export const Portfolio = {
           description
           createdAt
           updatedAt
-          portfolioUsers {
+          users {
             id
             userId
             portfolioId
@@ -2992,7 +2992,7 @@ export const Portfolio = {
           description
           createdAt
           updatedAt
-          portfolioUsers {
+          users {
             id
             userId
             portfolioId
@@ -3321,7 +3321,7 @@ export const Portfolio = {
           description
           createdAt
           updatedAt
-          portfolioUsers {
+          users {
             id
             userId
             portfolioId

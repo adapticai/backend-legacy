@@ -250,7 +250,7 @@ export const TradeStep = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
               }
               holdings {
@@ -745,7 +745,7 @@ export const TradeStep = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
               }
               holdings {
@@ -1322,7 +1322,7 @@ export const TradeStep = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
               }
               holdings {
@@ -1680,7 +1680,7 @@ export const TradeStep = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
               }
               holdings {
@@ -2031,7 +2031,7 @@ export const TradeStep = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
               }
               holdings {
@@ -2379,7 +2379,7 @@ export const TradeStep = {
               description
               createdAt
               updatedAt
-              portfolioUsers {
+              users {
                 id
               }
               holdings {
