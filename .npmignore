@@ -4,13 +4,6 @@
 # Include the .npmignore file itself
 !.npmignore
 
-# Include specific directories and files in dist/
-!/dist/types/
-!/dist/package.json
-!/dist/README.md
-!/dist/generated/
-!/dist/node_modules/
-
 # Explicitly exclude specific files in dist/
 dist/server.js
 dist/server.d.ts

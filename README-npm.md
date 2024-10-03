@@ -6,6 +6,12 @@
 
 The `adaptic-backend` repository is a highly scalable backend solution designed for modern web applications. It leverages the power of **Prisma** for data management, **Apollo Server** for handling GraphQL requests, and **TypeGraphQL** for building type-safe GraphQL APIs. This repository features both GraphQL and RESTful APIs, real-time subscriptions, and robust authentication mechanisms, making it an ideal choice for developers looking to create secure and efficient server-side applications.
 
+### Adaptic NPM Package
+
+The `adaptic-backend` NPM package provides a collection of executable functions for each content model within the backend. These functions are dynamically generated to handle the corresponding model object type as input, alongside the `client` from `@apollo/client`. They map these inputs (at whatever degree of completion they may be) to the relevant structure of the input types of a CRUD resolver.
+
+All these functions are unified under a global `adaptic` namespace, making them easily accessible throughout your application. Additionally, various types are available under the `adaptic.types` namespace, providing type safety and consistency when working with your data models.
+
 ## File Tree Structure
 
 ```
@@ -31,6 +37,8 @@ The `adaptic-backend` repository is a highly scalable backend solution designed 
 
 This repository offers a comprehensive backend solution for web applications, leveraging modern technologies to provide a robust and efficient server environment. Key features include:
 
+- **Dynamic Model Functions**: Automatically generated functions for each content model, simplifying CRUD operations.
+- **Unified Namespace**: All functions are accessible under a global `adaptic` namespace, with types under `adaptic.types`.
 - **GraphQL API**: Flexible and efficient data querying.
 - **Prisma Integration**: Seamless database interactions with type safety.
 - **Secure Authentication**: JSON Web Tokens (JWT) for user authentication.
@@ -47,6 +55,7 @@ Before you begin, ensure you have the following prerequisites set up:
 
 The following NPM packages are required:
 
+- `@apollo/client`
 - `@apollo/server`
 - `@prisma/client`
 - `body-parser`
@@ -124,127 +133,133 @@ Your backend server should now be up and running, ready to handle GraphQL reques
 
 ## Usage
 
+### Adaptic Namespace
+
+All the dynamically generated functions for each content model are available under the global `adaptic` namespace. You can import and use them in your application as follows:
+
+```typescript
+import { adaptic } from 'adaptic-backend';
+
+// Usage example:
+const createdItem = await adaptic.modelName.create(props, client);
+```
+
+### Types Namespace
+
+Types associated with your data models are available under the `adaptic.types` namespace. This provides type safety and consistency when working with your models.
+
+```typescript
+import { adaptic } from 'adaptic-backend';
+
+const item: adaptic.types.ModelNameType = {
+  // model properties
+};
+```
+
 ### Input Parameters
 
 The backend service accepts various input parameters depending on the GraphQL queries and mutations:
 
-- **User Authentication**
-  - `username`: String (required)
-  - `password`: String (required)
+- **Model Operations**
+  - `props`: An object representing the model's data.
+  - `client`: An instance of `ApolloClient` from `@apollo/client`.
 
-- **GraphQL Queries**
-  - `query`: String (required) - The GraphQL query string.
-  - `variables`: Object (optional) - Variables for the query.
+### Example Usage
+
+Here's how you can use the generated functions in your application:
+
+```typescript
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { adaptic } from 'adaptic-backend';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache(),
+});
+
+// Create a new item
+const newItemProps = {
+  // ...model properties
+};
+
+adaptic.modelName.create(newItemProps, client).then((createdItem) => {
+  console.log('Created Item:', createdItem);
+});
+
+// Get an item by ID
+const itemId = '12345';
+
+adaptic.modelName.get({ id: itemId }, client).then((item) => {
+  console.log('Retrieved Item:', item);
+});
+```
 
 ### Expected Output
 
-The expected output varies based on the GraphQL operation performed:
+The expected output varies based on the operation performed:
 
-- **User Authentication**
-  - On successful authentication:
-    ```json
-    {
-      "token": "JWT_TOKEN_STRING",
-      "user": {
-        "id": "USER_ID",
-        "username": "USERNAME"
-      }
-    }
-    ```
+- **Create Operation**
+  - Returns the newly created model object with all its properties.
 
-- **GraphQL Query Response**
-  - For a successful query:
-    ```json
-    {
-      "data": {
-        "user": {
-          "id": "USER_ID",
-          "username": "USERNAME",
-          "email": "USER_EMAIL"
-        }
-      }
-    }
-    ```
+- **Get Operation**
+  - Returns the requested model object based on the provided ID.
 
 ### Test Data
 
 To test the backend, use the following sample data:
 
-- **User Credentials**
-  - Username: `testuser`
-  - Password: `password123`
+- **Model Properties**
+  - For a `User` model:
+    ```typescript
+    const userProps = {
+      username: 'testuser',
+      email: 'testuser@example.com',
+      password: 'password123',
+    };
+    ```
 
-- **GraphQL Query Example**
-  ```graphql
-  query {
-    user(id: "USER_ID") {
-      id
-      username
-      email
-    }
-  }
+- **Apollo Client Instance**
+  ```typescript
+  const client = new ApolloClient({
+    uri: 'http://localhost:4000/graphql',
+    cache: new InMemoryCache(),
+  });
   ```
 
 ### Code Examples
 
-Here’s how to interact with the backend using JavaScript and the `fetch` API:
+#### Create a New User
 
-#### User Authentication
-```javascript
-const authenticateUser = async (username, password) => {
-  const response = await fetch('http://localhost:PORT/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: `
-        mutation {
-          login(username: "${username}", password: "${password}") {
-            token
-            user {
-              id
-              username
-            }
-          }
-        }
-      `,
-    }),
-  });
-  const data = await response.json();
-  return data;
+```typescript
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { adaptic } from 'adaptic-backend';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache(),
+});
+
+const userProps = {
+  username: 'testuser',
+  email: 'testuser@example.com',
+  password: 'password123',
 };
 
-// Usage
-authenticateUser('testuser', 'password123').then(console.log);
+adaptic.user.create(userProps, client).then((createdUser) => {
+  console.log('Created User:', createdUser);
+});
 ```
 
-#### GraphQL Query
-```javascript
-const fetchUserData = async (userId) => {
-  const response = await fetch('http://localhost:PORT/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: `
-        query {
-          user(id: "${userId}") {
-            id
-            username
-            email
-          }
-        }
-      `,
-    }),
-  });
-  const data = await response.json();
-  return data;
-};
+#### Retrieve a User by ID
 
-// Usage
-fetchUserData('USER_ID').then(console.log);
+```typescript
+import { adaptic } from 'adaptic-backend';
+
+const userId = 'USER_ID';
+
+adaptic.user.get({ id: userId }, client).then((user) => {
+  console.log('Retrieved User:', user);
+});
 ```
 
 ## Contributing

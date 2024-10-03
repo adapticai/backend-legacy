@@ -8,18 +8,12 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pull latest changes
-        run: git pull
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -39,6 +33,14 @@ jobs:
       - name: Build npm package
         run: npm run build:package
 
+      # # Filter dist/ files based on .npmignore
+      # - name: Filter dist files with .npmignore
+      #   run: |
+      #     echo "Filtering dist/ files based on .npmignore..."
+      #     mkdir -p ./filtered_dist
+      #     rsync -av --exclude-from=.npmignore dist/ ./filtered_dist/
+      #     mv ./filtered_dist dist
+
       - name: Install dependencies in dist folder
         working-directory: dist
         run: npm install
@@ -57,26 +59,10 @@ jobs:
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
           echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
 
-      - name: Check if package exists on npm
-        id: check_npm_package_exists
-        run: |
-          if npm view ${{ env.PACKAGE_NAME }} > /dev/null 2>&1; then
-            echo "package_exists=true" >> $GITHUB_ENV
-          else
-            echo "package_exists=false" >> $GITHUB_ENV
-          fi
-
-      - name: Get current package content from npm (if it exists)
+      - name: Get current package content from npm
         id: get_npm_package_content
-        if: env.package_exists == 'true'
         run: |
           npm view ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }} dist.tarball | xargs curl -sL | tar -tzf - > ../npm_package_files.txt
-
-      - name: Create empty npm_package_files.txt (if package does not exist)
-        if: env.package_exists == 'false'
-        run: |
-          echo "Package does not exist on npm. Creating empty npm_package_files.txt."
-          touch ../npm_package_files.txt
 
       - name: List local dist files
         id: list_dist_files
@@ -86,29 +72,30 @@ jobs:
       - name: Compare dist content with published package
         id: compare_dist
         run: |
-          comm -3 <(sort local_dist_files.txt) <(sort npm_package_files.txt) > diff.txt || true
+          comm -3 <(sort local_dist_files.txt) <(sort npm_package_files.txt) > diff.txt
           if [ -s diff.txt ]; then
             echo "Differences found."
             cat diff.txt
-            echo "diff_output=true" >> $GITHUB_ENV
+            echo "::set-output name=diff_output::true"
           else
             echo "No differences found."
-            echo "diff_output=false" >> $GITHUB_ENV
+            echo "::set-output name=diff_output::false"
           fi
 
       - name: Determine if publish is necessary
         id: should_publish
         run: |
-          if [ "${{ env.diff_output }}" == "false" ]; then
+          if [ "${{ steps.compare_dist.outputs.diff_output }}" == "false" ]; then
             echo "No changes detected. Skipping publish."
-            echo "should_publish=false" >> $GITHUB_ENV
+            echo "::set-output name=should_publish::false"
           else
-            echo "Changes detected or first-time publish. Proceeding with publish."
-            echo "should_publish=true" >> $GITHUB_ENV
+            echo "Changes detected. Proceeding with publish."
+            echo "::set-output name=should_publish::true"
           fi
 
       - name: Bump version if necessary
-        if: env.should_publish == 'true'
+        id: bump_version
+        if: steps.should_publish.outputs.should_publish == 'true'
         run: |
           echo "Checking current version..."
 
@@ -140,22 +127,18 @@ jobs:
           # Check for changes and commit if there are any
           if git diff-index --cached --quiet HEAD --; then
             echo "No changes to commit"
+            exit 0
           else
             git commit -m "ci: bump version to $NEW_VERSION"
           fi
 
-      - name: Pull latest changes
-        if: env.should_publish == 'true'
-        run: |
-          git pull --rebase origin main
-
       - name: Push changes
-        if: env.should_publish == 'true'
+        if: steps.should_publish.outputs.should_publish == 'true'
         run: |
           git push origin HEAD:main
 
       - name: Publish package
-        if: env.should_publish == 'true'
+        if: steps.should_publish.outputs.should_publish == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         working-directory: dist

@@ -4,8 +4,8 @@
     "module": "commonjs",
     "lib": ["ES2018"],
     "allowJs": true,
-    "outDir": "dist",
-    "rootDir": "src",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -17,8 +17,11 @@
     "declaration": true,
     "declarationMap": true,
     "removeComments": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "sourceMap": true
   },
   "include": ["src/**/*.ts", "src/generated/typegraphql-prisma/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "**/*.test.ts", "src/modules/**/*.ts"]
 }

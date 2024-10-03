@@ -1,9 +1,10 @@
 {
   "name": "adaptic-backend",
-  "version": "1.0.3",
+  "version": "1.0.99",
   "description": "Backend type definitions for the Adaptic AI platform.",
-  "types": "types/index.d.ts",
-  "module": "types/index.mjs",
+  "types": "index.d.ts",
+  "main": "index.js",
+  "module": "index.mjs",
   "scripts": {
     "build": "tsc --declaration --emitDeclarationOnly"
   },
@@ -20,9 +21,15 @@
     "generated/",
     "node_modules/",
     "README.md",
-    "package.json"
+    "package.json",
+    "*.d.ts",
+    "*.js",
+    "*.mjs",
+    "*.ts",
+    "*.map.js"
   ],
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "@prisma/client": "^5.17.0",
     "graphql": "^16.9.0",
     "prisma": "^5.17.0",
