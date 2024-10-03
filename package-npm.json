@@ -1,6 +1,6 @@
 {
   "name": "adaptic-backend",
-  "version": "1.0.99",
+  "version": "1.0.3",
   "description": "Backend type definitions for the Adaptic AI platform.",
   "types": "index.d.ts",
   "main": "index.js",
