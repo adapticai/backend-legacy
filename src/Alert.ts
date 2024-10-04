@@ -113,6 +113,7 @@ export const Alert = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const Alert = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -613,7 +616,7 @@ export const Alert = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAlert: AlertType }>({ mutation: CREATE_ONE_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneAlert) {
         return response.data.createOneAlert;
@@ -653,7 +656,7 @@ export const Alert = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAlert: { count: number } }>({ mutation: CREATE_MANY_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyAlert) {
         return response.data.createManyAlert;
@@ -771,6 +774,7 @@ export const Alert = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1483,10 +1487,16 @@ export const Alert = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1689,6 +1699,7 @@ export const Alert = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -1804,7 +1815,7 @@ export const Alert = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAlert: AlertType }>({ mutation: UPDATE_ONE_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneAlert) {
         return response.data.updateOneAlert;
@@ -1921,6 +1932,7 @@ export const Alert = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2130,7 +2142,7 @@ export const Alert = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAlert: AlertType }>({ mutation: DELETE_ONE_ALERT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ALERT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAlert) {
         return response.data.deleteOneAlert;
@@ -2247,6 +2259,7 @@ export const Alert = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2454,7 +2467,7 @@ export const Alert = {
       },
   };
     try {
-      const response = await client.query<{ Alert: AlertType }>({ query: GET_ONE_ALERT, variables });
+      const response = await client.query({ query: GET_ONE_ALERT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Alert ?? null;
     } catch (error) {
@@ -2566,6 +2579,7 @@ export const Alert = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2769,7 +2783,7 @@ export const Alert = {
       }`;
 
     try {
-      const response = await client.query<{ Alerts: AlertType[] }>({ query: GET_ALL_ALERT });
+      const response = await client.query({ query: GET_ALL_ALERT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Alerts ?? null;
     } catch (error) {
@@ -2882,6 +2896,7 @@ export const Alert = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3095,7 +3110,7 @@ export const Alert = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Alerts: AlertType[] }>({ query: FIND_MANY_ALERT, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Alerts) {
         return response.data.Alerts;

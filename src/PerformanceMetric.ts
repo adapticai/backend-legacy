@@ -112,6 +112,7 @@ export const PerformanceMetric = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const PerformanceMetric = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -614,7 +617,7 @@ export const PerformanceMetric = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOnePerformanceMetric: PerformanceMetricType }>({ mutation: CREATE_ONE_PERFORMANCEMETRIC, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_PERFORMANCEMETRIC, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOnePerformanceMetric) {
         return response.data.createOnePerformanceMetric;
@@ -653,7 +656,7 @@ export const PerformanceMetric = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyPerformanceMetric: { count: number } }>({ mutation: CREATE_MANY_PERFORMANCEMETRIC, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_PERFORMANCEMETRIC, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyPerformanceMetric) {
         return response.data.createManyPerformanceMetric;
@@ -770,6 +773,7 @@ export const PerformanceMetric = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1485,10 +1489,16 @@ export const PerformanceMetric = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1695,6 +1705,7 @@ export const PerformanceMetric = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -1811,7 +1822,7 @@ export const PerformanceMetric = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOnePerformanceMetric: PerformanceMetricType }>({ mutation: UPDATE_ONE_PERFORMANCEMETRIC, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_PERFORMANCEMETRIC, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOnePerformanceMetric) {
         return response.data.updateOnePerformanceMetric;
@@ -1927,6 +1938,7 @@ export const PerformanceMetric = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2137,7 +2149,7 @@ export const PerformanceMetric = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOnePerformanceMetric: PerformanceMetricType }>({ mutation: DELETE_ONE_PERFORMANCEMETRIC, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_PERFORMANCEMETRIC, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOnePerformanceMetric) {
         return response.data.deleteOnePerformanceMetric;
@@ -2253,6 +2265,7 @@ export const PerformanceMetric = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2461,7 +2474,7 @@ export const PerformanceMetric = {
       },
   };
     try {
-      const response = await client.query<{ PerformanceMetric: PerformanceMetricType }>({ query: GET_ONE_PERFORMANCEMETRIC, variables });
+      const response = await client.query({ query: GET_ONE_PERFORMANCEMETRIC, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.PerformanceMetric ?? null;
     } catch (error) {
@@ -2572,6 +2585,7 @@ export const PerformanceMetric = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2776,7 +2790,7 @@ export const PerformanceMetric = {
       }`;
 
     try {
-      const response = await client.query<{ PerformanceMetrics: PerformanceMetricType[] }>({ query: GET_ALL_PERFORMANCEMETRIC });
+      const response = await client.query({ query: GET_ALL_PERFORMANCEMETRIC });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.PerformanceMetrics ?? null;
     } catch (error) {
@@ -2888,6 +2902,7 @@ export const PerformanceMetric = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3102,7 +3117,7 @@ export const PerformanceMetric = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ PerformanceMetrics: PerformanceMetricType[] }>({ query: FIND_MANY_PERFORMANCEMETRIC, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_PERFORMANCEMETRIC, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.PerformanceMetrics) {
         return response.data.PerformanceMetrics;

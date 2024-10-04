@@ -103,6 +103,7 @@ export const Account = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -494,7 +495,7 @@ export const Account = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAccount: AccountType }>({ mutation: CREATE_ONE_ACCOUNT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneAccount) {
         return response.data.createOneAccount;
@@ -540,7 +541,7 @@ export const Account = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAccount: { count: number } }>({ mutation: CREATE_MANY_ACCOUNT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyAccount) {
         return response.data.createManyAccount;
@@ -648,6 +649,7 @@ export const Account = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1347,7 +1349,7 @@ export const Account = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAccount: AccountType }>({ mutation: UPDATE_ONE_ACCOUNT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneAccount) {
         return response.data.updateOneAccount;
@@ -1454,6 +1456,7 @@ export const Account = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1673,7 +1676,7 @@ export const Account = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAccount: AccountType }>({ mutation: DELETE_ONE_ACCOUNT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ACCOUNT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAccount) {
         return response.data.deleteOneAccount;
@@ -1780,6 +1783,7 @@ export const Account = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1997,7 +2001,7 @@ export const Account = {
       },
   };
     try {
-      const response = await client.query<{ Account: AccountType }>({ query: GET_ONE_ACCOUNT, variables });
+      const response = await client.query({ query: GET_ONE_ACCOUNT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Account ?? null;
     } catch (error) {
@@ -2099,6 +2103,7 @@ export const Account = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2312,7 +2317,7 @@ export const Account = {
       }`;
 
     try {
-      const response = await client.query<{ Accounts: AccountType[] }>({ query: GET_ALL_ACCOUNT });
+      const response = await client.query({ query: GET_ALL_ACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Accounts ?? null;
     } catch (error) {
@@ -2415,6 +2420,7 @@ export const Account = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2638,7 +2644,7 @@ export const Account = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Accounts: AccountType[] }>({ query: FIND_MANY_ACCOUNT, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Accounts) {
         return response.data.Accounts;

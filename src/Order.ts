@@ -116,6 +116,7 @@ export const Order = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const Order = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -692,7 +695,7 @@ export const Order = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneOrder: OrderType }>({ mutation: CREATE_ONE_ORDER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneOrder) {
         return response.data.createOneOrder;
@@ -735,7 +738,7 @@ export const Order = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyOrder: { count: number } }>({ mutation: CREATE_MANY_ORDER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyOrder) {
         return response.data.createManyOrder;
@@ -856,6 +859,7 @@ export const Order = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1561,10 +1565,16 @@ export const Order = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1759,6 +1769,7 @@ export const Order = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -2095,7 +2106,7 @@ export const Order = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneOrder: OrderType }>({ mutation: UPDATE_ONE_ORDER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneOrder) {
         return response.data.updateOneOrder;
@@ -2215,6 +2226,7 @@ export const Order = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2421,7 +2433,7 @@ export const Order = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneOrder: OrderType }>({ mutation: DELETE_ONE_ORDER, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ORDER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneOrder) {
         return response.data.deleteOneOrder;
@@ -2541,6 +2553,7 @@ export const Order = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2745,7 +2758,7 @@ export const Order = {
       },
   };
     try {
-      const response = await client.query<{ Order: OrderType }>({ query: GET_ONE_ORDER, variables });
+      const response = await client.query({ query: GET_ONE_ORDER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Order ?? null;
     } catch (error) {
@@ -2860,6 +2873,7 @@ export const Order = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3060,7 +3074,7 @@ export const Order = {
       }`;
 
     try {
-      const response = await client.query<{ Orders: OrderType[] }>({ query: GET_ALL_ORDER });
+      const response = await client.query({ query: GET_ALL_ORDER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Orders ?? null;
     } catch (error) {
@@ -3176,6 +3190,7 @@ export const Order = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3386,7 +3401,7 @@ export const Order = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Orders: OrderType[] }>({ query: FIND_MANY_ORDER, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Orders) {
         return response.data.Orders;

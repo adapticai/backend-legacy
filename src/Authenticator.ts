@@ -101,6 +101,7 @@ export const Authenticator = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -494,7 +495,7 @@ export const Authenticator = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAuthenticator: AuthenticatorType }>({ mutation: CREATE_ONE_AUTHENTICATOR, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_AUTHENTICATOR, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneAuthenticator) {
         return response.data.createOneAuthenticator;
@@ -533,7 +534,7 @@ export const Authenticator = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAuthenticator: { count: number } }>({ mutation: CREATE_MANY_AUTHENTICATOR, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_AUTHENTICATOR, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyAuthenticator) {
         return response.data.createManyAuthenticator;
@@ -639,6 +640,7 @@ export const Authenticator = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1357,7 +1359,7 @@ export const Authenticator = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAuthenticator: AuthenticatorType }>({ mutation: UPDATE_ONE_AUTHENTICATOR, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_AUTHENTICATOR, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneAuthenticator) {
         return response.data.updateOneAuthenticator;
@@ -1462,6 +1464,7 @@ export const Authenticator = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1683,7 +1686,7 @@ export const Authenticator = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAuthenticator: AuthenticatorType }>({ mutation: DELETE_ONE_AUTHENTICATOR, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_AUTHENTICATOR, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAuthenticator) {
         return response.data.deleteOneAuthenticator;
@@ -1788,6 +1791,7 @@ export const Authenticator = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2007,7 +2011,7 @@ export const Authenticator = {
       },
   };
     try {
-      const response = await client.query<{ Authenticator: AuthenticatorType }>({ query: GET_ONE_AUTHENTICATOR, variables });
+      const response = await client.query({ query: GET_ONE_AUTHENTICATOR, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Authenticator ?? null;
     } catch (error) {
@@ -2107,6 +2111,7 @@ export const Authenticator = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2322,7 +2327,7 @@ export const Authenticator = {
       }`;
 
     try {
-      const response = await client.query<{ Authenticators: AuthenticatorType[] }>({ query: GET_ALL_AUTHENTICATOR });
+      const response = await client.query({ query: GET_ALL_AUTHENTICATOR });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Authenticators ?? null;
     } catch (error) {
@@ -2423,6 +2428,7 @@ export const Authenticator = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2648,7 +2654,7 @@ export const Authenticator = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Authenticators: AuthenticatorType[] }>({ query: FIND_MANY_AUTHENTICATOR, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_AUTHENTICATOR, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Authenticators) {
         return response.data.Authenticators;

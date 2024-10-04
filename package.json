@@ -13,7 +13,8 @@
   "scripts": {
     "clean": "rm -rf dist && rm -rf src/generated",
     "dev": "npm run migrate:dev  && npm run fix-imports && nodemon --exec ts-node src/server.ts",
-    "build": "npm run clean && npm run generate && npm run fix-imports && npm run generate:functions && tsc",
+    "build": "npm run clean && npm run generate && npm run fix-imports && npm run generate:functions && tsc && npm run build:esm",
+    "build:esm": "tsc --project tsconfig.esm.json",
     "build:package": "npm run build && npm run prepare-package-folder",
     "start": "npm run migrate && node dist/server.js",
     "generate": "npx prisma generate",

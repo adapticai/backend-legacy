@@ -247,6 +247,7 @@ export const TradeStep = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -403,12 +404,14 @@ export const TradeStep = {
       connectOrCreate: {
         where: {
           id: props.trade.portfolio.id !== undefined ? props.trade.portfolio.id : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
           name: props.trade.portfolio.name !== undefined ? {
               equals: props.trade.portfolio.name 
              } : undefined,
         },
         create: {
           name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
           description: props.trade.portfolio.description !== undefined ? props.trade.portfolio.description : undefined,
         },
       }
@@ -439,7 +442,7 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneTradeStep: TradeStepType }>({ mutation: CREATE_ONE_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneTradeStep) {
         return response.data.createOneTradeStep;
@@ -490,7 +493,7 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyTradeStep: { count: number } }>({ mutation: CREATE_MANY_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyTradeStep) {
         return response.data.createManyTradeStep;
@@ -742,6 +745,7 @@ export const TradeStep = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -952,10 +956,16 @@ export const TradeStep = {
           name: props.trade.portfolio.name !== undefined ? {
               equals: props.trade.portfolio.name 
              } : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? {
+              equals: props.trade.portfolio.slug 
+             } : undefined,
         },
         update: {
           name: props.trade.portfolio.name !== undefined ? {
               set: props.trade.portfolio.name  
+             } : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? {
+              set: props.trade.portfolio.slug  
              } : undefined,
           description: props.trade.portfolio.description !== undefined ? {
               set: props.trade.portfolio.description  
@@ -963,6 +973,7 @@ export const TradeStep = {
         },
         create: {
           name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
           description: props.trade.portfolio.description !== undefined ? props.trade.portfolio.description : undefined,
         },
       }
@@ -1033,12 +1044,14 @@ export const TradeStep = {
       connectOrCreate: {
         where: {
           id: props.trade.portfolio.id !== undefined ? props.trade.portfolio.id : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
           name: props.trade.portfolio.name !== undefined ? {
               equals: props.trade.portfolio.name 
              } : undefined,
         },
         create: {
           name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
+          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
           description: props.trade.portfolio.description !== undefined ? props.trade.portfolio.description : undefined,
         },
       }
@@ -1068,7 +1081,7 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneTradeStep: TradeStepType }>({ mutation: UPDATE_ONE_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneTradeStep) {
         return response.data.updateOneTradeStep;
@@ -1319,6 +1332,7 @@ export const TradeStep = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -1426,7 +1440,7 @@ export const TradeStep = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneTradeStep: TradeStepType }>({ mutation: DELETE_ONE_TRADESTEP, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_TRADESTEP, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneTradeStep) {
         return response.data.deleteOneTradeStep;
@@ -1677,6 +1691,7 @@ export const TradeStep = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -1782,7 +1797,7 @@ export const TradeStep = {
       },
   };
     try {
-      const response = await client.query<{ TradeStep: TradeStepType }>({ query: GET_ONE_TRADESTEP, variables });
+      const response = await client.query({ query: GET_ONE_TRADESTEP, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.TradeStep ?? null;
     } catch (error) {
@@ -2028,6 +2043,7 @@ export const TradeStep = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -2129,7 +2145,7 @@ export const TradeStep = {
       }`;
 
     try {
-      const response = await client.query<{ TradeSteps: TradeStepType[] }>({ query: GET_ALL_TRADESTEP });
+      const response = await client.query({ query: GET_ALL_TRADESTEP });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.TradeSteps ?? null;
     } catch (error) {
@@ -2376,6 +2392,7 @@ export const TradeStep = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -2487,7 +2504,7 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ TradeSteps: TradeStepType[] }>({ query: FIND_MANY_TRADESTEP, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.TradeSteps) {
         return response.data.TradeSteps;

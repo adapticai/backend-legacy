@@ -112,6 +112,7 @@ export const RiskAllocation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const RiskAllocation = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -614,7 +617,7 @@ export const RiskAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneRiskAllocation: RiskAllocationType }>({ mutation: CREATE_ONE_RISKALLOCATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneRiskAllocation) {
         return response.data.createOneRiskAllocation;
@@ -653,7 +656,7 @@ export const RiskAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyRiskAllocation: { count: number } }>({ mutation: CREATE_MANY_RISKALLOCATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyRiskAllocation) {
         return response.data.createManyRiskAllocation;
@@ -770,6 +773,7 @@ export const RiskAllocation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1488,10 +1492,16 @@ export const RiskAllocation = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1698,6 +1708,7 @@ export const RiskAllocation = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -1814,7 +1825,7 @@ export const RiskAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneRiskAllocation: RiskAllocationType }>({ mutation: UPDATE_ONE_RISKALLOCATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneRiskAllocation) {
         return response.data.updateOneRiskAllocation;
@@ -1930,6 +1941,7 @@ export const RiskAllocation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2140,7 +2152,7 @@ export const RiskAllocation = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneRiskAllocation: RiskAllocationType }>({ mutation: DELETE_ONE_RISKALLOCATION, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_RISKALLOCATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneRiskAllocation) {
         return response.data.deleteOneRiskAllocation;
@@ -2256,6 +2268,7 @@ export const RiskAllocation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2464,7 +2477,7 @@ export const RiskAllocation = {
       },
   };
     try {
-      const response = await client.query<{ RiskAllocation: RiskAllocationType }>({ query: GET_ONE_RISKALLOCATION, variables });
+      const response = await client.query({ query: GET_ONE_RISKALLOCATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.RiskAllocation ?? null;
     } catch (error) {
@@ -2575,6 +2588,7 @@ export const RiskAllocation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2779,7 +2793,7 @@ export const RiskAllocation = {
       }`;
 
     try {
-      const response = await client.query<{ RiskAllocations: RiskAllocationType[] }>({ query: GET_ALL_RISKALLOCATION });
+      const response = await client.query({ query: GET_ALL_RISKALLOCATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.RiskAllocations ?? null;
     } catch (error) {
@@ -2891,6 +2905,7 @@ export const RiskAllocation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3105,7 +3120,7 @@ export const RiskAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ RiskAllocations: RiskAllocationType[] }>({ query: FIND_MANY_RISKALLOCATION, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.RiskAllocations) {
         return response.data.RiskAllocations;

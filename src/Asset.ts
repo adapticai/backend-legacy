@@ -240,6 +240,7 @@ export const Asset = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -369,12 +370,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -420,12 +423,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -494,12 +499,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -541,12 +548,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -583,12 +592,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -603,7 +614,7 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAsset: AssetType }>({ mutation: CREATE_ONE_ASSET, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneAsset) {
         return response.data.createOneAsset;
@@ -642,7 +653,7 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAsset: { count: number } }>({ mutation: CREATE_MANY_ASSET, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyAsset) {
         return response.data.createManyAsset;
@@ -887,6 +898,7 @@ export const Asset = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -1065,10 +1077,16 @@ export const Asset = {
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
         },
         update: {
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
              } : undefined,
           description: item.portfolio.description !== undefined ? {
               set: item.portfolio.description  
@@ -1076,6 +1094,7 @@ export const Asset = {
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1110,12 +1129,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1211,10 +1232,16 @@ export const Asset = {
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
         },
         update: {
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
              } : undefined,
           description: item.portfolio.description !== undefined ? {
               set: item.portfolio.description  
@@ -1222,6 +1249,7 @@ export const Asset = {
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1331,12 +1359,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1453,10 +1483,16 @@ export const Asset = {
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
         },
         update: {
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
              } : undefined,
           description: item.portfolio.description !== undefined ? {
               set: item.portfolio.description  
@@ -1464,6 +1500,7 @@ export const Asset = {
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1501,12 +1538,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1590,10 +1629,16 @@ export const Asset = {
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
         },
         update: {
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
              } : undefined,
           description: item.portfolio.description !== undefined ? {
               set: item.portfolio.description  
@@ -1601,6 +1646,7 @@ export const Asset = {
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1635,12 +1681,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1704,10 +1752,16 @@ export const Asset = {
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
         },
         update: {
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
              } : undefined,
           description: item.portfolio.description !== undefined ? {
               set: item.portfolio.description  
@@ -1715,6 +1769,7 @@ export const Asset = {
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1726,12 +1781,14 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           name: item.portfolio.name !== undefined ? {
               equals: item.portfolio.name 
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
           description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
@@ -1745,7 +1802,7 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAsset: AssetType }>({ mutation: UPDATE_ONE_ASSET, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneAsset) {
         return response.data.updateOneAsset;
@@ -1989,6 +2046,7 @@ export const Asset = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -2084,7 +2142,7 @@ export const Asset = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAsset: AssetType }>({ mutation: DELETE_ONE_ASSET, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ASSET, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAsset) {
         return response.data.deleteOneAsset;
@@ -2328,6 +2386,7 @@ export const Asset = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -2421,7 +2480,7 @@ export const Asset = {
       },
   };
     try {
-      const response = await client.query<{ Asset: AssetType }>({ query: GET_ONE_ASSET, variables });
+      const response = await client.query({ query: GET_ONE_ASSET, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Asset ?? null;
     } catch (error) {
@@ -2660,6 +2719,7 @@ export const Asset = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -2749,7 +2809,7 @@ export const Asset = {
       }`;
 
     try {
-      const response = await client.query<{ Assets: AssetType[] }>({ query: GET_ALL_ASSET });
+      const response = await client.query({ query: GET_ALL_ASSET });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Assets ?? null;
     } catch (error) {
@@ -2989,6 +3049,7 @@ export const Asset = {
             portfolio {
               id
               name
+              slug
               description
               createdAt
               updatedAt
@@ -3091,7 +3152,7 @@ export const Asset = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Assets: AssetType[] }>({ query: FIND_MANY_ASSET, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Assets) {
         return response.data.Assets;

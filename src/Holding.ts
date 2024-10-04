@@ -120,6 +120,7 @@ export const Holding = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const Holding = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -698,7 +701,7 @@ export const Holding = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneHolding: HoldingType }>({ mutation: CREATE_ONE_HOLDING, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_HOLDING, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneHolding) {
         return response.data.createOneHolding;
@@ -738,7 +741,7 @@ export const Holding = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyHolding: { count: number } }>({ mutation: CREATE_MANY_HOLDING, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_HOLDING, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyHolding) {
         return response.data.createManyHolding;
@@ -863,6 +866,7 @@ export const Holding = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1570,10 +1574,16 @@ export const Holding = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1780,6 +1790,7 @@ export const Holding = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -2134,7 +2145,7 @@ export const Holding = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneHolding: HoldingType }>({ mutation: UPDATE_ONE_HOLDING, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_HOLDING, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneHolding) {
         return response.data.updateOneHolding;
@@ -2258,6 +2269,7 @@ export const Holding = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2460,7 +2472,7 @@ export const Holding = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneHolding: HoldingType }>({ mutation: DELETE_ONE_HOLDING, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_HOLDING, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneHolding) {
         return response.data.deleteOneHolding;
@@ -2584,6 +2596,7 @@ export const Holding = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2784,7 +2797,7 @@ export const Holding = {
       },
   };
     try {
-      const response = await client.query<{ Holding: HoldingType }>({ query: GET_ONE_HOLDING, variables });
+      const response = await client.query({ query: GET_ONE_HOLDING, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Holding ?? null;
     } catch (error) {
@@ -2903,6 +2916,7 @@ export const Holding = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3099,7 +3113,7 @@ export const Holding = {
       }`;
 
     try {
-      const response = await client.query<{ Holdings: HoldingType[] }>({ query: GET_ALL_HOLDING });
+      const response = await client.query({ query: GET_ALL_HOLDING });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Holdings ?? null;
     } catch (error) {
@@ -3219,6 +3233,7 @@ export const Holding = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3425,7 +3440,7 @@ export const Holding = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Holdings: HoldingType[] }>({ query: FIND_MANY_HOLDING, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_HOLDING, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Holdings) {
         return response.data.Holdings;

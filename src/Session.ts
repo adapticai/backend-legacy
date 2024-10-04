@@ -101,6 +101,7 @@ export const Session = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -494,7 +495,7 @@ export const Session = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneSession: SessionType }>({ mutation: CREATE_ONE_SESSION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneSession) {
         return response.data.createOneSession;
@@ -532,7 +533,7 @@ export const Session = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManySession: { count: number } }>({ mutation: CREATE_MANY_SESSION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManySession) {
         return response.data.createManySession;
@@ -638,6 +639,7 @@ export const Session = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1361,7 +1363,7 @@ export const Session = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneSession: SessionType }>({ mutation: UPDATE_ONE_SESSION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneSession) {
         return response.data.updateOneSession;
@@ -1466,6 +1468,7 @@ export const Session = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1687,7 +1690,7 @@ export const Session = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneSession: SessionType }>({ mutation: DELETE_ONE_SESSION, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_SESSION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneSession) {
         return response.data.deleteOneSession;
@@ -1792,6 +1795,7 @@ export const Session = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2011,7 +2015,7 @@ export const Session = {
       },
   };
     try {
-      const response = await client.query<{ Session: SessionType }>({ query: GET_ONE_SESSION, variables });
+      const response = await client.query({ query: GET_ONE_SESSION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Session ?? null;
     } catch (error) {
@@ -2111,6 +2115,7 @@ export const Session = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2326,7 +2331,7 @@ export const Session = {
       }`;
 
     try {
-      const response = await client.query<{ Sessions: SessionType[] }>({ query: GET_ALL_SESSION });
+      const response = await client.query({ query: GET_ALL_SESSION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Sessions ?? null;
     } catch (error) {
@@ -2427,6 +2432,7 @@ export const Session = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2652,7 +2658,7 @@ export const Session = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Sessions: SessionType[] }>({ query: FIND_MANY_SESSION, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Sessions) {
         return response.data.Sessions;

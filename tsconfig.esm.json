@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "outDir": "./dist/esm",
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*.ts", "src/generated/typegraphql-prisma/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "src/modules/**/*.ts",
+    "src/server.ts"
+  ]
+}

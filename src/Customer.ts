@@ -103,6 +103,7 @@ export const Customer = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,7 +492,7 @@ export const Customer = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneCustomer: CustomerType }>({ mutation: CREATE_ONE_CUSTOMER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneCustomer) {
         return response.data.createOneCustomer;
@@ -533,7 +534,7 @@ export const Customer = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyCustomer: { count: number } }>({ mutation: CREATE_MANY_CUSTOMER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyCustomer) {
         return response.data.createManyCustomer;
@@ -641,6 +642,7 @@ export const Customer = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1340,7 +1342,7 @@ export const Customer = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneCustomer: CustomerType }>({ mutation: UPDATE_ONE_CUSTOMER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneCustomer) {
         return response.data.updateOneCustomer;
@@ -1447,6 +1449,7 @@ export const Customer = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1666,7 +1669,7 @@ export const Customer = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneCustomer: CustomerType }>({ mutation: DELETE_ONE_CUSTOMER, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_CUSTOMER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneCustomer) {
         return response.data.deleteOneCustomer;
@@ -1773,6 +1776,7 @@ export const Customer = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1991,7 +1995,7 @@ export const Customer = {
       },
   };
     try {
-      const response = await client.query<{ Customer: CustomerType }>({ query: GET_ONE_CUSTOMER, variables });
+      const response = await client.query({ query: GET_ONE_CUSTOMER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Customer ?? null;
     } catch (error) {
@@ -2093,6 +2097,7 @@ export const Customer = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2306,7 +2311,7 @@ export const Customer = {
       }`;
 
     try {
-      const response = await client.query<{ Customers: CustomerType[] }>({ query: GET_ALL_CUSTOMER });
+      const response = await client.query({ query: GET_ALL_CUSTOMER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Customers ?? null;
     } catch (error) {
@@ -2409,6 +2414,7 @@ export const Customer = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2635,7 +2641,7 @@ export const Customer = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Customers: CustomerType[] }>({ query: FIND_MANY_CUSTOMER, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Customers) {
         return response.data.Customers;

@@ -113,6 +113,7 @@ export const AIRecommendation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const AIRecommendation = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -698,7 +701,7 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneAIRecommendation: AIRecommendationType }>({ mutation: CREATE_ONE_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_AIRECOMMENDATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneAIRecommendation) {
         return response.data.createOneAIRecommendation;
@@ -738,7 +741,7 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyAIRecommendation: { count: number } }>({ mutation: CREATE_MANY_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_AIRECOMMENDATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyAIRecommendation) {
         return response.data.createManyAIRecommendation;
@@ -856,6 +859,7 @@ export const AIRecommendation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1573,10 +1577,16 @@ export const AIRecommendation = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1783,6 +1793,7 @@ export const AIRecommendation = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -2137,7 +2148,7 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneAIRecommendation: AIRecommendationType }>({ mutation: UPDATE_ONE_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_AIRECOMMENDATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneAIRecommendation) {
         return response.data.updateOneAIRecommendation;
@@ -2254,6 +2265,7 @@ export const AIRecommendation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2463,7 +2475,7 @@ export const AIRecommendation = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneAIRecommendation: AIRecommendationType }>({ mutation: DELETE_ONE_AIRECOMMENDATION, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_AIRECOMMENDATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAIRecommendation) {
         return response.data.deleteOneAIRecommendation;
@@ -2580,6 +2592,7 @@ export const AIRecommendation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2787,7 +2800,7 @@ export const AIRecommendation = {
       },
   };
     try {
-      const response = await client.query<{ AIRecommendation: AIRecommendationType }>({ query: GET_ONE_AIRECOMMENDATION, variables });
+      const response = await client.query({ query: GET_ONE_AIRECOMMENDATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.AIRecommendation ?? null;
     } catch (error) {
@@ -2899,6 +2912,7 @@ export const AIRecommendation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3102,7 +3116,7 @@ export const AIRecommendation = {
       }`;
 
     try {
-      const response = await client.query<{ AIRecommendations: AIRecommendationType[] }>({ query: GET_ALL_AIRECOMMENDATION });
+      const response = await client.query({ query: GET_ALL_AIRECOMMENDATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.AIRecommendations ?? null;
     } catch (error) {
@@ -3215,6 +3229,7 @@ export const AIRecommendation = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3428,7 +3443,7 @@ export const AIRecommendation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ AIRecommendations: AIRecommendationType[] }>({ query: FIND_MANY_AIRECOMMENDATION, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_AIRECOMMENDATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.AIRecommendations) {
         return response.data.AIRecommendations;

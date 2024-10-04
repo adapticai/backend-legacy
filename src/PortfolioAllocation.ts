@@ -28,6 +28,7 @@ export const PortfolioAllocation = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -298,12 +299,14 @@ export const PortfolioAllocation = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -507,7 +510,7 @@ export const PortfolioAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOnePortfolioAllocation: PortfolioAllocationType }>({ mutation: CREATE_ONE_PORTFOLIOALLOCATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOnePortfolioAllocation) {
         return response.data.createOnePortfolioAllocation;
@@ -545,7 +548,7 @@ export const PortfolioAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyPortfolioAllocation: { count: number } }>({ mutation: CREATE_MANY_PORTFOLIOALLOCATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyPortfolioAllocation) {
         return response.data.createManyPortfolioAllocation;
@@ -578,6 +581,7 @@ export const PortfolioAllocation = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -854,10 +858,16 @@ export const PortfolioAllocation = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1068,6 +1078,7 @@ export const PortfolioAllocation = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -1428,7 +1439,7 @@ export const PortfolioAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOnePortfolioAllocation: PortfolioAllocationType }>({ mutation: UPDATE_ONE_PORTFOLIOALLOCATION, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOnePortfolioAllocation) {
         return response.data.updateOnePortfolioAllocation;
@@ -1460,6 +1471,7 @@ export const PortfolioAllocation = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -1729,7 +1741,7 @@ export const PortfolioAllocation = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOnePortfolioAllocation: PortfolioAllocationType }>({ mutation: DELETE_ONE_PORTFOLIOALLOCATION, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_PORTFOLIOALLOCATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOnePortfolioAllocation) {
         return response.data.deleteOnePortfolioAllocation;
@@ -1761,6 +1773,7 @@ export const PortfolioAllocation = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -2028,7 +2041,7 @@ export const PortfolioAllocation = {
       },
   };
     try {
-      const response = await client.query<{ PortfolioAllocation: PortfolioAllocationType }>({ query: GET_ONE_PORTFOLIOALLOCATION, variables });
+      const response = await client.query({ query: GET_ONE_PORTFOLIOALLOCATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.PortfolioAllocation ?? null;
     } catch (error) {
@@ -2055,6 +2068,7 @@ export const PortfolioAllocation = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -2318,7 +2332,7 @@ export const PortfolioAllocation = {
       }`;
 
     try {
-      const response = await client.query<{ PortfolioAllocations: PortfolioAllocationType[] }>({ query: GET_ALL_PORTFOLIOALLOCATION });
+      const response = await client.query({ query: GET_ALL_PORTFOLIOALLOCATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.PortfolioAllocations ?? null;
     } catch (error) {
@@ -2346,6 +2360,7 @@ export const PortfolioAllocation = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -2619,7 +2634,7 @@ export const PortfolioAllocation = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ PortfolioAllocations: PortfolioAllocationType[] }>({ query: FIND_MANY_PORTFOLIOALLOCATION, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_PORTFOLIOALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.PortfolioAllocations) {
         return response.data.PortfolioAllocations;

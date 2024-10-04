@@ -100,6 +100,7 @@ export const News = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -338,7 +339,7 @@ export const News = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneNews: NewsType }>({ mutation: CREATE_ONE_NEWS, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_NEWS, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneNews) {
         return response.data.createOneNews;
@@ -380,7 +381,7 @@ export const News = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyNews: { count: number } }>({ mutation: CREATE_MANY_NEWS, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_NEWS, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyNews) {
         return response.data.createManyNews;
@@ -485,6 +486,7 @@ export const News = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -865,7 +867,7 @@ export const News = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneNews: NewsType }>({ mutation: UPDATE_ONE_NEWS, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_NEWS, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneNews) {
         return response.data.updateOneNews;
@@ -969,6 +971,7 @@ export const News = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1121,7 +1124,7 @@ export const News = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneNews: NewsType }>({ mutation: DELETE_ONE_NEWS, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_NEWS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneNews) {
         return response.data.deleteOneNews;
@@ -1225,6 +1228,7 @@ export const News = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1375,7 +1379,7 @@ export const News = {
       },
   };
     try {
-      const response = await client.query<{ News: NewsType }>({ query: GET_ONE_NEWS, variables });
+      const response = await client.query({ query: GET_ONE_NEWS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.News ?? null;
     } catch (error) {
@@ -1474,6 +1478,7 @@ export const News = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1620,7 +1625,7 @@ export const News = {
       }`;
 
     try {
-      const response = await client.query<{ News: NewsType[] }>({ query: GET_ALL_NEWS });
+      const response = await client.query({ query: GET_ALL_NEWS });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.News ?? null;
     } catch (error) {
@@ -1720,6 +1725,7 @@ export const News = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1879,7 +1885,7 @@ export const News = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ News: NewsType[] }>({ query: FIND_MANY_NEWS, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_NEWS, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.News) {
         return response.data.News;

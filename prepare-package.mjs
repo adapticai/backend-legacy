@@ -1,8 +1,23 @@
 // script that copies the package.json and README.md files to the dist folder
 import fs from 'fs';
 import path from 'path';
-// import path from 'path';
 
+function getFilesRecursively(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach((file) => {
+    file = path.resolve(dir, file);
+    const stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getFilesRecursively(file));
+    } else {
+      results.push(file);
+    }
+  });
+  return results;
+}
+
+// copy the package.json and README.md files to the dist folder
 fs.copyFileSync('package-npm.json', 'dist/package.json');
 fs.copyFileSync('README-npm.md', 'dist/README.md');
 
@@ -34,28 +49,25 @@ content = content.replace(
 
 fs.writeFileSync(indexFile, content, 'utf8');
 
-// clone all .js files in dist directory (including subdirectories) to .mjs files
-const distDir = 'dist';
-const distFiles = getFilesRecursively(distDir);
-distFiles.forEach((file) => {
-  if (file.endsWith('.js')) {
-    const newFile = file.replace(/\.js$/, '.mjs');
-    fs.copyFileSync(file, newFile);
-  }
+// copy all of the files from dist/esm to dist
+const esmDir = 'dist/esm';
+let esmFiles = getFilesRecursively(esmDir);
+
+// rename .js to .mjs files in the dist/esm directory
+esmFiles.forEach((file) => {
+  if (!file.endsWith('.js')) return;
+  const newFile = file.replace('.js', '.mjs');
+  fs.renameSync(file, newFile);
 });
 
-function getFilesRecursively(dir) {
-  let results = [];
-  const list = fs.readdirSync(dir);
-  list.forEach((file) => {
-    file = path.resolve(dir, file);
-    const stat = fs.statSync(file);
-    if (stat && stat.isDirectory()) {
-      results = results.concat(getFilesRecursively(file));
-    } else {
-      results.push(file);
-    }
-  });
-  return results;
-}
+esmFiles = getFilesRecursively(esmDir);
+
+esmFiles.forEach((file) => {
+  if (!file.endsWith('.mjs')) return;
+  const newFile = file.replace('dist/esm/', 'dist/');
+  fs.copyFileSync(file, newFile);
+});
+
+// delete the dist/esm directory
+fs.rmdirSync(esmDir, { recursive: true });
 

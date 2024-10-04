@@ -117,6 +117,7 @@ export const Trade = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const Trade = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -714,7 +717,7 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneTrade: TradeType }>({ mutation: CREATE_ONE_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneTrade) {
         return response.data.createOneTrade;
@@ -758,7 +761,7 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyTrade: { count: number } }>({ mutation: CREATE_MANY_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyTrade) {
         return response.data.createManyTrade;
@@ -880,6 +883,7 @@ export const Trade = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1576,10 +1580,16 @@ export const Trade = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1770,6 +1780,7 @@ export const Trade = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -2171,7 +2182,7 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneTrade: TradeType }>({ mutation: UPDATE_ONE_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneTrade) {
         return response.data.updateOneTrade;
@@ -2292,6 +2303,7 @@ export const Trade = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2497,7 +2509,7 @@ export const Trade = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneTrade: TradeType }>({ mutation: DELETE_ONE_TRADE, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_TRADE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneTrade) {
         return response.data.deleteOneTrade;
@@ -2618,6 +2630,7 @@ export const Trade = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2821,7 +2834,7 @@ export const Trade = {
       },
   };
     try {
-      const response = await client.query<{ Trade: TradeType }>({ query: GET_ONE_TRADE, variables });
+      const response = await client.query({ query: GET_ONE_TRADE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Trade ?? null;
     } catch (error) {
@@ -2937,6 +2950,7 @@ export const Trade = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3136,7 +3150,7 @@ export const Trade = {
       }`;
 
     try {
-      const response = await client.query<{ Trades: TradeType[] }>({ query: GET_ALL_TRADE });
+      const response = await client.query({ query: GET_ALL_TRADE });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Trades ?? null;
     } catch (error) {
@@ -3253,6 +3267,7 @@ export const Trade = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3462,7 +3477,7 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Trades: TradeType[] }>({ query: FIND_MANY_TRADE, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Trades) {
         return response.data.Trades;

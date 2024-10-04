@@ -39,7 +39,7 @@ export const VerificationToken = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneVerificationToken: VerificationTokenType }>({ mutation: CREATE_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneVerificationToken) {
         return response.data.createOneVerificationToken;
@@ -77,7 +77,7 @@ export const VerificationToken = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyVerificationToken: { count: number } }>({ mutation: CREATE_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyVerificationToken) {
         return response.data.createManyVerificationToken;
@@ -119,7 +119,7 @@ export const VerificationToken = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneVerificationToken: VerificationTokenType }>({ mutation: UPDATE_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneVerificationToken) {
         return response.data.updateOneVerificationToken;
@@ -156,7 +156,7 @@ export const VerificationToken = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneVerificationToken: VerificationTokenType }>({ mutation: DELETE_ONE_VERIFICATIONTOKEN, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_VERIFICATIONTOKEN, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneVerificationToken) {
         return response.data.deleteOneVerificationToken;
@@ -191,7 +191,7 @@ export const VerificationToken = {
       },
   };
     try {
-      const response = await client.query<{ VerificationToken: VerificationTokenType }>({ query: GET_ONE_VERIFICATIONTOKEN, variables });
+      const response = await client.query({ query: GET_ONE_VERIFICATIONTOKEN, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.VerificationToken ?? null;
     } catch (error) {
@@ -217,7 +217,7 @@ export const VerificationToken = {
       }`;
 
     try {
-      const response = await client.query<{ VerificationTokens: VerificationTokenType[] }>({ query: GET_ALL_VERIFICATIONTOKEN });
+      const response = await client.query({ query: GET_ALL_VERIFICATIONTOKEN });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.VerificationTokens ?? null;
     } catch (error) {
@@ -254,7 +254,7 @@ export const VerificationToken = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ VerificationTokens: VerificationTokenType[] }>({ query: FIND_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.VerificationTokens) {
         return response.data.VerificationTokens;

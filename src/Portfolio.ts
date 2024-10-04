@@ -21,6 +21,7 @@ export const Portfolio = {
         createOnePortfolio(data: $data) {
           id
           name
+          slug
           description
           createdAt
           updatedAt
@@ -332,6 +333,7 @@ export const Portfolio = {
     const variables = {
       data: {
           name: props.name !== undefined ? props.name : undefined,
+  slug: props.slug !== undefined ? props.slug : undefined,
   description: props.description !== undefined ? props.description : undefined,
   users: props.users ? {
     connectOrCreate: props.users.map((item: any) => ({
@@ -737,7 +739,7 @@ export const Portfolio = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOnePortfolio: PortfolioType }>({ mutation: CREATE_ONE_PORTFOLIO, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOnePortfolio) {
         return response.data.createOnePortfolio;
@@ -767,6 +769,7 @@ export const Portfolio = {
     const variables = {
       data: props.map(prop => ({
   name: prop.name !== undefined ? prop.name : undefined,
+  slug: prop.slug !== undefined ? prop.slug : undefined,
   description: prop.description !== undefined ? prop.description : undefined,
       })),
     };
@@ -774,7 +777,7 @@ export const Portfolio = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyPortfolio: { count: number } }>({ mutation: CREATE_MANY_PORTFOLIO, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyPortfolio) {
         return response.data.createManyPortfolio;
@@ -800,6 +803,7 @@ export const Portfolio = {
         updateOnePortfolio(data: $data, where: $where) {
           id
           name
+          slug
           description
           createdAt
           updatedAt
@@ -1110,6 +1114,7 @@ export const Portfolio = {
     const variables = {
       where: {
               id: props.id !== undefined ? props.id : undefined,
+        slug: props.slug !== undefined ? props.slug : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
@@ -2293,7 +2298,7 @@ export const Portfolio = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOnePortfolio: PortfolioType }>({ mutation: UPDATE_ONE_PORTFOLIO, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOnePortfolio) {
         return response.data.updateOnePortfolio;
@@ -2318,6 +2323,7 @@ export const Portfolio = {
         deleteOnePortfolio(where: $where) {
           id
           name
+          slug
           description
           createdAt
           updatedAt
@@ -2632,7 +2638,7 @@ export const Portfolio = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOnePortfolio: PortfolioType }>({ mutation: DELETE_ONE_PORTFOLIO, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_PORTFOLIO, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOnePortfolio) {
         return response.data.deleteOnePortfolio;
@@ -2657,6 +2663,7 @@ export const Portfolio = {
         Portfolio(where: $where) {
           id
           name
+          slug
           description
           createdAt
           updatedAt
@@ -2969,7 +2976,7 @@ export const Portfolio = {
       },
   };
     try {
-      const response = await client.query<{ Portfolio: PortfolioType }>({ query: GET_ONE_PORTFOLIO, variables });
+      const response = await client.query({ query: GET_ONE_PORTFOLIO, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Portfolio ?? null;
     } catch (error) {
@@ -2989,6 +2996,7 @@ export const Portfolio = {
         Portfolios {
           id
           name
+          slug
           description
           createdAt
           updatedAt
@@ -3297,7 +3305,7 @@ export const Portfolio = {
       }`;
 
     try {
-      const response = await client.query<{ Portfolios: PortfolioType[] }>({ query: GET_ALL_PORTFOLIO });
+      const response = await client.query({ query: GET_ALL_PORTFOLIO });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.Portfolios ?? null;
     } catch (error) {
@@ -3318,6 +3326,7 @@ export const Portfolio = {
         Portfolios(where: $where) {
           id
           name
+          slug
           description
           createdAt
           updatedAt
@@ -3633,13 +3642,16 @@ export const Portfolio = {
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
+        slug: props.slug !== undefined ? {
+            equals: props.slug 
+           } : undefined,
       },
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ Portfolios: PortfolioType[] }>({ query: FIND_MANY_PORTFOLIO, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_PORTFOLIO, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Portfolios) {
         return response.data.Portfolios;

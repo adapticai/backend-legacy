@@ -108,6 +108,7 @@ export const PortfolioUser = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -491,12 +492,14 @@ export const PortfolioUser = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     holdings: props.portfolio.holdings ? {
       connectOrCreate: props.portfolio.holdings.map((item: any) => ({
@@ -615,7 +618,7 @@ export const PortfolioUser = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOnePortfolioUser: PortfolioUserType }>({ mutation: CREATE_ONE_PORTFOLIOUSER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOnePortfolioUser) {
         return response.data.createOnePortfolioUser;
@@ -653,7 +656,7 @@ export const PortfolioUser = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyPortfolioUser: { count: number } }>({ mutation: CREATE_MANY_PORTFOLIOUSER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyPortfolioUser) {
         return response.data.createManyPortfolioUser;
@@ -766,6 +769,7 @@ export const PortfolioUser = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -1493,10 +1497,16 @@ export const PortfolioUser = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -1707,6 +1717,7 @@ export const PortfolioUser = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     holdings: props.portfolio.holdings ? {
       connectOrCreate: props.portfolio.holdings.map((item: any) => ({
@@ -1824,7 +1835,7 @@ export const PortfolioUser = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOnePortfolioUser: PortfolioUserType }>({ mutation: UPDATE_ONE_PORTFOLIOUSER, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOnePortfolioUser) {
         return response.data.updateOnePortfolioUser;
@@ -1936,6 +1947,7 @@ export const PortfolioUser = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2150,7 +2162,7 @@ export const PortfolioUser = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOnePortfolioUser: PortfolioUserType }>({ mutation: DELETE_ONE_PORTFOLIOUSER, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_PORTFOLIOUSER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOnePortfolioUser) {
         return response.data.deleteOnePortfolioUser;
@@ -2262,6 +2274,7 @@ export const PortfolioUser = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2474,7 +2487,7 @@ export const PortfolioUser = {
       },
   };
     try {
-      const response = await client.query<{ PortfolioUser: PortfolioUserType }>({ query: GET_ONE_PORTFOLIOUSER, variables });
+      const response = await client.query({ query: GET_ONE_PORTFOLIOUSER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.PortfolioUser ?? null;
     } catch (error) {
@@ -2581,6 +2594,7 @@ export const PortfolioUser = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -2789,7 +2803,7 @@ export const PortfolioUser = {
       }`;
 
     try {
-      const response = await client.query<{ PortfolioUsers: PortfolioUserType[] }>({ query: GET_ALL_PORTFOLIOUSER });
+      const response = await client.query({ query: GET_ALL_PORTFOLIOUSER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.PortfolioUsers ?? null;
     } catch (error) {
@@ -2897,6 +2911,7 @@ export const PortfolioUser = {
               portfolio {
                 id
                 name
+                slug
                 description
                 createdAt
                 updatedAt
@@ -3115,7 +3130,7 @@ export const PortfolioUser = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ PortfolioUsers: PortfolioUserType[] }>({ query: FIND_MANY_PORTFOLIOUSER, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_PORTFOLIOUSER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.PortfolioUsers) {
         return response.data.PortfolioUsers;

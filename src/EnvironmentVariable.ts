@@ -27,6 +27,7 @@ export const EnvironmentVariable = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -300,12 +301,14 @@ export const EnvironmentVariable = {
     connectOrCreate: {
       where: {
         id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -422,7 +425,7 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneEnvironmentVariable: EnvironmentVariableType }>({ mutation: CREATE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneEnvironmentVariable) {
         return response.data.createOneEnvironmentVariable;
@@ -461,7 +464,7 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyEnvironmentVariable: { count: number } }>({ mutation: CREATE_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyEnvironmentVariable) {
         return response.data.createManyEnvironmentVariable;
@@ -493,6 +496,7 @@ export const EnvironmentVariable = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -773,10 +777,16 @@ export const EnvironmentVariable = {
         name: props.portfolio.name !== undefined ? {
             equals: props.portfolio.name 
            } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            equals: props.portfolio.slug 
+           } : undefined,
       },
       update: {
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
+           } : undefined,
+        slug: props.portfolio.slug !== undefined ? {
+            set: props.portfolio.slug  
            } : undefined,
         description: props.portfolio.description !== undefined ? {
             set: props.portfolio.description  
@@ -979,6 +989,7 @@ export const EnvironmentVariable = {
       },
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
+        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
         description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
     users: props.portfolio.users ? {
       connectOrCreate: props.portfolio.users.map((item: any) => ({
@@ -1094,7 +1105,7 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneEnvironmentVariable: EnvironmentVariableType }>({ mutation: UPDATE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneEnvironmentVariable) {
         return response.data.updateOneEnvironmentVariable;
@@ -1125,6 +1136,7 @@ export const EnvironmentVariable = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -1395,7 +1407,7 @@ export const EnvironmentVariable = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneEnvironmentVariable: EnvironmentVariableType }>({ mutation: DELETE_ONE_ENVIRONMENTVARIABLE, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ENVIRONMENTVARIABLE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneEnvironmentVariable) {
         return response.data.deleteOneEnvironmentVariable;
@@ -1426,6 +1438,7 @@ export const EnvironmentVariable = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -1694,7 +1707,7 @@ export const EnvironmentVariable = {
       },
   };
     try {
-      const response = await client.query<{ EnvironmentVariable: EnvironmentVariableType }>({ query: GET_ONE_ENVIRONMENTVARIABLE, variables });
+      const response = await client.query({ query: GET_ONE_ENVIRONMENTVARIABLE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.EnvironmentVariable ?? null;
     } catch (error) {
@@ -1720,6 +1733,7 @@ export const EnvironmentVariable = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -1984,7 +1998,7 @@ export const EnvironmentVariable = {
       }`;
 
     try {
-      const response = await client.query<{ EnvironmentVariables: EnvironmentVariableType[] }>({ query: GET_ALL_ENVIRONMENTVARIABLE });
+      const response = await client.query({ query: GET_ALL_ENVIRONMENTVARIABLE });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.EnvironmentVariables ?? null;
     } catch (error) {
@@ -2011,6 +2025,7 @@ export const EnvironmentVariable = {
           portfolio {
             id
             name
+            slug
             description
             createdAt
             updatedAt
@@ -2285,7 +2300,7 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ EnvironmentVariables: EnvironmentVariableType[] }>({ query: FIND_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.EnvironmentVariables) {
         return response.data.EnvironmentVariables;

@@ -43,7 +43,7 @@ export const EconomicEvent = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createOneEconomicEvent: EconomicEventType }>({ mutation: CREATE_ONE_ECONOMICEVENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneEconomicEvent) {
         return response.data.createOneEconomicEvent;
@@ -82,7 +82,7 @@ export const EconomicEvent = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ createManyEconomicEvent: { count: number } }>({ mutation: CREATE_MANY_ECONOMICEVENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createManyEconomicEvent) {
         return response.data.createManyEconomicEvent;
@@ -136,7 +136,7 @@ export const EconomicEvent = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate<{ updateOneEconomicEvent: EconomicEventType }>({ mutation: UPDATE_ONE_ECONOMICEVENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.updateOneEconomicEvent) {
         return response.data.updateOneEconomicEvent;
@@ -176,7 +176,7 @@ export const EconomicEvent = {
     };
 
     try {
-      const response = await client.mutate<{ deleteOneEconomicEvent: EconomicEventType }>({ mutation: DELETE_ONE_ECONOMICEVENT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ECONOMICEVENT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneEconomicEvent) {
         return response.data.deleteOneEconomicEvent;
@@ -214,7 +214,7 @@ export const EconomicEvent = {
       },
   };
     try {
-      const response = await client.query<{ EconomicEvent: EconomicEventType }>({ query: GET_ONE_ECONOMICEVENT, variables });
+      const response = await client.query({ query: GET_ONE_ECONOMICEVENT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.EconomicEvent ?? null;
     } catch (error) {
@@ -243,7 +243,7 @@ export const EconomicEvent = {
       }`;
 
     try {
-      const response = await client.query<{ EconomicEvents: EconomicEventType[] }>({ query: GET_ALL_ECONOMICEVENT });
+      const response = await client.query({ query: GET_ALL_ECONOMICEVENT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.EconomicEvents ?? null;
     } catch (error) {
@@ -286,7 +286,7 @@ export const EconomicEvent = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query<{ EconomicEvents: EconomicEventType[] }>({ query: FIND_MANY_ECONOMICEVENT, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.EconomicEvents) {
         return response.data.EconomicEvents;
