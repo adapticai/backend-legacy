@@ -47,7 +47,7 @@ export const PortfolioAllocation = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -600,7 +600,7 @@ export const PortfolioAllocation = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1490,7 +1490,7 @@ export const PortfolioAllocation = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1792,7 +1792,7 @@ export const PortfolioAllocation = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -2090,7 +2090,7 @@ export const PortfolioAllocation = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -2382,7 +2382,7 @@ export const PortfolioAllocation = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }

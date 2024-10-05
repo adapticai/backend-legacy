@@ -60,7 +60,7 @@ export const TradeStep = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -395,7 +395,7 @@ export const TradeStep = {
           role: props.trade.user.role !== undefined ? props.trade.user.role : undefined,
           bio: props.trade.user.bio !== undefined ? props.trade.user.bio : undefined,
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
-          currentPortfolio: props.trade.user.currentPortfolio !== undefined ? props.trade.user.currentPortfolio : undefined,
+          currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
         },
       }
@@ -558,7 +558,7 @@ export const TradeStep = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -927,8 +927,8 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? {
               set: props.trade.user.jobTitle  
              } : undefined,
-          currentPortfolio: props.trade.user.currentPortfolio !== undefined ? {
-              set: props.trade.user.currentPortfolio  
+          currentMode: props.trade.user.currentMode !== undefined ? {
+              set: props.trade.user.currentMode  
              } : undefined,
           plan: props.trade.user.plan !== undefined ? {
               set: props.trade.user.plan  
@@ -942,7 +942,7 @@ export const TradeStep = {
           role: props.trade.user.role !== undefined ? props.trade.user.role : undefined,
           bio: props.trade.user.bio !== undefined ? props.trade.user.bio : undefined,
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
-          currentPortfolio: props.trade.user.currentPortfolio !== undefined ? props.trade.user.currentPortfolio : undefined,
+          currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
         },
       }
@@ -1035,7 +1035,7 @@ export const TradeStep = {
           role: props.trade.user.role !== undefined ? props.trade.user.role : undefined,
           bio: props.trade.user.bio !== undefined ? props.trade.user.bio : undefined,
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
-          currentPortfolio: props.trade.user.currentPortfolio !== undefined ? props.trade.user.currentPortfolio : undefined,
+          currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
         },
       }
@@ -1145,7 +1145,7 @@ export const TradeStep = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -1504,7 +1504,7 @@ export const TradeStep = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -1859,7 +1859,7 @@ export const TradeStep = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -2208,7 +2208,7 @@ export const TradeStep = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId

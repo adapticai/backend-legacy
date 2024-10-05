@@ -34,7 +34,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
               authUserId
@@ -338,7 +338,7 @@ export const Session = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
+        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
@@ -572,7 +572,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
               authUserId
@@ -894,8 +894,8 @@ export const Session = {
         jobTitle: props.user.jobTitle !== undefined ? {
             set: props.user.jobTitle  
            } : undefined,
-        currentPortfolio: props.user.currentPortfolio !== undefined ? {
-            set: props.user.currentPortfolio  
+        currentMode: props.user.currentMode !== undefined ? {
+            set: props.user.currentMode  
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
@@ -1207,7 +1207,7 @@ export const Session = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentPortfolio: props.user.currentPortfolio !== undefined ? props.user.currentPortfolio : undefined,
+        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
@@ -1401,7 +1401,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
               authUserId
@@ -1728,7 +1728,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
               authUserId
@@ -2051,7 +2051,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
               authUserId
@@ -2368,7 +2368,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
               authUserId

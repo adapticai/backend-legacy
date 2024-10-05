@@ -46,7 +46,7 @@ export const EnvironmentVariable = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -515,7 +515,7 @@ export const EnvironmentVariable = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1155,7 +1155,7 @@ export const EnvironmentVariable = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1457,7 +1457,7 @@ export const EnvironmentVariable = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1755,7 +1755,7 @@ export const EnvironmentVariable = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -2047,7 +2047,7 @@ export const EnvironmentVariable = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }

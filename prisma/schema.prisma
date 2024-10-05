@@ -112,23 +112,23 @@ model Session {
 }
 
 model User {
-  id               String            @id @default(uuid()) @db.Uuid
-  name             String?
-  email            String?           @unique
-  emailVerified    DateTime?
-  image            String?
-  createdAt        DateTime          @default(now()) @map(name: "created_at")
-  updatedAt        DateTime          @default(now()) @map(name: "updated_at")
-  role             UserRole          @default(USER)
-  bio              String?
-  jobTitle         String?
-  currentPortfolio String?
-  customer         Customer?         @relation(fields: [customerId], references: [id])
-  customerId       Int?
-  accounts         Account[]
-  sessions         Session[]
-  authenticators   Authenticator[]
-  plan             SubscriptionPlan?
+  id             String            @id @default(uuid()) @db.Uuid
+  name           String?
+  email          String?           @unique
+  emailVerified  DateTime?
+  image          String?
+  createdAt      DateTime          @default(now()) @map(name: "created_at")
+  updatedAt      DateTime          @default(now()) @map(name: "updated_at")
+  role           UserRole          @default(USER)
+  bio            String?
+  jobTitle       String?
+  currentMode    String?           @default("paper")
+  customer       Customer?         @relation(fields: [customerId], references: [id])
+  customerId     Int?
+  accounts       Account[]
+  sessions       Session[]
+  authenticators Authenticator[]
+  plan           SubscriptionPlan?
 
   // Relations
   holdings           Holding[]

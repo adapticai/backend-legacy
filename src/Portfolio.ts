@@ -40,7 +40,7 @@ export const Portfolio = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -359,7 +359,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -392,7 +392,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -445,7 +445,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -521,7 +521,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -570,7 +570,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -619,7 +619,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -653,7 +653,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -686,7 +686,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -822,7 +822,7 @@ export const Portfolio = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -1167,8 +1167,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1182,7 +1182,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1207,7 +1207,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1262,8 +1262,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1277,7 +1277,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1335,7 +1335,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1418,8 +1418,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1433,7 +1433,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1566,7 +1566,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1670,8 +1670,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1685,7 +1685,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1746,7 +1746,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1817,8 +1817,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1832,7 +1832,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1890,7 +1890,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1961,8 +1961,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1976,7 +1976,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2002,7 +2002,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2060,8 +2060,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -2075,7 +2075,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2102,7 +2102,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2157,8 +2157,8 @@ export const Portfolio = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? {
-              set: item.user.currentPortfolio  
+          currentMode: item.user.currentMode !== undefined ? {
+              set: item.user.currentMode  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -2172,7 +2172,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2198,7 +2198,7 @@ export const Portfolio = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentPortfolio: item.user.currentPortfolio !== undefined ? item.user.currentPortfolio : undefined,
+          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2342,7 +2342,7 @@ export const Portfolio = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -2682,7 +2682,7 @@ export const Portfolio = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -3024,7 +3024,7 @@ export const Portfolio = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId
@@ -3354,7 +3354,7 @@ export const Portfolio = {
               role
               bio
               jobTitle
-              currentPortfolio
+              currentMode
               customer {
                 id
                 authUserId

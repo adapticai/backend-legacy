@@ -29,7 +29,7 @@ export const User = {
           role
           bio
           jobTitle
-          currentPortfolio
+          currentMode
           customer {
             id
             authUserId
@@ -339,7 +339,7 @@ export const User = {
   role: props.role !== undefined ? props.role : undefined,
   bio: props.bio !== undefined ? props.bio : undefined,
   jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
-  currentPortfolio: props.currentPortfolio !== undefined ? props.currentPortfolio : undefined,
+  currentMode: props.currentMode !== undefined ? props.currentMode : undefined,
   plan: props.plan !== undefined ? props.plan : undefined,
   customer: props.customer ? {
     connectOrCreate: {
@@ -756,7 +756,7 @@ export const User = {
   role: prop.role !== undefined ? prop.role : undefined,
   bio: prop.bio !== undefined ? prop.bio : undefined,
   jobTitle: prop.jobTitle !== undefined ? prop.jobTitle : undefined,
-  currentPortfolio: prop.currentPortfolio !== undefined ? prop.currentPortfolio : undefined,
+  currentMode: prop.currentMode !== undefined ? prop.currentMode : undefined,
   customerId: prop.customerId !== undefined ? prop.customerId : undefined,
   plan: prop.plan !== undefined ? prop.plan : undefined,
       })),
@@ -799,7 +799,7 @@ export const User = {
           role
           bio
           jobTitle
-          currentPortfolio
+          currentMode
           customer {
             id
             authUserId
@@ -1126,8 +1126,8 @@ export const User = {
   jobTitle: props.jobTitle !== undefined ? {
             set: props.jobTitle 
            } : undefined,
-  currentPortfolio: props.currentPortfolio !== undefined ? {
-            set: props.currentPortfolio 
+  currentMode: props.currentMode !== undefined ? {
+            set: props.currentMode 
            } : undefined,
   customer: props.customer ? {
     upsert: {
@@ -2148,7 +2148,7 @@ export const User = {
           role
           bio
           jobTitle
-          currentPortfolio
+          currentMode
           customer {
             id
             authUserId
@@ -2488,7 +2488,7 @@ export const User = {
           role
           bio
           jobTitle
-          currentPortfolio
+          currentMode
           customer {
             id
             authUserId
@@ -2830,7 +2830,7 @@ export const User = {
           role
           bio
           jobTitle
-          currentPortfolio
+          currentMode
           customer {
             id
             authUserId
@@ -3160,7 +3160,7 @@ export const User = {
           role
           bio
           jobTitle
-          currentPortfolio
+          currentMode
           customer {
             id
             authUserId

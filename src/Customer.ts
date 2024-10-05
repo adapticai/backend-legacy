@@ -40,7 +40,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
             }
@@ -343,7 +343,7 @@ export const Customer = {
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentPortfolio: item.currentPortfolio !== undefined ? item.currentPortfolio : undefined,
+        currentMode: item.currentMode !== undefined ? item.currentMode : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
     accounts: item.accounts ? {
       connectOrCreate: item.accounts.map((item: any) => ({
@@ -579,7 +579,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
             }
@@ -906,8 +906,8 @@ export const Customer = {
         jobTitle: item.jobTitle !== undefined ? {
             set: item.jobTitle  
            } : undefined,
-        currentPortfolio: item.currentPortfolio !== undefined ? {
-            set: item.currentPortfolio  
+        currentMode: item.currentMode !== undefined ? {
+            set: item.currentMode  
            } : undefined,
         plan: item.plan !== undefined ? {
             set: item.plan  
@@ -1194,7 +1194,7 @@ export const Customer = {
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentPortfolio: item.currentPortfolio !== undefined ? item.currentPortfolio : undefined,
+        currentMode: item.currentMode !== undefined ? item.currentMode : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
     accounts: item.accounts ? {
       connectOrCreate: item.accounts.map((item: any) => ({
@@ -1386,7 +1386,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
             }
@@ -1713,7 +1713,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
             }
@@ -2039,7 +2039,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
             }
@@ -2356,7 +2356,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentPortfolio
+            currentMode
             customer {
               id
             }

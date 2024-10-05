@@ -57,7 +57,7 @@ export const News = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -443,7 +443,7 @@ export const News = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -928,7 +928,7 @@ export const News = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1185,7 +1185,7 @@ export const News = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1441,7 +1441,7 @@ export const News = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
@@ -1688,7 +1688,7 @@ export const News = {
                 role
                 bio
                 jobTitle
-                currentPortfolio
+                currentMode
                 customer {
                   id
                 }
