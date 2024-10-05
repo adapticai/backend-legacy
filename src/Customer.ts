@@ -1691,7 +1691,7 @@ export const Customer = {
   async get(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType> {
     const GET_ONE_CUSTOMER = gql`
       query getOneCustomer($where: CustomerWhereUniqueInput!) {
-        Customer(where: $where) {
+        customers(where: $where) {
           id
           authUserId
           name

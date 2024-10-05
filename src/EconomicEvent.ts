@@ -198,7 +198,7 @@ export const EconomicEvent = {
   async get(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType> {
     const GET_ONE_ECONOMICEVENT = gql`
       query getOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
-        EconomicEvent(where: $where) {
+        economicEvents(where: $where) {
           id
           title
           description

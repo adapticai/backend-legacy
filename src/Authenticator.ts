@@ -1708,7 +1708,7 @@ export const Authenticator = {
   async get(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
     const GET_ONE_AUTHENTICATOR = gql`
       query getOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
-        Authenticator(where: $where) {
+        authenticators(where: $where) {
           id
           userId
           credentialID

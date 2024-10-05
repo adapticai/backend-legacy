@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import pluralize from 'pluralize'; // Accurate pluralization
 import { FieldDefinition, InputTypePaths } from './types';
-import { capitalizeFirstLetter } from './utils';
+import { capitalizeFirstLetter, lowerCaseFirstLetter } from './utils';
 import { getInputTypeDefinition, isScalarType } from './parser';
 
 type OperationType = 'create' | 'createMany' | 'update' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
@@ -856,19 +856,19 @@ ${selectionSet}      }
   async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
     const GET_ONE_${capitalModelName.toUpperCase()} = gql\`
       query getOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
-        ${modelName}(where: $where) {
+        ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
 ${selectionSet}        }
       }\`;
 
     const variables = {
       where: {
       ${constructVariablesObject(
-        'props',
-        inputTypePaths.whereUnique,
-        capitalModelName,
-        inputsPath,
-        modelsPath,
-        'where'
+    'props',
+    inputTypePaths.whereUnique,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'where'
   )}      },
 };
     try {

@@ -1712,7 +1712,7 @@ export const Session = {
   async get(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType> {
     const GET_ONE_SESSION = gql`
       query getOneSession($where: SessionWhereUniqueInput!) {
-        Session(where: $where) {
+        sessions(where: $where) {
           id
           sessionToken
           userId

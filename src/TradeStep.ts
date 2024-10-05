@@ -1462,7 +1462,7 @@ export const TradeStep = {
   async get(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
     const GET_ONE_TRADESTEP = gql`
       query getOneTradeStep($where: TradeStepWhereUniqueInput!) {
-        TradeStep(where: $where) {
+        tradeSteps(where: $where) {
           id
           tradeId
           sequence

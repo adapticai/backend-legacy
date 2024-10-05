@@ -2494,7 +2494,7 @@ export const Holding = {
   async get(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType> {
     const GET_ONE_HOLDING = gql`
       query getOneHolding($where: HoldingWhereUniqueInput!) {
-        Holding(where: $where) {
+        holdings(where: $where) {
           id
           userId
           portfolioId

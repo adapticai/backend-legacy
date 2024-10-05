@@ -1146,7 +1146,7 @@ export const News = {
   async get(props: NewsType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsType> {
     const GET_ONE_NEWS = gql`
       query getOneNews($where: NewsWhereUniqueInput!) {
-        News(where: $where) {
+        news(where: $where) {
           id
           assetId
           title

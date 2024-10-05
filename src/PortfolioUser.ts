@@ -2184,7 +2184,7 @@ export const PortfolioUser = {
   async get(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType> {
     const GET_ONE_PORTFOLIOUSER = gql`
       query getOnePortfolioUser($where: PortfolioUserWhereUniqueInput!) {
-        PortfolioUser(where: $where) {
+        portfolioUsers(where: $where) {
           id
           userId
           portfolioId

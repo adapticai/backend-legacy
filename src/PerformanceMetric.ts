@@ -2171,7 +2171,7 @@ export const PerformanceMetric = {
   async get(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType> {
     const GET_ONE_PERFORMANCEMETRIC = gql`
       query getOnePerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
-        PerformanceMetric(where: $where) {
+        performanceMetrics(where: $where) {
           id
           userId
           portfolioId

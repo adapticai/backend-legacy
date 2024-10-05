@@ -2164,7 +2164,7 @@ export const Asset = {
   async get(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
     const GET_ONE_ASSET = gql`
       query getOneAsset($where: AssetWhereUniqueInput!) {
-        Asset(where: $where) {
+        assets(where: $where) {
           id
           symbol
           name

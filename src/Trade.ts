@@ -2531,7 +2531,7 @@ export const Trade = {
   async get(props: TradeType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeType> {
     const GET_ONE_TRADE = gql`
       query getOneTrade($where: TradeWhereUniqueInput!) {
-        Trade(where: $where) {
+        trades(where: $where) {
           id
           userId
           portfolioId

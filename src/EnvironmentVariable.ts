@@ -1429,7 +1429,7 @@ export const EnvironmentVariable = {
   async get(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
     const GET_ONE_ENVIRONMENTVARIABLE = gql`
       query getOneEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
-        EnvironmentVariable(where: $where) {
+        environmentVariables(where: $where) {
           id
           key
           value

@@ -2174,7 +2174,7 @@ export const RiskAllocation = {
   async get(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType> {
     const GET_ONE_RISKALLOCATION = gql`
       query getOneRiskAllocation($where: RiskAllocationWhereUniqueInput!) {
-        RiskAllocation(where: $where) {
+        riskAllocations(where: $where) {
           id
           userId
           portfolioId

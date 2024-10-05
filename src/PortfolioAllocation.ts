@@ -1763,7 +1763,7 @@ export const PortfolioAllocation = {
   async get(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType> {
     const GET_ONE_PORTFOLIOALLOCATION = gql`
       query getOnePortfolioAllocation($where: PortfolioAllocationWhereUniqueInput!) {
-        PortfolioAllocation(where: $where) {
+        portfolioAllocations(where: $where) {
           id
           portfolioId
           assetId

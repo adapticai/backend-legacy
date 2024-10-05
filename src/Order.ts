@@ -2455,7 +2455,7 @@ export const Order = {
   async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
     const GET_ONE_ORDER = gql`
       query getOneOrder($where: OrderWhereUniqueInput!) {
-        Order(where: $where) {
+        orders(where: $where) {
           id
           userId
           portfolioId

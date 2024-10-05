@@ -2660,7 +2660,7 @@ export const Portfolio = {
   async get(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
     const GET_ONE_PORTFOLIO = gql`
       query getOnePortfolio($where: PortfolioWhereUniqueInput!) {
-        Portfolio(where: $where) {
+        portfolios(where: $where) {
           id
           name
           slug

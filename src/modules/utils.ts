@@ -8,6 +8,11 @@ export function capitalizeFirstLetter(str: string | undefined): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+// function to convert first letter to lowercase
+export function lowerCaseFirstLetter(string: string): string {
+  return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
 /**
  * Removes undefined properties from an object recursively.
  * @param obj - The object to filter.

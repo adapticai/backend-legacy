@@ -2164,7 +2164,7 @@ export const Alert = {
   async get(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType> {
     const GET_ONE_ALERT = gql`
       query getOneAlert($where: AlertWhereUniqueInput!) {
-        Alert(where: $where) {
+        alerts(where: $where) {
           id
           userId
           portfolioId

@@ -2497,7 +2497,7 @@ export const AIRecommendation = {
   async get(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
     const GET_ONE_AIRECOMMENDATION = gql`
       query getOneAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
-        AIRecommendation(where: $where) {
+        aIRecommendations(where: $where) {
           id
           userId
           portfolioId

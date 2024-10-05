@@ -178,7 +178,7 @@ export const VerificationToken = {
   async get(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
     const GET_ONE_VERIFICATIONTOKEN = gql`
       query getOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
-        VerificationToken(where: $where) {
+        verificationTokens(where: $where) {
           id
           identifier
           token
