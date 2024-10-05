@@ -25,6 +25,7 @@ enum AssetType {
   CRYPTO
   CURRENCY
   COMMODITY
+  FOREX
   ETF
 }
 
