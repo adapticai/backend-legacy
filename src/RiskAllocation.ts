@@ -2172,8 +2172,8 @@ export const RiskAllocation = {
    * @returns The retrieved RiskAllocation or null.
    */
   async get(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType> {
-    const GET_ONE_RISKALLOCATION = gql`
-      query getOneRiskAllocation($where: RiskAllocationWhereUniqueInput!) {
+    const GET_RISKALLOCATIONS = gql`
+      query getRiskAllocations($where: RiskAllocationWhereInput!) {
         riskAllocations(where: $where) {
           id
           userId
@@ -2474,15 +2474,17 @@ export const RiskAllocation = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_RISKALLOCATION, variables });
+      const response = await client.query({ query: GET_RISKALLOCATIONS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.RiskAllocation ?? null;
+      return response.data?.riskAllocations ?? null;
     } catch (error) {
-      console.error('Error in getOneRiskAllocation:', error);
+      console.error('Error in getRiskAllocations:', error);
       throw error;
     }
   },

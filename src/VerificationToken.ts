@@ -176,8 +176,8 @@ export const VerificationToken = {
    * @returns The retrieved VerificationToken or null.
    */
   async get(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
-    const GET_ONE_VERIFICATIONTOKEN = gql`
-      query getOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
+    const GET_VERIFICATIONTOKENS = gql`
+      query getVerificationTokens($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
           id
           identifier
@@ -188,15 +188,17 @@ export const VerificationToken = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_VERIFICATIONTOKEN, variables });
+      const response = await client.query({ query: GET_VERIFICATIONTOKENS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.VerificationToken ?? null;
+      return response.data?.verificationTokens ?? null;
     } catch (error) {
-      console.error('Error in getOneVerificationToken:', error);
+      console.error('Error in getVerificationTokens:', error);
       throw error;
     }
   },

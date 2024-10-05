@@ -1460,8 +1460,8 @@ export const TradeStep = {
    * @returns The retrieved TradeStep or null.
    */
   async get(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
-    const GET_ONE_TRADESTEP = gql`
-      query getOneTradeStep($where: TradeStepWhereUniqueInput!) {
+    const GET_TRADESTEPS = gql`
+      query getTradeSteps($where: TradeStepWhereInput!) {
         tradeSteps(where: $where) {
           id
           tradeId
@@ -1794,15 +1794,17 @@ export const TradeStep = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_TRADESTEP, variables });
+      const response = await client.query({ query: GET_TRADESTEPS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.TradeStep ?? null;
+      return response.data?.tradeSteps ?? null;
     } catch (error) {
-      console.error('Error in getOneTradeStep:', error);
+      console.error('Error in getTradeSteps:', error);
       throw error;
     }
   },

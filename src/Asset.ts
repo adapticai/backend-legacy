@@ -2162,8 +2162,8 @@ export const Asset = {
    * @returns The retrieved Asset or null.
    */
   async get(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
-    const GET_ONE_ASSET = gql`
-      query getOneAsset($where: AssetWhereUniqueInput!) {
+    const GET_ASSETS = gql`
+      query getAssets($where: AssetWhereInput!) {
         assets(where: $where) {
           id
           symbol
@@ -2477,18 +2477,20 @@ export const Asset = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_ASSET, variables });
+      const response = await client.query({ query: GET_ASSETS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Asset ?? null;
+      return response.data?.assets ?? null;
     } catch (error) {
-      console.error('Error in getOneAsset:', error);
+      console.error('Error in getAssets:', error);
       throw error;
     }
   },

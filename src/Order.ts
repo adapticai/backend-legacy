@@ -2453,8 +2453,8 @@ export const Order = {
    * @returns The retrieved Order or null.
    */
   async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
-    const GET_ONE_ORDER = gql`
-      query getOneOrder($where: OrderWhereUniqueInput!) {
+    const GET_ORDERS = gql`
+      query getOrders($where: OrderWhereInput!) {
         orders(where: $where) {
           id
           userId
@@ -2755,15 +2755,17 @@ export const Order = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_ORDER, variables });
+      const response = await client.query({ query: GET_ORDERS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Order ?? null;
+      return response.data?.orders ?? null;
     } catch (error) {
-      console.error('Error in getOneOrder:', error);
+      console.error('Error in getOrders:', error);
       throw error;
     }
   },

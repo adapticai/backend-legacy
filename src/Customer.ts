@@ -1689,8 +1689,8 @@ export const Customer = {
    * @returns The retrieved Customer or null.
    */
   async get(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType> {
-    const GET_ONE_CUSTOMER = gql`
-      query getOneCustomer($where: CustomerWhereUniqueInput!) {
+    const GET_CUSTOMERS = gql`
+      query getCustomers($where: CustomerWhereInput!) {
         customers(where: $where) {
           id
           authUserId
@@ -1991,18 +1991,20 @@ export const Customer = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_CUSTOMER, variables });
+      const response = await client.query({ query: GET_CUSTOMERS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Customer ?? null;
+      return response.data?.customers ?? null;
     } catch (error) {
-      console.error('Error in getOneCustomer:', error);
+      console.error('Error in getCustomers:', error);
       throw error;
     }
   },

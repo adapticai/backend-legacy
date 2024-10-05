@@ -2182,8 +2182,8 @@ export const PortfolioUser = {
    * @returns The retrieved PortfolioUser or null.
    */
   async get(props: PortfolioUserType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioUserType> {
-    const GET_ONE_PORTFOLIOUSER = gql`
-      query getOnePortfolioUser($where: PortfolioUserWhereUniqueInput!) {
+    const GET_PORTFOLIOUSERS = gql`
+      query getPortfolioUsers($where: PortfolioUserWhereInput!) {
         portfolioUsers(where: $where) {
           id
           userId
@@ -2484,15 +2484,17 @@ export const PortfolioUser = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_PORTFOLIOUSER, variables });
+      const response = await client.query({ query: GET_PORTFOLIOUSERS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.PortfolioUser ?? null;
+      return response.data?.portfolioUsers ?? null;
     } catch (error) {
-      console.error('Error in getOnePortfolioUser:', error);
+      console.error('Error in getPortfolioUsers:', error);
       throw error;
     }
   },

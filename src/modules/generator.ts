@@ -854,8 +854,8 @@ ${selectionSet}      }
    * @returns The retrieved ${capitalModelName} or null.
    */
   async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-    const GET_ONE_${capitalModelName.toUpperCase()} = gql\`
-      query getOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
+    const GET_${pluralModelName.toUpperCase()} = gql\`
+      query get${pluralModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
 ${selectionSet}        }
       }\`;
@@ -864,7 +864,7 @@ ${selectionSet}        }
       where: {
       ${constructVariablesObject(
     'props',
-    inputTypePaths.whereUnique,
+    inputTypePaths.where,
     capitalModelName,
     inputsPath,
     modelsPath,
@@ -872,11 +872,11 @@ ${selectionSet}        }
   )}      },
 };
     try {
-      const response = await client.query({ query: GET_ONE_${capitalModelName.toUpperCase()}, variables });
+      const response = await client.query({ query: GET_${pluralModelName.toUpperCase()}, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.${modelName} ?? null;
+      return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
     } catch (error) {
-      console.error('Error in getOne${capitalModelName}:', error);
+      console.error('Error in get${pluralModelName}:', error);
       throw error;
     }
   },

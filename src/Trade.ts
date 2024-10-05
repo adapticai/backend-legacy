@@ -2529,8 +2529,8 @@ export const Trade = {
    * @returns The retrieved Trade or null.
    */
   async get(props: TradeType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeType> {
-    const GET_ONE_TRADE = gql`
-      query getOneTrade($where: TradeWhereUniqueInput!) {
+    const GET_TRADES = gql`
+      query getTrades($where: TradeWhereInput!) {
         trades(where: $where) {
           id
           userId
@@ -2831,15 +2831,17 @@ export const Trade = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_TRADE, variables });
+      const response = await client.query({ query: GET_TRADES, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Trade ?? null;
+      return response.data?.trades ?? null;
     } catch (error) {
-      console.error('Error in getOneTrade:', error);
+      console.error('Error in getTrades:', error);
       throw error;
     }
   },

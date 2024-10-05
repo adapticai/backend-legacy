@@ -1696,8 +1696,8 @@ export const Account = {
    * @returns The retrieved Account or null.
    */
   async get(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType> {
-    const GET_ONE_ACCOUNT = gql`
-      query getOneAccount($where: AccountWhereUniqueInput!) {
+    const GET_ACCOUNTS = gql`
+      query getAccounts($where: AccountWhereInput!) {
         accounts(where: $where) {
           id
           userId
@@ -1998,15 +1998,17 @@ export const Account = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_ACCOUNT, variables });
+      const response = await client.query({ query: GET_ACCOUNTS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Account ?? null;
+      return response.data?.accounts ?? null;
     } catch (error) {
-      console.error('Error in getOneAccount:', error);
+      console.error('Error in getAccounts:', error);
       throw error;
     }
   },

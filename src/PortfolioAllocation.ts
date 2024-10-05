@@ -1761,8 +1761,8 @@ export const PortfolioAllocation = {
    * @returns The retrieved PortfolioAllocation or null.
    */
   async get(props: PortfolioAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioAllocationType> {
-    const GET_ONE_PORTFOLIOALLOCATION = gql`
-      query getOnePortfolioAllocation($where: PortfolioAllocationWhereUniqueInput!) {
+    const GET_PORTFOLIOALLOCATIONS = gql`
+      query getPortfolioAllocations($where: PortfolioAllocationWhereInput!) {
         portfolioAllocations(where: $where) {
           id
           portfolioId
@@ -2038,15 +2038,17 @@ export const PortfolioAllocation = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_PORTFOLIOALLOCATION, variables });
+      const response = await client.query({ query: GET_PORTFOLIOALLOCATIONS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.PortfolioAllocation ?? null;
+      return response.data?.portfolioAllocations ?? null;
     } catch (error) {
-      console.error('Error in getOnePortfolioAllocation:', error);
+      console.error('Error in getPortfolioAllocations:', error);
       throw error;
     }
   },

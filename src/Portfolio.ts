@@ -2658,8 +2658,8 @@ export const Portfolio = {
    * @returns The retrieved Portfolio or null.
    */
   async get(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
-    const GET_ONE_PORTFOLIO = gql`
-      query getOnePortfolio($where: PortfolioWhereUniqueInput!) {
+    const GET_PORTFOLIOS = gql`
+      query getPortfolios($where: PortfolioWhereInput!) {
         portfolios(where: $where) {
           id
           name
@@ -2973,19 +2973,23 @@ export const Portfolio = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
-        slug: props.slug !== undefined ? props.slug : undefined,
+              id: props.id !== undefined ? {
+            equals: props.id 
+           } : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
+           } : undefined,
+        slug: props.slug !== undefined ? {
+            equals: props.slug 
            } : undefined,
       },
 };
     try {
-      const response = await client.query({ query: GET_ONE_PORTFOLIO, variables });
+      const response = await client.query({ query: GET_PORTFOLIOS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Portfolio ?? null;
+      return response.data?.portfolios ?? null;
     } catch (error) {
-      console.error('Error in getOnePortfolio:', error);
+      console.error('Error in getPortfolios:', error);
       throw error;
     }
   },
