@@ -861,16 +861,16 @@ ${selectionSet}        }
       }\`;
 
     const variables = {
-      data: {
-${constructVariablesObject(
-    'props',
-    inputTypePaths.update,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'get'
+      where: {
+      ${constructVariablesObject(
+        'props',
+        inputTypePaths.whereUnique,
+        capitalModelName,
+        inputsPath,
+        modelsPath,
+        'where'
   )}      },
-  };
+};
     try {
       const response = await client.query({ query: GET_ONE_${capitalModelName.toUpperCase()}, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);

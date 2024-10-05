@@ -132,11 +132,6 @@ jobs:
             git commit -m "ci: bump version to $NEW_VERSION"
           fi
 
-      - name: Push changes
-        if: steps.should_publish.outputs.should_publish == 'true'
-        run: |
-          git push origin HEAD:main
-
       - name: Publish package
         if: steps.should_publish.outputs.should_publish == 'true'
         env:
@@ -146,3 +141,10 @@ jobs:
           # Ensure temporary files are removed
           rm -f ../npm_package_files.txt ../local_dist_files.txt diff.txt
           npm publish
+
+      - name: Remove dist/package.json after publish and push changes
+        if: steps.should_publish.outputs.should_publish == 'true'
+        run: |
+          git rm dist/package.json
+          git commit -m "ci: remove dist/package.json after publish"
+          git push origin HEAD:main

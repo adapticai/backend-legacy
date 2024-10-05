@@ -2789,11 +2789,14 @@ export const User = {
       }`;
 
     const variables = {
-      data: {
-        name: props.name !== undefined ? props.name : undefined,
+      where: {
+              id: props.id !== undefined ? props.id : undefined,
         email: props.email !== undefined ? props.email : undefined,
+        name: props.name !== undefined ? {
+            equals: props.name 
+           } : undefined,
       },
-  };
+};
     try {
       const response = await client.query({ query: GET_ONE_USER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);

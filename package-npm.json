@@ -1,11 +1,11 @@
 {
   "name": "adaptic-backend",
   "version": "1.0.7",
-  "description": "Backend type definitions for the Adaptic AI platform.",
+  "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
+  "type": "module",
   "types": "index.d.ts",
   "main": "index.js",
-  "module": "index.mjs",
-  "type": "module",
+  "module": "server/index.mjs",
   "scripts": {
     "build": "tsc --declaration --emitDeclarationOnly"
   },
@@ -16,21 +16,24 @@
     "typegraphql-prisma": "^0.27.2"
   },
   "files": [
-    "types/",
     "package.json",
     "README.md",
     "generated/",
+    "server/",
     "node_modules/",
     "README.md",
     "package.json",
     "*.d.ts",
     "*.js",
+    "*.cjs",
     "*.mjs",
     "*.ts",
     "*.map.js"
   ],
+  "peerDependencies": {
+    "@apollo/client": "^3.11.8"
+  },
   "dependencies": {
-    "@apollo/client": "^3.11.8",
     "@prisma/client": "^5.17.0",
     "graphql": "^16.9.0",
     "prisma": "^5.17.0",

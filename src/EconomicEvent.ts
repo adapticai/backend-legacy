@@ -210,9 +210,13 @@ export const EconomicEvent = {
       }`;
 
     const variables = {
-      data: {
+      where: {
+              id: props.id !== undefined ? props.id : undefined,
+        title: props.title !== undefined ? {
+            equals: props.title 
+           } : undefined,
       },
-  };
+};
     try {
       const response = await client.query({ query: GET_ONE_ECONOMICEVENT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);

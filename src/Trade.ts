@@ -2830,9 +2830,10 @@ export const Trade = {
       }`;
 
     const variables = {
-      data: {
+      where: {
+              id: props.id !== undefined ? props.id : undefined,
       },
-  };
+};
     try {
       const response = await client.query({ query: GET_ONE_TRADE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);

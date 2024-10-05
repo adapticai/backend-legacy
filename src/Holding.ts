@@ -2793,9 +2793,10 @@ export const Holding = {
       }`;
 
     const variables = {
-      data: {
+      where: {
+              id: props.id !== undefined ? props.id : undefined,
       },
-  };
+};
     try {
       const response = await client.query({ query: GET_ONE_HOLDING, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);

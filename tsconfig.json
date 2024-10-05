@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "module": "CommonJS",
+    "module": "commonjs",
     "lib": ["ES2018"],
     "allowJs": true,
     "outDir": "./dist",
@@ -18,7 +18,8 @@
     "declarationMap": true,
     "removeComments": false,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "adaptic-backend/*": ["./node_modules/adaptic-backend/*"]
     },
     "sourceMap": true
   },

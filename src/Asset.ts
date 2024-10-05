@@ -2476,9 +2476,13 @@ export const Asset = {
       }`;
 
     const variables = {
-      data: {
+      where: {
+              id: props.id !== undefined ? props.id : undefined,
+        name: props.name !== undefined ? {
+            equals: props.name 
+           } : undefined,
       },
-  };
+};
     try {
       const response = await client.query({ query: GET_ONE_ASSET, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
