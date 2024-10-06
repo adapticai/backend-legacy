@@ -120,25 +120,6 @@ export const TradeStep = {
                 updatedAt
               }
               plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
@@ -214,20 +195,6 @@ export const TradeStep = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -243,64 +210,45 @@ export const TradeStep = {
                   id
                 }
               }
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
             }
             portfolio {
               id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
             }
             asset {
               id
@@ -312,6 +260,18 @@ export const TradeStep = {
               updatedAt
               holdings {
                 id
+                tradingAccountId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                tradingAccount {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -335,9 +295,6 @@ export const TradeStep = {
                 relevancyScore
                 sentimentScore
                 sentimentLabel
-              }
-              PortfolioAllocation {
-                id
               }
             }
             steps {
@@ -411,7 +368,7 @@ export const TradeStep = {
         create: {
           name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
           slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          description: props.trade.portfolio.description !== undefined ? props.trade.portfolio.description : undefined,
+          type: props.trade.portfolio.type !== undefined ? props.trade.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -617,25 +574,6 @@ export const TradeStep = {
                 updatedAt
               }
               plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
@@ -711,20 +649,6 @@ export const TradeStep = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -740,64 +664,45 @@ export const TradeStep = {
                   id
                 }
               }
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
             }
             portfolio {
               id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
             }
             asset {
               id
@@ -809,6 +714,18 @@ export const TradeStep = {
               updatedAt
               holdings {
                 id
+                tradingAccountId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                tradingAccount {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -832,9 +749,6 @@ export const TradeStep = {
                 relevancyScore
                 sentimentScore
                 sentimentLabel
-              }
-              PortfolioAllocation {
-                id
               }
             }
             steps {
@@ -965,14 +879,14 @@ export const TradeStep = {
           slug: props.trade.portfolio.slug !== undefined ? {
               set: props.trade.portfolio.slug  
              } : undefined,
-          description: props.trade.portfolio.description !== undefined ? {
-              set: props.trade.portfolio.description  
+          type: props.trade.portfolio.type !== undefined ? {
+              set: props.trade.portfolio.type  
              } : undefined,
         },
         create: {
           name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
           slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          description: props.trade.portfolio.description !== undefined ? props.trade.portfolio.description : undefined,
+          type: props.trade.portfolio.type !== undefined ? props.trade.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1050,7 +964,7 @@ export const TradeStep = {
         create: {
           name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
           slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          description: props.trade.portfolio.description !== undefined ? props.trade.portfolio.description : undefined,
+          type: props.trade.portfolio.type !== undefined ? props.trade.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1203,25 +1117,6 @@ export const TradeStep = {
                 updatedAt
               }
               plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
@@ -1297,20 +1192,6 @@ export const TradeStep = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -1326,64 +1207,45 @@ export const TradeStep = {
                   id
                 }
               }
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
             }
             portfolio {
               id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
             }
             asset {
               id
@@ -1395,6 +1257,18 @@ export const TradeStep = {
               updatedAt
               holdings {
                 id
+                tradingAccountId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                tradingAccount {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -1418,9 +1292,6 @@ export const TradeStep = {
                 relevancyScore
                 sentimentScore
                 sentimentLabel
-              }
-              PortfolioAllocation {
-                id
               }
             }
             steps {
@@ -1561,25 +1432,6 @@ export const TradeStep = {
                 updatedAt
               }
               plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
@@ -1655,20 +1507,6 @@ export const TradeStep = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -1684,64 +1522,45 @@ export const TradeStep = {
                   id
                 }
               }
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
             }
             portfolio {
               id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
             }
             asset {
               id
@@ -1753,6 +1572,18 @@ export const TradeStep = {
               updatedAt
               holdings {
                 id
+                tradingAccountId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                tradingAccount {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -1776,9 +1607,6 @@ export const TradeStep = {
                 relevancyScore
                 sentimentScore
                 sentimentLabel
-              }
-              PortfolioAllocation {
-                id
               }
             }
             steps {
@@ -1915,25 +1743,6 @@ export const TradeStep = {
                 updatedAt
               }
               plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
@@ -2009,20 +1818,6 @@ export const TradeStep = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -2038,64 +1833,45 @@ export const TradeStep = {
                   id
                 }
               }
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
             }
             portfolio {
               id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
             }
             asset {
               id
@@ -2107,6 +1883,18 @@ export const TradeStep = {
               updatedAt
               holdings {
                 id
+                tradingAccountId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                tradingAccount {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -2130,9 +1918,6 @@ export const TradeStep = {
                 relevancyScore
                 sentimentScore
                 sentimentLabel
-              }
-              PortfolioAllocation {
-                id
               }
             }
             steps {
@@ -2263,25 +2048,6 @@ export const TradeStep = {
                 updatedAt
               }
               plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
@@ -2357,20 +2123,6 @@ export const TradeStep = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -2386,64 +2138,45 @@ export const TradeStep = {
                   id
                 }
               }
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
             }
             portfolio {
               id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
             }
             asset {
               id
@@ -2455,6 +2188,18 @@ export const TradeStep = {
               updatedAt
               holdings {
                 id
+                tradingAccountId
+                assetId
+                quantity
+                averagePrice
+                createdAt
+                updatedAt
+                tradingAccount {
+                  id
+                }
+                asset {
+                  id
+                }
               }
               trades {
                 id
@@ -2478,9 +2223,6 @@ export const TradeStep = {
                 relevancyScore
                 sentimentScore
                 sentimentLabel
-              }
-              PortfolioAllocation {
-                id
               }
             }
             steps {

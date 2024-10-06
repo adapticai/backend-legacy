@@ -53,13 +53,65 @@ export const NewsAssetSentiment = {
             updatedAt
             holdings {
               id
-              userId
-              portfolioId
+              tradingAccountId
               assetId
               quantity
               averagePrice
               createdAt
               updatedAt
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
               user {
                 id
                 name
@@ -86,44 +138,6 @@ export const NewsAssetSentiment = {
                   id
                 }
                 plan
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                portfolios {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-              }
-              portfolio {
-                id
-                name
-                slug
-                description
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
@@ -142,32 +156,9 @@ export const NewsAssetSentiment = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
+                tradingAccount {
                   id
                 }
-                environmentVariables {
-                  id
-                }
-              }
-              asset {
-                id
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
               }
               portfolio {
                 id
@@ -241,20 +232,6 @@ export const NewsAssetSentiment = {
             }
             newsMentions {
               id
-            }
-            PortfolioAllocation {
-              id
-              portfolioId
-              assetId
-              allocation
-              createdAt
-              updatedAt
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
             }
           }
           relevancyScore
@@ -355,16 +332,6 @@ export const NewsAssetSentiment = {
         create: {
           action: item.action !== undefined ? item.action : undefined,
           confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -476,13 +443,65 @@ export const NewsAssetSentiment = {
             updatedAt
             holdings {
               id
-              userId
-              portfolioId
+              tradingAccountId
               assetId
               quantity
               averagePrice
               createdAt
               updatedAt
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
               user {
                 id
                 name
@@ -509,44 +528,6 @@ export const NewsAssetSentiment = {
                   id
                 }
                 plan
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                portfolios {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-              }
-              portfolio {
-                id
-                name
-                slug
-                description
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
@@ -565,32 +546,9 @@ export const NewsAssetSentiment = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
+                tradingAccount {
                   id
                 }
-                environmentVariables {
-                  id
-                }
-              }
-              asset {
-                id
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
               }
               portfolio {
                 id
@@ -664,20 +622,6 @@ export const NewsAssetSentiment = {
             }
             newsMentions {
               id
-            }
-            PortfolioAllocation {
-              id
-              portfolioId
-              assetId
-              allocation
-              createdAt
-              updatedAt
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
             }
           }
           relevancyScore
@@ -895,21 +839,6 @@ export const NewsAssetSentiment = {
         },
       }))
     } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
@@ -964,16 +893,6 @@ export const NewsAssetSentiment = {
         create: {
           action: item.action !== undefined ? item.action : undefined,
           confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -1043,13 +962,65 @@ export const NewsAssetSentiment = {
             updatedAt
             holdings {
               id
-              userId
-              portfolioId
+              tradingAccountId
               assetId
               quantity
               averagePrice
               createdAt
               updatedAt
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
               user {
                 id
                 name
@@ -1076,44 +1047,6 @@ export const NewsAssetSentiment = {
                   id
                 }
                 plan
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                portfolios {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-              }
-              portfolio {
-                id
-                name
-                slug
-                description
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
@@ -1132,32 +1065,9 @@ export const NewsAssetSentiment = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
+                tradingAccount {
                   id
                 }
-                environmentVariables {
-                  id
-                }
-              }
-              asset {
-                id
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
               }
               portfolio {
                 id
@@ -1231,20 +1141,6 @@ export const NewsAssetSentiment = {
             }
             newsMentions {
               id
-            }
-            PortfolioAllocation {
-              id
-              portfolioId
-              assetId
-              allocation
-              createdAt
-              updatedAt
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
             }
           }
           relevancyScore
@@ -1317,13 +1213,65 @@ export const NewsAssetSentiment = {
             updatedAt
             holdings {
               id
-              userId
-              portfolioId
+              tradingAccountId
               assetId
               quantity
               averagePrice
               createdAt
               updatedAt
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
               user {
                 id
                 name
@@ -1350,44 +1298,6 @@ export const NewsAssetSentiment = {
                   id
                 }
                 plan
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                portfolios {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-              }
-              portfolio {
-                id
-                name
-                slug
-                description
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
@@ -1406,32 +1316,9 @@ export const NewsAssetSentiment = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
+                tradingAccount {
                   id
                 }
-                environmentVariables {
-                  id
-                }
-              }
-              asset {
-                id
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
               }
               portfolio {
                 id
@@ -1505,20 +1392,6 @@ export const NewsAssetSentiment = {
             }
             newsMentions {
               id
-            }
-            PortfolioAllocation {
-              id
-              portfolioId
-              assetId
-              allocation
-              createdAt
-              updatedAt
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
             }
           }
           relevancyScore
@@ -1587,13 +1460,65 @@ export const NewsAssetSentiment = {
             updatedAt
             holdings {
               id
-              userId
-              portfolioId
+              tradingAccountId
               assetId
               quantity
               averagePrice
               createdAt
               updatedAt
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
               user {
                 id
                 name
@@ -1620,44 +1545,6 @@ export const NewsAssetSentiment = {
                   id
                 }
                 plan
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                portfolios {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-              }
-              portfolio {
-                id
-                name
-                slug
-                description
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
@@ -1676,32 +1563,9 @@ export const NewsAssetSentiment = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
+                tradingAccount {
                   id
                 }
-                environmentVariables {
-                  id
-                }
-              }
-              asset {
-                id
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
               }
               portfolio {
                 id
@@ -1775,20 +1639,6 @@ export const NewsAssetSentiment = {
             }
             newsMentions {
               id
-            }
-            PortfolioAllocation {
-              id
-              portfolioId
-              assetId
-              allocation
-              createdAt
-              updatedAt
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
             }
           }
           relevancyScore
@@ -1851,13 +1701,65 @@ export const NewsAssetSentiment = {
             updatedAt
             holdings {
               id
-              userId
-              portfolioId
+              tradingAccountId
               assetId
               quantity
               averagePrice
               createdAt
               updatedAt
+              tradingAccount {
+                id
+                name
+                slug
+                type
+                user {
+                  id
+                }
+                userId
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+                createdAt
+                updatedAt
+              }
+              asset {
+                id
+              }
+            }
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
               user {
                 id
                 name
@@ -1884,44 +1786,6 @@ export const NewsAssetSentiment = {
                   id
                 }
                 plan
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                portfolios {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-              }
-              portfolio {
-                id
-                name
-                slug
-                description
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
@@ -1940,32 +1804,9 @@ export const NewsAssetSentiment = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
+                tradingAccount {
                   id
                 }
-                environmentVariables {
-                  id
-                }
-              }
-              asset {
-                id
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
               }
               portfolio {
                 id
@@ -2039,20 +1880,6 @@ export const NewsAssetSentiment = {
             }
             newsMentions {
               id
-            }
-            PortfolioAllocation {
-              id
-              portfolioId
-              assetId
-              allocation
-              createdAt
-              updatedAt
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
             }
           }
           relevancyScore

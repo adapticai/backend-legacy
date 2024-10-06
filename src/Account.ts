@@ -88,15 +88,19 @@ export const Account = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -104,12 +108,11 @@ export const Account = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -131,12 +134,11 @@ export const Account = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -161,32 +163,6 @@ export const Account = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -283,20 +259,6 @@ export const Account = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -311,6 +273,9 @@ export const Account = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
         }
@@ -390,17 +355,6 @@ export const Account = {
         },
       }))
     } : undefined,
-    holdings: props.user.holdings ? {
-      connectOrCreate: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
     trades: props.user.trades ? {
       connectOrCreate: props.user.trades.map((item: any) => ({
         where: {
@@ -464,16 +418,6 @@ export const Account = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -482,6 +426,22 @@ export const Account = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: props.user.tradingAccount ? {
+      connectOrCreate: props.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -634,15 +594,19 @@ export const Account = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -650,12 +614,11 @@ export const Account = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -677,12 +640,11 @@ export const Account = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -707,32 +669,6 @@ export const Account = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -829,20 +765,6 @@ export const Account = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -857,6 +779,9 @@ export const Account = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
       }
@@ -1012,25 +937,6 @@ export const Account = {
         },
       }))
     } : undefined,
-    holdings: props.user.holdings ? {
-      upsert: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
     trades: props.user.trades ? {
       upsert: props.user.trades.map((item: any) => ({
         where: {
@@ -1158,21 +1064,6 @@ export const Account = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      upsert: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       upsert: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -1189,6 +1080,33 @@ export const Account = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: props.user.tradingAccount ? {
+      upsert: props.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        update: {
+          name: item.name !== undefined ? {
+              set: item.name  
+             } : undefined,
+          slug: item.slug !== undefined ? {
+              set: item.slug  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1242,17 +1160,6 @@ export const Account = {
           credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
           publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
           counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.user.holdings ? {
-      connectOrCreate: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
         },
       }))
     } : undefined,
@@ -1319,16 +1226,6 @@ export const Account = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -1337,6 +1234,22 @@ export const Account = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: props.user.tradingAccount ? {
+      connectOrCreate: props.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1441,15 +1354,19 @@ export const Account = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -1457,12 +1374,11 @@ export const Account = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -1484,12 +1400,11 @@ export const Account = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -1514,32 +1429,6 @@ export const Account = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -1636,20 +1525,6 @@ export const Account = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -1664,6 +1539,9 @@ export const Account = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
       }
@@ -1768,15 +1646,19 @@ export const Account = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -1784,12 +1666,11 @@ export const Account = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -1811,12 +1692,11 @@ export const Account = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -1841,32 +1721,6 @@ export const Account = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -1963,20 +1817,6 @@ export const Account = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -1991,6 +1831,9 @@ export const Account = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
         }
@@ -2091,15 +1934,19 @@ export const Account = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -2107,12 +1954,11 @@ export const Account = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -2134,12 +1980,11 @@ export const Account = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -2164,32 +2009,6 @@ export const Account = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -2286,20 +2105,6 @@ export const Account = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -2314,6 +2119,9 @@ export const Account = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
       }
@@ -2408,15 +2216,19 @@ export const Account = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -2424,12 +2236,11 @@ export const Account = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -2451,12 +2262,11 @@ export const Account = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -2481,32 +2291,6 @@ export const Account = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -2603,20 +2387,6 @@ export const Account = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -2631,6 +2401,9 @@ export const Account = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
       }

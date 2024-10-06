@@ -1,250 +1,271 @@
 
 
-import { Portfolio as PortfolioType } from './generated/typegraphql-prisma/models/Portfolio';
+import { TradingAccount as TradingAccountType } from './generated/typegraphql-prisma/models/TradingAccount';
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the Portfolio model.
+ * CRUD operations for the TradingAccount model.
  */
 
-export const Portfolio = {
+export const TradingAccount = {
   /**
-   * Create a new Portfolio record.
+   * Create a new TradingAccount record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
-   * @returns The created Portfolio or null.
+   * @returns The created TradingAccount or null.
    */
-  async create(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
-    const CREATE_ONE_PORTFOLIO = gql`
-      mutation createOnePortfolio($data: PortfolioCreateInput!) {
-        createOnePortfolio(data: $data) {
+  async create(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+    const CREATE_ONE_TRADINGACCOUNT = gql`
+      mutation createOneTradingAccount($data: TradingAccountCreateInput!) {
+        createOneTradingAccount(data: $data) {
           id
           name
           slug
-          description
-          createdAt
-          updatedAt
-          users {
+          type
+          user {
             id
-            userId
-            portfolioId
-            user {
-              id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              trades {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                quantity
-                price
-                total
-                timestamp
-                createdAt
-                updatedAt
-                status
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-                steps {
-                  id
-                }
-              }
-              orders {
-                id
-                userId
-                portfolioId
-                assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              aiRecommendations {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
-                message
-                type
-                isRead
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              portfolios {
-                id
-              }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-            }
-            portfolio {
-              id
-            }
-            role
+            name
+            email
+            emailVerified
+            image
             createdAt
             updatedAt
+            role
+            bio
+            jobTitle
+            currentMode
+            customer {
+              id
+              authUserId
+              name
+              plan
+              stripeCustomerId
+              stripeSubscriptionId
+              stripePriceId
+              stripeCurrentPeriodEnd
+              createdAt
+              updatedAt
+              users {
+                id
+              }
+            }
+            customerId
+            accounts {
+              id
+              userId
+              type
+              provider
+              providerAccountId
+              refresh_token
+              access_token
+              expires_at
+              token_type
+              scope
+              id_token
+              session_state
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+            }
+            sessions {
+              id
+              sessionToken
+              userId
+              expires
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            authenticators {
+              id
+              userId
+              credentialID
+              publicKey
+              counter
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            plan
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                newsMentions {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            tradingAccount {
+              id
+            }
           }
+          userId
           holdings {
             id
+            tradingAccountId
+            assetId
+            quantity
+            averagePrice
+            createdAt
+            updatedAt
+            tradingAccount {
+              id
+            }
+            asset {
+              id
+            }
           }
           trades {
             id
@@ -264,55 +285,6 @@ export const Portfolio = {
           performanceMetrics {
             id
           }
-          portfolioAllocations {
-            id
-            portfolioId
-            assetId
-            allocation
-            createdAt
-            updatedAt
-            portfolio {
-              id
-            }
-            asset {
-              id
-              symbol
-              name
-              type
-              logoUrl
-              createdAt
-              updatedAt
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsId
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
-              PortfolioAllocation {
-                id
-              }
-            }
-          }
           environmentVariables {
             id
             key
@@ -325,6 +297,8 @@ export const Portfolio = {
             createdAt
             updatedAt
           }
+          createdAt
+          updatedAt
         }
       }
    `;
@@ -333,38 +307,163 @@ export const Portfolio = {
       data: {
           name: props.name !== undefined ? props.name : undefined,
   slug: props.slug !== undefined ? props.slug : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  users: props.users ? {
-    connectOrCreate: props.users.map((item: any) => ({
+  type: props.type !== undefined ? props.type : undefined,
+  user: props.user ? {
+    connectOrCreate: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
+        id: props.user.id !== undefined ? props.user.id : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        name: props.user.name !== undefined ? {
+            equals: props.user.name 
+           } : undefined,
       },
       create: {
-        role: item.role !== undefined ? item.role : undefined,
-    user: item.user ? {
+        name: props.user.name !== undefined ? props.user.name : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
+        image: props.user.image !== undefined ? props.user.image : undefined,
+        role: props.user.role !== undefined ? props.user.role : undefined,
+        bio: props.user.bio !== undefined ? props.user.bio : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
+        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
+        plan: props.user.plan !== undefined ? props.user.plan : undefined,
+    customer: props.user.customer ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
+          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
     } : undefined,
+    accounts: props.user.accounts ? {
+      connectOrCreate: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: props.user.sessions ? {
+      connectOrCreate: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: props.user.authenticators ? {
+      connectOrCreate: props.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.user.trades ? {
+      connectOrCreate: props.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.user.orders ? {
+      connectOrCreate: props.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.user.aiRecommendations ? {
+      connectOrCreate: props.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.user.riskAllocations ? {
+      connectOrCreate: props.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.user.alerts ? {
+      connectOrCreate: props.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
       },
-    }))
+    }
   } : undefined,
   holdings: props.holdings ? {
     connectOrCreate: props.holdings.map((item: any) => ({
@@ -374,28 +473,6 @@ export const Portfolio = {
       create: {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       connectOrCreate: {
         where: {
@@ -693,32 +770,6 @@ export const Portfolio = {
       },
     }))
   } : undefined,
-  portfolioAllocations: props.portfolioAllocations ? {
-    connectOrCreate: props.portfolioAllocations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
   environmentVariables: props.environmentVariables ? {
     connectOrCreate: props.environmentVariables.map((item: any) => ({
       where: {
@@ -738,29 +789,29 @@ export const Portfolio = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_ONE_PORTFOLIO, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOnePortfolio) {
-        return response.data.createOnePortfolio;
+      if (response && response.data && response.data.createOneTradingAccount) {
+        return response.data.createOneTradingAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOnePortfolio:', error);
+      console.error('Error in createOneTradingAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple Portfolio records.
+   * Create multiple TradingAccount records.
    * @param props - Array of properties for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: PortfolioType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
-    const CREATE_MANY_PORTFOLIO = gql`
-      mutation createManyPortfolio($data: [PortfolioCreateManyInput!]!) {
-        createManyPortfolio(data: $data) {
+  async createMany(props: TradingAccountType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    const CREATE_MANY_TRADINGACCOUNT = gql`
+      mutation createManyTradingAccount($data: [TradingAccountCreateManyInput!]!) {
+        createManyTradingAccount(data: $data) {
           count
         }
       }`;
@@ -769,263 +820,285 @@ export const Portfolio = {
       data: props.map(prop => ({
   name: prop.name !== undefined ? prop.name : undefined,
   slug: prop.slug !== undefined ? prop.slug : undefined,
-  description: prop.description !== undefined ? prop.description : undefined,
+  type: prop.type !== undefined ? prop.type : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_MANY_PORTFOLIO, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyPortfolio) {
-        return response.data.createManyPortfolio;
+      if (response && response.data && response.data.createManyTradingAccount) {
+        return response.data.createManyTradingAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyPortfolio:', error);
+      console.error('Error in createManyTradingAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single Portfolio record.
+   * Update a single TradingAccount record.
    * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The updated Portfolio or null.
+   * @returns The updated TradingAccount or null.
    */
-  async update(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
-    const UPDATE_ONE_PORTFOLIO = gql`
-      mutation updateOnePortfolio($data: PortfolioUpdateInput!, $where: PortfolioWhereUniqueInput!) {
-        updateOnePortfolio(data: $data, where: $where) {
+  async update(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+    const UPDATE_ONE_TRADINGACCOUNT = gql`
+      mutation updateOneTradingAccount($data: TradingAccountUpdateInput!, $where: TradingAccountWhereUniqueInput!) {
+        updateOneTradingAccount(data: $data, where: $where) {
           id
           name
           slug
-          description
-          createdAt
-          updatedAt
-          users {
+          type
+          user {
             id
-            userId
-            portfolioId
-            user {
-              id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              trades {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                quantity
-                price
-                total
-                timestamp
-                createdAt
-                updatedAt
-                status
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-                steps {
-                  id
-                }
-              }
-              orders {
-                id
-                userId
-                portfolioId
-                assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              aiRecommendations {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
-                message
-                type
-                isRead
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              portfolios {
-                id
-              }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-            }
-            portfolio {
-              id
-            }
-            role
+            name
+            email
+            emailVerified
+            image
             createdAt
             updatedAt
+            role
+            bio
+            jobTitle
+            currentMode
+            customer {
+              id
+              authUserId
+              name
+              plan
+              stripeCustomerId
+              stripeSubscriptionId
+              stripePriceId
+              stripeCurrentPeriodEnd
+              createdAt
+              updatedAt
+              users {
+                id
+              }
+            }
+            customerId
+            accounts {
+              id
+              userId
+              type
+              provider
+              providerAccountId
+              refresh_token
+              access_token
+              expires_at
+              token_type
+              scope
+              id_token
+              session_state
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+            }
+            sessions {
+              id
+              sessionToken
+              userId
+              expires
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            authenticators {
+              id
+              userId
+              credentialID
+              publicKey
+              counter
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            plan
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                newsMentions {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            tradingAccount {
+              id
+            }
           }
+          userId
           holdings {
             id
+            tradingAccountId
+            assetId
+            quantity
+            averagePrice
+            createdAt
+            updatedAt
+            tradingAccount {
+              id
+            }
+            asset {
+              id
+            }
           }
           trades {
             id
@@ -1045,55 +1118,6 @@ export const Portfolio = {
           performanceMetrics {
             id
           }
-          portfolioAllocations {
-            id
-            portfolioId
-            assetId
-            allocation
-            createdAt
-            updatedAt
-            portfolio {
-              id
-            }
-            asset {
-              id
-              symbol
-              name
-              type
-              logoUrl
-              createdAt
-              updatedAt
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsId
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
-              PortfolioAllocation {
-                id
-              }
-            }
-          }
           environmentVariables {
             id
             key
@@ -1106,6 +1130,8 @@ export const Portfolio = {
             createdAt
             updatedAt
           }
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -1118,100 +1144,481 @@ export const Portfolio = {
            } : undefined,
       },
       data: {
-  description: props.description !== undefined ? {
-            set: props.description 
+  type: props.type !== undefined ? {
+            set: props.type 
            } : undefined,
-  users: props.users ? {
-    upsert: props.users.map((item: any) => ({
+  user: props.user ? {
+    upsert: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
+        id: props.user.id !== undefined ? {
+            equals: props.user.id 
+           } : undefined,
+        name: props.user.name !== undefined ? {
+            equals: props.user.name 
+           } : undefined,
+        email: props.user.email !== undefined ? {
+            equals: props.user.email 
+           } : undefined,
       },
       update: {
-        role: item.role !== undefined ? {
-            set: item.role  
+        name: props.user.name !== undefined ? {
+            set: props.user.name  
            } : undefined,
-    user: item.user ? {
+        email: props.user.email !== undefined ? {
+            set: props.user.email  
+           } : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? {
+            set: props.user.emailVerified  
+           } : undefined,
+        image: props.user.image !== undefined ? {
+            set: props.user.image  
+           } : undefined,
+        role: props.user.role !== undefined ? {
+            set: props.user.role  
+           } : undefined,
+        bio: props.user.bio !== undefined ? {
+            set: props.user.bio  
+           } : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? {
+            set: props.user.jobTitle  
+           } : undefined,
+        currentMode: props.user.currentMode !== undefined ? {
+            set: props.user.currentMode  
+           } : undefined,
+        plan: props.user.plan !== undefined ? {
+            set: props.user.plan  
+           } : undefined,
+    customer: props.user.customer ? {
       upsert: {
         where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
+          id: props.user.customer.id !== undefined ? {
+              equals: props.user.customer.id 
              } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
              } : undefined,
         },
         update: {
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              set: props.user.customer.authUserId  
              } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
+          name: props.user.customer.name !== undefined ? {
+              set: props.user.customer.name  
              } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
+          plan: props.user.customer.plan !== undefined ? {
+              set: props.user.customer.plan  
              } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
+              set: props.user.customer.stripeCustomerId  
              } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
+              set: props.user.customer.stripeSubscriptionId  
              } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              set: props.user.customer.stripePriceId  
              } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentMode: item.user.currentMode !== undefined ? {
-              set: item.user.currentMode  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? {
+              set: props.user.customer.stripeCurrentPeriodEnd  
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
+    } : undefined,
+    accounts: props.user.accounts ? {
+      upsert: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider  
+             } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId  
+             } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token  
+             } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token  
+             } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at  
+             } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type  
+             } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope  
+             } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token  
+             } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: props.user.sessions ? {
+      upsert: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          sessionToken: item.sessionToken !== undefined ? {
+              set: item.sessionToken  
+             } : undefined,
+          expires: item.expires !== undefined ? {
+              set: item.expires  
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: props.user.authenticators ? {
+      upsert: props.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          credentialID: item.credentialID !== undefined ? {
+              set: item.credentialID  
+             } : undefined,
+          publicKey: item.publicKey !== undefined ? {
+              set: item.publicKey  
+             } : undefined,
+          counter: item.counter !== undefined ? {
+              set: item.counter  
+             } : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.user.trades ? {
+      upsert: props.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.user.orders ? {
+      upsert: props.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.user.aiRecommendations ? {
+      upsert: props.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.user.riskAllocations ? {
+      upsert: props.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.user.alerts ? {
+      upsert: props.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      upsert: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
     } : undefined,
       },
       create: {
-        role: item.role !== undefined ? item.role : undefined,
-    user: item.user ? {
+        name: props.user.name !== undefined ? props.user.name : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
+        image: props.user.image !== undefined ? props.user.image : undefined,
+        role: props.user.role !== undefined ? props.user.role : undefined,
+        bio: props.user.bio !== undefined ? props.user.bio : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
+        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
+        plan: props.user.plan !== undefined ? props.user.plan : undefined,
+    customer: props.user.customer ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
+          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
     } : undefined,
+    accounts: props.user.accounts ? {
+      connectOrCreate: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: props.user.sessions ? {
+      connectOrCreate: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: props.user.authenticators ? {
+      connectOrCreate: props.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.user.trades ? {
+      connectOrCreate: props.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.user.orders ? {
+      connectOrCreate: props.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: props.user.aiRecommendations ? {
+      connectOrCreate: props.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: props.user.riskAllocations ? {
+      connectOrCreate: props.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: props.user.alerts ? {
+      connectOrCreate: props.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: props.user.performanceMetrics ? {
+      connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
       },
-    }))
+    }
   } : undefined,
   holdings: props.holdings ? {
     upsert: props.holdings.map((item: any) => ({
@@ -1225,61 +1632,6 @@ export const Portfolio = {
         averagePrice: item.averagePrice !== undefined ? {
             set: item.averagePrice  
            } : undefined,
-    user: item.user ? {
-      upsert: {
-        where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
-             } : undefined,
-        },
-        update: {
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
-             } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
-             } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
-             } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentMode: item.user.currentMode !== undefined ? {
-              set: item.user.currentMode  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       upsert: {
         where: {
@@ -1316,28 +1668,6 @@ export const Portfolio = {
       create: {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       connectOrCreate: {
         where: {
@@ -2204,69 +2534,6 @@ export const Portfolio = {
       },
     }))
   } : undefined,
-  portfolioAllocations: props.portfolioAllocations ? {
-    upsert: props.portfolioAllocations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        allocation: item.allocation !== undefined ? {
-            set: item.allocation  
-           } : undefined,
-    asset: item.asset ? {
-      upsert: {
-        where: {
-          id: item.asset.id !== undefined ? {
-              equals: item.asset.id 
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        update: {
-          symbol: item.asset.symbol !== undefined ? {
-              set: item.asset.symbol  
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              set: item.asset.name  
-             } : undefined,
-          type: item.asset.type !== undefined ? {
-              set: item.asset.type  
-             } : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? {
-              set: item.asset.logoUrl  
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
   environmentVariables: props.environmentVariables ? {
     upsert: props.environmentVariables.map((item: any) => ({
       where: {
@@ -2296,255 +2563,276 @@ export const Portfolio = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_PORTFOLIO, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOnePortfolio) {
-        return response.data.updateOnePortfolio;
+      if (response && response.data && response.data.updateOneTradingAccount) {
+        return response.data.updateOneTradingAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOnePortfolio:', error);
+      console.error('Error in updateOneTradingAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single Portfolio record.
+   * Delete a single TradingAccount record.
    * @param id - Unique identifier of the record to delete.
    * @param client - Apollo Client instance.
-   * @returns The deleted Portfolio or null.
+   * @returns The deleted TradingAccount or null.
    */
-  async delete(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
-    const DELETE_ONE_PORTFOLIO = gql`
-      mutation deleteOnePortfolio($where: PortfolioWhereUniqueInput!) {
-        deleteOnePortfolio(where: $where) {
+  async delete(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+    const DELETE_ONE_TRADINGACCOUNT = gql`
+      mutation deleteOneTradingAccount($where: TradingAccountWhereUniqueInput!) {
+        deleteOneTradingAccount(where: $where) {
           id
           name
           slug
-          description
-          createdAt
-          updatedAt
-          users {
+          type
+          user {
             id
-            userId
-            portfolioId
-            user {
-              id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              trades {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                quantity
-                price
-                total
-                timestamp
-                createdAt
-                updatedAt
-                status
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-                steps {
-                  id
-                }
-              }
-              orders {
-                id
-                userId
-                portfolioId
-                assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              aiRecommendations {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
-                message
-                type
-                isRead
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              portfolios {
-                id
-              }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-            }
-            portfolio {
-              id
-            }
-            role
+            name
+            email
+            emailVerified
+            image
             createdAt
             updatedAt
+            role
+            bio
+            jobTitle
+            currentMode
+            customer {
+              id
+              authUserId
+              name
+              plan
+              stripeCustomerId
+              stripeSubscriptionId
+              stripePriceId
+              stripeCurrentPeriodEnd
+              createdAt
+              updatedAt
+              users {
+                id
+              }
+            }
+            customerId
+            accounts {
+              id
+              userId
+              type
+              provider
+              providerAccountId
+              refresh_token
+              access_token
+              expires_at
+              token_type
+              scope
+              id_token
+              session_state
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+            }
+            sessions {
+              id
+              sessionToken
+              userId
+              expires
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            authenticators {
+              id
+              userId
+              credentialID
+              publicKey
+              counter
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            plan
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                newsMentions {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            tradingAccount {
+              id
+            }
           }
+          userId
           holdings {
             id
+            tradingAccountId
+            assetId
+            quantity
+            averagePrice
+            createdAt
+            updatedAt
+            tradingAccount {
+              id
+            }
+            asset {
+              id
+            }
           }
           trades {
             id
@@ -2564,55 +2852,6 @@ export const Portfolio = {
           performanceMetrics {
             id
           }
-          portfolioAllocations {
-            id
-            portfolioId
-            assetId
-            allocation
-            createdAt
-            updatedAt
-            portfolio {
-              id
-            }
-            asset {
-              id
-              symbol
-              name
-              type
-              logoUrl
-              createdAt
-              updatedAt
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsId
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
-              PortfolioAllocation {
-                id
-              }
-            }
-          }
           environmentVariables {
             id
             key
@@ -2625,6 +2864,8 @@ export const Portfolio = {
             createdAt
             updatedAt
           }
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -2635,255 +2876,276 @@ export const Portfolio = {
     };
 
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_PORTFOLIO, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_TRADINGACCOUNT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOnePortfolio) {
-        return response.data.deleteOnePortfolio;
+      if (response && response.data && response.data.deleteOneTradingAccount) {
+        return response.data.deleteOneTradingAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOnePortfolio:', error);
+      console.error('Error in deleteOneTradingAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single Portfolio record by ID.
+   * Retrieve a single TradingAccount record by ID.
    * @param id - Unique identifier of the record.
    * @param client - Apollo Client instance.
-   * @returns The retrieved Portfolio or null.
+   * @returns The retrieved TradingAccount or null.
    */
-  async get(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType> {
-    const GET_PORTFOLIOS = gql`
-      query getPortfolios($where: PortfolioWhereInput!) {
-        portfolios(where: $where) {
+  async get(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+    const GET_TRADINGACCOUNTS = gql`
+      query getTradingAccounts($where: TradingAccountWhereInput!) {
+        tradingAccounts(where: $where) {
           id
           name
           slug
-          description
-          createdAt
-          updatedAt
-          users {
+          type
+          user {
             id
-            userId
-            portfolioId
-            user {
-              id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              trades {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                quantity
-                price
-                total
-                timestamp
-                createdAt
-                updatedAt
-                status
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-                steps {
-                  id
-                }
-              }
-              orders {
-                id
-                userId
-                portfolioId
-                assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              aiRecommendations {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
-                message
-                type
-                isRead
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              portfolios {
-                id
-              }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-            }
-            portfolio {
-              id
-            }
-            role
+            name
+            email
+            emailVerified
+            image
             createdAt
             updatedAt
+            role
+            bio
+            jobTitle
+            currentMode
+            customer {
+              id
+              authUserId
+              name
+              plan
+              stripeCustomerId
+              stripeSubscriptionId
+              stripePriceId
+              stripeCurrentPeriodEnd
+              createdAt
+              updatedAt
+              users {
+                id
+              }
+            }
+            customerId
+            accounts {
+              id
+              userId
+              type
+              provider
+              providerAccountId
+              refresh_token
+              access_token
+              expires_at
+              token_type
+              scope
+              id_token
+              session_state
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+            }
+            sessions {
+              id
+              sessionToken
+              userId
+              expires
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            authenticators {
+              id
+              userId
+              credentialID
+              publicKey
+              counter
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            plan
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                newsMentions {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            tradingAccount {
+              id
+            }
           }
+          userId
           holdings {
             id
+            tradingAccountId
+            assetId
+            quantity
+            averagePrice
+            createdAt
+            updatedAt
+            tradingAccount {
+              id
+            }
+            asset {
+              id
+            }
           }
           trades {
             id
@@ -2903,55 +3165,6 @@ export const Portfolio = {
           performanceMetrics {
             id
           }
-          portfolioAllocations {
-            id
-            portfolioId
-            assetId
-            allocation
-            createdAt
-            updatedAt
-            portfolio {
-              id
-            }
-            asset {
-              id
-              symbol
-              name
-              type
-              logoUrl
-              createdAt
-              updatedAt
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsId
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
-              PortfolioAllocation {
-                id
-              }
-            }
-          }
           environmentVariables {
             id
             key
@@ -2964,6 +3177,8 @@ export const Portfolio = {
             createdAt
             updatedAt
           }
+          createdAt
+          updatedAt
         }
       }`;
 
@@ -2981,250 +3196,271 @@ export const Portfolio = {
       },
 };
     try {
-      const response = await client.query({ query: GET_PORTFOLIOS, variables });
+      const response = await client.query({ query: GET_TRADINGACCOUNTS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.portfolios ?? null;
+      return response.data?.tradingAccounts ?? null;
     } catch (error) {
-      console.error('Error in getPortfolios:', error);
+      console.error('Error in getTradingAccounts:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve all Portfolios records.
+   * Retrieve all TradingAccounts records.
    * @param client - Apollo Client instance.
-   * @returns An array of Portfolio records or null.
+   * @returns An array of TradingAccount records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType[] | null> {
-    const GET_ALL_PORTFOLIO = gql`
-      query getAllPortfolio {
-        Portfolios {
+  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[] | null> {
+    const GET_ALL_TRADINGACCOUNT = gql`
+      query getAllTradingAccount {
+        TradingAccounts {
           id
           name
           slug
-          description
-          createdAt
-          updatedAt
-          users {
+          type
+          user {
             id
-            userId
-            portfolioId
-            user {
-              id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              trades {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                quantity
-                price
-                total
-                timestamp
-                createdAt
-                updatedAt
-                status
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-                steps {
-                  id
-                }
-              }
-              orders {
-                id
-                userId
-                portfolioId
-                assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              aiRecommendations {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
-                message
-                type
-                isRead
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              portfolios {
-                id
-              }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-            }
-            portfolio {
-              id
-            }
-            role
+            name
+            email
+            emailVerified
+            image
             createdAt
             updatedAt
+            role
+            bio
+            jobTitle
+            currentMode
+            customer {
+              id
+              authUserId
+              name
+              plan
+              stripeCustomerId
+              stripeSubscriptionId
+              stripePriceId
+              stripeCurrentPeriodEnd
+              createdAt
+              updatedAt
+              users {
+                id
+              }
+            }
+            customerId
+            accounts {
+              id
+              userId
+              type
+              provider
+              providerAccountId
+              refresh_token
+              access_token
+              expires_at
+              token_type
+              scope
+              id_token
+              session_state
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+            }
+            sessions {
+              id
+              sessionToken
+              userId
+              expires
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            authenticators {
+              id
+              userId
+              credentialID
+              publicKey
+              counter
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            plan
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                newsMentions {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            tradingAccount {
+              id
+            }
           }
+          userId
           holdings {
             id
+            tradingAccountId
+            assetId
+            quantity
+            averagePrice
+            createdAt
+            updatedAt
+            tradingAccount {
+              id
+            }
+            asset {
+              id
+            }
           }
           trades {
             id
@@ -3244,55 +3480,6 @@ export const Portfolio = {
           performanceMetrics {
             id
           }
-          portfolioAllocations {
-            id
-            portfolioId
-            assetId
-            allocation
-            createdAt
-            updatedAt
-            portfolio {
-              id
-            }
-            asset {
-              id
-              symbol
-              name
-              type
-              logoUrl
-              createdAt
-              updatedAt
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsId
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
-              PortfolioAllocation {
-                id
-              }
-            }
-          }
           environmentVariables {
             id
             key
@@ -3305,255 +3492,278 @@ export const Portfolio = {
             createdAt
             updatedAt
           }
+          createdAt
+          updatedAt
       }
       }`;
 
     try {
-      const response = await client.query({ query: GET_ALL_PORTFOLIO });
+      const response = await client.query({ query: GET_ALL_TRADINGACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Portfolios ?? null;
+      return response.data?.TradingAccounts ?? null;
     } catch (error) {
-      console.error('Error in getAllPortfolio:', error);
+      console.error('Error in getAllTradingAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Find multiple Portfolio records based on conditions.
+   * Find multiple TradingAccount records based on conditions.
    * @param where - Conditions to find records.
    * @param client - Apollo Client instance.
-   * @returns An array of found Portfolio records or null.
+   * @returns An array of found TradingAccount records or null.
    */
-  async findMany(props: PortfolioType, client: ApolloClient<NormalizedCacheObject>): Promise<PortfolioType[]> {
-    const FIND_MANY_PORTFOLIO = gql`
-      query findManyPortfolio($where: PortfolioWhereInput!) {
-        Portfolios(where: $where) {
+  async findMany(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[]> {
+    const FIND_MANY_TRADINGACCOUNT = gql`
+      query findManyTradingAccount($where: TradingAccountWhereInput!) {
+        TradingAccounts(where: $where) {
           id
           name
           slug
-          description
-          createdAt
-          updatedAt
-          users {
+          type
+          user {
             id
-            userId
-            portfolioId
-            user {
-              id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              holdings {
-                id
-                userId
-                portfolioId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              trades {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                quantity
-                price
-                total
-                timestamp
-                createdAt
-                updatedAt
-                status
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-                steps {
-                  id
-                }
-              }
-              orders {
-                id
-                userId
-                portfolioId
-                assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              aiRecommendations {
-                id
-                userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
-                message
-                type
-                isRead
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              portfolios {
-                id
-              }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-            }
-            portfolio {
-              id
-            }
-            role
+            name
+            email
+            emailVerified
+            image
             createdAt
             updatedAt
+            role
+            bio
+            jobTitle
+            currentMode
+            customer {
+              id
+              authUserId
+              name
+              plan
+              stripeCustomerId
+              stripeSubscriptionId
+              stripePriceId
+              stripeCurrentPeriodEnd
+              createdAt
+              updatedAt
+              users {
+                id
+              }
+            }
+            customerId
+            accounts {
+              id
+              userId
+              type
+              provider
+              providerAccountId
+              refresh_token
+              access_token
+              expires_at
+              token_type
+              scope
+              id_token
+              session_state
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+            }
+            sessions {
+              id
+              sessionToken
+              userId
+              expires
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            authenticators {
+              id
+              userId
+              credentialID
+              publicKey
+              counter
+              user {
+                id
+              }
+              createdAt
+              updatedAt
+            }
+            plan
+            trades {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              quantity
+              price
+              total
+              timestamp
+              createdAt
+              updatedAt
+              status
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+                symbol
+                name
+                type
+                logoUrl
+                createdAt
+                updatedAt
+                holdings {
+                  id
+                }
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                newsMentions {
+                  id
+                }
+              }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            aiRecommendations {
+              id
+              userId
+              portfolioId
+              assetId
+              action
+              confidence
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
+            }
+            riskAllocations {
+              id
+              userId
+              portfolioId
+              assetType
+              allocation
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            alerts {
+              id
+              userId
+              portfolioId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            performanceMetrics {
+              id
+              userId
+              portfolioId
+              label
+              value
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+            }
+            tradingAccount {
+              id
+            }
           }
+          userId
           holdings {
             id
+            tradingAccountId
+            assetId
+            quantity
+            averagePrice
+            createdAt
+            updatedAt
+            tradingAccount {
+              id
+            }
+            asset {
+              id
+            }
           }
           trades {
             id
@@ -3573,55 +3783,6 @@ export const Portfolio = {
           performanceMetrics {
             id
           }
-          portfolioAllocations {
-            id
-            portfolioId
-            assetId
-            allocation
-            createdAt
-            updatedAt
-            portfolio {
-              id
-            }
-            asset {
-              id
-              symbol
-              name
-              type
-              logoUrl
-              createdAt
-              updatedAt
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsId
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
-              PortfolioAllocation {
-                id
-              }
-            }
-          }
           environmentVariables {
             id
             key
@@ -3634,6 +3795,8 @@ export const Portfolio = {
             createdAt
             updatedAt
           }
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -3654,15 +3817,15 @@ export const Portfolio = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: FIND_MANY_PORTFOLIO, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Portfolios) {
-        return response.data.Portfolios;
+      if (response && response.data && response.data.TradingAccounts) {
+        return response.data.TradingAccounts;
       } else {
-       return [] as PortfolioType[];
+       return [] as TradingAccountType[];
       }
     } catch (error) {
-      console.error('Error in findManyPortfolio:', error);
+      console.error('Error in findManyTradingAccount:', error);
       throw error;
     }
   }

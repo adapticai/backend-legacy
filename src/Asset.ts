@@ -28,84 +28,66 @@ export const Asset = {
           updatedAt
           holdings {
             id
-            userId
-            portfolioId
+            tradingAccountId
             assetId
             quantity
             averagePrice
             createdAt
             updatedAt
-            user {
+            tradingAccount {
               id
               name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
+              slug
+              type
+              user {
                 id
-                authUserId
                 name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentMode
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
                 plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                tradingAccount {
                   id
                 }
               }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
+              userId
               holdings {
                 id
               }
@@ -207,20 +189,6 @@ export const Asset = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -236,52 +204,6 @@ export const Asset = {
                   id
                 }
               }
-            }
-            portfolio {
-              id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               environmentVariables {
                 id
                 key
@@ -294,6 +216,8 @@ export const Asset = {
                 createdAt
                 updatedAt
               }
+              createdAt
+              updatedAt
             }
             asset {
               id
@@ -340,9 +264,6 @@ export const Asset = {
             sentimentScore
             sentimentLabel
           }
-          PortfolioAllocation {
-            id
-          }
         }
       }
    `;
@@ -361,41 +282,19 @@ export const Asset = {
       create: {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-    user: item.user ? {
+    tradingAccount: item.tradingAccount ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
+          id: item.tradingAccount.id !== undefined ? item.tradingAccount.id : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          name: item.tradingAccount.name !== undefined ? {
+              equals: item.tradingAccount.name 
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          name: item.tradingAccount.name !== undefined ? item.tradingAccount.name : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          type: item.tradingAccount.type !== undefined ? item.tradingAccount.type : undefined,
         },
       }
     } : undefined,
@@ -448,7 +347,7 @@ export const Asset = {
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -524,7 +423,7 @@ export const Asset = {
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -573,7 +472,7 @@ export const Asset = {
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -611,32 +510,6 @@ export const Asset = {
           category: item.news.category !== undefined ? item.news.category : undefined,
           topics: item.news.topics !== undefined ? item.news.topics : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  PortfolioAllocation: props.PortfolioAllocation ? {
-    connectOrCreate: props.PortfolioAllocation.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
         },
       }
     } : undefined,
@@ -722,84 +595,66 @@ export const Asset = {
           updatedAt
           holdings {
             id
-            userId
-            portfolioId
+            tradingAccountId
             assetId
             quantity
             averagePrice
             createdAt
             updatedAt
-            user {
+            tradingAccount {
               id
               name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
+              slug
+              type
+              user {
                 id
-                authUserId
                 name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentMode
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
                 plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                tradingAccount {
                   id
                 }
               }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
+              userId
               holdings {
                 id
               }
@@ -901,20 +756,6 @@ export const Asset = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -930,52 +771,6 @@ export const Asset = {
                   id
                 }
               }
-            }
-            portfolio {
-              id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               environmentVariables {
                 id
                 key
@@ -988,6 +783,8 @@ export const Asset = {
                 createdAt
                 updatedAt
               }
+              createdAt
+              updatedAt
             }
             asset {
               id
@@ -1034,9 +831,6 @@ export const Asset = {
             sentimentScore
             sentimentLabel
           }
-          PortfolioAllocation {
-            id
-          }
       }
       }`;
 
@@ -1066,89 +860,34 @@ export const Asset = {
         averagePrice: item.averagePrice !== undefined ? {
             set: item.averagePrice  
            } : undefined,
-    user: item.user ? {
+    tradingAccount: item.tradingAccount ? {
       upsert: {
         where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
+          id: item.tradingAccount.id !== undefined ? {
+              equals: item.tradingAccount.id 
              } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
+          name: item.tradingAccount.name !== undefined ? {
+              equals: item.tradingAccount.name 
              } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
+          slug: item.tradingAccount.slug !== undefined ? {
+              equals: item.tradingAccount.slug 
              } : undefined,
         },
         update: {
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
+          name: item.tradingAccount.name !== undefined ? {
+              set: item.tradingAccount.name  
              } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
+          slug: item.tradingAccount.slug !== undefined ? {
+              set: item.tradingAccount.slug  
              } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
-             } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
-             } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentMode: item.user.currentMode !== undefined ? {
-              set: item.user.currentMode  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
+          type: item.tradingAccount.type !== undefined ? {
+              set: item.tradingAccount.type  
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          name: item.tradingAccount.name !== undefined ? item.tradingAccount.name : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          type: item.tradingAccount.type !== undefined ? item.tradingAccount.type : undefined,
         },
       }
     } : undefined,
@@ -1156,41 +895,19 @@ export const Asset = {
       create: {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-    user: item.user ? {
+    tradingAccount: item.tradingAccount ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
+          id: item.tradingAccount.id !== undefined ? item.tradingAccount.id : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          name: item.tradingAccount.name !== undefined ? {
+              equals: item.tradingAccount.name 
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          name: item.tradingAccount.name !== undefined ? item.tradingAccount.name : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          type: item.tradingAccount.type !== undefined ? item.tradingAccount.type : undefined,
         },
       }
     } : undefined,
@@ -1296,14 +1013,14 @@ export const Asset = {
           slug: item.portfolio.slug !== undefined ? {
               set: item.portfolio.slug  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          type: item.portfolio.type !== undefined ? {
+              set: item.portfolio.type  
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1420,7 +1137,7 @@ export const Asset = {
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1547,14 +1264,14 @@ export const Asset = {
           slug: item.portfolio.slug !== undefined ? {
               set: item.portfolio.slug  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          type: item.portfolio.type !== undefined ? {
+              set: item.portfolio.type  
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1599,7 +1316,7 @@ export const Asset = {
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1693,14 +1410,14 @@ export const Asset = {
           slug: item.portfolio.slug !== undefined ? {
               set: item.portfolio.slug  
              } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
+          type: item.portfolio.type !== undefined ? {
+              set: item.portfolio.type  
              } : undefined,
         },
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1742,7 +1459,7 @@ export const Asset = {
         create: {
           name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
           slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -1865,68 +1582,6 @@ export const Asset = {
       },
     }))
   } : undefined,
-  PortfolioAllocation: props.PortfolioAllocation ? {
-    upsert: props.PortfolioAllocation.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        allocation: item.allocation !== undefined ? {
-            set: item.allocation  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          description: item.portfolio.description !== undefined ? {
-              set: item.portfolio.description  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          description: item.portfolio.description !== undefined ? item.portfolio.description : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
       },
     };
 
@@ -1965,84 +1620,66 @@ export const Asset = {
           updatedAt
           holdings {
             id
-            userId
-            portfolioId
+            tradingAccountId
             assetId
             quantity
             averagePrice
             createdAt
             updatedAt
-            user {
+            tradingAccount {
               id
               name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
+              slug
+              type
+              user {
                 id
-                authUserId
                 name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentMode
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
                 plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                tradingAccount {
                   id
                 }
               }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
+              userId
               holdings {
                 id
               }
@@ -2144,20 +1781,6 @@ export const Asset = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -2173,52 +1796,6 @@ export const Asset = {
                   id
                 }
               }
-            }
-            portfolio {
-              id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               environmentVariables {
                 id
                 key
@@ -2231,6 +1808,8 @@ export const Asset = {
                 createdAt
                 updatedAt
               }
+              createdAt
+              updatedAt
             }
             asset {
               id
@@ -2276,9 +1855,6 @@ export const Asset = {
             relevancyScore
             sentimentScore
             sentimentLabel
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;
@@ -2322,84 +1898,66 @@ export const Asset = {
           updatedAt
           holdings {
             id
-            userId
-            portfolioId
+            tradingAccountId
             assetId
             quantity
             averagePrice
             createdAt
             updatedAt
-            user {
+            tradingAccount {
               id
               name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
+              slug
+              type
+              user {
                 id
-                authUserId
                 name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentMode
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
                 plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                tradingAccount {
                   id
                 }
               }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
+              userId
               holdings {
                 id
               }
@@ -2501,20 +2059,6 @@ export const Asset = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -2530,52 +2074,6 @@ export const Asset = {
                   id
                 }
               }
-            }
-            portfolio {
-              id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               environmentVariables {
                 id
                 key
@@ -2588,6 +2086,8 @@ export const Asset = {
                 createdAt
                 updatedAt
               }
+              createdAt
+              updatedAt
             }
             asset {
               id
@@ -2633,9 +2133,6 @@ export const Asset = {
             relevancyScore
             sentimentScore
             sentimentLabel
-          }
-          PortfolioAllocation {
-            id
           }
         }
       }`;
@@ -2678,84 +2175,66 @@ export const Asset = {
           updatedAt
           holdings {
             id
-            userId
-            portfolioId
+            tradingAccountId
             assetId
             quantity
             averagePrice
             createdAt
             updatedAt
-            user {
+            tradingAccount {
               id
               name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
+              slug
+              type
+              user {
                 id
-                authUserId
                 name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentMode
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
                 plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                tradingAccount {
                   id
                 }
               }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
+              userId
               holdings {
                 id
               }
@@ -2857,20 +2336,6 @@ export const Asset = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -2886,52 +2351,6 @@ export const Asset = {
                   id
                 }
               }
-            }
-            portfolio {
-              id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               environmentVariables {
                 id
                 key
@@ -2944,6 +2363,8 @@ export const Asset = {
                 createdAt
                 updatedAt
               }
+              createdAt
+              updatedAt
             }
             asset {
               id
@@ -2989,9 +2410,6 @@ export const Asset = {
             relevancyScore
             sentimentScore
             sentimentLabel
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;
@@ -3025,84 +2443,66 @@ export const Asset = {
           updatedAt
           holdings {
             id
-            userId
-            portfolioId
+            tradingAccountId
             assetId
             quantity
             averagePrice
             createdAt
             updatedAt
-            user {
+            tradingAccount {
               id
               name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentMode
-              customer {
+              slug
+              type
+              user {
                 id
-                authUserId
                 name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentMode
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
                 plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                aiRecommendations {
+                  id
+                }
+                riskAllocations {
+                  id
+                }
+                alerts {
+                  id
+                }
+                performanceMetrics {
+                  id
+                }
+                tradingAccount {
                   id
                 }
               }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
+              userId
               holdings {
                 id
               }
@@ -3204,20 +2604,6 @@ export const Asset = {
                   id
                 }
               }
-              portfolios {
-                id
-                userId
-                portfolioId
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                role
-                createdAt
-                updatedAt
-              }
               performanceMetrics {
                 id
                 userId
@@ -3233,52 +2619,6 @@ export const Asset = {
                   id
                 }
               }
-            }
-            portfolio {
-              id
-              name
-              slug
-              description
-              createdAt
-              updatedAt
-              users {
-                id
-              }
-              holdings {
-                id
-              }
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              aiRecommendations {
-                id
-              }
-              riskAllocations {
-                id
-              }
-              alerts {
-                id
-              }
-              performanceMetrics {
-                id
-              }
-              portfolioAllocations {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               environmentVariables {
                 id
                 key
@@ -3291,6 +2631,8 @@ export const Asset = {
                 createdAt
                 updatedAt
               }
+              createdAt
+              updatedAt
             }
             asset {
               id
@@ -3336,9 +2678,6 @@ export const Asset = {
             relevancyScore
             sentimentScore
             sentimentLabel
-          }
-          PortfolioAllocation {
-            id
           }
       }
       }`;

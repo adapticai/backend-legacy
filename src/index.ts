@@ -15,13 +15,11 @@ import { News } from './News';
 import { NewsAssetSentiment } from './NewsAssetSentiment';
 import { Order } from './Order';
 import { PerformanceMetric } from './PerformanceMetric';
-import { Portfolio } from './Portfolio';
-import { PortfolioAllocation } from './PortfolioAllocation';
-import { PortfolioUser } from './PortfolioUser';
 import { RiskAllocation } from './RiskAllocation';
 import { Session } from './Session';
 import { Trade } from './Trade';
 import { TradeStep } from './TradeStep';
+import { TradingAccount } from './TradingAccount';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
 
@@ -39,13 +37,11 @@ const adaptic = {
   newsAssetSentiment: NewsAssetSentiment,
   order: Order,
   performanceMetric: PerformanceMetric,
-  portfolio: Portfolio,
-  portfolioAllocation: PortfolioAllocation,
-  portfolioUser: PortfolioUser,
   riskAllocation: RiskAllocation,
   session: Session,
   trade: Trade,
   tradeStep: TradeStep,
+  tradingAccount: TradingAccount,
   user: User,
   verificationToken: VerificationToken,
 };

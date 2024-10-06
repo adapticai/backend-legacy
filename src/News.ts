@@ -52,17 +52,13 @@ export const News = {
               updatedAt
               holdings {
                 id
-                userId
-                portfolioId
+                tradingAccountId
                 assetId
                 quantity
                 averagePrice
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                portfolio {
+                tradingAccount {
                   id
                 }
                 asset {
@@ -138,20 +134,6 @@ export const News = {
               }
               newsMentions {
                 id
-              }
-              PortfolioAllocation {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
               }
             }
             relevancyScore
@@ -317,17 +299,13 @@ export const News = {
               updatedAt
               holdings {
                 id
-                userId
-                portfolioId
+                tradingAccountId
                 assetId
                 quantity
                 averagePrice
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                portfolio {
+                tradingAccount {
                   id
                 }
                 asset {
@@ -403,20 +381,6 @@ export const News = {
               }
               newsMentions {
                 id
-              }
-              PortfolioAllocation {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
               }
             }
             relevancyScore
@@ -585,17 +549,13 @@ export const News = {
               updatedAt
               holdings {
                 id
-                userId
-                portfolioId
+                tradingAccountId
                 assetId
                 quantity
                 averagePrice
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                portfolio {
+                tradingAccount {
                   id
                 }
                 asset {
@@ -671,20 +631,6 @@ export const News = {
               }
               newsMentions {
                 id
-              }
-              PortfolioAllocation {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
               }
             }
             relevancyScore
@@ -757,17 +703,13 @@ export const News = {
               updatedAt
               holdings {
                 id
-                userId
-                portfolioId
+                tradingAccountId
                 assetId
                 quantity
                 averagePrice
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                portfolio {
+                tradingAccount {
                   id
                 }
                 asset {
@@ -843,20 +785,6 @@ export const News = {
               }
               newsMentions {
                 id
-              }
-              PortfolioAllocation {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
               }
             }
             relevancyScore
@@ -928,17 +856,13 @@ export const News = {
               updatedAt
               holdings {
                 id
-                userId
-                portfolioId
+                tradingAccountId
                 assetId
                 quantity
                 averagePrice
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                portfolio {
+                tradingAccount {
                   id
                 }
                 asset {
@@ -1014,20 +938,6 @@ export const News = {
               }
               newsMentions {
                 id
-              }
-              PortfolioAllocation {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
               }
             }
             relevancyScore
@@ -1090,17 +1000,13 @@ export const News = {
               updatedAt
               holdings {
                 id
-                userId
-                portfolioId
+                tradingAccountId
                 assetId
                 quantity
                 averagePrice
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                portfolio {
+                tradingAccount {
                   id
                 }
                 asset {
@@ -1176,20 +1082,6 @@ export const News = {
               }
               newsMentions {
                 id
-              }
-              PortfolioAllocation {
-                id
-                portfolioId
-                assetId
-                allocation
-                createdAt
-                updatedAt
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
               }
             }
             relevancyScore

@@ -98,15 +98,19 @@ export const AIRecommendation = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -114,12 +118,11 @@ export const AIRecommendation = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -141,12 +144,11 @@ export const AIRecommendation = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -171,32 +173,6 @@ export const AIRecommendation = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -277,20 +253,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -305,6 +267,9 @@ export const AIRecommendation = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
           portfolio {
@@ -401,17 +366,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    holdings: props.user.holdings ? {
-      connectOrCreate: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
     trades: props.user.trades ? {
       connectOrCreate: props.user.trades.map((item: any) => ({
         where: {
@@ -464,16 +418,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -482,6 +426,22 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: props.user.tradingAccount ? {
+      connectOrCreate: props.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -500,16 +460,28 @@ export const AIRecommendation = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    users: props.portfolio.users ? {
-      connectOrCreate: props.portfolio.users.map((item: any) => ({
+        type: props.portfolio.type !== undefined ? props.portfolio.type : undefined,
+    user: props.portfolio.user ? {
+      connectOrCreate: {
         where: {
-          id: item.id !== undefined ? item.id : undefined,
+          id: props.portfolio.user.id !== undefined ? props.portfolio.user.id : undefined,
+          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
+          name: props.portfolio.user.name !== undefined ? {
+              equals: props.portfolio.user.name 
+             } : undefined,
         },
         create: {
-          role: item.role !== undefined ? item.role : undefined,
+          name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
+          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
+          emailVerified: props.portfolio.user.emailVerified !== undefined ? props.portfolio.user.emailVerified : undefined,
+          image: props.portfolio.user.image !== undefined ? props.portfolio.user.image : undefined,
+          role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
+          bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
+          jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
+          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
+          plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
         },
-      }))
+      }
     } : undefined,
     holdings: props.portfolio.holdings ? {
       connectOrCreate: props.portfolio.holdings.map((item: any) => ({
@@ -582,16 +554,6 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -672,16 +634,6 @@ export const AIRecommendation = {
           relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
           sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
           sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -838,15 +790,19 @@ export const AIRecommendation = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -854,12 +810,11 @@ export const AIRecommendation = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -881,12 +836,11 @@ export const AIRecommendation = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -911,32 +865,6 @@ export const AIRecommendation = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -1017,20 +945,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -1045,6 +959,9 @@ export const AIRecommendation = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
           portfolio {
@@ -1242,25 +1159,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    holdings: props.user.holdings ? {
-      upsert: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
     trades: props.user.trades ? {
       upsert: props.user.trades.map((item: any) => ({
         where: {
@@ -1369,21 +1267,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      upsert: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       upsert: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -1400,6 +1283,33 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: props.user.tradingAccount ? {
+      upsert: props.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        update: {
+          name: item.name !== undefined ? {
+              set: item.name  
+             } : undefined,
+          slug: item.slug !== undefined ? {
+              set: item.slug  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1475,17 +1385,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    holdings: props.user.holdings ? {
-      connectOrCreate: props.user.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
     trades: props.user.trades ? {
       connectOrCreate: props.user.trades.map((item: any) => ({
         where: {
@@ -1538,16 +1437,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    portfolios: props.user.portfolios ? {
-      connectOrCreate: props.user.portfolios.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
     performanceMetrics: props.user.performanceMetrics ? {
       connectOrCreate: props.user.performanceMetrics.map((item: any) => ({
         where: {
@@ -1556,6 +1445,22 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: props.user.tradingAccount ? {
+      connectOrCreate: props.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1582,23 +1487,63 @@ export const AIRecommendation = {
         slug: props.portfolio.slug !== undefined ? {
             set: props.portfolio.slug  
            } : undefined,
-        description: props.portfolio.description !== undefined ? {
-            set: props.portfolio.description  
+        type: props.portfolio.type !== undefined ? {
+            set: props.portfolio.type  
            } : undefined,
-    users: props.portfolio.users ? {
-      upsert: props.portfolio.users.map((item: any) => ({
+    user: props.portfolio.user ? {
+      upsert: {
         where: {
-          id: item.id !== undefined ? item.id : undefined,
+          id: props.portfolio.user.id !== undefined ? {
+              equals: props.portfolio.user.id 
+             } : undefined,
+          name: props.portfolio.user.name !== undefined ? {
+              equals: props.portfolio.user.name 
+             } : undefined,
+          email: props.portfolio.user.email !== undefined ? {
+              equals: props.portfolio.user.email 
+             } : undefined,
         },
         update: {
-          role: item.role !== undefined ? {
-              set: item.role  
+          name: props.portfolio.user.name !== undefined ? {
+              set: props.portfolio.user.name  
+             } : undefined,
+          email: props.portfolio.user.email !== undefined ? {
+              set: props.portfolio.user.email  
+             } : undefined,
+          emailVerified: props.portfolio.user.emailVerified !== undefined ? {
+              set: props.portfolio.user.emailVerified  
+             } : undefined,
+          image: props.portfolio.user.image !== undefined ? {
+              set: props.portfolio.user.image  
+             } : undefined,
+          role: props.portfolio.user.role !== undefined ? {
+              set: props.portfolio.user.role  
+             } : undefined,
+          bio: props.portfolio.user.bio !== undefined ? {
+              set: props.portfolio.user.bio  
+             } : undefined,
+          jobTitle: props.portfolio.user.jobTitle !== undefined ? {
+              set: props.portfolio.user.jobTitle  
+             } : undefined,
+          currentMode: props.portfolio.user.currentMode !== undefined ? {
+              set: props.portfolio.user.currentMode  
+             } : undefined,
+          plan: props.portfolio.user.plan !== undefined ? {
+              set: props.portfolio.user.plan  
              } : undefined,
         },
         create: {
-          role: item.role !== undefined ? item.role : undefined,
+          name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
+          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
+          emailVerified: props.portfolio.user.emailVerified !== undefined ? props.portfolio.user.emailVerified : undefined,
+          image: props.portfolio.user.image !== undefined ? props.portfolio.user.image : undefined,
+          role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
+          bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
+          jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
+          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
+          plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
         },
-      }))
+      }
     } : undefined,
     holdings: props.portfolio.holdings ? {
       upsert: props.portfolio.holdings.map((item: any) => ({
@@ -1746,21 +1691,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      upsert: props.portfolio.portfolioAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
     environmentVariables: props.portfolio.environmentVariables ? {
       upsert: props.portfolio.environmentVariables.map((item: any) => ({
         where: {
@@ -1788,16 +1718,28 @@ export const AIRecommendation = {
       create: {
         name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
         slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    users: props.portfolio.users ? {
-      connectOrCreate: props.portfolio.users.map((item: any) => ({
+        type: props.portfolio.type !== undefined ? props.portfolio.type : undefined,
+    user: props.portfolio.user ? {
+      connectOrCreate: {
         where: {
-          id: item.id !== undefined ? item.id : undefined,
+          id: props.portfolio.user.id !== undefined ? props.portfolio.user.id : undefined,
+          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
+          name: props.portfolio.user.name !== undefined ? {
+              equals: props.portfolio.user.name 
+             } : undefined,
         },
         create: {
-          role: item.role !== undefined ? item.role : undefined,
+          name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
+          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
+          emailVerified: props.portfolio.user.emailVerified !== undefined ? props.portfolio.user.emailVerified : undefined,
+          image: props.portfolio.user.image !== undefined ? props.portfolio.user.image : undefined,
+          role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
+          bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
+          jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
+          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
+          plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
         },
-      }))
+      }
     } : undefined,
     holdings: props.portfolio.holdings ? {
       connectOrCreate: props.portfolio.holdings.map((item: any) => ({
@@ -1870,16 +1812,6 @@ export const AIRecommendation = {
         create: {
           label: item.label !== undefined ? item.label : undefined,
           value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -2029,21 +1961,6 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
@@ -2099,16 +2016,6 @@ export const AIRecommendation = {
           relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
           sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
           sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-        },
-      }))
-    } : undefined,
-    PortfolioAllocation: props.asset.PortfolioAllocation ? {
-      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
         },
       }))
     } : undefined,
@@ -2223,15 +2130,19 @@ export const AIRecommendation = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -2239,12 +2150,11 @@ export const AIRecommendation = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -2266,12 +2176,11 @@ export const AIRecommendation = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -2296,32 +2205,6 @@ export const AIRecommendation = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -2402,20 +2285,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -2430,6 +2299,9 @@ export const AIRecommendation = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
           portfolio {
@@ -2550,15 +2422,19 @@ export const AIRecommendation = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -2566,12 +2442,11 @@ export const AIRecommendation = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -2593,12 +2468,11 @@ export const AIRecommendation = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -2623,32 +2497,6 @@ export const AIRecommendation = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -2729,20 +2577,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -2757,6 +2591,9 @@ export const AIRecommendation = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
           portfolio {
@@ -2873,15 +2710,19 @@ export const AIRecommendation = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -2889,12 +2730,11 @@ export const AIRecommendation = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -2916,12 +2756,11 @@ export const AIRecommendation = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -2946,32 +2785,6 @@ export const AIRecommendation = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -3052,20 +2865,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -3080,6 +2879,9 @@ export const AIRecommendation = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
           portfolio {
@@ -3190,15 +2992,19 @@ export const AIRecommendation = {
               updatedAt
             }
             plan
-            holdings {
+            trades {
               id
               userId
               portfolioId
               assetId
+              action
               quantity
-              averagePrice
+              price
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -3206,12 +3012,11 @@ export const AIRecommendation = {
                 id
                 name
                 slug
-                description
-                createdAt
-                updatedAt
-                users {
+                type
+                user {
                   id
                 }
+                userId
                 holdings {
                   id
                 }
@@ -3233,12 +3038,11 @@ export const AIRecommendation = {
                 performanceMetrics {
                   id
                 }
-                portfolioAllocations {
-                  id
-                }
                 environmentVariables {
                   id
                 }
+                createdAt
+                updatedAt
               }
               asset {
                 id
@@ -3263,32 +3067,6 @@ export const AIRecommendation = {
                 newsMentions {
                   id
                 }
-                PortfolioAllocation {
-                  id
-                }
-              }
-            }
-            trades {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              quantity
-              price
-              total
-              timestamp
-              createdAt
-              updatedAt
-              status
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
               }
               steps {
                 id
@@ -3369,20 +3147,6 @@ export const AIRecommendation = {
                 id
               }
             }
-            portfolios {
-              id
-              userId
-              portfolioId
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              role
-              createdAt
-              updatedAt
-            }
             performanceMetrics {
               id
               userId
@@ -3397,6 +3161,9 @@ export const AIRecommendation = {
               portfolio {
                 id
               }
+            }
+            tradingAccount {
+              id
             }
           }
           portfolio {
