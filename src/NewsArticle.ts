@@ -1131,9 +1131,9 @@ export const NewsArticle = {
    * @returns The retrieved NewsArticle or null.
    */
   async get(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType> {
-    const GET_NEWSARTICLES = gql`
-      query getNewsArticles($where: NewsArticleWhereInput!) {
-        newsArticles(where: $where) {
+    const GET_NEWSARTICLE = gql`
+      query getNewsArticle($where: NewsArticleWhereInput!) {
+        getNewsArticle(where: $where) {
           id
           title
           content
@@ -1331,11 +1331,11 @@ export const NewsArticle = {
       },
 };
     try {
-      const response = await client.query({ query: GET_NEWSARTICLES, variables });
+      const response = await client.query({ query: GET_NEWSARTICLE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.newsArticles ?? null;
+      return response.data?.getNewsArticle ?? null;
     } catch (error) {
-      console.error('Error in getNewsArticles:', error);
+      console.error('Error in getNewsArticle:', error);
       throw error;
     }
   },

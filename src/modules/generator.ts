@@ -853,9 +853,9 @@ ${selectionSet}      }
    * @returns The retrieved ${capitalModelName} or null.
    */
   async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-    const GET_${pluralModelName.toUpperCase()} = gql\`
-      query get${pluralModelName}($where: ${capitalModelName}WhereInput!) {
-        ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
+    const GET_${capitalModelName.toUpperCase()} = gql\`
+      query get${capitalModelName}($where: ${capitalModelName}WhereInput!) {
+        get${capitalModelName}(where: $where) {
 ${selectionSet}        }
       }\`;
 
@@ -871,11 +871,11 @@ ${selectionSet}        }
   )}      },
 };
     try {
-      const response = await client.query({ query: GET_${pluralModelName.toUpperCase()}, variables });
+      const response = await client.query({ query: GET_${capitalModelName.toUpperCase()}, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
+      return response.data?.get${capitalModelName} ?? null;
     } catch (error) {
-      console.error('Error in get${pluralModelName}:', error);
+      console.error('Error in get${capitalModelName}:', error);
       throw error;
     }
   },

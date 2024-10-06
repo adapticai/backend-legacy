@@ -1760,9 +1760,9 @@ export const Authenticator = {
    * @returns The retrieved Authenticator or null.
    */
   async get(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
-    const GET_AUTHENTICATORS = gql`
-      query getAuthenticators($where: AuthenticatorWhereInput!) {
-        authenticators(where: $where) {
+    const GET_AUTHENTICATOR = gql`
+      query getAuthenticator($where: AuthenticatorWhereInput!) {
+        getAuthenticator(where: $where) {
           id
           userId
           credentialID
@@ -2092,11 +2092,11 @@ export const Authenticator = {
       },
 };
     try {
-      const response = await client.query({ query: GET_AUTHENTICATORS, variables });
+      const response = await client.query({ query: GET_AUTHENTICATOR, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.authenticators ?? null;
+      return response.data?.getAuthenticator ?? null;
     } catch (error) {
-      console.error('Error in getAuthenticators:', error);
+      console.error('Error in getAuthenticator:', error);
       throw error;
     }
   },

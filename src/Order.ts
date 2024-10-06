@@ -2729,9 +2729,9 @@ export const Order = {
    * @returns The retrieved Order or null.
    */
   async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
-    const GET_ORDERS = gql`
-      query getOrders($where: OrderWhereInput!) {
-        orders(where: $where) {
+    const GET_ORDER = gql`
+      query getOrder($where: OrderWhereInput!) {
+        getOrder(where: $where) {
           id
           userId
           portfolioId
@@ -3061,11 +3061,11 @@ export const Order = {
       },
 };
     try {
-      const response = await client.query({ query: GET_ORDERS, variables });
+      const response = await client.query({ query: GET_ORDER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.orders ?? null;
+      return response.data?.getOrder ?? null;
     } catch (error) {
-      console.error('Error in getOrders:', error);
+      console.error('Error in getOrder:', error);
       throw error;
     }
   },

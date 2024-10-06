@@ -2771,9 +2771,9 @@ export const AIRecommendation = {
    * @returns The retrieved AIRecommendation or null.
    */
   async get(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
-    const GET_AIRECOMMENDATIONS = gql`
-      query getAIRecommendations($where: AIRecommendationWhereInput!) {
-        aIRecommendations(where: $where) {
+    const GET_AIRECOMMENDATION = gql`
+      query getAIRecommendation($where: AIRecommendationWhereInput!) {
+        getAIRecommendation(where: $where) {
           id
           userId
           portfolioId
@@ -3103,11 +3103,11 @@ export const AIRecommendation = {
       },
 };
     try {
-      const response = await client.query({ query: GET_AIRECOMMENDATIONS, variables });
+      const response = await client.query({ query: GET_AIRECOMMENDATION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.aIRecommendations ?? null;
+      return response.data?.getAIRecommendation ?? null;
     } catch (error) {
-      console.error('Error in getAIRecommendations:', error);
+      console.error('Error in getAIRecommendation:', error);
       throw error;
     }
   },

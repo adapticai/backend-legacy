@@ -1596,9 +1596,9 @@ export const NewsArticleAssetSentiment = {
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
   async get(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
-    const GET_NEWSARTICLEASSETSENTIMENTS = gql`
-      query getNewsArticleAssetSentiments($where: NewsArticleAssetSentimentWhereInput!) {
-        newsArticleAssetSentiments(where: $where) {
+    const GET_NEWSARTICLEASSETSENTIMENT = gql`
+      query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
+        getNewsArticleAssetSentiment(where: $where) {
           id
           assetId
           newsArticleId
@@ -1890,11 +1890,11 @@ export const NewsArticleAssetSentiment = {
       },
 };
     try {
-      const response = await client.query({ query: GET_NEWSARTICLEASSETSENTIMENTS, variables });
+      const response = await client.query({ query: GET_NEWSARTICLEASSETSENTIMENT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.newsArticleAssetSentiments ?? null;
+      return response.data?.getNewsArticleAssetSentiment ?? null;
     } catch (error) {
-      console.error('Error in getNewsArticleAssetSentiments:', error);
+      console.error('Error in getNewsArticleAssetSentiment:', error);
       throw error;
     }
   },

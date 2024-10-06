@@ -2212,9 +2212,9 @@ export const Holding = {
    * @returns The retrieved Holding or null.
    */
   async get(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType> {
-    const GET_HOLDINGS = gql`
-      query getHoldings($where: HoldingWhereInput!) {
-        holdings(where: $where) {
+    const GET_HOLDING = gql`
+      query getHolding($where: HoldingWhereInput!) {
+        getHolding(where: $where) {
           id
           tradingAccountId
           assetId
@@ -2575,11 +2575,11 @@ export const Holding = {
       },
 };
     try {
-      const response = await client.query({ query: GET_HOLDINGS, variables });
+      const response = await client.query({ query: GET_HOLDING, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.holdings ?? null;
+      return response.data?.getHolding ?? null;
     } catch (error) {
-      console.error('Error in getHoldings:', error);
+      console.error('Error in getHolding:', error);
       throw error;
     }
   },

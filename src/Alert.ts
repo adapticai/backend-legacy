@@ -2254,9 +2254,9 @@ export const Alert = {
    * @returns The retrieved Alert or null.
    */
   async get(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType> {
-    const GET_ALERTS = gql`
-      query getAlerts($where: AlertWhereInput!) {
-        alerts(where: $where) {
+    const GET_ALERT = gql`
+      query getAlert($where: AlertWhereInput!) {
+        getAlert(where: $where) {
           id
           userId
           portfolioId
@@ -2586,11 +2586,11 @@ export const Alert = {
       },
 };
     try {
-      const response = await client.query({ query: GET_ALERTS, variables });
+      const response = await client.query({ query: GET_ALERT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.alerts ?? null;
+      return response.data?.getAlert ?? null;
     } catch (error) {
-      console.error('Error in getAlerts:', error);
+      console.error('Error in getAlert:', error);
       throw error;
     }
   },

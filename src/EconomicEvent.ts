@@ -195,9 +195,9 @@ export const EconomicEvent = {
    * @returns The retrieved EconomicEvent or null.
    */
   async get(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType> {
-    const GET_ECONOMICEVENTS = gql`
-      query getEconomicEvents($where: EconomicEventWhereInput!) {
-        economicEvents(where: $where) {
+    const GET_ECONOMICEVENT = gql`
+      query getEconomicEvent($where: EconomicEventWhereInput!) {
+        getEconomicEvent(where: $where) {
           id
           title
           description
@@ -219,11 +219,11 @@ export const EconomicEvent = {
       },
 };
     try {
-      const response = await client.query({ query: GET_ECONOMICEVENTS, variables });
+      const response = await client.query({ query: GET_ECONOMICEVENT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.economicEvents ?? null;
+      return response.data?.getEconomicEvent ?? null;
     } catch (error) {
-      console.error('Error in getEconomicEvents:', error);
+      console.error('Error in getEconomicEvent:', error);
       throw error;
     }
   },

@@ -1611,9 +1611,9 @@ export const EnvironmentVariable = {
    * @returns The retrieved EnvironmentVariable or null.
    */
   async get(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
-    const GET_ENVIRONMENTVARIABLES = gql`
-      query getEnvironmentVariables($where: EnvironmentVariableWhereInput!) {
-        environmentVariables(where: $where) {
+    const GET_ENVIRONMENTVARIABLE = gql`
+      query getEnvironmentVariable($where: EnvironmentVariableWhereInput!) {
+        getEnvironmentVariable(where: $where) {
           id
           key
           value
@@ -1948,11 +1948,11 @@ export const EnvironmentVariable = {
       },
 };
     try {
-      const response = await client.query({ query: GET_ENVIRONMENTVARIABLES, variables });
+      const response = await client.query({ query: GET_ENVIRONMENTVARIABLE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.environmentVariables ?? null;
+      return response.data?.getEnvironmentVariable ?? null;
     } catch (error) {
-      console.error('Error in getEnvironmentVariables:', error);
+      console.error('Error in getEnvironmentVariable:', error);
       throw error;
     }
   },

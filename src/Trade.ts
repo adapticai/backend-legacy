@@ -2805,9 +2805,9 @@ export const Trade = {
    * @returns The retrieved Trade or null.
    */
   async get(props: TradeType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeType> {
-    const GET_TRADES = gql`
-      query getTrades($where: TradeWhereInput!) {
-        trades(where: $where) {
+    const GET_TRADE = gql`
+      query getTrade($where: TradeWhereInput!) {
+        getTrade(where: $where) {
           id
           userId
           portfolioId
@@ -3137,11 +3137,11 @@ export const Trade = {
       },
 };
     try {
-      const response = await client.query({ query: GET_TRADES, variables });
+      const response = await client.query({ query: GET_TRADE, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.trades ?? null;
+      return response.data?.getTrade ?? null;
     } catch (error) {
-      console.error('Error in getTrades:', error);
+      console.error('Error in getTrade:', error);
       throw error;
     }
   },

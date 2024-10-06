@@ -1764,9 +1764,9 @@ export const Session = {
    * @returns The retrieved Session or null.
    */
   async get(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType> {
-    const GET_SESSIONS = gql`
-      query getSessions($where: SessionWhereInput!) {
-        sessions(where: $where) {
+    const GET_SESSION = gql`
+      query getSession($where: SessionWhereInput!) {
+        getSession(where: $where) {
           id
           sessionToken
           userId
@@ -2096,11 +2096,11 @@ export const Session = {
       },
 };
     try {
-      const response = await client.query({ query: GET_SESSIONS, variables });
+      const response = await client.query({ query: GET_SESSION, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.sessions ?? null;
+      return response.data?.getSession ?? null;
     } catch (error) {
-      console.error('Error in getSessions:', error);
+      console.error('Error in getSession:', error);
       throw error;
     }
   },

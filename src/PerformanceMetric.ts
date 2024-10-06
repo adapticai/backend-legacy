@@ -2261,9 +2261,9 @@ export const PerformanceMetric = {
    * @returns The retrieved PerformanceMetric or null.
    */
   async get(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType> {
-    const GET_PERFORMANCEMETRICS = gql`
-      query getPerformanceMetrics($where: PerformanceMetricWhereInput!) {
-        performanceMetrics(where: $where) {
+    const GET_PERFORMANCEMETRIC = gql`
+      query getPerformanceMetric($where: PerformanceMetricWhereInput!) {
+        getPerformanceMetric(where: $where) {
           id
           userId
           portfolioId
@@ -2593,11 +2593,11 @@ export const PerformanceMetric = {
       },
 };
     try {
-      const response = await client.query({ query: GET_PERFORMANCEMETRICS, variables });
+      const response = await client.query({ query: GET_PERFORMANCEMETRIC, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.performanceMetrics ?? null;
+      return response.data?.getPerformanceMetric ?? null;
     } catch (error) {
-      console.error('Error in getPerformanceMetrics:', error);
+      console.error('Error in getPerformanceMetric:', error);
       throw error;
     }
   },
