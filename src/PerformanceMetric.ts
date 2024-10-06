@@ -561,6 +561,9 @@ export const PerformanceMetric = {
       connectOrCreate: props.portfolio.environmentVariables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
         },
         create: {
           key: item.key !== undefined ? item.key : undefined,
@@ -1623,6 +1626,9 @@ export const PerformanceMetric = {
       upsert: props.portfolio.environmentVariables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
         },
         update: {
           key: item.key !== undefined ? {
@@ -1747,6 +1753,9 @@ export const PerformanceMetric = {
       connectOrCreate: props.portfolio.environmentVariables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
         },
         create: {
           key: item.key !== undefined ? item.key : undefined,

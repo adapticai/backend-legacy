@@ -730,6 +730,9 @@ export const User = {
       connectOrCreate: item.environmentVariables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
         },
         create: {
           key: item.key !== undefined ? item.key : undefined,
@@ -2133,6 +2136,9 @@ export const User = {
       upsert: item.environmentVariables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
         },
         update: {
           key: item.key !== undefined ? {
@@ -2246,6 +2252,9 @@ export const User = {
       connectOrCreate: item.environmentVariables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
         },
         create: {
           key: item.key !== undefined ? item.key : undefined,

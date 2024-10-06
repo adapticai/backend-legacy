@@ -393,6 +393,7 @@ export const News = {
     const variables = {
       where: {
               id: props.id !== undefined ? props.id : undefined,
+        url: props.url !== undefined ? props.url : undefined,
         title: props.title !== undefined ? {
             equals: props.title 
            } : undefined,
@@ -802,6 +803,9 @@ export const News = {
         title: props.title !== undefined ? {
             equals: props.title 
            } : undefined,
+        url: props.url !== undefined ? {
+            equals: props.url 
+           } : undefined,
       },
 };
     try {
@@ -1098,6 +1102,9 @@ export const News = {
            } : undefined,
         title: props.title !== undefined ? {
             equals: props.title 
+           } : undefined,
+        url: props.url !== undefined ? {
+            equals: props.url 
            } : undefined,
       },
     };

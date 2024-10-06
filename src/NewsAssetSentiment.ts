@@ -250,6 +250,7 @@ export const NewsAssetSentiment = {
     connectOrCreate: {
       where: {
         id: props.news.id !== undefined ? props.news.id : undefined,
+        url: props.news.url !== undefined ? props.news.url : undefined,
         title: props.news.title !== undefined ? {
             equals: props.news.title 
            } : undefined,
@@ -652,6 +653,9 @@ export const NewsAssetSentiment = {
            } : undefined,
         title: props.news.title !== undefined ? {
             equals: props.news.title 
+           } : undefined,
+        url: props.news.url !== undefined ? {
+            equals: props.news.url 
            } : undefined,
       },
       update: {

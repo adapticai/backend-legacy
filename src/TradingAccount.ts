@@ -774,6 +774,9 @@ export const TradingAccount = {
     connectOrCreate: props.environmentVariables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        key: item.key !== undefined ? {
+            equals: item.key 
+           } : undefined,
       },
       create: {
         key: item.key !== undefined ? item.key : undefined,
@@ -2538,6 +2541,9 @@ export const TradingAccount = {
     upsert: props.environmentVariables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        key: item.key !== undefined ? {
+            equals: item.key 
+           } : undefined,
       },
       update: {
         key: item.key !== undefined ? {

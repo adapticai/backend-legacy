@@ -749,6 +749,9 @@ export const EnvironmentVariable = {
     const variables = {
       where: {
               id: props.id !== undefined ? props.id : undefined,
+        key: props.key !== undefined ? {
+            equals: props.key 
+           } : undefined,
       },
       data: {
   description: props.description !== undefined ? {
@@ -1704,6 +1707,9 @@ export const EnvironmentVariable = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
+        key: props.key !== undefined ? {
+            equals: props.key 
+           } : undefined,
       },
 };
     try {
@@ -2277,6 +2283,9 @@ export const EnvironmentVariable = {
       where: {
         id: props.id !== undefined ? {
             equals: props.id 
+           } : undefined,
+        key: props.key !== undefined ? {
+            equals: props.key 
            } : undefined,
       },
     };

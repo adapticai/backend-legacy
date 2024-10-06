@@ -622,7 +622,7 @@ const isReservedField = (name: string): boolean => {
 
 const isUniqueField = (name: string): boolean => {
   // return true if the field matches any of the unique fields
-  const uniqueFields = ['id', 'email', 'username', 'slug', 'name', 'title'];
+  const uniqueFields = ['id', 'email', 'username', 'slug', 'name', 'title', 'url', 'key', 'handle'];
   return uniqueFields.includes(name);
 };
 

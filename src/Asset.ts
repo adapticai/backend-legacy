@@ -492,6 +492,7 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.news.id !== undefined ? item.news.id : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
           title: item.news.title !== undefined ? {
               equals: item.news.title 
              } : undefined,
@@ -1490,6 +1491,9 @@ export const Asset = {
           title: item.news.title !== undefined ? {
               equals: item.news.title 
              } : undefined,
+          url: item.news.url !== undefined ? {
+              equals: item.news.url 
+             } : undefined,
         },
         update: {
           title: item.news.title !== undefined ? {
@@ -1558,6 +1562,7 @@ export const Asset = {
       connectOrCreate: {
         where: {
           id: item.news.id !== undefined ? item.news.id : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
           title: item.news.title !== undefined ? {
               equals: item.news.title 
              } : undefined,

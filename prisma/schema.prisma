@@ -397,7 +397,7 @@ model News {
   content       String?
   source        String
   sourceDomain  String?
-  url           String
+  url           String               @unique
   sentiment     String
   authors       String[]
   summary       String?
