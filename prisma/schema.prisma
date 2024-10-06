@@ -238,7 +238,7 @@ model Customer {
 }
 
 model Asset {
-  id                String               @id @default(uuid()) @db.Uuid
+  id                String               @id @unique
   symbol            String               @unique
   name              String               @unique
   type              AssetType
