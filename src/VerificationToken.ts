@@ -154,8 +154,10 @@ export const VerificationToken = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_VERIFICATIONTOKEN, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneVerificationToken) {
         return response.data.deleteOneVerificationToken;
@@ -190,10 +192,12 @@ export const VerificationToken = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_VERIFICATIONTOKEN, variables });
+      const response = await client.query({ query: GET_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getVerificationToken ?? null;
     } catch (error) {

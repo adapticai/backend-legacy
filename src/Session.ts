@@ -1743,8 +1743,10 @@ export const Session = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_SESSION, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneSession) {
         return response.data.deleteOneSession;
@@ -2093,10 +2095,12 @@ export const Session = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_SESSION, variables });
+      const response = await client.query({ query: GET_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getSession ?? null;
     } catch (error) {

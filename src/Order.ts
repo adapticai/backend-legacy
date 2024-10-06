@@ -2708,8 +2708,10 @@ export const Order = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ORDER, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneOrder) {
         return response.data.deleteOneOrder;
@@ -3058,10 +3060,12 @@ export const Order = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_ORDER, variables });
+      const response = await client.query({ query: GET_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getOrder ?? null;
     } catch (error) {

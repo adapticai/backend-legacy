@@ -1575,8 +1575,10 @@ export const NewsArticleAssetSentiment = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_NEWSARTICLEASSETSENTIMENT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneNewsArticleAssetSentiment) {
         return response.data.deleteOneNewsArticleAssetSentiment;
@@ -1887,10 +1889,12 @@ export const NewsArticleAssetSentiment = {
         url: props.url !== undefined ? {
             equals: props.url 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_NEWSARTICLEASSETSENTIMENT, variables });
+      const response = await client.query({ query: GET_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getNewsArticleAssetSentiment ?? null;
     } catch (error) {

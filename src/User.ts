@@ -3611,8 +3611,10 @@ export const User = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_USER, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_USER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneUser) {
         return response.data.deleteOneUser;
@@ -3999,10 +4001,12 @@ export const User = {
         email: props.email !== undefined ? {
             equals: props.email 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_USER, variables });
+      const response = await client.query({ query: GET_USER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getUser ?? null;
     } catch (error) {

@@ -4177,8 +4177,10 @@ export const TradingAccount = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_TRADINGACCOUNT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneTradingAccount) {
         return response.data.deleteOneTradingAccount;
@@ -4554,10 +4556,12 @@ export const TradingAccount = {
         slug: props.slug !== undefined ? {
             equals: props.slug 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_TRADINGACCOUNT, variables });
+      const response = await client.query({ query: GET_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTradingAccount ?? null;
     } catch (error) {

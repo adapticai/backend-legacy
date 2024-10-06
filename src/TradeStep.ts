@@ -1763,8 +1763,10 @@ export const TradeStep = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_TRADESTEP, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneTradeStep) {
         return response.data.deleteOneTradeStep;
@@ -2136,10 +2138,12 @@ export const TradeStep = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_TRADESTEP, variables });
+      const response = await client.query({ query: GET_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTradeStep ?? null;
     } catch (error) {

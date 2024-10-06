@@ -2170,8 +2170,10 @@ export const Asset = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ASSET, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAsset) {
         return response.data.deleteOneAsset;
@@ -2512,10 +2514,12 @@ export const Asset = {
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_ASSET, variables });
+      const response = await client.query({ query: GET_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAsset ?? null;
     } catch (error) {

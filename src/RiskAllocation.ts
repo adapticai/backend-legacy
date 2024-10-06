@@ -2243,8 +2243,10 @@ export const RiskAllocation = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_RISKALLOCATION, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneRiskAllocation) {
         return response.data.deleteOneRiskAllocation;
@@ -2593,10 +2595,12 @@ export const RiskAllocation = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_RISKALLOCATION, variables });
+      const response = await client.query({ query: GET_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getRiskAllocation ?? null;
     } catch (error) {

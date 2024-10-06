@@ -832,8 +832,10 @@ ${selectionSet}      }
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_${capitalModelName.toUpperCase()}, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOne${capitalModelName}) {
         return response.data.deleteOne${capitalModelName};
@@ -868,10 +870,12 @@ ${selectionSet}        }
     inputsPath,
     modelsPath,
     'where'
-  )}      },
+  )}},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_${capitalModelName.toUpperCase()}, variables });
+      const response = await client.query({ query: GET_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.get${capitalModelName} ?? null;
     } catch (error) {

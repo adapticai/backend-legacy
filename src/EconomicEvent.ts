@@ -174,8 +174,10 @@ export const EconomicEvent = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ECONOMICEVENT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneEconomicEvent) {
         return response.data.deleteOneEconomicEvent;
@@ -216,10 +218,12 @@ export const EconomicEvent = {
         title: props.title !== undefined ? {
             equals: props.title 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_ECONOMICEVENT, variables });
+      const response = await client.query({ query: GET_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getEconomicEvent ?? null;
     } catch (error) {

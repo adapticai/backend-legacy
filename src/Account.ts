@@ -1729,8 +1729,10 @@ export const Account = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ACCOUNT, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneAccount) {
         return response.data.deleteOneAccount;
@@ -2079,10 +2081,12 @@ export const Account = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_ACCOUNT, variables });
+      const response = await client.query({ query: GET_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAccount ?? null;
     } catch (error) {

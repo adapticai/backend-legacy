@@ -1110,8 +1110,10 @@ export const NewsArticle = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_NEWSARTICLE, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_NEWSARTICLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneNewsArticle) {
         return response.data.deleteOneNewsArticle;
@@ -1328,10 +1330,12 @@ export const NewsArticle = {
         url: props.url !== undefined ? {
             equals: props.url 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_NEWSARTICLE, variables });
+      const response = await client.query({ query: GET_NEWSARTICLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getNewsArticle ?? null;
     } catch (error) {

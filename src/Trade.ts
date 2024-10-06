@@ -2784,8 +2784,10 @@ export const Trade = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_TRADE, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneTrade) {
         return response.data.deleteOneTrade;
@@ -3134,10 +3136,12 @@ export const Trade = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_TRADE, variables });
+      const response = await client.query({ query: GET_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTrade ?? null;
     } catch (error) {

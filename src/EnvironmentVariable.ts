@@ -1590,8 +1590,10 @@ export const EnvironmentVariable = {
       }
     };
 
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ENVIRONMENTVARIABLE, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.deleteOneEnvironmentVariable) {
         return response.data.deleteOneEnvironmentVariable;
@@ -1945,10 +1947,12 @@ export const EnvironmentVariable = {
         key: props.key !== undefined ? {
             equals: props.key 
            } : undefined,
-      },
+},
 };
+    const filteredVariables = removeUndefinedProps(variables);
+
     try {
-      const response = await client.query({ query: GET_ENVIRONMENTVARIABLE, variables });
+      const response = await client.query({ query: GET_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getEnvironmentVariable ?? null;
     } catch (error) {
