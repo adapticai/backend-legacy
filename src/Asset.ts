@@ -1077,6 +1077,9 @@ export const Asset = {
   fiscalYearEnd: props.fiscalYearEnd !== undefined ? {
             set: props.fiscalYearEnd 
            } : undefined,
+  latestQuarter: props.latestQuarter !== undefined ? {
+            set: props.latestQuarter 
+           } : undefined,
   marketCapitalization: props.marketCapitalization !== undefined ? {
             set: props.marketCapitalization 
            } : undefined,
@@ -1184,6 +1187,12 @@ export const Asset = {
            } : undefined,
   sharesOutstanding: props.sharesOutstanding !== undefined ? {
             set: props.sharesOutstanding 
+           } : undefined,
+  dividendDate: props.dividendDate !== undefined ? {
+            set: props.dividendDate 
+           } : undefined,
+  exDividendDate: props.exDividendDate !== undefined ? {
+            set: props.exDividendDate 
            } : undefined,
   holdings: props.holdings ? {
     upsert: props.holdings.map((item: any) => ({
