@@ -3632,9 +3632,9 @@ export const User = {
    * @returns The retrieved User or null.
    */
   async get(props: UserType, client: ApolloClient<NormalizedCacheObject>): Promise<UserType> {
-    const GET_USERS = gql`
-      query getUsers($where: UserWhereInput!) {
-        users(where: $where) {
+    const GET_USER = gql`
+      query getUser($where: UserWhereInput!) {
+        getUser(where: $where) {
           id
           name
           email
@@ -4002,11 +4002,11 @@ export const User = {
       },
 };
     try {
-      const response = await client.query({ query: GET_USERS, variables });
+      const response = await client.query({ query: GET_USER, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.users ?? null;
+      return response.data?.getUser ?? null;
     } catch (error) {
-      console.error('Error in getUsers:', error);
+      console.error('Error in getUser:', error);
       throw error;
     }
   },
