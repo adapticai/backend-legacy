@@ -376,9 +376,8 @@ export const TradeStep = {
       connectOrCreate: {
         where: {
           id: props.trade.asset.id !== undefined ? props.trade.asset.id : undefined,
-          name: props.trade.asset.name !== undefined ? {
-              equals: props.trade.asset.name 
-             } : undefined,
+          symbol: props.trade.asset.symbol !== undefined ? props.trade.asset.symbol : undefined,
+          name: props.trade.asset.name !== undefined ? props.trade.asset.name : undefined,
         },
         create: {
           symbol: props.trade.asset.symbol !== undefined ? props.trade.asset.symbol : undefined,
@@ -895,6 +894,9 @@ export const TradeStep = {
           id: props.trade.asset.id !== undefined ? {
               equals: props.trade.asset.id 
              } : undefined,
+          symbol: props.trade.asset.symbol !== undefined ? {
+              equals: props.trade.asset.symbol 
+             } : undefined,
           name: props.trade.asset.name !== undefined ? {
               equals: props.trade.asset.name 
              } : undefined,
@@ -971,9 +973,8 @@ export const TradeStep = {
       connectOrCreate: {
         where: {
           id: props.trade.asset.id !== undefined ? props.trade.asset.id : undefined,
-          name: props.trade.asset.name !== undefined ? {
-              equals: props.trade.asset.name 
-             } : undefined,
+          symbol: props.trade.asset.symbol !== undefined ? props.trade.asset.symbol : undefined,
+          name: props.trade.asset.name !== undefined ? props.trade.asset.name : undefined,
         },
         create: {
           symbol: props.trade.asset.symbol !== undefined ? props.trade.asset.symbol : undefined,

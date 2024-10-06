@@ -276,9 +276,8 @@ export const NewsAssetSentiment = {
     connectOrCreate: {
       where: {
         id: props.asset.id !== undefined ? props.asset.id : undefined,
-        name: props.asset.name !== undefined ? {
-            equals: props.asset.name 
-           } : undefined,
+        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
+        name: props.asset.name !== undefined ? props.asset.name : undefined,
       },
       create: {
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
@@ -720,6 +719,9 @@ export const NewsAssetSentiment = {
       where: {
         id: props.asset.id !== undefined ? {
             equals: props.asset.id 
+           } : undefined,
+        symbol: props.asset.symbol !== undefined ? {
+            equals: props.asset.symbol 
            } : undefined,
         name: props.asset.name !== undefined ? {
             equals: props.asset.name 

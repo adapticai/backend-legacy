@@ -477,9 +477,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -530,9 +529,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -606,9 +604,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -655,9 +652,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1640,6 +1636,9 @@ export const TradingAccount = {
           id: item.asset.id !== undefined ? {
               equals: item.asset.id 
              } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              equals: item.asset.symbol 
+             } : undefined,
           name: item.asset.name !== undefined ? {
               equals: item.asset.name 
              } : undefined,
@@ -1674,9 +1673,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1773,6 +1771,9 @@ export const TradingAccount = {
         where: {
           id: item.asset.id !== undefined ? {
               equals: item.asset.id 
+             } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              equals: item.asset.symbol 
              } : undefined,
           name: item.asset.name !== undefined ? {
               equals: item.asset.name 
@@ -1905,9 +1906,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -2026,6 +2026,9 @@ export const TradingAccount = {
           id: item.asset.id !== undefined ? {
               equals: item.asset.id 
              } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              equals: item.asset.symbol 
+             } : undefined,
           name: item.asset.name !== undefined ? {
               equals: item.asset.name 
              } : undefined,
@@ -2085,9 +2088,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -2173,6 +2175,9 @@ export const TradingAccount = {
           id: item.asset.id !== undefined ? {
               equals: item.asset.id 
              } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              equals: item.asset.symbol 
+             } : undefined,
           name: item.asset.name !== undefined ? {
               equals: item.asset.name 
              } : undefined,
@@ -2229,9 +2234,8 @@ export const TradingAccount = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,

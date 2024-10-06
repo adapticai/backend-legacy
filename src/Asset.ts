@@ -837,9 +837,8 @@ export const Asset = {
     const variables = {
       where: {
               id: props.id !== undefined ? props.id : undefined,
-        name: props.name !== undefined ? {
-            equals: props.name 
-           } : undefined,
+        symbol: props.symbol !== undefined ? props.symbol : undefined,
+        name: props.name !== undefined ? props.name : undefined,
       },
       data: {
   type: props.type !== undefined ? {
@@ -2146,6 +2145,9 @@ export const Asset = {
               id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
+        symbol: props.symbol !== undefined ? {
+            equals: props.symbol 
+           } : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
@@ -2690,6 +2692,9 @@ export const Asset = {
       where: {
         id: props.id !== undefined ? {
             equals: props.id 
+           } : undefined,
+        symbol: props.symbol !== undefined ? {
+            equals: props.symbol 
            } : undefined,
         name: props.name !== undefined ? {
             equals: props.name 

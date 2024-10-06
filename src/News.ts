@@ -172,9 +172,8 @@ export const News = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -437,6 +436,9 @@ export const News = {
           id: item.asset.id !== undefined ? {
               equals: item.asset.id 
              } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              equals: item.asset.symbol 
+             } : undefined,
           name: item.asset.name !== undefined ? {
               equals: item.asset.name 
              } : undefined,
@@ -472,9 +474,8 @@ export const News = {
       connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
