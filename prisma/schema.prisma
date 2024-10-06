@@ -417,6 +417,7 @@ model NewsAssetSentiment {
   id             String  @id @default(uuid()) @db.Uuid
   assetId        String  @db.Uuid
   newsId         String  @db.Uuid
+  url            String  @unique
   news           News    @relation(fields: [newsId], references: [id])
   asset          Asset   @relation(fields: [assetId], references: [id])
   relevancyScore String?
