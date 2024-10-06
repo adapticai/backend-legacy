@@ -24,6 +24,64 @@ export const Asset = {
           name
           type
           logoUrl
+          description
+          cik
+          exchange
+          currency
+          country
+          sector
+          industry
+          address
+          officialSite
+          fiscalYearEnd
+          latestQuarter
+          marketCapitalization {
+          }
+          ebitda {
+            id
+          }
+          peRatio
+          pegRatio
+          bookValue
+          dividendPerShare
+          dividendYield
+          eps
+          revenuePerShareTTM
+          profitMargin
+          operatingMarginTTM
+          returnOnAssetsTTM
+          returnOnEquityTTM
+          revenueTTM {
+            id
+          }
+          grossProfitTTM {
+            id
+          }
+          dilutedEPSTTM
+          quarterlyEarningsGrowthYOY
+          quarterlyRevenueGrowthYOY
+          analystTargetPrice
+          analystRatingStrongBuy
+          analystRatingBuy
+          analystRatingHold
+          analystRatingSell
+          analystRatingStrongSell
+          trailingPE
+          forwardPE
+          priceToSalesRatioTTM
+          priceToBookRatio
+          evToRevenue
+          evToEbitda
+          beta
+          week52High
+          week52Low
+          day50MovingAverage
+          day200MovingAverage
+          sharesOutstanding {
+            id
+          }
+          dividendDate
+          exDividendDate
           createdAt
           updatedAt
           holdings {
@@ -235,7 +293,8 @@ export const Asset = {
           newsMentions {
             id
             assetId
-            newsId
+            newsArticleId
+            url
             news {
               id
               title
@@ -274,6 +333,50 @@ export const Asset = {
   name: props.name !== undefined ? props.name : undefined,
   type: props.type !== undefined ? props.type : undefined,
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  cik: props.cik !== undefined ? props.cik : undefined,
+  exchange: props.exchange !== undefined ? props.exchange : undefined,
+  currency: props.currency !== undefined ? props.currency : undefined,
+  country: props.country !== undefined ? props.country : undefined,
+  sector: props.sector !== undefined ? props.sector : undefined,
+  industry: props.industry !== undefined ? props.industry : undefined,
+  address: props.address !== undefined ? props.address : undefined,
+  officialSite: props.officialSite !== undefined ? props.officialSite : undefined,
+  fiscalYearEnd: props.fiscalYearEnd !== undefined ? props.fiscalYearEnd : undefined,
+  latestQuarter: props.latestQuarter !== undefined ? props.latestQuarter : undefined,
+  peRatio: props.peRatio !== undefined ? props.peRatio : undefined,
+  pegRatio: props.pegRatio !== undefined ? props.pegRatio : undefined,
+  bookValue: props.bookValue !== undefined ? props.bookValue : undefined,
+  dividendPerShare: props.dividendPerShare !== undefined ? props.dividendPerShare : undefined,
+  dividendYield: props.dividendYield !== undefined ? props.dividendYield : undefined,
+  eps: props.eps !== undefined ? props.eps : undefined,
+  revenuePerShareTTM: props.revenuePerShareTTM !== undefined ? props.revenuePerShareTTM : undefined,
+  profitMargin: props.profitMargin !== undefined ? props.profitMargin : undefined,
+  operatingMarginTTM: props.operatingMarginTTM !== undefined ? props.operatingMarginTTM : undefined,
+  returnOnAssetsTTM: props.returnOnAssetsTTM !== undefined ? props.returnOnAssetsTTM : undefined,
+  returnOnEquityTTM: props.returnOnEquityTTM !== undefined ? props.returnOnEquityTTM : undefined,
+  dilutedEPSTTM: props.dilutedEPSTTM !== undefined ? props.dilutedEPSTTM : undefined,
+  quarterlyEarningsGrowthYOY: props.quarterlyEarningsGrowthYOY !== undefined ? props.quarterlyEarningsGrowthYOY : undefined,
+  quarterlyRevenueGrowthYOY: props.quarterlyRevenueGrowthYOY !== undefined ? props.quarterlyRevenueGrowthYOY : undefined,
+  analystTargetPrice: props.analystTargetPrice !== undefined ? props.analystTargetPrice : undefined,
+  analystRatingStrongBuy: props.analystRatingStrongBuy !== undefined ? props.analystRatingStrongBuy : undefined,
+  analystRatingBuy: props.analystRatingBuy !== undefined ? props.analystRatingBuy : undefined,
+  analystRatingHold: props.analystRatingHold !== undefined ? props.analystRatingHold : undefined,
+  analystRatingSell: props.analystRatingSell !== undefined ? props.analystRatingSell : undefined,
+  analystRatingStrongSell: props.analystRatingStrongSell !== undefined ? props.analystRatingStrongSell : undefined,
+  trailingPE: props.trailingPE !== undefined ? props.trailingPE : undefined,
+  forwardPE: props.forwardPE !== undefined ? props.forwardPE : undefined,
+  priceToSalesRatioTTM: props.priceToSalesRatioTTM !== undefined ? props.priceToSalesRatioTTM : undefined,
+  priceToBookRatio: props.priceToBookRatio !== undefined ? props.priceToBookRatio : undefined,
+  evToRevenue: props.evToRevenue !== undefined ? props.evToRevenue : undefined,
+  evToEbitda: props.evToEbitda !== undefined ? props.evToEbitda : undefined,
+  beta: props.beta !== undefined ? props.beta : undefined,
+  week52High: props.week52High !== undefined ? props.week52High : undefined,
+  week52Low: props.week52Low !== undefined ? props.week52Low : undefined,
+  day50MovingAverage: props.day50MovingAverage !== undefined ? props.day50MovingAverage : undefined,
+  day200MovingAverage: props.day200MovingAverage !== undefined ? props.day200MovingAverage : undefined,
+  dividendDate: props.dividendDate !== undefined ? props.dividendDate : undefined,
+  exDividendDate: props.exDividendDate !== undefined ? props.exDividendDate : undefined,
   holdings: props.holdings ? {
     connectOrCreate: props.holdings.map((item: any) => ({
       where: {
@@ -483,8 +586,10 @@ export const Asset = {
     connectOrCreate: props.newsMentions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        url: item.url !== undefined ? item.url : undefined,
       },
       create: {
+        url: item.url !== undefined ? item.url : undefined,
         relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
         sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
         sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
@@ -557,6 +662,50 @@ export const Asset = {
   name: prop.name !== undefined ? prop.name : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
   logoUrl: prop.logoUrl !== undefined ? prop.logoUrl : undefined,
+  description: prop.description !== undefined ? prop.description : undefined,
+  cik: prop.cik !== undefined ? prop.cik : undefined,
+  exchange: prop.exchange !== undefined ? prop.exchange : undefined,
+  currency: prop.currency !== undefined ? prop.currency : undefined,
+  country: prop.country !== undefined ? prop.country : undefined,
+  sector: prop.sector !== undefined ? prop.sector : undefined,
+  industry: prop.industry !== undefined ? prop.industry : undefined,
+  address: prop.address !== undefined ? prop.address : undefined,
+  officialSite: prop.officialSite !== undefined ? prop.officialSite : undefined,
+  fiscalYearEnd: prop.fiscalYearEnd !== undefined ? prop.fiscalYearEnd : undefined,
+  latestQuarter: prop.latestQuarter !== undefined ? prop.latestQuarter : undefined,
+  peRatio: prop.peRatio !== undefined ? prop.peRatio : undefined,
+  pegRatio: prop.pegRatio !== undefined ? prop.pegRatio : undefined,
+  bookValue: prop.bookValue !== undefined ? prop.bookValue : undefined,
+  dividendPerShare: prop.dividendPerShare !== undefined ? prop.dividendPerShare : undefined,
+  dividendYield: prop.dividendYield !== undefined ? prop.dividendYield : undefined,
+  eps: prop.eps !== undefined ? prop.eps : undefined,
+  revenuePerShareTTM: prop.revenuePerShareTTM !== undefined ? prop.revenuePerShareTTM : undefined,
+  profitMargin: prop.profitMargin !== undefined ? prop.profitMargin : undefined,
+  operatingMarginTTM: prop.operatingMarginTTM !== undefined ? prop.operatingMarginTTM : undefined,
+  returnOnAssetsTTM: prop.returnOnAssetsTTM !== undefined ? prop.returnOnAssetsTTM : undefined,
+  returnOnEquityTTM: prop.returnOnEquityTTM !== undefined ? prop.returnOnEquityTTM : undefined,
+  dilutedEPSTTM: prop.dilutedEPSTTM !== undefined ? prop.dilutedEPSTTM : undefined,
+  quarterlyEarningsGrowthYOY: prop.quarterlyEarningsGrowthYOY !== undefined ? prop.quarterlyEarningsGrowthYOY : undefined,
+  quarterlyRevenueGrowthYOY: prop.quarterlyRevenueGrowthYOY !== undefined ? prop.quarterlyRevenueGrowthYOY : undefined,
+  analystTargetPrice: prop.analystTargetPrice !== undefined ? prop.analystTargetPrice : undefined,
+  analystRatingStrongBuy: prop.analystRatingStrongBuy !== undefined ? prop.analystRatingStrongBuy : undefined,
+  analystRatingBuy: prop.analystRatingBuy !== undefined ? prop.analystRatingBuy : undefined,
+  analystRatingHold: prop.analystRatingHold !== undefined ? prop.analystRatingHold : undefined,
+  analystRatingSell: prop.analystRatingSell !== undefined ? prop.analystRatingSell : undefined,
+  analystRatingStrongSell: prop.analystRatingStrongSell !== undefined ? prop.analystRatingStrongSell : undefined,
+  trailingPE: prop.trailingPE !== undefined ? prop.trailingPE : undefined,
+  forwardPE: prop.forwardPE !== undefined ? prop.forwardPE : undefined,
+  priceToSalesRatioTTM: prop.priceToSalesRatioTTM !== undefined ? prop.priceToSalesRatioTTM : undefined,
+  priceToBookRatio: prop.priceToBookRatio !== undefined ? prop.priceToBookRatio : undefined,
+  evToRevenue: prop.evToRevenue !== undefined ? prop.evToRevenue : undefined,
+  evToEbitda: prop.evToEbitda !== undefined ? prop.evToEbitda : undefined,
+  beta: prop.beta !== undefined ? prop.beta : undefined,
+  week52High: prop.week52High !== undefined ? prop.week52High : undefined,
+  week52Low: prop.week52Low !== undefined ? prop.week52Low : undefined,
+  day50MovingAverage: prop.day50MovingAverage !== undefined ? prop.day50MovingAverage : undefined,
+  day200MovingAverage: prop.day200MovingAverage !== undefined ? prop.day200MovingAverage : undefined,
+  dividendDate: prop.dividendDate !== undefined ? prop.dividendDate : undefined,
+  exDividendDate: prop.exDividendDate !== undefined ? prop.exDividendDate : undefined,
       })),
     };
 
@@ -591,6 +740,64 @@ export const Asset = {
           name
           type
           logoUrl
+          description
+          cik
+          exchange
+          currency
+          country
+          sector
+          industry
+          address
+          officialSite
+          fiscalYearEnd
+          latestQuarter
+          marketCapitalization {
+          }
+          ebitda {
+            id
+          }
+          peRatio
+          pegRatio
+          bookValue
+          dividendPerShare
+          dividendYield
+          eps
+          revenuePerShareTTM
+          profitMargin
+          operatingMarginTTM
+          returnOnAssetsTTM
+          returnOnEquityTTM
+          revenueTTM {
+            id
+          }
+          grossProfitTTM {
+            id
+          }
+          dilutedEPSTTM
+          quarterlyEarningsGrowthYOY
+          quarterlyRevenueGrowthYOY
+          analystTargetPrice
+          analystRatingStrongBuy
+          analystRatingBuy
+          analystRatingHold
+          analystRatingSell
+          analystRatingStrongSell
+          trailingPE
+          forwardPE
+          priceToSalesRatioTTM
+          priceToBookRatio
+          evToRevenue
+          evToEbitda
+          beta
+          week52High
+          week52Low
+          day50MovingAverage
+          day200MovingAverage
+          sharesOutstanding {
+            id
+          }
+          dividendDate
+          exDividendDate
           createdAt
           updatedAt
           holdings {
@@ -802,7 +1009,8 @@ export const Asset = {
           newsMentions {
             id
             assetId
-            newsId
+            newsArticleId
+            url
             news {
               id
               title
@@ -846,6 +1054,36 @@ export const Asset = {
            } : undefined,
   logoUrl: props.logoUrl !== undefined ? {
             set: props.logoUrl 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
+           } : undefined,
+  cik: props.cik !== undefined ? {
+            set: props.cik 
+           } : undefined,
+  exchange: props.exchange !== undefined ? {
+            set: props.exchange 
+           } : undefined,
+  currency: props.currency !== undefined ? {
+            set: props.currency 
+           } : undefined,
+  country: props.country !== undefined ? {
+            set: props.country 
+           } : undefined,
+  sector: props.sector !== undefined ? {
+            set: props.sector 
+           } : undefined,
+  industry: props.industry !== undefined ? {
+            set: props.industry 
+           } : undefined,
+  address: props.address !== undefined ? {
+            set: props.address 
+           } : undefined,
+  officialSite: props.officialSite !== undefined ? {
+            set: props.officialSite 
+           } : undefined,
+  fiscalYearEnd: props.fiscalYearEnd !== undefined ? {
+            set: props.fiscalYearEnd 
            } : undefined,
   holdings: props.holdings ? {
     upsert: props.holdings.map((item: any) => ({
@@ -1469,8 +1707,12 @@ export const Asset = {
     upsert: props.newsMentions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        url: item.url !== undefined ? item.url : undefined,
       },
       update: {
+        url: item.url !== undefined ? {
+            set: item.url  
+           } : undefined,
         relevancyScore: item.relevancyScore !== undefined ? {
             set: item.relevancyScore  
            } : undefined,
@@ -1553,6 +1795,7 @@ export const Asset = {
     } : undefined,
       },
       create: {
+        url: item.url !== undefined ? item.url : undefined,
         relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
         sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
         sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
@@ -1619,6 +1862,64 @@ export const Asset = {
           name
           type
           logoUrl
+          description
+          cik
+          exchange
+          currency
+          country
+          sector
+          industry
+          address
+          officialSite
+          fiscalYearEnd
+          latestQuarter
+          marketCapitalization {
+          }
+          ebitda {
+            id
+          }
+          peRatio
+          pegRatio
+          bookValue
+          dividendPerShare
+          dividendYield
+          eps
+          revenuePerShareTTM
+          profitMargin
+          operatingMarginTTM
+          returnOnAssetsTTM
+          returnOnEquityTTM
+          revenueTTM {
+            id
+          }
+          grossProfitTTM {
+            id
+          }
+          dilutedEPSTTM
+          quarterlyEarningsGrowthYOY
+          quarterlyRevenueGrowthYOY
+          analystTargetPrice
+          analystRatingStrongBuy
+          analystRatingBuy
+          analystRatingHold
+          analystRatingSell
+          analystRatingStrongSell
+          trailingPE
+          forwardPE
+          priceToSalesRatioTTM
+          priceToBookRatio
+          evToRevenue
+          evToEbitda
+          beta
+          week52High
+          week52Low
+          day50MovingAverage
+          day200MovingAverage
+          sharesOutstanding {
+            id
+          }
+          dividendDate
+          exDividendDate
           createdAt
           updatedAt
           holdings {
@@ -1830,7 +2131,8 @@ export const Asset = {
           newsMentions {
             id
             assetId
-            newsId
+            newsArticleId
+            url
             news {
               id
               title
@@ -1897,6 +2199,64 @@ export const Asset = {
           name
           type
           logoUrl
+          description
+          cik
+          exchange
+          currency
+          country
+          sector
+          industry
+          address
+          officialSite
+          fiscalYearEnd
+          latestQuarter
+          marketCapitalization {
+          }
+          ebitda {
+            id
+          }
+          peRatio
+          pegRatio
+          bookValue
+          dividendPerShare
+          dividendYield
+          eps
+          revenuePerShareTTM
+          profitMargin
+          operatingMarginTTM
+          returnOnAssetsTTM
+          returnOnEquityTTM
+          revenueTTM {
+            id
+          }
+          grossProfitTTM {
+            id
+          }
+          dilutedEPSTTM
+          quarterlyEarningsGrowthYOY
+          quarterlyRevenueGrowthYOY
+          analystTargetPrice
+          analystRatingStrongBuy
+          analystRatingBuy
+          analystRatingHold
+          analystRatingSell
+          analystRatingStrongSell
+          trailingPE
+          forwardPE
+          priceToSalesRatioTTM
+          priceToBookRatio
+          evToRevenue
+          evToEbitda
+          beta
+          week52High
+          week52Low
+          day50MovingAverage
+          day200MovingAverage
+          sharesOutstanding {
+            id
+          }
+          dividendDate
+          exDividendDate
           createdAt
           updatedAt
           holdings {
@@ -2108,7 +2468,8 @@ export const Asset = {
           newsMentions {
             id
             assetId
-            newsId
+            newsArticleId
+            url
             news {
               id
               title
@@ -2177,6 +2538,64 @@ export const Asset = {
           name
           type
           logoUrl
+          description
+          cik
+          exchange
+          currency
+          country
+          sector
+          industry
+          address
+          officialSite
+          fiscalYearEnd
+          latestQuarter
+          marketCapitalization {
+          }
+          ebitda {
+            id
+          }
+          peRatio
+          pegRatio
+          bookValue
+          dividendPerShare
+          dividendYield
+          eps
+          revenuePerShareTTM
+          profitMargin
+          operatingMarginTTM
+          returnOnAssetsTTM
+          returnOnEquityTTM
+          revenueTTM {
+            id
+          }
+          grossProfitTTM {
+            id
+          }
+          dilutedEPSTTM
+          quarterlyEarningsGrowthYOY
+          quarterlyRevenueGrowthYOY
+          analystTargetPrice
+          analystRatingStrongBuy
+          analystRatingBuy
+          analystRatingHold
+          analystRatingSell
+          analystRatingStrongSell
+          trailingPE
+          forwardPE
+          priceToSalesRatioTTM
+          priceToBookRatio
+          evToRevenue
+          evToEbitda
+          beta
+          week52High
+          week52Low
+          day50MovingAverage
+          day200MovingAverage
+          sharesOutstanding {
+            id
+          }
+          dividendDate
+          exDividendDate
           createdAt
           updatedAt
           holdings {
@@ -2388,7 +2807,8 @@ export const Asset = {
           newsMentions {
             id
             assetId
-            newsId
+            newsArticleId
+            url
             news {
               id
               title
@@ -2445,6 +2865,64 @@ export const Asset = {
           name
           type
           logoUrl
+          description
+          cik
+          exchange
+          currency
+          country
+          sector
+          industry
+          address
+          officialSite
+          fiscalYearEnd
+          latestQuarter
+          marketCapitalization {
+          }
+          ebitda {
+            id
+          }
+          peRatio
+          pegRatio
+          bookValue
+          dividendPerShare
+          dividendYield
+          eps
+          revenuePerShareTTM
+          profitMargin
+          operatingMarginTTM
+          returnOnAssetsTTM
+          returnOnEquityTTM
+          revenueTTM {
+            id
+          }
+          grossProfitTTM {
+            id
+          }
+          dilutedEPSTTM
+          quarterlyEarningsGrowthYOY
+          quarterlyRevenueGrowthYOY
+          analystTargetPrice
+          analystRatingStrongBuy
+          analystRatingBuy
+          analystRatingHold
+          analystRatingSell
+          analystRatingStrongSell
+          trailingPE
+          forwardPE
+          priceToSalesRatioTTM
+          priceToBookRatio
+          evToRevenue
+          evToEbitda
+          beta
+          week52High
+          week52Low
+          day50MovingAverage
+          day200MovingAverage
+          sharesOutstanding {
+            id
+          }
+          dividendDate
+          exDividendDate
           createdAt
           updatedAt
           holdings {
@@ -2656,7 +3134,8 @@ export const Asset = {
           newsMentions {
             id
             assetId
-            newsId
+            newsArticleId
+            url
             news {
               id
               title

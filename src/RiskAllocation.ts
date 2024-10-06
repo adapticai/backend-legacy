@@ -155,6 +155,65 @@ export const RiskAllocation = {
                 name
                 type
                 logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization {
+                  id
+                }
+                ebitda {
+                  id
+                }
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM {
+                  id
+                }
+                grossProfitTTM {
+                  id
+                }
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding {
+                  id
+                }
+                dividendDate
+                exDividendDate
                 createdAt
                 updatedAt
                 holdings {
@@ -780,6 +839,65 @@ export const RiskAllocation = {
                 name
                 type
                 logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization {
+                  id
+                }
+                ebitda {
+                  id
+                }
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM {
+                  id
+                }
+                grossProfitTTM {
+                  id
+                }
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding {
+                  id
+                }
+                dividendDate
+                exDividendDate
                 createdAt
                 updatedAt
                 holdings {
@@ -1934,6 +2052,65 @@ export const RiskAllocation = {
                 name
                 type
                 logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization {
+                  id
+                }
+                ebitda {
+                  id
+                }
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM {
+                  id
+                }
+                grossProfitTTM {
+                  id
+                }
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding {
+                  id
+                }
+                dividendDate
+                exDividendDate
                 createdAt
                 updatedAt
                 holdings {
@@ -2226,6 +2403,65 @@ export const RiskAllocation = {
                 name
                 type
                 logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization {
+                  id
+                }
+                ebitda {
+                  id
+                }
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM {
+                  id
+                }
+                grossProfitTTM {
+                  id
+                }
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding {
+                  id
+                }
+                dividendDate
+                exDividendDate
                 createdAt
                 updatedAt
                 holdings {
@@ -2514,6 +2750,65 @@ export const RiskAllocation = {
                 name
                 type
                 logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization {
+                  id
+                }
+                ebitda {
+                  id
+                }
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM {
+                  id
+                }
+                grossProfitTTM {
+                  id
+                }
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding {
+                  id
+                }
+                dividendDate
+                exDividendDate
                 createdAt
                 updatedAt
                 holdings {
@@ -2796,6 +3091,65 @@ export const RiskAllocation = {
                 name
                 type
                 logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization {
+                  id
+                }
+                ebitda {
+                  id
+                }
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM {
+                  id
+                }
+                grossProfitTTM {
+                  id
+                }
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding {
+                  id
+                }
+                dividendDate
+                exDividendDate
                 createdAt
                 updatedAt
                 holdings {

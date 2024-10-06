@@ -11,8 +11,8 @@ import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
 import { EnvironmentVariable } from './EnvironmentVariable';
 import { Holding } from './Holding';
-import { News } from './News';
-import { NewsAssetSentiment } from './NewsAssetSentiment';
+import { NewsArticle } from './NewsArticle';
+import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
 import { Order } from './Order';
 import { PerformanceMetric } from './PerformanceMetric';
 import { RiskAllocation } from './RiskAllocation';
@@ -33,8 +33,8 @@ const adaptic = {
   economicEvent: EconomicEvent,
   environmentVariable: EnvironmentVariable,
   holding: Holding,
-  news: News,
-  newsAssetSentiment: NewsAssetSentiment,
+  newsArticle: NewsArticle,
+  newsArticleAssetSentiment: NewsArticleAssetSentiment,
   order: Order,
   performanceMetric: PerformanceMetric,
   riskAllocation: RiskAllocation,

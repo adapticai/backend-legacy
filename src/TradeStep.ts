@@ -256,6 +256,64 @@ export const TradeStep = {
               name
               type
               logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization {
+              }
+              ebitda {
+                id
+              }
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM {
+                id
+              }
+              grossProfitTTM {
+                id
+              }
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding {
+                id
+              }
+              dividendDate
+              exDividendDate
               createdAt
               updatedAt
               holdings {
@@ -285,7 +343,8 @@ export const TradeStep = {
               newsMentions {
                 id
                 assetId
-                newsId
+                newsArticleId
+                url
                 news {
                   id
                 }
@@ -384,6 +443,50 @@ export const TradeStep = {
           name: props.trade.asset.name !== undefined ? props.trade.asset.name : undefined,
           type: props.trade.asset.type !== undefined ? props.trade.asset.type : undefined,
           logoUrl: props.trade.asset.logoUrl !== undefined ? props.trade.asset.logoUrl : undefined,
+          description: props.trade.asset.description !== undefined ? props.trade.asset.description : undefined,
+          cik: props.trade.asset.cik !== undefined ? props.trade.asset.cik : undefined,
+          exchange: props.trade.asset.exchange !== undefined ? props.trade.asset.exchange : undefined,
+          currency: props.trade.asset.currency !== undefined ? props.trade.asset.currency : undefined,
+          country: props.trade.asset.country !== undefined ? props.trade.asset.country : undefined,
+          sector: props.trade.asset.sector !== undefined ? props.trade.asset.sector : undefined,
+          industry: props.trade.asset.industry !== undefined ? props.trade.asset.industry : undefined,
+          address: props.trade.asset.address !== undefined ? props.trade.asset.address : undefined,
+          officialSite: props.trade.asset.officialSite !== undefined ? props.trade.asset.officialSite : undefined,
+          fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? props.trade.asset.fiscalYearEnd : undefined,
+          latestQuarter: props.trade.asset.latestQuarter !== undefined ? props.trade.asset.latestQuarter : undefined,
+          peRatio: props.trade.asset.peRatio !== undefined ? props.trade.asset.peRatio : undefined,
+          pegRatio: props.trade.asset.pegRatio !== undefined ? props.trade.asset.pegRatio : undefined,
+          bookValue: props.trade.asset.bookValue !== undefined ? props.trade.asset.bookValue : undefined,
+          dividendPerShare: props.trade.asset.dividendPerShare !== undefined ? props.trade.asset.dividendPerShare : undefined,
+          dividendYield: props.trade.asset.dividendYield !== undefined ? props.trade.asset.dividendYield : undefined,
+          eps: props.trade.asset.eps !== undefined ? props.trade.asset.eps : undefined,
+          revenuePerShareTTM: props.trade.asset.revenuePerShareTTM !== undefined ? props.trade.asset.revenuePerShareTTM : undefined,
+          profitMargin: props.trade.asset.profitMargin !== undefined ? props.trade.asset.profitMargin : undefined,
+          operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? props.trade.asset.operatingMarginTTM : undefined,
+          returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? props.trade.asset.returnOnAssetsTTM : undefined,
+          returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? props.trade.asset.returnOnEquityTTM : undefined,
+          dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? props.trade.asset.dilutedEPSTTM : undefined,
+          quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? props.trade.asset.quarterlyEarningsGrowthYOY : undefined,
+          quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? props.trade.asset.quarterlyRevenueGrowthYOY : undefined,
+          analystTargetPrice: props.trade.asset.analystTargetPrice !== undefined ? props.trade.asset.analystTargetPrice : undefined,
+          analystRatingStrongBuy: props.trade.asset.analystRatingStrongBuy !== undefined ? props.trade.asset.analystRatingStrongBuy : undefined,
+          analystRatingBuy: props.trade.asset.analystRatingBuy !== undefined ? props.trade.asset.analystRatingBuy : undefined,
+          analystRatingHold: props.trade.asset.analystRatingHold !== undefined ? props.trade.asset.analystRatingHold : undefined,
+          analystRatingSell: props.trade.asset.analystRatingSell !== undefined ? props.trade.asset.analystRatingSell : undefined,
+          analystRatingStrongSell: props.trade.asset.analystRatingStrongSell !== undefined ? props.trade.asset.analystRatingStrongSell : undefined,
+          trailingPE: props.trade.asset.trailingPE !== undefined ? props.trade.asset.trailingPE : undefined,
+          forwardPE: props.trade.asset.forwardPE !== undefined ? props.trade.asset.forwardPE : undefined,
+          priceToSalesRatioTTM: props.trade.asset.priceToSalesRatioTTM !== undefined ? props.trade.asset.priceToSalesRatioTTM : undefined,
+          priceToBookRatio: props.trade.asset.priceToBookRatio !== undefined ? props.trade.asset.priceToBookRatio : undefined,
+          evToRevenue: props.trade.asset.evToRevenue !== undefined ? props.trade.asset.evToRevenue : undefined,
+          evToEbitda: props.trade.asset.evToEbitda !== undefined ? props.trade.asset.evToEbitda : undefined,
+          beta: props.trade.asset.beta !== undefined ? props.trade.asset.beta : undefined,
+          week52High: props.trade.asset.week52High !== undefined ? props.trade.asset.week52High : undefined,
+          week52Low: props.trade.asset.week52Low !== undefined ? props.trade.asset.week52Low : undefined,
+          day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? props.trade.asset.day50MovingAverage : undefined,
+          day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? props.trade.asset.day200MovingAverage : undefined,
+          dividendDate: props.trade.asset.dividendDate !== undefined ? props.trade.asset.dividendDate : undefined,
+          exDividendDate: props.trade.asset.exDividendDate !== undefined ? props.trade.asset.exDividendDate : undefined,
         },
       }
     } : undefined,
@@ -708,6 +811,64 @@ export const TradeStep = {
               name
               type
               logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization {
+              }
+              ebitda {
+                id
+              }
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM {
+                id
+              }
+              grossProfitTTM {
+                id
+              }
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding {
+                id
+              }
+              dividendDate
+              exDividendDate
               createdAt
               updatedAt
               holdings {
@@ -737,7 +898,8 @@ export const TradeStep = {
               newsMentions {
                 id
                 assetId
-                newsId
+                newsArticleId
+                url
                 news {
                   id
                 }
@@ -914,12 +1076,203 @@ export const TradeStep = {
           logoUrl: props.trade.asset.logoUrl !== undefined ? {
               set: props.trade.asset.logoUrl  
              } : undefined,
+          description: props.trade.asset.description !== undefined ? {
+              set: props.trade.asset.description  
+             } : undefined,
+          cik: props.trade.asset.cik !== undefined ? {
+              set: props.trade.asset.cik  
+             } : undefined,
+          exchange: props.trade.asset.exchange !== undefined ? {
+              set: props.trade.asset.exchange  
+             } : undefined,
+          currency: props.trade.asset.currency !== undefined ? {
+              set: props.trade.asset.currency  
+             } : undefined,
+          country: props.trade.asset.country !== undefined ? {
+              set: props.trade.asset.country  
+             } : undefined,
+          sector: props.trade.asset.sector !== undefined ? {
+              set: props.trade.asset.sector  
+             } : undefined,
+          industry: props.trade.asset.industry !== undefined ? {
+              set: props.trade.asset.industry  
+             } : undefined,
+          address: props.trade.asset.address !== undefined ? {
+              set: props.trade.asset.address  
+             } : undefined,
+          officialSite: props.trade.asset.officialSite !== undefined ? {
+              set: props.trade.asset.officialSite  
+             } : undefined,
+          fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? {
+              set: props.trade.asset.fiscalYearEnd  
+             } : undefined,
+          latestQuarter: props.trade.asset.latestQuarter !== undefined ? {
+              set: props.trade.asset.latestQuarter  
+             } : undefined,
+          marketCapitalization: props.trade.asset.marketCapitalization !== undefined ? {
+              set: props.trade.asset.marketCapitalization  
+             } : undefined,
+          ebitda: props.trade.asset.ebitda !== undefined ? {
+              set: props.trade.asset.ebitda  
+             } : undefined,
+          peRatio: props.trade.asset.peRatio !== undefined ? {
+              set: props.trade.asset.peRatio  
+             } : undefined,
+          pegRatio: props.trade.asset.pegRatio !== undefined ? {
+              set: props.trade.asset.pegRatio  
+             } : undefined,
+          bookValue: props.trade.asset.bookValue !== undefined ? {
+              set: props.trade.asset.bookValue  
+             } : undefined,
+          dividendPerShare: props.trade.asset.dividendPerShare !== undefined ? {
+              set: props.trade.asset.dividendPerShare  
+             } : undefined,
+          dividendYield: props.trade.asset.dividendYield !== undefined ? {
+              set: props.trade.asset.dividendYield  
+             } : undefined,
+          eps: props.trade.asset.eps !== undefined ? {
+              set: props.trade.asset.eps  
+             } : undefined,
+          revenuePerShareTTM: props.trade.asset.revenuePerShareTTM !== undefined ? {
+              set: props.trade.asset.revenuePerShareTTM  
+             } : undefined,
+          profitMargin: props.trade.asset.profitMargin !== undefined ? {
+              set: props.trade.asset.profitMargin  
+             } : undefined,
+          operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? {
+              set: props.trade.asset.operatingMarginTTM  
+             } : undefined,
+          returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? {
+              set: props.trade.asset.returnOnAssetsTTM  
+             } : undefined,
+          returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? {
+              set: props.trade.asset.returnOnEquityTTM  
+             } : undefined,
+          revenueTTM: props.trade.asset.revenueTTM !== undefined ? {
+              set: props.trade.asset.revenueTTM  
+             } : undefined,
+          grossProfitTTM: props.trade.asset.grossProfitTTM !== undefined ? {
+              set: props.trade.asset.grossProfitTTM  
+             } : undefined,
+          dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? {
+              set: props.trade.asset.dilutedEPSTTM  
+             } : undefined,
+          quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? {
+              set: props.trade.asset.quarterlyEarningsGrowthYOY  
+             } : undefined,
+          quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? {
+              set: props.trade.asset.quarterlyRevenueGrowthYOY  
+             } : undefined,
+          analystTargetPrice: props.trade.asset.analystTargetPrice !== undefined ? {
+              set: props.trade.asset.analystTargetPrice  
+             } : undefined,
+          analystRatingStrongBuy: props.trade.asset.analystRatingStrongBuy !== undefined ? {
+              set: props.trade.asset.analystRatingStrongBuy  
+             } : undefined,
+          analystRatingBuy: props.trade.asset.analystRatingBuy !== undefined ? {
+              set: props.trade.asset.analystRatingBuy  
+             } : undefined,
+          analystRatingHold: props.trade.asset.analystRatingHold !== undefined ? {
+              set: props.trade.asset.analystRatingHold  
+             } : undefined,
+          analystRatingSell: props.trade.asset.analystRatingSell !== undefined ? {
+              set: props.trade.asset.analystRatingSell  
+             } : undefined,
+          analystRatingStrongSell: props.trade.asset.analystRatingStrongSell !== undefined ? {
+              set: props.trade.asset.analystRatingStrongSell  
+             } : undefined,
+          trailingPE: props.trade.asset.trailingPE !== undefined ? {
+              set: props.trade.asset.trailingPE  
+             } : undefined,
+          forwardPE: props.trade.asset.forwardPE !== undefined ? {
+              set: props.trade.asset.forwardPE  
+             } : undefined,
+          priceToSalesRatioTTM: props.trade.asset.priceToSalesRatioTTM !== undefined ? {
+              set: props.trade.asset.priceToSalesRatioTTM  
+             } : undefined,
+          priceToBookRatio: props.trade.asset.priceToBookRatio !== undefined ? {
+              set: props.trade.asset.priceToBookRatio  
+             } : undefined,
+          evToRevenue: props.trade.asset.evToRevenue !== undefined ? {
+              set: props.trade.asset.evToRevenue  
+             } : undefined,
+          evToEbitda: props.trade.asset.evToEbitda !== undefined ? {
+              set: props.trade.asset.evToEbitda  
+             } : undefined,
+          beta: props.trade.asset.beta !== undefined ? {
+              set: props.trade.asset.beta  
+             } : undefined,
+          week52High: props.trade.asset.week52High !== undefined ? {
+              set: props.trade.asset.week52High  
+             } : undefined,
+          week52Low: props.trade.asset.week52Low !== undefined ? {
+              set: props.trade.asset.week52Low  
+             } : undefined,
+          day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? {
+              set: props.trade.asset.day50MovingAverage  
+             } : undefined,
+          day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? {
+              set: props.trade.asset.day200MovingAverage  
+             } : undefined,
+          sharesOutstanding: props.trade.asset.sharesOutstanding !== undefined ? {
+              set: props.trade.asset.sharesOutstanding  
+             } : undefined,
+          dividendDate: props.trade.asset.dividendDate !== undefined ? {
+              set: props.trade.asset.dividendDate  
+             } : undefined,
+          exDividendDate: props.trade.asset.exDividendDate !== undefined ? {
+              set: props.trade.asset.exDividendDate  
+             } : undefined,
         },
         create: {
           symbol: props.trade.asset.symbol !== undefined ? props.trade.asset.symbol : undefined,
           name: props.trade.asset.name !== undefined ? props.trade.asset.name : undefined,
           type: props.trade.asset.type !== undefined ? props.trade.asset.type : undefined,
           logoUrl: props.trade.asset.logoUrl !== undefined ? props.trade.asset.logoUrl : undefined,
+          description: props.trade.asset.description !== undefined ? props.trade.asset.description : undefined,
+          cik: props.trade.asset.cik !== undefined ? props.trade.asset.cik : undefined,
+          exchange: props.trade.asset.exchange !== undefined ? props.trade.asset.exchange : undefined,
+          currency: props.trade.asset.currency !== undefined ? props.trade.asset.currency : undefined,
+          country: props.trade.asset.country !== undefined ? props.trade.asset.country : undefined,
+          sector: props.trade.asset.sector !== undefined ? props.trade.asset.sector : undefined,
+          industry: props.trade.asset.industry !== undefined ? props.trade.asset.industry : undefined,
+          address: props.trade.asset.address !== undefined ? props.trade.asset.address : undefined,
+          officialSite: props.trade.asset.officialSite !== undefined ? props.trade.asset.officialSite : undefined,
+          fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? props.trade.asset.fiscalYearEnd : undefined,
+          latestQuarter: props.trade.asset.latestQuarter !== undefined ? props.trade.asset.latestQuarter : undefined,
+          peRatio: props.trade.asset.peRatio !== undefined ? props.trade.asset.peRatio : undefined,
+          pegRatio: props.trade.asset.pegRatio !== undefined ? props.trade.asset.pegRatio : undefined,
+          bookValue: props.trade.asset.bookValue !== undefined ? props.trade.asset.bookValue : undefined,
+          dividendPerShare: props.trade.asset.dividendPerShare !== undefined ? props.trade.asset.dividendPerShare : undefined,
+          dividendYield: props.trade.asset.dividendYield !== undefined ? props.trade.asset.dividendYield : undefined,
+          eps: props.trade.asset.eps !== undefined ? props.trade.asset.eps : undefined,
+          revenuePerShareTTM: props.trade.asset.revenuePerShareTTM !== undefined ? props.trade.asset.revenuePerShareTTM : undefined,
+          profitMargin: props.trade.asset.profitMargin !== undefined ? props.trade.asset.profitMargin : undefined,
+          operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? props.trade.asset.operatingMarginTTM : undefined,
+          returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? props.trade.asset.returnOnAssetsTTM : undefined,
+          returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? props.trade.asset.returnOnEquityTTM : undefined,
+          dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? props.trade.asset.dilutedEPSTTM : undefined,
+          quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? props.trade.asset.quarterlyEarningsGrowthYOY : undefined,
+          quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? props.trade.asset.quarterlyRevenueGrowthYOY : undefined,
+          analystTargetPrice: props.trade.asset.analystTargetPrice !== undefined ? props.trade.asset.analystTargetPrice : undefined,
+          analystRatingStrongBuy: props.trade.asset.analystRatingStrongBuy !== undefined ? props.trade.asset.analystRatingStrongBuy : undefined,
+          analystRatingBuy: props.trade.asset.analystRatingBuy !== undefined ? props.trade.asset.analystRatingBuy : undefined,
+          analystRatingHold: props.trade.asset.analystRatingHold !== undefined ? props.trade.asset.analystRatingHold : undefined,
+          analystRatingSell: props.trade.asset.analystRatingSell !== undefined ? props.trade.asset.analystRatingSell : undefined,
+          analystRatingStrongSell: props.trade.asset.analystRatingStrongSell !== undefined ? props.trade.asset.analystRatingStrongSell : undefined,
+          trailingPE: props.trade.asset.trailingPE !== undefined ? props.trade.asset.trailingPE : undefined,
+          forwardPE: props.trade.asset.forwardPE !== undefined ? props.trade.asset.forwardPE : undefined,
+          priceToSalesRatioTTM: props.trade.asset.priceToSalesRatioTTM !== undefined ? props.trade.asset.priceToSalesRatioTTM : undefined,
+          priceToBookRatio: props.trade.asset.priceToBookRatio !== undefined ? props.trade.asset.priceToBookRatio : undefined,
+          evToRevenue: props.trade.asset.evToRevenue !== undefined ? props.trade.asset.evToRevenue : undefined,
+          evToEbitda: props.trade.asset.evToEbitda !== undefined ? props.trade.asset.evToEbitda : undefined,
+          beta: props.trade.asset.beta !== undefined ? props.trade.asset.beta : undefined,
+          week52High: props.trade.asset.week52High !== undefined ? props.trade.asset.week52High : undefined,
+          week52Low: props.trade.asset.week52Low !== undefined ? props.trade.asset.week52Low : undefined,
+          day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? props.trade.asset.day50MovingAverage : undefined,
+          day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? props.trade.asset.day200MovingAverage : undefined,
+          dividendDate: props.trade.asset.dividendDate !== undefined ? props.trade.asset.dividendDate : undefined,
+          exDividendDate: props.trade.asset.exDividendDate !== undefined ? props.trade.asset.exDividendDate : undefined,
         },
       }
     } : undefined,
@@ -981,6 +1334,50 @@ export const TradeStep = {
           name: props.trade.asset.name !== undefined ? props.trade.asset.name : undefined,
           type: props.trade.asset.type !== undefined ? props.trade.asset.type : undefined,
           logoUrl: props.trade.asset.logoUrl !== undefined ? props.trade.asset.logoUrl : undefined,
+          description: props.trade.asset.description !== undefined ? props.trade.asset.description : undefined,
+          cik: props.trade.asset.cik !== undefined ? props.trade.asset.cik : undefined,
+          exchange: props.trade.asset.exchange !== undefined ? props.trade.asset.exchange : undefined,
+          currency: props.trade.asset.currency !== undefined ? props.trade.asset.currency : undefined,
+          country: props.trade.asset.country !== undefined ? props.trade.asset.country : undefined,
+          sector: props.trade.asset.sector !== undefined ? props.trade.asset.sector : undefined,
+          industry: props.trade.asset.industry !== undefined ? props.trade.asset.industry : undefined,
+          address: props.trade.asset.address !== undefined ? props.trade.asset.address : undefined,
+          officialSite: props.trade.asset.officialSite !== undefined ? props.trade.asset.officialSite : undefined,
+          fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? props.trade.asset.fiscalYearEnd : undefined,
+          latestQuarter: props.trade.asset.latestQuarter !== undefined ? props.trade.asset.latestQuarter : undefined,
+          peRatio: props.trade.asset.peRatio !== undefined ? props.trade.asset.peRatio : undefined,
+          pegRatio: props.trade.asset.pegRatio !== undefined ? props.trade.asset.pegRatio : undefined,
+          bookValue: props.trade.asset.bookValue !== undefined ? props.trade.asset.bookValue : undefined,
+          dividendPerShare: props.trade.asset.dividendPerShare !== undefined ? props.trade.asset.dividendPerShare : undefined,
+          dividendYield: props.trade.asset.dividendYield !== undefined ? props.trade.asset.dividendYield : undefined,
+          eps: props.trade.asset.eps !== undefined ? props.trade.asset.eps : undefined,
+          revenuePerShareTTM: props.trade.asset.revenuePerShareTTM !== undefined ? props.trade.asset.revenuePerShareTTM : undefined,
+          profitMargin: props.trade.asset.profitMargin !== undefined ? props.trade.asset.profitMargin : undefined,
+          operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? props.trade.asset.operatingMarginTTM : undefined,
+          returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? props.trade.asset.returnOnAssetsTTM : undefined,
+          returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? props.trade.asset.returnOnEquityTTM : undefined,
+          dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? props.trade.asset.dilutedEPSTTM : undefined,
+          quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? props.trade.asset.quarterlyEarningsGrowthYOY : undefined,
+          quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? props.trade.asset.quarterlyRevenueGrowthYOY : undefined,
+          analystTargetPrice: props.trade.asset.analystTargetPrice !== undefined ? props.trade.asset.analystTargetPrice : undefined,
+          analystRatingStrongBuy: props.trade.asset.analystRatingStrongBuy !== undefined ? props.trade.asset.analystRatingStrongBuy : undefined,
+          analystRatingBuy: props.trade.asset.analystRatingBuy !== undefined ? props.trade.asset.analystRatingBuy : undefined,
+          analystRatingHold: props.trade.asset.analystRatingHold !== undefined ? props.trade.asset.analystRatingHold : undefined,
+          analystRatingSell: props.trade.asset.analystRatingSell !== undefined ? props.trade.asset.analystRatingSell : undefined,
+          analystRatingStrongSell: props.trade.asset.analystRatingStrongSell !== undefined ? props.trade.asset.analystRatingStrongSell : undefined,
+          trailingPE: props.trade.asset.trailingPE !== undefined ? props.trade.asset.trailingPE : undefined,
+          forwardPE: props.trade.asset.forwardPE !== undefined ? props.trade.asset.forwardPE : undefined,
+          priceToSalesRatioTTM: props.trade.asset.priceToSalesRatioTTM !== undefined ? props.trade.asset.priceToSalesRatioTTM : undefined,
+          priceToBookRatio: props.trade.asset.priceToBookRatio !== undefined ? props.trade.asset.priceToBookRatio : undefined,
+          evToRevenue: props.trade.asset.evToRevenue !== undefined ? props.trade.asset.evToRevenue : undefined,
+          evToEbitda: props.trade.asset.evToEbitda !== undefined ? props.trade.asset.evToEbitda : undefined,
+          beta: props.trade.asset.beta !== undefined ? props.trade.asset.beta : undefined,
+          week52High: props.trade.asset.week52High !== undefined ? props.trade.asset.week52High : undefined,
+          week52Low: props.trade.asset.week52Low !== undefined ? props.trade.asset.week52Low : undefined,
+          day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? props.trade.asset.day50MovingAverage : undefined,
+          day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? props.trade.asset.day200MovingAverage : undefined,
+          dividendDate: props.trade.asset.dividendDate !== undefined ? props.trade.asset.dividendDate : undefined,
+          exDividendDate: props.trade.asset.exDividendDate !== undefined ? props.trade.asset.exDividendDate : undefined,
         },
       }
     } : undefined,
@@ -1253,6 +1650,64 @@ export const TradeStep = {
               name
               type
               logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization {
+              }
+              ebitda {
+                id
+              }
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM {
+                id
+              }
+              grossProfitTTM {
+                id
+              }
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding {
+                id
+              }
+              dividendDate
+              exDividendDate
               createdAt
               updatedAt
               holdings {
@@ -1282,7 +1737,8 @@ export const TradeStep = {
               newsMentions {
                 id
                 assetId
-                newsId
+                newsArticleId
+                url
                 news {
                   id
                 }
@@ -1568,6 +2024,64 @@ export const TradeStep = {
               name
               type
               logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization {
+              }
+              ebitda {
+                id
+              }
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM {
+                id
+              }
+              grossProfitTTM {
+                id
+              }
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding {
+                id
+              }
+              dividendDate
+              exDividendDate
               createdAt
               updatedAt
               holdings {
@@ -1597,7 +2111,8 @@ export const TradeStep = {
               newsMentions {
                 id
                 assetId
-                newsId
+                newsArticleId
+                url
                 news {
                   id
                 }
@@ -1879,6 +2394,64 @@ export const TradeStep = {
               name
               type
               logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization {
+              }
+              ebitda {
+                id
+              }
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM {
+                id
+              }
+              grossProfitTTM {
+                id
+              }
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding {
+                id
+              }
+              dividendDate
+              exDividendDate
               createdAt
               updatedAt
               holdings {
@@ -1908,7 +2481,8 @@ export const TradeStep = {
               newsMentions {
                 id
                 assetId
-                newsId
+                newsArticleId
+                url
                 news {
                   id
                 }
@@ -2184,6 +2758,64 @@ export const TradeStep = {
               name
               type
               logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization {
+              }
+              ebitda {
+                id
+              }
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM {
+                id
+              }
+              grossProfitTTM {
+                id
+              }
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding {
+                id
+              }
+              dividendDate
+              exDividendDate
               createdAt
               updatedAt
               holdings {
@@ -2213,7 +2845,8 @@ export const TradeStep = {
               newsMentions {
                 id
                 assetId
-                newsId
+                newsArticleId
+                url
                 news {
                   id
                 }

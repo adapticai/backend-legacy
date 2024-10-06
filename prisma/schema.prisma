@@ -238,18 +238,67 @@ model Customer {
 }
 
 model Asset {
-  id                String                      @id @default(uuid()) @db.Uuid
-  symbol            String                      @unique
-  name              String                      @unique
-  type              AssetType
-  logoUrl           String?
-  createdAt         DateTime                    @default(now())
-  updatedAt         DateTime                    @default(now())
-  holdings          Holding[]
-  trades            Trade[]
-  orders            Order[]
-  aiRecommendations AIRecommendation[]
-  newsMentions      NewsArticleAssetSentiment[]
+  id                         String                      @id @default(uuid()) @db.Uuid
+  symbol                     String                      @unique
+  name                       String                      @unique
+  type                       AssetType
+  logoUrl                    String?
+  description                String?
+  cik                        String?
+  exchange                   String?
+  currency                   String?
+  country                    String?
+  sector                     String?
+  industry                   String?
+  address                    String?
+  officialSite               String?
+  fiscalYearEnd              String?
+  latestQuarter              DateTime?
+  marketCapitalization       BigInt?
+  ebitda                     BigInt?
+  peRatio                    Float?
+  pegRatio                   Float?
+  bookValue                  Float?
+  dividendPerShare           Float?
+  dividendYield              Float?
+  eps                        Float?
+  revenuePerShareTTM         Float?
+  profitMargin               Float?
+  operatingMarginTTM         Float?
+  returnOnAssetsTTM          Float?
+  returnOnEquityTTM          Float?
+  revenueTTM                 BigInt?
+  grossProfitTTM             BigInt?
+  dilutedEPSTTM              Float?
+  quarterlyEarningsGrowthYOY Float?
+  quarterlyRevenueGrowthYOY  Float?
+  analystTargetPrice         Float?
+  analystRatingStrongBuy     Int?
+  analystRatingBuy           Int?
+  analystRatingHold          Int?
+  analystRatingSell          Int?
+  analystRatingStrongSell    Int?
+  trailingPE                 Float?
+  forwardPE                  Float?
+  priceToSalesRatioTTM       Float?
+  priceToBookRatio           Float?
+  evToRevenue                Float?
+  evToEbitda                 Float?
+  beta                       Float?
+  week52High                 Float?
+  week52Low                  Float?
+  day50MovingAverage         Float?
+  day200MovingAverage        Float?
+  sharesOutstanding          BigInt?
+  dividendDate               DateTime?
+  exDividendDate             DateTime?
+  createdAt                  DateTime                    @default(now())
+  updatedAt                  DateTime                    @default(now())
+  holdings                   Holding[]
+  trades                     Trade[]
+  orders                     Order[]
+  aiRecommendations          AIRecommendation[]
+  newsMentions               NewsArticleAssetSentiment[]
 
   @@map(name: "assets")
 }
