@@ -314,7 +314,6 @@ export const Asset = {
             newsId
             news {
               id
-              newsAssetsId
               title
               content
               source
@@ -599,7 +598,6 @@ export const Asset = {
              } : undefined,
         },
         create: {
-          newsAssetsId: item.news.newsAssetsId !== undefined ? item.news.newsAssetsId : undefined,
           title: item.news.title !== undefined ? item.news.title : undefined,
           content: item.news.content !== undefined ? item.news.content : undefined,
           source: item.news.source !== undefined ? item.news.source : undefined,
@@ -1010,7 +1008,6 @@ export const Asset = {
             newsId
             news {
               id
-              newsAssetsId
               title
               content
               source
@@ -1778,9 +1775,6 @@ export const Asset = {
              } : undefined,
         },
         update: {
-          newsAssetsId: item.news.newsAssetsId !== undefined ? {
-              set: item.news.newsAssetsId  
-             } : undefined,
           title: item.news.title !== undefined ? {
               set: item.news.title  
              } : undefined,
@@ -1822,7 +1816,6 @@ export const Asset = {
              } : undefined,
         },
         create: {
-          newsAssetsId: item.news.newsAssetsId !== undefined ? item.news.newsAssetsId : undefined,
           title: item.news.title !== undefined ? item.news.title : undefined,
           content: item.news.content !== undefined ? item.news.content : undefined,
           source: item.news.source !== undefined ? item.news.source : undefined,
@@ -1853,7 +1846,6 @@ export const Asset = {
              } : undefined,
         },
         create: {
-          newsAssetsId: item.news.newsAssetsId !== undefined ? item.news.newsAssetsId : undefined,
           title: item.news.title !== undefined ? item.news.title : undefined,
           content: item.news.content !== undefined ? item.news.content : undefined,
           source: item.news.source !== undefined ? item.news.source : undefined,
@@ -2259,7 +2251,6 @@ export const Asset = {
             newsId
             news {
               id
-              newsAssetsId
               title
               content
               source
@@ -2617,7 +2608,6 @@ export const Asset = {
             newsId
             news {
               id
-              newsAssetsId
               title
               content
               source
@@ -2974,7 +2964,6 @@ export const Asset = {
             newsId
             news {
               id
-              newsAssetsId
               title
               content
               source
@@ -3322,7 +3311,6 @@ export const Asset = {
             newsId
             news {
               id
-              newsAssetsId
               title
               content
               source

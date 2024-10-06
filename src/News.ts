@@ -20,7 +20,6 @@ export const News = {
       mutation createOneNews($data: NewsCreateInput!) {
         createOneNews(data: $data) {
           id
-          newsAssetsId
           title
           content
           source
@@ -165,8 +164,7 @@ export const News = {
 
     const variables = {
       data: {
-          newsAssetsId: props.newsAssetsId !== undefined ? props.newsAssetsId : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+          title: props.title !== undefined ? props.title : undefined,
   content: props.content !== undefined ? props.content : undefined,
   source: props.source !== undefined ? props.source : undefined,
   sourceDomain: props.sourceDomain !== undefined ? props.sourceDomain : undefined,
@@ -243,7 +241,6 @@ export const News = {
 
     const variables = {
       data: props.map(prop => ({
-  newsAssetsId: prop.newsAssetsId !== undefined ? prop.newsAssetsId : undefined,
   title: prop.title !== undefined ? prop.title : undefined,
   content: prop.content !== undefined ? prop.content : undefined,
   source: prop.source !== undefined ? prop.source : undefined,
@@ -288,7 +285,6 @@ export const News = {
       mutation updateOneNews($data: NewsUpdateInput!, $where: NewsWhereUniqueInput!) {
         updateOneNews(data: $data, where: $where) {
           id
-          newsAssetsId
           title
           content
           source
@@ -557,7 +553,6 @@ export const News = {
       mutation deleteOneNews($where: NewsWhereUniqueInput!) {
         deleteOneNews(where: $where) {
           id
-          newsAssetsId
           title
           content
           source
@@ -730,7 +725,6 @@ export const News = {
       query getNews($where: NewsWhereInput!) {
         news(where: $where) {
           id
-          newsAssetsId
           title
           content
           source
@@ -902,7 +896,6 @@ export const News = {
       query getAllNews {
         News {
           id
-          newsAssetsId
           title
           content
           source
@@ -1065,7 +1058,6 @@ export const News = {
       query findManyNews($where: NewsWhereInput!) {
         News(where: $where) {
           id
-          newsAssetsId
           title
           content
           source

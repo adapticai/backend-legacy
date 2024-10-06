@@ -411,7 +411,6 @@ model Alert {
 
 model News {
   id            String               @id @default(uuid()) @db.Uuid
-  newsAssetsId  String               @db.Uuid
   title         String
   content       String?
   source        String

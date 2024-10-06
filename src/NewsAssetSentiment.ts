@@ -24,7 +24,6 @@ export const NewsAssetSentiment = {
           newsId
           news {
             id
-            newsAssetsId
             title
             content
             source
@@ -279,7 +278,6 @@ export const NewsAssetSentiment = {
            } : undefined,
       },
       create: {
-        newsAssetsId: props.news.newsAssetsId !== undefined ? props.news.newsAssetsId : undefined,
         title: props.news.title !== undefined ? props.news.title : undefined,
         content: props.news.content !== undefined ? props.news.content : undefined,
         source: props.news.source !== undefined ? props.news.source : undefined,
@@ -449,7 +447,6 @@ export const NewsAssetSentiment = {
           newsId
           news {
             id
-            newsAssetsId
             title
             content
             source
@@ -714,9 +711,6 @@ export const NewsAssetSentiment = {
            } : undefined,
       },
       update: {
-        newsAssetsId: props.news.newsAssetsId !== undefined ? {
-            set: props.news.newsAssetsId  
-           } : undefined,
         title: props.news.title !== undefined ? {
             set: props.news.title  
            } : undefined,
@@ -758,7 +752,6 @@ export const NewsAssetSentiment = {
            } : undefined,
       },
       create: {
-        newsAssetsId: props.news.newsAssetsId !== undefined ? props.news.newsAssetsId : undefined,
         title: props.news.title !== undefined ? props.news.title : undefined,
         content: props.news.content !== undefined ? props.news.content : undefined,
         source: props.news.source !== undefined ? props.news.source : undefined,
@@ -1021,7 +1014,6 @@ export const NewsAssetSentiment = {
           newsId
           news {
             id
-            newsAssetsId
             title
             content
             source
@@ -1296,7 +1288,6 @@ export const NewsAssetSentiment = {
           newsId
           news {
             id
-            newsAssetsId
             title
             content
             source
@@ -1567,7 +1558,6 @@ export const NewsAssetSentiment = {
           newsId
           news {
             id
-            newsAssetsId
             title
             content
             source
@@ -1832,7 +1822,6 @@ export const NewsAssetSentiment = {
           newsId
           news {
             id
-            newsAssetsId
             title
             content
             source
