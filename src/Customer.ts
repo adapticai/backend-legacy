@@ -509,7 +509,6 @@ export const Customer = {
 
   /**
    * Update a single Customer record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Customer or null.
@@ -1270,7 +1269,7 @@ export const Customer = {
 
   /**
    * Delete a single Customer record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Customer or null.
    */
@@ -1562,7 +1561,7 @@ export const Customer = {
 
   /**
    * Retrieve a single Customer record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Customer or null.
    */
@@ -1860,7 +1859,7 @@ export const Customer = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType[] | null> {
     const GET_ALL_CUSTOMER = gql`
       query getAllCustomer {
-        Customers {
+        customers {
           id
           authUserId
           name
@@ -2126,7 +2125,7 @@ export const Customer = {
     try {
       const response = await client.query({ query: GET_ALL_CUSTOMER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Customers ?? null;
+      return response.data?.customers ?? null;
     } catch (error) {
       console.error('Error in getAllCustomer:', error);
       throw error;
@@ -2142,7 +2141,7 @@ export const Customer = {
   async findMany(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType[]> {
     const FIND_MANY_CUSTOMER = gql`
       query findManyCustomer($where: CustomerWhereInput!) {
-        Customers(where: $where) {
+        customers(where: $where) {
           id
           authUserId
           name
@@ -2422,7 +2421,7 @@ export const Customer = {
       const response = await client.query({ query: FIND_MANY_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Customers) {
-        return response.data.Customers;
+        return response.data.customers;
       } else {
        return [] as CustomerType[];
       }

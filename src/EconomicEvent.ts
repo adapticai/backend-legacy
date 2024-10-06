@@ -97,7 +97,6 @@ export const EconomicEvent = {
 
   /**
    * Update a single EconomicEvent record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated EconomicEvent or null.
@@ -151,7 +150,7 @@ export const EconomicEvent = {
 
   /**
    * Delete a single EconomicEvent record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted EconomicEvent or null.
    */
@@ -191,7 +190,7 @@ export const EconomicEvent = {
 
   /**
    * Retrieve a single EconomicEvent record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved EconomicEvent or null.
    */
@@ -237,7 +236,7 @@ export const EconomicEvent = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType[] | null> {
     const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
-        EconomicEvents {
+        economicEvents {
           id
           title
           description
@@ -251,7 +250,7 @@ export const EconomicEvent = {
     try {
       const response = await client.query({ query: GET_ALL_ECONOMICEVENT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.EconomicEvents ?? null;
+      return response.data?.economicEvents ?? null;
     } catch (error) {
       console.error('Error in getAllEconomicEvent:', error);
       throw error;
@@ -267,7 +266,7 @@ export const EconomicEvent = {
   async findMany(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType[]> {
     const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {
-        EconomicEvents(where: $where) {
+        economicEvents(where: $where) {
           id
           title
           description
@@ -295,7 +294,7 @@ export const EconomicEvent = {
       const response = await client.query({ query: FIND_MANY_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.EconomicEvents) {
-        return response.data.EconomicEvents;
+        return response.data.economicEvents;
       } else {
        return [] as EconomicEventType[];
       }

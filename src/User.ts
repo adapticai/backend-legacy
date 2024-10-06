@@ -811,7 +811,6 @@ export const User = {
 
   /**
    * Update a single User record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated User or null.
@@ -2287,7 +2286,7 @@ export const User = {
 
   /**
    * Delete a single User record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted User or null.
    */
@@ -2611,7 +2610,7 @@ export const User = {
 
   /**
    * Retrieve a single User record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved User or null.
    */
@@ -2944,7 +2943,7 @@ export const User = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<UserType[] | null> {
     const GET_ALL_USER = gql`
       query getAllUser {
-        Users {
+        users {
           id
           name
           email
@@ -3242,7 +3241,7 @@ export const User = {
     try {
       const response = await client.query({ query: GET_ALL_USER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Users ?? null;
+      return response.data?.users ?? null;
     } catch (error) {
       console.error('Error in getAllUser:', error);
       throw error;
@@ -3258,7 +3257,7 @@ export const User = {
   async findMany(props: UserType, client: ApolloClient<NormalizedCacheObject>): Promise<UserType[]> {
     const FIND_MANY_USER = gql`
       query findManyUser($where: UserWhereInput!) {
-        Users(where: $where) {
+        users(where: $where) {
           id
           name
           email
@@ -3573,7 +3572,7 @@ export const User = {
       const response = await client.query({ query: FIND_MANY_USER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Users) {
-        return response.data.Users;
+        return response.data.users;
       } else {
        return [] as UserType[];
       }

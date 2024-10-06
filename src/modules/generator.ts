@@ -765,7 +765,6 @@ ${constructVariablesObject(
 
   /**
    * Update a single ${capitalModelName} record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
@@ -816,7 +815,7 @@ ${constructVariablesObject(
 
   /**
    * Delete a single ${capitalModelName} record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
@@ -849,7 +848,7 @@ ${selectionSet}      }
 
   /**
    * Retrieve a single ${capitalModelName} record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
@@ -889,14 +888,14 @@ ${selectionSet}        }
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
     const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
-        ${pluralModelName} {
+        ${lowerCaseFirstLetter(pluralModelName)} {
 ${selectionSet}      }
       }\`;
 
     try {
       const response = await client.query({ query: GET_ALL_${capitalModelName.toUpperCase()} });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.${pluralModelName} ?? null;
+      return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
     } catch (error) {
       console.error('Error in getAll${capitalModelName}:', error);
       throw error;
@@ -912,7 +911,7 @@ ${selectionSet}      }
   async findMany(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type[]> {
     const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
-        ${pluralModelName}(where: $where) {
+        ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
 ${selectionSet}      }
       }\`;
 
@@ -934,7 +933,7 @@ ${constructVariablesObject(
       const response = await client.query({ query: FIND_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.${pluralModelName}) {
-        return response.data.${pluralModelName};
+        return response.data.${lowerCaseFirstLetter(pluralModelName)};
       } else {
        return [] as ${capitalModelName}Type[];
       }

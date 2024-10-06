@@ -636,7 +636,6 @@ export const PerformanceMetric = {
 
   /**
    * Update a single PerformanceMetric record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated PerformanceMetric or null.
@@ -1788,7 +1787,7 @@ export const PerformanceMetric = {
 
   /**
    * Delete a single PerformanceMetric record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted PerformanceMetric or null.
    */
@@ -2080,7 +2079,7 @@ export const PerformanceMetric = {
 
   /**
    * Retrieve a single PerformanceMetric record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved PerformanceMetric or null.
    */
@@ -2375,7 +2374,7 @@ export const PerformanceMetric = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType[] | null> {
     const GET_ALL_PERFORMANCEMETRIC = gql`
       query getAllPerformanceMetric {
-        PerformanceMetrics {
+        performanceMetrics {
           id
           userId
           portfolioId
@@ -2641,7 +2640,7 @@ export const PerformanceMetric = {
     try {
       const response = await client.query({ query: GET_ALL_PERFORMANCEMETRIC });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.PerformanceMetrics ?? null;
+      return response.data?.performanceMetrics ?? null;
     } catch (error) {
       console.error('Error in getAllPerformanceMetric:', error);
       throw error;
@@ -2657,7 +2656,7 @@ export const PerformanceMetric = {
   async findMany(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType[]> {
     const FIND_MANY_PERFORMANCEMETRIC = gql`
       query findManyPerformanceMetric($where: PerformanceMetricWhereInput!) {
-        PerformanceMetrics(where: $where) {
+        performanceMetrics(where: $where) {
           id
           userId
           portfolioId
@@ -2934,7 +2933,7 @@ export const PerformanceMetric = {
       const response = await client.query({ query: FIND_MANY_PERFORMANCEMETRIC, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.PerformanceMetrics) {
-        return response.data.PerformanceMetrics;
+        return response.data.performanceMetrics;
       } else {
        return [] as PerformanceMetricType[];
       }

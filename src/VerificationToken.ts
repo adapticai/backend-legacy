@@ -92,7 +92,6 @@ export const VerificationToken = {
 
   /**
    * Update a single VerificationToken record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated VerificationToken or null.
@@ -134,7 +133,7 @@ export const VerificationToken = {
 
   /**
    * Delete a single VerificationToken record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted VerificationToken or null.
    */
@@ -171,7 +170,7 @@ export const VerificationToken = {
 
   /**
    * Retrieve a single VerificationToken record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved VerificationToken or null.
    */
@@ -211,7 +210,7 @@ export const VerificationToken = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType[] | null> {
     const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
-        VerificationTokens {
+        verificationTokens {
           id
           identifier
           token
@@ -222,7 +221,7 @@ export const VerificationToken = {
     try {
       const response = await client.query({ query: GET_ALL_VERIFICATIONTOKEN });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.VerificationTokens ?? null;
+      return response.data?.verificationTokens ?? null;
     } catch (error) {
       console.error('Error in getAllVerificationToken:', error);
       throw error;
@@ -238,7 +237,7 @@ export const VerificationToken = {
   async findMany(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType[]> {
     const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
-        VerificationTokens(where: $where) {
+        verificationTokens(where: $where) {
           id
           identifier
           token
@@ -260,7 +259,7 @@ export const VerificationToken = {
       const response = await client.query({ query: FIND_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.VerificationTokens) {
-        return response.data.VerificationTokens;
+        return response.data.verificationTokens;
       } else {
        return [] as VerificationTokenType[];
       }

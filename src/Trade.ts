@@ -725,7 +725,6 @@ export const Trade = {
 
   /**
    * Update a single Trade record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Trade or null.
@@ -2086,7 +2085,7 @@ export const Trade = {
 
   /**
    * Delete a single Trade record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Trade or null.
    */
@@ -2378,7 +2377,7 @@ export const Trade = {
 
   /**
    * Retrieve a single Trade record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Trade or null.
    */
@@ -2673,7 +2672,7 @@ export const Trade = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<TradeType[] | null> {
     const GET_ALL_TRADE = gql`
       query getAllTrade {
-        Trades {
+        trades {
           id
           userId
           portfolioId
@@ -2939,7 +2938,7 @@ export const Trade = {
     try {
       const response = await client.query({ query: GET_ALL_TRADE });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Trades ?? null;
+      return response.data?.trades ?? null;
     } catch (error) {
       console.error('Error in getAllTrade:', error);
       throw error;
@@ -2955,7 +2954,7 @@ export const Trade = {
   async findMany(props: TradeType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeType[]> {
     const FIND_MANY_TRADE = gql`
       query findManyTrade($where: TradeWhereInput!) {
-        Trades(where: $where) {
+        trades(where: $where) {
           id
           userId
           portfolioId
@@ -3232,7 +3231,7 @@ export const Trade = {
       const response = await client.query({ query: FIND_MANY_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Trades) {
-        return response.data.Trades;
+        return response.data.trades;
       } else {
        return [] as TradeType[];
       }

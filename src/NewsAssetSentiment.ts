@@ -401,7 +401,6 @@ export const NewsAssetSentiment = {
 
   /**
    * Update a single NewsAssetSentiment record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated NewsAssetSentiment or null.
@@ -924,7 +923,7 @@ export const NewsAssetSentiment = {
 
   /**
    * Delete a single NewsAssetSentiment record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted NewsAssetSentiment or null.
    */
@@ -1175,7 +1174,7 @@ export const NewsAssetSentiment = {
 
   /**
    * Retrieve a single NewsAssetSentiment record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved NewsAssetSentiment or null.
    */
@@ -1429,7 +1428,7 @@ export const NewsAssetSentiment = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType[] | null> {
     const GET_ALL_NEWSASSETSENTIMENT = gql`
       query getAllNewsAssetSentiment {
-        NewsAssetSentiments {
+        newsAssetSentiments {
           id
           assetId
           newsId
@@ -1654,7 +1653,7 @@ export const NewsAssetSentiment = {
     try {
       const response = await client.query({ query: GET_ALL_NEWSASSETSENTIMENT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.NewsAssetSentiments ?? null;
+      return response.data?.newsAssetSentiments ?? null;
     } catch (error) {
       console.error('Error in getAllNewsAssetSentiment:', error);
       throw error;
@@ -1670,7 +1669,7 @@ export const NewsAssetSentiment = {
   async findMany(props: NewsAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType[]> {
     const FIND_MANY_NEWSASSETSENTIMENT = gql`
       query findManyNewsAssetSentiment($where: NewsAssetSentimentWhereInput!) {
-        NewsAssetSentiments(where: $where) {
+        newsAssetSentiments(where: $where) {
           id
           assetId
           newsId
@@ -1906,7 +1905,7 @@ export const NewsAssetSentiment = {
       const response = await client.query({ query: FIND_MANY_NEWSASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.NewsAssetSentiments) {
-        return response.data.NewsAssetSentiments;
+        return response.data.newsAssetSentiments;
       } else {
        return [] as NewsAssetSentimentType[];
       }

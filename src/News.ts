@@ -257,7 +257,6 @@ export const News = {
 
   /**
    * Update a single News record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated News or null.
@@ -509,7 +508,7 @@ export const News = {
 
   /**
    * Delete a single News record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted News or null.
    */
@@ -663,7 +662,7 @@ export const News = {
 
   /**
    * Retrieve a single News record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved News or null.
    */
@@ -826,7 +825,7 @@ export const News = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<NewsType[] | null> {
     const GET_ALL_NEWS = gql`
       query getAllNews {
-        News {
+        news {
           id
           title
           content
@@ -954,7 +953,7 @@ export const News = {
     try {
       const response = await client.query({ query: GET_ALL_NEWS });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.News ?? null;
+      return response.data?.news ?? null;
     } catch (error) {
       console.error('Error in getAllNews:', error);
       throw error;
@@ -970,7 +969,7 @@ export const News = {
   async findMany(props: NewsType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsType[]> {
     const FIND_MANY_NEWS = gql`
       query findManyNews($where: NewsWhereInput!) {
-        News(where: $where) {
+        news(where: $where) {
           id
           title
           content
@@ -1115,7 +1114,7 @@ export const News = {
       const response = await client.query({ query: FIND_MANY_NEWS, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.News) {
-        return response.data.News;
+        return response.data.news;
       } else {
        return [] as NewsType[];
       }

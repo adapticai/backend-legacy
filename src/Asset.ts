@@ -578,7 +578,6 @@ export const Asset = {
 
   /**
    * Update a single Asset record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Asset or null.
@@ -1608,7 +1607,7 @@ export const Asset = {
 
   /**
    * Delete a single Asset record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Asset or null.
    */
@@ -1886,7 +1885,7 @@ export const Asset = {
 
   /**
    * Retrieve a single Asset record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Asset or null.
    */
@@ -2170,7 +2169,7 @@ export const Asset = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[] | null> {
     const GET_ALL_ASSET = gql`
       query getAllAsset {
-        Assets {
+        assets {
           id
           symbol
           name
@@ -2422,7 +2421,7 @@ export const Asset = {
     try {
       const response = await client.query({ query: GET_ALL_ASSET });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Assets ?? null;
+      return response.data?.assets ?? null;
     } catch (error) {
       console.error('Error in getAllAsset:', error);
       throw error;
@@ -2438,7 +2437,7 @@ export const Asset = {
   async findMany(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[]> {
     const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {
-        Assets(where: $where) {
+        assets(where: $where) {
           id
           symbol
           name
@@ -2704,7 +2703,7 @@ export const Asset = {
       const response = await client.query({ query: FIND_MANY_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Assets) {
-        return response.data.Assets;
+        return response.data.assets;
       } else {
        return [] as AssetType[];
       }

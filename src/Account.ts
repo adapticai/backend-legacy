@@ -516,7 +516,6 @@ export const Account = {
 
   /**
    * Update a single Account record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Account or null.
@@ -1277,7 +1276,7 @@ export const Account = {
 
   /**
    * Delete a single Account record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Account or null.
    */
@@ -1569,7 +1568,7 @@ export const Account = {
 
   /**
    * Retrieve a single Account record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Account or null.
    */
@@ -1864,7 +1863,7 @@ export const Account = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AccountType[] | null> {
     const GET_ALL_ACCOUNT = gql`
       query getAllAccount {
-        Accounts {
+        accounts {
           id
           userId
           type
@@ -2130,7 +2129,7 @@ export const Account = {
     try {
       const response = await client.query({ query: GET_ALL_ACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Accounts ?? null;
+      return response.data?.accounts ?? null;
     } catch (error) {
       console.error('Error in getAllAccount:', error);
       throw error;
@@ -2146,7 +2145,7 @@ export const Account = {
   async findMany(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType[]> {
     const FIND_MANY_ACCOUNT = gql`
       query findManyAccount($where: AccountWhereInput!) {
-        Accounts(where: $where) {
+        accounts(where: $where) {
           id
           userId
           type
@@ -2423,7 +2422,7 @@ export const Account = {
       const response = await client.query({ query: FIND_MANY_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Accounts) {
-        return response.data.Accounts;
+        return response.data.accounts;
       } else {
        return [] as AccountType[];
       }

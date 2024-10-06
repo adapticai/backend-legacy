@@ -509,7 +509,6 @@ export const Authenticator = {
 
   /**
    * Update a single Authenticator record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Authenticator or null.
@@ -1287,7 +1286,7 @@ export const Authenticator = {
 
   /**
    * Delete a single Authenticator record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Authenticator or null.
    */
@@ -1579,7 +1578,7 @@ export const Authenticator = {
 
   /**
    * Retrieve a single Authenticator record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Authenticator or null.
    */
@@ -1874,7 +1873,7 @@ export const Authenticator = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType[] | null> {
     const GET_ALL_AUTHENTICATOR = gql`
       query getAllAuthenticator {
-        Authenticators {
+        authenticators {
           id
           userId
           credentialID
@@ -2140,7 +2139,7 @@ export const Authenticator = {
     try {
       const response = await client.query({ query: GET_ALL_AUTHENTICATOR });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Authenticators ?? null;
+      return response.data?.authenticators ?? null;
     } catch (error) {
       console.error('Error in getAllAuthenticator:', error);
       throw error;
@@ -2156,7 +2155,7 @@ export const Authenticator = {
   async findMany(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType[]> {
     const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {
-        Authenticators(where: $where) {
+        authenticators(where: $where) {
           id
           userId
           credentialID
@@ -2433,7 +2432,7 @@ export const Authenticator = {
       const response = await client.query({ query: FIND_MANY_AUTHENTICATOR, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Authenticators) {
-        return response.data.Authenticators;
+        return response.data.authenticators;
       } else {
        return [] as AuthenticatorType[];
       }

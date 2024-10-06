@@ -705,7 +705,6 @@ export const AIRecommendation = {
 
   /**
    * Update a single AIRecommendation record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated AIRecommendation or null.
@@ -2052,7 +2051,7 @@ export const AIRecommendation = {
 
   /**
    * Delete a single AIRecommendation record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted AIRecommendation or null.
    */
@@ -2344,7 +2343,7 @@ export const AIRecommendation = {
 
   /**
    * Retrieve a single AIRecommendation record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved AIRecommendation or null.
    */
@@ -2639,7 +2638,7 @@ export const AIRecommendation = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType[] | null> {
     const GET_ALL_AIRECOMMENDATION = gql`
       query getAllAIRecommendation {
-        AIRecommendations {
+        aIRecommendations {
           id
           userId
           portfolioId
@@ -2905,7 +2904,7 @@ export const AIRecommendation = {
     try {
       const response = await client.query({ query: GET_ALL_AIRECOMMENDATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.AIRecommendations ?? null;
+      return response.data?.aIRecommendations ?? null;
     } catch (error) {
       console.error('Error in getAllAIRecommendation:', error);
       throw error;
@@ -2921,7 +2920,7 @@ export const AIRecommendation = {
   async findMany(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType[]> {
     const FIND_MANY_AIRECOMMENDATION = gql`
       query findManyAIRecommendation($where: AIRecommendationWhereInput!) {
-        AIRecommendations(where: $where) {
+        aIRecommendations(where: $where) {
           id
           userId
           portfolioId
@@ -3198,7 +3197,7 @@ export const AIRecommendation = {
       const response = await client.query({ query: FIND_MANY_AIRECOMMENDATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.AIRecommendations) {
-        return response.data.AIRecommendations;
+        return response.data.aIRecommendations;
       } else {
        return [] as AIRecommendationType[];
       }

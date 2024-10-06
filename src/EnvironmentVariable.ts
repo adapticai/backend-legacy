@@ -473,7 +473,6 @@ export const EnvironmentVariable = {
 
   /**
    * Update a single EnvironmentVariable record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated EnvironmentVariable or null.
@@ -1136,7 +1135,7 @@ export const EnvironmentVariable = {
 
   /**
    * Delete a single EnvironmentVariable record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted EnvironmentVariable or null.
    */
@@ -1430,7 +1429,7 @@ export const EnvironmentVariable = {
 
   /**
    * Retrieve a single EnvironmentVariable record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved EnvironmentVariable or null.
    */
@@ -1730,7 +1729,7 @@ export const EnvironmentVariable = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[] | null> {
     const GET_ALL_ENVIRONMENTVARIABLE = gql`
       query getAllEnvironmentVariable {
-        EnvironmentVariables {
+        environmentVariables {
           id
           key
           value
@@ -1998,7 +1997,7 @@ export const EnvironmentVariable = {
     try {
       const response = await client.query({ query: GET_ALL_ENVIRONMENTVARIABLE });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.EnvironmentVariables ?? null;
+      return response.data?.environmentVariables ?? null;
     } catch (error) {
       console.error('Error in getAllEnvironmentVariable:', error);
       throw error;
@@ -2014,7 +2013,7 @@ export const EnvironmentVariable = {
   async findMany(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[]> {
     const FIND_MANY_ENVIRONMENTVARIABLE = gql`
       query findManyEnvironmentVariable($where: EnvironmentVariableWhereInput!) {
-        EnvironmentVariables(where: $where) {
+        environmentVariables(where: $where) {
           id
           key
           value
@@ -2296,7 +2295,7 @@ export const EnvironmentVariable = {
       const response = await client.query({ query: FIND_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.EnvironmentVariables) {
-        return response.data.EnvironmentVariables;
+        return response.data.environmentVariables;
       } else {
        return [] as EnvironmentVariableType[];
       }

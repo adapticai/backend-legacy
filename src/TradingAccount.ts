@@ -846,7 +846,6 @@ export const TradingAccount = {
 
   /**
    * Update a single TradingAccount record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated TradingAccount or null.
@@ -2584,7 +2583,7 @@ export const TradingAccount = {
 
   /**
    * Delete a single TradingAccount record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted TradingAccount or null.
    */
@@ -2897,7 +2896,7 @@ export const TradingAccount = {
 
   /**
    * Retrieve a single TradingAccount record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved TradingAccount or null.
    */
@@ -3219,7 +3218,7 @@ export const TradingAccount = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[] | null> {
     const GET_ALL_TRADINGACCOUNT = gql`
       query getAllTradingAccount {
-        TradingAccounts {
+        tradingAccounts {
           id
           name
           slug
@@ -3506,7 +3505,7 @@ export const TradingAccount = {
     try {
       const response = await client.query({ query: GET_ALL_TRADINGACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.TradingAccounts ?? null;
+      return response.data?.tradingAccounts ?? null;
     } catch (error) {
       console.error('Error in getAllTradingAccount:', error);
       throw error;
@@ -3522,7 +3521,7 @@ export const TradingAccount = {
   async findMany(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[]> {
     const FIND_MANY_TRADINGACCOUNT = gql`
       query findManyTradingAccount($where: TradingAccountWhereInput!) {
-        TradingAccounts(where: $where) {
+        tradingAccounts(where: $where) {
           id
           name
           slug
@@ -3826,7 +3825,7 @@ export const TradingAccount = {
       const response = await client.query({ query: FIND_MANY_TRADINGACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.TradingAccounts) {
-        return response.data.TradingAccounts;
+        return response.data.tradingAccounts;
       } else {
        return [] as TradingAccountType[];
       }

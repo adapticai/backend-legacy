@@ -573,7 +573,6 @@ export const Holding = {
 
   /**
    * Update a single Holding record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Holding or null.
@@ -1462,7 +1461,7 @@ export const Holding = {
 
   /**
    * Delete a single Holding record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Holding or null.
    */
@@ -1785,7 +1784,7 @@ export const Holding = {
 
   /**
    * Retrieve a single Holding record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Holding or null.
    */
@@ -2111,7 +2110,7 @@ export const Holding = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType[] | null> {
     const GET_ALL_HOLDING = gql`
       query getAllHolding {
-        Holdings {
+        holdings {
           id
           tradingAccountId
           assetId
@@ -2408,7 +2407,7 @@ export const Holding = {
     try {
       const response = await client.query({ query: GET_ALL_HOLDING });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Holdings ?? null;
+      return response.data?.holdings ?? null;
     } catch (error) {
       console.error('Error in getAllHolding:', error);
       throw error;
@@ -2424,7 +2423,7 @@ export const Holding = {
   async findMany(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType[]> {
     const FIND_MANY_HOLDING = gql`
       query findManyHolding($where: HoldingWhereInput!) {
-        Holdings(where: $where) {
+        holdings(where: $where) {
           id
           tradingAccountId
           assetId
@@ -2732,7 +2731,7 @@ export const Holding = {
       const response = await client.query({ query: FIND_MANY_HOLDING, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Holdings) {
-        return response.data.Holdings;
+        return response.data.holdings;
       } else {
        return [] as HoldingType[];
       }

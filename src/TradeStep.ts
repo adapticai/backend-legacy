@@ -464,7 +464,6 @@ export const TradeStep = {
 
   /**
    * Update a single TradeStep record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated TradeStep or null.
@@ -1008,7 +1007,7 @@ export const TradeStep = {
 
   /**
    * Delete a single TradeStep record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted TradeStep or null.
    */
@@ -1323,7 +1322,7 @@ export const TradeStep = {
 
   /**
    * Retrieve a single TradeStep record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved TradeStep or null.
    */
@@ -1641,7 +1640,7 @@ export const TradeStep = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType[] | null> {
     const GET_ALL_TRADESTEP = gql`
       query getAllTradeStep {
-        TradeSteps {
+        tradeSteps {
           id
           tradeId
           sequence
@@ -1930,7 +1929,7 @@ export const TradeStep = {
     try {
       const response = await client.query({ query: GET_ALL_TRADESTEP });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.TradeSteps ?? null;
+      return response.data?.tradeSteps ?? null;
     } catch (error) {
       console.error('Error in getAllTradeStep:', error);
       throw error;
@@ -1946,7 +1945,7 @@ export const TradeStep = {
   async findMany(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType[]> {
     const FIND_MANY_TRADESTEP = gql`
       query findManyTradeStep($where: TradeStepWhereInput!) {
-        TradeSteps(where: $where) {
+        tradeSteps(where: $where) {
           id
           tradeId
           sequence
@@ -2246,7 +2245,7 @@ export const TradeStep = {
       const response = await client.query({ query: FIND_MANY_TRADESTEP, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.TradeSteps) {
-        return response.data.TradeSteps;
+        return response.data.tradeSteps;
       } else {
        return [] as TradeStepType[];
       }

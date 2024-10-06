@@ -508,7 +508,6 @@ export const Session = {
 
   /**
    * Update a single Session record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Session or null.
@@ -1291,7 +1290,7 @@ export const Session = {
 
   /**
    * Delete a single Session record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Session or null.
    */
@@ -1583,7 +1582,7 @@ export const Session = {
 
   /**
    * Retrieve a single Session record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Session or null.
    */
@@ -1878,7 +1877,7 @@ export const Session = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<SessionType[] | null> {
     const GET_ALL_SESSION = gql`
       query getAllSession {
-        Sessions {
+        sessions {
           id
           sessionToken
           userId
@@ -2144,7 +2143,7 @@ export const Session = {
     try {
       const response = await client.query({ query: GET_ALL_SESSION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Sessions ?? null;
+      return response.data?.sessions ?? null;
     } catch (error) {
       console.error('Error in getAllSession:', error);
       throw error;
@@ -2160,7 +2159,7 @@ export const Session = {
   async findMany(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType[]> {
     const FIND_MANY_SESSION = gql`
       query findManySession($where: SessionWhereInput!) {
-        Sessions(where: $where) {
+        sessions(where: $where) {
           id
           sessionToken
           userId
@@ -2437,7 +2436,7 @@ export const Session = {
       const response = await client.query({ query: FIND_MANY_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Sessions) {
-        return response.data.Sessions;
+        return response.data.sessions;
       } else {
        return [] as SessionType[];
       }

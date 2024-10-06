@@ -636,7 +636,6 @@ export const Alert = {
 
   /**
    * Update a single Alert record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Alert or null.
@@ -1781,7 +1780,7 @@ export const Alert = {
 
   /**
    * Delete a single Alert record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Alert or null.
    */
@@ -2073,7 +2072,7 @@ export const Alert = {
 
   /**
    * Retrieve a single Alert record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Alert or null.
    */
@@ -2368,7 +2367,7 @@ export const Alert = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AlertType[] | null> {
     const GET_ALL_ALERT = gql`
       query getAllAlert {
-        Alerts {
+        alerts {
           id
           userId
           portfolioId
@@ -2634,7 +2633,7 @@ export const Alert = {
     try {
       const response = await client.query({ query: GET_ALL_ALERT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Alerts ?? null;
+      return response.data?.alerts ?? null;
     } catch (error) {
       console.error('Error in getAllAlert:', error);
       throw error;
@@ -2650,7 +2649,7 @@ export const Alert = {
   async findMany(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType[]> {
     const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {
-        Alerts(where: $where) {
+        alerts(where: $where) {
           id
           userId
           portfolioId
@@ -2927,7 +2926,7 @@ export const Alert = {
       const response = await client.query({ query: FIND_MANY_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Alerts) {
-        return response.data.Alerts;
+        return response.data.alerts;
       } else {
        return [] as AlertType[];
       }

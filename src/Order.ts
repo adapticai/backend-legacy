@@ -702,7 +702,6 @@ export const Order = {
 
   /**
    * Update a single Order record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated Order or null.
@@ -2010,7 +2009,7 @@ export const Order = {
 
   /**
    * Delete a single Order record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted Order or null.
    */
@@ -2302,7 +2301,7 @@ export const Order = {
 
   /**
    * Retrieve a single Order record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved Order or null.
    */
@@ -2597,7 +2596,7 @@ export const Order = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<OrderType[] | null> {
     const GET_ALL_ORDER = gql`
       query getAllOrder {
-        Orders {
+        orders {
           id
           userId
           portfolioId
@@ -2863,7 +2862,7 @@ export const Order = {
     try {
       const response = await client.query({ query: GET_ALL_ORDER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.Orders ?? null;
+      return response.data?.orders ?? null;
     } catch (error) {
       console.error('Error in getAllOrder:', error);
       throw error;
@@ -2879,7 +2878,7 @@ export const Order = {
   async findMany(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType[]> {
     const FIND_MANY_ORDER = gql`
       query findManyOrder($where: OrderWhereInput!) {
-        Orders(where: $where) {
+        orders(where: $where) {
           id
           userId
           portfolioId
@@ -3156,7 +3155,7 @@ export const Order = {
       const response = await client.query({ query: FIND_MANY_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.Orders) {
-        return response.data.Orders;
+        return response.data.orders;
       } else {
        return [] as OrderType[];
       }

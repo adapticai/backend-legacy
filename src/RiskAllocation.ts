@@ -636,7 +636,6 @@ export const RiskAllocation = {
 
   /**
    * Update a single RiskAllocation record.
-   * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The updated RiskAllocation or null.
@@ -1791,7 +1790,7 @@ export const RiskAllocation = {
 
   /**
    * Delete a single RiskAllocation record.
-   * @param id - Unique identifier of the record to delete.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The deleted RiskAllocation or null.
    */
@@ -2083,7 +2082,7 @@ export const RiskAllocation = {
 
   /**
    * Retrieve a single RiskAllocation record by ID.
-   * @param id - Unique identifier of the record.
+   * @param props - Properties to update.
    * @param client - Apollo Client instance.
    * @returns The retrieved RiskAllocation or null.
    */
@@ -2378,7 +2377,7 @@ export const RiskAllocation = {
   async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType[] | null> {
     const GET_ALL_RISKALLOCATION = gql`
       query getAllRiskAllocation {
-        RiskAllocations {
+        riskAllocations {
           id
           userId
           portfolioId
@@ -2644,7 +2643,7 @@ export const RiskAllocation = {
     try {
       const response = await client.query({ query: GET_ALL_RISKALLOCATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.RiskAllocations ?? null;
+      return response.data?.riskAllocations ?? null;
     } catch (error) {
       console.error('Error in getAllRiskAllocation:', error);
       throw error;
@@ -2660,7 +2659,7 @@ export const RiskAllocation = {
   async findMany(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType[]> {
     const FIND_MANY_RISKALLOCATION = gql`
       query findManyRiskAllocation($where: RiskAllocationWhereInput!) {
-        RiskAllocations(where: $where) {
+        riskAllocations(where: $where) {
           id
           userId
           portfolioId
@@ -2937,7 +2936,7 @@ export const RiskAllocation = {
       const response = await client.query({ query: FIND_MANY_RISKALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.RiskAllocations) {
-        return response.data.RiskAllocations;
+        return response.data.riskAllocations;
       } else {
        return [] as RiskAllocationType[];
       }
