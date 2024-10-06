@@ -856,7 +856,7 @@ ${selectionSet}      }
    */
   async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
     const GET_${capitalModelName.toUpperCase()} = gql\`
-      query get${capitalModelName}($where: ${capitalModelName}WhereInput!) {
+      query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
 ${selectionSet}        }
       }\`;
@@ -865,7 +865,7 @@ ${selectionSet}        }
       where: {
       ${constructVariablesObject(
     'props',
-    inputTypePaths.where,
+    inputTypePaths.whereUnique,
     capitalModelName,
     inputsPath,
     modelsPath,

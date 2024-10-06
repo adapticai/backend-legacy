@@ -157,12 +157,8 @@ export const Account = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -174,12 +170,8 @@ export const Account = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -200,9 +192,7 @@ export const Account = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -721,12 +711,8 @@ export const Account = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -738,12 +724,8 @@ export const Account = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -764,9 +746,7 @@ export const Account = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -1540,12 +1520,8 @@ export const Account = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1557,12 +1533,8 @@ export const Account = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1583,9 +1555,7 @@ export const Account = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -1753,7 +1723,7 @@ export const Account = {
    */
   async get(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType> {
     const GET_ACCOUNT = gql`
-      query getAccount($where: AccountWhereInput!) {
+      query getAccount($where: AccountWhereUniqueInput!) {
         getAccount(where: $where) {
           id
           userId
@@ -1893,12 +1863,8 @@ export const Account = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1910,12 +1876,8 @@ export const Account = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1936,9 +1898,7 @@ export const Account = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2078,9 +2038,7 @@ export const Account = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2242,12 +2200,8 @@ export const Account = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2259,12 +2213,8 @@ export const Account = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2285,9 +2235,7 @@ export const Account = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2583,12 +2531,8 @@ export const Account = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2600,12 +2544,8 @@ export const Account = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2626,9 +2566,7 @@ export const Account = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt

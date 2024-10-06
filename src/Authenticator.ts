@@ -155,12 +155,8 @@ export const Authenticator = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -172,12 +168,8 @@ export const Authenticator = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -198,9 +190,7 @@ export const Authenticator = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -712,12 +702,8 @@ export const Authenticator = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -729,12 +715,8 @@ export const Authenticator = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -755,9 +737,7 @@ export const Authenticator = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -1548,12 +1528,8 @@ export const Authenticator = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1565,12 +1541,8 @@ export const Authenticator = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1591,9 +1563,7 @@ export const Authenticator = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -1763,7 +1733,7 @@ export const Authenticator = {
    */
   async get(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
     const GET_AUTHENTICATOR = gql`
-      query getAuthenticator($where: AuthenticatorWhereInput!) {
+      query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         getAuthenticator(where: $where) {
           id
           userId
@@ -1901,12 +1871,8 @@ export const Authenticator = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1918,12 +1884,8 @@ export const Authenticator = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1944,9 +1906,7 @@ export const Authenticator = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2088,9 +2048,7 @@ export const Authenticator = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2250,12 +2208,8 @@ export const Authenticator = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2267,12 +2221,8 @@ export const Authenticator = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2293,9 +2243,7 @@ export const Authenticator = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2591,12 +2539,8 @@ export const Authenticator = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2608,12 +2552,8 @@ export const Authenticator = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2634,9 +2574,7 @@ export const Authenticator = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt

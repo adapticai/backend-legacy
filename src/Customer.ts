@@ -157,12 +157,8 @@ export const Customer = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -174,12 +170,8 @@ export const Customer = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -200,9 +192,7 @@ export const Customer = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -714,12 +704,8 @@ export const Customer = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -731,12 +717,8 @@ export const Customer = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -757,9 +739,7 @@ export const Customer = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -1533,12 +1513,8 @@ export const Customer = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1550,12 +1526,8 @@ export const Customer = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1576,9 +1548,7 @@ export const Customer = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -1746,7 +1716,7 @@ export const Customer = {
    */
   async get(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType> {
     const GET_CUSTOMER = gql`
-      query getCustomer($where: CustomerWhereInput!) {
+      query getCustomer($where: CustomerWhereUniqueInput!) {
         getCustomer(where: $where) {
           id
           authUserId
@@ -1886,12 +1856,8 @@ export const Customer = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1903,12 +1869,8 @@ export const Customer = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1929,9 +1891,7 @@ export const Customer = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2071,9 +2031,7 @@ export const Customer = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
            } : undefined,
@@ -2238,12 +2196,8 @@ export const Customer = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2255,12 +2209,8 @@ export const Customer = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2281,9 +2231,7 @@ export const Customer = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2579,12 +2527,8 @@ export const Customer = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2596,12 +2540,8 @@ export const Customer = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2622,9 +2562,7 @@ export const Customer = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt

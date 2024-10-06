@@ -170,12 +170,8 @@ export const Order = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -187,12 +183,8 @@ export const Order = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -213,9 +205,7 @@ export const Order = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -654,6 +644,8 @@ export const Order = {
         officialSite: props.asset.officialSite !== undefined ? props.asset.officialSite : undefined,
         fiscalYearEnd: props.asset.fiscalYearEnd !== undefined ? props.asset.fiscalYearEnd : undefined,
         latestQuarter: props.asset.latestQuarter !== undefined ? props.asset.latestQuarter : undefined,
+        marketCapitalization: props.asset.marketCapitalization !== undefined ? props.asset.marketCapitalization : undefined,
+        ebitda: props.asset.ebitda !== undefined ? props.asset.ebitda : undefined,
         peRatio: props.asset.peRatio !== undefined ? props.asset.peRatio : undefined,
         pegRatio: props.asset.pegRatio !== undefined ? props.asset.pegRatio : undefined,
         bookValue: props.asset.bookValue !== undefined ? props.asset.bookValue : undefined,
@@ -665,6 +657,8 @@ export const Order = {
         operatingMarginTTM: props.asset.operatingMarginTTM !== undefined ? props.asset.operatingMarginTTM : undefined,
         returnOnAssetsTTM: props.asset.returnOnAssetsTTM !== undefined ? props.asset.returnOnAssetsTTM : undefined,
         returnOnEquityTTM: props.asset.returnOnEquityTTM !== undefined ? props.asset.returnOnEquityTTM : undefined,
+        revenueTTM: props.asset.revenueTTM !== undefined ? props.asset.revenueTTM : undefined,
+        grossProfitTTM: props.asset.grossProfitTTM !== undefined ? props.asset.grossProfitTTM : undefined,
         dilutedEPSTTM: props.asset.dilutedEPSTTM !== undefined ? props.asset.dilutedEPSTTM : undefined,
         quarterlyEarningsGrowthYOY: props.asset.quarterlyEarningsGrowthYOY !== undefined ? props.asset.quarterlyEarningsGrowthYOY : undefined,
         quarterlyRevenueGrowthYOY: props.asset.quarterlyRevenueGrowthYOY !== undefined ? props.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -685,6 +679,7 @@ export const Order = {
         week52Low: props.asset.week52Low !== undefined ? props.asset.week52Low : undefined,
         day50MovingAverage: props.asset.day50MovingAverage !== undefined ? props.asset.day50MovingAverage : undefined,
         day200MovingAverage: props.asset.day200MovingAverage !== undefined ? props.asset.day200MovingAverage : undefined,
+        sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
         dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
     holdings: props.asset.holdings ? {
@@ -965,12 +960,8 @@ export const Order = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -982,12 +973,8 @@ export const Order = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1008,9 +995,7 @@ export const Order = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2265,6 +2250,8 @@ export const Order = {
         officialSite: props.asset.officialSite !== undefined ? props.asset.officialSite : undefined,
         fiscalYearEnd: props.asset.fiscalYearEnd !== undefined ? props.asset.fiscalYearEnd : undefined,
         latestQuarter: props.asset.latestQuarter !== undefined ? props.asset.latestQuarter : undefined,
+        marketCapitalization: props.asset.marketCapitalization !== undefined ? props.asset.marketCapitalization : undefined,
+        ebitda: props.asset.ebitda !== undefined ? props.asset.ebitda : undefined,
         peRatio: props.asset.peRatio !== undefined ? props.asset.peRatio : undefined,
         pegRatio: props.asset.pegRatio !== undefined ? props.asset.pegRatio : undefined,
         bookValue: props.asset.bookValue !== undefined ? props.asset.bookValue : undefined,
@@ -2276,6 +2263,8 @@ export const Order = {
         operatingMarginTTM: props.asset.operatingMarginTTM !== undefined ? props.asset.operatingMarginTTM : undefined,
         returnOnAssetsTTM: props.asset.returnOnAssetsTTM !== undefined ? props.asset.returnOnAssetsTTM : undefined,
         returnOnEquityTTM: props.asset.returnOnEquityTTM !== undefined ? props.asset.returnOnEquityTTM : undefined,
+        revenueTTM: props.asset.revenueTTM !== undefined ? props.asset.revenueTTM : undefined,
+        grossProfitTTM: props.asset.grossProfitTTM !== undefined ? props.asset.grossProfitTTM : undefined,
         dilutedEPSTTM: props.asset.dilutedEPSTTM !== undefined ? props.asset.dilutedEPSTTM : undefined,
         quarterlyEarningsGrowthYOY: props.asset.quarterlyEarningsGrowthYOY !== undefined ? props.asset.quarterlyEarningsGrowthYOY : undefined,
         quarterlyRevenueGrowthYOY: props.asset.quarterlyRevenueGrowthYOY !== undefined ? props.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -2296,6 +2285,7 @@ export const Order = {
         week52Low: props.asset.week52Low !== undefined ? props.asset.week52Low : undefined,
         day50MovingAverage: props.asset.day50MovingAverage !== undefined ? props.asset.day50MovingAverage : undefined,
         day200MovingAverage: props.asset.day200MovingAverage !== undefined ? props.asset.day200MovingAverage : undefined,
+        sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
         dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
     holdings: props.asset.holdings ? {
@@ -2532,12 +2522,8 @@ export const Order = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2549,12 +2535,8 @@ export const Order = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2575,9 +2557,7 @@ export const Order = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2732,7 +2712,7 @@ export const Order = {
    */
   async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
     const GET_ORDER = gql`
-      query getOrder($where: OrderWhereInput!) {
+      query getOrder($where: OrderWhereUniqueInput!) {
         getOrder(where: $where) {
           id
           userId
@@ -2885,12 +2865,8 @@ export const Order = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2902,12 +2878,8 @@ export const Order = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2928,9 +2900,7 @@ export const Order = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -3057,9 +3027,7 @@ export const Order = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -3234,12 +3202,8 @@ export const Order = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -3251,12 +3215,8 @@ export const Order = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -3277,9 +3237,7 @@ export const Order = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -3575,12 +3533,8 @@ export const Order = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -3592,12 +3546,8 @@ export const Order = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -3618,9 +3568,7 @@ export const Order = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt

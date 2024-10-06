@@ -166,12 +166,8 @@ export const RiskAllocation = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -183,12 +179,8 @@ export const RiskAllocation = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -209,9 +201,7 @@ export const RiskAllocation = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -850,12 +840,8 @@ export const RiskAllocation = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -867,12 +853,8 @@ export const RiskAllocation = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -893,9 +875,7 @@ export const RiskAllocation = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2063,12 +2043,8 @@ export const RiskAllocation = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2080,12 +2056,8 @@ export const RiskAllocation = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2106,9 +2078,7 @@ export const RiskAllocation = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2267,7 +2237,7 @@ export const RiskAllocation = {
    */
   async get(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType> {
     const GET_RISKALLOCATION = gql`
-      query getRiskAllocation($where: RiskAllocationWhereInput!) {
+      query getRiskAllocation($where: RiskAllocationWhereUniqueInput!) {
         getRiskAllocation(where: $where) {
           id
           userId
@@ -2416,12 +2386,8 @@ export const RiskAllocation = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2433,12 +2399,8 @@ export const RiskAllocation = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2459,9 +2421,7 @@ export const RiskAllocation = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2592,9 +2552,7 @@ export const RiskAllocation = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2765,12 +2723,8 @@ export const RiskAllocation = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -2782,12 +2736,8 @@ export const RiskAllocation = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -2808,9 +2758,7 @@ export const RiskAllocation = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -3106,12 +3054,8 @@ export const RiskAllocation = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -3123,12 +3067,8 @@ export const RiskAllocation = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -3149,9 +3089,7 @@ export const RiskAllocation = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt

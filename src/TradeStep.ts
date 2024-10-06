@@ -267,11 +267,8 @@ export const TradeStep = {
               officialSite
               fiscalYearEnd
               latestQuarter
-              marketCapitalization {
-              }
-              ebitda {
-                id
-              }
+              marketCapitalization
+              ebitda
               peRatio
               pegRatio
               bookValue
@@ -283,12 +280,8 @@ export const TradeStep = {
               operatingMarginTTM
               returnOnAssetsTTM
               returnOnEquityTTM
-              revenueTTM {
-                id
-              }
-              grossProfitTTM {
-                id
-              }
+              revenueTTM
+              grossProfitTTM
               dilutedEPSTTM
               quarterlyEarningsGrowthYOY
               quarterlyRevenueGrowthYOY
@@ -309,9 +302,7 @@ export const TradeStep = {
               week52Low
               day50MovingAverage
               day200MovingAverage
-              sharesOutstanding {
-                id
-              }
+              sharesOutstanding
               dividendDate
               exDividendDate
               createdAt
@@ -454,6 +445,8 @@ export const TradeStep = {
           officialSite: props.trade.asset.officialSite !== undefined ? props.trade.asset.officialSite : undefined,
           fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? props.trade.asset.fiscalYearEnd : undefined,
           latestQuarter: props.trade.asset.latestQuarter !== undefined ? props.trade.asset.latestQuarter : undefined,
+          marketCapitalization: props.trade.asset.marketCapitalization !== undefined ? props.trade.asset.marketCapitalization : undefined,
+          ebitda: props.trade.asset.ebitda !== undefined ? props.trade.asset.ebitda : undefined,
           peRatio: props.trade.asset.peRatio !== undefined ? props.trade.asset.peRatio : undefined,
           pegRatio: props.trade.asset.pegRatio !== undefined ? props.trade.asset.pegRatio : undefined,
           bookValue: props.trade.asset.bookValue !== undefined ? props.trade.asset.bookValue : undefined,
@@ -465,6 +458,8 @@ export const TradeStep = {
           operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? props.trade.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? props.trade.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? props.trade.asset.returnOnEquityTTM : undefined,
+          revenueTTM: props.trade.asset.revenueTTM !== undefined ? props.trade.asset.revenueTTM : undefined,
+          grossProfitTTM: props.trade.asset.grossProfitTTM !== undefined ? props.trade.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? props.trade.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? props.trade.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? props.trade.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -485,6 +480,7 @@ export const TradeStep = {
           week52Low: props.trade.asset.week52Low !== undefined ? props.trade.asset.week52Low : undefined,
           day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? props.trade.asset.day50MovingAverage : undefined,
           day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? props.trade.asset.day200MovingAverage : undefined,
+          sharesOutstanding: props.trade.asset.sharesOutstanding !== undefined ? props.trade.asset.sharesOutstanding : undefined,
           dividendDate: props.trade.asset.dividendDate !== undefined ? props.trade.asset.dividendDate : undefined,
           exDividendDate: props.trade.asset.exDividendDate !== undefined ? props.trade.asset.exDividendDate : undefined,
         },
@@ -822,11 +818,8 @@ export const TradeStep = {
               officialSite
               fiscalYearEnd
               latestQuarter
-              marketCapitalization {
-              }
-              ebitda {
-                id
-              }
+              marketCapitalization
+              ebitda
               peRatio
               pegRatio
               bookValue
@@ -838,12 +831,8 @@ export const TradeStep = {
               operatingMarginTTM
               returnOnAssetsTTM
               returnOnEquityTTM
-              revenueTTM {
-                id
-              }
-              grossProfitTTM {
-                id
-              }
+              revenueTTM
+              grossProfitTTM
               dilutedEPSTTM
               quarterlyEarningsGrowthYOY
               quarterlyRevenueGrowthYOY
@@ -864,9 +853,7 @@ export const TradeStep = {
               week52Low
               day50MovingAverage
               day200MovingAverage
-              sharesOutstanding {
-                id
-              }
+              sharesOutstanding
               dividendDate
               exDividendDate
               createdAt
@@ -1240,6 +1227,8 @@ export const TradeStep = {
           officialSite: props.trade.asset.officialSite !== undefined ? props.trade.asset.officialSite : undefined,
           fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? props.trade.asset.fiscalYearEnd : undefined,
           latestQuarter: props.trade.asset.latestQuarter !== undefined ? props.trade.asset.latestQuarter : undefined,
+          marketCapitalization: props.trade.asset.marketCapitalization !== undefined ? props.trade.asset.marketCapitalization : undefined,
+          ebitda: props.trade.asset.ebitda !== undefined ? props.trade.asset.ebitda : undefined,
           peRatio: props.trade.asset.peRatio !== undefined ? props.trade.asset.peRatio : undefined,
           pegRatio: props.trade.asset.pegRatio !== undefined ? props.trade.asset.pegRatio : undefined,
           bookValue: props.trade.asset.bookValue !== undefined ? props.trade.asset.bookValue : undefined,
@@ -1251,6 +1240,8 @@ export const TradeStep = {
           operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? props.trade.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? props.trade.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? props.trade.asset.returnOnEquityTTM : undefined,
+          revenueTTM: props.trade.asset.revenueTTM !== undefined ? props.trade.asset.revenueTTM : undefined,
+          grossProfitTTM: props.trade.asset.grossProfitTTM !== undefined ? props.trade.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? props.trade.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? props.trade.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? props.trade.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -1271,6 +1262,7 @@ export const TradeStep = {
           week52Low: props.trade.asset.week52Low !== undefined ? props.trade.asset.week52Low : undefined,
           day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? props.trade.asset.day50MovingAverage : undefined,
           day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? props.trade.asset.day200MovingAverage : undefined,
+          sharesOutstanding: props.trade.asset.sharesOutstanding !== undefined ? props.trade.asset.sharesOutstanding : undefined,
           dividendDate: props.trade.asset.dividendDate !== undefined ? props.trade.asset.dividendDate : undefined,
           exDividendDate: props.trade.asset.exDividendDate !== undefined ? props.trade.asset.exDividendDate : undefined,
         },
@@ -1345,6 +1337,8 @@ export const TradeStep = {
           officialSite: props.trade.asset.officialSite !== undefined ? props.trade.asset.officialSite : undefined,
           fiscalYearEnd: props.trade.asset.fiscalYearEnd !== undefined ? props.trade.asset.fiscalYearEnd : undefined,
           latestQuarter: props.trade.asset.latestQuarter !== undefined ? props.trade.asset.latestQuarter : undefined,
+          marketCapitalization: props.trade.asset.marketCapitalization !== undefined ? props.trade.asset.marketCapitalization : undefined,
+          ebitda: props.trade.asset.ebitda !== undefined ? props.trade.asset.ebitda : undefined,
           peRatio: props.trade.asset.peRatio !== undefined ? props.trade.asset.peRatio : undefined,
           pegRatio: props.trade.asset.pegRatio !== undefined ? props.trade.asset.pegRatio : undefined,
           bookValue: props.trade.asset.bookValue !== undefined ? props.trade.asset.bookValue : undefined,
@@ -1356,6 +1350,8 @@ export const TradeStep = {
           operatingMarginTTM: props.trade.asset.operatingMarginTTM !== undefined ? props.trade.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: props.trade.asset.returnOnAssetsTTM !== undefined ? props.trade.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: props.trade.asset.returnOnEquityTTM !== undefined ? props.trade.asset.returnOnEquityTTM : undefined,
+          revenueTTM: props.trade.asset.revenueTTM !== undefined ? props.trade.asset.revenueTTM : undefined,
+          grossProfitTTM: props.trade.asset.grossProfitTTM !== undefined ? props.trade.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: props.trade.asset.dilutedEPSTTM !== undefined ? props.trade.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: props.trade.asset.quarterlyEarningsGrowthYOY !== undefined ? props.trade.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: props.trade.asset.quarterlyRevenueGrowthYOY !== undefined ? props.trade.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -1376,6 +1372,7 @@ export const TradeStep = {
           week52Low: props.trade.asset.week52Low !== undefined ? props.trade.asset.week52Low : undefined,
           day50MovingAverage: props.trade.asset.day50MovingAverage !== undefined ? props.trade.asset.day50MovingAverage : undefined,
           day200MovingAverage: props.trade.asset.day200MovingAverage !== undefined ? props.trade.asset.day200MovingAverage : undefined,
+          sharesOutstanding: props.trade.asset.sharesOutstanding !== undefined ? props.trade.asset.sharesOutstanding : undefined,
           dividendDate: props.trade.asset.dividendDate !== undefined ? props.trade.asset.dividendDate : undefined,
           exDividendDate: props.trade.asset.exDividendDate !== undefined ? props.trade.asset.exDividendDate : undefined,
         },
@@ -1661,11 +1658,8 @@ export const TradeStep = {
               officialSite
               fiscalYearEnd
               latestQuarter
-              marketCapitalization {
-              }
-              ebitda {
-                id
-              }
+              marketCapitalization
+              ebitda
               peRatio
               pegRatio
               bookValue
@@ -1677,12 +1671,8 @@ export const TradeStep = {
               operatingMarginTTM
               returnOnAssetsTTM
               returnOnEquityTTM
-              revenueTTM {
-                id
-              }
-              grossProfitTTM {
-                id
-              }
+              revenueTTM
+              grossProfitTTM
               dilutedEPSTTM
               quarterlyEarningsGrowthYOY
               quarterlyRevenueGrowthYOY
@@ -1703,9 +1693,7 @@ export const TradeStep = {
               week52Low
               day50MovingAverage
               day200MovingAverage
-              sharesOutstanding {
-                id
-              }
+              sharesOutstanding
               dividendDate
               exDividendDate
               createdAt
@@ -1787,7 +1775,7 @@ export const TradeStep = {
    */
   async get(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
     const GET_TRADESTEP = gql`
-      query getTradeStep($where: TradeStepWhereInput!) {
+      query getTradeStep($where: TradeStepWhereUniqueInput!) {
         getTradeStep(where: $where) {
           id
           tradeId
@@ -2037,11 +2025,8 @@ export const TradeStep = {
               officialSite
               fiscalYearEnd
               latestQuarter
-              marketCapitalization {
-              }
-              ebitda {
-                id
-              }
+              marketCapitalization
+              ebitda
               peRatio
               pegRatio
               bookValue
@@ -2053,12 +2038,8 @@ export const TradeStep = {
               operatingMarginTTM
               returnOnAssetsTTM
               returnOnEquityTTM
-              revenueTTM {
-                id
-              }
-              grossProfitTTM {
-                id
-              }
+              revenueTTM
+              grossProfitTTM
               dilutedEPSTTM
               quarterlyEarningsGrowthYOY
               quarterlyRevenueGrowthYOY
@@ -2079,9 +2060,7 @@ export const TradeStep = {
               week52Low
               day50MovingAverage
               day200MovingAverage
-              sharesOutstanding {
-                id
-              }
+              sharesOutstanding
               dividendDate
               exDividendDate
               createdAt
@@ -2135,9 +2114,7 @@ export const TradeStep = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2409,11 +2386,8 @@ export const TradeStep = {
               officialSite
               fiscalYearEnd
               latestQuarter
-              marketCapitalization {
-              }
-              ebitda {
-                id
-              }
+              marketCapitalization
+              ebitda
               peRatio
               pegRatio
               bookValue
@@ -2425,12 +2399,8 @@ export const TradeStep = {
               operatingMarginTTM
               returnOnAssetsTTM
               returnOnEquityTTM
-              revenueTTM {
-                id
-              }
-              grossProfitTTM {
-                id
-              }
+              revenueTTM
+              grossProfitTTM
               dilutedEPSTTM
               quarterlyEarningsGrowthYOY
               quarterlyRevenueGrowthYOY
@@ -2451,9 +2421,7 @@ export const TradeStep = {
               week52Low
               day50MovingAverage
               day200MovingAverage
-              sharesOutstanding {
-                id
-              }
+              sharesOutstanding
               dividendDate
               exDividendDate
               createdAt
@@ -2773,11 +2741,8 @@ export const TradeStep = {
               officialSite
               fiscalYearEnd
               latestQuarter
-              marketCapitalization {
-              }
-              ebitda {
-                id
-              }
+              marketCapitalization
+              ebitda
               peRatio
               pegRatio
               bookValue
@@ -2789,12 +2754,8 @@ export const TradeStep = {
               operatingMarginTTM
               returnOnAssetsTTM
               returnOnEquityTTM
-              revenueTTM {
-                id
-              }
-              grossProfitTTM {
-                id
-              }
+              revenueTTM
+              grossProfitTTM
               dilutedEPSTTM
               quarterlyEarningsGrowthYOY
               quarterlyRevenueGrowthYOY
@@ -2815,9 +2776,7 @@ export const TradeStep = {
               week52Low
               day50MovingAverage
               day200MovingAverage
-              sharesOutstanding {
-                id
-              }
+              sharesOutstanding
               dividendDate
               exDividendDate
               createdAt

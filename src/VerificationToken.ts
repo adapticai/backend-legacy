@@ -178,7 +178,7 @@ export const VerificationToken = {
    */
   async get(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
     const GET_VERIFICATIONTOKEN = gql`
-      query getVerificationToken($where: VerificationTokenWhereInput!) {
+      query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
           id
           identifier
@@ -189,9 +189,7 @@ export const VerificationToken = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);

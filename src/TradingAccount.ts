@@ -130,12 +130,8 @@ export const TradingAccount = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -147,12 +143,8 @@ export const TradingAccount = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -173,9 +165,7 @@ export const TradingAccount = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -555,6 +545,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -566,6 +558,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -586,6 +580,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -651,6 +646,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -662,6 +659,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -682,6 +681,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -770,6 +770,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -781,6 +783,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -801,6 +805,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -862,6 +867,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -873,6 +880,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -893,6 +902,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -1196,12 +1206,8 @@ export const TradingAccount = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -1213,12 +1219,8 @@ export const TradingAccount = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -1239,9 +1241,7 @@ export const TradingAccount = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -2114,6 +2114,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -2125,6 +2127,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -2145,6 +2149,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -2177,6 +2182,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -2188,6 +2195,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -2208,6 +2217,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -2485,6 +2495,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -2496,6 +2508,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -2516,6 +2530,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -2645,6 +2660,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -2656,6 +2673,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -2676,6 +2695,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -2974,6 +2994,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -2985,6 +3007,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -3005,6 +3029,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -3062,6 +3087,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -3073,6 +3100,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -3093,6 +3122,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -3358,6 +3388,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -3369,6 +3401,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -3389,6 +3423,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -3443,6 +3478,8 @@ export const TradingAccount = {
           officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
           fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
           latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
           peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
           pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
           bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
@@ -3454,6 +3491,8 @@ export const TradingAccount = {
           operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
           returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
           returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
           dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
           quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
           quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
@@ -3474,6 +3513,7 @@ export const TradingAccount = {
           week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
           day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
           day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
         },
@@ -3940,12 +3980,8 @@ export const TradingAccount = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -3957,12 +3993,8 @@ export const TradingAccount = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -3983,9 +4015,7 @@ export const TradingAccount = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -4201,7 +4231,7 @@ export const TradingAccount = {
    */
   async get(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
     const GET_TRADINGACCOUNT = gql`
-      query getTradingAccount($where: TradingAccountWhereInput!) {
+      query getTradingAccount($where: TradingAccountWhereUniqueInput!) {
         getTradingAccount(where: $where) {
           id
           name
@@ -4314,12 +4344,8 @@ export const TradingAccount = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -4331,12 +4357,8 @@ export const TradingAccount = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -4357,9 +4379,7 @@ export const TradingAccount = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -4547,14 +4567,10 @@ export const TradingAccount = {
 
     const variables = {
       where: {
-              id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+              id: props.id !== undefined ? props.id : undefined,
+        slug: props.slug !== undefined ? props.slug : undefined,
         name: props.name !== undefined ? {
             equals: props.name 
-           } : undefined,
-        slug: props.slug !== undefined ? {
-            equals: props.slug 
            } : undefined,
 },
 };
@@ -4690,12 +4706,8 @@ export const TradingAccount = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -4707,12 +4719,8 @@ export const TradingAccount = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -4733,9 +4741,7 @@ export const TradingAccount = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
@@ -5052,12 +5058,8 @@ export const TradingAccount = {
                 officialSite
                 fiscalYearEnd
                 latestQuarter
-                marketCapitalization {
-                  id
-                }
-                ebitda {
-                  id
-                }
+                marketCapitalization
+                ebitda
                 peRatio
                 pegRatio
                 bookValue
@@ -5069,12 +5071,8 @@ export const TradingAccount = {
                 operatingMarginTTM
                 returnOnAssetsTTM
                 returnOnEquityTTM
-                revenueTTM {
-                  id
-                }
-                grossProfitTTM {
-                  id
-                }
+                revenueTTM
+                grossProfitTTM
                 dilutedEPSTTM
                 quarterlyEarningsGrowthYOY
                 quarterlyRevenueGrowthYOY
@@ -5095,9 +5093,7 @@ export const TradingAccount = {
                 week52Low
                 day50MovingAverage
                 day200MovingAverage
-                sharesOutstanding {
-                  id
-                }
+                sharesOutstanding
                 dividendDate
                 exDividendDate
                 createdAt
