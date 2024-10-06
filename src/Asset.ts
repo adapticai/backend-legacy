@@ -308,20 +308,38 @@ export const Asset = {
           aiRecommendations {
             id
           }
-          news {
+          newsMentions {
             id
             assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
-            createdAt
-            updatedAt
+            newsId
+            news {
+              id
+              newsAssetsId
+              title
+              content
+              source
+              sourceDomain
+              url
+              sentiment
+              authors
+              summary
+              bannerImage
+              timePublished
+              category
+              topics
+              logo
+              createdAt
+              updatedAt
+              assets {
+                id
+              }
+            }
             asset {
               id
             }
+            relevancyScore
+            sentimentScore
+            sentimentLabel
           }
           PortfolioAllocation {
             id
@@ -563,21 +581,41 @@ export const Asset = {
       },
     }))
   } : undefined,
-  news: props.news ? {
-    connectOrCreate: props.news.map((item: any) => ({
+  newsMentions: props.newsMentions ? {
+    connectOrCreate: props.newsMentions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        title: item.title !== undefined ? {
-            equals: item.title 
-           } : undefined,
       },
       create: {
-        title: item.title !== undefined ? item.title : undefined,
-        content: item.content !== undefined ? item.content : undefined,
-        source: item.source !== undefined ? item.source : undefined,
-        url: item.url !== undefined ? item.url : undefined,
-        sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-        publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+        sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+        sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+    news: item.news ? {
+      connectOrCreate: {
+        where: {
+          id: item.news.id !== undefined ? item.news.id : undefined,
+          title: item.news.title !== undefined ? {
+              equals: item.news.title 
+             } : undefined,
+        },
+        create: {
+          newsAssetsId: item.news.newsAssetsId !== undefined ? item.news.newsAssetsId : undefined,
+          title: item.news.title !== undefined ? item.news.title : undefined,
+          content: item.news.content !== undefined ? item.news.content : undefined,
+          source: item.news.source !== undefined ? item.news.source : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
+          sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+          authors: item.news.authors !== undefined ? item.news.authors : undefined,
+          summary: item.news.summary !== undefined ? item.news.summary : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+          timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+          category: item.news.category !== undefined ? item.news.category : undefined,
+          topics: item.news.topics !== undefined ? item.news.topics : undefined,
+          logo: item.news.logo !== undefined ? item.news.logo : undefined,
+        },
+      }
+    } : undefined,
       },
     }))
   } : undefined,
@@ -966,20 +1004,38 @@ export const Asset = {
           aiRecommendations {
             id
           }
-          news {
+          newsMentions {
             id
             assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
-            createdAt
-            updatedAt
+            newsId
+            news {
+              id
+              newsAssetsId
+              title
+              content
+              source
+              sourceDomain
+              url
+              sentiment
+              authors
+              summary
+              bannerImage
+              timePublished
+              category
+              topics
+              logo
+              createdAt
+              updatedAt
+              assets {
+                id
+              }
+            }
             asset {
               id
             }
+            relevancyScore
+            sentimentScore
+            sentimentLabel
           }
           PortfolioAllocation {
             id
@@ -1696,41 +1752,124 @@ export const Asset = {
       },
     }))
   } : undefined,
-  news: props.news ? {
-    upsert: props.news.map((item: any) => ({
+  newsMentions: props.newsMentions ? {
+    upsert: props.newsMentions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        title: item.title !== undefined ? {
-            equals: item.title 
-           } : undefined,
       },
       update: {
-        title: item.title !== undefined ? {
-            set: item.title  
+        relevancyScore: item.relevancyScore !== undefined ? {
+            set: item.relevancyScore  
            } : undefined,
-        content: item.content !== undefined ? {
-            set: item.content  
+        sentimentScore: item.sentimentScore !== undefined ? {
+            set: item.sentimentScore  
            } : undefined,
-        source: item.source !== undefined ? {
-            set: item.source  
+        sentimentLabel: item.sentimentLabel !== undefined ? {
+            set: item.sentimentLabel  
            } : undefined,
-        url: item.url !== undefined ? {
-            set: item.url  
-           } : undefined,
-        sentiment: item.sentiment !== undefined ? {
-            set: item.sentiment  
-           } : undefined,
-        publishedAt: item.publishedAt !== undefined ? {
-            set: item.publishedAt  
-           } : undefined,
+    news: item.news ? {
+      upsert: {
+        where: {
+          id: item.news.id !== undefined ? {
+              equals: item.news.id 
+             } : undefined,
+          title: item.news.title !== undefined ? {
+              equals: item.news.title 
+             } : undefined,
+        },
+        update: {
+          newsAssetsId: item.news.newsAssetsId !== undefined ? {
+              set: item.news.newsAssetsId  
+             } : undefined,
+          title: item.news.title !== undefined ? {
+              set: item.news.title  
+             } : undefined,
+          content: item.news.content !== undefined ? {
+              set: item.news.content  
+             } : undefined,
+          source: item.news.source !== undefined ? {
+              set: item.news.source  
+             } : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? {
+              set: item.news.sourceDomain  
+             } : undefined,
+          url: item.news.url !== undefined ? {
+              set: item.news.url  
+             } : undefined,
+          sentiment: item.news.sentiment !== undefined ? {
+              set: item.news.sentiment  
+             } : undefined,
+          authors: item.news.authors !== undefined ? {
+              set: item.news.authors  
+             } : undefined,
+          summary: item.news.summary !== undefined ? {
+              set: item.news.summary  
+             } : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? {
+              set: item.news.bannerImage  
+             } : undefined,
+          timePublished: item.news.timePublished !== undefined ? {
+              set: item.news.timePublished  
+             } : undefined,
+          category: item.news.category !== undefined ? {
+              set: item.news.category  
+             } : undefined,
+          topics: item.news.topics !== undefined ? {
+              set: item.news.topics  
+             } : undefined,
+          logo: item.news.logo !== undefined ? {
+              set: item.news.logo  
+             } : undefined,
+        },
+        create: {
+          newsAssetsId: item.news.newsAssetsId !== undefined ? item.news.newsAssetsId : undefined,
+          title: item.news.title !== undefined ? item.news.title : undefined,
+          content: item.news.content !== undefined ? item.news.content : undefined,
+          source: item.news.source !== undefined ? item.news.source : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
+          sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+          authors: item.news.authors !== undefined ? item.news.authors : undefined,
+          summary: item.news.summary !== undefined ? item.news.summary : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+          timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+          category: item.news.category !== undefined ? item.news.category : undefined,
+          topics: item.news.topics !== undefined ? item.news.topics : undefined,
+          logo: item.news.logo !== undefined ? item.news.logo : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
-        title: item.title !== undefined ? item.title : undefined,
-        content: item.content !== undefined ? item.content : undefined,
-        source: item.source !== undefined ? item.source : undefined,
-        url: item.url !== undefined ? item.url : undefined,
-        sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-        publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+        relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+        sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+        sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+    news: item.news ? {
+      connectOrCreate: {
+        where: {
+          id: item.news.id !== undefined ? item.news.id : undefined,
+          title: item.news.title !== undefined ? {
+              equals: item.news.title 
+             } : undefined,
+        },
+        create: {
+          newsAssetsId: item.news.newsAssetsId !== undefined ? item.news.newsAssetsId : undefined,
+          title: item.news.title !== undefined ? item.news.title : undefined,
+          content: item.news.content !== undefined ? item.news.content : undefined,
+          source: item.news.source !== undefined ? item.news.source : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
+          sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+          authors: item.news.authors !== undefined ? item.news.authors : undefined,
+          summary: item.news.summary !== undefined ? item.news.summary : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+          timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+          category: item.news.category !== undefined ? item.news.category : undefined,
+          topics: item.news.topics !== undefined ? item.news.topics : undefined,
+          logo: item.news.logo !== undefined ? item.news.logo : undefined,
+        },
+      }
+    } : undefined,
       },
     }))
   } : undefined,
@@ -2114,20 +2253,38 @@ export const Asset = {
           aiRecommendations {
             id
           }
-          news {
+          newsMentions {
             id
             assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
-            createdAt
-            updatedAt
+            newsId
+            news {
+              id
+              newsAssetsId
+              title
+              content
+              source
+              sourceDomain
+              url
+              sentiment
+              authors
+              summary
+              bannerImage
+              timePublished
+              category
+              topics
+              logo
+              createdAt
+              updatedAt
+              assets {
+                id
+              }
+            }
             asset {
               id
             }
+            relevancyScore
+            sentimentScore
+            sentimentLabel
           }
           PortfolioAllocation {
             id
@@ -2454,20 +2611,38 @@ export const Asset = {
           aiRecommendations {
             id
           }
-          news {
+          newsMentions {
             id
             assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
-            createdAt
-            updatedAt
+            newsId
+            news {
+              id
+              newsAssetsId
+              title
+              content
+              source
+              sourceDomain
+              url
+              sentiment
+              authors
+              summary
+              bannerImage
+              timePublished
+              category
+              topics
+              logo
+              createdAt
+              updatedAt
+              assets {
+                id
+              }
+            }
             asset {
               id
             }
+            relevancyScore
+            sentimentScore
+            sentimentLabel
           }
           PortfolioAllocation {
             id
@@ -2793,20 +2968,38 @@ export const Asset = {
           aiRecommendations {
             id
           }
-          news {
+          newsMentions {
             id
             assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
-            createdAt
-            updatedAt
+            newsId
+            news {
+              id
+              newsAssetsId
+              title
+              content
+              source
+              sourceDomain
+              url
+              sentiment
+              authors
+              summary
+              bannerImage
+              timePublished
+              category
+              topics
+              logo
+              createdAt
+              updatedAt
+              assets {
+                id
+              }
+            }
             asset {
               id
             }
+            relevancyScore
+            sentimentScore
+            sentimentLabel
           }
           PortfolioAllocation {
             id
@@ -3123,20 +3316,38 @@ export const Asset = {
           aiRecommendations {
             id
           }
-          news {
+          newsMentions {
             id
             assetId
-            title
-            content
-            source
-            url
-            sentiment
-            publishedAt
-            createdAt
-            updatedAt
+            newsId
+            news {
+              id
+              newsAssetsId
+              title
+              content
+              source
+              sourceDomain
+              url
+              sentiment
+              authors
+              summary
+              bannerImage
+              timePublished
+              category
+              topics
+              logo
+              createdAt
+              updatedAt
+              assets {
+                id
+              }
+            }
             asset {
               id
             }
+            relevancyScore
+            sentimentScore
+            sentimentLabel
           }
           PortfolioAllocation {
             id

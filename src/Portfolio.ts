@@ -294,20 +294,19 @@ export const Portfolio = {
               aiRecommendations {
                 id
               }
-              news {
+              newsMentions {
                 id
                 assetId
-                title
-                content
-                source
-                url
-                sentiment
-                publishedAt
-                createdAt
-                updatedAt
+                newsId
+                news {
+                  id
+                }
                 asset {
                   id
                 }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
               }
               PortfolioAllocation {
                 id
@@ -1076,20 +1075,19 @@ export const Portfolio = {
               aiRecommendations {
                 id
               }
-              news {
+              newsMentions {
                 id
                 assetId
-                title
-                content
-                source
-                url
-                sentiment
-                publishedAt
-                createdAt
-                updatedAt
+                newsId
+                news {
+                  id
+                }
                 asset {
                   id
                 }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
               }
               PortfolioAllocation {
                 id
@@ -2596,20 +2594,19 @@ export const Portfolio = {
               aiRecommendations {
                 id
               }
-              news {
+              newsMentions {
                 id
                 assetId
-                title
-                content
-                source
-                url
-                sentiment
-                publishedAt
-                createdAt
-                updatedAt
+                newsId
+                news {
+                  id
+                }
                 asset {
                   id
                 }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
               }
               PortfolioAllocation {
                 id
@@ -2936,20 +2933,19 @@ export const Portfolio = {
               aiRecommendations {
                 id
               }
-              news {
+              newsMentions {
                 id
                 assetId
-                title
-                content
-                source
-                url
-                sentiment
-                publishedAt
-                createdAt
-                updatedAt
+                newsId
+                news {
+                  id
+                }
                 asset {
                   id
                 }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
               }
               PortfolioAllocation {
                 id
@@ -3278,20 +3274,19 @@ export const Portfolio = {
               aiRecommendations {
                 id
               }
-              news {
+              newsMentions {
                 id
                 assetId
-                title
-                content
-                source
-                url
-                sentiment
-                publishedAt
-                createdAt
-                updatedAt
+                newsId
+                news {
+                  id
+                }
                 asset {
                   id
                 }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
               }
               PortfolioAllocation {
                 id
@@ -3608,20 +3603,19 @@ export const Portfolio = {
               aiRecommendations {
                 id
               }
-              news {
+              newsMentions {
                 id
                 assetId
-                title
-                content
-                source
-                url
-                sentiment
-                publishedAt
-                createdAt
-                updatedAt
+                newsId
+                news {
+                  id
+                }
                 asset {
                   id
                 }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
               }
               PortfolioAllocation {
                 id

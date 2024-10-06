@@ -175,7 +175,7 @@ export const Holding = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -663,21 +663,15 @@ export const Holding = {
         },
       }))
     } : undefined,
-    news: props.asset.news ? {
-      connectOrCreate: props.asset.news.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? {
+      connectOrCreate: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          title: item.title !== undefined ? {
-              equals: item.title 
-             } : undefined,
         },
         create: {
-          title: item.title !== undefined ? item.title : undefined,
-          content: item.content !== undefined ? item.content : undefined,
-          source: item.source !== undefined ? item.source : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
         },
       }))
     } : undefined,
@@ -921,7 +915,7 @@ export const Holding = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2009,41 +2003,26 @@ export const Holding = {
         },
       }))
     } : undefined,
-    news: props.asset.news ? {
-      upsert: props.asset.news.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? {
+      upsert: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          title: item.title !== undefined ? {
-              equals: item.title 
-             } : undefined,
         },
         update: {
-          title: item.title !== undefined ? {
-              set: item.title  
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore  
              } : undefined,
-          content: item.content !== undefined ? {
-              set: item.content  
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore  
              } : undefined,
-          source: item.source !== undefined ? {
-              set: item.source  
-             } : undefined,
-          url: item.url !== undefined ? {
-              set: item.url  
-             } : undefined,
-          sentiment: item.sentiment !== undefined ? {
-              set: item.sentiment  
-             } : undefined,
-          publishedAt: item.publishedAt !== undefined ? {
-              set: item.publishedAt  
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel  
              } : undefined,
         },
         create: {
-          title: item.title !== undefined ? item.title : undefined,
-          content: item.content !== undefined ? item.content : undefined,
-          source: item.source !== undefined ? item.source : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
         },
       }))
     } : undefined,
@@ -2108,21 +2087,15 @@ export const Holding = {
         },
       }))
     } : undefined,
-    news: props.asset.news ? {
-      connectOrCreate: props.asset.news.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? {
+      connectOrCreate: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          title: item.title !== undefined ? {
-              equals: item.title 
-             } : undefined,
         },
         create: {
-          title: item.title !== undefined ? item.title : undefined,
-          content: item.content !== undefined ? item.content : undefined,
-          source: item.source !== undefined ? item.source : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-          sentiment: item.sentiment !== undefined ? item.sentiment : undefined,
-          publishedAt: item.publishedAt !== undefined ? item.publishedAt : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
         },
       }))
     } : undefined,
@@ -2324,7 +2297,7 @@ export const Holding = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2651,7 +2624,7 @@ export const Holding = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2974,7 +2947,7 @@ export const Holding = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -3291,7 +3264,7 @@ export const Holding = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {

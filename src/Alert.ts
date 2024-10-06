@@ -168,7 +168,7 @@ export const Alert = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -829,7 +829,7 @@ export const Alert = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -1987,7 +1987,7 @@ export const Alert = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2314,7 +2314,7 @@ export const Alert = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2637,7 +2637,7 @@ export const Alert = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2954,7 +2954,7 @@ export const Alert = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {

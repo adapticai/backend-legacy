@@ -167,7 +167,7 @@ export const RiskAllocation = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -828,7 +828,7 @@ export const RiskAllocation = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -1996,7 +1996,7 @@ export const RiskAllocation = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2323,7 +2323,7 @@ export const RiskAllocation = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2646,7 +2646,7 @@ export const RiskAllocation = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2963,7 +2963,7 @@ export const RiskAllocation = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {

@@ -12,6 +12,7 @@ import { EconomicEvent } from './EconomicEvent';
 import { EnvironmentVariable } from './EnvironmentVariable';
 import { Holding } from './Holding';
 import { News } from './News';
+import { NewsAssetSentiment } from './NewsAssetSentiment';
 import { Order } from './Order';
 import { PerformanceMetric } from './PerformanceMetric';
 import { Portfolio } from './Portfolio';
@@ -35,6 +36,7 @@ const adaptic = {
   environmentVariable: EnvironmentVariable,
   holding: Holding,
   news: News,
+  newsAssetSentiment: NewsAssetSentiment,
   order: Order,
   performanceMetric: PerformanceMetric,
   portfolio: Portfolio,

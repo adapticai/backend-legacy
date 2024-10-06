@@ -156,7 +156,7 @@ export const Session = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -694,7 +694,7 @@ export const Session = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -1523,7 +1523,7 @@ export const Session = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -1850,7 +1850,7 @@ export const Session = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2173,7 +2173,7 @@ export const Session = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2490,7 +2490,7 @@ export const Session = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {

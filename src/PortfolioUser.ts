@@ -163,7 +163,7 @@ export const PortfolioUser = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -824,7 +824,7 @@ export const PortfolioUser = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2002,7 +2002,7 @@ export const PortfolioUser = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2329,7 +2329,7 @@ export const PortfolioUser = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2652,7 +2652,7 @@ export const PortfolioUser = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {
@@ -2969,7 +2969,7 @@ export const PortfolioUser = {
                 aiRecommendations {
                   id
                 }
-                news {
+                newsMentions {
                   id
                 }
                 PortfolioAllocation {

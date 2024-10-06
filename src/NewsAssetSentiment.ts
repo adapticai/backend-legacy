@@ -1,40 +1,66 @@
 
 
-import { EnvironmentVariable as EnvironmentVariableType } from './generated/typegraphql-prisma/models/EnvironmentVariable';
+import { NewsAssetSentiment as NewsAssetSentimentType } from './generated/typegraphql-prisma/models/NewsAssetSentiment';
 import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the EnvironmentVariable model.
+ * CRUD operations for the NewsAssetSentiment model.
  */
 
-export const EnvironmentVariable = {
+export const NewsAssetSentiment = {
   /**
-   * Create a new EnvironmentVariable record.
+   * Create a new NewsAssetSentiment record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
-   * @returns The created EnvironmentVariable or null.
+   * @returns The created NewsAssetSentiment or null.
    */
-  async create(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
-    const CREATE_ONE_ENVIRONMENTVARIABLE = gql`
-      mutation createOneEnvironmentVariable($data: EnvironmentVariableCreateInput!) {
-        createOneEnvironmentVariable(data: $data) {
+  async create(props: NewsAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType> {
+    const CREATE_ONE_NEWSASSETSENTIMENT = gql`
+      mutation createOneNewsAssetSentiment($data: NewsAssetSentimentCreateInput!) {
+        createOneNewsAssetSentiment(data: $data) {
           id
-          key
-          value
-          description
-          portfolioId
-          portfolio {
+          assetId
+          newsId
+          news {
             id
-            name
-            slug
-            description
+            newsAssetsId
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
             createdAt
             updatedAt
-            users {
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
               id
               userId
               portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
               user {
                 id
                 name
@@ -88,34 +114,14 @@ export const EnvironmentVariable = {
               }
               portfolio {
                 id
-              }
-              role
-              createdAt
-              updatedAt
-            }
-            holdings {
-              id
-              userId
-              portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-                symbol
                 name
-                type
-                logoUrl
+                slug
+                description
                 createdAt
                 updatedAt
+                users {
+                  id
+                }
                 holdings {
                   id
                 }
@@ -128,12 +134,24 @@ export const EnvironmentVariable = {
                 aiRecommendations {
                   id
                 }
-                newsMentions {
+                riskAllocations {
                   id
                 }
-                PortfolioAllocation {
+                alerts {
                   id
                 }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
               }
             }
             trades {
@@ -222,53 +240,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            riskAllocations {
+            newsMentions {
               id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
-            alerts {
-              id
-              userId
-              portfolioId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            portfolioAllocations {
+            PortfolioAllocation {
               id
               portfolioId
               assetId
@@ -282,46 +257,60 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            environmentVariables {
-              id
-            }
           }
-          createdAt
-          updatedAt
+          relevancyScore
+          sentimentScore
+          sentimentLabel
         }
       }
    `;
 
     const variables = {
       data: {
-          key: props.key !== undefined ? props.key : undefined,
-  value: props.value !== undefined ? props.value : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  portfolio: props.portfolio ? {
+          relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
+  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
+  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
+  news: props.news ? {
     connectOrCreate: {
       where: {
-        id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
-        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        name: props.portfolio.name !== undefined ? {
-            equals: props.portfolio.name 
+        id: props.news.id !== undefined ? props.news.id : undefined,
+        title: props.news.title !== undefined ? {
+            equals: props.news.title 
            } : undefined,
       },
       create: {
-        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
-        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    users: props.portfolio.users ? {
-      connectOrCreate: props.portfolio.users.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.portfolio.holdings ? {
-      connectOrCreate: props.portfolio.holdings.map((item: any) => ({
+        newsAssetsId: props.news.newsAssetsId !== undefined ? props.news.newsAssetsId : undefined,
+        title: props.news.title !== undefined ? props.news.title : undefined,
+        content: props.news.content !== undefined ? props.news.content : undefined,
+        source: props.news.source !== undefined ? props.news.source : undefined,
+        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
+        url: props.news.url !== undefined ? props.news.url : undefined,
+        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
+        authors: props.news.authors !== undefined ? props.news.authors : undefined,
+        summary: props.news.summary !== undefined ? props.news.summary : undefined,
+        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
+        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
+        category: props.news.category !== undefined ? props.news.category : undefined,
+        topics: props.news.topics !== undefined ? props.news.topics : undefined,
+        logo: props.news.logo !== undefined ? props.news.logo : undefined,
+      },
+    }
+  } : undefined,
+  asset: props.asset ? {
+    connectOrCreate: {
+      where: {
+        id: props.asset.id !== undefined ? props.asset.id : undefined,
+        name: props.asset.name !== undefined ? {
+            equals: props.asset.name 
+           } : undefined,
+      },
+      create: {
+        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
+        name: props.asset.name !== undefined ? props.asset.name : undefined,
+        type: props.asset.type !== undefined ? props.asset.type : undefined,
+        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
+    holdings: props.asset.holdings ? {
+      connectOrCreate: props.asset.holdings.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -331,8 +320,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    trades: props.portfolio.trades ? {
-      connectOrCreate: props.portfolio.trades.map((item: any) => ({
+    trades: props.asset.trades ? {
+      connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -346,8 +335,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    orders: props.portfolio.orders ? {
-      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+    orders: props.asset.orders ? {
+      connectOrCreate: props.asset.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -360,8 +349,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    aiRecommendations: props.portfolio.aiRecommendations ? {
-      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -371,42 +360,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    riskAllocations: props.portfolio.riskAllocations ? {
-      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.portfolio.alerts ? {
-      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.portfolio.performanceMetrics ? {
-      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -425,85 +380,112 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_NEWSASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneEnvironmentVariable) {
-        return response.data.createOneEnvironmentVariable;
+      if (response && response.data && response.data.createOneNewsAssetSentiment) {
+        return response.data.createOneNewsAssetSentiment;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneEnvironmentVariable:', error);
+      console.error('Error in createOneNewsAssetSentiment:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple EnvironmentVariable records.
+   * Create multiple NewsAssetSentiment records.
    * @param props - Array of properties for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: EnvironmentVariableType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
-    const CREATE_MANY_ENVIRONMENTVARIABLE = gql`
-      mutation createManyEnvironmentVariable($data: [EnvironmentVariableCreateManyInput!]!) {
-        createManyEnvironmentVariable(data: $data) {
+  async createMany(props: NewsAssetSentimentType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    const CREATE_MANY_NEWSASSETSENTIMENT = gql`
+      mutation createManyNewsAssetSentiment($data: [NewsAssetSentimentCreateManyInput!]!) {
+        createManyNewsAssetSentiment(data: $data) {
           count
         }
       }`;
 
     const variables = {
       data: props.map(prop => ({
-  key: prop.key !== undefined ? prop.key : undefined,
-  value: prop.value !== undefined ? prop.value : undefined,
-  description: prop.description !== undefined ? prop.description : undefined,
-  portfolioId: prop.portfolioId !== undefined ? prop.portfolioId : undefined,
+  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  newsId: prop.newsId !== undefined ? prop.newsId : undefined,
+  relevancyScore: prop.relevancyScore !== undefined ? prop.relevancyScore : undefined,
+  sentimentScore: prop.sentimentScore !== undefined ? prop.sentimentScore : undefined,
+  sentimentLabel: prop.sentimentLabel !== undefined ? prop.sentimentLabel : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_NEWSASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyEnvironmentVariable) {
-        return response.data.createManyEnvironmentVariable;
+      if (response && response.data && response.data.createManyNewsAssetSentiment) {
+        return response.data.createManyNewsAssetSentiment;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyEnvironmentVariable:', error);
+      console.error('Error in createManyNewsAssetSentiment:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single EnvironmentVariable record.
+   * Update a single NewsAssetSentiment record.
    * @param id - Unique identifier of the record to update.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The updated EnvironmentVariable or null.
+   * @returns The updated NewsAssetSentiment or null.
    */
-  async update(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
-    const UPDATE_ONE_ENVIRONMENTVARIABLE = gql`
-      mutation updateOneEnvironmentVariable($data: EnvironmentVariableUpdateInput!, $where: EnvironmentVariableWhereUniqueInput!) {
-        updateOneEnvironmentVariable(data: $data, where: $where) {
+  async update(props: NewsAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType> {
+    const UPDATE_ONE_NEWSASSETSENTIMENT = gql`
+      mutation updateOneNewsAssetSentiment($data: NewsAssetSentimentUpdateInput!, $where: NewsAssetSentimentWhereUniqueInput!) {
+        updateOneNewsAssetSentiment(data: $data, where: $where) {
           id
-          key
-          value
-          description
-          portfolioId
-          portfolio {
+          assetId
+          newsId
+          news {
             id
-            name
-            slug
-            description
+            newsAssetsId
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
             createdAt
             updatedAt
-            users {
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
               id
               userId
               portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
               user {
                 id
                 name
@@ -557,34 +539,14 @@ export const EnvironmentVariable = {
               }
               portfolio {
                 id
-              }
-              role
-              createdAt
-              updatedAt
-            }
-            holdings {
-              id
-              userId
-              portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-                symbol
                 name
-                type
-                logoUrl
+                slug
+                description
                 createdAt
                 updatedAt
+                users {
+                  id
+                }
                 holdings {
                   id
                 }
@@ -597,12 +559,24 @@ export const EnvironmentVariable = {
                 aiRecommendations {
                   id
                 }
-                newsMentions {
+                riskAllocations {
                   id
                 }
-                PortfolioAllocation {
+                alerts {
                   id
                 }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
               }
             }
             trades {
@@ -691,53 +665,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            riskAllocations {
+            newsMentions {
               id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
-            alerts {
-              id
-              userId
-              portfolioId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            portfolioAllocations {
+            PortfolioAllocation {
               id
               portfolioId
               assetId
@@ -751,12 +682,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            environmentVariables {
-              id
-            }
           }
-          createdAt
-          updatedAt
+          relevancyScore
+          sentimentScore
+          sentimentLabel
       }
       }`;
 
@@ -765,49 +694,112 @@ export const EnvironmentVariable = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
-  description: props.description !== undefined ? {
-            set: props.description 
+  relevancyScore: props.relevancyScore !== undefined ? {
+            set: props.relevancyScore 
            } : undefined,
-  portfolio: props.portfolio ? {
+  sentimentScore: props.sentimentScore !== undefined ? {
+            set: props.sentimentScore 
+           } : undefined,
+  sentimentLabel: props.sentimentLabel !== undefined ? {
+            set: props.sentimentLabel 
+           } : undefined,
+  news: props.news ? {
     upsert: {
       where: {
-        id: props.portfolio.id !== undefined ? {
-            equals: props.portfolio.id 
+        id: props.news.id !== undefined ? {
+            equals: props.news.id 
            } : undefined,
-        name: props.portfolio.name !== undefined ? {
-            equals: props.portfolio.name 
-           } : undefined,
-        slug: props.portfolio.slug !== undefined ? {
-            equals: props.portfolio.slug 
+        title: props.news.title !== undefined ? {
+            equals: props.news.title 
            } : undefined,
       },
       update: {
-        name: props.portfolio.name !== undefined ? {
-            set: props.portfolio.name  
+        newsAssetsId: props.news.newsAssetsId !== undefined ? {
+            set: props.news.newsAssetsId  
            } : undefined,
-        slug: props.portfolio.slug !== undefined ? {
-            set: props.portfolio.slug  
+        title: props.news.title !== undefined ? {
+            set: props.news.title  
            } : undefined,
-        description: props.portfolio.description !== undefined ? {
-            set: props.portfolio.description  
+        content: props.news.content !== undefined ? {
+            set: props.news.content  
            } : undefined,
-    users: props.portfolio.users ? {
-      upsert: props.portfolio.users.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          role: item.role !== undefined ? {
-              set: item.role  
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.portfolio.holdings ? {
-      upsert: props.portfolio.holdings.map((item: any) => ({
+        source: props.news.source !== undefined ? {
+            set: props.news.source  
+           } : undefined,
+        sourceDomain: props.news.sourceDomain !== undefined ? {
+            set: props.news.sourceDomain  
+           } : undefined,
+        url: props.news.url !== undefined ? {
+            set: props.news.url  
+           } : undefined,
+        sentiment: props.news.sentiment !== undefined ? {
+            set: props.news.sentiment  
+           } : undefined,
+        authors: props.news.authors !== undefined ? {
+            set: props.news.authors  
+           } : undefined,
+        summary: props.news.summary !== undefined ? {
+            set: props.news.summary  
+           } : undefined,
+        bannerImage: props.news.bannerImage !== undefined ? {
+            set: props.news.bannerImage  
+           } : undefined,
+        timePublished: props.news.timePublished !== undefined ? {
+            set: props.news.timePublished  
+           } : undefined,
+        category: props.news.category !== undefined ? {
+            set: props.news.category  
+           } : undefined,
+        topics: props.news.topics !== undefined ? {
+            set: props.news.topics  
+           } : undefined,
+        logo: props.news.logo !== undefined ? {
+            set: props.news.logo  
+           } : undefined,
+      },
+      create: {
+        newsAssetsId: props.news.newsAssetsId !== undefined ? props.news.newsAssetsId : undefined,
+        title: props.news.title !== undefined ? props.news.title : undefined,
+        content: props.news.content !== undefined ? props.news.content : undefined,
+        source: props.news.source !== undefined ? props.news.source : undefined,
+        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
+        url: props.news.url !== undefined ? props.news.url : undefined,
+        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
+        authors: props.news.authors !== undefined ? props.news.authors : undefined,
+        summary: props.news.summary !== undefined ? props.news.summary : undefined,
+        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
+        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
+        category: props.news.category !== undefined ? props.news.category : undefined,
+        topics: props.news.topics !== undefined ? props.news.topics : undefined,
+        logo: props.news.logo !== undefined ? props.news.logo : undefined,
+      },
+    }
+  } : undefined,
+  asset: props.asset ? {
+    upsert: {
+      where: {
+        id: props.asset.id !== undefined ? {
+            equals: props.asset.id 
+           } : undefined,
+        name: props.asset.name !== undefined ? {
+            equals: props.asset.name 
+           } : undefined,
+      },
+      update: {
+        symbol: props.asset.symbol !== undefined ? {
+            set: props.asset.symbol  
+           } : undefined,
+        name: props.asset.name !== undefined ? {
+            set: props.asset.name  
+           } : undefined,
+        type: props.asset.type !== undefined ? {
+            set: props.asset.type  
+           } : undefined,
+        logoUrl: props.asset.logoUrl !== undefined ? {
+            set: props.asset.logoUrl  
+           } : undefined,
+    holdings: props.asset.holdings ? {
+      upsert: props.asset.holdings.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -825,8 +817,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    trades: props.portfolio.trades ? {
-      upsert: props.portfolio.trades.map((item: any) => ({
+    trades: props.asset.trades ? {
+      upsert: props.asset.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -860,8 +852,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    orders: props.portfolio.orders ? {
-      upsert: props.portfolio.orders.map((item: any) => ({
+    orders: props.asset.orders ? {
+      upsert: props.asset.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -891,8 +883,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    aiRecommendations: props.portfolio.aiRecommendations ? {
-      upsert: props.portfolio.aiRecommendations.map((item: any) => ({
+    aiRecommendations: props.asset.aiRecommendations ? {
+      upsert: props.asset.aiRecommendations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -910,69 +902,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    riskAllocations: props.portfolio.riskAllocations ? {
-      upsert: props.portfolio.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.portfolio.alerts ? {
-      upsert: props.portfolio.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.portfolio.performanceMetrics ? {
-      upsert: props.portfolio.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      upsert: props.portfolio.portfolioAllocations.map((item: any) => ({
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      upsert: props.asset.PortfolioAllocation.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -988,21 +919,12 @@ export const EnvironmentVariable = {
     } : undefined,
       },
       create: {
-        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
-        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        description: props.portfolio.description !== undefined ? props.portfolio.description : undefined,
-    users: props.portfolio.users ? {
-      connectOrCreate: props.portfolio.users.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-        },
-      }))
-    } : undefined,
-    holdings: props.portfolio.holdings ? {
-      connectOrCreate: props.portfolio.holdings.map((item: any) => ({
+        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
+        name: props.asset.name !== undefined ? props.asset.name : undefined,
+        type: props.asset.type !== undefined ? props.asset.type : undefined,
+        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
+    holdings: props.asset.holdings ? {
+      connectOrCreate: props.asset.holdings.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1012,8 +934,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    trades: props.portfolio.trades ? {
-      connectOrCreate: props.portfolio.trades.map((item: any) => ({
+    trades: props.asset.trades ? {
+      connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1027,8 +949,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    orders: props.portfolio.orders ? {
-      connectOrCreate: props.portfolio.orders.map((item: any) => ({
+    orders: props.asset.orders ? {
+      connectOrCreate: props.asset.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1041,8 +963,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    aiRecommendations: props.portfolio.aiRecommendations ? {
-      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
+    aiRecommendations: props.asset.aiRecommendations ? {
+      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1052,42 +974,8 @@ export const EnvironmentVariable = {
         },
       }))
     } : undefined,
-    riskAllocations: props.portfolio.riskAllocations ? {
-      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.portfolio.alerts ? {
-      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.portfolio.performanceMetrics ? {
-      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    portfolioAllocations: props.portfolio.portfolioAllocations ? {
-      connectOrCreate: props.portfolio.portfolioAllocations.map((item: any) => ({
+    PortfolioAllocation: props.asset.PortfolioAllocation ? {
+      connectOrCreate: props.asset.PortfolioAllocation.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1105,45 +993,71 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_NEWSASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneEnvironmentVariable) {
-        return response.data.updateOneEnvironmentVariable;
+      if (response && response.data && response.data.updateOneNewsAssetSentiment) {
+        return response.data.updateOneNewsAssetSentiment;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneEnvironmentVariable:', error);
+      console.error('Error in updateOneNewsAssetSentiment:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single EnvironmentVariable record.
+   * Delete a single NewsAssetSentiment record.
    * @param id - Unique identifier of the record to delete.
    * @param client - Apollo Client instance.
-   * @returns The deleted EnvironmentVariable or null.
+   * @returns The deleted NewsAssetSentiment or null.
    */
-  async delete(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
-    const DELETE_ONE_ENVIRONMENTVARIABLE = gql`
-      mutation deleteOneEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
-        deleteOneEnvironmentVariable(where: $where) {
+  async delete(props: NewsAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType> {
+    const DELETE_ONE_NEWSASSETSENTIMENT = gql`
+      mutation deleteOneNewsAssetSentiment($where: NewsAssetSentimentWhereUniqueInput!) {
+        deleteOneNewsAssetSentiment(where: $where) {
           id
-          key
-          value
-          description
-          portfolioId
-          portfolio {
+          assetId
+          newsId
+          news {
             id
-            name
-            slug
-            description
+            newsAssetsId
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
             createdAt
             updatedAt
-            users {
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
               id
               userId
               portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
               user {
                 id
                 name
@@ -1197,34 +1111,14 @@ export const EnvironmentVariable = {
               }
               portfolio {
                 id
-              }
-              role
-              createdAt
-              updatedAt
-            }
-            holdings {
-              id
-              userId
-              portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-                symbol
                 name
-                type
-                logoUrl
+                slug
+                description
                 createdAt
                 updatedAt
+                users {
+                  id
+                }
                 holdings {
                   id
                 }
@@ -1237,12 +1131,24 @@ export const EnvironmentVariable = {
                 aiRecommendations {
                   id
                 }
-                newsMentions {
+                riskAllocations {
                   id
                 }
-                PortfolioAllocation {
+                alerts {
                   id
                 }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
               }
             }
             trades {
@@ -1331,53 +1237,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            riskAllocations {
+            newsMentions {
               id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
-            alerts {
-              id
-              userId
-              portfolioId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            portfolioAllocations {
+            PortfolioAllocation {
               id
               portfolioId
               assetId
@@ -1391,12 +1254,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            environmentVariables {
-              id
-            }
           }
-          createdAt
-          updatedAt
+          relevancyScore
+          sentimentScore
+          sentimentLabel
       }
       }`;
 
@@ -1407,45 +1268,71 @@ export const EnvironmentVariable = {
     };
 
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ENVIRONMENTVARIABLE, variables });
+      const response = await client.mutate({ mutation: DELETE_ONE_NEWSASSETSENTIMENT, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneEnvironmentVariable) {
-        return response.data.deleteOneEnvironmentVariable;
+      if (response && response.data && response.data.deleteOneNewsAssetSentiment) {
+        return response.data.deleteOneNewsAssetSentiment;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneEnvironmentVariable:', error);
+      console.error('Error in deleteOneNewsAssetSentiment:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single EnvironmentVariable record by ID.
+   * Retrieve a single NewsAssetSentiment record by ID.
    * @param id - Unique identifier of the record.
    * @param client - Apollo Client instance.
-   * @returns The retrieved EnvironmentVariable or null.
+   * @returns The retrieved NewsAssetSentiment or null.
    */
-  async get(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
-    const GET_ENVIRONMENTVARIABLES = gql`
-      query getEnvironmentVariables($where: EnvironmentVariableWhereInput!) {
-        environmentVariables(where: $where) {
+  async get(props: NewsAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType> {
+    const GET_NEWSASSETSENTIMENTS = gql`
+      query getNewsAssetSentiments($where: NewsAssetSentimentWhereInput!) {
+        newsAssetSentiments(where: $where) {
           id
-          key
-          value
-          description
-          portfolioId
-          portfolio {
+          assetId
+          newsId
+          news {
             id
-            name
-            slug
-            description
+            newsAssetsId
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
             createdAt
             updatedAt
-            users {
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
               id
               userId
               portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
               user {
                 id
                 name
@@ -1499,34 +1386,14 @@ export const EnvironmentVariable = {
               }
               portfolio {
                 id
-              }
-              role
-              createdAt
-              updatedAt
-            }
-            holdings {
-              id
-              userId
-              portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-                symbol
                 name
-                type
-                logoUrl
+                slug
+                description
                 createdAt
                 updatedAt
+                users {
+                  id
+                }
                 holdings {
                   id
                 }
@@ -1539,12 +1406,24 @@ export const EnvironmentVariable = {
                 aiRecommendations {
                   id
                 }
-                newsMentions {
+                riskAllocations {
                   id
                 }
-                PortfolioAllocation {
+                alerts {
                   id
                 }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
               }
             }
             trades {
@@ -1633,53 +1512,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            riskAllocations {
+            newsMentions {
               id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
-            alerts {
-              id
-              userId
-              portfolioId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            portfolioAllocations {
+            PortfolioAllocation {
               id
               portfolioId
               assetId
@@ -1693,12 +1529,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            environmentVariables {
-              id
-            }
           }
-          createdAt
-          updatedAt
+          relevancyScore
+          sentimentScore
+          sentimentLabel
         }
       }`;
 
@@ -1710,40 +1544,66 @@ export const EnvironmentVariable = {
       },
 };
     try {
-      const response = await client.query({ query: GET_ENVIRONMENTVARIABLES, variables });
+      const response = await client.query({ query: GET_NEWSASSETSENTIMENTS, variables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.environmentVariables ?? null;
+      return response.data?.newsAssetSentiments ?? null;
     } catch (error) {
-      console.error('Error in getEnvironmentVariables:', error);
+      console.error('Error in getNewsAssetSentiments:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve all EnvironmentVariables records.
+   * Retrieve all NewsAssetSentiments records.
    * @param client - Apollo Client instance.
-   * @returns An array of EnvironmentVariable records or null.
+   * @returns An array of NewsAssetSentiment records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[] | null> {
-    const GET_ALL_ENVIRONMENTVARIABLE = gql`
-      query getAllEnvironmentVariable {
-        EnvironmentVariables {
+  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType[] | null> {
+    const GET_ALL_NEWSASSETSENTIMENT = gql`
+      query getAllNewsAssetSentiment {
+        NewsAssetSentiments {
           id
-          key
-          value
-          description
-          portfolioId
-          portfolio {
+          assetId
+          newsId
+          news {
             id
-            name
-            slug
-            description
+            newsAssetsId
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
             createdAt
             updatedAt
-            users {
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
               id
               userId
               portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
               user {
                 id
                 name
@@ -1797,34 +1657,14 @@ export const EnvironmentVariable = {
               }
               portfolio {
                 id
-              }
-              role
-              createdAt
-              updatedAt
-            }
-            holdings {
-              id
-              userId
-              portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-                symbol
                 name
-                type
-                logoUrl
+                slug
+                description
                 createdAt
                 updatedAt
+                users {
+                  id
+                }
                 holdings {
                   id
                 }
@@ -1837,12 +1677,24 @@ export const EnvironmentVariable = {
                 aiRecommendations {
                   id
                 }
-                newsMentions {
+                riskAllocations {
                   id
                 }
-                PortfolioAllocation {
+                alerts {
                   id
                 }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
               }
             }
             trades {
@@ -1931,53 +1783,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            riskAllocations {
+            newsMentions {
               id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
-            alerts {
-              id
-              userId
-              portfolioId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            portfolioAllocations {
+            PortfolioAllocation {
               id
               portfolioId
               assetId
@@ -1991,51 +1800,75 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            environmentVariables {
-              id
-            }
           }
-          createdAt
-          updatedAt
+          relevancyScore
+          sentimentScore
+          sentimentLabel
       }
       }`;
 
     try {
-      const response = await client.query({ query: GET_ALL_ENVIRONMENTVARIABLE });
+      const response = await client.query({ query: GET_ALL_NEWSASSETSENTIMENT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.EnvironmentVariables ?? null;
+      return response.data?.NewsAssetSentiments ?? null;
     } catch (error) {
-      console.error('Error in getAllEnvironmentVariable:', error);
+      console.error('Error in getAllNewsAssetSentiment:', error);
       throw error;
     }
   },
 
   /**
-   * Find multiple EnvironmentVariable records based on conditions.
+   * Find multiple NewsAssetSentiment records based on conditions.
    * @param where - Conditions to find records.
    * @param client - Apollo Client instance.
-   * @returns An array of found EnvironmentVariable records or null.
+   * @returns An array of found NewsAssetSentiment records or null.
    */
-  async findMany(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[]> {
-    const FIND_MANY_ENVIRONMENTVARIABLE = gql`
-      query findManyEnvironmentVariable($where: EnvironmentVariableWhereInput!) {
-        EnvironmentVariables(where: $where) {
+  async findMany(props: NewsAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsAssetSentimentType[]> {
+    const FIND_MANY_NEWSASSETSENTIMENT = gql`
+      query findManyNewsAssetSentiment($where: NewsAssetSentimentWhereInput!) {
+        NewsAssetSentiments(where: $where) {
           id
-          key
-          value
-          description
-          portfolioId
-          portfolio {
+          assetId
+          newsId
+          news {
             id
-            name
-            slug
-            description
+            newsAssetsId
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
             createdAt
             updatedAt
-            users {
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            createdAt
+            updatedAt
+            holdings {
               id
               userId
               portfolioId
+              assetId
+              quantity
+              averagePrice
+              createdAt
+              updatedAt
               user {
                 id
                 name
@@ -2089,34 +1922,14 @@ export const EnvironmentVariable = {
               }
               portfolio {
                 id
-              }
-              role
-              createdAt
-              updatedAt
-            }
-            holdings {
-              id
-              userId
-              portfolioId
-              assetId
-              quantity
-              averagePrice
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-                symbol
                 name
-                type
-                logoUrl
+                slug
+                description
                 createdAt
                 updatedAt
+                users {
+                  id
+                }
                 holdings {
                   id
                 }
@@ -2129,12 +1942,24 @@ export const EnvironmentVariable = {
                 aiRecommendations {
                   id
                 }
-                newsMentions {
+                riskAllocations {
                   id
                 }
-                PortfolioAllocation {
+                alerts {
                   id
                 }
+                performanceMetrics {
+                  id
+                }
+                portfolioAllocations {
+                  id
+                }
+                environmentVariables {
+                  id
+                }
+              }
+              asset {
+                id
               }
             }
             trades {
@@ -2223,53 +2048,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            riskAllocations {
+            newsMentions {
               id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
-            alerts {
-              id
-              userId
-              portfolioId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            portfolioAllocations {
+            PortfolioAllocation {
               id
               portfolioId
               assetId
@@ -2283,12 +2065,10 @@ export const EnvironmentVariable = {
                 id
               }
             }
-            environmentVariables {
-              id
-            }
           }
-          createdAt
-          updatedAt
+          relevancyScore
+          sentimentScore
+          sentimentLabel
       }
       }`;
 
@@ -2303,15 +2083,15 @@ export const EnvironmentVariable = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: FIND_MANY_ENVIRONMENTVARIABLE, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_NEWSASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.EnvironmentVariables) {
-        return response.data.EnvironmentVariables;
+      if (response && response.data && response.data.NewsAssetSentiments) {
+        return response.data.NewsAssetSentiments;
       } else {
-       return [] as EnvironmentVariableType[];
+       return [] as NewsAssetSentimentType[];
       }
     } catch (error) {
-      console.error('Error in findManyEnvironmentVariable:', error);
+      console.error('Error in findManyNewsAssetSentiment:', error);
       throw error;
     }
   }

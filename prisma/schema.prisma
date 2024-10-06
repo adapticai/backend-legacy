@@ -79,12 +79,6 @@ enum AlertType {
   INFO
 }
 
-enum NewsSentiment {
-  POSITIVE
-  NEUTRAL
-  NEGATIVE
-}
-
 enum EventImportance {
   LOW
   MEDIUM
@@ -104,8 +98,8 @@ model Session {
   userId       String   @db.Uuid
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 
   @@index([userId])
   @@map(name: "sessions")
@@ -117,8 +111,8 @@ model User {
   email          String?           @unique
   emailVerified  DateTime?
   image          String?
-  createdAt      DateTime          @default(now()) @map(name: "created_at")
-  updatedAt      DateTime          @default(now()) @map(name: "updated_at")
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @default(now())
   role           UserRole          @default(USER)
   bio            String?
   jobTitle       String?
@@ -150,8 +144,8 @@ model Authenticator {
   publicKey    String
   counter      Int
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 
   @@index([userId])
   @@map(name: "authenticators")
@@ -170,8 +164,8 @@ model Account {
   scope             String?
   id_token          String?  @db.Text
   session_state     String?
-  createdAt         DateTime @default(now()) @map(name: "created_at")
-  updatedAt         DateTime @default(now()) @map(name: "updated_at")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -195,8 +189,8 @@ model Portfolio {
   name        String
   slug        String   @unique
   description String?
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
   // Relations
   users                PortfolioUser[]
@@ -220,8 +214,8 @@ model PortfolioUser {
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
   role        UserRole  @default(USER)
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
 
   @@unique([userId, portfolioId])
   @@map(name: "portfolio_users")
@@ -234,8 +228,8 @@ model EnvironmentVariable {
   description String?
   portfolioId String    @db.Uuid
   portfolio   Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
 
   @@unique([portfolioId, key])
   @@map(name: "environment_variables")
@@ -263,13 +257,13 @@ model Asset {
   name                String
   type                AssetType
   logoUrl             String?
-  createdAt           DateTime              @default(now()) @map(name: "created_at")
-  updatedAt           DateTime              @default(now()) @map(name: "updated_at")
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @default(now())
   holdings            Holding[]
   trades              Trade[]
   orders              Order[]
   aiRecommendations   AIRecommendation[]
-  news                News[]
+  newsMentions        NewsAssetSentiment[]
   PortfolioAllocation PortfolioAllocation[]
 
   @@map(name: "assets")
@@ -282,8 +276,8 @@ model Holding {
   assetId      String   @db.Uuid
   quantity     Float
   averagePrice Float
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  updatedAt    DateTime @default(now()) @map(name: "updated_at")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 
   // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -304,8 +298,8 @@ model Trade {
   price       Float
   total       Float
   timestamp   DateTime    @default(now()) @map(name: "timestamp")
-  createdAt   DateTime    @default(now()) @map(name: "created_at")
-  updatedAt   DateTime    @default(now()) @map(name: "updated_at")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
   status      TradeStatus @default(STAGED)
 
   // Relations
@@ -352,8 +346,8 @@ model Order {
   quantity    Float
   price       Float
   status      OrderStatus
-  createdAt   DateTime    @default(now()) @map(name: "created_at")
-  updatedAt   DateTime    @default(now()) @map(name: "updated_at")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
 
   // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -370,8 +364,8 @@ model AIRecommendation {
   assetId     String      @db.Uuid
   action      TradeAction
   confidence  Float
-  createdAt   DateTime    @default(now()) @map(name: "created_at")
-  updatedAt   DateTime    @default(now()) @map(name: "updated_at")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
 
   // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -387,8 +381,8 @@ model RiskAllocation {
   portfolioId String    @db.Uuid
   assetType   AssetType
   allocation  Float
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
 
   // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -405,8 +399,8 @@ model Alert {
   message     String
   type        AlertType
   isRead      Boolean   @default(false)
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @default(now()) @map(name: "updated_at")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now())
 
   // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -416,19 +410,37 @@ model Alert {
 }
 
 model News {
-  id          String        @id @default(uuid()) @db.Uuid
-  assetId     String        @db.Uuid
-  title       String
-  content     String?
-  source      String
-  url         String?
-  sentiment   NewsSentiment
-  publishedAt DateTime      @map(name: "published_at")
-  createdAt   DateTime      @default(now()) @map(name: "created_at")
-  updatedAt   DateTime      @default(now()) @map(name: "updated_at")
-  asset       Asset         @relation(fields: [assetId], references: [id])
+  id            String               @id @default(uuid()) @db.Uuid
+  newsAssetsId  String               @db.Uuid
+  title         String
+  content       String?
+  source        String
+  sourceDomain  String?
+  url           String
+  sentiment     String
+  authors       String[]
+  summary       String?
+  bannerImage   String?
+  timePublished String
+  category      String?
+  topics        String[]
+  logo          String?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @default(now())
+  assets        NewsAssetSentiment[]
 
   @@map(name: "news")
+}
+
+model NewsAssetSentiment {
+  id             String  @id @default(uuid()) @db.Uuid
+  assetId        String  @db.Uuid
+  newsId         String  @db.Uuid
+  news           News    @relation(fields: [newsId], references: [id])
+  asset          Asset   @relation(fields: [assetId], references: [id])
+  relevancyScore String?
+  sentimentScore String?
+  sentimentLabel String?
 }
 
 model EconomicEvent {
@@ -437,8 +449,8 @@ model EconomicEvent {
   description String?
   date        DateTime
   importance  EventImportance
-  createdAt   DateTime        @default(now()) @map(name: "created_at")
-  updatedAt   DateTime        @default(now()) @map(name: "updated_at")
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @default(now())
 
   @@map(name: "economic_events")
 }
@@ -448,8 +460,8 @@ model PortfolioAllocation {
   portfolioId String   @db.Uuid
   assetId     String   @db.Uuid
   allocation  Float
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
   // Relations
   portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
@@ -465,8 +477,8 @@ model PerformanceMetric {
   portfolioId String   @db.Uuid
   label       String
   value       String
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
   // Relations
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
