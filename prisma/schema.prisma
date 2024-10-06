@@ -238,18 +238,18 @@ model Customer {
 }
 
 model Asset {
-  id                String               @id @default(uuid()) @db.Uuid
-  symbol            String               @unique
-  name              String               @unique
+  id                String                      @id @default(uuid()) @db.Uuid
+  symbol            String                      @unique
+  name              String                      @unique
   type              AssetType
   logoUrl           String?
-  createdAt         DateTime             @default(now())
-  updatedAt         DateTime             @default(now())
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @default(now())
   holdings          Holding[]
   trades            Trade[]
   orders            Order[]
   aiRecommendations AIRecommendation[]
-  newsMentions      NewsAssetSentiment[]
+  newsMentions      NewsArticleAssetSentiment[]
 
   @@map(name: "assets")
 }
@@ -391,13 +391,13 @@ model Alert {
   @@map(name: "alerts")
 }
 
-model News {
-  id            String               @id @default(uuid()) @db.Uuid
+model NewsArticle {
+  id            String                      @id @default(uuid()) @db.Uuid
   title         String
   content       String?
   source        String
   sourceDomain  String?
-  url           String               @unique
+  url           String                      @unique
   sentiment     String
   authors       String[]
   summary       String?
@@ -406,20 +406,20 @@ model News {
   category      String?
   topics        String[]
   logo          String?
-  createdAt     DateTime             @default(now())
-  updatedAt     DateTime             @default(now())
-  assets        NewsAssetSentiment[]
+  createdAt     DateTime                    @default(now())
+  updatedAt     DateTime                    @default(now())
+  assets        NewsArticleAssetSentiment[]
 
   @@map(name: "news")
 }
 
-model NewsAssetSentiment {
-  id             String  @id @default(uuid()) @db.Uuid
-  assetId        String  @db.Uuid
-  newsId         String  @db.Uuid
-  url            String  @unique
-  news           News    @relation(fields: [newsId], references: [id])
-  asset          Asset   @relation(fields: [assetId], references: [id])
+model NewsArticleAssetSentiment {
+  id             String      @id @default(uuid()) @db.Uuid
+  assetId        String      @db.Uuid
+  newsArticleId  String      @db.Uuid
+  url            String      @unique
+  news           NewsArticle @relation(fields: [newsArticleId], references: [id])
+  asset          Asset       @relation(fields: [assetId], references: [id])
   relevancyScore String?
   sentimentScore String?
   sentimentLabel String?
