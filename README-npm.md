@@ -68,13 +68,6 @@ All the dynamically generated functions for each content model are available und
 ```typescript
 // client-side/index.ts
 import adaptic, { types, enums } from 'adaptic-backend';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-
-// Initialize Apollo Client
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache(),
-});
 
 export const main = async () => {
 // Example: Create a new User
@@ -87,7 +80,7 @@ const userProps = {
 
 
 try {
-  const createdUser = await adaptic.User.create(userProps, client) as types.User;
+  const createdUser = await adaptic.User.create(userProps) as types.User;
   console.log('Created User:', createdUser);
 } catch (error) {
   console.error('Error creating user:', error);
@@ -101,7 +94,7 @@ const updateUser = async () => {
   };
 
   try {
-    const updatedUser = await adaptic.User.update(updateProps, client) as types.User;
+    const updatedUser = await adaptic.User.update(updateProps) as types.User;
     console.log('Updated User:', updatedUser);
   } catch (error) {
     console.error('Error updating user:', error);
@@ -123,18 +116,6 @@ The only difference between client-side and server-side usage is the import stat
 ```javascript
 // server-side/lambdaFunction.mjs
 import adaptic from 'adaptic-backend/server';
-import pkg from '@apollo/client';
-import fetch from 'cross-fetch';
-
-const { ApolloClient, InMemoryCache, HttpLink } = pkg;
-
-const client = new ApolloClient({
-  link: new HttpLink({
-    uri: process.env.GRAPHQL_ENDPOINT,
-    fetch,
-  }),
-  cache: new InMemoryCache(),
-});
 
 export const handler = async (event) => {
   // Parse the incoming event data
@@ -158,7 +139,7 @@ export const handler = async (event) => {
   };
 
   try {
-    const result = await adaptic.dependency.create(dependencyObject, client);
+    const result = await adaptic.dependency.create(dependencyObject);
 
     return {
       statusCode: 200,
