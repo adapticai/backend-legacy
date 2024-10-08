@@ -2,12 +2,17 @@ export function removeUndefinedProps(obj: any): any {
   if (Array.isArray(obj)) {
     return obj
       .map(item => removeUndefinedProps(item))
-      .filter(item => item !== undefined && Object.keys(item).length > 0);
+      .filter(
+        item =>
+          item !== undefined &&
+          item !== null &&
+          (typeof item !== 'object' || Object.keys(item).length > 0)
+      );
   } else if (typeof obj === 'object' && obj !== null) {
     return Object.keys(obj).reduce((acc: any, key) => {
       let value = obj[key];
 
-      if (value !== undefined) {
+      if (value !== undefined && value !== null) {
         let cleanedValue;
 
         if (key === 'where' && typeof value === 'object' && value !== null) {
@@ -25,6 +30,7 @@ export function removeUndefinedProps(obj: any): any {
 
         if (
           cleanedValue !== undefined &&
+          cleanedValue !== null &&
           (typeof cleanedValue !== 'object' || Object.keys(cleanedValue).length > 0)
         ) {
           acc[key] = cleanedValue;
@@ -35,5 +41,5 @@ export function removeUndefinedProps(obj: any): any {
     }, {});
   }
 
-  return obj !== undefined ? obj : undefined;
+  return obj !== undefined && obj !== null ? obj : undefined;
 }
