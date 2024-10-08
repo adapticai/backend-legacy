@@ -1,7 +1,7 @@
 
 
 import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2225,7 +2225,7 @@ export const Alert = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Alert or null.
    */
-  async get(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType> {
+  async get(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType | null> {
     const GET_ALERT = gql`
       query getAlert($where: AlertWhereUniqueInput!) {
         getAlert(where: $where) {
@@ -2552,8 +2552,12 @@ export const Alert = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAlert ?? null;
     } catch (error) {
-      console.error('Error in getAlert:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Alert found') {
+        return null;
+      } else {
+        console.error('Error in getAlert:', error);
+        throw error;
+      }
     }
   },
 
@@ -2882,8 +2886,12 @@ export const Alert = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.alerts ?? null;
     } catch (error) {
-      console.error('Error in getAllAlert:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Alert found') {
+        return null;
+      } else {
+        console.error('Error in getAlert:', error);
+        throw error;
+      }
     }
   },
 
@@ -2893,7 +2901,7 @@ export const Alert = {
    * @param client - Apollo Client instance.
    * @returns An array of found Alert records or null.
    */
-  async findMany(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType[]> {
+  async findMany(props: AlertType, client: ApolloClient<NormalizedCacheObject>): Promise<AlertType[] | null> {
     const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {
         alerts(where: $where) {
@@ -3227,8 +3235,12 @@ export const Alert = {
        return [] as AlertType[];
       }
     } catch (error) {
-      console.error('Error in findManyAlert:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Alert found') {
+        return null;
+      } else {
+        console.error('Error in getAlert:', error);
+        throw error;
+      }
     }
   }
 };

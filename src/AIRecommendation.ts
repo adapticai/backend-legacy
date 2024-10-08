@@ -1,7 +1,7 @@
 
 
 import { AIRecommendation as AIRecommendationType } from './generated/typegraphql-prisma/models/AIRecommendation';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2752,7 +2752,7 @@ export const AIRecommendation = {
    * @param client - Apollo Client instance.
    * @returns The retrieved AIRecommendation or null.
    */
-  async get(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType> {
+  async get(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType | null> {
     const GET_AIRECOMMENDATION = gql`
       query getAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
         getAIRecommendation(where: $where) {
@@ -3079,8 +3079,12 @@ export const AIRecommendation = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAIRecommendation ?? null;
     } catch (error) {
-      console.error('Error in getAIRecommendation:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No AIRecommendation found') {
+        return null;
+      } else {
+        console.error('Error in getAIRecommendation:', error);
+        throw error;
+      }
     }
   },
 
@@ -3409,8 +3413,12 @@ export const AIRecommendation = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.aIRecommendations ?? null;
     } catch (error) {
-      console.error('Error in getAllAIRecommendation:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No AIRecommendation found') {
+        return null;
+      } else {
+        console.error('Error in getAIRecommendation:', error);
+        throw error;
+      }
     }
   },
 
@@ -3420,7 +3428,7 @@ export const AIRecommendation = {
    * @param client - Apollo Client instance.
    * @returns An array of found AIRecommendation records or null.
    */
-  async findMany(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType[]> {
+  async findMany(props: AIRecommendationType, client: ApolloClient<NormalizedCacheObject>): Promise<AIRecommendationType[] | null> {
     const FIND_MANY_AIRECOMMENDATION = gql`
       query findManyAIRecommendation($where: AIRecommendationWhereInput!) {
         aIRecommendations(where: $where) {
@@ -3754,8 +3762,12 @@ export const AIRecommendation = {
        return [] as AIRecommendationType[];
       }
     } catch (error) {
-      console.error('Error in findManyAIRecommendation:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No AIRecommendation found') {
+        return null;
+      } else {
+        console.error('Error in getAIRecommendation:', error);
+        throw error;
+      }
     }
   }
 };

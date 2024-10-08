@@ -1,7 +1,7 @@
 
 
 import { Asset as AssetType } from './generated/typegraphql-prisma/models/Asset';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2292,7 +2292,7 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Asset or null.
    */
-  async get(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
+  async get(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType | null> {
     const GET_ASSET = gql`
       query getAsset($where: AssetWhereUniqueInput!) {
         getAsset(where: $where) {
@@ -2608,8 +2608,12 @@ export const Asset = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAsset ?? null;
     } catch (error) {
-      console.error('Error in getAsset:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Asset found') {
+        return null;
+      } else {
+        console.error('Error in getAsset:', error);
+        throw error;
+      }
     }
   },
 
@@ -2925,8 +2929,12 @@ export const Asset = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.assets ?? null;
     } catch (error) {
-      console.error('Error in getAllAsset:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Asset found') {
+        return null;
+      } else {
+        console.error('Error in getAsset:', error);
+        throw error;
+      }
     }
   },
 
@@ -2936,7 +2944,7 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns An array of found Asset records or null.
    */
-  async findMany(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[]> {
+  async findMany(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[] | null> {
     const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {
         assets(where: $where) {
@@ -3263,8 +3271,12 @@ export const Asset = {
        return [] as AssetType[];
       }
     } catch (error) {
-      console.error('Error in findManyAsset:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Asset found') {
+        return null;
+      } else {
+        console.error('Error in getAsset:', error);
+        throw error;
+      }
     }
   }
 };

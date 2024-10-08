@@ -667,7 +667,7 @@ export const generateModelFunctions = (
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -854,7 +854,7 @@ ${selectionSet}      }
    * @param client - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+  async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type | null> {
     const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
@@ -879,8 +879,12 @@ ${selectionSet}        }
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.get${capitalModelName} ?? null;
     } catch (error) {
-      console.error('Error in get${capitalModelName}:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
+        return null;
+      } else {
+        console.error('Error in get${capitalModelName}:', error);
+        throw error;
+      }
     }
   },
 
@@ -901,8 +905,12 @@ ${selectionSet}      }
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
     } catch (error) {
-      console.error('Error in getAll${capitalModelName}:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
+        return null;
+      } else {
+        console.error('Error in get${capitalModelName}:', error);
+        throw error;
+      }
     }
   },
 
@@ -912,7 +920,7 @@ ${selectionSet}      }
    * @param client - Apollo Client instance.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type[]> {
+  async findMany(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
     const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
@@ -942,8 +950,12 @@ ${constructVariablesObject(
        return [] as ${capitalModelName}Type[];
       }
     } catch (error) {
-      console.error('Error in findMany${capitalModelName}:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
+        return null;
+      } else {
+        console.error('Error in get${capitalModelName}:', error);
+        throw error;
+      }
     }
   }
 };

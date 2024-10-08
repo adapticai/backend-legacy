@@ -1,7 +1,7 @@
 
 
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -196,7 +196,7 @@ export const EconomicEvent = {
    * @param client - Apollo Client instance.
    * @returns The retrieved EconomicEvent or null.
    */
-  async get(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType> {
+  async get(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType | null> {
     const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         getEconomicEvent(where: $where) {
@@ -225,8 +225,12 @@ export const EconomicEvent = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getEconomicEvent ?? null;
     } catch (error) {
-      console.error('Error in getEconomicEvent:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No EconomicEvent found') {
+        return null;
+      } else {
+        console.error('Error in getEconomicEvent:', error);
+        throw error;
+      }
     }
   },
 
@@ -254,8 +258,12 @@ export const EconomicEvent = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.economicEvents ?? null;
     } catch (error) {
-      console.error('Error in getAllEconomicEvent:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No EconomicEvent found') {
+        return null;
+      } else {
+        console.error('Error in getEconomicEvent:', error);
+        throw error;
+      }
     }
   },
 
@@ -265,7 +273,7 @@ export const EconomicEvent = {
    * @param client - Apollo Client instance.
    * @returns An array of found EconomicEvent records or null.
    */
-  async findMany(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType[]> {
+  async findMany(props: EconomicEventType, client: ApolloClient<NormalizedCacheObject>): Promise<EconomicEventType[] | null> {
     const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {
         economicEvents(where: $where) {
@@ -301,8 +309,12 @@ export const EconomicEvent = {
        return [] as EconomicEventType[];
       }
     } catch (error) {
-      console.error('Error in findManyEconomicEvent:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No EconomicEvent found') {
+        return null;
+      } else {
+        console.error('Error in getEconomicEvent:', error);
+        throw error;
+      }
     }
   }
 };

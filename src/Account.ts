@@ -1,7 +1,7 @@
 
 
 import { Account as AccountType } from './generated/typegraphql-prisma/models/Account';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1721,7 +1721,7 @@ export const Account = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Account or null.
    */
-  async get(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType> {
+  async get(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType | null> {
     const GET_ACCOUNT = gql`
       query getAccount($where: AccountWhereUniqueInput!) {
         getAccount(where: $where) {
@@ -2048,8 +2048,12 @@ export const Account = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAccount ?? null;
     } catch (error) {
-      console.error('Error in getAccount:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Account found') {
+        return null;
+      } else {
+        console.error('Error in getAccount:', error);
+        throw error;
+      }
     }
   },
 
@@ -2378,8 +2382,12 @@ export const Account = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.accounts ?? null;
     } catch (error) {
-      console.error('Error in getAllAccount:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Account found') {
+        return null;
+      } else {
+        console.error('Error in getAccount:', error);
+        throw error;
+      }
     }
   },
 
@@ -2389,7 +2397,7 @@ export const Account = {
    * @param client - Apollo Client instance.
    * @returns An array of found Account records or null.
    */
-  async findMany(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType[]> {
+  async findMany(props: AccountType, client: ApolloClient<NormalizedCacheObject>): Promise<AccountType[] | null> {
     const FIND_MANY_ACCOUNT = gql`
       query findManyAccount($where: AccountWhereInput!) {
         accounts(where: $where) {
@@ -2723,8 +2731,12 @@ export const Account = {
        return [] as AccountType[];
       }
     } catch (error) {
-      console.error('Error in findManyAccount:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Account found') {
+        return null;
+      } else {
+        console.error('Error in getAccount:', error);
+        throw error;
+      }
     }
   }
 };

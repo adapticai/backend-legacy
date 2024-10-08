@@ -1,7 +1,7 @@
 
 
 import { Order as OrderType } from './generated/typegraphql-prisma/models/Order';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2710,7 +2710,7 @@ export const Order = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Order or null.
    */
-  async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType> {
+  async get(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType | null> {
     const GET_ORDER = gql`
       query getOrder($where: OrderWhereUniqueInput!) {
         getOrder(where: $where) {
@@ -3037,8 +3037,12 @@ export const Order = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getOrder ?? null;
     } catch (error) {
-      console.error('Error in getOrder:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Order found') {
+        return null;
+      } else {
+        console.error('Error in getOrder:', error);
+        throw error;
+      }
     }
   },
 
@@ -3367,8 +3371,12 @@ export const Order = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.orders ?? null;
     } catch (error) {
-      console.error('Error in getAllOrder:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Order found') {
+        return null;
+      } else {
+        console.error('Error in getOrder:', error);
+        throw error;
+      }
     }
   },
 
@@ -3378,7 +3386,7 @@ export const Order = {
    * @param client - Apollo Client instance.
    * @returns An array of found Order records or null.
    */
-  async findMany(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType[]> {
+  async findMany(props: OrderType, client: ApolloClient<NormalizedCacheObject>): Promise<OrderType[] | null> {
     const FIND_MANY_ORDER = gql`
       query findManyOrder($where: OrderWhereInput!) {
         orders(where: $where) {
@@ -3712,8 +3720,12 @@ export const Order = {
        return [] as OrderType[];
       }
     } catch (error) {
-      console.error('Error in findManyOrder:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Order found') {
+        return null;
+      } else {
+        console.error('Error in getOrder:', error);
+        throw error;
+      }
     }
   }
 };

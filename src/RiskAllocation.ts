@@ -1,7 +1,7 @@
 
 
 import { RiskAllocation as RiskAllocationType } from './generated/typegraphql-prisma/models/RiskAllocation';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2235,7 +2235,7 @@ export const RiskAllocation = {
    * @param client - Apollo Client instance.
    * @returns The retrieved RiskAllocation or null.
    */
-  async get(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType> {
+  async get(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType | null> {
     const GET_RISKALLOCATION = gql`
       query getRiskAllocation($where: RiskAllocationWhereUniqueInput!) {
         getRiskAllocation(where: $where) {
@@ -2562,8 +2562,12 @@ export const RiskAllocation = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getRiskAllocation ?? null;
     } catch (error) {
-      console.error('Error in getRiskAllocation:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No RiskAllocation found') {
+        return null;
+      } else {
+        console.error('Error in getRiskAllocation:', error);
+        throw error;
+      }
     }
   },
 
@@ -2892,8 +2896,12 @@ export const RiskAllocation = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.riskAllocations ?? null;
     } catch (error) {
-      console.error('Error in getAllRiskAllocation:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No RiskAllocation found') {
+        return null;
+      } else {
+        console.error('Error in getRiskAllocation:', error);
+        throw error;
+      }
     }
   },
 
@@ -2903,7 +2911,7 @@ export const RiskAllocation = {
    * @param client - Apollo Client instance.
    * @returns An array of found RiskAllocation records or null.
    */
-  async findMany(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType[]> {
+  async findMany(props: RiskAllocationType, client: ApolloClient<NormalizedCacheObject>): Promise<RiskAllocationType[] | null> {
     const FIND_MANY_RISKALLOCATION = gql`
       query findManyRiskAllocation($where: RiskAllocationWhereInput!) {
         riskAllocations(where: $where) {
@@ -3237,8 +3245,12 @@ export const RiskAllocation = {
        return [] as RiskAllocationType[];
       }
     } catch (error) {
-      console.error('Error in findManyRiskAllocation:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No RiskAllocation found') {
+        return null;
+      } else {
+        console.error('Error in getRiskAllocation:', error);
+        throw error;
+      }
     }
   }
 };

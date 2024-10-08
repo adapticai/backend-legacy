@@ -1,7 +1,7 @@
 
 
 import { EnvironmentVariable as EnvironmentVariableType } from './generated/typegraphql-prisma/models/EnvironmentVariable';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1582,7 +1582,7 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns The retrieved EnvironmentVariable or null.
    */
-  async get(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
+  async get(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType | null> {
     const GET_ENVIRONMENTVARIABLE = gql`
       query getEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
         getEnvironmentVariable(where: $where) {
@@ -1914,8 +1914,12 @@ export const EnvironmentVariable = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getEnvironmentVariable ?? null;
     } catch (error) {
-      console.error('Error in getEnvironmentVariable:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No EnvironmentVariable found') {
+        return null;
+      } else {
+        console.error('Error in getEnvironmentVariable:', error);
+        throw error;
+      }
     }
   },
 
@@ -2246,8 +2250,12 @@ export const EnvironmentVariable = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.environmentVariables ?? null;
     } catch (error) {
-      console.error('Error in getAllEnvironmentVariable:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No EnvironmentVariable found') {
+        return null;
+      } else {
+        console.error('Error in getEnvironmentVariable:', error);
+        throw error;
+      }
     }
   },
 
@@ -2257,7 +2265,7 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns An array of found EnvironmentVariable records or null.
    */
-  async findMany(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[]> {
+  async findMany(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[] | null> {
     const FIND_MANY_ENVIRONMENTVARIABLE = gql`
       query findManyEnvironmentVariable($where: EnvironmentVariableWhereInput!) {
         environmentVariables(where: $where) {
@@ -2596,8 +2604,12 @@ export const EnvironmentVariable = {
        return [] as EnvironmentVariableType[];
       }
     } catch (error) {
-      console.error('Error in findManyEnvironmentVariable:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No EnvironmentVariable found') {
+        return null;
+      } else {
+        console.error('Error in getEnvironmentVariable:', error);
+        throw error;
+      }
     }
   }
 };

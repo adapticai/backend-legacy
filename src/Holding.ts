@@ -1,7 +1,7 @@
 
 
 import { Holding as HoldingType } from './generated/typegraphql-prisma/models/Holding';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2196,7 +2196,7 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Holding or null.
    */
-  async get(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType> {
+  async get(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType | null> {
     const GET_HOLDING = gql`
       query getHolding($where: HoldingWhereUniqueInput!) {
         getHolding(where: $where) {
@@ -2555,8 +2555,12 @@ export const Holding = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getHolding ?? null;
     } catch (error) {
-      console.error('Error in getHolding:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Holding found') {
+        return null;
+      } else {
+        console.error('Error in getHolding:', error);
+        throw error;
+      }
     }
   },
 
@@ -2917,8 +2921,12 @@ export const Holding = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.holdings ?? null;
     } catch (error) {
-      console.error('Error in getAllHolding:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Holding found') {
+        return null;
+      } else {
+        console.error('Error in getHolding:', error);
+        throw error;
+      }
     }
   },
 
@@ -2928,7 +2936,7 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns An array of found Holding records or null.
    */
-  async findMany(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType[]> {
+  async findMany(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType[] | null> {
     const FIND_MANY_HOLDING = gql`
       query findManyHolding($where: HoldingWhereInput!) {
         holdings(where: $where) {
@@ -3294,8 +3302,12 @@ export const Holding = {
        return [] as HoldingType[];
       }
     } catch (error) {
-      console.error('Error in findManyHolding:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Holding found') {
+        return null;
+      } else {
+        console.error('Error in getHolding:', error);
+        throw error;
+      }
     }
   }
 };

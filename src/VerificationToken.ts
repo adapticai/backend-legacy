@@ -1,7 +1,7 @@
 
 
 import { VerificationToken as VerificationTokenType } from './generated/typegraphql-prisma/models/VerificationToken';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -176,7 +176,7 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns The retrieved VerificationToken or null.
    */
-  async get(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
+  async get(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType | null> {
     const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
@@ -199,8 +199,12 @@ export const VerificationToken = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getVerificationToken ?? null;
     } catch (error) {
-      console.error('Error in getVerificationToken:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No VerificationToken found') {
+        return null;
+      } else {
+        console.error('Error in getVerificationToken:', error);
+        throw error;
+      }
     }
   },
 
@@ -225,8 +229,12 @@ export const VerificationToken = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.verificationTokens ?? null;
     } catch (error) {
-      console.error('Error in getAllVerificationToken:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No VerificationToken found') {
+        return null;
+      } else {
+        console.error('Error in getVerificationToken:', error);
+        throw error;
+      }
     }
   },
 
@@ -236,7 +244,7 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns An array of found VerificationToken records or null.
    */
-  async findMany(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType[]> {
+  async findMany(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType[] | null> {
     const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
@@ -266,8 +274,12 @@ export const VerificationToken = {
        return [] as VerificationTokenType[];
       }
     } catch (error) {
-      console.error('Error in findManyVerificationToken:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No VerificationToken found') {
+        return null;
+      } else {
+        console.error('Error in getVerificationToken:', error);
+        throw error;
+      }
     }
   }
 };

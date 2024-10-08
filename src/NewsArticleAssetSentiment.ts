@@ -1,7 +1,7 @@
 
 
 import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1580,7 +1580,7 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
-  async get(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+  async get(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType | null> {
     const GET_NEWSARTICLEASSETSENTIMENT = gql`
       query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         getNewsArticleAssetSentiment(where: $where) {
@@ -1868,8 +1868,12 @@ export const NewsArticleAssetSentiment = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getNewsArticleAssetSentiment ?? null;
     } catch (error) {
-      console.error('Error in getNewsArticleAssetSentiment:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
+        return null;
+      } else {
+        console.error('Error in getNewsArticleAssetSentiment:', error);
+        throw error;
+      }
     }
   },
 
@@ -2158,8 +2162,12 @@ export const NewsArticleAssetSentiment = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.newsArticleAssetSentiments ?? null;
     } catch (error) {
-      console.error('Error in getAllNewsArticleAssetSentiment:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
+        return null;
+      } else {
+        console.error('Error in getNewsArticleAssetSentiment:', error);
+        throw error;
+      }
     }
   },
 
@@ -2169,7 +2177,7 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType[]> {
+  async findMany(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType[] | null> {
     const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
         newsArticleAssetSentiments(where: $where) {
@@ -2466,8 +2474,12 @@ export const NewsArticleAssetSentiment = {
        return [] as NewsArticleAssetSentimentType[];
       }
     } catch (error) {
-      console.error('Error in findManyNewsArticleAssetSentiment:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
+        return null;
+      } else {
+        console.error('Error in getNewsArticleAssetSentiment:', error);
+        throw error;
+      }
     }
   }
 };

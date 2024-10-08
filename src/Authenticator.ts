@@ -1,7 +1,7 @@
 
 
 import { Authenticator as AuthenticatorType } from './generated/typegraphql-prisma/models/Authenticator';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1731,7 +1731,7 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Authenticator or null.
    */
-  async get(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
+  async get(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType | null> {
     const GET_AUTHENTICATOR = gql`
       query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         getAuthenticator(where: $where) {
@@ -2058,8 +2058,12 @@ export const Authenticator = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAuthenticator ?? null;
     } catch (error) {
-      console.error('Error in getAuthenticator:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Authenticator found') {
+        return null;
+      } else {
+        console.error('Error in getAuthenticator:', error);
+        throw error;
+      }
     }
   },
 
@@ -2388,8 +2392,12 @@ export const Authenticator = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.authenticators ?? null;
     } catch (error) {
-      console.error('Error in getAllAuthenticator:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Authenticator found') {
+        return null;
+      } else {
+        console.error('Error in getAuthenticator:', error);
+        throw error;
+      }
     }
   },
 
@@ -2399,7 +2407,7 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns An array of found Authenticator records or null.
    */
-  async findMany(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType[]> {
+  async findMany(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType[] | null> {
     const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {
         authenticators(where: $where) {
@@ -2733,8 +2741,12 @@ export const Authenticator = {
        return [] as AuthenticatorType[];
       }
     } catch (error) {
-      console.error('Error in findManyAuthenticator:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Authenticator found') {
+        return null;
+      } else {
+        console.error('Error in getAuthenticator:', error);
+        throw error;
+      }
     }
   }
 };

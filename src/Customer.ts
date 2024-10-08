@@ -1,7 +1,7 @@
 
 
 import { Customer as CustomerType } from './generated/typegraphql-prisma/models/Customer';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1714,7 +1714,7 @@ export const Customer = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Customer or null.
    */
-  async get(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType> {
+  async get(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType | null> {
     const GET_CUSTOMER = gql`
       query getCustomer($where: CustomerWhereUniqueInput!) {
         getCustomer(where: $where) {
@@ -2044,8 +2044,12 @@ export const Customer = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getCustomer ?? null;
     } catch (error) {
-      console.error('Error in getCustomer:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Customer found') {
+        return null;
+      } else {
+        console.error('Error in getCustomer:', error);
+        throw error;
+      }
     }
   },
 
@@ -2374,8 +2378,12 @@ export const Customer = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.customers ?? null;
     } catch (error) {
-      console.error('Error in getAllCustomer:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Customer found') {
+        return null;
+      } else {
+        console.error('Error in getCustomer:', error);
+        throw error;
+      }
     }
   },
 
@@ -2385,7 +2393,7 @@ export const Customer = {
    * @param client - Apollo Client instance.
    * @returns An array of found Customer records or null.
    */
-  async findMany(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType[]> {
+  async findMany(props: CustomerType, client: ApolloClient<NormalizedCacheObject>): Promise<CustomerType[] | null> {
     const FIND_MANY_CUSTOMER = gql`
       query findManyCustomer($where: CustomerWhereInput!) {
         customers(where: $where) {
@@ -2722,8 +2730,12 @@ export const Customer = {
        return [] as CustomerType[];
       }
     } catch (error) {
-      console.error('Error in findManyCustomer:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Customer found') {
+        return null;
+      } else {
+        console.error('Error in getCustomer:', error);
+        throw error;
+      }
     }
   }
 };

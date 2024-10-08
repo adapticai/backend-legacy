@@ -1,7 +1,7 @@
 
 
 import { Session as SessionType } from './generated/typegraphql-prisma/models/Session';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1735,7 +1735,7 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Session or null.
    */
-  async get(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType> {
+  async get(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType | null> {
     const GET_SESSION = gql`
       query getSession($where: SessionWhereUniqueInput!) {
         getSession(where: $where) {
@@ -2062,8 +2062,12 @@ export const Session = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getSession ?? null;
     } catch (error) {
-      console.error('Error in getSession:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Session found') {
+        return null;
+      } else {
+        console.error('Error in getSession:', error);
+        throw error;
+      }
     }
   },
 
@@ -2392,8 +2396,12 @@ export const Session = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.sessions ?? null;
     } catch (error) {
-      console.error('Error in getAllSession:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Session found') {
+        return null;
+      } else {
+        console.error('Error in getSession:', error);
+        throw error;
+      }
     }
   },
 
@@ -2403,7 +2411,7 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns An array of found Session records or null.
    */
-  async findMany(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType[]> {
+  async findMany(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType[] | null> {
     const FIND_MANY_SESSION = gql`
       query findManySession($where: SessionWhereInput!) {
         sessions(where: $where) {
@@ -2737,8 +2745,12 @@ export const Session = {
        return [] as SessionType[];
       }
     } catch (error) {
-      console.error('Error in findManySession:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No Session found') {
+        return null;
+      } else {
+        console.error('Error in getSession:', error);
+        throw error;
+      }
     }
   }
 };

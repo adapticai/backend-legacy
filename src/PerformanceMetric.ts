@@ -1,7 +1,7 @@
 
 
 import { PerformanceMetric as PerformanceMetricType } from './generated/typegraphql-prisma/models/PerformanceMetric';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -2232,7 +2232,7 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns The retrieved PerformanceMetric or null.
    */
-  async get(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType> {
+  async get(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType | null> {
     const GET_PERFORMANCEMETRIC = gql`
       query getPerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         getPerformanceMetric(where: $where) {
@@ -2559,8 +2559,12 @@ export const PerformanceMetric = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getPerformanceMetric ?? null;
     } catch (error) {
-      console.error('Error in getPerformanceMetric:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No PerformanceMetric found') {
+        return null;
+      } else {
+        console.error('Error in getPerformanceMetric:', error);
+        throw error;
+      }
     }
   },
 
@@ -2889,8 +2893,12 @@ export const PerformanceMetric = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.performanceMetrics ?? null;
     } catch (error) {
-      console.error('Error in getAllPerformanceMetric:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No PerformanceMetric found') {
+        return null;
+      } else {
+        console.error('Error in getPerformanceMetric:', error);
+        throw error;
+      }
     }
   },
 
@@ -2900,7 +2908,7 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns An array of found PerformanceMetric records or null.
    */
-  async findMany(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType[]> {
+  async findMany(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType[] | null> {
     const FIND_MANY_PERFORMANCEMETRIC = gql`
       query findManyPerformanceMetric($where: PerformanceMetricWhereInput!) {
         performanceMetrics(where: $where) {
@@ -3234,8 +3242,12 @@ export const PerformanceMetric = {
        return [] as PerformanceMetricType[];
       }
     } catch (error) {
-      console.error('Error in findManyPerformanceMetric:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No PerformanceMetric found') {
+        return null;
+      } else {
+        console.error('Error in getPerformanceMetric:', error);
+        throw error;
+      }
     }
   }
 };

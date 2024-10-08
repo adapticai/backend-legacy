@@ -1,7 +1,7 @@
 
 
 import { TradingAccount as TradingAccountType } from './generated/typegraphql-prisma/models/TradingAccount';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -4229,7 +4229,7 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns The retrieved TradingAccount or null.
    */
-  async get(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+  async get(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType | null> {
     const GET_TRADINGACCOUNT = gql`
       query getTradingAccount($where: TradingAccountWhereUniqueInput!) {
         getTradingAccount(where: $where) {
@@ -4581,8 +4581,12 @@ export const TradingAccount = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTradingAccount ?? null;
     } catch (error) {
-      console.error('Error in getTradingAccount:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No TradingAccount found') {
+        return null;
+      } else {
+        console.error('Error in getTradingAccount:', error);
+        throw error;
+      }
     }
   },
 
@@ -4932,8 +4936,12 @@ export const TradingAccount = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.tradingAccounts ?? null;
     } catch (error) {
-      console.error('Error in getAllTradingAccount:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No TradingAccount found') {
+        return null;
+      } else {
+        console.error('Error in getTradingAccount:', error);
+        throw error;
+      }
     }
   },
 
@@ -4943,7 +4951,7 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns An array of found TradingAccount records or null.
    */
-  async findMany(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[]> {
+  async findMany(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[] | null> {
     const FIND_MANY_TRADINGACCOUNT = gql`
       query findManyTradingAccount($where: TradingAccountWhereInput!) {
         tradingAccounts(where: $where) {
@@ -5304,8 +5312,12 @@ export const TradingAccount = {
        return [] as TradingAccountType[];
       }
     } catch (error) {
-      console.error('Error in findManyTradingAccount:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No TradingAccount found') {
+        return null;
+      } else {
+        console.error('Error in getTradingAccount:', error);
+        throw error;
+      }
     }
   }
 };

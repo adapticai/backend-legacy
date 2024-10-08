@@ -1,7 +1,7 @@
 
 
 import { TradeStep as TradeStepType } from './generated/typegraphql-prisma/models/TradeStep';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1773,7 +1773,7 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns The retrieved TradeStep or null.
    */
-  async get(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
+  async get(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType | null> {
     const GET_TRADESTEP = gql`
       query getTradeStep($where: TradeStepWhereUniqueInput!) {
         getTradeStep(where: $where) {
@@ -2124,8 +2124,12 @@ export const TradeStep = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTradeStep ?? null;
     } catch (error) {
-      console.error('Error in getTradeStep:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No TradeStep found') {
+        return null;
+      } else {
+        console.error('Error in getTradeStep:', error);
+        throw error;
+      }
     }
   },
 
@@ -2478,8 +2482,12 @@ export const TradeStep = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.tradeSteps ?? null;
     } catch (error) {
-      console.error('Error in getAllTradeStep:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No TradeStep found') {
+        return null;
+      } else {
+        console.error('Error in getTradeStep:', error);
+        throw error;
+      }
     }
   },
 
@@ -2489,7 +2497,7 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns An array of found TradeStep records or null.
    */
-  async findMany(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType[]> {
+  async findMany(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType[] | null> {
     const FIND_MANY_TRADESTEP = gql`
       query findManyTradeStep($where: TradeStepWhereInput!) {
         tradeSteps(where: $where) {
@@ -2847,8 +2855,12 @@ export const TradeStep = {
        return [] as TradeStepType[];
       }
     } catch (error) {
-      console.error('Error in findManyTradeStep:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No TradeStep found') {
+        return null;
+      } else {
+        console.error('Error in getTradeStep:', error);
+        throw error;
+      }
     }
   }
 };

@@ -1,7 +1,7 @@
 
 
 import { NewsArticle as NewsArticleType } from './generated/typegraphql-prisma/models/NewsArticle';
-import { ApolloClient, gql, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -1120,7 +1120,7 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns The retrieved NewsArticle or null.
    */
-  async get(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType> {
+  async get(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType | null> {
     const GET_NEWSARTICLE = gql`
       query getNewsArticle($where: NewsArticleWhereUniqueInput!) {
         getNewsArticle(where: $where) {
@@ -1314,8 +1314,12 @@ export const NewsArticle = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getNewsArticle ?? null;
     } catch (error) {
-      console.error('Error in getNewsArticle:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No NewsArticle found') {
+        return null;
+      } else {
+        console.error('Error in getNewsArticle:', error);
+        throw error;
+      }
     }
   },
 
@@ -1507,8 +1511,12 @@ export const NewsArticle = {
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.newsArticles ?? null;
     } catch (error) {
-      console.error('Error in getAllNewsArticle:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No NewsArticle found') {
+        return null;
+      } else {
+        console.error('Error in getNewsArticle:', error);
+        throw error;
+      }
     }
   },
 
@@ -1518,7 +1526,7 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns An array of found NewsArticle records or null.
    */
-  async findMany(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType[]> {
+  async findMany(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType[] | null> {
     const FIND_MANY_NEWSARTICLE = gql`
       query findManyNewsArticle($where: NewsArticleWhereInput!) {
         newsArticles(where: $where) {
@@ -1721,8 +1729,12 @@ export const NewsArticle = {
        return [] as NewsArticleType[];
       }
     } catch (error) {
-      console.error('Error in findManyNewsArticle:', error);
-      throw error;
+      if (error instanceof ApolloError && error.message === 'No NewsArticle found') {
+        return null;
+      } else {
+        console.error('Error in getNewsArticle:', error);
+        throw error;
+      }
     }
   }
 };
