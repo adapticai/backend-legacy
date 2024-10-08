@@ -2,6 +2,7 @@
 
 import { Asset as AssetType } from './generated/typegraphql-prisma/models/Asset';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns The created Asset or null.
    */
-  async create(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
-    const CREATE_ONE_ASSET = gql`
+  async create(props: AssetType): Promise<AssetType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_ASSET = gql`
       mutation createOneAsset($data: AssetCreateInput!) {
         createOneAsset(data: $data) {
           id
@@ -135,6 +139,10 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               userId
               holdings {
@@ -431,6 +439,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -507,6 +516,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -556,6 +566,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -644,7 +655,10 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AssetType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AssetType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_ASSET = gql`
       mutation createManyAsset($data: [AssetCreateManyInput!]!) {
         createManyAsset(data: $data) {
@@ -732,7 +746,10 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns The updated Asset or null.
    */
-  async update(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
+  async update(props: AssetType): Promise<AssetType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_ASSET = gql`
       mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
         updateOneAsset(data: $data, where: $where) {
@@ -852,6 +869,10 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               userId
               holdings {
@@ -1325,6 +1346,9 @@ export const Asset = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1336,6 +1360,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1468,6 +1493,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1576,6 +1602,9 @@ export const Asset = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1587,6 +1616,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1647,6 +1677,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1722,6 +1753,9 @@ export const Asset = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1733,6 +1767,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1790,6 +1825,7 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1962,7 +1998,10 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns The deleted Asset or null.
    */
-  async delete(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType> {
+  async delete(props: AssetType): Promise<AssetType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_ASSET = gql`
       mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
         deleteOneAsset(where: $where) {
@@ -2082,6 +2121,10 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               userId
               holdings {
@@ -2292,7 +2335,10 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Asset or null.
    */
-  async get(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType | null> {
+  async get(props: AssetType): Promise<AssetType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ASSET = gql`
       query getAsset($where: AssetWhereUniqueInput!) {
         getAsset(where: $where) {
@@ -2412,6 +2458,10 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               userId
               holdings {
@@ -2622,7 +2672,10 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns An array of Asset records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[] | null> {
+  async getAll(): Promise<AssetType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_ASSET = gql`
       query getAllAsset {
         assets {
@@ -2742,6 +2795,10 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               userId
               holdings {
@@ -2944,7 +3001,10 @@ export const Asset = {
    * @param client - Apollo Client instance.
    * @returns An array of found Asset records or null.
    */
-  async findMany(props: AssetType, client: ApolloClient<NormalizedCacheObject>): Promise<AssetType[] | null> {
+  async findMany(props: AssetType): Promise<AssetType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {
         assets(where: $where) {
@@ -3064,6 +3124,10 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               userId
               holdings {

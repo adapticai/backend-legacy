@@ -2,6 +2,7 @@
 
 import { TradeStep as TradeStepType } from './generated/typegraphql-prisma/models/TradeStep';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns The created TradeStep or null.
    */
-  async create(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
-    const CREATE_ONE_TRADESTEP = gql`
+  async create(props: TradeStepType): Promise<TradeStepType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_TRADESTEP = gql`
       mutation createOneTradeStep($data: TradeStepCreateInput!) {
         createOneTradeStep(data: $data) {
           id
@@ -246,6 +250,18 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             portfolio {
               id
@@ -403,6 +419,7 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
           currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
+          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? props.trade.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -515,7 +532,10 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: TradeStepType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: TradeStepType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_TRADESTEP = gql`
       mutation createManyTradeStep($data: [TradeStepCreateManyInput!]!) {
         createManyTradeStep(data: $data) {
@@ -566,7 +586,10 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns The updated TradeStep or null.
    */
-  async update(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
+  async update(props: TradeStepType): Promise<TradeStepType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_TRADESTEP = gql`
       mutation updateOneTradeStep($data: TradeStepUpdateInput!, $where: TradeStepWhereUniqueInput!) {
         updateOneTradeStep(data: $data, where: $where) {
@@ -797,6 +820,18 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             portfolio {
               id
@@ -992,6 +1027,9 @@ export const TradeStep = {
           plan: props.trade.user.plan !== undefined ? {
               set: props.trade.user.plan  
              } : undefined,
+          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? {
+              set: props.trade.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: props.trade.user.name !== undefined ? props.trade.user.name : undefined,
@@ -1003,6 +1041,7 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
           currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
+          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? props.trade.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1295,6 +1334,7 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
           currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
+          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? props.trade.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1406,7 +1446,10 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns The deleted TradeStep or null.
    */
-  async delete(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType> {
+  async delete(props: TradeStepType): Promise<TradeStepType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_TRADESTEP = gql`
       mutation deleteOneTradeStep($where: TradeStepWhereUniqueInput!) {
         deleteOneTradeStep(where: $where) {
@@ -1637,6 +1680,18 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             portfolio {
               id
@@ -1773,7 +1828,10 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns The retrieved TradeStep or null.
    */
-  async get(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType | null> {
+  async get(props: TradeStepType): Promise<TradeStepType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_TRADESTEP = gql`
       query getTradeStep($where: TradeStepWhereUniqueInput!) {
         getTradeStep(where: $where) {
@@ -2004,6 +2062,18 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             portfolio {
               id
@@ -2138,7 +2208,10 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns An array of TradeStep records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType[] | null> {
+  async getAll(): Promise<TradeStepType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_TRADESTEP = gql`
       query getAllTradeStep {
         tradeSteps {
@@ -2369,6 +2442,18 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             portfolio {
               id
@@ -2497,7 +2582,10 @@ export const TradeStep = {
    * @param client - Apollo Client instance.
    * @returns An array of found TradeStep records or null.
    */
-  async findMany(props: TradeStepType, client: ApolloClient<NormalizedCacheObject>): Promise<TradeStepType[] | null> {
+  async findMany(props: TradeStepType): Promise<TradeStepType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_TRADESTEP = gql`
       query findManyTradeStep($where: TradeStepWhereInput!) {
         tradeSteps(where: $where) {
@@ -2728,6 +2816,18 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             portfolio {
               id

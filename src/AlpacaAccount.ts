@@ -1,40 +1,33 @@
 
 
-import { Trade as TradeType } from './generated/typegraphql-prisma/models/Trade';
+import { AlpacaAccount as AlpacaAccountType } from './generated/typegraphql-prisma/models/AlpacaAccount';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
 import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the Trade model.
+ * CRUD operations for the AlpacaAccount model.
  */
 
-export const Trade = {
+export const AlpacaAccount = {
   /**
-   * Create a new Trade record.
+   * Create a new AlpacaAccount record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
-   * @returns The created Trade or null.
+   * @returns The created AlpacaAccount or null.
    */
-  async create(props: TradeType): Promise<TradeType> {
+  async create(props: AlpacaAccountType): Promise<AlpacaAccountType> {
 
   const client = await initializeApolloServerSide();
 
-  const CREATE_ONE_TRADE = gql`
-      mutation createOneTrade($data: TradeCreateInput!) {
-        createOneTrade(data: $data) {
+  const CREATE_ONE_ALPACAACCOUNT = gql`
+      mutation createOneAlpacaAccount($data: AlpacaAccountCreateInput!) {
+        createOneAlpacaAccount(data: $data) {
           id
-          userId
-          portfolioId
-          assetId
-          action
-          quantity
-          price
-          total
-          timestamp
-          createdAt
+          APIKey
+          APISecret
+          configuration
           updatedAt
-          status
           user {
             id
             name
@@ -108,19 +101,17 @@ export const Trade = {
             plan
             trades {
               id
-            }
-            orders {
-              id
               userId
               portfolioId
               assetId
-              type
               action
               quantity
               price
-              status
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -233,6 +224,50 @@ export const Trade = {
                   id
                 }
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -304,57 +339,19 @@ export const Trade = {
             }
             alpacaAccount {
               id
-              APIKey
-              APISecret
-              configuration
-              updatedAt
-              user {
-                id
-              }
-              userId
             }
             alpacaAccountId
           }
-          portfolio {
-            id
-          }
-          asset {
-            id
-          }
-          steps {
-            id
-            tradeId
-            sequence
-            action
-            hedgeType
-            hedgePrice
-            buyPrice
-            sellPrice
-            qty
-            side
-            type
-            stopLoss
-            targetPrice
-            note
-            executionTime
-            status
-            fee
-            trade {
-              id
-            }
-          }
+          userId
         }
       }
    `;
 
     const variables = {
       data: {
-          action: props.action !== undefined ? props.action : undefined,
-  quantity: props.quantity !== undefined ? props.quantity : undefined,
-  price: props.price !== undefined ? props.price : undefined,
-  total: props.total !== undefined ? props.total : undefined,
-  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  status: props.status !== undefined ? props.status : undefined,
+          APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
+  APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
+  configuration: props.configuration !== undefined ? props.configuration : undefined,
   user: props.user ? {
     connectOrCreate: {
       where: {
@@ -436,6 +433,21 @@ export const Trade = {
         },
       }))
     } : undefined,
+    trades: props.user.trades ? {
+      connectOrCreate: props.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
     orders: props.user.orders ? {
       connectOrCreate: props.user.orders.map((item: any) => ({
         where: {
@@ -511,282 +523,8 @@ export const Trade = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
-        where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
-        },
-        create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
-        },
-      }
-    } : undefined,
       },
     }
-  } : undefined,
-  portfolio: props.portfolio ? {
-    connectOrCreate: {
-      where: {
-        id: props.portfolio.id !== undefined ? props.portfolio.id : undefined,
-        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        name: props.portfolio.name !== undefined ? {
-            equals: props.portfolio.name 
-           } : undefined,
-      },
-      create: {
-        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
-        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        type: props.portfolio.type !== undefined ? props.portfolio.type : undefined,
-    user: props.portfolio.user ? {
-      connectOrCreate: {
-        where: {
-          id: props.portfolio.user.id !== undefined ? props.portfolio.user.id : undefined,
-          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
-          name: props.portfolio.user.name !== undefined ? {
-              equals: props.portfolio.user.name 
-             } : undefined,
-        },
-        create: {
-          name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
-          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
-          emailVerified: props.portfolio.user.emailVerified !== undefined ? props.portfolio.user.emailVerified : undefined,
-          image: props.portfolio.user.image !== undefined ? props.portfolio.user.image : undefined,
-          role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
-          bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
-          jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
-          plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
-        },
-      }
-    } : undefined,
-    holdings: props.portfolio.holdings ? {
-      connectOrCreate: props.portfolio.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.portfolio.orders ? {
-      connectOrCreate: props.portfolio.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.portfolio.aiRecommendations ? {
-      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: props.portfolio.riskAllocations ? {
-      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.portfolio.alerts ? {
-      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.portfolio.performanceMetrics ? {
-      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: props.portfolio.environmentVariables ? {
-      connectOrCreate: props.portfolio.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  asset: props.asset ? {
-    connectOrCreate: {
-      where: {
-        id: props.asset.id !== undefined ? props.asset.id : undefined,
-        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
-        name: props.asset.name !== undefined ? props.asset.name : undefined,
-      },
-      create: {
-        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
-        name: props.asset.name !== undefined ? props.asset.name : undefined,
-        type: props.asset.type !== undefined ? props.asset.type : undefined,
-        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
-        description: props.asset.description !== undefined ? props.asset.description : undefined,
-        cik: props.asset.cik !== undefined ? props.asset.cik : undefined,
-        exchange: props.asset.exchange !== undefined ? props.asset.exchange : undefined,
-        currency: props.asset.currency !== undefined ? props.asset.currency : undefined,
-        country: props.asset.country !== undefined ? props.asset.country : undefined,
-        sector: props.asset.sector !== undefined ? props.asset.sector : undefined,
-        industry: props.asset.industry !== undefined ? props.asset.industry : undefined,
-        address: props.asset.address !== undefined ? props.asset.address : undefined,
-        officialSite: props.asset.officialSite !== undefined ? props.asset.officialSite : undefined,
-        fiscalYearEnd: props.asset.fiscalYearEnd !== undefined ? props.asset.fiscalYearEnd : undefined,
-        latestQuarter: props.asset.latestQuarter !== undefined ? props.asset.latestQuarter : undefined,
-        marketCapitalization: props.asset.marketCapitalization !== undefined ? props.asset.marketCapitalization : undefined,
-        ebitda: props.asset.ebitda !== undefined ? props.asset.ebitda : undefined,
-        peRatio: props.asset.peRatio !== undefined ? props.asset.peRatio : undefined,
-        pegRatio: props.asset.pegRatio !== undefined ? props.asset.pegRatio : undefined,
-        bookValue: props.asset.bookValue !== undefined ? props.asset.bookValue : undefined,
-        dividendPerShare: props.asset.dividendPerShare !== undefined ? props.asset.dividendPerShare : undefined,
-        dividendYield: props.asset.dividendYield !== undefined ? props.asset.dividendYield : undefined,
-        eps: props.asset.eps !== undefined ? props.asset.eps : undefined,
-        revenuePerShareTTM: props.asset.revenuePerShareTTM !== undefined ? props.asset.revenuePerShareTTM : undefined,
-        profitMargin: props.asset.profitMargin !== undefined ? props.asset.profitMargin : undefined,
-        operatingMarginTTM: props.asset.operatingMarginTTM !== undefined ? props.asset.operatingMarginTTM : undefined,
-        returnOnAssetsTTM: props.asset.returnOnAssetsTTM !== undefined ? props.asset.returnOnAssetsTTM : undefined,
-        returnOnEquityTTM: props.asset.returnOnEquityTTM !== undefined ? props.asset.returnOnEquityTTM : undefined,
-        revenueTTM: props.asset.revenueTTM !== undefined ? props.asset.revenueTTM : undefined,
-        grossProfitTTM: props.asset.grossProfitTTM !== undefined ? props.asset.grossProfitTTM : undefined,
-        dilutedEPSTTM: props.asset.dilutedEPSTTM !== undefined ? props.asset.dilutedEPSTTM : undefined,
-        quarterlyEarningsGrowthYOY: props.asset.quarterlyEarningsGrowthYOY !== undefined ? props.asset.quarterlyEarningsGrowthYOY : undefined,
-        quarterlyRevenueGrowthYOY: props.asset.quarterlyRevenueGrowthYOY !== undefined ? props.asset.quarterlyRevenueGrowthYOY : undefined,
-        analystTargetPrice: props.asset.analystTargetPrice !== undefined ? props.asset.analystTargetPrice : undefined,
-        analystRatingStrongBuy: props.asset.analystRatingStrongBuy !== undefined ? props.asset.analystRatingStrongBuy : undefined,
-        analystRatingBuy: props.asset.analystRatingBuy !== undefined ? props.asset.analystRatingBuy : undefined,
-        analystRatingHold: props.asset.analystRatingHold !== undefined ? props.asset.analystRatingHold : undefined,
-        analystRatingSell: props.asset.analystRatingSell !== undefined ? props.asset.analystRatingSell : undefined,
-        analystRatingStrongSell: props.asset.analystRatingStrongSell !== undefined ? props.asset.analystRatingStrongSell : undefined,
-        trailingPE: props.asset.trailingPE !== undefined ? props.asset.trailingPE : undefined,
-        forwardPE: props.asset.forwardPE !== undefined ? props.asset.forwardPE : undefined,
-        priceToSalesRatioTTM: props.asset.priceToSalesRatioTTM !== undefined ? props.asset.priceToSalesRatioTTM : undefined,
-        priceToBookRatio: props.asset.priceToBookRatio !== undefined ? props.asset.priceToBookRatio : undefined,
-        evToRevenue: props.asset.evToRevenue !== undefined ? props.asset.evToRevenue : undefined,
-        evToEbitda: props.asset.evToEbitda !== undefined ? props.asset.evToEbitda : undefined,
-        beta: props.asset.beta !== undefined ? props.asset.beta : undefined,
-        week52High: props.asset.week52High !== undefined ? props.asset.week52High : undefined,
-        week52Low: props.asset.week52Low !== undefined ? props.asset.week52Low : undefined,
-        day50MovingAverage: props.asset.day50MovingAverage !== undefined ? props.asset.day50MovingAverage : undefined,
-        day200MovingAverage: props.asset.day200MovingAverage !== undefined ? props.asset.day200MovingAverage : undefined,
-        sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
-        dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
-        exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
-    holdings: props.asset.holdings ? {
-      connectOrCreate: props.asset.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.asset.orders ? {
-      connectOrCreate: props.asset.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.asset.aiRecommendations ? {
-      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    newsMentions: props.asset.newsMentions ? {
-      connectOrCreate: props.asset.newsMentions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-        },
-        create: {
-          url: item.url !== undefined ? item.url : undefined,
-          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  steps: props.steps ? {
-    connectOrCreate: props.steps.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        sequence: item.sequence !== undefined ? item.sequence : undefined,
-        action: item.action !== undefined ? item.action : undefined,
-        hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-        hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-        buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-        sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-        qty: item.qty !== undefined ? item.qty : undefined,
-        side: item.side !== undefined ? item.side : undefined,
-        type: item.type !== undefined ? item.type : undefined,
-        stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-        targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-        note: item.note !== undefined ? item.note : undefined,
-        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-        status: item.status !== undefined ? item.status : undefined,
-        fee: item.fee !== undefined ? item.fee : undefined,
-      },
-    }))
   } : undefined,
 
       },
@@ -795,91 +533,79 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_ONE_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneTrade) {
-        return response.data.createOneTrade;
+      if (response && response.data && response.data.createOneAlpacaAccount) {
+        return response.data.createOneAlpacaAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneTrade:', error);
+      console.error('Error in createOneAlpacaAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple Trade records.
+   * Create multiple AlpacaAccount records.
    * @param props - Array of properties for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: TradeType[]): Promise<{ count: number } | null> {
+  async createMany(props: AlpacaAccountType[]): Promise<{ count: number } | null> {
 
     const client = await initializeApolloServerSide();
 
-    const CREATE_MANY_TRADE = gql`
-      mutation createManyTrade($data: [TradeCreateManyInput!]!) {
-        createManyTrade(data: $data) {
+    const CREATE_MANY_ALPACAACCOUNT = gql`
+      mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
+        createManyAlpacaAccount(data: $data) {
           count
         }
       }`;
 
     const variables = {
       data: props.map(prop => ({
+  APIKey: prop.APIKey !== undefined ? prop.APIKey : undefined,
+  APISecret: prop.APISecret !== undefined ? prop.APISecret : undefined,
+  configuration: prop.configuration !== undefined ? prop.configuration : undefined,
   userId: prop.userId !== undefined ? prop.userId : undefined,
-  portfolioId: prop.portfolioId !== undefined ? prop.portfolioId : undefined,
-  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
-  action: prop.action !== undefined ? prop.action : undefined,
-  quantity: prop.quantity !== undefined ? prop.quantity : undefined,
-  price: prop.price !== undefined ? prop.price : undefined,
-  total: prop.total !== undefined ? prop.total : undefined,
-  timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
-  status: prop.status !== undefined ? prop.status : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_MANY_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyTrade) {
-        return response.data.createManyTrade;
+      if (response && response.data && response.data.createManyAlpacaAccount) {
+        return response.data.createManyAlpacaAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyTrade:', error);
+      console.error('Error in createManyAlpacaAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single Trade record.
+   * Update a single AlpacaAccount record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The updated Trade or null.
+   * @returns The updated AlpacaAccount or null.
    */
-  async update(props: TradeType): Promise<TradeType> {
+  async update(props: AlpacaAccountType): Promise<AlpacaAccountType> {
 
     const client = await initializeApolloServerSide();
 
-    const UPDATE_ONE_TRADE = gql`
-      mutation updateOneTrade($data: TradeUpdateInput!, $where: TradeWhereUniqueInput!) {
-        updateOneTrade(data: $data, where: $where) {
+    const UPDATE_ONE_ALPACAACCOUNT = gql`
+      mutation updateOneAlpacaAccount($data: AlpacaAccountUpdateInput!, $where: AlpacaAccountWhereUniqueInput!) {
+        updateOneAlpacaAccount(data: $data, where: $where) {
           id
-          userId
-          portfolioId
-          assetId
-          action
-          quantity
-          price
-          total
-          timestamp
-          createdAt
+          APIKey
+          APISecret
+          configuration
           updatedAt
-          status
           user {
             id
             name
@@ -953,19 +679,17 @@ export const Trade = {
             plan
             trades {
               id
-            }
-            orders {
-              id
               userId
               portfolioId
               assetId
-              type
               action
               quantity
               price
-              status
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -1078,6 +802,50 @@ export const Trade = {
                   id
                 }
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -1149,45 +917,10 @@ export const Trade = {
             }
             alpacaAccount {
               id
-              APIKey
-              APISecret
-              configuration
-              updatedAt
-              user {
-                id
-              }
-              userId
             }
             alpacaAccountId
           }
-          portfolio {
-            id
-          }
-          asset {
-            id
-          }
-          steps {
-            id
-            tradeId
-            sequence
-            action
-            hedgeType
-            hedgePrice
-            buyPrice
-            sellPrice
-            qty
-            side
-            type
-            stopLoss
-            targetPrice
-            note
-            executionTime
-            status
-            fee
-            trade {
-              id
-            }
-          }
+          userId
       }
       }`;
 
@@ -1196,12 +929,6 @@ export const Trade = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
-  action: props.action !== undefined ? {
-            set: props.action 
-           } : undefined,
-  status: props.status !== undefined ? {
-            set: props.status 
-           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -1383,6 +1110,41 @@ export const Trade = {
         },
       }))
     } : undefined,
+    trades: props.user.trades ? {
+      upsert: props.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
     orders: props.user.orders ? {
       upsert: props.user.orders.map((item: any) => ({
         where: {
@@ -1521,31 +1283,6 @@ export const Trade = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
-        where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
-        },
-        update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
-             } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
-             } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
-             } : undefined,
-        },
-        create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
-        },
-      }
-    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1616,6 +1353,21 @@ export const Trade = {
           credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
           publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
           counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: props.user.trades ? {
+      connectOrCreate: props.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
         },
       }))
     } : undefined,
@@ -1694,823 +1446,8 @@ export const Trade = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
-        where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
-        },
-        create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
-        },
-      }
-    } : undefined,
       },
     }
-  } : undefined,
-  portfolio: props.portfolio ? {
-    upsert: {
-      where: {
-        id: props.portfolio.id !== undefined ? {
-            equals: props.portfolio.id 
-           } : undefined,
-        name: props.portfolio.name !== undefined ? {
-            equals: props.portfolio.name 
-           } : undefined,
-        slug: props.portfolio.slug !== undefined ? {
-            equals: props.portfolio.slug 
-           } : undefined,
-      },
-      update: {
-        name: props.portfolio.name !== undefined ? {
-            set: props.portfolio.name  
-           } : undefined,
-        slug: props.portfolio.slug !== undefined ? {
-            set: props.portfolio.slug  
-           } : undefined,
-        type: props.portfolio.type !== undefined ? {
-            set: props.portfolio.type  
-           } : undefined,
-    user: props.portfolio.user ? {
-      upsert: {
-        where: {
-          id: props.portfolio.user.id !== undefined ? {
-              equals: props.portfolio.user.id 
-             } : undefined,
-          name: props.portfolio.user.name !== undefined ? {
-              equals: props.portfolio.user.name 
-             } : undefined,
-          email: props.portfolio.user.email !== undefined ? {
-              equals: props.portfolio.user.email 
-             } : undefined,
-        },
-        update: {
-          name: props.portfolio.user.name !== undefined ? {
-              set: props.portfolio.user.name  
-             } : undefined,
-          email: props.portfolio.user.email !== undefined ? {
-              set: props.portfolio.user.email  
-             } : undefined,
-          emailVerified: props.portfolio.user.emailVerified !== undefined ? {
-              set: props.portfolio.user.emailVerified  
-             } : undefined,
-          image: props.portfolio.user.image !== undefined ? {
-              set: props.portfolio.user.image  
-             } : undefined,
-          role: props.portfolio.user.role !== undefined ? {
-              set: props.portfolio.user.role  
-             } : undefined,
-          bio: props.portfolio.user.bio !== undefined ? {
-              set: props.portfolio.user.bio  
-             } : undefined,
-          jobTitle: props.portfolio.user.jobTitle !== undefined ? {
-              set: props.portfolio.user.jobTitle  
-             } : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? {
-              set: props.portfolio.user.currentMode  
-             } : undefined,
-          plan: props.portfolio.user.plan !== undefined ? {
-              set: props.portfolio.user.plan  
-             } : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
-              set: props.portfolio.user.alpacaAccountId  
-             } : undefined,
-        },
-        create: {
-          name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
-          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
-          emailVerified: props.portfolio.user.emailVerified !== undefined ? props.portfolio.user.emailVerified : undefined,
-          image: props.portfolio.user.image !== undefined ? props.portfolio.user.image : undefined,
-          role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
-          bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
-          jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
-          plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
-        },
-      }
-    } : undefined,
-    holdings: props.portfolio.holdings ? {
-      upsert: props.portfolio.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.portfolio.orders ? {
-      upsert: props.portfolio.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.portfolio.aiRecommendations ? {
-      upsert: props.portfolio.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: props.portfolio.riskAllocations ? {
-      upsert: props.portfolio.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.portfolio.alerts ? {
-      upsert: props.portfolio.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.portfolio.performanceMetrics ? {
-      upsert: props.portfolio.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: props.portfolio.environmentVariables ? {
-      upsert: props.portfolio.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        update: {
-          key: item.key !== undefined ? {
-              set: item.key  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-          description: item.description !== undefined ? {
-              set: item.description  
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        name: props.portfolio.name !== undefined ? props.portfolio.name : undefined,
-        slug: props.portfolio.slug !== undefined ? props.portfolio.slug : undefined,
-        type: props.portfolio.type !== undefined ? props.portfolio.type : undefined,
-    user: props.portfolio.user ? {
-      connectOrCreate: {
-        where: {
-          id: props.portfolio.user.id !== undefined ? props.portfolio.user.id : undefined,
-          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
-          name: props.portfolio.user.name !== undefined ? {
-              equals: props.portfolio.user.name 
-             } : undefined,
-        },
-        create: {
-          name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
-          email: props.portfolio.user.email !== undefined ? props.portfolio.user.email : undefined,
-          emailVerified: props.portfolio.user.emailVerified !== undefined ? props.portfolio.user.emailVerified : undefined,
-          image: props.portfolio.user.image !== undefined ? props.portfolio.user.image : undefined,
-          role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
-          bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
-          jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
-          plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
-        },
-      }
-    } : undefined,
-    holdings: props.portfolio.holdings ? {
-      connectOrCreate: props.portfolio.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.portfolio.orders ? {
-      connectOrCreate: props.portfolio.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.portfolio.aiRecommendations ? {
-      connectOrCreate: props.portfolio.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: props.portfolio.riskAllocations ? {
-      connectOrCreate: props.portfolio.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.portfolio.alerts ? {
-      connectOrCreate: props.portfolio.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: props.portfolio.performanceMetrics ? {
-      connectOrCreate: props.portfolio.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: props.portfolio.environmentVariables ? {
-      connectOrCreate: props.portfolio.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  asset: props.asset ? {
-    upsert: {
-      where: {
-        id: props.asset.id !== undefined ? {
-            equals: props.asset.id 
-           } : undefined,
-        symbol: props.asset.symbol !== undefined ? {
-            equals: props.asset.symbol 
-           } : undefined,
-        name: props.asset.name !== undefined ? {
-            equals: props.asset.name 
-           } : undefined,
-      },
-      update: {
-        symbol: props.asset.symbol !== undefined ? {
-            set: props.asset.symbol  
-           } : undefined,
-        name: props.asset.name !== undefined ? {
-            set: props.asset.name  
-           } : undefined,
-        type: props.asset.type !== undefined ? {
-            set: props.asset.type  
-           } : undefined,
-        logoUrl: props.asset.logoUrl !== undefined ? {
-            set: props.asset.logoUrl  
-           } : undefined,
-        description: props.asset.description !== undefined ? {
-            set: props.asset.description  
-           } : undefined,
-        cik: props.asset.cik !== undefined ? {
-            set: props.asset.cik  
-           } : undefined,
-        exchange: props.asset.exchange !== undefined ? {
-            set: props.asset.exchange  
-           } : undefined,
-        currency: props.asset.currency !== undefined ? {
-            set: props.asset.currency  
-           } : undefined,
-        country: props.asset.country !== undefined ? {
-            set: props.asset.country  
-           } : undefined,
-        sector: props.asset.sector !== undefined ? {
-            set: props.asset.sector  
-           } : undefined,
-        industry: props.asset.industry !== undefined ? {
-            set: props.asset.industry  
-           } : undefined,
-        address: props.asset.address !== undefined ? {
-            set: props.asset.address  
-           } : undefined,
-        officialSite: props.asset.officialSite !== undefined ? {
-            set: props.asset.officialSite  
-           } : undefined,
-        fiscalYearEnd: props.asset.fiscalYearEnd !== undefined ? {
-            set: props.asset.fiscalYearEnd  
-           } : undefined,
-        latestQuarter: props.asset.latestQuarter !== undefined ? {
-            set: props.asset.latestQuarter  
-           } : undefined,
-        marketCapitalization: props.asset.marketCapitalization !== undefined ? {
-            set: props.asset.marketCapitalization  
-           } : undefined,
-        ebitda: props.asset.ebitda !== undefined ? {
-            set: props.asset.ebitda  
-           } : undefined,
-        peRatio: props.asset.peRatio !== undefined ? {
-            set: props.asset.peRatio  
-           } : undefined,
-        pegRatio: props.asset.pegRatio !== undefined ? {
-            set: props.asset.pegRatio  
-           } : undefined,
-        bookValue: props.asset.bookValue !== undefined ? {
-            set: props.asset.bookValue  
-           } : undefined,
-        dividendPerShare: props.asset.dividendPerShare !== undefined ? {
-            set: props.asset.dividendPerShare  
-           } : undefined,
-        dividendYield: props.asset.dividendYield !== undefined ? {
-            set: props.asset.dividendYield  
-           } : undefined,
-        eps: props.asset.eps !== undefined ? {
-            set: props.asset.eps  
-           } : undefined,
-        revenuePerShareTTM: props.asset.revenuePerShareTTM !== undefined ? {
-            set: props.asset.revenuePerShareTTM  
-           } : undefined,
-        profitMargin: props.asset.profitMargin !== undefined ? {
-            set: props.asset.profitMargin  
-           } : undefined,
-        operatingMarginTTM: props.asset.operatingMarginTTM !== undefined ? {
-            set: props.asset.operatingMarginTTM  
-           } : undefined,
-        returnOnAssetsTTM: props.asset.returnOnAssetsTTM !== undefined ? {
-            set: props.asset.returnOnAssetsTTM  
-           } : undefined,
-        returnOnEquityTTM: props.asset.returnOnEquityTTM !== undefined ? {
-            set: props.asset.returnOnEquityTTM  
-           } : undefined,
-        revenueTTM: props.asset.revenueTTM !== undefined ? {
-            set: props.asset.revenueTTM  
-           } : undefined,
-        grossProfitTTM: props.asset.grossProfitTTM !== undefined ? {
-            set: props.asset.grossProfitTTM  
-           } : undefined,
-        dilutedEPSTTM: props.asset.dilutedEPSTTM !== undefined ? {
-            set: props.asset.dilutedEPSTTM  
-           } : undefined,
-        quarterlyEarningsGrowthYOY: props.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-            set: props.asset.quarterlyEarningsGrowthYOY  
-           } : undefined,
-        quarterlyRevenueGrowthYOY: props.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-            set: props.asset.quarterlyRevenueGrowthYOY  
-           } : undefined,
-        analystTargetPrice: props.asset.analystTargetPrice !== undefined ? {
-            set: props.asset.analystTargetPrice  
-           } : undefined,
-        analystRatingStrongBuy: props.asset.analystRatingStrongBuy !== undefined ? {
-            set: props.asset.analystRatingStrongBuy  
-           } : undefined,
-        analystRatingBuy: props.asset.analystRatingBuy !== undefined ? {
-            set: props.asset.analystRatingBuy  
-           } : undefined,
-        analystRatingHold: props.asset.analystRatingHold !== undefined ? {
-            set: props.asset.analystRatingHold  
-           } : undefined,
-        analystRatingSell: props.asset.analystRatingSell !== undefined ? {
-            set: props.asset.analystRatingSell  
-           } : undefined,
-        analystRatingStrongSell: props.asset.analystRatingStrongSell !== undefined ? {
-            set: props.asset.analystRatingStrongSell  
-           } : undefined,
-        trailingPE: props.asset.trailingPE !== undefined ? {
-            set: props.asset.trailingPE  
-           } : undefined,
-        forwardPE: props.asset.forwardPE !== undefined ? {
-            set: props.asset.forwardPE  
-           } : undefined,
-        priceToSalesRatioTTM: props.asset.priceToSalesRatioTTM !== undefined ? {
-            set: props.asset.priceToSalesRatioTTM  
-           } : undefined,
-        priceToBookRatio: props.asset.priceToBookRatio !== undefined ? {
-            set: props.asset.priceToBookRatio  
-           } : undefined,
-        evToRevenue: props.asset.evToRevenue !== undefined ? {
-            set: props.asset.evToRevenue  
-           } : undefined,
-        evToEbitda: props.asset.evToEbitda !== undefined ? {
-            set: props.asset.evToEbitda  
-           } : undefined,
-        beta: props.asset.beta !== undefined ? {
-            set: props.asset.beta  
-           } : undefined,
-        week52High: props.asset.week52High !== undefined ? {
-            set: props.asset.week52High  
-           } : undefined,
-        week52Low: props.asset.week52Low !== undefined ? {
-            set: props.asset.week52Low  
-           } : undefined,
-        day50MovingAverage: props.asset.day50MovingAverage !== undefined ? {
-            set: props.asset.day50MovingAverage  
-           } : undefined,
-        day200MovingAverage: props.asset.day200MovingAverage !== undefined ? {
-            set: props.asset.day200MovingAverage  
-           } : undefined,
-        sharesOutstanding: props.asset.sharesOutstanding !== undefined ? {
-            set: props.asset.sharesOutstanding  
-           } : undefined,
-        dividendDate: props.asset.dividendDate !== undefined ? {
-            set: props.asset.dividendDate  
-           } : undefined,
-        exDividendDate: props.asset.exDividendDate !== undefined ? {
-            set: props.asset.exDividendDate  
-           } : undefined,
-    holdings: props.asset.holdings ? {
-      upsert: props.asset.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.asset.orders ? {
-      upsert: props.asset.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.asset.aiRecommendations ? {
-      upsert: props.asset.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    newsMentions: props.asset.newsMentions ? {
-      upsert: props.asset.newsMentions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-        },
-        update: {
-          url: item.url !== undefined ? {
-              set: item.url  
-             } : undefined,
-          relevancyScore: item.relevancyScore !== undefined ? {
-              set: item.relevancyScore  
-             } : undefined,
-          sentimentScore: item.sentimentScore !== undefined ? {
-              set: item.sentimentScore  
-             } : undefined,
-          sentimentLabel: item.sentimentLabel !== undefined ? {
-              set: item.sentimentLabel  
-             } : undefined,
-        },
-        create: {
-          url: item.url !== undefined ? item.url : undefined,
-          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
-        name: props.asset.name !== undefined ? props.asset.name : undefined,
-        type: props.asset.type !== undefined ? props.asset.type : undefined,
-        logoUrl: props.asset.logoUrl !== undefined ? props.asset.logoUrl : undefined,
-        description: props.asset.description !== undefined ? props.asset.description : undefined,
-        cik: props.asset.cik !== undefined ? props.asset.cik : undefined,
-        exchange: props.asset.exchange !== undefined ? props.asset.exchange : undefined,
-        currency: props.asset.currency !== undefined ? props.asset.currency : undefined,
-        country: props.asset.country !== undefined ? props.asset.country : undefined,
-        sector: props.asset.sector !== undefined ? props.asset.sector : undefined,
-        industry: props.asset.industry !== undefined ? props.asset.industry : undefined,
-        address: props.asset.address !== undefined ? props.asset.address : undefined,
-        officialSite: props.asset.officialSite !== undefined ? props.asset.officialSite : undefined,
-        fiscalYearEnd: props.asset.fiscalYearEnd !== undefined ? props.asset.fiscalYearEnd : undefined,
-        latestQuarter: props.asset.latestQuarter !== undefined ? props.asset.latestQuarter : undefined,
-        marketCapitalization: props.asset.marketCapitalization !== undefined ? props.asset.marketCapitalization : undefined,
-        ebitda: props.asset.ebitda !== undefined ? props.asset.ebitda : undefined,
-        peRatio: props.asset.peRatio !== undefined ? props.asset.peRatio : undefined,
-        pegRatio: props.asset.pegRatio !== undefined ? props.asset.pegRatio : undefined,
-        bookValue: props.asset.bookValue !== undefined ? props.asset.bookValue : undefined,
-        dividendPerShare: props.asset.dividendPerShare !== undefined ? props.asset.dividendPerShare : undefined,
-        dividendYield: props.asset.dividendYield !== undefined ? props.asset.dividendYield : undefined,
-        eps: props.asset.eps !== undefined ? props.asset.eps : undefined,
-        revenuePerShareTTM: props.asset.revenuePerShareTTM !== undefined ? props.asset.revenuePerShareTTM : undefined,
-        profitMargin: props.asset.profitMargin !== undefined ? props.asset.profitMargin : undefined,
-        operatingMarginTTM: props.asset.operatingMarginTTM !== undefined ? props.asset.operatingMarginTTM : undefined,
-        returnOnAssetsTTM: props.asset.returnOnAssetsTTM !== undefined ? props.asset.returnOnAssetsTTM : undefined,
-        returnOnEquityTTM: props.asset.returnOnEquityTTM !== undefined ? props.asset.returnOnEquityTTM : undefined,
-        revenueTTM: props.asset.revenueTTM !== undefined ? props.asset.revenueTTM : undefined,
-        grossProfitTTM: props.asset.grossProfitTTM !== undefined ? props.asset.grossProfitTTM : undefined,
-        dilutedEPSTTM: props.asset.dilutedEPSTTM !== undefined ? props.asset.dilutedEPSTTM : undefined,
-        quarterlyEarningsGrowthYOY: props.asset.quarterlyEarningsGrowthYOY !== undefined ? props.asset.quarterlyEarningsGrowthYOY : undefined,
-        quarterlyRevenueGrowthYOY: props.asset.quarterlyRevenueGrowthYOY !== undefined ? props.asset.quarterlyRevenueGrowthYOY : undefined,
-        analystTargetPrice: props.asset.analystTargetPrice !== undefined ? props.asset.analystTargetPrice : undefined,
-        analystRatingStrongBuy: props.asset.analystRatingStrongBuy !== undefined ? props.asset.analystRatingStrongBuy : undefined,
-        analystRatingBuy: props.asset.analystRatingBuy !== undefined ? props.asset.analystRatingBuy : undefined,
-        analystRatingHold: props.asset.analystRatingHold !== undefined ? props.asset.analystRatingHold : undefined,
-        analystRatingSell: props.asset.analystRatingSell !== undefined ? props.asset.analystRatingSell : undefined,
-        analystRatingStrongSell: props.asset.analystRatingStrongSell !== undefined ? props.asset.analystRatingStrongSell : undefined,
-        trailingPE: props.asset.trailingPE !== undefined ? props.asset.trailingPE : undefined,
-        forwardPE: props.asset.forwardPE !== undefined ? props.asset.forwardPE : undefined,
-        priceToSalesRatioTTM: props.asset.priceToSalesRatioTTM !== undefined ? props.asset.priceToSalesRatioTTM : undefined,
-        priceToBookRatio: props.asset.priceToBookRatio !== undefined ? props.asset.priceToBookRatio : undefined,
-        evToRevenue: props.asset.evToRevenue !== undefined ? props.asset.evToRevenue : undefined,
-        evToEbitda: props.asset.evToEbitda !== undefined ? props.asset.evToEbitda : undefined,
-        beta: props.asset.beta !== undefined ? props.asset.beta : undefined,
-        week52High: props.asset.week52High !== undefined ? props.asset.week52High : undefined,
-        week52Low: props.asset.week52Low !== undefined ? props.asset.week52Low : undefined,
-        day50MovingAverage: props.asset.day50MovingAverage !== undefined ? props.asset.day50MovingAverage : undefined,
-        day200MovingAverage: props.asset.day200MovingAverage !== undefined ? props.asset.day200MovingAverage : undefined,
-        sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
-        dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
-        exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
-    holdings: props.asset.holdings ? {
-      connectOrCreate: props.asset.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.asset.orders ? {
-      connectOrCreate: props.asset.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    aiRecommendations: props.asset.aiRecommendations ? {
-      connectOrCreate: props.asset.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    newsMentions: props.asset.newsMentions ? {
-      connectOrCreate: props.asset.newsMentions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          url: item.url !== undefined ? item.url : undefined,
-        },
-        create: {
-          url: item.url !== undefined ? item.url : undefined,
-          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  steps: props.steps ? {
-    upsert: props.steps.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        sequence: item.sequence !== undefined ? {
-            set: item.sequence  
-           } : undefined,
-        action: item.action !== undefined ? {
-            set: item.action  
-           } : undefined,
-        hedgeType: item.hedgeType !== undefined ? {
-            set: item.hedgeType  
-           } : undefined,
-        hedgePrice: item.hedgePrice !== undefined ? {
-            set: item.hedgePrice  
-           } : undefined,
-        buyPrice: item.buyPrice !== undefined ? {
-            set: item.buyPrice  
-           } : undefined,
-        sellPrice: item.sellPrice !== undefined ? {
-            set: item.sellPrice  
-           } : undefined,
-        qty: item.qty !== undefined ? {
-            set: item.qty  
-           } : undefined,
-        side: item.side !== undefined ? {
-            set: item.side  
-           } : undefined,
-        type: item.type !== undefined ? {
-            set: item.type  
-           } : undefined,
-        stopLoss: item.stopLoss !== undefined ? {
-            set: item.stopLoss  
-           } : undefined,
-        targetPrice: item.targetPrice !== undefined ? {
-            set: item.targetPrice  
-           } : undefined,
-        note: item.note !== undefined ? {
-            set: item.note  
-           } : undefined,
-        executionTime: item.executionTime !== undefined ? {
-            set: item.executionTime  
-           } : undefined,
-        status: item.status !== undefined ? {
-            set: item.status  
-           } : undefined,
-        fee: item.fee !== undefined ? {
-            set: item.fee  
-           } : undefined,
-      },
-      create: {
-        sequence: item.sequence !== undefined ? item.sequence : undefined,
-        action: item.action !== undefined ? item.action : undefined,
-        hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-        hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-        buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-        sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-        qty: item.qty !== undefined ? item.qty : undefined,
-        side: item.side !== undefined ? item.side : undefined,
-        type: item.type !== undefined ? item.type : undefined,
-        stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-        targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-        note: item.note !== undefined ? item.note : undefined,
-        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-        status: item.status !== undefined ? item.status : undefined,
-        fee: item.fee !== undefined ? item.fee : undefined,
-      },
-    }))
   } : undefined,
       },
     };
@@ -2518,44 +1455,37 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneTrade) {
-        return response.data.updateOneTrade;
+      if (response && response.data && response.data.updateOneAlpacaAccount) {
+        return response.data.updateOneAlpacaAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneTrade:', error);
+      console.error('Error in updateOneAlpacaAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single Trade record.
+   * Delete a single AlpacaAccount record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The deleted Trade or null.
+   * @returns The deleted AlpacaAccount or null.
    */
-  async delete(props: TradeType): Promise<TradeType> {
+  async delete(props: AlpacaAccountType): Promise<AlpacaAccountType> {
 
     const client = await initializeApolloServerSide();
 
-    const DELETE_ONE_TRADE = gql`
-      mutation deleteOneTrade($where: TradeWhereUniqueInput!) {
-        deleteOneTrade(where: $where) {
+    const DELETE_ONE_ALPACAACCOUNT = gql`
+      mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
+        deleteOneAlpacaAccount(where: $where) {
           id
-          userId
-          portfolioId
-          assetId
-          action
-          quantity
-          price
-          total
-          timestamp
-          createdAt
+          APIKey
+          APISecret
+          configuration
           updatedAt
-          status
           user {
             id
             name
@@ -2629,19 +1559,17 @@ export const Trade = {
             plan
             trades {
               id
-            }
-            orders {
-              id
               userId
               portfolioId
               assetId
-              type
               action
               quantity
               price
-              status
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -2754,6 +1682,50 @@ export const Trade = {
                   id
                 }
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -2825,45 +1797,10 @@ export const Trade = {
             }
             alpacaAccount {
               id
-              APIKey
-              APISecret
-              configuration
-              updatedAt
-              user {
-                id
-              }
-              userId
             }
             alpacaAccountId
           }
-          portfolio {
-            id
-          }
-          asset {
-            id
-          }
-          steps {
-            id
-            tradeId
-            sequence
-            action
-            hedgeType
-            hedgePrice
-            buyPrice
-            sellPrice
-            qty
-            side
-            type
-            stopLoss
-            targetPrice
-            note
-            executionTime
-            status
-            fee
-            trade {
-              id
-            }
-          }
+          userId
       }
       }`;
 
@@ -2876,44 +1813,37 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_TRADE, variables: filteredVariables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneTrade) {
-        return response.data.deleteOneTrade;
+      if (response && response.data && response.data.deleteOneAlpacaAccount) {
+        return response.data.deleteOneAlpacaAccount;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneTrade:', error);
+      console.error('Error in deleteOneAlpacaAccount:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single Trade record by ID.
+   * Retrieve a single AlpacaAccount record by ID.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
-   * @returns The retrieved Trade or null.
+   * @returns The retrieved AlpacaAccount or null.
    */
-  async get(props: TradeType): Promise<TradeType | null> {
+  async get(props: AlpacaAccountType): Promise<AlpacaAccountType | null> {
 
     const client = await initializeApolloServerSide();
 
-    const GET_TRADE = gql`
-      query getTrade($where: TradeWhereUniqueInput!) {
-        getTrade(where: $where) {
+    const GET_ALPACAACCOUNT = gql`
+      query getAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
+        getAlpacaAccount(where: $where) {
           id
-          userId
-          portfolioId
-          assetId
-          action
-          quantity
-          price
-          total
-          timestamp
-          createdAt
+          APIKey
+          APISecret
+          configuration
           updatedAt
-          status
           user {
             id
             name
@@ -2987,19 +1917,17 @@ export const Trade = {
             plan
             trades {
               id
-            }
-            orders {
-              id
               userId
               portfolioId
               assetId
-              type
               action
               quantity
               price
-              status
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -3112,6 +2040,50 @@ export const Trade = {
                   id
                 }
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -3183,45 +2155,10 @@ export const Trade = {
             }
             alpacaAccount {
               id
-              APIKey
-              APISecret
-              configuration
-              updatedAt
-              user {
-                id
-              }
-              userId
             }
             alpacaAccountId
           }
-          portfolio {
-            id
-          }
-          asset {
-            id
-          }
-          steps {
-            id
-            tradeId
-            sequence
-            action
-            hedgeType
-            hedgePrice
-            buyPrice
-            sellPrice
-            qty
-            side
-            type
-            stopLoss
-            targetPrice
-            note
-            executionTime
-            status
-            fee
-            trade {
-              id
-            }
-          }
+          userId
         }
       }`;
 
@@ -3233,43 +2170,36 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: GET_TRADE, variables: filteredVariables });
+      const response = await client.query({ query: GET_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getTrade ?? null;
+      return response.data?.getAlpacaAccount ?? null;
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No Trade found') {
+      if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
         return null;
       } else {
-        console.error('Error in getTrade:', error);
+        console.error('Error in getAlpacaAccount:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Retrieve all Trades records.
+   * Retrieve all AlpacaAccounts records.
    * @param client - Apollo Client instance.
-   * @returns An array of Trade records or null.
+   * @returns An array of AlpacaAccount records or null.
    */
-  async getAll(): Promise<TradeType[] | null> {
+  async getAll(): Promise<AlpacaAccountType[] | null> {
 
     const client = await initializeApolloServerSide();
 
-    const GET_ALL_TRADE = gql`
-      query getAllTrade {
-        trades {
+    const GET_ALL_ALPACAACCOUNT = gql`
+      query getAllAlpacaAccount {
+        alpacaAccounts {
           id
-          userId
-          portfolioId
-          assetId
-          action
-          quantity
-          price
-          total
-          timestamp
-          createdAt
+          APIKey
+          APISecret
+          configuration
           updatedAt
-          status
           user {
             id
             name
@@ -3343,19 +2273,17 @@ export const Trade = {
             plan
             trades {
               id
-            }
-            orders {
-              id
               userId
               portfolioId
               assetId
-              type
               action
               quantity
               price
-              status
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -3468,6 +2396,50 @@ export const Trade = {
                   id
                 }
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -3539,87 +2511,45 @@ export const Trade = {
             }
             alpacaAccount {
               id
-              APIKey
-              APISecret
-              configuration
-              updatedAt
-              user {
-                id
-              }
-              userId
             }
             alpacaAccountId
           }
-          portfolio {
-            id
-          }
-          asset {
-            id
-          }
-          steps {
-            id
-            tradeId
-            sequence
-            action
-            hedgeType
-            hedgePrice
-            buyPrice
-            sellPrice
-            qty
-            side
-            type
-            stopLoss
-            targetPrice
-            note
-            executionTime
-            status
-            fee
-            trade {
-              id
-            }
-          }
+          userId
       }
       }`;
 
     try {
-      const response = await client.query({ query: GET_ALL_TRADE });
+      const response = await client.query({ query: GET_ALL_ALPACAACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.trades ?? null;
+      return response.data?.alpacaAccounts ?? null;
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No Trade found') {
+      if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
         return null;
       } else {
-        console.error('Error in getTrade:', error);
+        console.error('Error in getAlpacaAccount:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Find multiple Trade records based on conditions.
+   * Find multiple AlpacaAccount records based on conditions.
    * @param where - Conditions to find records.
    * @param client - Apollo Client instance.
-   * @returns An array of found Trade records or null.
+   * @returns An array of found AlpacaAccount records or null.
    */
-  async findMany(props: TradeType): Promise<TradeType[] | null> {
+  async findMany(props: AlpacaAccountType): Promise<AlpacaAccountType[] | null> {
 
     const client = await initializeApolloServerSide();
 
-    const FIND_MANY_TRADE = gql`
-      query findManyTrade($where: TradeWhereInput!) {
-        trades(where: $where) {
+    const FIND_MANY_ALPACAACCOUNT = gql`
+      query findManyAlpacaAccount($where: AlpacaAccountWhereInput!) {
+        alpacaAccounts(where: $where) {
           id
-          userId
-          portfolioId
-          assetId
-          action
-          quantity
-          price
-          total
-          timestamp
-          createdAt
+          APIKey
+          APISecret
+          configuration
           updatedAt
-          status
           user {
             id
             name
@@ -3693,19 +2623,17 @@ export const Trade = {
             plan
             trades {
               id
-            }
-            orders {
-              id
               userId
               portfolioId
               assetId
-              type
               action
               quantity
               price
-              status
+              total
+              timestamp
               createdAt
               updatedAt
+              status
               user {
                 id
               }
@@ -3818,6 +2746,50 @@ export const Trade = {
                   id
                 }
               }
+              steps {
+                id
+                tradeId
+                sequence
+                action
+                hedgeType
+                hedgePrice
+                buyPrice
+                sellPrice
+                qty
+                side
+                type
+                stopLoss
+                targetPrice
+                note
+                executionTime
+                status
+                fee
+                trade {
+                  id
+                }
+              }
+            }
+            orders {
+              id
+              userId
+              portfolioId
+              assetId
+              type
+              action
+              quantity
+              price
+              status
+              createdAt
+              updatedAt
+              user {
+                id
+              }
+              portfolio {
+                id
+              }
+              asset {
+                id
+              }
             }
             aiRecommendations {
               id
@@ -3889,45 +2861,10 @@ export const Trade = {
             }
             alpacaAccount {
               id
-              APIKey
-              APISecret
-              configuration
-              updatedAt
-              user {
-                id
-              }
-              userId
             }
             alpacaAccountId
           }
-          portfolio {
-            id
-          }
-          asset {
-            id
-          }
-          steps {
-            id
-            tradeId
-            sequence
-            action
-            hedgeType
-            hedgePrice
-            buyPrice
-            sellPrice
-            qty
-            side
-            type
-            stopLoss
-            targetPrice
-            note
-            executionTime
-            status
-            fee
-            trade {
-              id
-            }
-          }
+          userId
       }
       }`;
 
@@ -3942,18 +2879,18 @@ export const Trade = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: FIND_MANY_TRADE, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Trades) {
-        return response.data.trades;
+      if (response && response.data && response.data.AlpacaAccounts) {
+        return response.data.alpacaAccounts;
       } else {
-       return [] as TradeType[];
+       return [] as AlpacaAccountType[];
       }
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No Trade found') {
+      if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
         return null;
       } else {
-        console.error('Error in getTrade:', error);
+        console.error('Error in getAlpacaAccount:', error);
         throw error;
       }
     }

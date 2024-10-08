@@ -2,6 +2,7 @@
 
 import { Authenticator as AuthenticatorType } from './generated/typegraphql-prisma/models/Authenticator';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns The created Authenticator or null.
    */
-  async create(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
-    const CREATE_ONE_AUTHENTICATOR = gql`
+  async create(props: AuthenticatorType): Promise<AuthenticatorType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_AUTHENTICATOR = gql`
       mutation createOneAuthenticator($data: AuthenticatorCreateInput!) {
         createOneAuthenticator(data: $data) {
           id
@@ -324,6 +328,18 @@ export const Authenticator = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -355,6 +371,7 @@ export const Authenticator = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -494,6 +511,18 @@ export const Authenticator = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -523,7 +552,10 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AuthenticatorType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_AUTHENTICATOR = gql`
       mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
         createManyAuthenticator(data: $data) {
@@ -562,7 +594,10 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns The updated Authenticator or null.
    */
-  async update(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
+  async update(props: AuthenticatorType): Promise<AuthenticatorType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_AUTHENTICATOR = gql`
       mutation updateOneAuthenticator($data: AuthenticatorUpdateInput!, $where: AuthenticatorWhereUniqueInput!) {
         updateOneAuthenticator(data: $data, where: $where) {
@@ -871,6 +906,18 @@ export const Authenticator = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -922,6 +969,9 @@ export const Authenticator = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
+           } : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
+            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1210,6 +1260,31 @@ export const Authenticator = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      upsert: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? {
+              equals: props.user.alpacaAccount.id 
+             } : undefined,
+        },
+        update: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
+              set: props.user.alpacaAccount.APIKey  
+             } : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
+              set: props.user.alpacaAccount.APISecret  
+             } : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? {
+              set: props.user.alpacaAccount.configuration  
+             } : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1221,6 +1296,7 @@ export const Authenticator = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1360,6 +1436,18 @@ export const Authenticator = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -1388,7 +1476,10 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns The deleted Authenticator or null.
    */
-  async delete(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType> {
+  async delete(props: AuthenticatorType): Promise<AuthenticatorType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_AUTHENTICATOR = gql`
       mutation deleteOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         deleteOneAuthenticator(where: $where) {
@@ -1697,6 +1788,18 @@ export const Authenticator = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -1731,7 +1834,10 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Authenticator or null.
    */
-  async get(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType | null> {
+  async get(props: AuthenticatorType): Promise<AuthenticatorType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_AUTHENTICATOR = gql`
       query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         getAuthenticator(where: $where) {
@@ -2040,6 +2146,18 @@ export const Authenticator = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -2072,7 +2190,10 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns An array of Authenticator records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType[] | null> {
+  async getAll(): Promise<AuthenticatorType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_AUTHENTICATOR = gql`
       query getAllAuthenticator {
         authenticators {
@@ -2381,6 +2502,18 @@ export const Authenticator = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -2407,7 +2540,10 @@ export const Authenticator = {
    * @param client - Apollo Client instance.
    * @returns An array of found Authenticator records or null.
    */
-  async findMany(props: AuthenticatorType, client: ApolloClient<NormalizedCacheObject>): Promise<AuthenticatorType[] | null> {
+  async findMany(props: AuthenticatorType): Promise<AuthenticatorType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {
         authenticators(where: $where) {
@@ -2716,6 +2852,18 @@ export const Authenticator = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt

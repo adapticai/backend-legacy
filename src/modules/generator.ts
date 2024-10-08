@@ -668,6 +668,7 @@ export const generateModelFunctions = (
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -684,8 +685,11 @@ export const ${modelName} = {
    * @param client - Apollo Client instance.
    * @returns The created ${capitalModelName} or null.
    */
-  async create(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-    const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
+  async create(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
         createOne${capitalModelName}(data: $data) {
 ${selectionSet}        }
@@ -727,7 +731,10 @@ ${selectionSet}        }
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ${capitalModelName}Type[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
         createMany${capitalModelName}(data: $data) {
@@ -769,7 +776,10 @@ ${constructVariablesObject(
    * @param client - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
-  async update(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+  async update(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
         updateOne${capitalModelName}(data: $data, where: $where) {
@@ -819,7 +829,10 @@ ${constructVariablesObject(
    * @param client - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
-  async delete(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+  async delete(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
@@ -854,7 +867,10 @@ ${selectionSet}      }
    * @param client - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type | null> {
+  async get(props: ${capitalModelName}Type): Promise<${capitalModelName}Type | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
@@ -893,7 +909,10 @@ ${selectionSet}        }
    * @param client - Apollo Client instance.
    * @returns An array of ${capitalModelName} records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
+  async getAll(): Promise<${capitalModelName}Type[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
         ${lowerCaseFirstLetter(pluralModelName)} {
@@ -920,7 +939,10 @@ ${selectionSet}      }
    * @param client - Apollo Client instance.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type, client: ApolloClient<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
+  async findMany(props: ${capitalModelName}Type): Promise<${capitalModelName}Type[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {

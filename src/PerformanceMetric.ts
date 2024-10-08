@@ -2,6 +2,7 @@
 
 import { PerformanceMetric as PerformanceMetricType } from './generated/typegraphql-prisma/models/PerformanceMetric';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns The created PerformanceMetric or null.
    */
-  async create(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType> {
-    const CREATE_ONE_PERFORMANCEMETRIC = gql`
+  async create(props: PerformanceMetricType): Promise<PerformanceMetricType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_PERFORMANCEMETRIC = gql`
       mutation createOnePerformanceMetric($data: PerformanceMetricCreateInput!) {
         createOnePerformanceMetric(data: $data) {
           id
@@ -323,6 +327,18 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           portfolio {
             id
@@ -354,6 +370,7 @@ export const PerformanceMetric = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -494,6 +511,18 @@ export const PerformanceMetric = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -529,6 +558,7 @@ export const PerformanceMetric = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -650,7 +680,10 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: PerformanceMetricType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: PerformanceMetricType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_PERFORMANCEMETRIC = gql`
       mutation createManyPerformanceMetric($data: [PerformanceMetricCreateManyInput!]!) {
         createManyPerformanceMetric(data: $data) {
@@ -689,7 +722,10 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns The updated PerformanceMetric or null.
    */
-  async update(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType> {
+  async update(props: PerformanceMetricType): Promise<PerformanceMetricType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_PERFORMANCEMETRIC = gql`
       mutation updateOnePerformanceMetric($data: PerformanceMetricUpdateInput!, $where: PerformanceMetricWhereUniqueInput!) {
         updateOnePerformanceMetric(data: $data, where: $where) {
@@ -997,6 +1033,18 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           portfolio {
             id
@@ -1049,6 +1097,9 @@ export const PerformanceMetric = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
+           } : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
+            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1341,6 +1392,31 @@ export const PerformanceMetric = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      upsert: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? {
+              equals: props.user.alpacaAccount.id 
+             } : undefined,
+        },
+        update: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
+              set: props.user.alpacaAccount.APIKey  
+             } : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
+              set: props.user.alpacaAccount.APISecret  
+             } : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? {
+              set: props.user.alpacaAccount.configuration  
+             } : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1352,6 +1428,7 @@ export const PerformanceMetric = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1492,6 +1569,18 @@ export const PerformanceMetric = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -1559,6 +1648,9 @@ export const PerformanceMetric = {
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
              } : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
+              set: props.portfolio.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
@@ -1570,6 +1662,7 @@ export const PerformanceMetric = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1769,6 +1862,7 @@ export const PerformanceMetric = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1889,7 +1983,10 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns The deleted PerformanceMetric or null.
    */
-  async delete(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType> {
+  async delete(props: PerformanceMetricType): Promise<PerformanceMetricType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_PERFORMANCEMETRIC = gql`
       mutation deleteOnePerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         deleteOnePerformanceMetric(where: $where) {
@@ -2197,6 +2294,18 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           portfolio {
             id
@@ -2232,7 +2341,10 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns The retrieved PerformanceMetric or null.
    */
-  async get(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType | null> {
+  async get(props: PerformanceMetricType): Promise<PerformanceMetricType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_PERFORMANCEMETRIC = gql`
       query getPerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         getPerformanceMetric(where: $where) {
@@ -2540,6 +2652,18 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           portfolio {
             id
@@ -2573,7 +2697,10 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns An array of PerformanceMetric records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType[] | null> {
+  async getAll(): Promise<PerformanceMetricType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_PERFORMANCEMETRIC = gql`
       query getAllPerformanceMetric {
         performanceMetrics {
@@ -2881,6 +3008,18 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           portfolio {
             id
@@ -2908,7 +3047,10 @@ export const PerformanceMetric = {
    * @param client - Apollo Client instance.
    * @returns An array of found PerformanceMetric records or null.
    */
-  async findMany(props: PerformanceMetricType, client: ApolloClient<NormalizedCacheObject>): Promise<PerformanceMetricType[] | null> {
+  async findMany(props: PerformanceMetricType): Promise<PerformanceMetricType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_PERFORMANCEMETRIC = gql`
       query findManyPerformanceMetric($where: PerformanceMetricWhereInput!) {
         performanceMetrics(where: $where) {
@@ -3216,6 +3358,18 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           portfolio {
             id

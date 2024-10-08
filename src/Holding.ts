@@ -2,6 +2,7 @@
 
 import { Holding as HoldingType } from './generated/typegraphql-prisma/models/Holding';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns The created Holding or null.
    */
-  async create(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType> {
-    const CREATE_ONE_HOLDING = gql`
+  async create(props: HoldingType): Promise<HoldingType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_HOLDING = gql`
       mutation createOneHolding($data: HoldingCreateInput!) {
         createOneHolding(data: $data) {
           id
@@ -218,6 +222,18 @@ export const Holding = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -399,6 +415,7 @@ export const Holding = {
           jobTitle: props.tradingAccount.user.jobTitle !== undefined ? props.tradingAccount.user.jobTitle : undefined,
           currentMode: props.tradingAccount.user.currentMode !== undefined ? props.tradingAccount.user.currentMode : undefined,
           plan: props.tradingAccount.user.plan !== undefined ? props.tradingAccount.user.plan : undefined,
+          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? props.tradingAccount.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -638,7 +655,10 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: HoldingType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: HoldingType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_HOLDING = gql`
       mutation createManyHolding($data: [HoldingCreateManyInput!]!) {
         createManyHolding(data: $data) {
@@ -677,7 +697,10 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns The updated Holding or null.
    */
-  async update(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType> {
+  async update(props: HoldingType): Promise<HoldingType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_HOLDING = gql`
       mutation updateOneHolding($data: HoldingUpdateInput!, $where: HoldingWhereUniqueInput!) {
         updateOneHolding(data: $data, where: $where) {
@@ -880,6 +903,18 @@ export const Holding = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -1093,6 +1128,9 @@ export const Holding = {
           plan: props.tradingAccount.user.plan !== undefined ? {
               set: props.tradingAccount.user.plan  
              } : undefined,
+          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? {
+              set: props.tradingAccount.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: props.tradingAccount.user.name !== undefined ? props.tradingAccount.user.name : undefined,
@@ -1104,6 +1142,7 @@ export const Holding = {
           jobTitle: props.tradingAccount.user.jobTitle !== undefined ? props.tradingAccount.user.jobTitle : undefined,
           currentMode: props.tradingAccount.user.currentMode !== undefined ? props.tradingAccount.user.currentMode : undefined,
           plan: props.tradingAccount.user.plan !== undefined ? props.tradingAccount.user.plan : undefined,
+          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? props.tradingAccount.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1303,6 +1342,7 @@ export const Holding = {
           jobTitle: props.tradingAccount.user.jobTitle !== undefined ? props.tradingAccount.user.jobTitle : undefined,
           currentMode: props.tradingAccount.user.currentMode !== undefined ? props.tradingAccount.user.currentMode : undefined,
           plan: props.tradingAccount.user.plan !== undefined ? props.tradingAccount.user.plan : undefined,
+          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? props.tradingAccount.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1821,7 +1861,10 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns The deleted Holding or null.
    */
-  async delete(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType> {
+  async delete(props: HoldingType): Promise<HoldingType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_HOLDING = gql`
       mutation deleteOneHolding($where: HoldingWhereUniqueInput!) {
         deleteOneHolding(where: $where) {
@@ -2024,6 +2067,18 @@ export const Holding = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -2196,7 +2251,10 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Holding or null.
    */
-  async get(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType | null> {
+  async get(props: HoldingType): Promise<HoldingType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_HOLDING = gql`
       query getHolding($where: HoldingWhereUniqueInput!) {
         getHolding(where: $where) {
@@ -2399,6 +2457,18 @@ export const Holding = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -2569,7 +2639,10 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns An array of Holding records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType[] | null> {
+  async getAll(): Promise<HoldingType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_HOLDING = gql`
       query getAllHolding {
         holdings {
@@ -2772,6 +2845,18 @@ export const Holding = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -2936,7 +3021,10 @@ export const Holding = {
    * @param client - Apollo Client instance.
    * @returns An array of found Holding records or null.
    */
-  async findMany(props: HoldingType, client: ApolloClient<NormalizedCacheObject>): Promise<HoldingType[] | null> {
+  async findMany(props: HoldingType): Promise<HoldingType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_HOLDING = gql`
       query findManyHolding($where: HoldingWhereInput!) {
         holdings(where: $where) {
@@ -3139,6 +3227,18 @@ export const Holding = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {

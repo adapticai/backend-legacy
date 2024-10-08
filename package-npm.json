@@ -30,10 +30,8 @@
     "*.ts",
     "*.map.js"
   ],
-  "peerDependencies": {
-    "@apollo/client": "^3.11.8"
-  },
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "@prisma/client": "^5.17.0",
     "graphql": "^16.9.0",
     "prisma": "^5.17.0",

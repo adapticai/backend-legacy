@@ -24,25 +24,22 @@ This package offers a robust backend solution tailored for the Adaptic AI platfo
 
 ## Prerequisites
 
-To use the `adaptic-backend` package, the only requirement id to provide a valid GraphQL endpoint URI. This can be a local development server or a production endpoint, depending on your project's needs.
-
-
-### Dependencies
-
-Ensure that the following dependencies are installed in your project:
-- `@apollo/client`: `^3.11.8`
-- `cross-fetch`: `^3.1.0`
+To use the `adaptic-backend` package, the only requirement is to ensure you have several environment variables configured (see below). This can be a local development server or a production endpoints for the graphql server, and the corresponding HTTPS and WebSocket URLs.
 
 ### Environment Variables
 
 Add the folowing to your `.env` file or add them as environment variables in your deployment environment:
 
 - `GRAPHQL_ENDPOINT`: The URI of your GraphQL server (e.g., `http://localhost:4000/graphql` for local development, or a production endpoint for deployment e.g. `https://api.example.com/graphql`).
+- `BACKEND_HTTPS_URL`: The HTTPS URL of your GraphQL server. E.g. `https://api.example.com/graphql`.
+- `BACKEND_WS_URL`: The WebSocket URL of your GraphQL server. E.g. `wss://api.example.com/subscriptions`.
 
 Example `.env` file:
 
 ```plaintext
 GRAPHQL_ENDPOINT=http://localhost:4000/graphql
+BACKEND_HTTPS_URL=https://api.example.com/graphql
+BACKEND_WS_URL=wss://api.example.com/subscriptions
 ```
 
 ## Installation

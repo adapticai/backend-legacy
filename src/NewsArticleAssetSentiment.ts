@@ -2,6 +2,7 @@
 
 import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns The created NewsArticleAssetSentiment or null.
    */
-  async create(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
-    const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
+  async create(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentCreateInput!) {
         createOneNewsArticleAssetSentiment(data: $data) {
           id
@@ -209,6 +213,10 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               portfolio {
                 id
@@ -464,7 +472,10 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: NewsArticleAssetSentimentType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
         createManyNewsArticleAssetSentiment(data: $data) {
@@ -505,7 +516,10 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns The updated NewsArticleAssetSentiment or null.
    */
-  async update(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+  async update(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation updateOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentUpdateInput!, $where: NewsArticleAssetSentimentWhereUniqueInput!) {
         updateOneNewsArticleAssetSentiment(data: $data, where: $where) {
@@ -699,6 +713,10 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               portfolio {
                 id
@@ -1277,7 +1295,10 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns The deleted NewsArticleAssetSentiment or null.
    */
-  async delete(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+  async delete(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         deleteOneNewsArticleAssetSentiment(where: $where) {
@@ -1471,6 +1492,10 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               portfolio {
                 id
@@ -1580,7 +1605,10 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
-  async get(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType | null> {
+  async get(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_NEWSARTICLEASSETSENTIMENT = gql`
       query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         getNewsArticleAssetSentiment(where: $where) {
@@ -1774,6 +1802,10 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               portfolio {
                 id
@@ -1882,7 +1914,10 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns An array of NewsArticleAssetSentiment records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType[] | null> {
+  async getAll(): Promise<NewsArticleAssetSentimentType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
       query getAllNewsArticleAssetSentiment {
         newsArticleAssetSentiments {
@@ -2076,6 +2111,10 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               portfolio {
                 id
@@ -2177,7 +2216,10 @@ export const NewsArticleAssetSentiment = {
    * @param client - Apollo Client instance.
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType[] | null> {
+  async findMany(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
         newsArticleAssetSentiments(where: $where) {
@@ -2371,6 +2413,10 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
               }
               portfolio {
                 id

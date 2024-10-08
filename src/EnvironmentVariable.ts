@@ -2,6 +2,7 @@
 
 import { EnvironmentVariable as EnvironmentVariableType } from './generated/typegraphql-prisma/models/EnvironmentVariable';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns The created EnvironmentVariable or null.
    */
-  async create(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
-    const CREATE_ONE_ENVIRONMENTVARIABLE = gql`
+  async create(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_ENVIRONMENTVARIABLE = gql`
       mutation createOneEnvironmentVariable($data: EnvironmentVariableCreateInput!) {
         createOneEnvironmentVariable(data: $data) {
           id
@@ -216,6 +220,18 @@ export const EnvironmentVariable = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -370,6 +386,7 @@ export const EnvironmentVariable = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -487,7 +504,10 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: EnvironmentVariableType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: EnvironmentVariableType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_ENVIRONMENTVARIABLE = gql`
       mutation createManyEnvironmentVariable($data: [EnvironmentVariableCreateManyInput!]!) {
         createManyEnvironmentVariable(data: $data) {
@@ -526,7 +546,10 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns The updated EnvironmentVariable or null.
    */
-  async update(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
+  async update(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_ENVIRONMENTVARIABLE = gql`
       mutation updateOneEnvironmentVariable($data: EnvironmentVariableUpdateInput!, $where: EnvironmentVariableWhereUniqueInput!) {
         updateOneEnvironmentVariable(data: $data, where: $where) {
@@ -727,6 +750,18 @@ export const EnvironmentVariable = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -918,6 +953,9 @@ export const EnvironmentVariable = {
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
              } : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
+              set: props.portfolio.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
@@ -929,6 +967,7 @@ export const EnvironmentVariable = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1121,6 +1160,7 @@ export const EnvironmentVariable = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
+          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1237,7 +1277,10 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns The deleted EnvironmentVariable or null.
    */
-  async delete(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType> {
+  async delete(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_ENVIRONMENTVARIABLE = gql`
       mutation deleteOneEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
         deleteOneEnvironmentVariable(where: $where) {
@@ -1438,6 +1481,18 @@ export const EnvironmentVariable = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -1582,7 +1637,10 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns The retrieved EnvironmentVariable or null.
    */
-  async get(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType | null> {
+  async get(props: EnvironmentVariableType): Promise<EnvironmentVariableType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ENVIRONMENTVARIABLE = gql`
       query getEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
         getEnvironmentVariable(where: $where) {
@@ -1783,6 +1841,18 @@ export const EnvironmentVariable = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -1928,7 +1998,10 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns An array of EnvironmentVariable records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[] | null> {
+  async getAll(): Promise<EnvironmentVariableType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_ENVIRONMENTVARIABLE = gql`
       query getAllEnvironmentVariable {
         environmentVariables {
@@ -2129,6 +2202,18 @@ export const EnvironmentVariable = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {
@@ -2265,7 +2350,10 @@ export const EnvironmentVariable = {
    * @param client - Apollo Client instance.
    * @returns An array of found EnvironmentVariable records or null.
    */
-  async findMany(props: EnvironmentVariableType, client: ApolloClient<NormalizedCacheObject>): Promise<EnvironmentVariableType[] | null> {
+  async findMany(props: EnvironmentVariableType): Promise<EnvironmentVariableType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_ENVIRONMENTVARIABLE = gql`
       query findManyEnvironmentVariable($where: EnvironmentVariableWhereInput!) {
         environmentVariables(where: $where) {
@@ -2466,6 +2554,18 @@ export const EnvironmentVariable = {
               tradingAccount {
                 id
               }
+              alpacaAccount {
+                id
+                APIKey
+                APISecret
+                configuration
+                updatedAt
+                user {
+                  id
+                }
+                userId
+              }
+              alpacaAccountId
             }
             userId
             holdings {

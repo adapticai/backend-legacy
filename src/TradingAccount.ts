@@ -2,6 +2,7 @@
 
 import { TradingAccount as TradingAccountType } from './generated/typegraphql-prisma/models/TradingAccount';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns The created TradingAccount or null.
    */
-  async create(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
-    const CREATE_ONE_TRADINGACCOUNT = gql`
+  async create(props: TradingAccountType): Promise<TradingAccountType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_TRADINGACCOUNT = gql`
       mutation createOneTradingAccount($data: TradingAccountCreateInput!) {
         createOneTradingAccount(data: $data) {
           id
@@ -299,6 +303,18 @@ export const TradingAccount = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           userId
           holdings {
@@ -376,6 +392,7 @@ export const TradingAccount = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,6 +528,18 @@ export const TradingAccount = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -620,6 +649,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -744,6 +774,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -841,6 +872,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -938,6 +970,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -972,6 +1005,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1005,6 +1039,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1052,7 +1087,10 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: TradingAccountType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: TradingAccountType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_TRADINGACCOUNT = gql`
       mutation createManyTradingAccount($data: [TradingAccountCreateManyInput!]!) {
         createManyTradingAccount(data: $data) {
@@ -1091,7 +1129,10 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns The updated TradingAccount or null.
    */
-  async update(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+  async update(props: TradingAccountType): Promise<TradingAccountType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_TRADINGACCOUNT = gql`
       mutation updateOneTradingAccount($data: TradingAccountUpdateInput!, $where: TradingAccountWhereUniqueInput!) {
         updateOneTradingAccount(data: $data, where: $where) {
@@ -1375,6 +1416,18 @@ export const TradingAccount = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           userId
           holdings {
@@ -1479,6 +1532,9 @@ export const TradingAccount = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
+           } : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
+            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1763,6 +1819,31 @@ export const TradingAccount = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      upsert: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? {
+              equals: props.user.alpacaAccount.id 
+             } : undefined,
+        },
+        update: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
+              set: props.user.alpacaAccount.APIKey  
+             } : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
+              set: props.user.alpacaAccount.APISecret  
+             } : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? {
+              set: props.user.alpacaAccount.configuration  
+             } : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1774,6 +1855,7 @@ export const TradingAccount = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1908,6 +1990,18 @@ export const TradingAccount = {
           value: item.value !== undefined ? item.value : undefined,
         },
       }))
+    } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -2291,6 +2385,9 @@ export const TradingAccount = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -2302,6 +2399,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -2634,6 +2732,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -2790,6 +2889,9 @@ export const TradingAccount = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -2801,6 +2903,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3061,6 +3164,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3184,6 +3288,9 @@ export const TradingAccount = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -3195,6 +3302,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3452,6 +3560,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3575,6 +3684,9 @@ export const TradingAccount = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -3586,6 +3698,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3612,6 +3725,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3674,6 +3788,9 @@ export const TradingAccount = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -3685,6 +3802,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3712,6 +3830,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3771,6 +3890,9 @@ export const TradingAccount = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
+              set: item.user.alpacaAccountId  
+             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -3782,6 +3904,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3808,6 +3931,7 @@ export const TradingAccount = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
+          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -3865,7 +3989,10 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns The deleted TradingAccount or null.
    */
-  async delete(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType> {
+  async delete(props: TradingAccountType): Promise<TradingAccountType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_TRADINGACCOUNT = gql`
       mutation deleteOneTradingAccount($where: TradingAccountWhereUniqueInput!) {
         deleteOneTradingAccount(where: $where) {
@@ -4149,6 +4276,18 @@ export const TradingAccount = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           userId
           holdings {
@@ -4229,7 +4368,10 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns The retrieved TradingAccount or null.
    */
-  async get(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType | null> {
+  async get(props: TradingAccountType): Promise<TradingAccountType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_TRADINGACCOUNT = gql`
       query getTradingAccount($where: TradingAccountWhereUniqueInput!) {
         getTradingAccount(where: $where) {
@@ -4513,6 +4655,18 @@ export const TradingAccount = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           userId
           holdings {
@@ -4595,7 +4749,10 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns An array of TradingAccount records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[] | null> {
+  async getAll(): Promise<TradingAccountType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_TRADINGACCOUNT = gql`
       query getAllTradingAccount {
         tradingAccounts {
@@ -4879,6 +5036,18 @@ export const TradingAccount = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           userId
           holdings {
@@ -4951,7 +5120,10 @@ export const TradingAccount = {
    * @param client - Apollo Client instance.
    * @returns An array of found TradingAccount records or null.
    */
-  async findMany(props: TradingAccountType, client: ApolloClient<NormalizedCacheObject>): Promise<TradingAccountType[] | null> {
+  async findMany(props: TradingAccountType): Promise<TradingAccountType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_TRADINGACCOUNT = gql`
       query findManyTradingAccount($where: TradingAccountWhereInput!) {
         tradingAccounts(where: $where) {
@@ -5235,6 +5407,18 @@ export const TradingAccount = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           userId
           holdings {

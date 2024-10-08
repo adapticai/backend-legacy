@@ -2,6 +2,7 @@
 
 import { NewsArticle as NewsArticleType } from './generated/typegraphql-prisma/models/NewsArticle';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns The created NewsArticle or null.
    */
-  async create(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType> {
-    const CREATE_ONE_NEWSARTICLE = gql`
+  async create(props: NewsArticleType): Promise<NewsArticleType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_NEWSARTICLE = gql`
       mutation createOneNewsArticle($data: NewsArticleCreateInput!) {
         createOneNewsArticle(data: $data) {
           id
@@ -313,7 +317,10 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: NewsArticleType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_NEWSARTICLE = gql`
       mutation createManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
         createManyNewsArticle(data: $data) {
@@ -361,7 +368,10 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns The updated NewsArticle or null.
    */
-  async update(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType> {
+  async update(props: NewsArticleType): Promise<NewsArticleType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_NEWSARTICLE = gql`
       mutation updateOneNewsArticle($data: NewsArticleUpdateInput!, $where: NewsArticleWhereUniqueInput!) {
         updateOneNewsArticle(data: $data, where: $where) {
@@ -914,7 +924,10 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns The deleted NewsArticle or null.
    */
-  async delete(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType> {
+  async delete(props: NewsArticleType): Promise<NewsArticleType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_NEWSARTICLE = gql`
       mutation deleteOneNewsArticle($where: NewsArticleWhereUniqueInput!) {
         deleteOneNewsArticle(where: $where) {
@@ -1120,7 +1133,10 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns The retrieved NewsArticle or null.
    */
-  async get(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType | null> {
+  async get(props: NewsArticleType): Promise<NewsArticleType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_NEWSARTICLE = gql`
       query getNewsArticle($where: NewsArticleWhereUniqueInput!) {
         getNewsArticle(where: $where) {
@@ -1328,7 +1344,10 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns An array of NewsArticle records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType[] | null> {
+  async getAll(): Promise<NewsArticleType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_NEWSARTICLE = gql`
       query getAllNewsArticle {
         newsArticles {
@@ -1526,7 +1545,10 @@ export const NewsArticle = {
    * @param client - Apollo Client instance.
    * @returns An array of found NewsArticle records or null.
    */
-  async findMany(props: NewsArticleType, client: ApolloClient<NormalizedCacheObject>): Promise<NewsArticleType[] | null> {
+  async findMany(props: NewsArticleType): Promise<NewsArticleType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_NEWSARTICLE = gql`
       query findManyNewsArticle($where: NewsArticleWhereInput!) {
         newsArticles(where: $where) {

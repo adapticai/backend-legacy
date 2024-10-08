@@ -2,6 +2,7 @@
 
 import { VerificationToken as VerificationTokenType } from './generated/typegraphql-prisma/models/VerificationToken';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns The created VerificationToken or null.
    */
-  async create(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
-    const CREATE_ONE_VERIFICATIONTOKEN = gql`
+  async create(props: VerificationTokenType): Promise<VerificationTokenType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_VERIFICATIONTOKEN = gql`
       mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
         createOneVerificationToken(data: $data) {
           id
@@ -58,7 +62,10 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: VerificationTokenType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_VERIFICATIONTOKEN = gql`
       mutation createManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
         createManyVerificationToken(data: $data) {
@@ -96,7 +103,10 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns The updated VerificationToken or null.
    */
-  async update(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
+  async update(props: VerificationTokenType): Promise<VerificationTokenType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
         updateOneVerificationToken(data: $data, where: $where) {
@@ -137,7 +147,10 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns The deleted VerificationToken or null.
    */
-  async delete(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType> {
+  async delete(props: VerificationTokenType): Promise<VerificationTokenType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
@@ -176,7 +189,10 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns The retrieved VerificationToken or null.
    */
-  async get(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType | null> {
+  async get(props: VerificationTokenType): Promise<VerificationTokenType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
@@ -213,7 +229,10 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns An array of VerificationToken records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType[] | null> {
+  async getAll(): Promise<VerificationTokenType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
@@ -244,7 +263,10 @@ export const VerificationToken = {
    * @param client - Apollo Client instance.
    * @returns An array of found VerificationToken records or null.
    */
-  async findMany(props: VerificationTokenType, client: ApolloClient<NormalizedCacheObject>): Promise<VerificationTokenType[] | null> {
+  async findMany(props: VerificationTokenType): Promise<VerificationTokenType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {

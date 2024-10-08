@@ -2,6 +2,7 @@
 
 import { Session as SessionType } from './generated/typegraphql-prisma/models/Session';
 import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
+import {initializeApolloServerSide} from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -15,8 +16,11 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns The created Session or null.
    */
-  async create(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType> {
-    const CREATE_ONE_SESSION = gql`
+  async create(props: SessionType): Promise<SessionType> {
+
+  const client = await initializeApolloServerSide();
+
+  const CREATE_ONE_SESSION = gql`
       mutation createOneSession($data: SessionCreateInput!) {
         createOneSession(data: $data) {
           id
@@ -324,6 +328,18 @@ export const Session = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -354,6 +370,7 @@ export const Session = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -494,6 +511,18 @@ export const Session = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -523,7 +552,10 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: SessionType[], client: ApolloClient<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: SessionType[]): Promise<{ count: number } | null> {
+
+    const client = await initializeApolloServerSide();
+
     const CREATE_MANY_SESSION = gql`
       mutation createManySession($data: [SessionCreateManyInput!]!) {
         createManySession(data: $data) {
@@ -561,7 +593,10 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns The updated Session or null.
    */
-  async update(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType> {
+  async update(props: SessionType): Promise<SessionType> {
+
+    const client = await initializeApolloServerSide();
+
     const UPDATE_ONE_SESSION = gql`
       mutation updateOneSession($data: SessionUpdateInput!, $where: SessionWhereUniqueInput!) {
         updateOneSession(data: $data, where: $where) {
@@ -870,6 +905,18 @@ export const Session = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -921,6 +968,9 @@ export const Session = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
+           } : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
+            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1213,6 +1263,31 @@ export const Session = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      upsert: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? {
+              equals: props.user.alpacaAccount.id 
+             } : undefined,
+        },
+        update: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
+              set: props.user.alpacaAccount.APIKey  
+             } : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
+              set: props.user.alpacaAccount.APISecret  
+             } : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? {
+              set: props.user.alpacaAccount.configuration  
+             } : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1224,6 +1299,7 @@ export const Session = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1364,6 +1440,18 @@ export const Session = {
         },
       }))
     } : undefined,
+    alpacaAccount: props.user.alpacaAccount ? {
+      connectOrCreate: {
+        where: {
+          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+        },
+        create: {
+          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
+          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
+          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -1392,7 +1480,10 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns The deleted Session or null.
    */
-  async delete(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType> {
+  async delete(props: SessionType): Promise<SessionType> {
+
+    const client = await initializeApolloServerSide();
+
     const DELETE_ONE_SESSION = gql`
       mutation deleteOneSession($where: SessionWhereUniqueInput!) {
         deleteOneSession(where: $where) {
@@ -1701,6 +1792,18 @@ export const Session = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -1735,7 +1838,10 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns The retrieved Session or null.
    */
-  async get(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType | null> {
+  async get(props: SessionType): Promise<SessionType | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_SESSION = gql`
       query getSession($where: SessionWhereUniqueInput!) {
         getSession(where: $where) {
@@ -2044,6 +2150,18 @@ export const Session = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -2076,7 +2194,10 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns An array of Session records or null.
    */
-  async getAll(client: ApolloClient<NormalizedCacheObject>): Promise<SessionType[] | null> {
+  async getAll(): Promise<SessionType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const GET_ALL_SESSION = gql`
       query getAllSession {
         sessions {
@@ -2385,6 +2506,18 @@ export const Session = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -2411,7 +2544,10 @@ export const Session = {
    * @param client - Apollo Client instance.
    * @returns An array of found Session records or null.
    */
-  async findMany(props: SessionType, client: ApolloClient<NormalizedCacheObject>): Promise<SessionType[] | null> {
+  async findMany(props: SessionType): Promise<SessionType[] | null> {
+
+    const client = await initializeApolloServerSide();
+
     const FIND_MANY_SESSION = gql`
       query findManySession($where: SessionWhereInput!) {
         sessions(where: $where) {
@@ -2720,6 +2856,18 @@ export const Session = {
             tradingAccount {
               id
             }
+            alpacaAccount {
+              id
+              APIKey
+              APISecret
+              configuration
+              updatedAt
+              user {
+                id
+              }
+              userId
+            }
+            alpacaAccountId
           }
           createdAt
           updatedAt

@@ -5,6 +5,7 @@ export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 import { AIRecommendation } from './AIRecommendation';
 import { Account } from './Account';
 import { Alert } from './Alert';
+import { AlpacaAccount } from './AlpacaAccount';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
 import { Customer } from './Customer';
@@ -27,6 +28,7 @@ const adaptic = {
   aIRecommendation: AIRecommendation,
   account: Account,
   alert: Alert,
+  alpacaAccount: AlpacaAccount,
   asset: Asset,
   authenticator: Authenticator,
   customer: Customer,
