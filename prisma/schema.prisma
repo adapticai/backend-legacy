@@ -150,20 +150,20 @@ model User {
   alerts             Alert[]
   performanceMetrics PerformanceMetric[]
   tradingAccount     TradingAccount[]
-  alpacaAccount      AlpacaAccount?
-  alpacaAccountId    String?             @unique @db.Uuid
+  alpacaAccounts     AlpacaAccount[]
 
   @@map(name: "users")
 }
 
 model AlpacaAccount {
-  id            String   @id @default(uuid()) @db.Uuid
+  id            String             @id @default(uuid()) @db.Uuid
+  type          TradingAccountType
   APIKey        String
   APISecret     String
   configuration Json?
-  updatedAt     DateTime @default(now()) @updatedAt
-  user          User     @relation(fields: [userId], references: [id])
-  userId        String   @unique @db.Uuid
+  updatedAt     DateTime           @default(now()) @updatedAt
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String             @db.Uuid
 
   @@map(name: "alpaca_accounts")
 }
