@@ -668,7 +668,7 @@ export const generateModelFunctions = (
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -688,6 +688,8 @@ export const ${modelName} = {
    */
 
   async create(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
@@ -733,6 +735,8 @@ ${selectionSet}        }
    */
   async createMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
         createMany${capitalModelName}(data: $data) {
@@ -775,6 +779,8 @@ ${constructVariablesObject(
    * @returns The updated ${capitalModelName} or null.
    */
   async update(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
@@ -827,6 +833,8 @@ ${constructVariablesObject(
    */
   async delete(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
@@ -862,6 +870,8 @@ ${selectionSet}      }
    * @returns The retrieved ${capitalModelName} or null.
    */
   async get(props: ${capitalModelName}Type): Promise<${capitalModelName}Type | null> {
+
+    const client = createApolloClient();
 
       const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
@@ -903,6 +913,8 @@ ${selectionSet}        }
    */
   async getAll(): Promise<${capitalModelName}Type[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
         ${lowerCaseFirstLetter(pluralModelName)} {
@@ -930,6 +942,8 @@ ${selectionSet}      }
    * @returns An array of found ${capitalModelName} records or null.
    */
   async findMany(props: ${capitalModelName}Type): Promise<${capitalModelName}Type[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {

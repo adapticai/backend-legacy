@@ -4,7 +4,6 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { buildSchema } from 'type-graphql';
-import { PrismaClient } from '@prisma/client';
 import { resolvers } from './generated/typegraphql-prisma';
 import { createServer } from 'http';
 import cors from 'cors';
@@ -13,8 +12,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
-
-const prisma = new PrismaClient();
+import prisma from './prismaClient';
 
 const startServer = async () => {
   const schema = await buildSchema({

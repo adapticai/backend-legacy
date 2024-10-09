@@ -2,7 +2,7 @@
 
 import { TradeStep as TradeStepType } from './generated/typegraphql-prisma/models/TradeStep';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const TradeStep = {
    */
 
   async create(props: TradeStepType): Promise<TradeStepType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_TRADESTEP = gql`
       mutation createOneTradeStep($data: TradeStepCreateInput!) {
@@ -533,6 +535,8 @@ export const TradeStep = {
    */
   async createMany(props: TradeStepType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_TRADESTEP = gql`
       mutation createManyTradeStep($data: [TradeStepCreateManyInput!]!) {
         createManyTradeStep(data: $data) {
@@ -584,6 +588,8 @@ export const TradeStep = {
    * @returns The updated TradeStep or null.
    */
   async update(props: TradeStepType): Promise<TradeStepType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_TRADESTEP = gql`
       mutation updateOneTradeStep($data: TradeStepUpdateInput!, $where: TradeStepWhereUniqueInput!) {
@@ -1438,6 +1444,8 @@ export const TradeStep = {
    */
   async delete(props: TradeStepType): Promise<TradeStepType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_TRADESTEP = gql`
       mutation deleteOneTradeStep($where: TradeStepWhereUniqueInput!) {
         deleteOneTradeStep(where: $where) {
@@ -1818,6 +1826,8 @@ export const TradeStep = {
    */
   async get(props: TradeStepType): Promise<TradeStepType | null> {
 
+    const client = createApolloClient();
+
       const GET_TRADESTEP = gql`
       query getTradeStep($where: TradeStepWhereUniqueInput!) {
         getTradeStep(where: $where) {
@@ -2196,6 +2206,8 @@ export const TradeStep = {
    */
   async getAll(): Promise<TradeStepType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_TRADESTEP = gql`
       query getAllTradeStep {
         tradeSteps {
@@ -2567,6 +2579,8 @@ export const TradeStep = {
    * @returns An array of found TradeStep records or null.
    */
   async findMany(props: TradeStepType): Promise<TradeStepType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_TRADESTEP = gql`
       query findManyTradeStep($where: TradeStepWhereInput!) {

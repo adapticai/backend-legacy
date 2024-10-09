@@ -2,7 +2,7 @@
 
 import { TradingAccount as TradingAccountType } from './generated/typegraphql-prisma/models/TradingAccount';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const TradingAccount = {
    */
 
   async create(props: TradingAccountType): Promise<TradingAccountType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_TRADINGACCOUNT = gql`
       mutation createOneTradingAccount($data: TradingAccountCreateInput!) {
@@ -1083,6 +1085,8 @@ export const TradingAccount = {
    */
   async createMany(props: TradingAccountType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_TRADINGACCOUNT = gql`
       mutation createManyTradingAccount($data: [TradingAccountCreateManyInput!]!) {
         createManyTradingAccount(data: $data) {
@@ -1122,6 +1126,8 @@ export const TradingAccount = {
    * @returns The updated TradingAccount or null.
    */
   async update(props: TradingAccountType): Promise<TradingAccountType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_TRADINGACCOUNT = gql`
       mutation updateOneTradingAccount($data: TradingAccountUpdateInput!, $where: TradingAccountWhereUniqueInput!) {
@@ -3950,6 +3956,8 @@ export const TradingAccount = {
    */
   async delete(props: TradingAccountType): Promise<TradingAccountType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_TRADINGACCOUNT = gql`
       mutation deleteOneTradingAccount($where: TradingAccountWhereUniqueInput!) {
         deleteOneTradingAccount(where: $where) {
@@ -4326,6 +4334,8 @@ export const TradingAccount = {
    * @returns The retrieved TradingAccount or null.
    */
   async get(props: TradingAccountType): Promise<TradingAccountType | null> {
+
+    const client = createApolloClient();
 
       const GET_TRADINGACCOUNT = gql`
       query getTradingAccount($where: TradingAccountWhereUniqueInput!) {
@@ -4706,6 +4716,8 @@ export const TradingAccount = {
    */
   async getAll(): Promise<TradingAccountType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_TRADINGACCOUNT = gql`
       query getAllTradingAccount {
         tradingAccounts {
@@ -5074,6 +5086,8 @@ export const TradingAccount = {
    * @returns An array of found TradingAccount records or null.
    */
   async findMany(props: TradingAccountType): Promise<TradingAccountType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_TRADINGACCOUNT = gql`
       query findManyTradingAccount($where: TradingAccountWhereInput!) {

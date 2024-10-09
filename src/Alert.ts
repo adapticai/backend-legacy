@@ -2,7 +2,7 @@
 
 import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const Alert = {
    */
 
   async create(props: AlertType): Promise<AlertType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_ALERT = gql`
       mutation createOneAlert($data: AlertCreateInput!) {
@@ -680,6 +682,8 @@ export const Alert = {
    */
   async createMany(props: AlertType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_ALERT = gql`
       mutation createManyAlert($data: [AlertCreateManyInput!]!) {
         createManyAlert(data: $data) {
@@ -720,6 +724,8 @@ export const Alert = {
    * @returns The updated Alert or null.
    */
   async update(props: AlertType): Promise<AlertType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_ALERT = gql`
       mutation updateOneAlert($data: AlertUpdateInput!, $where: AlertWhereUniqueInput!) {
@@ -1967,6 +1973,8 @@ export const Alert = {
    */
   async delete(props: AlertType): Promise<AlertType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_ALERT = gql`
       mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
         deleteOneAlert(where: $where) {
@@ -2323,6 +2331,8 @@ export const Alert = {
    */
   async get(props: AlertType): Promise<AlertType | null> {
 
+    const client = createApolloClient();
+
       const GET_ALERT = gql`
       query getAlert($where: AlertWhereUniqueInput!) {
         getAlert(where: $where) {
@@ -2677,6 +2687,8 @@ export const Alert = {
    */
   async getAll(): Promise<AlertType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_ALERT = gql`
       query getAllAlert {
         alerts {
@@ -3024,6 +3036,8 @@ export const Alert = {
    * @returns An array of found Alert records or null.
    */
   async findMany(props: AlertType): Promise<AlertType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {

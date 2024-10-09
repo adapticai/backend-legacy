@@ -1,5 +1,3 @@
-// client.ts
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,17 +7,15 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { getToken } from "next-auth/jwt";
 import { onError } from "@apollo/client/link/error";
-
 export type { NormalizedCacheObject, ApolloClient };
 
 const httpUrl =
   process.env.BACKEND_HTTPS_URL ?? "http://localhost:4000/graphql";
 
-// Singleton Apollo Client instance
-let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
-
-// Function to get the authentication token
-async function getAuthToken(): Promise<string | null> {
+/**
+ * Function to get the authentication token
+ */
+async function getAuthToken(req?: any): Promise<string | null> {
   const secret = process.env.JWT_SECRET as string;
   const salt = process.env.JWT_SALT as string;
   const secureCookie = process.env.NODE_ENV === "production";
@@ -40,12 +36,14 @@ async function getAuthToken(): Promise<string | null> {
   return null;
 }
 
-// Function to create a new Apollo Client instance
-function createApolloClient(): ApolloClient<NormalizedCacheObject> {
+/**
+ * Function to create a new Apollo Client instance
+ */
+export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObject> {
   const httpLink = new HttpLink({ uri: httpUrl });
 
   const authLink = setContext(async (_, { headers }) => {
-    const token = await getAuthToken();
+    const token = await getAuthToken(req);
     return {
       headers: {
         ...headers,
@@ -66,22 +64,8 @@ function createApolloClient(): ApolloClient<NormalizedCacheObject> {
     if (networkError) console.error(`[Network error]: ${networkError}`);
   });
 
-  const link = errorLink.concat(authLink.concat(httpLink));
-
   return new ApolloClient({
-    link,
+    link: errorLink.concat(authLink.concat(httpLink)),
     cache: new InMemoryCache(),
   });
 }
-
-// Function to get the singleton Apollo Client instance
-export function getApolloClient(): ApolloClient<NormalizedCacheObject> {
-  if (!apolloClient) {
-    apolloClient = createApolloClient();
-  }
-  return apolloClient;
-}
-
-// Export the Apollo Client instance
-export const client = getApolloClient();
-

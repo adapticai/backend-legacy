@@ -2,7 +2,7 @@
 
 import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const NewsArticleAssetSentiment = {
    */
 
   async create(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentCreateInput!) {
@@ -473,6 +475,8 @@ export const NewsArticleAssetSentiment = {
    */
   async createMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
         createManyNewsArticleAssetSentiment(data: $data) {
@@ -514,6 +518,8 @@ export const NewsArticleAssetSentiment = {
    * @returns The updated NewsArticleAssetSentiment or null.
    */
   async update(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation updateOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentUpdateInput!, $where: NewsArticleAssetSentimentWhereUniqueInput!) {
@@ -1291,6 +1297,8 @@ export const NewsArticleAssetSentiment = {
    */
   async delete(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         deleteOneNewsArticleAssetSentiment(where: $where) {
@@ -1598,6 +1606,8 @@ export const NewsArticleAssetSentiment = {
    */
   async get(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType | null> {
 
+    const client = createApolloClient();
+
       const GET_NEWSARTICLEASSETSENTIMENT = gql`
       query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         getNewsArticleAssetSentiment(where: $where) {
@@ -1904,6 +1914,8 @@ export const NewsArticleAssetSentiment = {
    */
   async getAll(): Promise<NewsArticleAssetSentimentType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
       query getAllNewsArticleAssetSentiment {
         newsArticleAssetSentiments {
@@ -2202,6 +2214,8 @@ export const NewsArticleAssetSentiment = {
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
   async findMany(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {

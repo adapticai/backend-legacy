@@ -2,7 +2,7 @@
 
 import { Session as SessionType } from './generated/typegraphql-prisma/models/Session';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const Session = {
    */
 
   async create(props: SessionType): Promise<SessionType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_SESSION = gql`
       mutation createOneSession($data: SessionCreateInput!) {
@@ -554,6 +556,8 @@ export const Session = {
    */
   async createMany(props: SessionType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_SESSION = gql`
       mutation createManySession($data: [SessionCreateManyInput!]!) {
         createManySession(data: $data) {
@@ -592,6 +596,8 @@ export const Session = {
    * @returns The updated Session or null.
    */
   async update(props: SessionType): Promise<SessionType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_SESSION = gql`
       mutation updateOneSession($data: SessionUpdateInput!, $where: SessionWhereUniqueInput!) {
@@ -1477,6 +1483,8 @@ export const Session = {
    */
   async delete(props: SessionType): Promise<SessionType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_SESSION = gql`
       mutation deleteOneSession($where: SessionWhereUniqueInput!) {
         deleteOneSession(where: $where) {
@@ -1833,6 +1841,8 @@ export const Session = {
    */
   async get(props: SessionType): Promise<SessionType | null> {
 
+    const client = createApolloClient();
+
       const GET_SESSION = gql`
       query getSession($where: SessionWhereUniqueInput!) {
         getSession(where: $where) {
@@ -2187,6 +2197,8 @@ export const Session = {
    */
   async getAll(): Promise<SessionType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_SESSION = gql`
       query getAllSession {
         sessions {
@@ -2534,6 +2546,8 @@ export const Session = {
    * @returns An array of found Session records or null.
    */
   async findMany(props: SessionType): Promise<SessionType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_SESSION = gql`
       query findManySession($where: SessionWhereInput!) {

@@ -2,7 +2,7 @@
 
 import { PerformanceMetric as PerformanceMetricType } from './generated/typegraphql-prisma/models/PerformanceMetric';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const PerformanceMetric = {
    */
 
   async create(props: PerformanceMetricType): Promise<PerformanceMetricType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_PERFORMANCEMETRIC = gql`
       mutation createOnePerformanceMetric($data: PerformanceMetricCreateInput!) {
@@ -681,6 +683,8 @@ export const PerformanceMetric = {
    */
   async createMany(props: PerformanceMetricType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_PERFORMANCEMETRIC = gql`
       mutation createManyPerformanceMetric($data: [PerformanceMetricCreateManyInput!]!) {
         createManyPerformanceMetric(data: $data) {
@@ -720,6 +724,8 @@ export const PerformanceMetric = {
    * @returns The updated PerformanceMetric or null.
    */
   async update(props: PerformanceMetricType): Promise<PerformanceMetricType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_PERFORMANCEMETRIC = gql`
       mutation updateOnePerformanceMetric($data: PerformanceMetricUpdateInput!, $where: PerformanceMetricWhereUniqueInput!) {
@@ -1974,6 +1980,8 @@ export const PerformanceMetric = {
    */
   async delete(props: PerformanceMetricType): Promise<PerformanceMetricType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_PERFORMANCEMETRIC = gql`
       mutation deleteOnePerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         deleteOnePerformanceMetric(where: $where) {
@@ -2330,6 +2338,8 @@ export const PerformanceMetric = {
    */
   async get(props: PerformanceMetricType): Promise<PerformanceMetricType | null> {
 
+    const client = createApolloClient();
+
       const GET_PERFORMANCEMETRIC = gql`
       query getPerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         getPerformanceMetric(where: $where) {
@@ -2684,6 +2694,8 @@ export const PerformanceMetric = {
    */
   async getAll(): Promise<PerformanceMetricType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_PERFORMANCEMETRIC = gql`
       query getAllPerformanceMetric {
         performanceMetrics {
@@ -3031,6 +3043,8 @@ export const PerformanceMetric = {
    * @returns An array of found PerformanceMetric records or null.
    */
   async findMany(props: PerformanceMetricType): Promise<PerformanceMetricType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_PERFORMANCEMETRIC = gql`
       query findManyPerformanceMetric($where: PerformanceMetricWhereInput!) {

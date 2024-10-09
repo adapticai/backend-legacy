@@ -2,7 +2,7 @@
 
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const EconomicEvent = {
    */
 
   async create(props: EconomicEventType): Promise<EconomicEventType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_ECONOMICEVENT = gql`
       mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
@@ -68,6 +70,8 @@ export const EconomicEvent = {
    */
   async createMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_ECONOMICEVENT = gql`
       mutation createManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
         createManyEconomicEvent(data: $data) {
@@ -107,6 +111,8 @@ export const EconomicEvent = {
    * @returns The updated EconomicEvent or null.
    */
   async update(props: EconomicEventType): Promise<EconomicEventType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
@@ -162,6 +168,8 @@ export const EconomicEvent = {
    */
   async delete(props: EconomicEventType): Promise<EconomicEventType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
@@ -204,6 +212,8 @@ export const EconomicEvent = {
    * @returns The retrieved EconomicEvent or null.
    */
   async get(props: EconomicEventType): Promise<EconomicEventType | null> {
+
+    const client = createApolloClient();
 
       const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
@@ -249,6 +259,8 @@ export const EconomicEvent = {
    */
   async getAll(): Promise<EconomicEventType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
         economicEvents {
@@ -283,6 +295,8 @@ export const EconomicEvent = {
    * @returns An array of found EconomicEvent records or null.
    */
   async findMany(props: EconomicEventType): Promise<EconomicEventType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {

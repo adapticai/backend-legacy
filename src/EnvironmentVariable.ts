@@ -2,7 +2,7 @@
 
 import { EnvironmentVariable as EnvironmentVariableType } from './generated/typegraphql-prisma/models/EnvironmentVariable';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const EnvironmentVariable = {
    */
 
   async create(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_ENVIRONMENTVARIABLE = gql`
       mutation createOneEnvironmentVariable($data: EnvironmentVariableCreateInput!) {
@@ -505,6 +507,8 @@ export const EnvironmentVariable = {
    */
   async createMany(props: EnvironmentVariableType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_ENVIRONMENTVARIABLE = gql`
       mutation createManyEnvironmentVariable($data: [EnvironmentVariableCreateManyInput!]!) {
         createManyEnvironmentVariable(data: $data) {
@@ -544,6 +548,8 @@ export const EnvironmentVariable = {
    * @returns The updated EnvironmentVariable or null.
    */
   async update(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_ENVIRONMENTVARIABLE = gql`
       mutation updateOneEnvironmentVariable($data: EnvironmentVariableUpdateInput!, $where: EnvironmentVariableWhereUniqueInput!) {
@@ -1269,6 +1275,8 @@ export const EnvironmentVariable = {
    */
   async delete(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_ENVIRONMENTVARIABLE = gql`
       mutation deleteOneEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
         deleteOneEnvironmentVariable(where: $where) {
@@ -1626,6 +1634,8 @@ export const EnvironmentVariable = {
    * @returns The retrieved EnvironmentVariable or null.
    */
   async get(props: EnvironmentVariableType): Promise<EnvironmentVariableType | null> {
+
+    const client = createApolloClient();
 
       const GET_ENVIRONMENTVARIABLE = gql`
       query getEnvironmentVariable($where: EnvironmentVariableWhereUniqueInput!) {
@@ -1986,6 +1996,8 @@ export const EnvironmentVariable = {
    */
   async getAll(): Promise<EnvironmentVariableType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_ENVIRONMENTVARIABLE = gql`
       query getAllEnvironmentVariable {
         environmentVariables {
@@ -2335,6 +2347,8 @@ export const EnvironmentVariable = {
    * @returns An array of found EnvironmentVariable records or null.
    */
   async findMany(props: EnvironmentVariableType): Promise<EnvironmentVariableType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_ENVIRONMENTVARIABLE = gql`
       query findManyEnvironmentVariable($where: EnvironmentVariableWhereInput!) {

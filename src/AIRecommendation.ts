@@ -2,7 +2,7 @@
 
 import { AIRecommendation as AIRecommendationType } from './generated/typegraphql-prisma/models/AIRecommendation';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const AIRecommendation = {
    */
 
   async create(props: AIRecommendationType): Promise<AIRecommendationType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_AIRECOMMENDATION = gql`
       mutation createOneAIRecommendation($data: AIRecommendationCreateInput!) {
@@ -799,6 +801,8 @@ export const AIRecommendation = {
    */
   async createMany(props: AIRecommendationType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_AIRECOMMENDATION = gql`
       mutation createManyAIRecommendation($data: [AIRecommendationCreateManyInput!]!) {
         createManyAIRecommendation(data: $data) {
@@ -839,6 +843,8 @@ export const AIRecommendation = {
    * @returns The updated AIRecommendation or null.
    */
   async update(props: AIRecommendationType): Promise<AIRecommendationType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_AIRECOMMENDATION = gql`
       mutation updateOneAIRecommendation($data: AIRecommendationUpdateInput!, $where: AIRecommendationWhereUniqueInput!) {
@@ -2494,6 +2500,8 @@ export const AIRecommendation = {
    */
   async delete(props: AIRecommendationType): Promise<AIRecommendationType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_AIRECOMMENDATION = gql`
       mutation deleteOneAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
         deleteOneAIRecommendation(where: $where) {
@@ -2850,6 +2858,8 @@ export const AIRecommendation = {
    */
   async get(props: AIRecommendationType): Promise<AIRecommendationType | null> {
 
+    const client = createApolloClient();
+
       const GET_AIRECOMMENDATION = gql`
       query getAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
         getAIRecommendation(where: $where) {
@@ -3204,6 +3214,8 @@ export const AIRecommendation = {
    */
   async getAll(): Promise<AIRecommendationType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_AIRECOMMENDATION = gql`
       query getAllAIRecommendation {
         aIRecommendations {
@@ -3551,6 +3563,8 @@ export const AIRecommendation = {
    * @returns An array of found AIRecommendation records or null.
    */
   async findMany(props: AIRecommendationType): Promise<AIRecommendationType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_AIRECOMMENDATION = gql`
       query findManyAIRecommendation($where: AIRecommendationWhereInput!) {

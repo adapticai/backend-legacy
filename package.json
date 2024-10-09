@@ -8,7 +8,9 @@
     "dist/",
     "dist/node_modules/",
     "README.md",
-    "package.json"
+    "package.json",
+    "server.ts",
+    "client.ts"
   ],
   "scripts": {
     "clean": "rm -rf dist && rm -rf src/generated",

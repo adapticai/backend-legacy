@@ -2,7 +2,7 @@
 
 import { Account as AccountType } from './generated/typegraphql-prisma/models/Account';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const Account = {
    */
 
   async create(props: AccountType): Promise<AccountType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_ACCOUNT = gql`
       mutation createOneAccount($data: AccountCreateInput!) {
@@ -554,6 +556,8 @@ export const Account = {
    */
   async createMany(props: AccountType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_ACCOUNT = gql`
       mutation createManyAccount($data: [AccountCreateManyInput!]!) {
         createManyAccount(data: $data) {
@@ -600,6 +604,8 @@ export const Account = {
    * @returns The updated Account or null.
    */
   async update(props: AccountType): Promise<AccountType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_ACCOUNT = gql`
       mutation updateOneAccount($data: AccountUpdateInput!, $where: AccountWhereUniqueInput!) {
@@ -1463,6 +1469,8 @@ export const Account = {
    */
   async delete(props: AccountType): Promise<AccountType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_ACCOUNT = gql`
       mutation deleteOneAccount($where: AccountWhereUniqueInput!) {
         deleteOneAccount(where: $where) {
@@ -1819,6 +1827,8 @@ export const Account = {
    */
   async get(props: AccountType): Promise<AccountType | null> {
 
+    const client = createApolloClient();
+
       const GET_ACCOUNT = gql`
       query getAccount($where: AccountWhereUniqueInput!) {
         getAccount(where: $where) {
@@ -2173,6 +2183,8 @@ export const Account = {
    */
   async getAll(): Promise<AccountType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_ACCOUNT = gql`
       query getAllAccount {
         accounts {
@@ -2520,6 +2532,8 @@ export const Account = {
    * @returns An array of found Account records or null.
    */
   async findMany(props: AccountType): Promise<AccountType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_ACCOUNT = gql`
       query findManyAccount($where: AccountWhereInput!) {

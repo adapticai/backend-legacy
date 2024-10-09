@@ -2,7 +2,7 @@
 
 import { Order as OrderType } from './generated/typegraphql-prisma/models/Order';
 import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
@@ -19,6 +19,8 @@ export const Order = {
    */
 
   async create(props: OrderType): Promise<OrderType> {
+
+  const client = createApolloClient();
 
   const CREATE_ONE_ORDER = gql`
       mutation createOneOrder($data: OrderCreateInput!) {
@@ -793,6 +795,8 @@ export const Order = {
    */
   async createMany(props: OrderType[]): Promise<{ count: number } | null> {
 
+    const client = createApolloClient();
+
       const CREATE_MANY_ORDER = gql`
       mutation createManyOrder($data: [OrderCreateManyInput!]!) {
         createManyOrder(data: $data) {
@@ -836,6 +840,8 @@ export const Order = {
    * @returns The updated Order or null.
    */
   async update(props: OrderType): Promise<OrderType> {
+
+    const client = createApolloClient();
 
       const UPDATE_ONE_ORDER = gql`
       mutation updateOneOrder($data: OrderUpdateInput!, $where: OrderWhereUniqueInput!) {
@@ -2452,6 +2458,8 @@ export const Order = {
    */
   async delete(props: OrderType): Promise<OrderType> {
 
+    const client = createApolloClient();
+
       const DELETE_ONE_ORDER = gql`
       mutation deleteOneOrder($where: OrderWhereUniqueInput!) {
         deleteOneOrder(where: $where) {
@@ -2808,6 +2816,8 @@ export const Order = {
    */
   async get(props: OrderType): Promise<OrderType | null> {
 
+    const client = createApolloClient();
+
       const GET_ORDER = gql`
       query getOrder($where: OrderWhereUniqueInput!) {
         getOrder(where: $where) {
@@ -3162,6 +3172,8 @@ export const Order = {
    */
   async getAll(): Promise<OrderType[] | null> {
 
+    const client = createApolloClient();
+
       const GET_ALL_ORDER = gql`
       query getAllOrder {
         orders {
@@ -3509,6 +3521,8 @@ export const Order = {
    * @returns An array of found Order records or null.
    */
   async findMany(props: OrderType): Promise<OrderType[] | null> {
+
+    const client = createApolloClient();
 
       const FIND_MANY_ORDER = gql`
       query findManyOrder($where: OrderWhereInput!) {
