@@ -2,14 +2,12 @@
 
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the EconomicEvent model.
  */
-
-  const client = getApolloClient();
 
 export const EconomicEvent = {
 

@@ -2,14 +2,12 @@
 
 import { User as UserType } from './generated/typegraphql-prisma/models/User';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the User model.
  */
-
-  const client = getApolloClient();
 
 export const User = {
 

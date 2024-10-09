@@ -668,7 +668,7 @@ export const generateModelFunctions = (
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -677,8 +677,6 @@ ${imports}
 /**
  * CRUD operations for the ${capitalModelName} model.
  */
-
-  const client = getApolloClient();
 
 export const ${modelName} = {
 

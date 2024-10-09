@@ -2,14 +2,12 @@
 
 import { PerformanceMetric as PerformanceMetricType } from './generated/typegraphql-prisma/models/PerformanceMetric';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the PerformanceMetric model.
  */
-
-  const client = getApolloClient();
 
 export const PerformanceMetric = {
 

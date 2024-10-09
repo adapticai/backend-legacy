@@ -2,14 +2,12 @@
 
 import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Alert model.
  */
-
-  const client = getApolloClient();
 
 export const Alert = {
 

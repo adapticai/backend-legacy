@@ -2,14 +2,12 @@
 
 import { Account as AccountType } from './generated/typegraphql-prisma/models/Account';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Account model.
  */
-
-  const client = getApolloClient();
 
 export const Account = {
 

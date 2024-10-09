@@ -81,3 +81,7 @@ export function getApolloClient(): ApolloClient<NormalizedCacheObject> {
   }
   return apolloClient;
 }
+
+// Export the Apollo Client instance
+export const client = getApolloClient();
+

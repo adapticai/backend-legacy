@@ -2,14 +2,12 @@
 
 import { Trade as TradeType } from './generated/typegraphql-prisma/models/Trade';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Trade model.
  */
-
-  const client = getApolloClient();
 
 export const Trade = {
 

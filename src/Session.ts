@@ -2,14 +2,12 @@
 
 import { Session as SessionType } from './generated/typegraphql-prisma/models/Session';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Session model.
  */
-
-  const client = getApolloClient();
 
 export const Session = {
 

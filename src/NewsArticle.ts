@@ -2,14 +2,12 @@
 
 import { NewsArticle as NewsArticleType } from './generated/typegraphql-prisma/models/NewsArticle';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the NewsArticle model.
  */
-
-  const client = getApolloClient();
 
 export const NewsArticle = {
 

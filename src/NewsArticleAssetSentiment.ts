@@ -2,14 +2,12 @@
 
 import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
 import { ApolloError, gql } from '@apollo/client';
-import { getApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the NewsArticleAssetSentiment model.
  */
-
-  const client = getApolloClient();
 
 export const NewsArticleAssetSentiment = {
 
