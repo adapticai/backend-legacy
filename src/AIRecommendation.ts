@@ -1,24 +1,26 @@
 
 
 import { AIRecommendation as AIRecommendationType } from './generated/typegraphql-prisma/models/AIRecommendation';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the AIRecommendation model.
  */
 
+  const client = getApolloClient();
+
 export const AIRecommendation = {
+
   /**
    * Create a new AIRecommendation record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created AIRecommendation or null.
    */
-  async create(props: AIRecommendationType): Promise<AIRecommendationType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: AIRecommendationType): Promise<AIRecommendationType> {
 
   const CREATE_ONE_AIRECOMMENDATION = gql`
       mutation createOneAIRecommendation($data: AIRecommendationCreateInput!) {
@@ -324,8 +326,9 @@ export const AIRecommendation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -335,7 +338,6 @@ export const AIRecommendation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -370,7 +372,6 @@ export const AIRecommendation = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,17 +512,18 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -558,7 +560,6 @@ export const AIRecommendation = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -800,9 +801,7 @@ export const AIRecommendation = {
    */
   async createMany(props: AIRecommendationType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_AIRECOMMENDATION = gql`
+      const CREATE_MANY_AIRECOMMENDATION = gql`
       mutation createManyAIRecommendation($data: [AIRecommendationCreateManyInput!]!) {
         createManyAIRecommendation(data: $data) {
           count
@@ -843,9 +842,7 @@ export const AIRecommendation = {
    */
   async update(props: AIRecommendationType): Promise<AIRecommendationType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_AIRECOMMENDATION = gql`
+      const UPDATE_ONE_AIRECOMMENDATION = gql`
       mutation updateOneAIRecommendation($data: AIRecommendationUpdateInput!, $where: AIRecommendationWhereUniqueInput!) {
         updateOneAIRecommendation(data: $data, where: $where) {
           id
@@ -1149,8 +1146,9 @@ export const AIRecommendation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -1160,7 +1158,6 @@ export const AIRecommendation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -1219,9 +1216,6 @@ export const AIRecommendation = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
-           } : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
-            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1514,30 +1508,32 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
              } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
              } : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
       create: {
@@ -1550,7 +1546,6 @@ export const AIRecommendation = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1691,17 +1686,18 @@ export const AIRecommendation = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -1770,9 +1766,6 @@ export const AIRecommendation = {
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
              } : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
-              set: props.portfolio.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
@@ -1784,7 +1777,6 @@ export const AIRecommendation = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1984,7 +1976,6 @@ export const AIRecommendation = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -2505,9 +2496,7 @@ export const AIRecommendation = {
    */
   async delete(props: AIRecommendationType): Promise<AIRecommendationType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_AIRECOMMENDATION = gql`
+      const DELETE_ONE_AIRECOMMENDATION = gql`
       mutation deleteOneAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
         deleteOneAIRecommendation(where: $where) {
           id
@@ -2811,8 +2800,9 @@ export const AIRecommendation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2822,7 +2812,6 @@ export const AIRecommendation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2863,9 +2852,7 @@ export const AIRecommendation = {
    */
   async get(props: AIRecommendationType): Promise<AIRecommendationType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_AIRECOMMENDATION = gql`
+      const GET_AIRECOMMENDATION = gql`
       query getAIRecommendation($where: AIRecommendationWhereUniqueInput!) {
         getAIRecommendation(where: $where) {
           id
@@ -3169,8 +3156,9 @@ export const AIRecommendation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3180,7 +3168,6 @@ export const AIRecommendation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -3219,9 +3206,7 @@ export const AIRecommendation = {
    */
   async getAll(): Promise<AIRecommendationType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_AIRECOMMENDATION = gql`
+      const GET_ALL_AIRECOMMENDATION = gql`
       query getAllAIRecommendation {
         aIRecommendations {
           id
@@ -3525,8 +3510,9 @@ export const AIRecommendation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3536,7 +3522,6 @@ export const AIRecommendation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -3569,9 +3554,7 @@ export const AIRecommendation = {
    */
   async findMany(props: AIRecommendationType): Promise<AIRecommendationType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_AIRECOMMENDATION = gql`
+      const FIND_MANY_AIRECOMMENDATION = gql`
       query findManyAIRecommendation($where: AIRecommendationWhereInput!) {
         aIRecommendations(where: $where) {
           id
@@ -3875,8 +3858,9 @@ export const AIRecommendation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3886,7 +3870,6 @@ export const AIRecommendation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id

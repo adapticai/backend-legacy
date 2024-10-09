@@ -1,24 +1,26 @@
 
 
 import { TradeStep as TradeStepType } from './generated/typegraphql-prisma/models/TradeStep';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the TradeStep model.
  */
 
+  const client = getApolloClient();
+
 export const TradeStep = {
+
   /**
    * Create a new TradeStep record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created TradeStep or null.
    */
-  async create(props: TradeStepType): Promise<TradeStepType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: TradeStepType): Promise<TradeStepType> {
 
   const CREATE_ONE_TRADESTEP = gql`
       mutation createOneTradeStep($data: TradeStepCreateInput!) {
@@ -250,8 +252,9 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -261,7 +264,6 @@ export const TradeStep = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             portfolio {
               id
@@ -419,7 +421,6 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
           currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
-          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? props.trade.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -534,9 +535,7 @@ export const TradeStep = {
    */
   async createMany(props: TradeStepType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_TRADESTEP = gql`
+      const CREATE_MANY_TRADESTEP = gql`
       mutation createManyTradeStep($data: [TradeStepCreateManyInput!]!) {
         createManyTradeStep(data: $data) {
           count
@@ -588,9 +587,7 @@ export const TradeStep = {
    */
   async update(props: TradeStepType): Promise<TradeStepType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_TRADESTEP = gql`
+      const UPDATE_ONE_TRADESTEP = gql`
       mutation updateOneTradeStep($data: TradeStepUpdateInput!, $where: TradeStepWhereUniqueInput!) {
         updateOneTradeStep(data: $data, where: $where) {
           id
@@ -820,8 +817,9 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -831,7 +829,6 @@ export const TradeStep = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             portfolio {
               id
@@ -1027,9 +1024,6 @@ export const TradeStep = {
           plan: props.trade.user.plan !== undefined ? {
               set: props.trade.user.plan  
              } : undefined,
-          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? {
-              set: props.trade.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: props.trade.user.name !== undefined ? props.trade.user.name : undefined,
@@ -1041,7 +1035,6 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
           currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
-          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? props.trade.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1334,7 +1327,6 @@ export const TradeStep = {
           jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
           currentMode: props.trade.user.currentMode !== undefined ? props.trade.user.currentMode : undefined,
           plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
-          alpacaAccountId: props.trade.user.alpacaAccountId !== undefined ? props.trade.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1448,9 +1440,7 @@ export const TradeStep = {
    */
   async delete(props: TradeStepType): Promise<TradeStepType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_TRADESTEP = gql`
+      const DELETE_ONE_TRADESTEP = gql`
       mutation deleteOneTradeStep($where: TradeStepWhereUniqueInput!) {
         deleteOneTradeStep(where: $where) {
           id
@@ -1680,8 +1670,9 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -1691,7 +1682,6 @@ export const TradeStep = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             portfolio {
               id
@@ -1830,9 +1820,7 @@ export const TradeStep = {
    */
   async get(props: TradeStepType): Promise<TradeStepType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_TRADESTEP = gql`
+      const GET_TRADESTEP = gql`
       query getTradeStep($where: TradeStepWhereUniqueInput!) {
         getTradeStep(where: $where) {
           id
@@ -2062,8 +2050,9 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -2073,7 +2062,6 @@ export const TradeStep = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             portfolio {
               id
@@ -2210,9 +2198,7 @@ export const TradeStep = {
    */
   async getAll(): Promise<TradeStepType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_TRADESTEP = gql`
+      const GET_ALL_TRADESTEP = gql`
       query getAllTradeStep {
         tradeSteps {
           id
@@ -2442,8 +2428,9 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -2453,7 +2440,6 @@ export const TradeStep = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             portfolio {
               id
@@ -2584,9 +2570,7 @@ export const TradeStep = {
    */
   async findMany(props: TradeStepType): Promise<TradeStepType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_TRADESTEP = gql`
+      const FIND_MANY_TRADESTEP = gql`
       query findManyTradeStep($where: TradeStepWhereInput!) {
         tradeSteps(where: $where) {
           id
@@ -2816,8 +2800,9 @@ export const TradeStep = {
                 createdAt
                 updatedAt
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -2827,7 +2812,6 @@ export const TradeStep = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             portfolio {
               id

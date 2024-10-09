@@ -1,24 +1,26 @@
 
 
 import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Alert model.
  */
 
+  const client = getApolloClient();
+
 export const Alert = {
+
   /**
    * Create a new Alert record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created Alert or null.
    */
-  async create(props: AlertType): Promise<AlertType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: AlertType): Promise<AlertType> {
 
   const CREATE_ONE_ALERT = gql`
       mutation createOneAlert($data: AlertCreateInput!) {
@@ -327,8 +329,9 @@ export const Alert = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -338,7 +341,6 @@ export const Alert = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -371,7 +373,6 @@ export const Alert = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,17 +512,18 @@ export const Alert = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -558,7 +560,6 @@ export const Alert = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -681,9 +682,7 @@ export const Alert = {
    */
   async createMany(props: AlertType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_ALERT = gql`
+      const CREATE_MANY_ALERT = gql`
       mutation createManyAlert($data: [AlertCreateManyInput!]!) {
         createManyAlert(data: $data) {
           count
@@ -724,9 +723,7 @@ export const Alert = {
    */
   async update(props: AlertType): Promise<AlertType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_ALERT = gql`
+      const UPDATE_ONE_ALERT = gql`
       mutation updateOneAlert($data: AlertUpdateInput!, $where: AlertWhereUniqueInput!) {
         updateOneAlert(data: $data, where: $where) {
           id
@@ -1033,8 +1030,9 @@ export const Alert = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -1044,7 +1042,6 @@ export const Alert = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -1100,9 +1097,6 @@ export const Alert = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
-           } : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
-            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1391,30 +1385,32 @@ export const Alert = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
              } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
              } : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
       create: {
@@ -1427,7 +1423,6 @@ export const Alert = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1567,17 +1562,18 @@ export const Alert = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -1646,9 +1642,6 @@ export const Alert = {
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
              } : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
-              set: props.portfolio.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
@@ -1660,7 +1653,6 @@ export const Alert = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1856,7 +1848,6 @@ export const Alert = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1978,9 +1969,7 @@ export const Alert = {
    */
   async delete(props: AlertType): Promise<AlertType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_ALERT = gql`
+      const DELETE_ONE_ALERT = gql`
       mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
         deleteOneAlert(where: $where) {
           id
@@ -2287,8 +2276,9 @@ export const Alert = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2298,7 +2288,6 @@ export const Alert = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2336,9 +2325,7 @@ export const Alert = {
    */
   async get(props: AlertType): Promise<AlertType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALERT = gql`
+      const GET_ALERT = gql`
       query getAlert($where: AlertWhereUniqueInput!) {
         getAlert(where: $where) {
           id
@@ -2645,8 +2632,9 @@ export const Alert = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2656,7 +2644,6 @@ export const Alert = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2692,9 +2679,7 @@ export const Alert = {
    */
   async getAll(): Promise<AlertType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_ALERT = gql`
+      const GET_ALL_ALERT = gql`
       query getAllAlert {
         alerts {
           id
@@ -3001,8 +2986,9 @@ export const Alert = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3012,7 +2998,6 @@ export const Alert = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -3042,9 +3027,7 @@ export const Alert = {
    */
   async findMany(props: AlertType): Promise<AlertType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_ALERT = gql`
+      const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {
         alerts(where: $where) {
           id
@@ -3351,8 +3334,9 @@ export const Alert = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3362,7 +3346,6 @@ export const Alert = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id

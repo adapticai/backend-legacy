@@ -1,24 +1,26 @@
 
 
 import { Account as AccountType } from './generated/typegraphql-prisma/models/Account';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Account model.
  */
 
+  const client = getApolloClient();
+
 export const Account = {
+
   /**
    * Create a new Account record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created Account or null.
    */
-  async create(props: AccountType): Promise<AccountType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: AccountType): Promise<AccountType> {
 
   const CREATE_ONE_ACCOUNT = gql`
       mutation createOneAccount($data: AccountCreateInput!) {
@@ -330,8 +332,9 @@ export const Account = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -341,7 +344,6 @@ export const Account = {
               }
               userId
             }
-            alpacaAccountId
           }
         }
       }
@@ -378,7 +380,6 @@ export const Account = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,17 +512,18 @@ export const Account = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -554,9 +556,7 @@ export const Account = {
    */
   async createMany(props: AccountType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_ACCOUNT = gql`
+      const CREATE_MANY_ACCOUNT = gql`
       mutation createManyAccount($data: [AccountCreateManyInput!]!) {
         createManyAccount(data: $data) {
           count
@@ -603,9 +603,7 @@ export const Account = {
    */
   async update(props: AccountType): Promise<AccountType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_ACCOUNT = gql`
+      const UPDATE_ONE_ACCOUNT = gql`
       mutation updateOneAccount($data: AccountUpdateInput!, $where: AccountWhereUniqueInput!) {
         updateOneAccount(data: $data, where: $where) {
           id
@@ -915,8 +913,9 @@ export const Account = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -926,7 +925,6 @@ export const Account = {
               }
               userId
             }
-            alpacaAccountId
           }
       }
       }`;
@@ -994,9 +992,6 @@ export const Account = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
-           } : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
-            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1257,30 +1252,32 @@ export const Account = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
              } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
              } : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
       create: {
@@ -1293,7 +1290,6 @@ export const Account = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1426,17 +1422,18 @@ export const Account = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -1468,9 +1465,7 @@ export const Account = {
    */
   async delete(props: AccountType): Promise<AccountType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_ACCOUNT = gql`
+      const DELETE_ONE_ACCOUNT = gql`
       mutation deleteOneAccount($where: AccountWhereUniqueInput!) {
         deleteOneAccount(where: $where) {
           id
@@ -1780,8 +1775,9 @@ export const Account = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -1791,7 +1787,6 @@ export const Account = {
               }
               userId
             }
-            alpacaAccountId
           }
       }
       }`;
@@ -1826,9 +1821,7 @@ export const Account = {
    */
   async get(props: AccountType): Promise<AccountType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ACCOUNT = gql`
+      const GET_ACCOUNT = gql`
       query getAccount($where: AccountWhereUniqueInput!) {
         getAccount(where: $where) {
           id
@@ -2138,8 +2131,9 @@ export const Account = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2149,7 +2143,6 @@ export const Account = {
               }
               userId
             }
-            alpacaAccountId
           }
         }
       }`;
@@ -2182,9 +2175,7 @@ export const Account = {
    */
   async getAll(): Promise<AccountType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_ACCOUNT = gql`
+      const GET_ALL_ACCOUNT = gql`
       query getAllAccount {
         accounts {
           id
@@ -2494,8 +2485,9 @@ export const Account = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2505,7 +2497,6 @@ export const Account = {
               }
               userId
             }
-            alpacaAccountId
           }
       }
       }`;
@@ -2532,9 +2523,7 @@ export const Account = {
    */
   async findMany(props: AccountType): Promise<AccountType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_ACCOUNT = gql`
+      const FIND_MANY_ACCOUNT = gql`
       query findManyAccount($where: AccountWhereInput!) {
         accounts(where: $where) {
           id
@@ -2844,8 +2833,9 @@ export const Account = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2855,7 +2845,6 @@ export const Account = {
               }
               userId
             }
-            alpacaAccountId
           }
       }
       }`;

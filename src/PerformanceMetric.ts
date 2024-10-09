@@ -1,24 +1,26 @@
 
 
 import { PerformanceMetric as PerformanceMetricType } from './generated/typegraphql-prisma/models/PerformanceMetric';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the PerformanceMetric model.
  */
 
+  const client = getApolloClient();
+
 export const PerformanceMetric = {
+
   /**
    * Create a new PerformanceMetric record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created PerformanceMetric or null.
    */
-  async create(props: PerformanceMetricType): Promise<PerformanceMetricType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: PerformanceMetricType): Promise<PerformanceMetricType> {
 
   const CREATE_ONE_PERFORMANCEMETRIC = gql`
       mutation createOnePerformanceMetric($data: PerformanceMetricCreateInput!) {
@@ -327,8 +329,9 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -338,7 +341,6 @@ export const PerformanceMetric = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -370,7 +372,6 @@ export const PerformanceMetric = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,17 +512,18 @@ export const PerformanceMetric = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -558,7 +560,6 @@ export const PerformanceMetric = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -682,9 +683,7 @@ export const PerformanceMetric = {
    */
   async createMany(props: PerformanceMetricType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_PERFORMANCEMETRIC = gql`
+      const CREATE_MANY_PERFORMANCEMETRIC = gql`
       mutation createManyPerformanceMetric($data: [PerformanceMetricCreateManyInput!]!) {
         createManyPerformanceMetric(data: $data) {
           count
@@ -724,9 +723,7 @@ export const PerformanceMetric = {
    */
   async update(props: PerformanceMetricType): Promise<PerformanceMetricType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_PERFORMANCEMETRIC = gql`
+      const UPDATE_ONE_PERFORMANCEMETRIC = gql`
       mutation updateOnePerformanceMetric($data: PerformanceMetricUpdateInput!, $where: PerformanceMetricWhereUniqueInput!) {
         updateOnePerformanceMetric(data: $data, where: $where) {
           id
@@ -1033,8 +1030,9 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -1044,7 +1042,6 @@ export const PerformanceMetric = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -1097,9 +1094,6 @@ export const PerformanceMetric = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
-           } : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
-            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1392,30 +1386,32 @@ export const PerformanceMetric = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
              } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
              } : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
       create: {
@@ -1428,7 +1424,6 @@ export const PerformanceMetric = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1569,17 +1564,18 @@ export const PerformanceMetric = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -1648,9 +1644,6 @@ export const PerformanceMetric = {
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
              } : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
-              set: props.portfolio.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
@@ -1662,7 +1655,6 @@ export const PerformanceMetric = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1862,7 +1854,6 @@ export const PerformanceMetric = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1985,9 +1976,7 @@ export const PerformanceMetric = {
    */
   async delete(props: PerformanceMetricType): Promise<PerformanceMetricType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_PERFORMANCEMETRIC = gql`
+      const DELETE_ONE_PERFORMANCEMETRIC = gql`
       mutation deleteOnePerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         deleteOnePerformanceMetric(where: $where) {
           id
@@ -2294,8 +2283,9 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2305,7 +2295,6 @@ export const PerformanceMetric = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2343,9 +2332,7 @@ export const PerformanceMetric = {
    */
   async get(props: PerformanceMetricType): Promise<PerformanceMetricType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_PERFORMANCEMETRIC = gql`
+      const GET_PERFORMANCEMETRIC = gql`
       query getPerformanceMetric($where: PerformanceMetricWhereUniqueInput!) {
         getPerformanceMetric(where: $where) {
           id
@@ -2652,8 +2639,9 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2663,7 +2651,6 @@ export const PerformanceMetric = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2699,9 +2686,7 @@ export const PerformanceMetric = {
    */
   async getAll(): Promise<PerformanceMetricType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_PERFORMANCEMETRIC = gql`
+      const GET_ALL_PERFORMANCEMETRIC = gql`
       query getAllPerformanceMetric {
         performanceMetrics {
           id
@@ -3008,8 +2993,9 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3019,7 +3005,6 @@ export const PerformanceMetric = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -3049,9 +3034,7 @@ export const PerformanceMetric = {
    */
   async findMany(props: PerformanceMetricType): Promise<PerformanceMetricType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_PERFORMANCEMETRIC = gql`
+      const FIND_MANY_PERFORMANCEMETRIC = gql`
       query findManyPerformanceMetric($where: PerformanceMetricWhereInput!) {
         performanceMetrics(where: $where) {
           id
@@ -3358,8 +3341,9 @@ export const PerformanceMetric = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3369,7 +3353,6 @@ export const PerformanceMetric = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id

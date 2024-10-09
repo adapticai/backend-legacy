@@ -1,24 +1,26 @@
 
 
 import { RiskAllocation as RiskAllocationType } from './generated/typegraphql-prisma/models/RiskAllocation';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the RiskAllocation model.
  */
 
+  const client = getApolloClient();
+
 export const RiskAllocation = {
+
   /**
    * Create a new RiskAllocation record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created RiskAllocation or null.
    */
-  async create(props: RiskAllocationType): Promise<RiskAllocationType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: RiskAllocationType): Promise<RiskAllocationType> {
 
   const CREATE_ONE_RISKALLOCATION = gql`
       mutation createOneRiskAllocation($data: RiskAllocationCreateInput!) {
@@ -327,8 +329,9 @@ export const RiskAllocation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -338,7 +341,6 @@ export const RiskAllocation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -370,7 +372,6 @@ export const RiskAllocation = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,17 +512,18 @@ export const RiskAllocation = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -558,7 +560,6 @@ export const RiskAllocation = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -682,9 +683,7 @@ export const RiskAllocation = {
    */
   async createMany(props: RiskAllocationType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_RISKALLOCATION = gql`
+      const CREATE_MANY_RISKALLOCATION = gql`
       mutation createManyRiskAllocation($data: [RiskAllocationCreateManyInput!]!) {
         createManyRiskAllocation(data: $data) {
           count
@@ -724,9 +723,7 @@ export const RiskAllocation = {
    */
   async update(props: RiskAllocationType): Promise<RiskAllocationType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_RISKALLOCATION = gql`
+      const UPDATE_ONE_RISKALLOCATION = gql`
       mutation updateOneRiskAllocation($data: RiskAllocationUpdateInput!, $where: RiskAllocationWhereUniqueInput!) {
         updateOneRiskAllocation(data: $data, where: $where) {
           id
@@ -1033,8 +1030,9 @@ export const RiskAllocation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -1044,7 +1042,6 @@ export const RiskAllocation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -1100,9 +1097,6 @@ export const RiskAllocation = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
-           } : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
-            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1395,30 +1389,32 @@ export const RiskAllocation = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
              } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
              } : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
       create: {
@@ -1431,7 +1427,6 @@ export const RiskAllocation = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1572,17 +1567,18 @@ export const RiskAllocation = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -1651,9 +1647,6 @@ export const RiskAllocation = {
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
              } : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? {
-              set: props.portfolio.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: props.portfolio.user.name !== undefined ? props.portfolio.user.name : undefined,
@@ -1665,7 +1658,6 @@ export const RiskAllocation = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1865,7 +1857,6 @@ export const RiskAllocation = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
           currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
-          alpacaAccountId: props.portfolio.user.alpacaAccountId !== undefined ? props.portfolio.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1988,9 +1979,7 @@ export const RiskAllocation = {
    */
   async delete(props: RiskAllocationType): Promise<RiskAllocationType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_RISKALLOCATION = gql`
+      const DELETE_ONE_RISKALLOCATION = gql`
       mutation deleteOneRiskAllocation($where: RiskAllocationWhereUniqueInput!) {
         deleteOneRiskAllocation(where: $where) {
           id
@@ -2297,8 +2286,9 @@ export const RiskAllocation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2308,7 +2298,6 @@ export const RiskAllocation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2346,9 +2335,7 @@ export const RiskAllocation = {
    */
   async get(props: RiskAllocationType): Promise<RiskAllocationType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_RISKALLOCATION = gql`
+      const GET_RISKALLOCATION = gql`
       query getRiskAllocation($where: RiskAllocationWhereUniqueInput!) {
         getRiskAllocation(where: $where) {
           id
@@ -2655,8 +2642,9 @@ export const RiskAllocation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2666,7 +2654,6 @@ export const RiskAllocation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -2702,9 +2689,7 @@ export const RiskAllocation = {
    */
   async getAll(): Promise<RiskAllocationType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_RISKALLOCATION = gql`
+      const GET_ALL_RISKALLOCATION = gql`
       query getAllRiskAllocation {
         riskAllocations {
           id
@@ -3011,8 +2996,9 @@ export const RiskAllocation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3022,7 +3008,6 @@ export const RiskAllocation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id
@@ -3052,9 +3037,7 @@ export const RiskAllocation = {
    */
   async findMany(props: RiskAllocationType): Promise<RiskAllocationType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_RISKALLOCATION = gql`
+      const FIND_MANY_RISKALLOCATION = gql`
       query findManyRiskAllocation($where: RiskAllocationWhereInput!) {
         riskAllocations(where: $where) {
           id
@@ -3361,8 +3344,9 @@ export const RiskAllocation = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -3372,7 +3356,6 @@ export const RiskAllocation = {
               }
               userId
             }
-            alpacaAccountId
           }
           portfolio {
             id

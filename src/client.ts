@@ -1,23 +1,31 @@
-import { ApolloClient, InMemoryCache, HttpLink, split } from "@apollo/client";
-import { getMainDefinition } from "@apollo/client/utilities";
-import { setContext } from "@apollo/client/link/context";
-import { createClient } from "graphql-ws";
-import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
-import { getToken } from "next-auth/jwt";
+// client.ts
 
-export type { NormalizedCacheObject, ApolloClient } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  HttpLink,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import { getToken } from "next-auth/jwt";
+import { onError } from "@apollo/client/link/error";
+
+export type { NormalizedCacheObject, ApolloClient };
 
 const httpUrl =
   process.env.BACKEND_HTTPS_URL ?? "http://localhost:4000/graphql";
-const wsUrl = process.env.BACKEND_WS_URL ?? "ws://localhost:4000/subscriptions";
 
-async function getAuthToken() {
+// Singleton Apollo Client instance
+let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
+
+// Function to get the authentication token
+async function getAuthToken(): Promise<string | null> {
   const secret = process.env.JWT_SECRET as string;
   const salt = process.env.JWT_SALT as string;
   const secureCookie = process.env.NODE_ENV === "production";
 
   if (secret && salt) {
-    return await getToken({
+    const token = await getToken({
       secureCookie,
       secret,
       salt,
@@ -27,53 +35,38 @@ async function getAuthToken() {
         },
       },
     } as any);
+    return token as any;
   }
   return null;
 }
 
-function createApolloClient(token: string | null) {
-  const httpLink = new HttpLink({
-    uri: httpUrl,
+// Function to create a new Apollo Client instance
+function createApolloClient(): ApolloClient<NormalizedCacheObject> {
+  const httpLink = new HttpLink({ uri: httpUrl });
+
+  const authLink = setContext(async (_, { headers }) => {
+    const token = await getAuthToken();
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      },
+    };
   });
 
-  const authLink = setContext((_, { headers }) => ({
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : "",
-    },
-  }));
-
-  const httpAuthLink = authLink.concat(httpLink);
-
-  const link =
-    typeof window === "undefined"
-      ? httpAuthLink
-      : split(
-        ({ query }) => {
-          const definition = getMainDefinition(query);
-          return (
-            definition.kind === "OperationDefinition" &&
-            definition.operation === "subscription"
-          );
-        },
-        new GraphQLWsLink(
-          createClient({
-            url: wsUrl,
-            connectionParams: async () => {
-              const token = await getAuthToken();
-              return { authorization: token ? `Bearer ${token}` : "" };
-            },
-            on: {
-              connected: () => console.log("WebSocket connection opened"),
-              opened: () => console.log("WebSocket connection established"),
-              closed: () => console.log("WebSocket connection closed"),
-              error: (error) =>
-                console.error("WebSocket connection error:", error),
-            },
-          }),
-        ),
-        httpAuthLink,
+  // Error handling link
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.error(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
       );
+
+    if (networkError) console.error(`[Network error]: ${networkError}`);
+  });
+
+  const link = errorLink.concat(authLink.concat(httpLink));
 
   return new ApolloClient({
     link,
@@ -81,16 +74,10 @@ function createApolloClient(token: string | null) {
   });
 }
 
-export async function initializeApolloServerSide() {
-  const token = await getAuthToken();
-  return createApolloClient(token as unknown as string);
+// Function to get the singleton Apollo Client instance
+export function getApolloClient(): ApolloClient<NormalizedCacheObject> {
+  if (!apolloClient) {
+    apolloClient = createApolloClient();
+  }
+  return apolloClient;
 }
-
-export async function initializeApolloClientSide() {
-  const token = await getAuthToken();
-  return createApolloClient(token as unknown as string);
-}
-
-export const makeClient = async () => {
-  return initializeApolloClientSide() as unknown as ApolloClient<any>;
-};

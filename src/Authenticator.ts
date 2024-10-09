@@ -1,24 +1,26 @@
 
 
 import { Authenticator as AuthenticatorType } from './generated/typegraphql-prisma/models/Authenticator';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Authenticator model.
  */
 
+  const client = getApolloClient();
+
 export const Authenticator = {
+
   /**
    * Create a new Authenticator record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created Authenticator or null.
    */
-  async create(props: AuthenticatorType): Promise<AuthenticatorType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: AuthenticatorType): Promise<AuthenticatorType> {
 
   const CREATE_ONE_AUTHENTICATOR = gql`
       mutation createOneAuthenticator($data: AuthenticatorCreateInput!) {
@@ -328,8 +330,9 @@ export const Authenticator = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -339,7 +342,6 @@ export const Authenticator = {
               }
               userId
             }
-            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -371,7 +373,6 @@ export const Authenticator = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -511,17 +512,18 @@ export const Authenticator = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -554,9 +556,7 @@ export const Authenticator = {
    */
   async createMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_AUTHENTICATOR = gql`
+      const CREATE_MANY_AUTHENTICATOR = gql`
       mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
         createManyAuthenticator(data: $data) {
           count
@@ -596,9 +596,7 @@ export const Authenticator = {
    */
   async update(props: AuthenticatorType): Promise<AuthenticatorType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_AUTHENTICATOR = gql`
+      const UPDATE_ONE_AUTHENTICATOR = gql`
       mutation updateOneAuthenticator($data: AuthenticatorUpdateInput!, $where: AuthenticatorWhereUniqueInput!) {
         updateOneAuthenticator(data: $data, where: $where) {
           id
@@ -906,8 +904,9 @@ export const Authenticator = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -917,7 +916,6 @@ export const Authenticator = {
               }
               userId
             }
-            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -969,9 +967,6 @@ export const Authenticator = {
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
-           } : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? {
-            set: props.user.alpacaAccountId  
            } : undefined,
     customer: props.user.customer ? {
       upsert: {
@@ -1260,30 +1255,32 @@ export const Authenticator = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      upsert: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? {
-              equals: props.user.alpacaAccount.id 
-             } : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         update: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? {
-              set: props.user.alpacaAccount.APIKey  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? {
-              set: props.user.alpacaAccount.APISecret  
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
              } : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? {
-              set: props.user.alpacaAccount.configuration  
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
              } : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
       create: {
@@ -1296,7 +1293,6 @@ export const Authenticator = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-        alpacaAccountId: props.user.alpacaAccountId !== undefined ? props.user.alpacaAccountId : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
         where: {
@@ -1436,17 +1432,18 @@ export const Authenticator = {
         },
       }))
     } : undefined,
-    alpacaAccount: props.user.alpacaAccount ? {
-      connectOrCreate: {
+    alpacaAccounts: props.user.alpacaAccounts ? {
+      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
-          id: props.user.alpacaAccount.id !== undefined ? props.user.alpacaAccount.id : undefined,
+          id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          APIKey: props.user.alpacaAccount.APIKey !== undefined ? props.user.alpacaAccount.APIKey : undefined,
-          APISecret: props.user.alpacaAccount.APISecret !== undefined ? props.user.alpacaAccount.APISecret : undefined,
-          configuration: props.user.alpacaAccount.configuration !== undefined ? props.user.alpacaAccount.configuration : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
         },
-      }
+      }))
     } : undefined,
       },
     }
@@ -1478,9 +1475,7 @@ export const Authenticator = {
    */
   async delete(props: AuthenticatorType): Promise<AuthenticatorType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_AUTHENTICATOR = gql`
+      const DELETE_ONE_AUTHENTICATOR = gql`
       mutation deleteOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         deleteOneAuthenticator(where: $where) {
           id
@@ -1788,8 +1783,9 @@ export const Authenticator = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -1799,7 +1795,6 @@ export const Authenticator = {
               }
               userId
             }
-            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -1836,9 +1831,7 @@ export const Authenticator = {
    */
   async get(props: AuthenticatorType): Promise<AuthenticatorType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_AUTHENTICATOR = gql`
+      const GET_AUTHENTICATOR = gql`
       query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         getAuthenticator(where: $where) {
           id
@@ -2146,8 +2139,9 @@ export const Authenticator = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2157,7 +2151,6 @@ export const Authenticator = {
               }
               userId
             }
-            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -2192,9 +2185,7 @@ export const Authenticator = {
    */
   async getAll(): Promise<AuthenticatorType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_AUTHENTICATOR = gql`
+      const GET_ALL_AUTHENTICATOR = gql`
       query getAllAuthenticator {
         authenticators {
           id
@@ -2502,8 +2493,9 @@ export const Authenticator = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2513,7 +2505,6 @@ export const Authenticator = {
               }
               userId
             }
-            alpacaAccountId
           }
           createdAt
           updatedAt
@@ -2542,9 +2533,7 @@ export const Authenticator = {
    */
   async findMany(props: AuthenticatorType): Promise<AuthenticatorType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_AUTHENTICATOR = gql`
+      const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {
         authenticators(where: $where) {
           id
@@ -2852,8 +2841,9 @@ export const Authenticator = {
             tradingAccount {
               id
             }
-            alpacaAccount {
+            alpacaAccounts {
               id
+              type
               APIKey
               APISecret
               configuration
@@ -2863,7 +2853,6 @@ export const Authenticator = {
               }
               userId
             }
-            alpacaAccountId
           }
           createdAt
           updatedAt

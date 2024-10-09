@@ -1,24 +1,26 @@
 
 
 import { Holding as HoldingType } from './generated/typegraphql-prisma/models/Holding';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Holding model.
  */
 
+  const client = getApolloClient();
+
 export const Holding = {
+
   /**
    * Create a new Holding record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created Holding or null.
    */
-  async create(props: HoldingType): Promise<HoldingType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: HoldingType): Promise<HoldingType> {
 
   const CREATE_ONE_HOLDING = gql`
       mutation createOneHolding($data: HoldingCreateInput!) {
@@ -222,8 +224,9 @@ export const Holding = {
               tradingAccount {
                 id
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -233,7 +236,6 @@ export const Holding = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             userId
             holdings {
@@ -415,7 +417,6 @@ export const Holding = {
           jobTitle: props.tradingAccount.user.jobTitle !== undefined ? props.tradingAccount.user.jobTitle : undefined,
           currentMode: props.tradingAccount.user.currentMode !== undefined ? props.tradingAccount.user.currentMode : undefined,
           plan: props.tradingAccount.user.plan !== undefined ? props.tradingAccount.user.plan : undefined,
-          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? props.tradingAccount.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -657,9 +658,7 @@ export const Holding = {
    */
   async createMany(props: HoldingType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_HOLDING = gql`
+      const CREATE_MANY_HOLDING = gql`
       mutation createManyHolding($data: [HoldingCreateManyInput!]!) {
         createManyHolding(data: $data) {
           count
@@ -699,9 +698,7 @@ export const Holding = {
    */
   async update(props: HoldingType): Promise<HoldingType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_HOLDING = gql`
+      const UPDATE_ONE_HOLDING = gql`
       mutation updateOneHolding($data: HoldingUpdateInput!, $where: HoldingWhereUniqueInput!) {
         updateOneHolding(data: $data, where: $where) {
           id
@@ -903,8 +900,9 @@ export const Holding = {
               tradingAccount {
                 id
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -914,7 +912,6 @@ export const Holding = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             userId
             holdings {
@@ -1128,9 +1125,6 @@ export const Holding = {
           plan: props.tradingAccount.user.plan !== undefined ? {
               set: props.tradingAccount.user.plan  
              } : undefined,
-          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? {
-              set: props.tradingAccount.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: props.tradingAccount.user.name !== undefined ? props.tradingAccount.user.name : undefined,
@@ -1142,7 +1136,6 @@ export const Holding = {
           jobTitle: props.tradingAccount.user.jobTitle !== undefined ? props.tradingAccount.user.jobTitle : undefined,
           currentMode: props.tradingAccount.user.currentMode !== undefined ? props.tradingAccount.user.currentMode : undefined,
           plan: props.tradingAccount.user.plan !== undefined ? props.tradingAccount.user.plan : undefined,
-          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? props.tradingAccount.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1342,7 +1335,6 @@ export const Holding = {
           jobTitle: props.tradingAccount.user.jobTitle !== undefined ? props.tradingAccount.user.jobTitle : undefined,
           currentMode: props.tradingAccount.user.currentMode !== undefined ? props.tradingAccount.user.currentMode : undefined,
           plan: props.tradingAccount.user.plan !== undefined ? props.tradingAccount.user.plan : undefined,
-          alpacaAccountId: props.tradingAccount.user.alpacaAccountId !== undefined ? props.tradingAccount.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1863,9 +1855,7 @@ export const Holding = {
    */
   async delete(props: HoldingType): Promise<HoldingType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_HOLDING = gql`
+      const DELETE_ONE_HOLDING = gql`
       mutation deleteOneHolding($where: HoldingWhereUniqueInput!) {
         deleteOneHolding(where: $where) {
           id
@@ -2067,8 +2057,9 @@ export const Holding = {
               tradingAccount {
                 id
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -2078,7 +2069,6 @@ export const Holding = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             userId
             holdings {
@@ -2253,9 +2243,7 @@ export const Holding = {
    */
   async get(props: HoldingType): Promise<HoldingType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_HOLDING = gql`
+      const GET_HOLDING = gql`
       query getHolding($where: HoldingWhereUniqueInput!) {
         getHolding(where: $where) {
           id
@@ -2457,8 +2445,9 @@ export const Holding = {
               tradingAccount {
                 id
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -2468,7 +2457,6 @@ export const Holding = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             userId
             holdings {
@@ -2641,9 +2629,7 @@ export const Holding = {
    */
   async getAll(): Promise<HoldingType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_HOLDING = gql`
+      const GET_ALL_HOLDING = gql`
       query getAllHolding {
         holdings {
           id
@@ -2845,8 +2831,9 @@ export const Holding = {
               tradingAccount {
                 id
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -2856,7 +2843,6 @@ export const Holding = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             userId
             holdings {
@@ -3023,9 +3009,7 @@ export const Holding = {
    */
   async findMany(props: HoldingType): Promise<HoldingType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_HOLDING = gql`
+      const FIND_MANY_HOLDING = gql`
       query findManyHolding($where: HoldingWhereInput!) {
         holdings(where: $where) {
           id
@@ -3227,8 +3211,9 @@ export const Holding = {
               tradingAccount {
                 id
               }
-              alpacaAccount {
+              alpacaAccounts {
                 id
+                type
                 APIKey
                 APISecret
                 configuration
@@ -3238,7 +3223,6 @@ export const Holding = {
                 }
                 userId
               }
-              alpacaAccountId
             }
             userId
             holdings {

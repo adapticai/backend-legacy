@@ -1,24 +1,26 @@
 
 
 import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the NewsArticleAssetSentiment model.
  */
 
+  const client = getApolloClient();
+
 export const NewsArticleAssetSentiment = {
+
   /**
    * Create a new NewsArticleAssetSentiment record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created NewsArticleAssetSentiment or null.
    */
-  async create(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
 
   const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentCreateInput!) {
@@ -213,10 +215,9 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               portfolio {
                 id
@@ -474,9 +475,7 @@ export const NewsArticleAssetSentiment = {
    */
   async createMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
+      const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
         createManyNewsArticleAssetSentiment(data: $data) {
           count
@@ -518,9 +517,7 @@ export const NewsArticleAssetSentiment = {
    */
   async update(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
+      const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation updateOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentUpdateInput!, $where: NewsArticleAssetSentimentWhereUniqueInput!) {
         updateOneNewsArticleAssetSentiment(data: $data, where: $where) {
           id
@@ -713,10 +710,9 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               portfolio {
                 id
@@ -1297,9 +1293,7 @@ export const NewsArticleAssetSentiment = {
    */
   async delete(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
+      const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         deleteOneNewsArticleAssetSentiment(where: $where) {
           id
@@ -1492,10 +1486,9 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               portfolio {
                 id
@@ -1607,9 +1600,7 @@ export const NewsArticleAssetSentiment = {
    */
   async get(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_NEWSARTICLEASSETSENTIMENT = gql`
+      const GET_NEWSARTICLEASSETSENTIMENT = gql`
       query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         getNewsArticleAssetSentiment(where: $where) {
           id
@@ -1802,10 +1793,9 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               portfolio {
                 id
@@ -1916,9 +1906,7 @@ export const NewsArticleAssetSentiment = {
    */
   async getAll(): Promise<NewsArticleAssetSentimentType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
+      const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
       query getAllNewsArticleAssetSentiment {
         newsArticleAssetSentiments {
           id
@@ -2111,10 +2099,9 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               portfolio {
                 id
@@ -2218,9 +2205,7 @@ export const NewsArticleAssetSentiment = {
    */
   async findMany(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
+      const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
         newsArticleAssetSentiments(where: $where) {
           id
@@ -2413,10 +2398,9 @@ export const NewsArticleAssetSentiment = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               portfolio {
                 id

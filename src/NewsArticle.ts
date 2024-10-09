@@ -1,24 +1,26 @@
 
 
 import { NewsArticle as NewsArticleType } from './generated/typegraphql-prisma/models/NewsArticle';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the NewsArticle model.
  */
 
+  const client = getApolloClient();
+
 export const NewsArticle = {
+
   /**
    * Create a new NewsArticle record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created NewsArticle or null.
    */
-  async create(props: NewsArticleType): Promise<NewsArticleType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: NewsArticleType): Promise<NewsArticleType> {
 
   const CREATE_ONE_NEWSARTICLE = gql`
       mutation createOneNewsArticle($data: NewsArticleCreateInput!) {
@@ -319,9 +321,7 @@ export const NewsArticle = {
    */
   async createMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_NEWSARTICLE = gql`
+      const CREATE_MANY_NEWSARTICLE = gql`
       mutation createManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
         createManyNewsArticle(data: $data) {
           count
@@ -370,9 +370,7 @@ export const NewsArticle = {
    */
   async update(props: NewsArticleType): Promise<NewsArticleType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_NEWSARTICLE = gql`
+      const UPDATE_ONE_NEWSARTICLE = gql`
       mutation updateOneNewsArticle($data: NewsArticleUpdateInput!, $where: NewsArticleWhereUniqueInput!) {
         updateOneNewsArticle(data: $data, where: $where) {
           id
@@ -926,9 +924,7 @@ export const NewsArticle = {
    */
   async delete(props: NewsArticleType): Promise<NewsArticleType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_NEWSARTICLE = gql`
+      const DELETE_ONE_NEWSARTICLE = gql`
       mutation deleteOneNewsArticle($where: NewsArticleWhereUniqueInput!) {
         deleteOneNewsArticle(where: $where) {
           id
@@ -1135,9 +1131,7 @@ export const NewsArticle = {
    */
   async get(props: NewsArticleType): Promise<NewsArticleType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_NEWSARTICLE = gql`
+      const GET_NEWSARTICLE = gql`
       query getNewsArticle($where: NewsArticleWhereUniqueInput!) {
         getNewsArticle(where: $where) {
           id
@@ -1346,9 +1340,7 @@ export const NewsArticle = {
    */
   async getAll(): Promise<NewsArticleType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_NEWSARTICLE = gql`
+      const GET_ALL_NEWSARTICLE = gql`
       query getAllNewsArticle {
         newsArticles {
           id
@@ -1547,9 +1539,7 @@ export const NewsArticle = {
    */
   async findMany(props: NewsArticleType): Promise<NewsArticleType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_NEWSARTICLE = gql`
+      const FIND_MANY_NEWSARTICLE = gql`
       query findManyNewsArticle($where: NewsArticleWhereInput!) {
         newsArticles(where: $where) {
           id

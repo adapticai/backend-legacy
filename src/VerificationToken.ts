@@ -1,24 +1,26 @@
 
 
 import { VerificationToken as VerificationTokenType } from './generated/typegraphql-prisma/models/VerificationToken';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the VerificationToken model.
  */
 
+  const client = getApolloClient();
+
 export const VerificationToken = {
+
   /**
    * Create a new VerificationToken record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created VerificationToken or null.
    */
-  async create(props: VerificationTokenType): Promise<VerificationTokenType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: VerificationTokenType): Promise<VerificationTokenType> {
 
   const CREATE_ONE_VERIFICATIONTOKEN = gql`
       mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
@@ -64,9 +66,7 @@ export const VerificationToken = {
    */
   async createMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_VERIFICATIONTOKEN = gql`
+      const CREATE_MANY_VERIFICATIONTOKEN = gql`
       mutation createManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
         createManyVerificationToken(data: $data) {
           count
@@ -105,9 +105,7 @@ export const VerificationToken = {
    */
   async update(props: VerificationTokenType): Promise<VerificationTokenType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_VERIFICATIONTOKEN = gql`
+      const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
         updateOneVerificationToken(data: $data, where: $where) {
           id
@@ -149,9 +147,7 @@ export const VerificationToken = {
    */
   async delete(props: VerificationTokenType): Promise<VerificationTokenType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_VERIFICATIONTOKEN = gql`
+      const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
           id
@@ -191,9 +187,7 @@ export const VerificationToken = {
    */
   async get(props: VerificationTokenType): Promise<VerificationTokenType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_VERIFICATIONTOKEN = gql`
+      const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
           id
@@ -231,9 +225,7 @@ export const VerificationToken = {
    */
   async getAll(): Promise<VerificationTokenType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_VERIFICATIONTOKEN = gql`
+      const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
           id
@@ -265,9 +257,7 @@ export const VerificationToken = {
    */
   async findMany(props: VerificationTokenType): Promise<VerificationTokenType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_VERIFICATIONTOKEN = gql`
+      const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
           id

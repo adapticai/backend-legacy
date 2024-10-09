@@ -1,24 +1,26 @@
 
 
 import { Asset as AssetType } from './generated/typegraphql-prisma/models/Asset';
-import { ApolloClient, ApolloError, gql, NormalizedCacheObject } from '@apollo/client';
-import {initializeApolloServerSide} from './client';
+import { ApolloError, gql } from '@apollo/client';
+import { getApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
  * CRUD operations for the Asset model.
  */
 
+  const client = getApolloClient();
+
 export const Asset = {
+
   /**
    * Create a new Asset record.
    * @param props - Properties for the new record.
    * @param client - Apollo Client instance.
    * @returns The created Asset or null.
    */
-  async create(props: AssetType): Promise<AssetType> {
 
-  const client = await initializeApolloServerSide();
+  async create(props: AssetType): Promise<AssetType> {
 
   const CREATE_ONE_ASSET = gql`
       mutation createOneAsset($data: AssetCreateInput!) {
@@ -139,10 +141,9 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               userId
               holdings {
@@ -439,7 +440,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -516,7 +516,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -566,7 +565,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -657,9 +655,7 @@ export const Asset = {
    */
   async createMany(props: AssetType[]): Promise<{ count: number } | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const CREATE_MANY_ASSET = gql`
+      const CREATE_MANY_ASSET = gql`
       mutation createManyAsset($data: [AssetCreateManyInput!]!) {
         createManyAsset(data: $data) {
           count
@@ -748,9 +744,7 @@ export const Asset = {
    */
   async update(props: AssetType): Promise<AssetType> {
 
-    const client = await initializeApolloServerSide();
-
-    const UPDATE_ONE_ASSET = gql`
+      const UPDATE_ONE_ASSET = gql`
       mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
         updateOneAsset(data: $data, where: $where) {
           id
@@ -869,10 +863,9 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               userId
               holdings {
@@ -1346,9 +1339,6 @@ export const Asset = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
-              set: item.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1360,7 +1350,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1493,7 +1482,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1602,9 +1590,6 @@ export const Asset = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
-              set: item.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1616,7 +1601,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1677,7 +1661,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1753,9 +1736,6 @@ export const Asset = {
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
              } : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? {
-              set: item.user.alpacaAccountId  
-             } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1767,7 +1747,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -1825,7 +1804,6 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
           currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
-          alpacaAccountId: item.user.alpacaAccountId !== undefined ? item.user.alpacaAccountId : undefined,
         },
       }
     } : undefined,
@@ -2000,9 +1978,7 @@ export const Asset = {
    */
   async delete(props: AssetType): Promise<AssetType> {
 
-    const client = await initializeApolloServerSide();
-
-    const DELETE_ONE_ASSET = gql`
+      const DELETE_ONE_ASSET = gql`
       mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
         deleteOneAsset(where: $where) {
           id
@@ -2121,10 +2097,9 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               userId
               holdings {
@@ -2337,9 +2312,7 @@ export const Asset = {
    */
   async get(props: AssetType): Promise<AssetType | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ASSET = gql`
+      const GET_ASSET = gql`
       query getAsset($where: AssetWhereUniqueInput!) {
         getAsset(where: $where) {
           id
@@ -2458,10 +2431,9 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               userId
               holdings {
@@ -2674,9 +2646,7 @@ export const Asset = {
    */
   async getAll(): Promise<AssetType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const GET_ALL_ASSET = gql`
+      const GET_ALL_ASSET = gql`
       query getAllAsset {
         assets {
           id
@@ -2795,10 +2765,9 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               userId
               holdings {
@@ -3003,9 +2972,7 @@ export const Asset = {
    */
   async findMany(props: AssetType): Promise<AssetType[] | null> {
 
-    const client = await initializeApolloServerSide();
-
-    const FIND_MANY_ASSET = gql`
+      const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {
         assets(where: $where) {
           id
@@ -3124,10 +3091,9 @@ export const Asset = {
                 tradingAccount {
                   id
                 }
-                alpacaAccount {
+                alpacaAccounts {
                   id
                 }
-                alpacaAccountId
               }
               userId
               holdings {
