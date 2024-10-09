@@ -1,6 +1,6 @@
 {
   "name": "adaptic-backend",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
   "type": "module",
   "types": "index.d.ts",
