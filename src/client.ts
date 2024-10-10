@@ -47,6 +47,7 @@ export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObjec
     return {
       headers: {
         ...headers,
+        keepAlive: false,
         authorization: token ? `Bearer ${token}` : "",
       },
     };

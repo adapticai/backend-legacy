@@ -7,10 +7,7 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-const prisma = global.prisma || new PrismaClient({
-  // Optional: Configure connection pool settings if needed
-  // datasources: { db: { url: process.env.DATABASE_URL } },
-});
+const prisma = global.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
 
