@@ -1197,6 +1197,9 @@ export const Trade = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
   action: props.action !== undefined ? {
             set: props.action 
            } : undefined,
@@ -1217,6 +1220,9 @@ export const Trade = {
            } : undefined,
       },
       update: {
+        id: props.user.id !== undefined ? {
+            set: props.user.id  
+           } : undefined,
         name: props.user.name !== undefined ? {
             set: props.user.name  
            } : undefined,
@@ -1294,6 +1300,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1345,6 +1354,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           sessionToken: item.sessionToken !== undefined ? {
               set: item.sessionToken  
              } : undefined,
@@ -1364,6 +1376,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           credentialID: item.credentialID !== undefined ? {
               set: item.credentialID  
              } : undefined,
@@ -1387,6 +1402,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1418,6 +1436,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1437,6 +1458,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           assetType: item.assetType !== undefined ? {
               set: item.assetType  
              } : undefined,
@@ -1456,6 +1480,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           message: item.message !== undefined ? {
               set: item.message  
              } : undefined,
@@ -1479,6 +1506,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           label: item.label !== undefined ? {
               set: item.label  
              } : undefined,
@@ -1502,6 +1532,9 @@ export const Trade = {
              } : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           name: item.name !== undefined ? {
               set: item.name  
              } : undefined,
@@ -1525,6 +1558,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1723,6 +1759,9 @@ export const Trade = {
            } : undefined,
       },
       update: {
+        id: props.portfolio.id !== undefined ? {
+            set: props.portfolio.id  
+           } : undefined,
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
            } : undefined,
@@ -1746,6 +1785,9 @@ export const Trade = {
              } : undefined,
         },
         update: {
+          id: props.portfolio.user.id !== undefined ? {
+              set: props.portfolio.user.id  
+             } : undefined,
           name: props.portfolio.user.name !== undefined ? {
               set: props.portfolio.user.name  
              } : undefined,
@@ -1793,6 +1835,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           quantity: item.quantity !== undefined ? {
               set: item.quantity  
              } : undefined,
@@ -1812,6 +1857,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1843,6 +1891,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1862,6 +1913,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           assetType: item.assetType !== undefined ? {
               set: item.assetType  
              } : undefined,
@@ -1881,6 +1935,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           message: item.message !== undefined ? {
               set: item.message  
              } : undefined,
@@ -1904,6 +1961,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           label: item.label !== undefined ? {
               set: item.label  
              } : undefined,
@@ -1926,6 +1986,9 @@ export const Trade = {
              } : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           key: item.key !== undefined ? {
               set: item.key  
              } : undefined,
@@ -2072,6 +2135,9 @@ export const Trade = {
            } : undefined,
       },
       update: {
+        id: props.asset.id !== undefined ? {
+            set: props.asset.id  
+           } : undefined,
         symbol: props.asset.symbol !== undefined ? {
             set: props.asset.symbol  
            } : undefined,
@@ -2237,6 +2303,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           quantity: item.quantity !== undefined ? {
               set: item.quantity  
              } : undefined,
@@ -2256,6 +2325,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -2287,6 +2359,9 @@ export const Trade = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -2307,6 +2382,9 @@ export const Trade = {
           url: item.url !== undefined ? item.url : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           url: item.url !== undefined ? {
               set: item.url  
              } : undefined,
@@ -2442,6 +2520,9 @@ export const Trade = {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         sequence: item.sequence !== undefined ? {
             set: item.sequence  
            } : undefined,

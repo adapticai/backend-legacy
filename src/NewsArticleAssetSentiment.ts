@@ -804,6 +804,12 @@ export const NewsArticleAssetSentiment = {
         url: props.url !== undefined ? props.url : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  url: props.url !== undefined ? {
+            set: props.url 
+           } : undefined,
   relevancyScore: props.relevancyScore !== undefined ? {
             set: props.relevancyScore 
            } : undefined,
@@ -827,6 +833,9 @@ export const NewsArticleAssetSentiment = {
            } : undefined,
       },
       update: {
+        id: props.news.id !== undefined ? {
+            set: props.news.id  
+           } : undefined,
         title: props.news.title !== undefined ? {
             set: props.news.title  
            } : undefined,
@@ -898,6 +907,9 @@ export const NewsArticleAssetSentiment = {
            } : undefined,
       },
       update: {
+        id: props.asset.id !== undefined ? {
+            set: props.asset.id  
+           } : undefined,
         symbol: props.asset.symbol !== undefined ? {
             set: props.asset.symbol  
            } : undefined,
@@ -1063,6 +1075,9 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           quantity: item.quantity !== undefined ? {
               set: item.quantity  
              } : undefined,
@@ -1082,6 +1097,9 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1117,6 +1135,9 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1148,6 +1169,9 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,

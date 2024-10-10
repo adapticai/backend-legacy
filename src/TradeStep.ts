@@ -946,6 +946,9 @@ export const TradeStep = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
   action: props.action !== undefined ? {
             set: props.action 
            } : undefined,
@@ -958,6 +961,9 @@ export const TradeStep = {
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
+  note: props.note !== undefined ? {
+            set: props.note 
+           } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
@@ -969,6 +975,9 @@ export const TradeStep = {
            } : undefined,
       },
       update: {
+        id: props.trade.id !== undefined ? {
+            set: props.trade.id  
+           } : undefined,
         action: props.trade.action !== undefined ? {
             set: props.trade.action  
            } : undefined,
@@ -1001,6 +1010,9 @@ export const TradeStep = {
              } : undefined,
         },
         update: {
+          id: props.trade.user.id !== undefined ? {
+              set: props.trade.user.id  
+             } : undefined,
           name: props.trade.user.name !== undefined ? {
               set: props.trade.user.name  
              } : undefined,
@@ -1056,6 +1068,9 @@ export const TradeStep = {
              } : undefined,
         },
         update: {
+          id: props.trade.portfolio.id !== undefined ? {
+              set: props.trade.portfolio.id  
+             } : undefined,
           name: props.trade.portfolio.name !== undefined ? {
               set: props.trade.portfolio.name  
              } : undefined,
@@ -1087,6 +1102,9 @@ export const TradeStep = {
              } : undefined,
         },
         update: {
+          id: props.trade.asset.id !== undefined ? {
+              set: props.trade.asset.id  
+             } : undefined,
           symbol: props.trade.asset.symbol !== undefined ? {
               set: props.trade.asset.symbol  
              } : undefined,

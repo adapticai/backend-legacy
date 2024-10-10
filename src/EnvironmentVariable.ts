@@ -887,6 +887,15 @@ export const EnvironmentVariable = {
            } : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  key: props.key !== undefined ? {
+            set: props.key 
+           } : undefined,
+  value: props.value !== undefined ? {
+            set: props.value 
+           } : undefined,
   description: props.description !== undefined ? {
             set: props.description 
            } : undefined,
@@ -904,6 +913,9 @@ export const EnvironmentVariable = {
            } : undefined,
       },
       update: {
+        id: props.portfolio.id !== undefined ? {
+            set: props.portfolio.id  
+           } : undefined,
         name: props.portfolio.name !== undefined ? {
             set: props.portfolio.name  
            } : undefined,
@@ -927,6 +939,9 @@ export const EnvironmentVariable = {
              } : undefined,
         },
         update: {
+          id: props.portfolio.user.id !== undefined ? {
+              set: props.portfolio.user.id  
+             } : undefined,
           name: props.portfolio.user.name !== undefined ? {
               set: props.portfolio.user.name  
              } : undefined,
@@ -974,6 +989,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           quantity: item.quantity !== undefined ? {
               set: item.quantity  
              } : undefined,
@@ -993,6 +1011,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1028,6 +1049,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1059,6 +1083,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1078,6 +1105,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           assetType: item.assetType !== undefined ? {
               set: item.assetType  
              } : undefined,
@@ -1097,6 +1127,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           message: item.message !== undefined ? {
               set: item.message  
              } : undefined,
@@ -1120,6 +1153,9 @@ export const EnvironmentVariable = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           label: item.label !== undefined ? {
               set: item.label  
              } : undefined,

@@ -1059,6 +1059,15 @@ export const Asset = {
         name: props.name !== undefined ? props.name : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  name: props.name !== undefined ? {
+            set: props.name 
+           } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
@@ -1218,6 +1227,9 @@ export const Asset = {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         quantity: item.quantity !== undefined ? {
             set: item.quantity  
            } : undefined,
@@ -1238,6 +1250,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.tradingAccount.id !== undefined ? {
+              set: item.tradingAccount.id  
+             } : undefined,
           name: item.tradingAccount.name !== undefined ? {
               set: item.tradingAccount.name  
              } : undefined,
@@ -1284,6 +1299,9 @@ export const Asset = {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         action: item.action !== undefined ? {
             set: item.action  
            } : undefined,
@@ -1316,6 +1334,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.user.id !== undefined ? {
+              set: item.user.id  
+             } : undefined,
           name: item.user.name !== undefined ? {
               set: item.user.name  
              } : undefined,
@@ -1371,6 +1392,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.portfolio.id !== undefined ? {
+              set: item.portfolio.id  
+             } : undefined,
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
              } : undefined,
@@ -1394,6 +1418,9 @@ export const Asset = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           sequence: item.sequence !== undefined ? {
               set: item.sequence  
              } : undefined,
@@ -1538,6 +1565,9 @@ export const Asset = {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         type: item.type !== undefined ? {
             set: item.type  
            } : undefined,
@@ -1567,6 +1597,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.user.id !== undefined ? {
+              set: item.user.id  
+             } : undefined,
           name: item.user.name !== undefined ? {
               set: item.user.name  
              } : undefined,
@@ -1622,6 +1655,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.portfolio.id !== undefined ? {
+              set: item.portfolio.id  
+             } : undefined,
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
              } : undefined,
@@ -1693,6 +1729,9 @@ export const Asset = {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         action: item.action !== undefined ? {
             set: item.action  
            } : undefined,
@@ -1713,6 +1752,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.user.id !== undefined ? {
+              set: item.user.id  
+             } : undefined,
           name: item.user.name !== undefined ? {
               set: item.user.name  
              } : undefined,
@@ -1768,6 +1810,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.portfolio.id !== undefined ? {
+              set: item.portfolio.id  
+             } : undefined,
           name: item.portfolio.name !== undefined ? {
               set: item.portfolio.name  
              } : undefined,
@@ -1837,6 +1882,9 @@ export const Asset = {
         url: item.url !== undefined ? item.url : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         url: item.url !== undefined ? {
             set: item.url  
            } : undefined,
@@ -1863,6 +1911,9 @@ export const Asset = {
              } : undefined,
         },
         update: {
+          id: item.news.id !== undefined ? {
+              set: item.news.id  
+             } : undefined,
           title: item.news.title !== undefined ? {
               set: item.news.title  
              } : undefined,

@@ -930,6 +930,12 @@ export const Session = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  sessionToken: props.sessionToken !== undefined ? {
+            set: props.sessionToken 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -944,6 +950,9 @@ export const Session = {
            } : undefined,
       },
       update: {
+        id: props.user.id !== undefined ? {
+            set: props.user.id  
+           } : undefined,
         name: props.user.name !== undefined ? {
             set: props.user.name  
            } : undefined,
@@ -1021,6 +1030,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1072,6 +1084,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           credentialID: item.credentialID !== undefined ? {
               set: item.credentialID  
              } : undefined,
@@ -1095,6 +1110,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1130,6 +1148,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1161,6 +1182,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1180,6 +1204,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           assetType: item.assetType !== undefined ? {
               set: item.assetType  
              } : undefined,
@@ -1199,6 +1226,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           message: item.message !== undefined ? {
               set: item.message  
              } : undefined,
@@ -1222,6 +1252,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           label: item.label !== undefined ? {
               set: item.label  
              } : undefined,
@@ -1245,6 +1278,9 @@ export const Session = {
              } : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           name: item.name !== undefined ? {
               set: item.name  
              } : undefined,
@@ -1268,6 +1304,9 @@ export const Session = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,

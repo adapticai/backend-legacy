@@ -106,6 +106,7 @@ export const GRAPHQL_SCALARS = new Set([
   'IntFilter',
   'StringFilter',
   'NullableStringFieldUpdateOperationsInput',
+  'StringFieldUpdateOperationsInput',
   'StringNullableFilter',
   'BooleanFilter',
   'FloatFilter',
@@ -208,7 +209,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
         isFieldUpdate = true;
       }
     }
-
+    
     // Handle nullable types
     if (ts.isUnionTypeNode(typeNode)) {
       const types = typeNode.types.filter(t => !isNullOrUndefined(t, sourceFile));

@@ -934,6 +934,9 @@ export const Customer = {
            } : undefined,
       },
       data: {
+  authUserId: props.authUserId !== undefined ? {
+            set: props.authUserId 
+           } : undefined,
   name: props.name !== undefined ? {
             set: props.name 
            } : undefined,
@@ -956,6 +959,9 @@ export const Customer = {
            } : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         name: item.name !== undefined ? {
             set: item.name  
            } : undefined,
@@ -989,6 +995,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1040,6 +1049,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           sessionToken: item.sessionToken !== undefined ? {
               set: item.sessionToken  
              } : undefined,
@@ -1059,6 +1071,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           credentialID: item.credentialID !== undefined ? {
               set: item.credentialID  
              } : undefined,
@@ -1082,6 +1097,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1117,6 +1135,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1148,6 +1169,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1167,6 +1191,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           assetType: item.assetType !== undefined ? {
               set: item.assetType  
              } : undefined,
@@ -1186,6 +1213,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           message: item.message !== undefined ? {
               set: item.message  
              } : undefined,
@@ -1209,6 +1239,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           label: item.label !== undefined ? {
               set: item.label  
              } : undefined,
@@ -1232,6 +1265,9 @@ export const Customer = {
              } : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           name: item.name !== undefined ? {
               set: item.name  
              } : undefined,
@@ -1255,6 +1291,9 @@ export const Customer = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,

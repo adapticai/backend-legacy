@@ -938,6 +938,18 @@ export const Account = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  type: props.type !== undefined ? {
+            set: props.type 
+           } : undefined,
+  provider: props.provider !== undefined ? {
+            set: props.provider 
+           } : undefined,
+  providerAccountId: props.providerAccountId !== undefined ? {
+            set: props.providerAccountId 
+           } : undefined,
   refresh_token: props.refresh_token !== undefined ? {
             set: props.refresh_token 
            } : undefined,
@@ -970,6 +982,9 @@ export const Account = {
            } : undefined,
       },
       update: {
+        id: props.user.id !== undefined ? {
+            set: props.user.id  
+           } : undefined,
         name: props.user.name !== undefined ? {
             set: props.user.name  
            } : undefined,
@@ -1047,6 +1062,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           sessionToken: item.sessionToken !== undefined ? {
               set: item.sessionToken  
              } : undefined,
@@ -1066,6 +1084,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           credentialID: item.credentialID !== undefined ? {
               set: item.credentialID  
              } : undefined,
@@ -1089,6 +1110,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1124,6 +1148,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
@@ -1155,6 +1182,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
@@ -1174,6 +1204,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           assetType: item.assetType !== undefined ? {
               set: item.assetType  
              } : undefined,
@@ -1193,6 +1226,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           message: item.message !== undefined ? {
               set: item.message  
              } : undefined,
@@ -1216,6 +1252,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           label: item.label !== undefined ? {
               set: item.label  
              } : undefined,
@@ -1239,6 +1278,9 @@ export const Account = {
              } : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           name: item.name !== undefined ? {
               set: item.name  
              } : undefined,
@@ -1262,6 +1304,9 @@ export const Account = {
           id: item.id !== undefined ? item.id : undefined,
         },
         update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,

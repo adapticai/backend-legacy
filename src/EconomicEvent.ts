@@ -135,6 +135,12 @@ export const EconomicEvent = {
            } : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
   description: props.description !== undefined ? {
             set: props.description 
            } : undefined,

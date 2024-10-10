@@ -124,6 +124,15 @@ export const VerificationToken = {
               id: props.id !== undefined ? props.id : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  identifier: props.identifier !== undefined ? {
+            set: props.identifier 
+           } : undefined,
+  token: props.token !== undefined ? {
+            set: props.token 
+           } : undefined,
       },
     };
 

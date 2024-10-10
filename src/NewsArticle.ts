@@ -560,17 +560,35 @@ export const NewsArticle = {
            } : undefined,
       },
       data: {
+  id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
   content: props.content !== undefined ? {
             set: props.content 
            } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
+           } : undefined,
   sourceDomain: props.sourceDomain !== undefined ? {
             set: props.sourceDomain 
+           } : undefined,
+  url: props.url !== undefined ? {
+            set: props.url 
+           } : undefined,
+  sentiment: props.sentiment !== undefined ? {
+            set: props.sentiment 
            } : undefined,
   summary: props.summary !== undefined ? {
             set: props.summary 
            } : undefined,
   bannerImage: props.bannerImage !== undefined ? {
             set: props.bannerImage 
+           } : undefined,
+  timePublished: props.timePublished !== undefined ? {
+            set: props.timePublished 
            } : undefined,
   category: props.category !== undefined ? {
             set: props.category 
@@ -585,6 +603,9 @@ export const NewsArticle = {
         url: item.url !== undefined ? item.url : undefined,
       },
       update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
         url: item.url !== undefined ? {
             set: item.url  
            } : undefined,
@@ -611,6 +632,9 @@ export const NewsArticle = {
              } : undefined,
         },
         update: {
+          id: item.asset.id !== undefined ? {
+              set: item.asset.id  
+             } : undefined,
           symbol: item.asset.symbol !== undefined ? {
               set: item.asset.symbol  
              } : undefined,
