@@ -141,23 +141,23 @@ try {
 
   packageJson.exports = {
     ".": {
-      "import": "./index.js",
-      "require": "./index.js",
+      "import": "./index.cjs",
+      "require": "./index.cjs",
       "types": "./index.d.ts"
     },
     "./*": {
-      "import": "./*.js",
+      "import": "./*.cjs",
       "require": "./*.cjs",
       "types": "./*.d.ts"
     },
     "./server": {
       "import": "./server/index.mjs",
-      "require": "./server/index.js",
+      "require": "./server/index.cjs",
       "types": "./server/index.d.ts"
     },
     "./server/*": {
       "import": "./server/*.mjs",
-      "require": "./server/*.js",
+      "require": "./server/*.cjs",
       "types": "./server/*.d.ts"
     }
   };
@@ -184,6 +184,22 @@ try {
   process.exit(1);
 }
 
+
+
+// Step 3b: Rename .js to .cjs in dist/
+try {
+  const cjsFiles = getFilesRecursively(distDir);
+  cjsFiles.forEach((file) => {
+    if (file.endsWith('.js')) {
+      const newFile = file.replace(/\.js$/, '.cjs');
+      fs.renameSync(file, newFile);
+    }
+  });
+  console.log('Renamed .js files to .cjs in dist.');
+} catch (err) {
+  console.error('Error processing dist:', err);
+  process.exit(1);
+}
 // Step 4: Update the README.md with Models and CRUD Resolvers section based on the models in the project
 
 // Read the current README
@@ -260,7 +276,7 @@ try {
 try {
   const serverMjsFiles = getFilesRecursively(distServerDir).filter(file => file.endsWith('.mjs'));
   serverMjsFiles.forEach((file) => {
-    if (file.endsWith('.mjs')) {
+    if (file.endsWith('.mjs') && (file !== 'server.mjs' && file !== 'utils.mjs' && file !== 'client.mjs' && file !== 'prismaClient.mjs')) {
       let content;
       try {
         content = fs.readFileSync(file, 'utf8');
@@ -284,5 +300,62 @@ try {
   process.exit(1);
 }
 
-// Step 7: Finalize Build
+// Step 6b. Update import paths for one specific 'from': "./getToken"; to from "./getToken.mjs"; in dist/server client.mjs file
+try {
+  const clientMjsFile = path.join(distServerDir, 'client.mjs');
+  let content = fs.readFileSync(clientMjsFile, 'utf8');
+  content = content.replace(
+    /import\s+{ getToken }\s+from\s+(['"])\.\/getToken\1;/g,
+    `import { getToken } from "./getToken.mjs";`
+  );
+  fs.writeFileSync(clientMjsFile, content, 'utf8');
+  console.log('Updated import statements in client.mjs file.');
+} catch (err) {
+  console.error('Error updating import statements in client.mjs file:', err);
+  process.exit(1);
+}
+
+// Step 7. Update import paths with .mjs in dist/server .mjs files
+
+const cjsFiles = getFilesRecursively(distDir).filter(file => file.endsWith('.cjs'));
+cjsFiles.forEach((file) => {
+
+  if (file.endsWith('.cjs') && (file !== 'server.cjs' && file !== 'utils.cjs' && file !== 'client.cjs' && file !== 'prismaClient.cjs' && !file.includes('/server'))) {
+    let content;
+    try {
+      content = fs.readFileSync(file, 'utf8');
+    } catch (err) {
+      console.error(`Error reading file ${file}:`, err);
+      return;
+    }
+
+    // Replace import statements to include .cjs extension. IF require("./Account"); then require("./Account.cjs");
+    const updatedContent = content.replace(
+      /require\s*\(\s*(['"])\.\/([^'"]+)\1\s*\);/g,
+      (match, p1, p2) => `require(${p1}./${p2}.cjs${p1});`
+    );
+
+    fs.writeFileSync(file, updatedContent, 'utf8');
+  }
+});
+
+console.log('Updated import statements in .cjs files.');
+
+// Step 7b. Update import paths for one specific 'from': "./getToken"; to from "./getToken.vjs"; in dist/client.cjs file
+
+try {
+  const clientCjsFile = path.join(distDir, 'client.cjs');
+  let content = fs.readFileSync(clientCjsFile, 'utf8');
+  content = content.replace(
+    /require\s*\(\s*(['"])\.\/getToken\1\s*\);/g,
+    `require($1./getToken.cjs$1);`
+  );
+  fs.writeFileSync(clientCjsFile, content, 'utf8');
+  console.log('Updated import statements in client.cjs file.');
+} catch (err) {
+  console.error('Error updating import statements in client.cjs file:', err);
+  process.exit(1);
+}
+
+// Step 8: Finalize Build
 console.log('Package preparation completed successfully.');
