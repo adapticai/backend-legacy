@@ -10,8 +10,7 @@ import { onError } from "@apollo/client/link/error";
 
 export type { NormalizedCacheObject, ApolloClient };
 
-const httpUrl =
-  process.env.BACKEND_HTTPS_URL ?? "http://localhost:4000/graphql";
+const httpUrl = process.env.BACKEND_HTTPS_URL || process.env.NODE_ENV === "production" ? "https://api.adaptic.ai/graphql" : "http://localhost:4000/graphql";
 
 /**
  * Function to get the authentication token using the custom getToken implementation
