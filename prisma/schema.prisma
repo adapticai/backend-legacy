@@ -72,8 +72,8 @@ enum TradeStepStatus {
 }
 
 enum TradeStatus {
-  STAGED
-  ACTIVE
+  PENDING
+  OPEN
   PARTIAL
   COMPLETED
 }
@@ -358,7 +358,7 @@ model Trade {
   timestamp   DateTime    @default(now()) @map(name: "timestamp")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @default(now())
-  status      TradeStatus @default(STAGED)
+  status      TradeStatus @default(PENDING)
 
   // Relations
   user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
