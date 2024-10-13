@@ -136,7 +136,7 @@ model User {
   role               UserRole            @default(USER)
   bio                String?
   jobTitle           String?
-  currentMode        TradingAccountType  @default(PAPER)
+  currentAccount     TradingAccountType  @default(PAPER)
   customer           Customer?           @relation(fields: [customerId], references: [id])
   customerId         Int?
   accounts           Account[]
