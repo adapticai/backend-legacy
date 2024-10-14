@@ -945,6 +945,419 @@ export const NewsArticle = {
   },
 
   /**
+   * Update multiple NewsArticle records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_NEWSARTICLE = gql`
+      mutation updateManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
+        updateManyNewsArticle(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+        url: prop.url !== undefined ? prop.url : undefined,
+        title: prop.title !== undefined ? {
+            equals: prop.title 
+           } : undefined,
+
+      },
+      data: {
+          id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  title: prop.title !== undefined ? {
+            set: prop.title 
+           } : undefined,
+  content: prop.content !== undefined ? {
+            set: prop.content 
+           } : undefined,
+  source: prop.source !== undefined ? {
+            set: prop.source 
+           } : undefined,
+  sourceDomain: prop.sourceDomain !== undefined ? {
+            set: prop.sourceDomain 
+           } : undefined,
+  url: prop.url !== undefined ? {
+            set: prop.url 
+           } : undefined,
+  sentiment: prop.sentiment !== undefined ? {
+            set: prop.sentiment 
+           } : undefined,
+  summary: prop.summary !== undefined ? {
+            set: prop.summary 
+           } : undefined,
+  bannerImage: prop.bannerImage !== undefined ? {
+            set: prop.bannerImage 
+           } : undefined,
+  timePublished: prop.timePublished !== undefined ? {
+            set: prop.timePublished 
+           } : undefined,
+  category: prop.category !== undefined ? {
+            set: prop.category 
+           } : undefined,
+  logo: prop.logo !== undefined ? {
+            set: prop.logo 
+           } : undefined,
+  assets: prop.assets ? {
+    upsert: prop.assets.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        url: item.url !== undefined ? item.url : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        url: item.url !== undefined ? {
+            set: item.url  
+           } : undefined,
+        relevancyScore: item.relevancyScore !== undefined ? {
+            set: item.relevancyScore  
+           } : undefined,
+        sentimentScore: item.sentimentScore !== undefined ? {
+            set: item.sentimentScore  
+           } : undefined,
+        sentimentLabel: item.sentimentLabel !== undefined ? {
+            set: item.sentimentLabel  
+           } : undefined,
+    asset: item.asset ? {
+      upsert: {
+        where: {
+          id: item.asset.id !== undefined ? {
+              equals: item.asset.id 
+             } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              equals: item.asset.symbol 
+             } : undefined,
+          name: item.asset.name !== undefined ? {
+              equals: item.asset.name 
+             } : undefined,
+        },
+        update: {
+          id: item.asset.id !== undefined ? {
+              set: item.asset.id  
+             } : undefined,
+          symbol: item.asset.symbol !== undefined ? {
+              set: item.asset.symbol  
+             } : undefined,
+          name: item.asset.name !== undefined ? {
+              set: item.asset.name  
+             } : undefined,
+          type: item.asset.type !== undefined ? {
+              set: item.asset.type  
+             } : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? {
+              set: item.asset.logoUrl  
+             } : undefined,
+          description: item.asset.description !== undefined ? {
+              set: item.asset.description  
+             } : undefined,
+          cik: item.asset.cik !== undefined ? {
+              set: item.asset.cik  
+             } : undefined,
+          exchange: item.asset.exchange !== undefined ? {
+              set: item.asset.exchange  
+             } : undefined,
+          currency: item.asset.currency !== undefined ? {
+              set: item.asset.currency  
+             } : undefined,
+          country: item.asset.country !== undefined ? {
+              set: item.asset.country  
+             } : undefined,
+          sector: item.asset.sector !== undefined ? {
+              set: item.asset.sector  
+             } : undefined,
+          industry: item.asset.industry !== undefined ? {
+              set: item.asset.industry  
+             } : undefined,
+          address: item.asset.address !== undefined ? {
+              set: item.asset.address  
+             } : undefined,
+          officialSite: item.asset.officialSite !== undefined ? {
+              set: item.asset.officialSite  
+             } : undefined,
+          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? {
+              set: item.asset.fiscalYearEnd  
+             } : undefined,
+          latestQuarter: item.asset.latestQuarter !== undefined ? {
+              set: item.asset.latestQuarter  
+             } : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? {
+              set: item.asset.marketCapitalization  
+             } : undefined,
+          ebitda: item.asset.ebitda !== undefined ? {
+              set: item.asset.ebitda  
+             } : undefined,
+          peRatio: item.asset.peRatio !== undefined ? {
+              set: item.asset.peRatio  
+             } : undefined,
+          pegRatio: item.asset.pegRatio !== undefined ? {
+              set: item.asset.pegRatio  
+             } : undefined,
+          bookValue: item.asset.bookValue !== undefined ? {
+              set: item.asset.bookValue  
+             } : undefined,
+          dividendPerShare: item.asset.dividendPerShare !== undefined ? {
+              set: item.asset.dividendPerShare  
+             } : undefined,
+          dividendYield: item.asset.dividendYield !== undefined ? {
+              set: item.asset.dividendYield  
+             } : undefined,
+          eps: item.asset.eps !== undefined ? {
+              set: item.asset.eps  
+             } : undefined,
+          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? {
+              set: item.asset.revenuePerShareTTM  
+             } : undefined,
+          profitMargin: item.asset.profitMargin !== undefined ? {
+              set: item.asset.profitMargin  
+             } : undefined,
+          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? {
+              set: item.asset.operatingMarginTTM  
+             } : undefined,
+          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? {
+              set: item.asset.returnOnAssetsTTM  
+             } : undefined,
+          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? {
+              set: item.asset.returnOnEquityTTM  
+             } : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? {
+              set: item.asset.revenueTTM  
+             } : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? {
+              set: item.asset.grossProfitTTM  
+             } : undefined,
+          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? {
+              set: item.asset.dilutedEPSTTM  
+             } : undefined,
+          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? {
+              set: item.asset.quarterlyEarningsGrowthYOY  
+             } : undefined,
+          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? {
+              set: item.asset.quarterlyRevenueGrowthYOY  
+             } : undefined,
+          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? {
+              set: item.asset.analystTargetPrice  
+             } : undefined,
+          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? {
+              set: item.asset.analystRatingStrongBuy  
+             } : undefined,
+          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? {
+              set: item.asset.analystRatingBuy  
+             } : undefined,
+          analystRatingHold: item.asset.analystRatingHold !== undefined ? {
+              set: item.asset.analystRatingHold  
+             } : undefined,
+          analystRatingSell: item.asset.analystRatingSell !== undefined ? {
+              set: item.asset.analystRatingSell  
+             } : undefined,
+          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? {
+              set: item.asset.analystRatingStrongSell  
+             } : undefined,
+          trailingPE: item.asset.trailingPE !== undefined ? {
+              set: item.asset.trailingPE  
+             } : undefined,
+          forwardPE: item.asset.forwardPE !== undefined ? {
+              set: item.asset.forwardPE  
+             } : undefined,
+          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? {
+              set: item.asset.priceToSalesRatioTTM  
+             } : undefined,
+          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? {
+              set: item.asset.priceToBookRatio  
+             } : undefined,
+          evToRevenue: item.asset.evToRevenue !== undefined ? {
+              set: item.asset.evToRevenue  
+             } : undefined,
+          evToEbitda: item.asset.evToEbitda !== undefined ? {
+              set: item.asset.evToEbitda  
+             } : undefined,
+          beta: item.asset.beta !== undefined ? {
+              set: item.asset.beta  
+             } : undefined,
+          week52High: item.asset.week52High !== undefined ? {
+              set: item.asset.week52High  
+             } : undefined,
+          week52Low: item.asset.week52Low !== undefined ? {
+              set: item.asset.week52Low  
+             } : undefined,
+          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? {
+              set: item.asset.day50MovingAverage  
+             } : undefined,
+          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? {
+              set: item.asset.day200MovingAverage  
+             } : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? {
+              set: item.asset.sharesOutstanding  
+             } : undefined,
+          dividendDate: item.asset.dividendDate !== undefined ? {
+              set: item.asset.dividendDate  
+             } : undefined,
+          exDividendDate: item.asset.exDividendDate !== undefined ? {
+              set: item.asset.exDividendDate  
+             } : undefined,
+        },
+        create: {
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
+          description: item.asset.description !== undefined ? item.asset.description : undefined,
+          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
+          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
+          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
+          country: item.asset.country !== undefined ? item.asset.country : undefined,
+          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
+          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
+          address: item.asset.address !== undefined ? item.asset.address : undefined,
+          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
+          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
+          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
+          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
+          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
+          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
+          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
+          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
+          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
+          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
+          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
+          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
+          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
+          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
+          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
+          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
+          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
+          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
+          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
+          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
+          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
+          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
+          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
+          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
+          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
+          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
+          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
+          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
+          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
+          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
+          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
+          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
+          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
+          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
+          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
+          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        url: item.url !== undefined ? item.url : undefined,
+        relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+        sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+        sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+    asset: item.asset ? {
+      connectOrCreate: {
+        where: {
+          id: item.asset.id !== undefined ? item.asset.id : undefined,
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+        },
+        create: {
+          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
+          name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? item.asset.type : undefined,
+          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
+          description: item.asset.description !== undefined ? item.asset.description : undefined,
+          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
+          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
+          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
+          country: item.asset.country !== undefined ? item.asset.country : undefined,
+          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
+          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
+          address: item.asset.address !== undefined ? item.asset.address : undefined,
+          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
+          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
+          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
+          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
+          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
+          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
+          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
+          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
+          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
+          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
+          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
+          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
+          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
+          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
+          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
+          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
+          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
+          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
+          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
+          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
+          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
+          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
+          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
+          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
+          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
+          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
+          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
+          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
+          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
+          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
+          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
+          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
+          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
+          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
+          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
+          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
+          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
+          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
+          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
+          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
+          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_NEWSARTICLE, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManyNewsArticle) {
+        return response.data.updateManyNewsArticle;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManyNewsArticle:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single NewsArticle record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.

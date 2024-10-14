@@ -46,7 +46,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
             }
@@ -375,7 +375,7 @@ export const Customer = {
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentMode: item.currentMode !== undefined ? item.currentMode : undefined,
+        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
     accounts: item.accounts ? {
       connectOrCreate: item.accounts.map((item: any) => ({
@@ -624,7 +624,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
             }
@@ -983,8 +983,8 @@ export const Customer = {
         jobTitle: item.jobTitle !== undefined ? {
             set: item.jobTitle  
            } : undefined,
-        currentMode: item.currentMode !== undefined ? {
-            set: item.currentMode  
+        currentAccount: item.currentAccount !== undefined ? {
+            set: item.currentAccount  
            } : undefined,
         plan: item.plan !== undefined ? {
             set: item.plan  
@@ -1324,7 +1324,7 @@ export const Customer = {
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentMode: item.currentMode !== undefined ? item.currentMode : undefined,
+        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
     accounts: item.accounts ? {
       connectOrCreate: item.accounts.map((item: any) => ({
@@ -1494,6 +1494,593 @@ export const Customer = {
   },
 
   /**
+   * Update multiple Customer records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: CustomerType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_CUSTOMER = gql`
+      mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
+        updateManyCustomer(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+        name: prop.name !== undefined ? {
+            equals: prop.name 
+           } : undefined,
+
+      },
+      data: {
+          authUserId: prop.authUserId !== undefined ? {
+            set: prop.authUserId 
+           } : undefined,
+  name: prop.name !== undefined ? {
+            set: prop.name 
+           } : undefined,
+  stripeCustomerId: prop.stripeCustomerId !== undefined ? {
+            set: prop.stripeCustomerId 
+           } : undefined,
+  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? {
+            set: prop.stripeSubscriptionId 
+           } : undefined,
+  stripePriceId: prop.stripePriceId !== undefined ? {
+            set: prop.stripePriceId 
+           } : undefined,
+  users: prop.users ? {
+    upsert: prop.users.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        name: item.name !== undefined ? {
+            equals: item.name 
+           } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        name: item.name !== undefined ? {
+            set: item.name  
+           } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email  
+           } : undefined,
+        emailVerified: item.emailVerified !== undefined ? {
+            set: item.emailVerified  
+           } : undefined,
+        image: item.image !== undefined ? {
+            set: item.image  
+           } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role  
+           } : undefined,
+        bio: item.bio !== undefined ? {
+            set: item.bio  
+           } : undefined,
+        jobTitle: item.jobTitle !== undefined ? {
+            set: item.jobTitle  
+           } : undefined,
+        currentAccount: item.currentAccount !== undefined ? {
+            set: item.currentAccount  
+           } : undefined,
+        plan: item.plan !== undefined ? {
+            set: item.plan  
+           } : undefined,
+    accounts: item.accounts ? {
+      upsert: item.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider  
+             } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId  
+             } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token  
+             } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token  
+             } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at  
+             } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type  
+             } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope  
+             } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token  
+             } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: item.sessions ? {
+      upsert: item.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          sessionToken: item.sessionToken !== undefined ? {
+              set: item.sessionToken  
+             } : undefined,
+          expires: item.expires !== undefined ? {
+              set: item.expires  
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: item.authenticators ? {
+      upsert: item.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          credentialID: item.credentialID !== undefined ? {
+              set: item.credentialID  
+             } : undefined,
+          publicKey: item.publicKey !== undefined ? {
+              set: item.publicKey  
+             } : undefined,
+          counter: item.counter !== undefined ? {
+              set: item.counter  
+             } : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: item.trades ? {
+      upsert: item.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: item.orders ? {
+      upsert: item.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: item.aiRecommendations ? {
+      upsert: item.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: item.riskAllocations ? {
+      upsert: item.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: item.alerts ? {
+      upsert: item.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: item.performanceMetrics ? {
+      upsert: item.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: item.tradingAccount ? {
+      upsert: item.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          name: item.name !== undefined ? {
+              set: item.name  
+             } : undefined,
+          slug: item.slug !== undefined ? {
+              set: item.slug  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+        },
+      }))
+    } : undefined,
+    alpacaAccounts: item.alpacaAccounts ? {
+      upsert: item.alpacaAccounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
+             } : undefined,
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: item.name !== undefined ? item.name : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
+        image: item.image !== undefined ? item.image : undefined,
+        role: item.role !== undefined ? item.role : undefined,
+        bio: item.bio !== undefined ? item.bio : undefined,
+        jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
+        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
+        plan: item.plan !== undefined ? item.plan : undefined,
+    accounts: item.accounts ? {
+      connectOrCreate: item.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: item.sessions ? {
+      connectOrCreate: item.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: item.authenticators ? {
+      connectOrCreate: item.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: item.trades ? {
+      connectOrCreate: item.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: item.orders ? {
+      connectOrCreate: item.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: item.aiRecommendations ? {
+      connectOrCreate: item.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: item.riskAllocations ? {
+      connectOrCreate: item.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: item.alerts ? {
+      connectOrCreate: item.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: item.performanceMetrics ? {
+      connectOrCreate: item.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: item.tradingAccount ? {
+      connectOrCreate: item.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+        },
+      }))
+    } : undefined,
+    alpacaAccounts: item.alpacaAccounts ? {
+      connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_CUSTOMER, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManyCustomer) {
+        return response.data.updateManyCustomer;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManyCustomer:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single Customer record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
@@ -1527,7 +2114,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
             }
@@ -1885,7 +2472,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
             }
@@ -2244,7 +2831,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
             }
@@ -2594,7 +3181,7 @@ export const Customer = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
             }

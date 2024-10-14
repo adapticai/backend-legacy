@@ -40,7 +40,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -370,7 +370,7 @@ export const Session = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
@@ -617,7 +617,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -974,8 +974,8 @@ export const Session = {
         jobTitle: props.user.jobTitle !== undefined ? {
             set: props.user.jobTitle  
            } : undefined,
-        currentMode: props.user.currentMode !== undefined ? {
-            set: props.user.currentMode  
+        currentAccount: props.user.currentAccount !== undefined ? {
+            set: props.user.currentAccount  
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
@@ -1337,7 +1337,7 @@ export const Session = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
@@ -1515,6 +1515,615 @@ export const Session = {
   },
 
   /**
+   * Update multiple Session records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: SessionType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_SESSION = gql`
+      mutation updateManySession($data: [SessionCreateManyInput!]!) {
+        updateManySession(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+
+      },
+      data: {
+          id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  sessionToken: prop.sessionToken !== undefined ? {
+            set: prop.sessionToken 
+           } : undefined,
+  user: prop.user ? {
+    upsert: {
+      where: {
+        id: prop.user.id !== undefined ? {
+            equals: prop.user.id 
+           } : undefined,
+        name: prop.user.name !== undefined ? {
+            equals: prop.user.name 
+           } : undefined,
+        email: prop.user.email !== undefined ? {
+            equals: prop.user.email 
+           } : undefined,
+      },
+      update: {
+        id: prop.user.id !== undefined ? {
+            set: prop.user.id  
+           } : undefined,
+        name: prop.user.name !== undefined ? {
+            set: prop.user.name  
+           } : undefined,
+        email: prop.user.email !== undefined ? {
+            set: prop.user.email  
+           } : undefined,
+        emailVerified: prop.user.emailVerified !== undefined ? {
+            set: prop.user.emailVerified  
+           } : undefined,
+        image: prop.user.image !== undefined ? {
+            set: prop.user.image  
+           } : undefined,
+        role: prop.user.role !== undefined ? {
+            set: prop.user.role  
+           } : undefined,
+        bio: prop.user.bio !== undefined ? {
+            set: prop.user.bio  
+           } : undefined,
+        jobTitle: prop.user.jobTitle !== undefined ? {
+            set: prop.user.jobTitle  
+           } : undefined,
+        currentAccount: prop.user.currentAccount !== undefined ? {
+            set: prop.user.currentAccount  
+           } : undefined,
+        plan: prop.user.plan !== undefined ? {
+            set: prop.user.plan  
+           } : undefined,
+    customer: prop.user.customer ? {
+      upsert: {
+        where: {
+          id: prop.user.customer.id !== undefined ? {
+              equals: prop.user.customer.id 
+             } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              equals: prop.user.customer.name 
+             } : undefined,
+        },
+        update: {
+          authUserId: prop.user.customer.authUserId !== undefined ? {
+              set: prop.user.customer.authUserId  
+             } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              set: prop.user.customer.name  
+             } : undefined,
+          plan: prop.user.customer.plan !== undefined ? {
+              set: prop.user.customer.plan  
+             } : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? {
+              set: prop.user.customer.stripeCustomerId  
+             } : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? {
+              set: prop.user.customer.stripeSubscriptionId  
+             } : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? {
+              set: prop.user.customer.stripePriceId  
+             } : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? {
+              set: prop.user.customer.stripeCurrentPeriodEnd  
+             } : undefined,
+        },
+        create: {
+          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
+          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
+          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: prop.user.accounts ? {
+      upsert: prop.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider  
+             } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId  
+             } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token  
+             } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token  
+             } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at  
+             } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type  
+             } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope  
+             } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token  
+             } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: prop.user.authenticators ? {
+      upsert: prop.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          credentialID: item.credentialID !== undefined ? {
+              set: item.credentialID  
+             } : undefined,
+          publicKey: item.publicKey !== undefined ? {
+              set: item.publicKey  
+             } : undefined,
+          counter: item.counter !== undefined ? {
+              set: item.counter  
+             } : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: prop.user.trades ? {
+      upsert: prop.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.user.orders ? {
+      upsert: prop.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.user.aiRecommendations ? {
+      upsert: prop.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: prop.user.riskAllocations ? {
+      upsert: prop.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: prop.user.alerts ? {
+      upsert: prop.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: prop.user.performanceMetrics ? {
+      upsert: prop.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: prop.user.tradingAccount ? {
+      upsert: prop.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          name: item.name !== undefined ? {
+              set: item.name  
+             } : undefined,
+          slug: item.slug !== undefined ? {
+              set: item.slug  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+        },
+      }))
+    } : undefined,
+    alpacaAccounts: prop.user.alpacaAccounts ? {
+      upsert: prop.user.alpacaAccounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
+             } : undefined,
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: prop.user.name !== undefined ? prop.user.name : undefined,
+        email: prop.user.email !== undefined ? prop.user.email : undefined,
+        emailVerified: prop.user.emailVerified !== undefined ? prop.user.emailVerified : undefined,
+        image: prop.user.image !== undefined ? prop.user.image : undefined,
+        role: prop.user.role !== undefined ? prop.user.role : undefined,
+        bio: prop.user.bio !== undefined ? prop.user.bio : undefined,
+        jobTitle: prop.user.jobTitle !== undefined ? prop.user.jobTitle : undefined,
+        currentAccount: prop.user.currentAccount !== undefined ? prop.user.currentAccount : undefined,
+        plan: prop.user.plan !== undefined ? prop.user.plan : undefined,
+    customer: prop.user.customer ? {
+      connectOrCreate: {
+        where: {
+          id: prop.user.customer.id !== undefined ? prop.user.customer.id : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              equals: prop.user.customer.name 
+             } : undefined,
+        },
+        create: {
+          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
+          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
+          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: prop.user.accounts ? {
+      connectOrCreate: prop.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: prop.user.authenticators ? {
+      connectOrCreate: prop.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    trades: prop.user.trades ? {
+      connectOrCreate: prop.user.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.user.orders ? {
+      connectOrCreate: prop.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.user.aiRecommendations ? {
+      connectOrCreate: prop.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: prop.user.riskAllocations ? {
+      connectOrCreate: prop.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: prop.user.alerts ? {
+      connectOrCreate: prop.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: prop.user.performanceMetrics ? {
+      connectOrCreate: prop.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: prop.user.tradingAccount ? {
+      connectOrCreate: prop.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+        },
+      }))
+    } : undefined,
+    alpacaAccounts: prop.user.alpacaAccounts ? {
+      connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_SESSION, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManySession) {
+        return response.data.updateManySession;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManySession:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single Session record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
@@ -1542,7 +2151,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -1900,7 +2509,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -2256,7 +2865,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -2606,7 +3215,7 @@ export const Session = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId

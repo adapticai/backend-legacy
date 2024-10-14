@@ -48,7 +48,7 @@ export const Trade = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -374,7 +374,7 @@ export const Trade = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
@@ -558,7 +558,7 @@ export const Trade = {
           role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
           bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
+          currentAccount: props.portfolio.user.currentAccount !== undefined ? props.portfolio.user.currentAccount : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
         },
       }
@@ -892,7 +892,7 @@ export const Trade = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -1244,8 +1244,8 @@ export const Trade = {
         jobTitle: props.user.jobTitle !== undefined ? {
             set: props.user.jobTitle  
            } : undefined,
-        currentMode: props.user.currentMode !== undefined ? {
-            set: props.user.currentMode  
+        currentAccount: props.user.currentAccount !== undefined ? {
+            set: props.user.currentAccount  
            } : undefined,
         plan: props.user.plan !== undefined ? {
             set: props.user.plan  
@@ -1591,7 +1591,7 @@ export const Trade = {
         role: props.user.role !== undefined ? props.user.role : undefined,
         bio: props.user.bio !== undefined ? props.user.bio : undefined,
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentMode: props.user.currentMode !== undefined ? props.user.currentMode : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
     customer: props.user.customer ? {
       connectOrCreate: {
@@ -1809,8 +1809,8 @@ export const Trade = {
           jobTitle: props.portfolio.user.jobTitle !== undefined ? {
               set: props.portfolio.user.jobTitle  
              } : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? {
-              set: props.portfolio.user.currentMode  
+          currentAccount: props.portfolio.user.currentAccount !== undefined ? {
+              set: props.portfolio.user.currentAccount  
              } : undefined,
           plan: props.portfolio.user.plan !== undefined ? {
               set: props.portfolio.user.plan  
@@ -1824,7 +1824,7 @@ export const Trade = {
           role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
           bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
+          currentAccount: props.portfolio.user.currentAccount !== undefined ? props.portfolio.user.currentAccount : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
         },
       }
@@ -2028,7 +2028,7 @@ export const Trade = {
           role: props.portfolio.user.role !== undefined ? props.portfolio.user.role : undefined,
           bio: props.portfolio.user.bio !== undefined ? props.portfolio.user.bio : undefined,
           jobTitle: props.portfolio.user.jobTitle !== undefined ? props.portfolio.user.jobTitle : undefined,
-          currentMode: props.portfolio.user.currentMode !== undefined ? props.portfolio.user.currentMode : undefined,
+          currentAccount: props.portfolio.user.currentAccount !== undefined ? props.portfolio.user.currentAccount : undefined,
           plan: props.portfolio.user.plan !== undefined ? props.portfolio.user.plan : undefined,
         },
       }
@@ -2608,6 +2608,1441 @@ export const Trade = {
   },
 
   /**
+   * Update multiple Trade records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: TradeType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_TRADE = gql`
+      mutation updateManyTrade($data: [TradeCreateManyInput!]!) {
+        updateManyTrade(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+
+      },
+      data: {
+          id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  action: prop.action !== undefined ? {
+            set: prop.action 
+           } : undefined,
+  status: prop.status !== undefined ? {
+            set: prop.status 
+           } : undefined,
+  user: prop.user ? {
+    upsert: {
+      where: {
+        id: prop.user.id !== undefined ? {
+            equals: prop.user.id 
+           } : undefined,
+        name: prop.user.name !== undefined ? {
+            equals: prop.user.name 
+           } : undefined,
+        email: prop.user.email !== undefined ? {
+            equals: prop.user.email 
+           } : undefined,
+      },
+      update: {
+        id: prop.user.id !== undefined ? {
+            set: prop.user.id  
+           } : undefined,
+        name: prop.user.name !== undefined ? {
+            set: prop.user.name  
+           } : undefined,
+        email: prop.user.email !== undefined ? {
+            set: prop.user.email  
+           } : undefined,
+        emailVerified: prop.user.emailVerified !== undefined ? {
+            set: prop.user.emailVerified  
+           } : undefined,
+        image: prop.user.image !== undefined ? {
+            set: prop.user.image  
+           } : undefined,
+        role: prop.user.role !== undefined ? {
+            set: prop.user.role  
+           } : undefined,
+        bio: prop.user.bio !== undefined ? {
+            set: prop.user.bio  
+           } : undefined,
+        jobTitle: prop.user.jobTitle !== undefined ? {
+            set: prop.user.jobTitle  
+           } : undefined,
+        currentAccount: prop.user.currentAccount !== undefined ? {
+            set: prop.user.currentAccount  
+           } : undefined,
+        plan: prop.user.plan !== undefined ? {
+            set: prop.user.plan  
+           } : undefined,
+    customer: prop.user.customer ? {
+      upsert: {
+        where: {
+          id: prop.user.customer.id !== undefined ? {
+              equals: prop.user.customer.id 
+             } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              equals: prop.user.customer.name 
+             } : undefined,
+        },
+        update: {
+          authUserId: prop.user.customer.authUserId !== undefined ? {
+              set: prop.user.customer.authUserId  
+             } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              set: prop.user.customer.name  
+             } : undefined,
+          plan: prop.user.customer.plan !== undefined ? {
+              set: prop.user.customer.plan  
+             } : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? {
+              set: prop.user.customer.stripeCustomerId  
+             } : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? {
+              set: prop.user.customer.stripeSubscriptionId  
+             } : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? {
+              set: prop.user.customer.stripePriceId  
+             } : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? {
+              set: prop.user.customer.stripeCurrentPeriodEnd  
+             } : undefined,
+        },
+        create: {
+          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
+          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
+          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: prop.user.accounts ? {
+      upsert: prop.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider  
+             } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId  
+             } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token  
+             } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token  
+             } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at  
+             } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type  
+             } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope  
+             } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token  
+             } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: prop.user.sessions ? {
+      upsert: prop.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          sessionToken: item.sessionToken !== undefined ? {
+              set: item.sessionToken  
+             } : undefined,
+          expires: item.expires !== undefined ? {
+              set: item.expires  
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: prop.user.authenticators ? {
+      upsert: prop.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          credentialID: item.credentialID !== undefined ? {
+              set: item.credentialID  
+             } : undefined,
+          publicKey: item.publicKey !== undefined ? {
+              set: item.publicKey  
+             } : undefined,
+          counter: item.counter !== undefined ? {
+              set: item.counter  
+             } : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.user.orders ? {
+      upsert: prop.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.user.aiRecommendations ? {
+      upsert: prop.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: prop.user.riskAllocations ? {
+      upsert: prop.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: prop.user.alerts ? {
+      upsert: prop.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: prop.user.performanceMetrics ? {
+      upsert: prop.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: prop.user.tradingAccount ? {
+      upsert: prop.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          name: item.name !== undefined ? {
+              set: item.name  
+             } : undefined,
+          slug: item.slug !== undefined ? {
+              set: item.slug  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+        },
+      }))
+    } : undefined,
+    alpacaAccounts: prop.user.alpacaAccounts ? {
+      upsert: prop.user.alpacaAccounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          APIKey: item.APIKey !== undefined ? {
+              set: item.APIKey  
+             } : undefined,
+          APISecret: item.APISecret !== undefined ? {
+              set: item.APISecret  
+             } : undefined,
+          configuration: item.configuration !== undefined ? {
+              set: item.configuration  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: prop.user.name !== undefined ? prop.user.name : undefined,
+        email: prop.user.email !== undefined ? prop.user.email : undefined,
+        emailVerified: prop.user.emailVerified !== undefined ? prop.user.emailVerified : undefined,
+        image: prop.user.image !== undefined ? prop.user.image : undefined,
+        role: prop.user.role !== undefined ? prop.user.role : undefined,
+        bio: prop.user.bio !== undefined ? prop.user.bio : undefined,
+        jobTitle: prop.user.jobTitle !== undefined ? prop.user.jobTitle : undefined,
+        currentAccount: prop.user.currentAccount !== undefined ? prop.user.currentAccount : undefined,
+        plan: prop.user.plan !== undefined ? prop.user.plan : undefined,
+    customer: prop.user.customer ? {
+      connectOrCreate: {
+        where: {
+          id: prop.user.customer.id !== undefined ? prop.user.customer.id : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              equals: prop.user.customer.name 
+             } : undefined,
+        },
+        create: {
+          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
+          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
+          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: prop.user.accounts ? {
+      connectOrCreate: prop.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: prop.user.sessions ? {
+      connectOrCreate: prop.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
+    authenticators: prop.user.authenticators ? {
+      connectOrCreate: prop.user.authenticators.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+          counter: item.counter !== undefined ? item.counter : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.user.orders ? {
+      connectOrCreate: prop.user.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.user.aiRecommendations ? {
+      connectOrCreate: prop.user.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: prop.user.riskAllocations ? {
+      connectOrCreate: prop.user.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: prop.user.alerts ? {
+      connectOrCreate: prop.user.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: prop.user.performanceMetrics ? {
+      connectOrCreate: prop.user.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    tradingAccount: prop.user.tradingAccount ? {
+      connectOrCreate: prop.user.tradingAccount.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          name: item.name !== undefined ? {
+              equals: item.name 
+             } : undefined,
+        },
+        create: {
+          name: item.name !== undefined ? item.name : undefined,
+          slug: item.slug !== undefined ? item.slug : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+        },
+      }))
+    } : undefined,
+    alpacaAccounts: prop.user.alpacaAccounts ? {
+      connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  portfolio: prop.portfolio ? {
+    upsert: {
+      where: {
+        id: prop.portfolio.id !== undefined ? {
+            equals: prop.portfolio.id 
+           } : undefined,
+        name: prop.portfolio.name !== undefined ? {
+            equals: prop.portfolio.name 
+           } : undefined,
+        slug: prop.portfolio.slug !== undefined ? {
+            equals: prop.portfolio.slug 
+           } : undefined,
+      },
+      update: {
+        id: prop.portfolio.id !== undefined ? {
+            set: prop.portfolio.id  
+           } : undefined,
+        name: prop.portfolio.name !== undefined ? {
+            set: prop.portfolio.name  
+           } : undefined,
+        slug: prop.portfolio.slug !== undefined ? {
+            set: prop.portfolio.slug  
+           } : undefined,
+        type: prop.portfolio.type !== undefined ? {
+            set: prop.portfolio.type  
+           } : undefined,
+    user: prop.portfolio.user ? {
+      upsert: {
+        where: {
+          id: prop.portfolio.user.id !== undefined ? {
+              equals: prop.portfolio.user.id 
+             } : undefined,
+          name: prop.portfolio.user.name !== undefined ? {
+              equals: prop.portfolio.user.name 
+             } : undefined,
+          email: prop.portfolio.user.email !== undefined ? {
+              equals: prop.portfolio.user.email 
+             } : undefined,
+        },
+        update: {
+          id: prop.portfolio.user.id !== undefined ? {
+              set: prop.portfolio.user.id  
+             } : undefined,
+          name: prop.portfolio.user.name !== undefined ? {
+              set: prop.portfolio.user.name  
+             } : undefined,
+          email: prop.portfolio.user.email !== undefined ? {
+              set: prop.portfolio.user.email  
+             } : undefined,
+          emailVerified: prop.portfolio.user.emailVerified !== undefined ? {
+              set: prop.portfolio.user.emailVerified  
+             } : undefined,
+          image: prop.portfolio.user.image !== undefined ? {
+              set: prop.portfolio.user.image  
+             } : undefined,
+          role: prop.portfolio.user.role !== undefined ? {
+              set: prop.portfolio.user.role  
+             } : undefined,
+          bio: prop.portfolio.user.bio !== undefined ? {
+              set: prop.portfolio.user.bio  
+             } : undefined,
+          jobTitle: prop.portfolio.user.jobTitle !== undefined ? {
+              set: prop.portfolio.user.jobTitle  
+             } : undefined,
+          currentAccount: prop.portfolio.user.currentAccount !== undefined ? {
+              set: prop.portfolio.user.currentAccount  
+             } : undefined,
+          plan: prop.portfolio.user.plan !== undefined ? {
+              set: prop.portfolio.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: prop.portfolio.user.name !== undefined ? prop.portfolio.user.name : undefined,
+          email: prop.portfolio.user.email !== undefined ? prop.portfolio.user.email : undefined,
+          emailVerified: prop.portfolio.user.emailVerified !== undefined ? prop.portfolio.user.emailVerified : undefined,
+          image: prop.portfolio.user.image !== undefined ? prop.portfolio.user.image : undefined,
+          role: prop.portfolio.user.role !== undefined ? prop.portfolio.user.role : undefined,
+          bio: prop.portfolio.user.bio !== undefined ? prop.portfolio.user.bio : undefined,
+          jobTitle: prop.portfolio.user.jobTitle !== undefined ? prop.portfolio.user.jobTitle : undefined,
+          currentAccount: prop.portfolio.user.currentAccount !== undefined ? prop.portfolio.user.currentAccount : undefined,
+          plan: prop.portfolio.user.plan !== undefined ? prop.portfolio.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    holdings: prop.portfolio.holdings ? {
+      upsert: prop.portfolio.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          averagePrice: item.averagePrice !== undefined ? {
+              set: item.averagePrice  
+             } : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.portfolio.orders ? {
+      upsert: prop.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.portfolio.aiRecommendations ? {
+      upsert: prop.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: prop.portfolio.riskAllocations ? {
+      upsert: prop.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          assetType: item.assetType !== undefined ? {
+              set: item.assetType  
+             } : undefined,
+          allocation: item.allocation !== undefined ? {
+              set: item.allocation  
+             } : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: prop.portfolio.alerts ? {
+      upsert: prop.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: prop.portfolio.performanceMetrics ? {
+      upsert: prop.portfolio.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          label: item.label !== undefined ? {
+              set: item.label  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    environmentVariables: prop.portfolio.environmentVariables ? {
+      upsert: prop.portfolio.environmentVariables.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          key: item.key !== undefined ? {
+              set: item.key  
+             } : undefined,
+          value: item.value !== undefined ? {
+              set: item.value  
+             } : undefined,
+          description: item.description !== undefined ? {
+              set: item.description  
+             } : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: prop.portfolio.name !== undefined ? prop.portfolio.name : undefined,
+        slug: prop.portfolio.slug !== undefined ? prop.portfolio.slug : undefined,
+        type: prop.portfolio.type !== undefined ? prop.portfolio.type : undefined,
+    user: prop.portfolio.user ? {
+      connectOrCreate: {
+        where: {
+          id: prop.portfolio.user.id !== undefined ? prop.portfolio.user.id : undefined,
+          email: prop.portfolio.user.email !== undefined ? prop.portfolio.user.email : undefined,
+          name: prop.portfolio.user.name !== undefined ? {
+              equals: prop.portfolio.user.name 
+             } : undefined,
+        },
+        create: {
+          name: prop.portfolio.user.name !== undefined ? prop.portfolio.user.name : undefined,
+          email: prop.portfolio.user.email !== undefined ? prop.portfolio.user.email : undefined,
+          emailVerified: prop.portfolio.user.emailVerified !== undefined ? prop.portfolio.user.emailVerified : undefined,
+          image: prop.portfolio.user.image !== undefined ? prop.portfolio.user.image : undefined,
+          role: prop.portfolio.user.role !== undefined ? prop.portfolio.user.role : undefined,
+          bio: prop.portfolio.user.bio !== undefined ? prop.portfolio.user.bio : undefined,
+          jobTitle: prop.portfolio.user.jobTitle !== undefined ? prop.portfolio.user.jobTitle : undefined,
+          currentAccount: prop.portfolio.user.currentAccount !== undefined ? prop.portfolio.user.currentAccount : undefined,
+          plan: prop.portfolio.user.plan !== undefined ? prop.portfolio.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    holdings: prop.portfolio.holdings ? {
+      connectOrCreate: prop.portfolio.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.portfolio.orders ? {
+      connectOrCreate: prop.portfolio.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.portfolio.aiRecommendations ? {
+      connectOrCreate: prop.portfolio.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    riskAllocations: prop.portfolio.riskAllocations ? {
+      connectOrCreate: prop.portfolio.riskAllocations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          assetType: item.assetType !== undefined ? item.assetType : undefined,
+          allocation: item.allocation !== undefined ? item.allocation : undefined,
+        },
+      }))
+    } : undefined,
+    alerts: prop.portfolio.alerts ? {
+      connectOrCreate: prop.portfolio.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+    performanceMetrics: prop.portfolio.performanceMetrics ? {
+      connectOrCreate: prop.portfolio.performanceMetrics.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          label: item.label !== undefined ? item.label : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+        },
+      }))
+    } : undefined,
+    environmentVariables: prop.portfolio.environmentVariables ? {
+      connectOrCreate: prop.portfolio.environmentVariables.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? {
+              equals: item.key 
+             } : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          value: item.value !== undefined ? item.value : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  asset: prop.asset ? {
+    upsert: {
+      where: {
+        id: prop.asset.id !== undefined ? {
+            equals: prop.asset.id 
+           } : undefined,
+        symbol: prop.asset.symbol !== undefined ? {
+            equals: prop.asset.symbol 
+           } : undefined,
+        name: prop.asset.name !== undefined ? {
+            equals: prop.asset.name 
+           } : undefined,
+      },
+      update: {
+        id: prop.asset.id !== undefined ? {
+            set: prop.asset.id  
+           } : undefined,
+        symbol: prop.asset.symbol !== undefined ? {
+            set: prop.asset.symbol  
+           } : undefined,
+        name: prop.asset.name !== undefined ? {
+            set: prop.asset.name  
+           } : undefined,
+        type: prop.asset.type !== undefined ? {
+            set: prop.asset.type  
+           } : undefined,
+        logoUrl: prop.asset.logoUrl !== undefined ? {
+            set: prop.asset.logoUrl  
+           } : undefined,
+        description: prop.asset.description !== undefined ? {
+            set: prop.asset.description  
+           } : undefined,
+        cik: prop.asset.cik !== undefined ? {
+            set: prop.asset.cik  
+           } : undefined,
+        exchange: prop.asset.exchange !== undefined ? {
+            set: prop.asset.exchange  
+           } : undefined,
+        currency: prop.asset.currency !== undefined ? {
+            set: prop.asset.currency  
+           } : undefined,
+        country: prop.asset.country !== undefined ? {
+            set: prop.asset.country  
+           } : undefined,
+        sector: prop.asset.sector !== undefined ? {
+            set: prop.asset.sector  
+           } : undefined,
+        industry: prop.asset.industry !== undefined ? {
+            set: prop.asset.industry  
+           } : undefined,
+        address: prop.asset.address !== undefined ? {
+            set: prop.asset.address  
+           } : undefined,
+        officialSite: prop.asset.officialSite !== undefined ? {
+            set: prop.asset.officialSite  
+           } : undefined,
+        fiscalYearEnd: prop.asset.fiscalYearEnd !== undefined ? {
+            set: prop.asset.fiscalYearEnd  
+           } : undefined,
+        latestQuarter: prop.asset.latestQuarter !== undefined ? {
+            set: prop.asset.latestQuarter  
+           } : undefined,
+        marketCapitalization: prop.asset.marketCapitalization !== undefined ? {
+            set: prop.asset.marketCapitalization  
+           } : undefined,
+        ebitda: prop.asset.ebitda !== undefined ? {
+            set: prop.asset.ebitda  
+           } : undefined,
+        peRatio: prop.asset.peRatio !== undefined ? {
+            set: prop.asset.peRatio  
+           } : undefined,
+        pegRatio: prop.asset.pegRatio !== undefined ? {
+            set: prop.asset.pegRatio  
+           } : undefined,
+        bookValue: prop.asset.bookValue !== undefined ? {
+            set: prop.asset.bookValue  
+           } : undefined,
+        dividendPerShare: prop.asset.dividendPerShare !== undefined ? {
+            set: prop.asset.dividendPerShare  
+           } : undefined,
+        dividendYield: prop.asset.dividendYield !== undefined ? {
+            set: prop.asset.dividendYield  
+           } : undefined,
+        eps: prop.asset.eps !== undefined ? {
+            set: prop.asset.eps  
+           } : undefined,
+        revenuePerShareTTM: prop.asset.revenuePerShareTTM !== undefined ? {
+            set: prop.asset.revenuePerShareTTM  
+           } : undefined,
+        profitMargin: prop.asset.profitMargin !== undefined ? {
+            set: prop.asset.profitMargin  
+           } : undefined,
+        operatingMarginTTM: prop.asset.operatingMarginTTM !== undefined ? {
+            set: prop.asset.operatingMarginTTM  
+           } : undefined,
+        returnOnAssetsTTM: prop.asset.returnOnAssetsTTM !== undefined ? {
+            set: prop.asset.returnOnAssetsTTM  
+           } : undefined,
+        returnOnEquityTTM: prop.asset.returnOnEquityTTM !== undefined ? {
+            set: prop.asset.returnOnEquityTTM  
+           } : undefined,
+        revenueTTM: prop.asset.revenueTTM !== undefined ? {
+            set: prop.asset.revenueTTM  
+           } : undefined,
+        grossProfitTTM: prop.asset.grossProfitTTM !== undefined ? {
+            set: prop.asset.grossProfitTTM  
+           } : undefined,
+        dilutedEPSTTM: prop.asset.dilutedEPSTTM !== undefined ? {
+            set: prop.asset.dilutedEPSTTM  
+           } : undefined,
+        quarterlyEarningsGrowthYOY: prop.asset.quarterlyEarningsGrowthYOY !== undefined ? {
+            set: prop.asset.quarterlyEarningsGrowthYOY  
+           } : undefined,
+        quarterlyRevenueGrowthYOY: prop.asset.quarterlyRevenueGrowthYOY !== undefined ? {
+            set: prop.asset.quarterlyRevenueGrowthYOY  
+           } : undefined,
+        analystTargetPrice: prop.asset.analystTargetPrice !== undefined ? {
+            set: prop.asset.analystTargetPrice  
+           } : undefined,
+        analystRatingStrongBuy: prop.asset.analystRatingStrongBuy !== undefined ? {
+            set: prop.asset.analystRatingStrongBuy  
+           } : undefined,
+        analystRatingBuy: prop.asset.analystRatingBuy !== undefined ? {
+            set: prop.asset.analystRatingBuy  
+           } : undefined,
+        analystRatingHold: prop.asset.analystRatingHold !== undefined ? {
+            set: prop.asset.analystRatingHold  
+           } : undefined,
+        analystRatingSell: prop.asset.analystRatingSell !== undefined ? {
+            set: prop.asset.analystRatingSell  
+           } : undefined,
+        analystRatingStrongSell: prop.asset.analystRatingStrongSell !== undefined ? {
+            set: prop.asset.analystRatingStrongSell  
+           } : undefined,
+        trailingPE: prop.asset.trailingPE !== undefined ? {
+            set: prop.asset.trailingPE  
+           } : undefined,
+        forwardPE: prop.asset.forwardPE !== undefined ? {
+            set: prop.asset.forwardPE  
+           } : undefined,
+        priceToSalesRatioTTM: prop.asset.priceToSalesRatioTTM !== undefined ? {
+            set: prop.asset.priceToSalesRatioTTM  
+           } : undefined,
+        priceToBookRatio: prop.asset.priceToBookRatio !== undefined ? {
+            set: prop.asset.priceToBookRatio  
+           } : undefined,
+        evToRevenue: prop.asset.evToRevenue !== undefined ? {
+            set: prop.asset.evToRevenue  
+           } : undefined,
+        evToEbitda: prop.asset.evToEbitda !== undefined ? {
+            set: prop.asset.evToEbitda  
+           } : undefined,
+        beta: prop.asset.beta !== undefined ? {
+            set: prop.asset.beta  
+           } : undefined,
+        week52High: prop.asset.week52High !== undefined ? {
+            set: prop.asset.week52High  
+           } : undefined,
+        week52Low: prop.asset.week52Low !== undefined ? {
+            set: prop.asset.week52Low  
+           } : undefined,
+        day50MovingAverage: prop.asset.day50MovingAverage !== undefined ? {
+            set: prop.asset.day50MovingAverage  
+           } : undefined,
+        day200MovingAverage: prop.asset.day200MovingAverage !== undefined ? {
+            set: prop.asset.day200MovingAverage  
+           } : undefined,
+        sharesOutstanding: prop.asset.sharesOutstanding !== undefined ? {
+            set: prop.asset.sharesOutstanding  
+           } : undefined,
+        dividendDate: prop.asset.dividendDate !== undefined ? {
+            set: prop.asset.dividendDate  
+           } : undefined,
+        exDividendDate: prop.asset.exDividendDate !== undefined ? {
+            set: prop.asset.exDividendDate  
+           } : undefined,
+    holdings: prop.asset.holdings ? {
+      upsert: prop.asset.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          averagePrice: item.averagePrice !== undefined ? {
+              set: item.averagePrice  
+             } : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.asset.orders ? {
+      upsert: prop.asset.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.asset.aiRecommendations ? {
+      upsert: prop.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
+             } : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    newsMentions: prop.asset.newsMentions ? {
+      upsert: prop.asset.newsMentions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          url: item.url !== undefined ? {
+              set: item.url  
+             } : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore  
+             } : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore  
+             } : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel  
+             } : undefined,
+        },
+        create: {
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        symbol: prop.asset.symbol !== undefined ? prop.asset.symbol : undefined,
+        name: prop.asset.name !== undefined ? prop.asset.name : undefined,
+        type: prop.asset.type !== undefined ? prop.asset.type : undefined,
+        logoUrl: prop.asset.logoUrl !== undefined ? prop.asset.logoUrl : undefined,
+        description: prop.asset.description !== undefined ? prop.asset.description : undefined,
+        cik: prop.asset.cik !== undefined ? prop.asset.cik : undefined,
+        exchange: prop.asset.exchange !== undefined ? prop.asset.exchange : undefined,
+        currency: prop.asset.currency !== undefined ? prop.asset.currency : undefined,
+        country: prop.asset.country !== undefined ? prop.asset.country : undefined,
+        sector: prop.asset.sector !== undefined ? prop.asset.sector : undefined,
+        industry: prop.asset.industry !== undefined ? prop.asset.industry : undefined,
+        address: prop.asset.address !== undefined ? prop.asset.address : undefined,
+        officialSite: prop.asset.officialSite !== undefined ? prop.asset.officialSite : undefined,
+        fiscalYearEnd: prop.asset.fiscalYearEnd !== undefined ? prop.asset.fiscalYearEnd : undefined,
+        latestQuarter: prop.asset.latestQuarter !== undefined ? prop.asset.latestQuarter : undefined,
+        marketCapitalization: prop.asset.marketCapitalization !== undefined ? prop.asset.marketCapitalization : undefined,
+        ebitda: prop.asset.ebitda !== undefined ? prop.asset.ebitda : undefined,
+        peRatio: prop.asset.peRatio !== undefined ? prop.asset.peRatio : undefined,
+        pegRatio: prop.asset.pegRatio !== undefined ? prop.asset.pegRatio : undefined,
+        bookValue: prop.asset.bookValue !== undefined ? prop.asset.bookValue : undefined,
+        dividendPerShare: prop.asset.dividendPerShare !== undefined ? prop.asset.dividendPerShare : undefined,
+        dividendYield: prop.asset.dividendYield !== undefined ? prop.asset.dividendYield : undefined,
+        eps: prop.asset.eps !== undefined ? prop.asset.eps : undefined,
+        revenuePerShareTTM: prop.asset.revenuePerShareTTM !== undefined ? prop.asset.revenuePerShareTTM : undefined,
+        profitMargin: prop.asset.profitMargin !== undefined ? prop.asset.profitMargin : undefined,
+        operatingMarginTTM: prop.asset.operatingMarginTTM !== undefined ? prop.asset.operatingMarginTTM : undefined,
+        returnOnAssetsTTM: prop.asset.returnOnAssetsTTM !== undefined ? prop.asset.returnOnAssetsTTM : undefined,
+        returnOnEquityTTM: prop.asset.returnOnEquityTTM !== undefined ? prop.asset.returnOnEquityTTM : undefined,
+        revenueTTM: prop.asset.revenueTTM !== undefined ? prop.asset.revenueTTM : undefined,
+        grossProfitTTM: prop.asset.grossProfitTTM !== undefined ? prop.asset.grossProfitTTM : undefined,
+        dilutedEPSTTM: prop.asset.dilutedEPSTTM !== undefined ? prop.asset.dilutedEPSTTM : undefined,
+        quarterlyEarningsGrowthYOY: prop.asset.quarterlyEarningsGrowthYOY !== undefined ? prop.asset.quarterlyEarningsGrowthYOY : undefined,
+        quarterlyRevenueGrowthYOY: prop.asset.quarterlyRevenueGrowthYOY !== undefined ? prop.asset.quarterlyRevenueGrowthYOY : undefined,
+        analystTargetPrice: prop.asset.analystTargetPrice !== undefined ? prop.asset.analystTargetPrice : undefined,
+        analystRatingStrongBuy: prop.asset.analystRatingStrongBuy !== undefined ? prop.asset.analystRatingStrongBuy : undefined,
+        analystRatingBuy: prop.asset.analystRatingBuy !== undefined ? prop.asset.analystRatingBuy : undefined,
+        analystRatingHold: prop.asset.analystRatingHold !== undefined ? prop.asset.analystRatingHold : undefined,
+        analystRatingSell: prop.asset.analystRatingSell !== undefined ? prop.asset.analystRatingSell : undefined,
+        analystRatingStrongSell: prop.asset.analystRatingStrongSell !== undefined ? prop.asset.analystRatingStrongSell : undefined,
+        trailingPE: prop.asset.trailingPE !== undefined ? prop.asset.trailingPE : undefined,
+        forwardPE: prop.asset.forwardPE !== undefined ? prop.asset.forwardPE : undefined,
+        priceToSalesRatioTTM: prop.asset.priceToSalesRatioTTM !== undefined ? prop.asset.priceToSalesRatioTTM : undefined,
+        priceToBookRatio: prop.asset.priceToBookRatio !== undefined ? prop.asset.priceToBookRatio : undefined,
+        evToRevenue: prop.asset.evToRevenue !== undefined ? prop.asset.evToRevenue : undefined,
+        evToEbitda: prop.asset.evToEbitda !== undefined ? prop.asset.evToEbitda : undefined,
+        beta: prop.asset.beta !== undefined ? prop.asset.beta : undefined,
+        week52High: prop.asset.week52High !== undefined ? prop.asset.week52High : undefined,
+        week52Low: prop.asset.week52Low !== undefined ? prop.asset.week52Low : undefined,
+        day50MovingAverage: prop.asset.day50MovingAverage !== undefined ? prop.asset.day50MovingAverage : undefined,
+        day200MovingAverage: prop.asset.day200MovingAverage !== undefined ? prop.asset.day200MovingAverage : undefined,
+        sharesOutstanding: prop.asset.sharesOutstanding !== undefined ? prop.asset.sharesOutstanding : undefined,
+        dividendDate: prop.asset.dividendDate !== undefined ? prop.asset.dividendDate : undefined,
+        exDividendDate: prop.asset.exDividendDate !== undefined ? prop.asset.exDividendDate : undefined,
+    holdings: prop.asset.holdings ? {
+      connectOrCreate: prop.asset.holdings.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.asset.orders ? {
+      connectOrCreate: prop.asset.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    aiRecommendations: prop.asset.aiRecommendations ? {
+      connectOrCreate: prop.asset.aiRecommendations.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          action: item.action !== undefined ? item.action : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
+        },
+      }))
+    } : undefined,
+    newsMentions: prop.asset.newsMentions ? {
+      connectOrCreate: prop.asset.newsMentions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+        },
+        create: {
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  steps: prop.steps ? {
+    upsert: prop.steps.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        sequence: item.sequence !== undefined ? {
+            set: item.sequence  
+           } : undefined,
+        action: item.action !== undefined ? {
+            set: item.action  
+           } : undefined,
+        hedgeType: item.hedgeType !== undefined ? {
+            set: item.hedgeType  
+           } : undefined,
+        hedgePrice: item.hedgePrice !== undefined ? {
+            set: item.hedgePrice  
+           } : undefined,
+        buyPrice: item.buyPrice !== undefined ? {
+            set: item.buyPrice  
+           } : undefined,
+        sellPrice: item.sellPrice !== undefined ? {
+            set: item.sellPrice  
+           } : undefined,
+        qty: item.qty !== undefined ? {
+            set: item.qty  
+           } : undefined,
+        side: item.side !== undefined ? {
+            set: item.side  
+           } : undefined,
+        type: item.type !== undefined ? {
+            set: item.type  
+           } : undefined,
+        stopLoss: item.stopLoss !== undefined ? {
+            set: item.stopLoss  
+           } : undefined,
+        targetPrice: item.targetPrice !== undefined ? {
+            set: item.targetPrice  
+           } : undefined,
+        note: item.note !== undefined ? {
+            set: item.note  
+           } : undefined,
+        executionTime: item.executionTime !== undefined ? {
+            set: item.executionTime  
+           } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status  
+           } : undefined,
+        fee: item.fee !== undefined ? {
+            set: item.fee  
+           } : undefined,
+      },
+      create: {
+        sequence: item.sequence !== undefined ? item.sequence : undefined,
+        action: item.action !== undefined ? item.action : undefined,
+        hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
+        hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
+        buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
+        sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
+        qty: item.qty !== undefined ? item.qty : undefined,
+        side: item.side !== undefined ? item.side : undefined,
+        type: item.type !== undefined ? item.type : undefined,
+        stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+        targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
+        note: item.note !== undefined ? item.note : undefined,
+        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        fee: item.fee !== undefined ? item.fee : undefined,
+      },
+    }))
+  } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_TRADE, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManyTrade) {
+        return response.data.updateManyTrade;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManyTrade:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single Trade record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
@@ -2643,7 +4078,7 @@ export const Trade = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -3001,7 +4436,7 @@ export const Trade = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -3357,7 +4792,7 @@ export const Trade = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId
@@ -3707,7 +5142,7 @@ export const Trade = {
             role
             bio
             jobTitle
-            currentMode
+            currentAccount
             customer {
               id
               authUserId

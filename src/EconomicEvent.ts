@@ -167,6 +167,65 @@ export const EconomicEvent = {
   },
 
   /**
+   * Update multiple EconomicEvent records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_ECONOMICEVENT = gql`
+      mutation updateManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
+        updateManyEconomicEvent(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+        title: prop.title !== undefined ? {
+            equals: prop.title 
+           } : undefined,
+
+      },
+      data: {
+          id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  title: prop.title !== undefined ? {
+            set: prop.title 
+           } : undefined,
+  description: prop.description !== undefined ? {
+            set: prop.description 
+           } : undefined,
+  importance: prop.importance !== undefined ? {
+            set: prop.importance 
+           } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_ECONOMICEVENT, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManyEconomicEvent) {
+        return response.data.updateManyEconomicEvent;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManyEconomicEvent:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single EconomicEvent record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.

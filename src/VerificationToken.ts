@@ -153,6 +153,59 @@ export const VerificationToken = {
   },
 
   /**
+   * Update multiple VerificationToken records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_VERIFICATIONTOKEN = gql`
+      mutation updateManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
+        updateManyVerificationToken(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+
+      },
+      data: {
+          id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  identifier: prop.identifier !== undefined ? {
+            set: prop.identifier 
+           } : undefined,
+  token: prop.token !== undefined ? {
+            set: prop.token 
+           } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManyVerificationToken) {
+        return response.data.updateManyVerificationToken;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManyVerificationToken:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single VerificationToken record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.

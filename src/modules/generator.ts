@@ -729,7 +729,7 @@ ${selectionSet}        }
 
   /**
    * Create multiple ${capitalModelName} records.
-   * @param props - Array of properties for the new records.
+   * @param props - Array of ${capitalModelName} objects for the new records.
    * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
@@ -821,6 +821,63 @@ ${constructVariablesObject(
       }
     } catch (error) {
       console.error('Error in updateOne${capitalModelName}:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Update multiple ${capitalModelName} records.
+   * @param props - Array of ${capitalModelName} objects for the updated records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+      mutation updateMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
+        updateMany${capitalModelName}(data: $data) {
+          count
+        }
+      }\`;
+
+    const variables = props.map(prop => ({
+      where: {
+        ${constructVariablesObject(
+    'prop',
+    inputTypePaths.whereUnique,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'where'
+  )}
+      },
+      data: {
+        ${constructVariablesObject(
+    'prop',
+    inputTypePaths.update,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'updateMany'
+  )}
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateMany${capitalModelName}) {
+        return response.data.updateMany${capitalModelName};
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateMany${capitalModelName}:', error);
       throw error;
     }
   },

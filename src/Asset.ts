@@ -105,7 +105,7 @@ export const Asset = {
                 role
                 bio
                 jobTitle
-                currentMode
+                currentAccount
                 customer {
                   id
                 }
@@ -438,7 +438,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -514,7 +514,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -563,7 +563,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -831,7 +831,7 @@ export const Asset = {
                 role
                 bio
                 jobTitle
-                currentMode
+                currentAccount
                 customer {
                   id
                 }
@@ -1358,8 +1358,8 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentMode: item.user.currentMode !== undefined ? {
-              set: item.user.currentMode  
+          currentAccount: item.user.currentAccount !== undefined ? {
+              set: item.user.currentAccount  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1373,7 +1373,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1511,7 +1511,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1621,8 +1621,8 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentMode: item.user.currentMode !== undefined ? {
-              set: item.user.currentMode  
+          currentAccount: item.user.currentAccount !== undefined ? {
+              set: item.user.currentAccount  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1636,7 +1636,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1699,7 +1699,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1776,8 +1776,8 @@ export const Asset = {
           jobTitle: item.user.jobTitle !== undefined ? {
               set: item.user.jobTitle  
              } : undefined,
-          currentMode: item.user.currentMode !== undefined ? {
-              set: item.user.currentMode  
+          currentAccount: item.user.currentAccount !== undefined ? {
+              set: item.user.currentAccount  
              } : undefined,
           plan: item.user.plan !== undefined ? {
               set: item.user.plan  
@@ -1791,7 +1791,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -1851,7 +1851,7 @@ export const Asset = {
           role: item.user.role !== undefined ? item.user.role : undefined,
           bio: item.user.bio !== undefined ? item.user.bio : undefined,
           jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentMode: item.user.currentMode !== undefined ? item.user.currentMode : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
         },
       }
@@ -2026,6 +2026,999 @@ export const Asset = {
   },
 
   /**
+   * Update multiple Asset records.
+   * @param props - Array of properties for the new records.
+   * @param client - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async updateMany(props: AssetType[]): Promise<{ count: number } | null> {
+
+    const client = createApolloClient();
+
+      const UPDATE_MANY_ASSET = gql`
+      mutation updateManyAsset($data: [AssetCreateManyInput!]!) {
+        updateManyAsset(data: $data) {
+          count
+        }
+      }`;
+
+    const variables = props.map(prop => ({
+      where: {
+                id: prop.id !== undefined ? prop.id : undefined,
+        symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+        name: prop.name !== undefined ? prop.name : undefined,
+
+      },
+      data: {
+          id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  name: prop.name !== undefined ? {
+            set: prop.name 
+           } : undefined,
+  type: prop.type !== undefined ? {
+            set: prop.type 
+           } : undefined,
+  logoUrl: prop.logoUrl !== undefined ? {
+            set: prop.logoUrl 
+           } : undefined,
+  description: prop.description !== undefined ? {
+            set: prop.description 
+           } : undefined,
+  cik: prop.cik !== undefined ? {
+            set: prop.cik 
+           } : undefined,
+  exchange: prop.exchange !== undefined ? {
+            set: prop.exchange 
+           } : undefined,
+  currency: prop.currency !== undefined ? {
+            set: prop.currency 
+           } : undefined,
+  country: prop.country !== undefined ? {
+            set: prop.country 
+           } : undefined,
+  sector: prop.sector !== undefined ? {
+            set: prop.sector 
+           } : undefined,
+  industry: prop.industry !== undefined ? {
+            set: prop.industry 
+           } : undefined,
+  address: prop.address !== undefined ? {
+            set: prop.address 
+           } : undefined,
+  officialSite: prop.officialSite !== undefined ? {
+            set: prop.officialSite 
+           } : undefined,
+  fiscalYearEnd: prop.fiscalYearEnd !== undefined ? {
+            set: prop.fiscalYearEnd 
+           } : undefined,
+  latestQuarter: prop.latestQuarter !== undefined ? {
+            set: prop.latestQuarter 
+           } : undefined,
+  marketCapitalization: prop.marketCapitalization !== undefined ? {
+            set: prop.marketCapitalization 
+           } : undefined,
+  ebitda: prop.ebitda !== undefined ? {
+            set: prop.ebitda 
+           } : undefined,
+  peRatio: prop.peRatio !== undefined ? {
+            set: prop.peRatio 
+           } : undefined,
+  pegRatio: prop.pegRatio !== undefined ? {
+            set: prop.pegRatio 
+           } : undefined,
+  bookValue: prop.bookValue !== undefined ? {
+            set: prop.bookValue 
+           } : undefined,
+  dividendPerShare: prop.dividendPerShare !== undefined ? {
+            set: prop.dividendPerShare 
+           } : undefined,
+  dividendYield: prop.dividendYield !== undefined ? {
+            set: prop.dividendYield 
+           } : undefined,
+  eps: prop.eps !== undefined ? {
+            set: prop.eps 
+           } : undefined,
+  revenuePerShareTTM: prop.revenuePerShareTTM !== undefined ? {
+            set: prop.revenuePerShareTTM 
+           } : undefined,
+  profitMargin: prop.profitMargin !== undefined ? {
+            set: prop.profitMargin 
+           } : undefined,
+  operatingMarginTTM: prop.operatingMarginTTM !== undefined ? {
+            set: prop.operatingMarginTTM 
+           } : undefined,
+  returnOnAssetsTTM: prop.returnOnAssetsTTM !== undefined ? {
+            set: prop.returnOnAssetsTTM 
+           } : undefined,
+  returnOnEquityTTM: prop.returnOnEquityTTM !== undefined ? {
+            set: prop.returnOnEquityTTM 
+           } : undefined,
+  revenueTTM: prop.revenueTTM !== undefined ? {
+            set: prop.revenueTTM 
+           } : undefined,
+  grossProfitTTM: prop.grossProfitTTM !== undefined ? {
+            set: prop.grossProfitTTM 
+           } : undefined,
+  dilutedEPSTTM: prop.dilutedEPSTTM !== undefined ? {
+            set: prop.dilutedEPSTTM 
+           } : undefined,
+  quarterlyEarningsGrowthYOY: prop.quarterlyEarningsGrowthYOY !== undefined ? {
+            set: prop.quarterlyEarningsGrowthYOY 
+           } : undefined,
+  quarterlyRevenueGrowthYOY: prop.quarterlyRevenueGrowthYOY !== undefined ? {
+            set: prop.quarterlyRevenueGrowthYOY 
+           } : undefined,
+  analystTargetPrice: prop.analystTargetPrice !== undefined ? {
+            set: prop.analystTargetPrice 
+           } : undefined,
+  analystRatingStrongBuy: prop.analystRatingStrongBuy !== undefined ? {
+            set: prop.analystRatingStrongBuy 
+           } : undefined,
+  analystRatingBuy: prop.analystRatingBuy !== undefined ? {
+            set: prop.analystRatingBuy 
+           } : undefined,
+  analystRatingHold: prop.analystRatingHold !== undefined ? {
+            set: prop.analystRatingHold 
+           } : undefined,
+  analystRatingSell: prop.analystRatingSell !== undefined ? {
+            set: prop.analystRatingSell 
+           } : undefined,
+  analystRatingStrongSell: prop.analystRatingStrongSell !== undefined ? {
+            set: prop.analystRatingStrongSell 
+           } : undefined,
+  trailingPE: prop.trailingPE !== undefined ? {
+            set: prop.trailingPE 
+           } : undefined,
+  forwardPE: prop.forwardPE !== undefined ? {
+            set: prop.forwardPE 
+           } : undefined,
+  priceToSalesRatioTTM: prop.priceToSalesRatioTTM !== undefined ? {
+            set: prop.priceToSalesRatioTTM 
+           } : undefined,
+  priceToBookRatio: prop.priceToBookRatio !== undefined ? {
+            set: prop.priceToBookRatio 
+           } : undefined,
+  evToRevenue: prop.evToRevenue !== undefined ? {
+            set: prop.evToRevenue 
+           } : undefined,
+  evToEbitda: prop.evToEbitda !== undefined ? {
+            set: prop.evToEbitda 
+           } : undefined,
+  beta: prop.beta !== undefined ? {
+            set: prop.beta 
+           } : undefined,
+  week52High: prop.week52High !== undefined ? {
+            set: prop.week52High 
+           } : undefined,
+  week52Low: prop.week52Low !== undefined ? {
+            set: prop.week52Low 
+           } : undefined,
+  day50MovingAverage: prop.day50MovingAverage !== undefined ? {
+            set: prop.day50MovingAverage 
+           } : undefined,
+  day200MovingAverage: prop.day200MovingAverage !== undefined ? {
+            set: prop.day200MovingAverage 
+           } : undefined,
+  sharesOutstanding: prop.sharesOutstanding !== undefined ? {
+            set: prop.sharesOutstanding 
+           } : undefined,
+  dividendDate: prop.dividendDate !== undefined ? {
+            set: prop.dividendDate 
+           } : undefined,
+  exDividendDate: prop.exDividendDate !== undefined ? {
+            set: prop.exDividendDate 
+           } : undefined,
+  holdings: prop.holdings ? {
+    upsert: prop.holdings.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity  
+           } : undefined,
+        averagePrice: item.averagePrice !== undefined ? {
+            set: item.averagePrice  
+           } : undefined,
+    tradingAccount: item.tradingAccount ? {
+      upsert: {
+        where: {
+          id: item.tradingAccount.id !== undefined ? {
+              equals: item.tradingAccount.id 
+             } : undefined,
+          name: item.tradingAccount.name !== undefined ? {
+              equals: item.tradingAccount.name 
+             } : undefined,
+          slug: item.tradingAccount.slug !== undefined ? {
+              equals: item.tradingAccount.slug 
+             } : undefined,
+        },
+        update: {
+          id: item.tradingAccount.id !== undefined ? {
+              set: item.tradingAccount.id  
+             } : undefined,
+          name: item.tradingAccount.name !== undefined ? {
+              set: item.tradingAccount.name  
+             } : undefined,
+          slug: item.tradingAccount.slug !== undefined ? {
+              set: item.tradingAccount.slug  
+             } : undefined,
+          type: item.tradingAccount.type !== undefined ? {
+              set: item.tradingAccount.type  
+             } : undefined,
+        },
+        create: {
+          name: item.tradingAccount.name !== undefined ? item.tradingAccount.name : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          type: item.tradingAccount.type !== undefined ? item.tradingAccount.type : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
+    tradingAccount: item.tradingAccount ? {
+      connectOrCreate: {
+        where: {
+          id: item.tradingAccount.id !== undefined ? item.tradingAccount.id : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          name: item.tradingAccount.name !== undefined ? {
+              equals: item.tradingAccount.name 
+             } : undefined,
+        },
+        create: {
+          name: item.tradingAccount.name !== undefined ? item.tradingAccount.name : undefined,
+          slug: item.tradingAccount.slug !== undefined ? item.tradingAccount.slug : undefined,
+          type: item.tradingAccount.type !== undefined ? item.tradingAccount.type : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  trades: prop.trades ? {
+    upsert: prop.trades.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        action: item.action !== undefined ? {
+            set: item.action  
+           } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity  
+           } : undefined,
+        price: item.price !== undefined ? {
+            set: item.price  
+           } : undefined,
+        total: item.total !== undefined ? {
+            set: item.total  
+           } : undefined,
+        timestamp: item.timestamp !== undefined ? {
+            set: item.timestamp  
+           } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status  
+           } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          id: item.user.id !== undefined ? {
+              set: item.user.id  
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? {
+              set: item.user.currentAccount  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    portfolio: item.portfolio ? {
+      upsert: {
+        where: {
+          id: item.portfolio.id !== undefined ? {
+              equals: item.portfolio.id 
+             } : undefined,
+          name: item.portfolio.name !== undefined ? {
+              equals: item.portfolio.name 
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
+        },
+        update: {
+          id: item.portfolio.id !== undefined ? {
+              set: item.portfolio.id  
+             } : undefined,
+          name: item.portfolio.name !== undefined ? {
+              set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
+             } : undefined,
+          type: item.portfolio.type !== undefined ? {
+              set: item.portfolio.type  
+             } : undefined,
+        },
+        create: {
+          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+        },
+      }
+    } : undefined,
+    steps: item.steps ? {
+      upsert: item.steps.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          sequence: item.sequence !== undefined ? {
+              set: item.sequence  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          hedgeType: item.hedgeType !== undefined ? {
+              set: item.hedgeType  
+             } : undefined,
+          hedgePrice: item.hedgePrice !== undefined ? {
+              set: item.hedgePrice  
+             } : undefined,
+          buyPrice: item.buyPrice !== undefined ? {
+              set: item.buyPrice  
+             } : undefined,
+          sellPrice: item.sellPrice !== undefined ? {
+              set: item.sellPrice  
+             } : undefined,
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          side: item.side !== undefined ? {
+              set: item.side  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
+          targetPrice: item.targetPrice !== undefined ? {
+              set: item.targetPrice  
+             } : undefined,
+          note: item.note !== undefined ? {
+              set: item.note  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
+             } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
+          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
+          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
+          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        action: item.action !== undefined ? item.action : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        price: item.price !== undefined ? item.price : undefined,
+        total: item.total !== undefined ? item.total : undefined,
+        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    portfolio: item.portfolio ? {
+      connectOrCreate: {
+        where: {
+          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          name: item.portfolio.name !== undefined ? {
+              equals: item.portfolio.name 
+             } : undefined,
+        },
+        create: {
+          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+        },
+      }
+    } : undefined,
+    steps: item.steps ? {
+      connectOrCreate: item.steps.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
+          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
+          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
+          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  orders: prop.orders ? {
+    upsert: prop.orders.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        type: item.type !== undefined ? {
+            set: item.type  
+           } : undefined,
+        action: item.action !== undefined ? {
+            set: item.action  
+           } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity  
+           } : undefined,
+        price: item.price !== undefined ? {
+            set: item.price  
+           } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status  
+           } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          id: item.user.id !== undefined ? {
+              set: item.user.id  
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? {
+              set: item.user.currentAccount  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    portfolio: item.portfolio ? {
+      upsert: {
+        where: {
+          id: item.portfolio.id !== undefined ? {
+              equals: item.portfolio.id 
+             } : undefined,
+          name: item.portfolio.name !== undefined ? {
+              equals: item.portfolio.name 
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
+        },
+        update: {
+          id: item.portfolio.id !== undefined ? {
+              set: item.portfolio.id  
+             } : undefined,
+          name: item.portfolio.name !== undefined ? {
+              set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
+             } : undefined,
+          type: item.portfolio.type !== undefined ? {
+              set: item.portfolio.type  
+             } : undefined,
+        },
+        create: {
+          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        type: item.type !== undefined ? item.type : undefined,
+        action: item.action !== undefined ? item.action : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        price: item.price !== undefined ? item.price : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    portfolio: item.portfolio ? {
+      connectOrCreate: {
+        where: {
+          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          name: item.portfolio.name !== undefined ? {
+              equals: item.portfolio.name 
+             } : undefined,
+        },
+        create: {
+          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  aiRecommendations: prop.aiRecommendations ? {
+    upsert: prop.aiRecommendations.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        action: item.action !== undefined ? {
+            set: item.action  
+           } : undefined,
+        confidence: item.confidence !== undefined ? {
+            set: item.confidence  
+           } : undefined,
+    user: item.user ? {
+      upsert: {
+        where: {
+          id: item.user.id !== undefined ? {
+              equals: item.user.id 
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              equals: item.user.email 
+             } : undefined,
+        },
+        update: {
+          id: item.user.id !== undefined ? {
+              set: item.user.id  
+             } : undefined,
+          name: item.user.name !== undefined ? {
+              set: item.user.name  
+             } : undefined,
+          email: item.user.email !== undefined ? {
+              set: item.user.email  
+             } : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? {
+              set: item.user.emailVerified  
+             } : undefined,
+          image: item.user.image !== undefined ? {
+              set: item.user.image  
+             } : undefined,
+          role: item.user.role !== undefined ? {
+              set: item.user.role  
+             } : undefined,
+          bio: item.user.bio !== undefined ? {
+              set: item.user.bio  
+             } : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? {
+              set: item.user.jobTitle  
+             } : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? {
+              set: item.user.currentAccount  
+             } : undefined,
+          plan: item.user.plan !== undefined ? {
+              set: item.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    portfolio: item.portfolio ? {
+      upsert: {
+        where: {
+          id: item.portfolio.id !== undefined ? {
+              equals: item.portfolio.id 
+             } : undefined,
+          name: item.portfolio.name !== undefined ? {
+              equals: item.portfolio.name 
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              equals: item.portfolio.slug 
+             } : undefined,
+        },
+        update: {
+          id: item.portfolio.id !== undefined ? {
+              set: item.portfolio.id  
+             } : undefined,
+          name: item.portfolio.name !== undefined ? {
+              set: item.portfolio.name  
+             } : undefined,
+          slug: item.portfolio.slug !== undefined ? {
+              set: item.portfolio.slug  
+             } : undefined,
+          type: item.portfolio.type !== undefined ? {
+              set: item.portfolio.type  
+             } : undefined,
+        },
+        create: {
+          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        action: item.action !== undefined ? item.action : undefined,
+        confidence: item.confidence !== undefined ? item.confidence : undefined,
+    user: item.user ? {
+      connectOrCreate: {
+        where: {
+          id: item.user.id !== undefined ? item.user.id : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          name: item.user.name !== undefined ? {
+              equals: item.user.name 
+             } : undefined,
+        },
+        create: {
+          name: item.user.name !== undefined ? item.user.name : undefined,
+          email: item.user.email !== undefined ? item.user.email : undefined,
+          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
+          image: item.user.image !== undefined ? item.user.image : undefined,
+          role: item.user.role !== undefined ? item.user.role : undefined,
+          bio: item.user.bio !== undefined ? item.user.bio : undefined,
+          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
+          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
+          plan: item.user.plan !== undefined ? item.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    portfolio: item.portfolio ? {
+      connectOrCreate: {
+        where: {
+          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          name: item.portfolio.name !== undefined ? {
+              equals: item.portfolio.name 
+             } : undefined,
+        },
+        create: {
+          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
+          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
+          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  newsMentions: prop.newsMentions ? {
+    upsert: prop.newsMentions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        url: item.url !== undefined ? item.url : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id  
+           } : undefined,
+        url: item.url !== undefined ? {
+            set: item.url  
+           } : undefined,
+        relevancyScore: item.relevancyScore !== undefined ? {
+            set: item.relevancyScore  
+           } : undefined,
+        sentimentScore: item.sentimentScore !== undefined ? {
+            set: item.sentimentScore  
+           } : undefined,
+        sentimentLabel: item.sentimentLabel !== undefined ? {
+            set: item.sentimentLabel  
+           } : undefined,
+    news: item.news ? {
+      upsert: {
+        where: {
+          id: item.news.id !== undefined ? {
+              equals: item.news.id 
+             } : undefined,
+          title: item.news.title !== undefined ? {
+              equals: item.news.title 
+             } : undefined,
+          url: item.news.url !== undefined ? {
+              equals: item.news.url 
+             } : undefined,
+        },
+        update: {
+          id: item.news.id !== undefined ? {
+              set: item.news.id  
+             } : undefined,
+          title: item.news.title !== undefined ? {
+              set: item.news.title  
+             } : undefined,
+          content: item.news.content !== undefined ? {
+              set: item.news.content  
+             } : undefined,
+          source: item.news.source !== undefined ? {
+              set: item.news.source  
+             } : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? {
+              set: item.news.sourceDomain  
+             } : undefined,
+          url: item.news.url !== undefined ? {
+              set: item.news.url  
+             } : undefined,
+          sentiment: item.news.sentiment !== undefined ? {
+              set: item.news.sentiment  
+             } : undefined,
+          authors: item.news.authors !== undefined ? {
+              set: item.news.authors  
+             } : undefined,
+          summary: item.news.summary !== undefined ? {
+              set: item.news.summary  
+             } : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? {
+              set: item.news.bannerImage  
+             } : undefined,
+          timePublished: item.news.timePublished !== undefined ? {
+              set: item.news.timePublished  
+             } : undefined,
+          category: item.news.category !== undefined ? {
+              set: item.news.category  
+             } : undefined,
+          topics: item.news.topics !== undefined ? {
+              set: item.news.topics  
+             } : undefined,
+          logo: item.news.logo !== undefined ? {
+              set: item.news.logo  
+             } : undefined,
+        },
+        create: {
+          title: item.news.title !== undefined ? item.news.title : undefined,
+          content: item.news.content !== undefined ? item.news.content : undefined,
+          source: item.news.source !== undefined ? item.news.source : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
+          sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+          authors: item.news.authors !== undefined ? item.news.authors : undefined,
+          summary: item.news.summary !== undefined ? item.news.summary : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+          timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+          category: item.news.category !== undefined ? item.news.category : undefined,
+          topics: item.news.topics !== undefined ? item.news.topics : undefined,
+          logo: item.news.logo !== undefined ? item.news.logo : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        url: item.url !== undefined ? item.url : undefined,
+        relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+        sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+        sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+    news: item.news ? {
+      connectOrCreate: {
+        where: {
+          id: item.news.id !== undefined ? item.news.id : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
+          title: item.news.title !== undefined ? {
+              equals: item.news.title 
+             } : undefined,
+        },
+        create: {
+          title: item.news.title !== undefined ? item.news.title : undefined,
+          content: item.news.content !== undefined ? item.news.content : undefined,
+          source: item.news.source !== undefined ? item.news.source : undefined,
+          sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+          url: item.news.url !== undefined ? item.news.url : undefined,
+          sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+          authors: item.news.authors !== undefined ? item.news.authors : undefined,
+          summary: item.news.summary !== undefined ? item.news.summary : undefined,
+          bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+          timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+          category: item.news.category !== undefined ? item.news.category : undefined,
+          topics: item.news.topics !== undefined ? item.news.topics : undefined,
+          logo: item.news.logo !== undefined ? item.news.logo : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+
+      },
+      }));
+
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPDATE_MANY_ASSET, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.updateManyAsset) {
+        return response.data.updateManyAsset;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in updateManyAsset:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Delete a single Asset record.
    * @param props - Properties to update.
    * @param client - Apollo Client instance.
@@ -2118,7 +3111,7 @@ export const Asset = {
                 role
                 bio
                 jobTitle
-                currentMode
+                currentAccount
                 customer {
                   id
                 }
@@ -2454,7 +3447,7 @@ export const Asset = {
                 role
                 bio
                 jobTitle
-                currentMode
+                currentAccount
                 customer {
                   id
                 }
@@ -2790,7 +3783,7 @@ export const Asset = {
                 role
                 bio
                 jobTitle
-                currentMode
+                currentAccount
                 customer {
                   id
                 }
@@ -3118,7 +4111,7 @@ export const Asset = {
                 role
                 bio
                 jobTitle
-                currentMode
+                currentAccount
                 customer {
                   id
                 }
