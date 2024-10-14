@@ -6,7 +6,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context/context.cjs";
 import { getToken } from "./getToken";
-import { onError } from "@apollo/client/link/error";
+import { onError } from "@apollo/client/link/error/error.cjs";
 
 export type { NormalizedCacheObject, ApolloClient };
 
