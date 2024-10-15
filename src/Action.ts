@@ -1,29 +1,29 @@
 
 
-import { TradeStep as TradeStepType } from './generated/typegraphql-prisma/models/TradeStep';
+import { Action as ActionType } from './generated/typegraphql-prisma/models/Action';
 import { ApolloError, gql } from '@apollo/client';
 import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the TradeStep model.
+ * CRUD operations for the Action model.
  */
 
-export const TradeStep = {
+export const Action = {
 
   /**
-   * Create a new TradeStep record.
+   * Create a new Action record.
    * @param props - Properties for the new record.
-   * @returns The created TradeStep or null.
+   * @returns The created Action or null.
    */
 
-  async create(props: TradeStepType): Promise<TradeStepType> {
+  async create(props: ActionType): Promise<ActionType> {
 
   const client = createApolloClient();
 
-  const CREATE_ONE_TRADESTEP = gql`
-      mutation createOneTradeStep($data: TradeStepCreateInput!) {
-        createOneTradeStep(data: $data) {
+  const CREATE_ONE_ACTION = gql`
+      mutation createOneAction($data: ActionCreateInput!) {
+        createOneAction(data: $data) {
           id
           tradeId
           sequence
@@ -43,10 +43,8 @@ export const TradeStep = {
           fee
           trade {
             id
-            userId
-            portfolioId
+            alpacaAccountId
             assetId
-            action
             quantity
             price
             total
@@ -54,84 +52,59 @@ export const TradeStep = {
             createdAt
             updatedAt
             status
-            user {
+            account {
               id
-              name
-              email
-              emailVerified
-              image
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentAccount
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                orders {
+                  id
+                }
+                alerts {
+                  id
+                }
+                alpacaAccounts {
+                  id
+                }
+              }
+              userId
               createdAt
               updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
               trades {
                 id
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -143,51 +116,41 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
                   id
                 }
-                portfolio {
-                  id
-                }
+                alpacaAccountId
               }
-              alerts {
+              Alert {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -196,78 +159,10 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              tradingAccount {
-                id
-                name
-                slug
-                type
-                user {
-                  id
-                }
-                userId
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              alpacaAccounts {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-              }
-            }
-            portfolio {
-              id
             }
             asset {
               id
@@ -326,28 +221,13 @@ export const TradeStep = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -366,7 +246,7 @@ export const TradeStep = {
                 sentimentLabel
               }
             }
-            steps {
+            actions {
               id
             }
           }
@@ -397,47 +277,22 @@ export const TradeStep = {
         id: props.trade.id !== undefined ? props.trade.id : undefined,
       },
       create: {
-        action: props.trade.action !== undefined ? props.trade.action : undefined,
         quantity: props.trade.quantity !== undefined ? props.trade.quantity : undefined,
         price: props.trade.price !== undefined ? props.trade.price : undefined,
         total: props.trade.total !== undefined ? props.trade.total : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
-    user: props.trade.user ? {
+    account: props.trade.account ? {
       connectOrCreate: {
         where: {
-          id: props.trade.user.id !== undefined ? props.trade.user.id : undefined,
-          email: props.trade.user.email !== undefined ? props.trade.user.email : undefined,
-          name: props.trade.user.name !== undefined ? {
-              equals: props.trade.user.name 
-             } : undefined,
+          id: props.trade.account.id !== undefined ? props.trade.account.id : undefined,
         },
         create: {
-          name: props.trade.user.name !== undefined ? props.trade.user.name : undefined,
-          email: props.trade.user.email !== undefined ? props.trade.user.email : undefined,
-          emailVerified: props.trade.user.emailVerified !== undefined ? props.trade.user.emailVerified : undefined,
-          image: props.trade.user.image !== undefined ? props.trade.user.image : undefined,
-          role: props.trade.user.role !== undefined ? props.trade.user.role : undefined,
-          bio: props.trade.user.bio !== undefined ? props.trade.user.bio : undefined,
-          jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
-          currentAccount: props.trade.user.currentAccount !== undefined ? props.trade.user.currentAccount : undefined,
-          plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: props.trade.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: props.trade.portfolio.id !== undefined ? props.trade.portfolio.id : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          name: props.trade.portfolio.name !== undefined ? {
-              equals: props.trade.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          type: props.trade.portfolio.type !== undefined ? props.trade.portfolio.type : undefined,
+          type: props.trade.account.type !== undefined ? props.trade.account.type : undefined,
+          APIKey: props.trade.account.APIKey !== undefined ? props.trade.account.APIKey : undefined,
+          APISecret: props.trade.account.APISecret !== undefined ? props.trade.account.APISecret : undefined,
+          configuration: props.trade.account.configuration !== undefined ? props.trade.account.configuration : undefined,
+          marketOpen: props.trade.account.marketOpen !== undefined ? props.trade.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -515,31 +370,31 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_ONE_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneTradeStep) {
-        return response.data.createOneTradeStep;
+      if (response && response.data && response.data.createOneAction) {
+        return response.data.createOneAction;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneTradeStep:', error);
+      console.error('Error in createOneAction:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple TradeStep records.
-   * @param props - Array of TradeStep objects for the new records.
+   * Create multiple Action records.
+   * @param props - Array of Action objects for the new records.
    * @returns The count of created records or null.
    */
-  async createMany(props: TradeStepType[]): Promise<{ count: number } | null> {
+  async createMany(props: ActionType[]): Promise<{ count: number } | null> {
 
     const client = createApolloClient();
 
-      const CREATE_MANY_TRADESTEP = gql`
-      mutation createManyTradeStep($data: [TradeStepCreateManyInput!]!) {
-        createManyTradeStep(data: $data) {
+      const CREATE_MANY_ACTION = gql`
+      mutation createManyAction($data: [ActionCreateManyInput!]!) {
+        createManyAction(data: $data) {
           count
         }
       }`;
@@ -568,31 +423,31 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_MANY_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyTradeStep) {
-        return response.data.createManyTradeStep;
+      if (response && response.data && response.data.createManyAction) {
+        return response.data.createManyAction;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyTradeStep:', error);
+      console.error('Error in createManyAction:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single TradeStep record.
+   * Update a single Action record.
    * @param props - Properties to update.
-   * @returns The updated TradeStep or null.
+   * @returns The updated Action or null.
    */
-  async update(props: TradeStepType): Promise<TradeStepType> {
+  async update(props: ActionType): Promise<ActionType> {
 
     const client = createApolloClient();
 
-      const UPDATE_ONE_TRADESTEP = gql`
-      mutation updateOneTradeStep($data: TradeStepUpdateInput!, $where: TradeStepWhereUniqueInput!) {
-        updateOneTradeStep(data: $data, where: $where) {
+      const UPDATE_ONE_ACTION = gql`
+      mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
+        updateOneAction(data: $data, where: $where) {
           id
           tradeId
           sequence
@@ -612,10 +467,8 @@ export const TradeStep = {
           fee
           trade {
             id
-            userId
-            portfolioId
+            alpacaAccountId
             assetId
-            action
             quantity
             price
             total
@@ -623,84 +476,59 @@ export const TradeStep = {
             createdAt
             updatedAt
             status
-            user {
+            account {
               id
-              name
-              email
-              emailVerified
-              image
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentAccount
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                orders {
+                  id
+                }
+                alerts {
+                  id
+                }
+                alpacaAccounts {
+                  id
+                }
+              }
+              userId
               createdAt
               updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
               trades {
                 id
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -712,51 +540,41 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
                   id
                 }
-                portfolio {
-                  id
-                }
+                alpacaAccountId
               }
-              alerts {
+              Alert {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -765,78 +583,10 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              tradingAccount {
-                id
-                name
-                slug
-                type
-                user {
-                  id
-                }
-                userId
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              alpacaAccounts {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-              }
-            }
-            portfolio {
-              id
             }
             asset {
               id
@@ -895,28 +645,13 @@ export const TradeStep = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -935,7 +670,7 @@ export const TradeStep = {
                 sentimentLabel
               }
             }
-            steps {
+            actions {
               id
             }
           }
@@ -1006,9 +741,6 @@ export const TradeStep = {
         id: props.trade.id !== undefined ? {
             set: props.trade.id  
            } : undefined,
-        action: props.trade.action !== undefined ? {
-            set: props.trade.action  
-           } : undefined,
         quantity: props.trade.quantity !== undefined ? {
             set: props.trade.quantity  
            } : undefined,
@@ -1024,95 +756,39 @@ export const TradeStep = {
         status: props.trade.status !== undefined ? {
             set: props.trade.status  
            } : undefined,
-    user: props.trade.user ? {
+    account: props.trade.account ? {
       upsert: {
         where: {
-          id: props.trade.user.id !== undefined ? {
-              equals: props.trade.user.id 
-             } : undefined,
-          name: props.trade.user.name !== undefined ? {
-              equals: props.trade.user.name 
-             } : undefined,
-          email: props.trade.user.email !== undefined ? {
-              equals: props.trade.user.email 
+          id: props.trade.account.id !== undefined ? {
+              equals: props.trade.account.id 
              } : undefined,
         },
         update: {
-          id: props.trade.user.id !== undefined ? {
-              set: props.trade.user.id  
+          id: props.trade.account.id !== undefined ? {
+              set: props.trade.account.id  
              } : undefined,
-          name: props.trade.user.name !== undefined ? {
-              set: props.trade.user.name  
+          type: props.trade.account.type !== undefined ? {
+              set: props.trade.account.type  
              } : undefined,
-          email: props.trade.user.email !== undefined ? {
-              set: props.trade.user.email  
+          APIKey: props.trade.account.APIKey !== undefined ? {
+              set: props.trade.account.APIKey  
              } : undefined,
-          emailVerified: props.trade.user.emailVerified !== undefined ? {
-              set: props.trade.user.emailVerified  
+          APISecret: props.trade.account.APISecret !== undefined ? {
+              set: props.trade.account.APISecret  
              } : undefined,
-          image: props.trade.user.image !== undefined ? {
-              set: props.trade.user.image  
+          configuration: props.trade.account.configuration !== undefined ? {
+              set: props.trade.account.configuration  
              } : undefined,
-          role: props.trade.user.role !== undefined ? {
-              set: props.trade.user.role  
-             } : undefined,
-          bio: props.trade.user.bio !== undefined ? {
-              set: props.trade.user.bio  
-             } : undefined,
-          jobTitle: props.trade.user.jobTitle !== undefined ? {
-              set: props.trade.user.jobTitle  
-             } : undefined,
-          currentAccount: props.trade.user.currentAccount !== undefined ? {
-              set: props.trade.user.currentAccount  
-             } : undefined,
-          plan: props.trade.user.plan !== undefined ? {
-              set: props.trade.user.plan  
+          marketOpen: props.trade.account.marketOpen !== undefined ? {
+              set: props.trade.account.marketOpen  
              } : undefined,
         },
         create: {
-          name: props.trade.user.name !== undefined ? props.trade.user.name : undefined,
-          email: props.trade.user.email !== undefined ? props.trade.user.email : undefined,
-          emailVerified: props.trade.user.emailVerified !== undefined ? props.trade.user.emailVerified : undefined,
-          image: props.trade.user.image !== undefined ? props.trade.user.image : undefined,
-          role: props.trade.user.role !== undefined ? props.trade.user.role : undefined,
-          bio: props.trade.user.bio !== undefined ? props.trade.user.bio : undefined,
-          jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
-          currentAccount: props.trade.user.currentAccount !== undefined ? props.trade.user.currentAccount : undefined,
-          plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: props.trade.portfolio ? {
-      upsert: {
-        where: {
-          id: props.trade.portfolio.id !== undefined ? {
-              equals: props.trade.portfolio.id 
-             } : undefined,
-          name: props.trade.portfolio.name !== undefined ? {
-              equals: props.trade.portfolio.name 
-             } : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? {
-              equals: props.trade.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: props.trade.portfolio.id !== undefined ? {
-              set: props.trade.portfolio.id  
-             } : undefined,
-          name: props.trade.portfolio.name !== undefined ? {
-              set: props.trade.portfolio.name  
-             } : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? {
-              set: props.trade.portfolio.slug  
-             } : undefined,
-          type: props.trade.portfolio.type !== undefined ? {
-              set: props.trade.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          type: props.trade.portfolio.type !== undefined ? props.trade.portfolio.type : undefined,
+          type: props.trade.account.type !== undefined ? props.trade.account.type : undefined,
+          APIKey: props.trade.account.APIKey !== undefined ? props.trade.account.APIKey : undefined,
+          APISecret: props.trade.account.APISecret !== undefined ? props.trade.account.APISecret : undefined,
+          configuration: props.trade.account.configuration !== undefined ? props.trade.account.configuration : undefined,
+          marketOpen: props.trade.account.marketOpen !== undefined ? props.trade.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1352,47 +1028,22 @@ export const TradeStep = {
     } : undefined,
       },
       create: {
-        action: props.trade.action !== undefined ? props.trade.action : undefined,
         quantity: props.trade.quantity !== undefined ? props.trade.quantity : undefined,
         price: props.trade.price !== undefined ? props.trade.price : undefined,
         total: props.trade.total !== undefined ? props.trade.total : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
-    user: props.trade.user ? {
+    account: props.trade.account ? {
       connectOrCreate: {
         where: {
-          id: props.trade.user.id !== undefined ? props.trade.user.id : undefined,
-          email: props.trade.user.email !== undefined ? props.trade.user.email : undefined,
-          name: props.trade.user.name !== undefined ? {
-              equals: props.trade.user.name 
-             } : undefined,
+          id: props.trade.account.id !== undefined ? props.trade.account.id : undefined,
         },
         create: {
-          name: props.trade.user.name !== undefined ? props.trade.user.name : undefined,
-          email: props.trade.user.email !== undefined ? props.trade.user.email : undefined,
-          emailVerified: props.trade.user.emailVerified !== undefined ? props.trade.user.emailVerified : undefined,
-          image: props.trade.user.image !== undefined ? props.trade.user.image : undefined,
-          role: props.trade.user.role !== undefined ? props.trade.user.role : undefined,
-          bio: props.trade.user.bio !== undefined ? props.trade.user.bio : undefined,
-          jobTitle: props.trade.user.jobTitle !== undefined ? props.trade.user.jobTitle : undefined,
-          currentAccount: props.trade.user.currentAccount !== undefined ? props.trade.user.currentAccount : undefined,
-          plan: props.trade.user.plan !== undefined ? props.trade.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: props.trade.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: props.trade.portfolio.id !== undefined ? props.trade.portfolio.id : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          name: props.trade.portfolio.name !== undefined ? {
-              equals: props.trade.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: props.trade.portfolio.name !== undefined ? props.trade.portfolio.name : undefined,
-          slug: props.trade.portfolio.slug !== undefined ? props.trade.portfolio.slug : undefined,
-          type: props.trade.portfolio.type !== undefined ? props.trade.portfolio.type : undefined,
+          type: props.trade.account.type !== undefined ? props.trade.account.type : undefined,
+          APIKey: props.trade.account.APIKey !== undefined ? props.trade.account.APIKey : undefined,
+          APISecret: props.trade.account.APISecret !== undefined ? props.trade.account.APISecret : undefined,
+          configuration: props.trade.account.configuration !== undefined ? props.trade.account.configuration : undefined,
+          marketOpen: props.trade.account.marketOpen !== undefined ? props.trade.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1469,31 +1120,31 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneTradeStep) {
-        return response.data.updateOneTradeStep;
+      if (response && response.data && response.data.updateOneAction) {
+        return response.data.updateOneAction;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneTradeStep:', error);
+      console.error('Error in updateOneAction:', error);
       throw error;
     }
   },
 
   /**
-   * Update multiple TradeStep records.
-   * @param props - Array of TradeStep objects for the updated records.
+   * Update multiple Action records.
+   * @param props - Array of Action objects for the updated records.
    * @returns The count of created records or null.
    */
-  async updateMany(props: TradeStepType[]): Promise<{ count: number } | null> {
+  async updateMany(props: ActionType[]): Promise<{ count: number } | null> {
 
     const client = createApolloClient();
 
-      const UPDATE_MANY_TRADESTEP = gql`
-      mutation updateManyTradeStep($data: [TradeStepCreateManyInput!]!) {
-        updateManyTradeStep(data: $data) {
+      const UPDATE_MANY_ACTION = gql`
+      mutation updateManyAction($data: [ActionCreateManyInput!]!) {
+        updateManyAction(data: $data) {
           count
         }
       }`;
@@ -1563,9 +1214,6 @@ export const TradeStep = {
         id: prop.trade.id !== undefined ? {
             set: prop.trade.id  
            } : undefined,
-        action: prop.trade.action !== undefined ? {
-            set: prop.trade.action  
-           } : undefined,
         quantity: prop.trade.quantity !== undefined ? {
             set: prop.trade.quantity  
            } : undefined,
@@ -1581,95 +1229,39 @@ export const TradeStep = {
         status: prop.trade.status !== undefined ? {
             set: prop.trade.status  
            } : undefined,
-    user: prop.trade.user ? {
+    account: prop.trade.account ? {
       upsert: {
         where: {
-          id: prop.trade.user.id !== undefined ? {
-              equals: prop.trade.user.id 
-             } : undefined,
-          name: prop.trade.user.name !== undefined ? {
-              equals: prop.trade.user.name 
-             } : undefined,
-          email: prop.trade.user.email !== undefined ? {
-              equals: prop.trade.user.email 
+          id: prop.trade.account.id !== undefined ? {
+              equals: prop.trade.account.id 
              } : undefined,
         },
         update: {
-          id: prop.trade.user.id !== undefined ? {
-              set: prop.trade.user.id  
+          id: prop.trade.account.id !== undefined ? {
+              set: prop.trade.account.id  
              } : undefined,
-          name: prop.trade.user.name !== undefined ? {
-              set: prop.trade.user.name  
+          type: prop.trade.account.type !== undefined ? {
+              set: prop.trade.account.type  
              } : undefined,
-          email: prop.trade.user.email !== undefined ? {
-              set: prop.trade.user.email  
+          APIKey: prop.trade.account.APIKey !== undefined ? {
+              set: prop.trade.account.APIKey  
              } : undefined,
-          emailVerified: prop.trade.user.emailVerified !== undefined ? {
-              set: prop.trade.user.emailVerified  
+          APISecret: prop.trade.account.APISecret !== undefined ? {
+              set: prop.trade.account.APISecret  
              } : undefined,
-          image: prop.trade.user.image !== undefined ? {
-              set: prop.trade.user.image  
+          configuration: prop.trade.account.configuration !== undefined ? {
+              set: prop.trade.account.configuration  
              } : undefined,
-          role: prop.trade.user.role !== undefined ? {
-              set: prop.trade.user.role  
-             } : undefined,
-          bio: prop.trade.user.bio !== undefined ? {
-              set: prop.trade.user.bio  
-             } : undefined,
-          jobTitle: prop.trade.user.jobTitle !== undefined ? {
-              set: prop.trade.user.jobTitle  
-             } : undefined,
-          currentAccount: prop.trade.user.currentAccount !== undefined ? {
-              set: prop.trade.user.currentAccount  
-             } : undefined,
-          plan: prop.trade.user.plan !== undefined ? {
-              set: prop.trade.user.plan  
+          marketOpen: prop.trade.account.marketOpen !== undefined ? {
+              set: prop.trade.account.marketOpen  
              } : undefined,
         },
         create: {
-          name: prop.trade.user.name !== undefined ? prop.trade.user.name : undefined,
-          email: prop.trade.user.email !== undefined ? prop.trade.user.email : undefined,
-          emailVerified: prop.trade.user.emailVerified !== undefined ? prop.trade.user.emailVerified : undefined,
-          image: prop.trade.user.image !== undefined ? prop.trade.user.image : undefined,
-          role: prop.trade.user.role !== undefined ? prop.trade.user.role : undefined,
-          bio: prop.trade.user.bio !== undefined ? prop.trade.user.bio : undefined,
-          jobTitle: prop.trade.user.jobTitle !== undefined ? prop.trade.user.jobTitle : undefined,
-          currentAccount: prop.trade.user.currentAccount !== undefined ? prop.trade.user.currentAccount : undefined,
-          plan: prop.trade.user.plan !== undefined ? prop.trade.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: prop.trade.portfolio ? {
-      upsert: {
-        where: {
-          id: prop.trade.portfolio.id !== undefined ? {
-              equals: prop.trade.portfolio.id 
-             } : undefined,
-          name: prop.trade.portfolio.name !== undefined ? {
-              equals: prop.trade.portfolio.name 
-             } : undefined,
-          slug: prop.trade.portfolio.slug !== undefined ? {
-              equals: prop.trade.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: prop.trade.portfolio.id !== undefined ? {
-              set: prop.trade.portfolio.id  
-             } : undefined,
-          name: prop.trade.portfolio.name !== undefined ? {
-              set: prop.trade.portfolio.name  
-             } : undefined,
-          slug: prop.trade.portfolio.slug !== undefined ? {
-              set: prop.trade.portfolio.slug  
-             } : undefined,
-          type: prop.trade.portfolio.type !== undefined ? {
-              set: prop.trade.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: prop.trade.portfolio.name !== undefined ? prop.trade.portfolio.name : undefined,
-          slug: prop.trade.portfolio.slug !== undefined ? prop.trade.portfolio.slug : undefined,
-          type: prop.trade.portfolio.type !== undefined ? prop.trade.portfolio.type : undefined,
+          type: prop.trade.account.type !== undefined ? prop.trade.account.type : undefined,
+          APIKey: prop.trade.account.APIKey !== undefined ? prop.trade.account.APIKey : undefined,
+          APISecret: prop.trade.account.APISecret !== undefined ? prop.trade.account.APISecret : undefined,
+          configuration: prop.trade.account.configuration !== undefined ? prop.trade.account.configuration : undefined,
+          marketOpen: prop.trade.account.marketOpen !== undefined ? prop.trade.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1909,47 +1501,22 @@ export const TradeStep = {
     } : undefined,
       },
       create: {
-        action: prop.trade.action !== undefined ? prop.trade.action : undefined,
         quantity: prop.trade.quantity !== undefined ? prop.trade.quantity : undefined,
         price: prop.trade.price !== undefined ? prop.trade.price : undefined,
         total: prop.trade.total !== undefined ? prop.trade.total : undefined,
         timestamp: prop.trade.timestamp !== undefined ? prop.trade.timestamp : undefined,
         status: prop.trade.status !== undefined ? prop.trade.status : undefined,
-    user: prop.trade.user ? {
+    account: prop.trade.account ? {
       connectOrCreate: {
         where: {
-          id: prop.trade.user.id !== undefined ? prop.trade.user.id : undefined,
-          email: prop.trade.user.email !== undefined ? prop.trade.user.email : undefined,
-          name: prop.trade.user.name !== undefined ? {
-              equals: prop.trade.user.name 
-             } : undefined,
+          id: prop.trade.account.id !== undefined ? prop.trade.account.id : undefined,
         },
         create: {
-          name: prop.trade.user.name !== undefined ? prop.trade.user.name : undefined,
-          email: prop.trade.user.email !== undefined ? prop.trade.user.email : undefined,
-          emailVerified: prop.trade.user.emailVerified !== undefined ? prop.trade.user.emailVerified : undefined,
-          image: prop.trade.user.image !== undefined ? prop.trade.user.image : undefined,
-          role: prop.trade.user.role !== undefined ? prop.trade.user.role : undefined,
-          bio: prop.trade.user.bio !== undefined ? prop.trade.user.bio : undefined,
-          jobTitle: prop.trade.user.jobTitle !== undefined ? prop.trade.user.jobTitle : undefined,
-          currentAccount: prop.trade.user.currentAccount !== undefined ? prop.trade.user.currentAccount : undefined,
-          plan: prop.trade.user.plan !== undefined ? prop.trade.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    portfolio: prop.trade.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: prop.trade.portfolio.id !== undefined ? prop.trade.portfolio.id : undefined,
-          slug: prop.trade.portfolio.slug !== undefined ? prop.trade.portfolio.slug : undefined,
-          name: prop.trade.portfolio.name !== undefined ? {
-              equals: prop.trade.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: prop.trade.portfolio.name !== undefined ? prop.trade.portfolio.name : undefined,
-          slug: prop.trade.portfolio.slug !== undefined ? prop.trade.portfolio.slug : undefined,
-          type: prop.trade.portfolio.type !== undefined ? prop.trade.portfolio.type : undefined,
+          type: prop.trade.account.type !== undefined ? prop.trade.account.type : undefined,
+          APIKey: prop.trade.account.APIKey !== undefined ? prop.trade.account.APIKey : undefined,
+          APISecret: prop.trade.account.APISecret !== undefined ? prop.trade.account.APISecret : undefined,
+          configuration: prop.trade.account.configuration !== undefined ? prop.trade.account.configuration : undefined,
+          marketOpen: prop.trade.account.marketOpen !== undefined ? prop.trade.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2028,31 +1595,31 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_MANY_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyTradeStep) {
-        return response.data.updateManyTradeStep;
+      if (response && response.data && response.data.updateManyAction) {
+        return response.data.updateManyAction;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateManyTradeStep:', error);
+      console.error('Error in updateManyAction:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single TradeStep record.
+   * Delete a single Action record.
    * @param props - Properties to update.
-   * @returns The deleted TradeStep or null.
+   * @returns The deleted Action or null.
    */
-  async delete(props: TradeStepType): Promise<TradeStepType> {
+  async delete(props: ActionType): Promise<ActionType> {
 
     const client = createApolloClient();
 
-      const DELETE_ONE_TRADESTEP = gql`
-      mutation deleteOneTradeStep($where: TradeStepWhereUniqueInput!) {
-        deleteOneTradeStep(where: $where) {
+      const DELETE_ONE_ACTION = gql`
+      mutation deleteOneAction($where: ActionWhereUniqueInput!) {
+        deleteOneAction(where: $where) {
           id
           tradeId
           sequence
@@ -2072,10 +1639,8 @@ export const TradeStep = {
           fee
           trade {
             id
-            userId
-            portfolioId
+            alpacaAccountId
             assetId
-            action
             quantity
             price
             total
@@ -2083,84 +1648,59 @@ export const TradeStep = {
             createdAt
             updatedAt
             status
-            user {
+            account {
               id
-              name
-              email
-              emailVerified
-              image
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentAccount
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                orders {
+                  id
+                }
+                alerts {
+                  id
+                }
+                alpacaAccounts {
+                  id
+                }
+              }
+              userId
               createdAt
               updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
               trades {
                 id
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -2172,51 +1712,41 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
                   id
                 }
-                portfolio {
-                  id
-                }
+                alpacaAccountId
               }
-              alerts {
+              Alert {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -2225,78 +1755,10 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              tradingAccount {
-                id
-                name
-                slug
-                type
-                user {
-                  id
-                }
-                userId
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              alpacaAccounts {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-              }
-            }
-            portfolio {
-              id
             }
             asset {
               id
@@ -2355,28 +1817,13 @@ export const TradeStep = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -2395,7 +1842,7 @@ export const TradeStep = {
                 sentimentLabel
               }
             }
-            steps {
+            actions {
               id
             }
           }
@@ -2411,31 +1858,31 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_TRADESTEP, variables: filteredVariables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneTradeStep) {
-        return response.data.deleteOneTradeStep;
+      if (response && response.data && response.data.deleteOneAction) {
+        return response.data.deleteOneAction;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneTradeStep:', error);
+      console.error('Error in deleteOneAction:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single TradeStep record by ID.
+   * Retrieve a single Action record by ID.
    * @param props - Properties to update.
-   * @returns The retrieved TradeStep or null.
+   * @returns The retrieved Action or null.
    */
-  async get(props: TradeStepType): Promise<TradeStepType | null> {
+  async get(props: ActionType): Promise<ActionType | null> {
 
     const client = createApolloClient();
 
-      const GET_TRADESTEP = gql`
-      query getTradeStep($where: TradeStepWhereUniqueInput!) {
-        getTradeStep(where: $where) {
+      const GET_ACTION = gql`
+      query getAction($where: ActionWhereUniqueInput!) {
+        getAction(where: $where) {
           id
           tradeId
           sequence
@@ -2455,10 +1902,8 @@ export const TradeStep = {
           fee
           trade {
             id
-            userId
-            portfolioId
+            alpacaAccountId
             assetId
-            action
             quantity
             price
             total
@@ -2466,84 +1911,59 @@ export const TradeStep = {
             createdAt
             updatedAt
             status
-            user {
+            account {
               id
-              name
-              email
-              emailVerified
-              image
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentAccount
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                orders {
+                  id
+                }
+                alerts {
+                  id
+                }
+                alpacaAccounts {
+                  id
+                }
+              }
+              userId
               createdAt
               updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
               trades {
                 id
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -2555,51 +1975,41 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
                   id
                 }
-                portfolio {
-                  id
-                }
+                alpacaAccountId
               }
-              alerts {
+              Alert {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -2608,78 +2018,10 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              tradingAccount {
-                id
-                name
-                slug
-                type
-                user {
-                  id
-                }
-                userId
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              alpacaAccounts {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-              }
-            }
-            portfolio {
-              id
             }
             asset {
               id
@@ -2738,28 +2080,13 @@ export const TradeStep = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -2778,7 +2105,7 @@ export const TradeStep = {
                 sentimentLabel
               }
             }
-            steps {
+            actions {
               id
             }
           }
@@ -2793,30 +2120,30 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: GET_TRADESTEP, variables: filteredVariables });
+      const response = await client.query({ query: GET_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getTradeStep ?? null;
+      return response.data?.getAction ?? null;
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No TradeStep found') {
+      if (error instanceof ApolloError && error.message === 'No Action found') {
         return null;
       } else {
-        console.error('Error in getTradeStep:', error);
+        console.error('Error in getAction:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Retrieve all TradeSteps records.
-   * @returns An array of TradeStep records or null.
+   * Retrieve all Actions records.
+   * @returns An array of Action records or null.
    */
-  async getAll(): Promise<TradeStepType[] | null> {
+  async getAll(): Promise<ActionType[] | null> {
 
     const client = createApolloClient();
 
-      const GET_ALL_TRADESTEP = gql`
-      query getAllTradeStep {
-        tradeSteps {
+      const GET_ALL_ACTION = gql`
+      query getAllAction {
+        actions {
           id
           tradeId
           sequence
@@ -2836,10 +2163,8 @@ export const TradeStep = {
           fee
           trade {
             id
-            userId
-            portfolioId
+            alpacaAccountId
             assetId
-            action
             quantity
             price
             total
@@ -2847,84 +2172,59 @@ export const TradeStep = {
             createdAt
             updatedAt
             status
-            user {
+            account {
               id
-              name
-              email
-              emailVerified
-              image
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentAccount
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                orders {
+                  id
+                }
+                alerts {
+                  id
+                }
+                alpacaAccounts {
+                  id
+                }
+              }
+              userId
               createdAt
               updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
               trades {
                 id
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -2936,51 +2236,41 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
                   id
                 }
-                portfolio {
-                  id
-                }
+                alpacaAccountId
               }
-              alerts {
+              Alert {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -2989,78 +2279,10 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              tradingAccount {
-                id
-                name
-                slug
-                type
-                user {
-                  id
-                }
-                userId
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              alpacaAccounts {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-              }
-            }
-            portfolio {
-              id
             }
             asset {
               id
@@ -3119,28 +2341,13 @@ export const TradeStep = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -3159,7 +2366,7 @@ export const TradeStep = {
                 sentimentLabel
               }
             }
-            steps {
+            actions {
               id
             }
           }
@@ -3167,31 +2374,31 @@ export const TradeStep = {
       }`;
 
     try {
-      const response = await client.query({ query: GET_ALL_TRADESTEP });
+      const response = await client.query({ query: GET_ALL_ACTION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.tradeSteps ?? null;
+      return response.data?.actions ?? null;
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No TradeStep found') {
+      if (error instanceof ApolloError && error.message === 'No Action found') {
         return null;
       } else {
-        console.error('Error in getTradeStep:', error);
+        console.error('Error in getAction:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Find multiple TradeStep records based on conditions.
+   * Find multiple Action records based on conditions.
    * @param props - Conditions to find records.
-   * @returns An array of found TradeStep records or null.
+   * @returns An array of found Action records or null.
    */
-  async findMany(props: TradeStepType): Promise<TradeStepType[] | null> {
+  async findMany(props: ActionType): Promise<ActionType[] | null> {
 
     const client = createApolloClient();
 
-      const FIND_MANY_TRADESTEP = gql`
-      query findManyTradeStep($where: TradeStepWhereInput!) {
-        tradeSteps(where: $where) {
+      const FIND_MANY_ACTION = gql`
+      query findManyAction($where: ActionWhereInput!) {
+        actions(where: $where) {
           id
           tradeId
           sequence
@@ -3211,10 +2418,8 @@ export const TradeStep = {
           fee
           trade {
             id
-            userId
-            portfolioId
+            alpacaAccountId
             assetId
-            action
             quantity
             price
             total
@@ -3222,84 +2427,59 @@ export const TradeStep = {
             createdAt
             updatedAt
             status
-            user {
+            account {
               id
-              name
-              email
-              emailVerified
-              image
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+                name
+                email
+                emailVerified
+                image
+                createdAt
+                updatedAt
+                role
+                bio
+                jobTitle
+                currentAccount
+                customer {
+                  id
+                }
+                customerId
+                accounts {
+                  id
+                }
+                sessions {
+                  id
+                }
+                authenticators {
+                  id
+                }
+                plan
+                orders {
+                  id
+                }
+                alerts {
+                  id
+                }
+                alpacaAccounts {
+                  id
+                }
+              }
+              userId
               createdAt
               updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
               trades {
                 id
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -3311,51 +2491,41 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
                   id
                 }
-                portfolio {
-                  id
-                }
+                alpacaAccountId
               }
-              alerts {
+              Alert {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -3364,78 +2534,10 @@ export const TradeStep = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              tradingAccount {
-                id
-                name
-                slug
-                type
-                user {
-                  id
-                }
-                userId
-                holdings {
-                  id
-                }
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                aiRecommendations {
-                  id
-                }
-                riskAllocations {
-                  id
-                }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              alpacaAccounts {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-              }
-            }
-            portfolio {
-              id
             }
             asset {
               id
@@ -3494,28 +2596,13 @@ export const TradeStep = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -3534,7 +2621,7 @@ export const TradeStep = {
                 sentimentLabel
               }
             }
-            steps {
+            actions {
               id
             }
           }
@@ -3552,18 +2639,18 @@ export const TradeStep = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: FIND_MANY_TRADESTEP, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.TradeSteps) {
-        return response.data.tradeSteps;
+      if (response && response.data && response.data.Actions) {
+        return response.data.actions;
       } else {
-       return [] as TradeStepType[];
+       return [] as ActionType[];
       }
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No TradeStep found') {
+      if (error instanceof ApolloError && error.message === 'No Action found') {
         return null;
       } else {
-        console.error('Error in getTradeStep:', error);
+        console.error('Error in getAction:', error);
         throw error;
       }
     }

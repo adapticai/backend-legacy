@@ -105,27 +105,10 @@ export const NewsArticle = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
-                userId
-                portfolioId
+                alpacaAccountId
                 assetId
-                action
                 quantity
                 price
                 total
@@ -133,23 +116,20 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                user {
-                  id
-                }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
-                steps {
+                actions {
                   id
                 }
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -161,31 +141,36 @@ export const NewsArticle = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
               newsMentions {
                 id
@@ -455,27 +440,10 @@ export const NewsArticle = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
-                userId
-                portfolioId
+                alpacaAccountId
                 assetId
-                action
                 quantity
                 price
                 total
@@ -483,23 +451,20 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                user {
-                  id
-                }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
-                steps {
+                actions {
                   id
                 }
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -511,31 +476,36 @@ export const NewsArticle = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
               newsMentions {
                 id
@@ -1458,27 +1428,10 @@ export const NewsArticle = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
-                userId
-                portfolioId
+                alpacaAccountId
                 assetId
-                action
                 quantity
                 price
                 total
@@ -1486,23 +1439,20 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                user {
-                  id
-                }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
-                steps {
+                actions {
                   id
                 }
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -1514,31 +1464,36 @@ export const NewsArticle = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
               newsMentions {
                 id
@@ -1666,27 +1621,10 @@ export const NewsArticle = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
-                userId
-                portfolioId
+                alpacaAccountId
                 assetId
-                action
                 quantity
                 price
                 total
@@ -1694,23 +1632,20 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                user {
-                  id
-                }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
-                steps {
+                actions {
                   id
                 }
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -1722,31 +1657,36 @@ export const NewsArticle = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
               newsMentions {
                 id
@@ -1876,27 +1816,10 @@ export const NewsArticle = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
-                userId
-                portfolioId
+                alpacaAccountId
                 assetId
-                action
                 quantity
                 price
                 total
@@ -1904,23 +1827,20 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                user {
-                  id
-                }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
-                steps {
+                actions {
                   id
                 }
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -1932,31 +1852,36 @@ export const NewsArticle = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
               newsMentions {
                 id
@@ -2076,27 +2001,10 @@ export const NewsArticle = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-                tradingAccountId
-                assetId
-                quantity
-                averagePrice
-                createdAt
-                updatedAt
-                tradingAccount {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
               trades {
                 id
-                userId
-                portfolioId
+                alpacaAccountId
                 assetId
-                action
                 quantity
                 price
                 total
@@ -2104,23 +2012,20 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                user {
-                  id
-                }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
-                steps {
+                actions {
                   id
                 }
               }
               orders {
                 id
                 userId
-                portfolioId
+                alpacaAccountId
                 assetId
                 type
                 action
@@ -2132,31 +2037,36 @@ export const NewsArticle = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
                 asset {
                   id
                 }
               }
-              aiRecommendations {
+              positions {
                 id
-                userId
-                portfolioId
                 assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
               newsMentions {
                 id

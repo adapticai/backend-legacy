@@ -2,48 +2,38 @@
 export type * as types from './generated/typegraphql-prisma/models/index.d.ts';
 export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 
-import { AIRecommendation } from './AIRecommendation';
 import { Account } from './Account';
+import { Action } from './Action';
 import { Alert } from './Alert';
 import { AlpacaAccount } from './AlpacaAccount';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
-import { EnvironmentVariable } from './EnvironmentVariable';
-import { Holding } from './Holding';
 import { NewsArticle } from './NewsArticle';
 import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
 import { Order } from './Order';
-import { PerformanceMetric } from './PerformanceMetric';
-import { RiskAllocation } from './RiskAllocation';
+import { Position } from './Position';
 import { Session } from './Session';
 import { Trade } from './Trade';
-import { TradeStep } from './TradeStep';
-import { TradingAccount } from './TradingAccount';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
 
 const adaptic = {
-  aIRecommendation: AIRecommendation,
   account: Account,
+  action: Action,
   alert: Alert,
   alpacaAccount: AlpacaAccount,
   asset: Asset,
   authenticator: Authenticator,
   customer: Customer,
   economicEvent: EconomicEvent,
-  environmentVariable: EnvironmentVariable,
-  holding: Holding,
   newsArticle: NewsArticle,
   newsArticleAssetSentiment: NewsArticleAssetSentiment,
   order: Order,
-  performanceMetric: PerformanceMetric,
-  riskAllocation: RiskAllocation,
+  position: Position,
   session: Session,
   trade: Trade,
-  tradeStep: TradeStep,
-  tradingAccount: TradingAccount,
   user: User,
   verificationToken: VerificationToken,
 };

@@ -1,54 +1,31 @@
 
 
-import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
+import { Position as PositionType } from './generated/typegraphql-prisma/models/Position';
 import { ApolloError, gql } from '@apollo/client';
 import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
 /**
- * CRUD operations for the NewsArticleAssetSentiment model.
+ * CRUD operations for the Position model.
  */
 
-export const NewsArticleAssetSentiment = {
+export const Position = {
 
   /**
-   * Create a new NewsArticleAssetSentiment record.
+   * Create a new Position record.
    * @param props - Properties for the new record.
-   * @returns The created NewsArticleAssetSentiment or null.
+   * @returns The created Position or null.
    */
 
-  async create(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+  async create(props: PositionType): Promise<PositionType> {
 
   const client = createApolloClient();
 
-  const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-      mutation createOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentCreateInput!) {
-        createOneNewsArticleAssetSentiment(data: $data) {
+  const CREATE_ONE_POSITION = gql`
+      mutation createOnePosition($data: PositionCreateInput!) {
+        createOnePosition(data: $data) {
           id
           assetId
-          newsArticleId
-          url
-          news {
-            id
-            title
-            content
-            source
-            sourceDomain
-            url
-            sentiment
-            authors
-            summary
-            bannerImage
-            timePublished
-            category
-            topics
-            logo
-            createdAt
-            updatedAt
-            assets {
-              id
-            }
-          }
           asset {
             id
             symbol
@@ -226,71 +203,77 @@ export const NewsArticleAssetSentiment = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              account {
-                id
-              }
-              alpacaAccountId
             }
             newsMentions {
               id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
             }
           }
-          relevancyScore
-          sentimentScore
-          sentimentLabel
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          account {
+            id
+          }
+          alpacaAccountId
         }
       }
    `;
 
     const variables = {
       data: {
-          url: props.url !== undefined ? props.url : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
-  news: props.news ? {
-    connectOrCreate: {
-      where: {
-        id: props.news.id !== undefined ? props.news.id : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        title: props.news.title !== undefined ? {
-            equals: props.news.title 
-           } : undefined,
-      },
-      create: {
-        title: props.news.title !== undefined ? props.news.title : undefined,
-        content: props.news.content !== undefined ? props.news.content : undefined,
-        source: props.news.source !== undefined ? props.news.source : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
-        authors: props.news.authors !== undefined ? props.news.authors : undefined,
-        summary: props.news.summary !== undefined ? props.news.summary : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
-        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
-        category: props.news.category !== undefined ? props.news.category : undefined,
-        topics: props.news.topics !== undefined ? props.news.topics : undefined,
-        logo: props.news.logo !== undefined ? props.news.logo : undefined,
-      },
-    }
-  } : undefined,
+          averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
+  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
+  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
+  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
+  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
+  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
+  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
+  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
+  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
+  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
+  assetMarginable: props.assetMarginable !== undefined ? props.assetMarginable : undefined,
   asset: props.asset ? {
     connectOrCreate: {
       where: {
@@ -380,25 +363,93 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    positions: props.asset.positions ? {
-      connectOrCreate: props.asset.positions.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? {
+      connectOrCreate: props.asset.newsMentions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+        },
+        create: {
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  account: props.account ? {
+    connectOrCreate: {
+      where: {
+        id: props.account.id !== undefined ? props.account.id : undefined,
+      },
+      create: {
+        type: props.account.type !== undefined ? props.account.type : undefined,
+        APIKey: props.account.APIKey !== undefined ? props.account.APIKey : undefined,
+        APISecret: props.account.APISecret !== undefined ? props.account.APISecret : undefined,
+        configuration: props.account.configuration !== undefined ? props.account.configuration : undefined,
+        marketOpen: props.account.marketOpen !== undefined ? props.account.marketOpen : undefined,
+    user: props.account.user ? {
+      connectOrCreate: {
+        where: {
+          id: props.account.user.id !== undefined ? props.account.user.id : undefined,
+          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
+          name: props.account.user.name !== undefined ? {
+              equals: props.account.user.name 
+             } : undefined,
+        },
+        create: {
+          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
+          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
+          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
+          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
+          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
+          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
+          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
+          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
+          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    trades: props.account.trades ? {
+      connectOrCreate: props.account.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.account.orders ? {
+      connectOrCreate: props.account.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    Alert: props.account.Alert ? {
+      connectOrCreate: props.account.Alert.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -412,31 +463,31 @@ export const NewsArticleAssetSentiment = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_ONE_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneNewsArticleAssetSentiment) {
-        return response.data.createOneNewsArticleAssetSentiment;
+      if (response && response.data && response.data.createOnePosition) {
+        return response.data.createOnePosition;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneNewsArticleAssetSentiment:', error);
+      console.error('Error in createOnePosition:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple NewsArticleAssetSentiment records.
-   * @param props - Array of NewsArticleAssetSentiment objects for the new records.
+   * Create multiple Position records.
+   * @param props - Array of Position objects for the new records.
    * @returns The count of created records or null.
    */
-  async createMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
+  async createMany(props: PositionType[]): Promise<{ count: number } | null> {
 
     const client = createApolloClient();
 
-      const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
-      mutation createManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
-        createManyNewsArticleAssetSentiment(data: $data) {
+      const CREATE_MANY_POSITION = gql`
+      mutation createManyPosition($data: [PositionCreateManyInput!]!) {
+        createManyPosition(data: $data) {
           count
         }
       }`;
@@ -444,67 +495,53 @@ export const NewsArticleAssetSentiment = {
     const variables = {
       data: props.map(prop => ({
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
-  newsArticleId: prop.newsArticleId !== undefined ? prop.newsArticleId : undefined,
-  url: prop.url !== undefined ? prop.url : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? prop.relevancyScore : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? prop.sentimentScore : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? prop.sentimentLabel : undefined,
+  averageEntryPrice: prop.averageEntryPrice !== undefined ? prop.averageEntryPrice : undefined,
+  qty: prop.qty !== undefined ? prop.qty : undefined,
+  qtyAvailable: prop.qtyAvailable !== undefined ? prop.qtyAvailable : undefined,
+  marketValue: prop.marketValue !== undefined ? prop.marketValue : undefined,
+  costBasis: prop.costBasis !== undefined ? prop.costBasis : undefined,
+  unrealizedPL: prop.unrealizedPL !== undefined ? prop.unrealizedPL : undefined,
+  unrealizedPLPC: prop.unrealizedPLPC !== undefined ? prop.unrealizedPLPC : undefined,
+  unrealisedIntradayPL: prop.unrealisedIntradayPL !== undefined ? prop.unrealisedIntradayPL : undefined,
+  unrealisedIntradayPLPC: prop.unrealisedIntradayPLPC !== undefined ? prop.unrealisedIntradayPLPC : undefined,
+  currentPrice: prop.currentPrice !== undefined ? prop.currentPrice : undefined,
+  lastTradePrice: prop.lastTradePrice !== undefined ? prop.lastTradePrice : undefined,
+  changeToday: prop.changeToday !== undefined ? prop.changeToday : undefined,
+  assetMarginable: prop.assetMarginable !== undefined ? prop.assetMarginable : undefined,
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_MANY_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyNewsArticleAssetSentiment) {
-        return response.data.createManyNewsArticleAssetSentiment;
+      if (response && response.data && response.data.createManyPosition) {
+        return response.data.createManyPosition;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyNewsArticleAssetSentiment:', error);
+      console.error('Error in createManyPosition:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single NewsArticleAssetSentiment record.
+   * Update a single Position record.
    * @param props - Properties to update.
-   * @returns The updated NewsArticleAssetSentiment or null.
+   * @returns The updated Position or null.
    */
-  async update(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+  async update(props: PositionType): Promise<PositionType> {
 
     const client = createApolloClient();
 
-      const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-      mutation updateOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentUpdateInput!, $where: NewsArticleAssetSentimentWhereUniqueInput!) {
-        updateOneNewsArticleAssetSentiment(data: $data, where: $where) {
+      const UPDATE_ONE_POSITION = gql`
+      mutation updateOnePosition($data: PositionUpdateInput!, $where: PositionWhereUniqueInput!) {
+        updateOnePosition(data: $data, where: $where) {
           id
           assetId
-          newsArticleId
-          url
-          news {
-            id
-            title
-            content
-            source
-            sourceDomain
-            url
-            sentiment
-            authors
-            summary
-            bannerImage
-            timePublished
-            category
-            topics
-            logo
-            createdAt
-            updatedAt
-            assets {
-              id
-            }
-          }
           asset {
             id
             symbol
@@ -682,133 +719,108 @@ export const NewsArticleAssetSentiment = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              account {
-                id
-              }
-              alpacaAccountId
             }
             newsMentions {
               id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
             }
           }
-          relevancyScore
-          sentimentScore
-          sentimentLabel
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          account {
+            id
+          }
+          alpacaAccountId
       }
       }`;
 
     const variables = {
       where: {
               id: props.id !== undefined ? props.id : undefined,
-        url: props.url !== undefined ? props.url : undefined,
       },
       data: {
   id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  url: props.url !== undefined ? {
-            set: props.url 
+  averageEntryPrice: props.averageEntryPrice !== undefined ? {
+            set: props.averageEntryPrice 
            } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-            set: props.relevancyScore 
+  qty: props.qty !== undefined ? {
+            set: props.qty 
            } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-            set: props.sentimentScore 
+  qtyAvailable: props.qtyAvailable !== undefined ? {
+            set: props.qtyAvailable 
            } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-            set: props.sentimentLabel 
+  marketValue: props.marketValue !== undefined ? {
+            set: props.marketValue 
            } : undefined,
-  news: props.news ? {
-    upsert: {
-      where: {
-        id: props.news.id !== undefined ? {
-            equals: props.news.id 
+  costBasis: props.costBasis !== undefined ? {
+            set: props.costBasis 
            } : undefined,
-        title: props.news.title !== undefined ? {
-            equals: props.news.title 
+  unrealizedPL: props.unrealizedPL !== undefined ? {
+            set: props.unrealizedPL 
            } : undefined,
-        url: props.news.url !== undefined ? {
-            equals: props.news.url 
+  unrealizedPLPC: props.unrealizedPLPC !== undefined ? {
+            set: props.unrealizedPLPC 
            } : undefined,
-      },
-      update: {
-        id: props.news.id !== undefined ? {
-            set: props.news.id  
+  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? {
+            set: props.unrealisedIntradayPL 
            } : undefined,
-        title: props.news.title !== undefined ? {
-            set: props.news.title  
+  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? {
+            set: props.unrealisedIntradayPLPC 
            } : undefined,
-        content: props.news.content !== undefined ? {
-            set: props.news.content  
+  currentPrice: props.currentPrice !== undefined ? {
+            set: props.currentPrice 
            } : undefined,
-        source: props.news.source !== undefined ? {
-            set: props.news.source  
+  lastTradePrice: props.lastTradePrice !== undefined ? {
+            set: props.lastTradePrice 
            } : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? {
-            set: props.news.sourceDomain  
+  changeToday: props.changeToday !== undefined ? {
+            set: props.changeToday 
            } : undefined,
-        url: props.news.url !== undefined ? {
-            set: props.news.url  
+  assetMarginable: props.assetMarginable !== undefined ? {
+            set: props.assetMarginable 
            } : undefined,
-        sentiment: props.news.sentiment !== undefined ? {
-            set: props.news.sentiment  
-           } : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors  
-           } : undefined,
-        summary: props.news.summary !== undefined ? {
-            set: props.news.summary  
-           } : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? {
-            set: props.news.bannerImage  
-           } : undefined,
-        timePublished: props.news.timePublished !== undefined ? {
-            set: props.news.timePublished  
-           } : undefined,
-        category: props.news.category !== undefined ? {
-            set: props.news.category  
-           } : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics  
-           } : undefined,
-        logo: props.news.logo !== undefined ? {
-            set: props.news.logo  
-           } : undefined,
-      },
-      create: {
-        title: props.news.title !== undefined ? props.news.title : undefined,
-        content: props.news.content !== undefined ? props.news.content : undefined,
-        source: props.news.source !== undefined ? props.news.source : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
-        authors: props.news.authors !== undefined ? props.news.authors : undefined,
-        summary: props.news.summary !== undefined ? props.news.summary : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
-        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
-        category: props.news.category !== undefined ? props.news.category : undefined,
-        topics: props.news.topics !== undefined ? props.news.topics : undefined,
-        logo: props.news.logo !== undefined ? props.news.logo : undefined,
-      },
-    }
-  } : undefined,
   asset: props.asset ? {
     upsert: {
       where: {
@@ -1053,69 +1065,34 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    positions: props.asset.positions ? {
-      upsert: props.asset.positions.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? {
+      upsert: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
         },
         update: {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          averageEntryPrice: item.averageEntryPrice !== undefined ? {
-              set: item.averageEntryPrice  
+          url: item.url !== undefined ? {
+              set: item.url  
              } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore  
              } : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? {
-              set: item.qtyAvailable  
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore  
              } : undefined,
-          marketValue: item.marketValue !== undefined ? {
-              set: item.marketValue  
-             } : undefined,
-          costBasis: item.costBasis !== undefined ? {
-              set: item.costBasis  
-             } : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? {
-              set: item.unrealizedPL  
-             } : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-              set: item.unrealizedPLPC  
-             } : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-              set: item.unrealisedIntradayPL  
-             } : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-              set: item.unrealisedIntradayPLPC  
-             } : undefined,
-          currentPrice: item.currentPrice !== undefined ? {
-              set: item.currentPrice  
-             } : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? {
-              set: item.lastTradePrice  
-             } : undefined,
-          changeToday: item.changeToday !== undefined ? {
-              set: item.changeToday  
-             } : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? {
-              set: item.assetMarginable  
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel  
              } : undefined,
         },
         create: {
-          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
         },
       }))
     } : undefined,
@@ -1202,25 +1179,267 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    positions: props.asset.positions ? {
-      connectOrCreate: props.asset.positions.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? {
+      connectOrCreate: props.asset.newsMentions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+        },
+        create: {
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  account: props.account ? {
+    upsert: {
+      where: {
+        id: props.account.id !== undefined ? {
+            equals: props.account.id 
+           } : undefined,
+      },
+      update: {
+        id: props.account.id !== undefined ? {
+            set: props.account.id  
+           } : undefined,
+        type: props.account.type !== undefined ? {
+            set: props.account.type  
+           } : undefined,
+        APIKey: props.account.APIKey !== undefined ? {
+            set: props.account.APIKey  
+           } : undefined,
+        APISecret: props.account.APISecret !== undefined ? {
+            set: props.account.APISecret  
+           } : undefined,
+        configuration: props.account.configuration !== undefined ? {
+            set: props.account.configuration  
+           } : undefined,
+        marketOpen: props.account.marketOpen !== undefined ? {
+            set: props.account.marketOpen  
+           } : undefined,
+    user: props.account.user ? {
+      upsert: {
+        where: {
+          id: props.account.user.id !== undefined ? {
+              equals: props.account.user.id 
+             } : undefined,
+          name: props.account.user.name !== undefined ? {
+              equals: props.account.user.name 
+             } : undefined,
+          email: props.account.user.email !== undefined ? {
+              equals: props.account.user.email 
+             } : undefined,
+        },
+        update: {
+          id: props.account.user.id !== undefined ? {
+              set: props.account.user.id  
+             } : undefined,
+          name: props.account.user.name !== undefined ? {
+              set: props.account.user.name  
+             } : undefined,
+          email: props.account.user.email !== undefined ? {
+              set: props.account.user.email  
+             } : undefined,
+          emailVerified: props.account.user.emailVerified !== undefined ? {
+              set: props.account.user.emailVerified  
+             } : undefined,
+          image: props.account.user.image !== undefined ? {
+              set: props.account.user.image  
+             } : undefined,
+          role: props.account.user.role !== undefined ? {
+              set: props.account.user.role  
+             } : undefined,
+          bio: props.account.user.bio !== undefined ? {
+              set: props.account.user.bio  
+             } : undefined,
+          jobTitle: props.account.user.jobTitle !== undefined ? {
+              set: props.account.user.jobTitle  
+             } : undefined,
+          currentAccount: props.account.user.currentAccount !== undefined ? {
+              set: props.account.user.currentAccount  
+             } : undefined,
+          plan: props.account.user.plan !== undefined ? {
+              set: props.account.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
+          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
+          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
+          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
+          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
+          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
+          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
+          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
+          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    trades: props.account.trades ? {
+      upsert: props.account.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.account.orders ? {
+      upsert: props.account.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    Alert: props.account.Alert ? {
+      upsert: props.account.Alert.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        type: props.account.type !== undefined ? props.account.type : undefined,
+        APIKey: props.account.APIKey !== undefined ? props.account.APIKey : undefined,
+        APISecret: props.account.APISecret !== undefined ? props.account.APISecret : undefined,
+        configuration: props.account.configuration !== undefined ? props.account.configuration : undefined,
+        marketOpen: props.account.marketOpen !== undefined ? props.account.marketOpen : undefined,
+    user: props.account.user ? {
+      connectOrCreate: {
+        where: {
+          id: props.account.user.id !== undefined ? props.account.user.id : undefined,
+          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
+          name: props.account.user.name !== undefined ? {
+              equals: props.account.user.name 
+             } : undefined,
+        },
+        create: {
+          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
+          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
+          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
+          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
+          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
+          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
+          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
+          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
+          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    trades: props.account.trades ? {
+      connectOrCreate: props.account.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: props.account.orders ? {
+      connectOrCreate: props.account.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    Alert: props.account.Alert ? {
+      connectOrCreate: props.account.Alert.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -1233,31 +1452,31 @@ export const NewsArticleAssetSentiment = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneNewsArticleAssetSentiment) {
-        return response.data.updateOneNewsArticleAssetSentiment;
+      if (response && response.data && response.data.updateOnePosition) {
+        return response.data.updateOnePosition;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneNewsArticleAssetSentiment:', error);
+      console.error('Error in updateOnePosition:', error);
       throw error;
     }
   },
 
   /**
-   * Update multiple NewsArticleAssetSentiment records.
-   * @param props - Array of NewsArticleAssetSentiment objects for the updated records.
+   * Update multiple Position records.
+   * @param props - Array of Position objects for the updated records.
    * @returns The count of created records or null.
    */
-  async updateMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
+  async updateMany(props: PositionType[]): Promise<{ count: number } | null> {
 
     const client = createApolloClient();
 
-      const UPDATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
-      mutation updateManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
-        updateManyNewsArticleAssetSentiment(data: $data) {
+      const UPDATE_MANY_POSITION = gql`
+      mutation updateManyPosition($data: [PositionCreateManyInput!]!) {
+        updateManyPosition(data: $data) {
           count
         }
       }`;
@@ -1265,99 +1484,51 @@ export const NewsArticleAssetSentiment = {
     const variables = props.map(prop => ({
       where: {
                 id: prop.id !== undefined ? prop.id : undefined,
-        url: prop.url !== undefined ? prop.url : undefined,
 
       },
       data: {
           id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  url: prop.url !== undefined ? {
-            set: prop.url 
+  averageEntryPrice: prop.averageEntryPrice !== undefined ? {
+            set: prop.averageEntryPrice 
            } : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? {
-            set: prop.relevancyScore 
+  qty: prop.qty !== undefined ? {
+            set: prop.qty 
            } : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? {
-            set: prop.sentimentScore 
+  qtyAvailable: prop.qtyAvailable !== undefined ? {
+            set: prop.qtyAvailable 
            } : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? {
-            set: prop.sentimentLabel 
+  marketValue: prop.marketValue !== undefined ? {
+            set: prop.marketValue 
            } : undefined,
-  news: prop.news ? {
-    upsert: {
-      where: {
-        id: prop.news.id !== undefined ? {
-            equals: prop.news.id 
+  costBasis: prop.costBasis !== undefined ? {
+            set: prop.costBasis 
            } : undefined,
-        title: prop.news.title !== undefined ? {
-            equals: prop.news.title 
+  unrealizedPL: prop.unrealizedPL !== undefined ? {
+            set: prop.unrealizedPL 
            } : undefined,
-        url: prop.news.url !== undefined ? {
-            equals: prop.news.url 
+  unrealizedPLPC: prop.unrealizedPLPC !== undefined ? {
+            set: prop.unrealizedPLPC 
            } : undefined,
-      },
-      update: {
-        id: prop.news.id !== undefined ? {
-            set: prop.news.id  
+  unrealisedIntradayPL: prop.unrealisedIntradayPL !== undefined ? {
+            set: prop.unrealisedIntradayPL 
            } : undefined,
-        title: prop.news.title !== undefined ? {
-            set: prop.news.title  
+  unrealisedIntradayPLPC: prop.unrealisedIntradayPLPC !== undefined ? {
+            set: prop.unrealisedIntradayPLPC 
            } : undefined,
-        content: prop.news.content !== undefined ? {
-            set: prop.news.content  
+  currentPrice: prop.currentPrice !== undefined ? {
+            set: prop.currentPrice 
            } : undefined,
-        source: prop.news.source !== undefined ? {
-            set: prop.news.source  
+  lastTradePrice: prop.lastTradePrice !== undefined ? {
+            set: prop.lastTradePrice 
            } : undefined,
-        sourceDomain: prop.news.sourceDomain !== undefined ? {
-            set: prop.news.sourceDomain  
+  changeToday: prop.changeToday !== undefined ? {
+            set: prop.changeToday 
            } : undefined,
-        url: prop.news.url !== undefined ? {
-            set: prop.news.url  
+  assetMarginable: prop.assetMarginable !== undefined ? {
+            set: prop.assetMarginable 
            } : undefined,
-        sentiment: prop.news.sentiment !== undefined ? {
-            set: prop.news.sentiment  
-           } : undefined,
-        authors: prop.news.authors !== undefined ? {
-            set: prop.news.authors  
-           } : undefined,
-        summary: prop.news.summary !== undefined ? {
-            set: prop.news.summary  
-           } : undefined,
-        bannerImage: prop.news.bannerImage !== undefined ? {
-            set: prop.news.bannerImage  
-           } : undefined,
-        timePublished: prop.news.timePublished !== undefined ? {
-            set: prop.news.timePublished  
-           } : undefined,
-        category: prop.news.category !== undefined ? {
-            set: prop.news.category  
-           } : undefined,
-        topics: prop.news.topics !== undefined ? {
-            set: prop.news.topics  
-           } : undefined,
-        logo: prop.news.logo !== undefined ? {
-            set: prop.news.logo  
-           } : undefined,
-      },
-      create: {
-        title: prop.news.title !== undefined ? prop.news.title : undefined,
-        content: prop.news.content !== undefined ? prop.news.content : undefined,
-        source: prop.news.source !== undefined ? prop.news.source : undefined,
-        sourceDomain: prop.news.sourceDomain !== undefined ? prop.news.sourceDomain : undefined,
-        url: prop.news.url !== undefined ? prop.news.url : undefined,
-        sentiment: prop.news.sentiment !== undefined ? prop.news.sentiment : undefined,
-        authors: prop.news.authors !== undefined ? prop.news.authors : undefined,
-        summary: prop.news.summary !== undefined ? prop.news.summary : undefined,
-        bannerImage: prop.news.bannerImage !== undefined ? prop.news.bannerImage : undefined,
-        timePublished: prop.news.timePublished !== undefined ? prop.news.timePublished : undefined,
-        category: prop.news.category !== undefined ? prop.news.category : undefined,
-        topics: prop.news.topics !== undefined ? prop.news.topics : undefined,
-        logo: prop.news.logo !== undefined ? prop.news.logo : undefined,
-      },
-    }
-  } : undefined,
   asset: prop.asset ? {
     upsert: {
       where: {
@@ -1602,69 +1773,34 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    positions: prop.asset.positions ? {
-      upsert: prop.asset.positions.map((item: any) => ({
+    newsMentions: prop.asset.newsMentions ? {
+      upsert: prop.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
         },
         update: {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          averageEntryPrice: item.averageEntryPrice !== undefined ? {
-              set: item.averageEntryPrice  
+          url: item.url !== undefined ? {
+              set: item.url  
              } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore  
              } : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? {
-              set: item.qtyAvailable  
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore  
              } : undefined,
-          marketValue: item.marketValue !== undefined ? {
-              set: item.marketValue  
-             } : undefined,
-          costBasis: item.costBasis !== undefined ? {
-              set: item.costBasis  
-             } : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? {
-              set: item.unrealizedPL  
-             } : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-              set: item.unrealizedPLPC  
-             } : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-              set: item.unrealisedIntradayPL  
-             } : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-              set: item.unrealisedIntradayPLPC  
-             } : undefined,
-          currentPrice: item.currentPrice !== undefined ? {
-              set: item.currentPrice  
-             } : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? {
-              set: item.lastTradePrice  
-             } : undefined,
-          changeToday: item.changeToday !== undefined ? {
-              set: item.changeToday  
-             } : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? {
-              set: item.assetMarginable  
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel  
              } : undefined,
         },
         create: {
-          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
         },
       }))
     } : undefined,
@@ -1751,25 +1887,267 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    positions: prop.asset.positions ? {
-      connectOrCreate: prop.asset.positions.map((item: any) => ({
+    newsMentions: prop.asset.newsMentions ? {
+      connectOrCreate: prop.asset.newsMentions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+        },
+        create: {
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  account: prop.account ? {
+    upsert: {
+      where: {
+        id: prop.account.id !== undefined ? {
+            equals: prop.account.id 
+           } : undefined,
+      },
+      update: {
+        id: prop.account.id !== undefined ? {
+            set: prop.account.id  
+           } : undefined,
+        type: prop.account.type !== undefined ? {
+            set: prop.account.type  
+           } : undefined,
+        APIKey: prop.account.APIKey !== undefined ? {
+            set: prop.account.APIKey  
+           } : undefined,
+        APISecret: prop.account.APISecret !== undefined ? {
+            set: prop.account.APISecret  
+           } : undefined,
+        configuration: prop.account.configuration !== undefined ? {
+            set: prop.account.configuration  
+           } : undefined,
+        marketOpen: prop.account.marketOpen !== undefined ? {
+            set: prop.account.marketOpen  
+           } : undefined,
+    user: prop.account.user ? {
+      upsert: {
+        where: {
+          id: prop.account.user.id !== undefined ? {
+              equals: prop.account.user.id 
+             } : undefined,
+          name: prop.account.user.name !== undefined ? {
+              equals: prop.account.user.name 
+             } : undefined,
+          email: prop.account.user.email !== undefined ? {
+              equals: prop.account.user.email 
+             } : undefined,
+        },
+        update: {
+          id: prop.account.user.id !== undefined ? {
+              set: prop.account.user.id  
+             } : undefined,
+          name: prop.account.user.name !== undefined ? {
+              set: prop.account.user.name  
+             } : undefined,
+          email: prop.account.user.email !== undefined ? {
+              set: prop.account.user.email  
+             } : undefined,
+          emailVerified: prop.account.user.emailVerified !== undefined ? {
+              set: prop.account.user.emailVerified  
+             } : undefined,
+          image: prop.account.user.image !== undefined ? {
+              set: prop.account.user.image  
+             } : undefined,
+          role: prop.account.user.role !== undefined ? {
+              set: prop.account.user.role  
+             } : undefined,
+          bio: prop.account.user.bio !== undefined ? {
+              set: prop.account.user.bio  
+             } : undefined,
+          jobTitle: prop.account.user.jobTitle !== undefined ? {
+              set: prop.account.user.jobTitle  
+             } : undefined,
+          currentAccount: prop.account.user.currentAccount !== undefined ? {
+              set: prop.account.user.currentAccount  
+             } : undefined,
+          plan: prop.account.user.plan !== undefined ? {
+              set: prop.account.user.plan  
+             } : undefined,
+        },
+        create: {
+          name: prop.account.user.name !== undefined ? prop.account.user.name : undefined,
+          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
+          emailVerified: prop.account.user.emailVerified !== undefined ? prop.account.user.emailVerified : undefined,
+          image: prop.account.user.image !== undefined ? prop.account.user.image : undefined,
+          role: prop.account.user.role !== undefined ? prop.account.user.role : undefined,
+          bio: prop.account.user.bio !== undefined ? prop.account.user.bio : undefined,
+          jobTitle: prop.account.user.jobTitle !== undefined ? prop.account.user.jobTitle : undefined,
+          currentAccount: prop.account.user.currentAccount !== undefined ? prop.account.user.currentAccount : undefined,
+          plan: prop.account.user.plan !== undefined ? prop.account.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    trades: prop.account.trades ? {
+      upsert: prop.account.trades.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          total: item.total !== undefined ? {
+              set: item.total  
+             } : undefined,
+          timestamp: item.timestamp !== undefined ? {
+              set: item.timestamp  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.account.orders ? {
+      upsert: prop.account.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          action: item.action !== undefined ? {
+              set: item.action  
+             } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity  
+             } : undefined,
+          price: item.price !== undefined ? {
+              set: item.price  
+             } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status  
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    Alert: prop.account.Alert ? {
+      upsert: prop.account.Alert.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id  
+             } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message  
+             } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type  
+             } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead  
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        type: prop.account.type !== undefined ? prop.account.type : undefined,
+        APIKey: prop.account.APIKey !== undefined ? prop.account.APIKey : undefined,
+        APISecret: prop.account.APISecret !== undefined ? prop.account.APISecret : undefined,
+        configuration: prop.account.configuration !== undefined ? prop.account.configuration : undefined,
+        marketOpen: prop.account.marketOpen !== undefined ? prop.account.marketOpen : undefined,
+    user: prop.account.user ? {
+      connectOrCreate: {
+        where: {
+          id: prop.account.user.id !== undefined ? prop.account.user.id : undefined,
+          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
+          name: prop.account.user.name !== undefined ? {
+              equals: prop.account.user.name 
+             } : undefined,
+        },
+        create: {
+          name: prop.account.user.name !== undefined ? prop.account.user.name : undefined,
+          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
+          emailVerified: prop.account.user.emailVerified !== undefined ? prop.account.user.emailVerified : undefined,
+          image: prop.account.user.image !== undefined ? prop.account.user.image : undefined,
+          role: prop.account.user.role !== undefined ? prop.account.user.role : undefined,
+          bio: prop.account.user.bio !== undefined ? prop.account.user.bio : undefined,
+          jobTitle: prop.account.user.jobTitle !== undefined ? prop.account.user.jobTitle : undefined,
+          currentAccount: prop.account.user.currentAccount !== undefined ? prop.account.user.currentAccount : undefined,
+          plan: prop.account.user.plan !== undefined ? prop.account.user.plan : undefined,
+        },
+      }
+    } : undefined,
+    trades: prop.account.trades ? {
+      connectOrCreate: prop.account.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          total: item.total !== undefined ? item.total : undefined,
+          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    orders: prop.account.orders ? {
+      connectOrCreate: prop.account.orders.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          action: item.action !== undefined ? item.action : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          price: item.price !== undefined ? item.price : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+        },
+      }))
+    } : undefined,
+    Alert: prop.account.Alert ? {
+      connectOrCreate: prop.account.Alert.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -1784,56 +2162,33 @@ export const NewsArticleAssetSentiment = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_MANY_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyNewsArticleAssetSentiment) {
-        return response.data.updateManyNewsArticleAssetSentiment;
+      if (response && response.data && response.data.updateManyPosition) {
+        return response.data.updateManyPosition;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateManyNewsArticleAssetSentiment:', error);
+      console.error('Error in updateManyPosition:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single NewsArticleAssetSentiment record.
+   * Delete a single Position record.
    * @param props - Properties to update.
-   * @returns The deleted NewsArticleAssetSentiment or null.
+   * @returns The deleted Position or null.
    */
-  async delete(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+  async delete(props: PositionType): Promise<PositionType> {
 
     const client = createApolloClient();
 
-      const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-      mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
-        deleteOneNewsArticleAssetSentiment(where: $where) {
+      const DELETE_ONE_POSITION = gql`
+      mutation deleteOnePosition($where: PositionWhereUniqueInput!) {
+        deleteOnePosition(where: $where) {
           id
           assetId
-          newsArticleId
-          url
-          news {
-            id
-            title
-            content
-            source
-            sourceDomain
-            url
-            sentiment
-            authors
-            summary
-            bannerImage
-            timePublished
-            category
-            topics
-            logo
-            createdAt
-            updatedAt
-            assets {
-              id
-            }
-          }
           asset {
             id
             symbol
@@ -2011,35 +2366,58 @@ export const NewsArticleAssetSentiment = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              account {
-                id
-              }
-              alpacaAccountId
             }
             newsMentions {
               id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
             }
           }
-          relevancyScore
-          sentimentScore
-          sentimentLabel
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          account {
+            id
+          }
+          alpacaAccountId
       }
       }`;
 
@@ -2052,56 +2430,33 @@ export const NewsArticleAssetSentiment = {
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: DELETE_ONE_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneNewsArticleAssetSentiment) {
-        return response.data.deleteOneNewsArticleAssetSentiment;
+      if (response && response.data && response.data.deleteOnePosition) {
+        return response.data.deleteOnePosition;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneNewsArticleAssetSentiment:', error);
+      console.error('Error in deleteOnePosition:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single NewsArticleAssetSentiment record by ID.
+   * Retrieve a single Position record by ID.
    * @param props - Properties to update.
-   * @returns The retrieved NewsArticleAssetSentiment or null.
+   * @returns The retrieved Position or null.
    */
-  async get(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType | null> {
+  async get(props: PositionType): Promise<PositionType | null> {
 
     const client = createApolloClient();
 
-      const GET_NEWSARTICLEASSETSENTIMENT = gql`
-      query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
-        getNewsArticleAssetSentiment(where: $where) {
+      const GET_POSITION = gql`
+      query getPosition($where: PositionWhereUniqueInput!) {
+        getPosition(where: $where) {
           id
           assetId
-          newsArticleId
-          url
-          news {
-            id
-            title
-            content
-            source
-            sourceDomain
-            url
-            sentiment
-            authors
-            summary
-            bannerImage
-            timePublished
-            category
-            topics
-            logo
-            createdAt
-            updatedAt
-            assets {
-              id
-            }
-          }
           asset {
             id
             symbol
@@ -2279,96 +2634,95 @@ export const NewsArticleAssetSentiment = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              account {
-                id
-              }
-              alpacaAccountId
             }
             newsMentions {
               id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
             }
           }
-          relevancyScore
-          sentimentScore
-          sentimentLabel
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          account {
+            id
+          }
+          alpacaAccountId
         }
       }`;
 
     const variables = {
       where: {
               id: props.id !== undefined ? props.id : undefined,
-        url: props.url !== undefined ? props.url : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: GET_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.query({ query: GET_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getNewsArticleAssetSentiment ?? null;
+      return response.data?.getPosition ?? null;
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
+      if (error instanceof ApolloError && error.message === 'No Position found') {
         return null;
       } else {
-        console.error('Error in getNewsArticleAssetSentiment:', error);
+        console.error('Error in getPosition:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Retrieve all NewsArticleAssetSentiments records.
-   * @returns An array of NewsArticleAssetSentiment records or null.
+   * Retrieve all Positions records.
+   * @returns An array of Position records or null.
    */
-  async getAll(): Promise<NewsArticleAssetSentimentType[] | null> {
+  async getAll(): Promise<PositionType[] | null> {
 
     const client = createApolloClient();
 
-      const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
-      query getAllNewsArticleAssetSentiment {
-        newsArticleAssetSentiments {
+      const GET_ALL_POSITION = gql`
+      query getAllPosition {
+        positions {
           id
           assetId
-          newsArticleId
-          url
-          news {
-            id
-            title
-            content
-            source
-            sourceDomain
-            url
-            sentiment
-            authors
-            summary
-            bannerImage
-            timePublished
-            category
-            topics
-            logo
-            createdAt
-            updatedAt
-            assets {
-              id
-            }
-          }
           asset {
             id
             symbol
@@ -2546,89 +2900,89 @@ export const NewsArticleAssetSentiment = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              account {
-                id
-              }
-              alpacaAccountId
             }
             newsMentions {
               id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
             }
           }
-          relevancyScore
-          sentimentScore
-          sentimentLabel
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          account {
+            id
+          }
+          alpacaAccountId
       }
       }`;
 
     try {
-      const response = await client.query({ query: GET_ALL_NEWSARTICLEASSETSENTIMENT });
+      const response = await client.query({ query: GET_ALL_POSITION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.newsArticleAssetSentiments ?? null;
+      return response.data?.positions ?? null;
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
+      if (error instanceof ApolloError && error.message === 'No Position found') {
         return null;
       } else {
-        console.error('Error in getNewsArticleAssetSentiment:', error);
+        console.error('Error in getPosition:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Find multiple NewsArticleAssetSentiment records based on conditions.
+   * Find multiple Position records based on conditions.
    * @param props - Conditions to find records.
-   * @returns An array of found NewsArticleAssetSentiment records or null.
+   * @returns An array of found Position records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType[] | null> {
+  async findMany(props: PositionType): Promise<PositionType[] | null> {
 
     const client = createApolloClient();
 
-      const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
-      query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
-        newsArticleAssetSentiments(where: $where) {
+      const FIND_MANY_POSITION = gql`
+      query findManyPosition($where: PositionWhereInput!) {
+        positions(where: $where) {
           id
           assetId
-          newsArticleId
-          url
-          news {
-            id
-            title
-            content
-            source
-            sourceDomain
-            url
-            sentiment
-            authors
-            summary
-            bannerImage
-            timePublished
-            category
-            topics
-            logo
-            createdAt
-            updatedAt
-            assets {
-              id
-            }
-          }
           asset {
             id
             symbol
@@ -2806,35 +3160,58 @@ export const NewsArticleAssetSentiment = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              account {
-                id
-              }
-              alpacaAccountId
             }
             newsMentions {
               id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
             }
           }
-          relevancyScore
-          sentimentScore
-          sentimentLabel
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          account {
+            id
+          }
+          alpacaAccountId
       }
       }`;
 
@@ -2843,27 +3220,24 @@ export const NewsArticleAssetSentiment = {
         id: props.id !== undefined ? {
             equals: props.id 
            } : undefined,
-        url: props.url !== undefined ? {
-            equals: props.url 
-           } : undefined,
       },
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: FIND_MANY_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_POSITION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.NewsArticleAssetSentiments) {
-        return response.data.newsArticleAssetSentiments;
+      if (response && response.data && response.data.Positions) {
+        return response.data.positions;
       } else {
-       return [] as NewsArticleAssetSentimentType[];
+       return [] as PositionType[];
       }
     } catch (error) {
-      if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
+      if (error instanceof ApolloError && error.message === 'No Position found') {
         return null;
       } else {
-        console.error('Error in getNewsArticleAssetSentiment:', error);
+        console.error('Error in getPosition:', error);
         throw error;
       }
     }

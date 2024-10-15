@@ -94,109 +94,86 @@ export const User = {
             updatedAt
           }
           plan
-          trades {
+          orders {
             id
             userId
-            portfolioId
+            alpacaAccountId
             assetId
+            type
             action
             quantity
             price
-            total
-            timestamp
+            status
             createdAt
             updatedAt
-            status
             user {
               id
             }
-            portfolio {
+            account {
               id
-              name
-              slug
               type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
               user {
                 id
               }
               userId
-              holdings {
+              createdAt
+              updatedAt
+              trades {
                 id
-                tradingAccountId
+                alpacaAccountId
                 assetId
                 quantity
-                averagePrice
+                price
+                total
+                timestamp
                 createdAt
                 updatedAt
-                tradingAccount {
+                status
+                account {
                   id
                 }
                 asset {
                   id
                 }
-              }
-              trades {
-                id
+                actions {
+                  id
+                }
               }
               orders {
                 id
-                userId
-                portfolioId
+              }
+              positions {
+                id
                 assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
-              aiRecommendations {
+              Alert {
                 id
                 userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -205,39 +182,10 @@ export const User = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
             }
             asset {
               id
@@ -296,16 +244,13 @@ export const User = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -324,60 +269,12 @@ export const User = {
                 sentimentLabel
               }
             }
-            steps {
-              id
-              tradeId
-              sequence
-              action
-              hedgeType
-              hedgePrice
-              buyPrice
-              sellPrice
-              qty
-              side
-              type
-              stopLoss
-              targetPrice
-              note
-              executionTime
-              status
-              fee
-              trade {
-                id
-              }
-            }
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          riskAllocations {
-            id
           }
           alerts {
             id
           }
-          performanceMetrics {
-            id
-          }
-          tradingAccount {
-            id
-          }
           alpacaAccounts {
             id
-            type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
-              id
-            }
-            userId
-            createdAt
-            updatedAt
           }
         }
       }
@@ -455,125 +352,6 @@ export const User = {
       },
     }))
   } : undefined,
-  trades: props.trades ? {
-    connectOrCreate: props.trades.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        action: item.action !== undefined ? item.action : undefined,
-        quantity: item.quantity !== undefined ? item.quantity : undefined,
-        price: item.price !== undefined ? item.price : undefined,
-        total: item.total !== undefined ? item.total : undefined,
-        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-        status: item.status !== undefined ? item.status : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-    steps: item.steps ? {
-      connectOrCreate: item.steps.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sequence: item.sequence !== undefined ? item.sequence : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          side: item.side !== undefined ? item.side : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-          note: item.note !== undefined ? item.note : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-          fee: item.fee !== undefined ? item.fee : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }))
-  } : undefined,
   orders: props.orders ? {
     connectOrCreate: props.orders.map((item: any) => ({
       where: {
@@ -585,19 +363,17 @@ export const User = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
+          id: item.account.id !== undefined ? item.account.id : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -662,124 +438,6 @@ export const User = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  aiRecommendations: props.aiRecommendations ? {
-    connectOrCreate: props.aiRecommendations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        action: item.action !== undefined ? item.action : undefined,
-        confidence: item.confidence !== undefined ? item.confidence : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  riskAllocations: props.riskAllocations ? {
-    connectOrCreate: props.riskAllocations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        assetType: item.assetType !== undefined ? item.assetType : undefined,
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -795,83 +453,40 @@ export const User = {
         message: item.message !== undefined ? item.message : undefined,
         type: item.type !== undefined ? item.type : undefined,
         isRead: item.isRead !== undefined ? item.isRead : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
+          id: item.account.id !== undefined ? item.account.id : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
       },
     }))
   } : undefined,
-  performanceMetrics: props.performanceMetrics ? {
-    connectOrCreate: props.performanceMetrics.map((item: any) => ({
+  alpacaAccounts: props.alpacaAccounts ? {
+    connectOrCreate: props.alpacaAccounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
       create: {
-        label: item.label !== undefined ? item.label : undefined,
-        value: item.value !== undefined ? item.value : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  tradingAccount: props.tradingAccount ? {
-    connectOrCreate: props.tradingAccount.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-        slug: item.slug !== undefined ? item.slug : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name 
-           } : undefined,
-      },
-      create: {
-        name: item.name !== undefined ? item.name : undefined,
-        slug: item.slug !== undefined ? item.slug : undefined,
         type: item.type !== undefined ? item.type : undefined,
-    holdings: item.holdings ? {
-      connectOrCreate: item.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
+        APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+        APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+        configuration: item.configuration !== undefined ? item.configuration : undefined,
+        marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
     trades: item.trades ? {
       connectOrCreate: item.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
           quantity: item.quantity !== undefined ? item.quantity : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
@@ -894,30 +509,30 @@ export const User = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      connectOrCreate: item.aiRecommendations.map((item: any) => ({
+    positions: item.positions ? {
+      connectOrCreate: item.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
+          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
         },
       }))
     } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      connectOrCreate: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: item.alerts ? {
-      connectOrCreate: item.alerts.map((item: any) => ({
+    Alert: item.Alert ? {
+      connectOrCreate: item.Alert.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -928,46 +543,6 @@ export const User = {
         },
       }))
     } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      connectOrCreate: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: item.environmentVariables ? {
-      connectOrCreate: item.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  alpacaAccounts: props.alpacaAccounts ? {
-    connectOrCreate: props.alpacaAccounts.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      create: {
-        type: item.type !== undefined ? item.type : undefined,
-        APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-        APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-        configuration: item.configuration !== undefined ? item.configuration : undefined,
-        marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
       },
     }))
   } : undefined,
@@ -1120,109 +695,86 @@ export const User = {
             updatedAt
           }
           plan
-          trades {
+          orders {
             id
             userId
-            portfolioId
+            alpacaAccountId
             assetId
+            type
             action
             quantity
             price
-            total
-            timestamp
+            status
             createdAt
             updatedAt
-            status
             user {
               id
             }
-            portfolio {
+            account {
               id
-              name
-              slug
               type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
               user {
                 id
               }
               userId
-              holdings {
+              createdAt
+              updatedAt
+              trades {
                 id
-                tradingAccountId
+                alpacaAccountId
                 assetId
                 quantity
-                averagePrice
+                price
+                total
+                timestamp
                 createdAt
                 updatedAt
-                tradingAccount {
+                status
+                account {
                   id
                 }
                 asset {
                   id
                 }
-              }
-              trades {
-                id
+                actions {
+                  id
+                }
               }
               orders {
                 id
-                userId
-                portfolioId
+              }
+              positions {
+                id
                 assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
-              aiRecommendations {
+              Alert {
                 id
                 userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -1231,39 +783,10 @@ export const User = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
             }
             asset {
               id
@@ -1322,16 +845,13 @@ export const User = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -1350,60 +870,12 @@ export const User = {
                 sentimentLabel
               }
             }
-            steps {
-              id
-              tradeId
-              sequence
-              action
-              hedgeType
-              hedgePrice
-              buyPrice
-              sellPrice
-              qty
-              side
-              type
-              stopLoss
-              targetPrice
-              note
-              executionTime
-              status
-              fee
-              trade {
-                id
-              }
-            }
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          riskAllocations {
-            id
           }
           alerts {
             id
           }
-          performanceMetrics {
-            id
-          }
-          tradingAccount {
-            id
-          }
           alpacaAccounts {
             id
-            type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
-              id
-            }
-            userId
-            createdAt
-            updatedAt
           }
       }
       }`;
@@ -1599,490 +1071,6 @@ export const User = {
       },
     }))
   } : undefined,
-  trades: props.trades ? {
-    upsert: props.trades.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        action: item.action !== undefined ? {
-            set: item.action  
-           } : undefined,
-        quantity: item.quantity !== undefined ? {
-            set: item.quantity  
-           } : undefined,
-        price: item.price !== undefined ? {
-            set: item.price  
-           } : undefined,
-        total: item.total !== undefined ? {
-            set: item.total  
-           } : undefined,
-        timestamp: item.timestamp !== undefined ? {
-            set: item.timestamp  
-           } : undefined,
-        status: item.status !== undefined ? {
-            set: item.status  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      upsert: {
-        where: {
-          id: item.asset.id !== undefined ? {
-              equals: item.asset.id 
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              equals: item.asset.symbol 
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        update: {
-          id: item.asset.id !== undefined ? {
-              set: item.asset.id  
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              set: item.asset.symbol  
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              set: item.asset.name  
-             } : undefined,
-          type: item.asset.type !== undefined ? {
-              set: item.asset.type  
-             } : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? {
-              set: item.asset.logoUrl  
-             } : undefined,
-          description: item.asset.description !== undefined ? {
-              set: item.asset.description  
-             } : undefined,
-          cik: item.asset.cik !== undefined ? {
-              set: item.asset.cik  
-             } : undefined,
-          exchange: item.asset.exchange !== undefined ? {
-              set: item.asset.exchange  
-             } : undefined,
-          currency: item.asset.currency !== undefined ? {
-              set: item.asset.currency  
-             } : undefined,
-          country: item.asset.country !== undefined ? {
-              set: item.asset.country  
-             } : undefined,
-          sector: item.asset.sector !== undefined ? {
-              set: item.asset.sector  
-             } : undefined,
-          industry: item.asset.industry !== undefined ? {
-              set: item.asset.industry  
-             } : undefined,
-          address: item.asset.address !== undefined ? {
-              set: item.asset.address  
-             } : undefined,
-          officialSite: item.asset.officialSite !== undefined ? {
-              set: item.asset.officialSite  
-             } : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? {
-              set: item.asset.fiscalYearEnd  
-             } : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? {
-              set: item.asset.latestQuarter  
-             } : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? {
-              set: item.asset.marketCapitalization  
-             } : undefined,
-          ebitda: item.asset.ebitda !== undefined ? {
-              set: item.asset.ebitda  
-             } : undefined,
-          peRatio: item.asset.peRatio !== undefined ? {
-              set: item.asset.peRatio  
-             } : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? {
-              set: item.asset.pegRatio  
-             } : undefined,
-          bookValue: item.asset.bookValue !== undefined ? {
-              set: item.asset.bookValue  
-             } : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? {
-              set: item.asset.dividendPerShare  
-             } : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? {
-              set: item.asset.dividendYield  
-             } : undefined,
-          eps: item.asset.eps !== undefined ? {
-              set: item.asset.eps  
-             } : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? {
-              set: item.asset.revenuePerShareTTM  
-             } : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? {
-              set: item.asset.profitMargin  
-             } : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? {
-              set: item.asset.operatingMarginTTM  
-             } : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? {
-              set: item.asset.returnOnAssetsTTM  
-             } : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? {
-              set: item.asset.returnOnEquityTTM  
-             } : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? {
-              set: item.asset.revenueTTM  
-             } : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? {
-              set: item.asset.grossProfitTTM  
-             } : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? {
-              set: item.asset.dilutedEPSTTM  
-             } : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? {
-              set: item.asset.analystTargetPrice  
-             } : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? {
-              set: item.asset.analystRatingStrongBuy  
-             } : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? {
-              set: item.asset.analystRatingBuy  
-             } : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? {
-              set: item.asset.analystRatingHold  
-             } : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? {
-              set: item.asset.analystRatingSell  
-             } : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? {
-              set: item.asset.analystRatingStrongSell  
-             } : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? {
-              set: item.asset.trailingPE  
-             } : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? {
-              set: item.asset.forwardPE  
-             } : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? {
-              set: item.asset.priceToSalesRatioTTM  
-             } : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? {
-              set: item.asset.priceToBookRatio  
-             } : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? {
-              set: item.asset.evToRevenue  
-             } : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? {
-              set: item.asset.evToEbitda  
-             } : undefined,
-          beta: item.asset.beta !== undefined ? {
-              set: item.asset.beta  
-             } : undefined,
-          week52High: item.asset.week52High !== undefined ? {
-              set: item.asset.week52High  
-             } : undefined,
-          week52Low: item.asset.week52Low !== undefined ? {
-              set: item.asset.week52Low  
-             } : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? {
-              set: item.asset.day50MovingAverage  
-             } : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? {
-              set: item.asset.day200MovingAverage  
-             } : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? {
-              set: item.asset.sharesOutstanding  
-             } : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? {
-              set: item.asset.dividendDate  
-             } : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? {
-              set: item.asset.exDividendDate  
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-    steps: item.steps ? {
-      upsert: item.steps.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          sequence: item.sequence !== undefined ? {
-              set: item.sequence  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          hedgeType: item.hedgeType !== undefined ? {
-              set: item.hedgeType  
-             } : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? {
-              set: item.hedgePrice  
-             } : undefined,
-          buyPrice: item.buyPrice !== undefined ? {
-              set: item.buyPrice  
-             } : undefined,
-          sellPrice: item.sellPrice !== undefined ? {
-              set: item.sellPrice  
-             } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
-             } : undefined,
-          side: item.side !== undefined ? {
-              set: item.side  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          stopLoss: item.stopLoss !== undefined ? {
-              set: item.stopLoss  
-             } : undefined,
-          targetPrice: item.targetPrice !== undefined ? {
-              set: item.targetPrice  
-             } : undefined,
-          note: item.note !== undefined ? {
-              set: item.note  
-             } : undefined,
-          executionTime: item.executionTime !== undefined ? {
-              set: item.executionTime  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-          fee: item.fee !== undefined ? {
-              set: item.fee  
-             } : undefined,
-        },
-        create: {
-          sequence: item.sequence !== undefined ? item.sequence : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          side: item.side !== undefined ? item.side : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-          note: item.note !== undefined ? item.note : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-          fee: item.fee !== undefined ? item.fee : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        action: item.action !== undefined ? item.action : undefined,
-        quantity: item.quantity !== undefined ? item.quantity : undefined,
-        price: item.price !== undefined ? item.price : undefined,
-        total: item.total !== undefined ? item.total : undefined,
-        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-        status: item.status !== undefined ? item.status : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-    steps: item.steps ? {
-      connectOrCreate: item.steps.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sequence: item.sequence !== undefined ? item.sequence : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          side: item.side !== undefined ? item.side : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-          note: item.note !== undefined ? item.note : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-          fee: item.fee !== undefined ? item.fee : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }))
-  } : undefined,
   orders: props.orders ? {
     upsert: props.orders.map((item: any) => ({
       where: {
@@ -2107,37 +1095,39 @@ export const User = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
+          id: item.account.id !== undefined ? {
+              equals: item.account.id 
              } : undefined,
         },
         update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
+          id: item.account.id !== undefined ? {
+              set: item.account.id  
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          type: item.account.type !== undefined ? {
+              set: item.account.type  
              } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
+          APIKey: item.account.APIKey !== undefined ? {
+              set: item.account.APIKey  
              } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
+          APISecret: item.account.APISecret !== undefined ? {
+              set: item.account.APISecret  
+             } : undefined,
+          configuration: item.account.configuration !== undefined ? {
+              set: item.account.configuration  
+             } : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? {
+              set: item.account.marketOpen  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2382,19 +1372,17 @@ export const User = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
+          id: item.account.id !== undefined ? item.account.id : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2459,448 +1447,6 @@ export const User = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  aiRecommendations: props.aiRecommendations ? {
-    upsert: props.aiRecommendations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        action: item.action !== undefined ? {
-            set: item.action  
-           } : undefined,
-        confidence: item.confidence !== undefined ? {
-            set: item.confidence  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      upsert: {
-        where: {
-          id: item.asset.id !== undefined ? {
-              equals: item.asset.id 
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              equals: item.asset.symbol 
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        update: {
-          id: item.asset.id !== undefined ? {
-              set: item.asset.id  
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              set: item.asset.symbol  
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              set: item.asset.name  
-             } : undefined,
-          type: item.asset.type !== undefined ? {
-              set: item.asset.type  
-             } : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? {
-              set: item.asset.logoUrl  
-             } : undefined,
-          description: item.asset.description !== undefined ? {
-              set: item.asset.description  
-             } : undefined,
-          cik: item.asset.cik !== undefined ? {
-              set: item.asset.cik  
-             } : undefined,
-          exchange: item.asset.exchange !== undefined ? {
-              set: item.asset.exchange  
-             } : undefined,
-          currency: item.asset.currency !== undefined ? {
-              set: item.asset.currency  
-             } : undefined,
-          country: item.asset.country !== undefined ? {
-              set: item.asset.country  
-             } : undefined,
-          sector: item.asset.sector !== undefined ? {
-              set: item.asset.sector  
-             } : undefined,
-          industry: item.asset.industry !== undefined ? {
-              set: item.asset.industry  
-             } : undefined,
-          address: item.asset.address !== undefined ? {
-              set: item.asset.address  
-             } : undefined,
-          officialSite: item.asset.officialSite !== undefined ? {
-              set: item.asset.officialSite  
-             } : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? {
-              set: item.asset.fiscalYearEnd  
-             } : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? {
-              set: item.asset.latestQuarter  
-             } : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? {
-              set: item.asset.marketCapitalization  
-             } : undefined,
-          ebitda: item.asset.ebitda !== undefined ? {
-              set: item.asset.ebitda  
-             } : undefined,
-          peRatio: item.asset.peRatio !== undefined ? {
-              set: item.asset.peRatio  
-             } : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? {
-              set: item.asset.pegRatio  
-             } : undefined,
-          bookValue: item.asset.bookValue !== undefined ? {
-              set: item.asset.bookValue  
-             } : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? {
-              set: item.asset.dividendPerShare  
-             } : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? {
-              set: item.asset.dividendYield  
-             } : undefined,
-          eps: item.asset.eps !== undefined ? {
-              set: item.asset.eps  
-             } : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? {
-              set: item.asset.revenuePerShareTTM  
-             } : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? {
-              set: item.asset.profitMargin  
-             } : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? {
-              set: item.asset.operatingMarginTTM  
-             } : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? {
-              set: item.asset.returnOnAssetsTTM  
-             } : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? {
-              set: item.asset.returnOnEquityTTM  
-             } : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? {
-              set: item.asset.revenueTTM  
-             } : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? {
-              set: item.asset.grossProfitTTM  
-             } : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? {
-              set: item.asset.dilutedEPSTTM  
-             } : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? {
-              set: item.asset.analystTargetPrice  
-             } : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? {
-              set: item.asset.analystRatingStrongBuy  
-             } : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? {
-              set: item.asset.analystRatingBuy  
-             } : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? {
-              set: item.asset.analystRatingHold  
-             } : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? {
-              set: item.asset.analystRatingSell  
-             } : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? {
-              set: item.asset.analystRatingStrongSell  
-             } : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? {
-              set: item.asset.trailingPE  
-             } : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? {
-              set: item.asset.forwardPE  
-             } : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? {
-              set: item.asset.priceToSalesRatioTTM  
-             } : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? {
-              set: item.asset.priceToBookRatio  
-             } : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? {
-              set: item.asset.evToRevenue  
-             } : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? {
-              set: item.asset.evToEbitda  
-             } : undefined,
-          beta: item.asset.beta !== undefined ? {
-              set: item.asset.beta  
-             } : undefined,
-          week52High: item.asset.week52High !== undefined ? {
-              set: item.asset.week52High  
-             } : undefined,
-          week52Low: item.asset.week52Low !== undefined ? {
-              set: item.asset.week52Low  
-             } : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? {
-              set: item.asset.day50MovingAverage  
-             } : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? {
-              set: item.asset.day200MovingAverage  
-             } : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? {
-              set: item.asset.sharesOutstanding  
-             } : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? {
-              set: item.asset.dividendDate  
-             } : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? {
-              set: item.asset.exDividendDate  
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        action: item.action !== undefined ? item.action : undefined,
-        confidence: item.confidence !== undefined ? item.confidence : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  riskAllocations: props.riskAllocations ? {
-    upsert: props.riskAllocations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        assetType: item.assetType !== undefined ? {
-            set: item.assetType  
-           } : undefined,
-        allocation: item.allocation !== undefined ? {
-            set: item.allocation  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        assetType: item.assetType !== undefined ? item.assetType : undefined,
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -2925,37 +1471,39 @@ export const User = {
         isRead: item.isRead !== undefined ? {
             set: item.isRead  
            } : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
+          id: item.account.id !== undefined ? {
+              equals: item.account.id 
              } : undefined,
         },
         update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
+          id: item.account.id !== undefined ? {
+              set: item.account.id  
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          type: item.account.type !== undefined ? {
+              set: item.account.type  
              } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
+          APIKey: item.account.APIKey !== undefined ? {
+              set: item.account.APIKey  
              } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
+          APISecret: item.account.APISecret !== undefined ? {
+              set: item.account.APISecret  
+             } : undefined,
+          configuration: item.account.configuration !== undefined ? {
+              set: item.account.configuration  
+             } : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? {
+              set: item.account.marketOpen  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2964,141 +1512,47 @@ export const User = {
         message: item.message !== undefined ? item.message : undefined,
         type: item.type !== undefined ? item.type : undefined,
         isRead: item.isRead !== undefined ? item.isRead : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
+          id: item.account.id !== undefined ? item.account.id : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
       },
     }))
   } : undefined,
-  performanceMetrics: props.performanceMetrics ? {
-    upsert: props.performanceMetrics.map((item: any) => ({
+  alpacaAccounts: props.alpacaAccounts ? {
+    upsert: props.alpacaAccounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
         id: item.id !== undefined ? {
             set: item.id  
-           } : undefined,
-        label: item.label !== undefined ? {
-            set: item.label  
-           } : undefined,
-        value: item.value !== undefined ? {
-            set: item.value  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        label: item.label !== undefined ? item.label : undefined,
-        value: item.value !== undefined ? item.value : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  tradingAccount: props.tradingAccount ? {
-    upsert: props.tradingAccount.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-        slug: item.slug !== undefined ? item.slug : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name 
-           } : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        name: item.name !== undefined ? {
-            set: item.name  
-           } : undefined,
-        slug: item.slug !== undefined ? {
-            set: item.slug  
            } : undefined,
         type: item.type !== undefined ? {
             set: item.type  
            } : undefined,
-    holdings: item.holdings ? {
-      upsert: item.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
+        APIKey: item.APIKey !== undefined ? {
+            set: item.APIKey  
+           } : undefined,
+        APISecret: item.APISecret !== undefined ? {
+            set: item.APISecret  
+           } : undefined,
+        configuration: item.configuration !== undefined ? {
+            set: item.configuration  
+           } : undefined,
+        marketOpen: item.marketOpen !== undefined ? {
+            set: item.marketOpen  
+           } : undefined,
     trades: item.trades ? {
       upsert: item.trades.map((item: any) => ({
         where: {
@@ -3107,9 +1561,6 @@ export const User = {
         update: {
           id: item.id !== undefined ? {
               set: item.id  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
              } : undefined,
           quantity: item.quantity !== undefined ? {
               set: item.quantity  
@@ -3128,7 +1579,6 @@ export const User = {
              } : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
           quantity: item.quantity !== undefined ? item.quantity : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
@@ -3171,8 +1621,8 @@ export const User = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      upsert: item.aiRecommendations.map((item: any) => ({
+    positions: item.positions ? {
+      upsert: item.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -3180,43 +1630,65 @@ export const User = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          averageEntryPrice: item.averageEntryPrice !== undefined ? {
+              set: item.averageEntryPrice  
              } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? {
+              set: item.qtyAvailable  
+             } : undefined,
+          marketValue: item.marketValue !== undefined ? {
+              set: item.marketValue  
+             } : undefined,
+          costBasis: item.costBasis !== undefined ? {
+              set: item.costBasis  
+             } : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? {
+              set: item.unrealizedPL  
+             } : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
+              set: item.unrealizedPLPC  
+             } : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
+              set: item.unrealisedIntradayPL  
+             } : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
+              set: item.unrealisedIntradayPLPC  
+             } : undefined,
+          currentPrice: item.currentPrice !== undefined ? {
+              set: item.currentPrice  
+             } : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? {
+              set: item.lastTradePrice  
+             } : undefined,
+          changeToday: item.changeToday !== undefined ? {
+              set: item.changeToday  
+             } : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? {
+              set: item.assetMarginable  
              } : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
+          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
         },
       }))
     } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      upsert: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: item.alerts ? {
-      upsert: item.alerts.map((item: any) => ({
+    Alert: item.Alert ? {
+      upsert: item.Alert.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -3241,80 +1713,19 @@ export const User = {
         },
       }))
     } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      upsert: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: item.environmentVariables ? {
-      upsert: item.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          key: item.key !== undefined ? {
-              set: item.key  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-          description: item.description !== undefined ? {
-              set: item.description  
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        slug: item.slug !== undefined ? item.slug : undefined,
         type: item.type !== undefined ? item.type : undefined,
-    holdings: item.holdings ? {
-      connectOrCreate: item.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
+        APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+        APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+        configuration: item.configuration !== undefined ? item.configuration : undefined,
+        marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
     trades: item.trades ? {
       connectOrCreate: item.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
           quantity: item.quantity !== undefined ? item.quantity : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
@@ -3337,30 +1748,30 @@ export const User = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      connectOrCreate: item.aiRecommendations.map((item: any) => ({
+    positions: item.positions ? {
+      connectOrCreate: item.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
+          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
         },
       }))
     } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      connectOrCreate: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: item.alerts ? {
-      connectOrCreate: item.alerts.map((item: any) => ({
+    Alert: item.Alert ? {
+      connectOrCreate: item.Alert.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -3371,66 +1782,6 @@ export const User = {
         },
       }))
     } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      connectOrCreate: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: item.environmentVariables ? {
-      connectOrCreate: item.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  alpacaAccounts: props.alpacaAccounts ? {
-    upsert: props.alpacaAccounts.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        type: item.type !== undefined ? {
-            set: item.type  
-           } : undefined,
-        APIKey: item.APIKey !== undefined ? {
-            set: item.APIKey  
-           } : undefined,
-        APISecret: item.APISecret !== undefined ? {
-            set: item.APISecret  
-           } : undefined,
-        configuration: item.configuration !== undefined ? {
-            set: item.configuration  
-           } : undefined,
-        marketOpen: item.marketOpen !== undefined ? {
-            set: item.marketOpen  
-           } : undefined,
-      },
-      create: {
-        type: item.type !== undefined ? item.type : undefined,
-        APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-        APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-        configuration: item.configuration !== undefined ? item.configuration : undefined,
-        marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
       },
     }))
   } : undefined,
@@ -3661,490 +2012,6 @@ export const User = {
       },
     }))
   } : undefined,
-  trades: prop.trades ? {
-    upsert: prop.trades.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        action: item.action !== undefined ? {
-            set: item.action  
-           } : undefined,
-        quantity: item.quantity !== undefined ? {
-            set: item.quantity  
-           } : undefined,
-        price: item.price !== undefined ? {
-            set: item.price  
-           } : undefined,
-        total: item.total !== undefined ? {
-            set: item.total  
-           } : undefined,
-        timestamp: item.timestamp !== undefined ? {
-            set: item.timestamp  
-           } : undefined,
-        status: item.status !== undefined ? {
-            set: item.status  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      upsert: {
-        where: {
-          id: item.asset.id !== undefined ? {
-              equals: item.asset.id 
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              equals: item.asset.symbol 
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        update: {
-          id: item.asset.id !== undefined ? {
-              set: item.asset.id  
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              set: item.asset.symbol  
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              set: item.asset.name  
-             } : undefined,
-          type: item.asset.type !== undefined ? {
-              set: item.asset.type  
-             } : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? {
-              set: item.asset.logoUrl  
-             } : undefined,
-          description: item.asset.description !== undefined ? {
-              set: item.asset.description  
-             } : undefined,
-          cik: item.asset.cik !== undefined ? {
-              set: item.asset.cik  
-             } : undefined,
-          exchange: item.asset.exchange !== undefined ? {
-              set: item.asset.exchange  
-             } : undefined,
-          currency: item.asset.currency !== undefined ? {
-              set: item.asset.currency  
-             } : undefined,
-          country: item.asset.country !== undefined ? {
-              set: item.asset.country  
-             } : undefined,
-          sector: item.asset.sector !== undefined ? {
-              set: item.asset.sector  
-             } : undefined,
-          industry: item.asset.industry !== undefined ? {
-              set: item.asset.industry  
-             } : undefined,
-          address: item.asset.address !== undefined ? {
-              set: item.asset.address  
-             } : undefined,
-          officialSite: item.asset.officialSite !== undefined ? {
-              set: item.asset.officialSite  
-             } : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? {
-              set: item.asset.fiscalYearEnd  
-             } : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? {
-              set: item.asset.latestQuarter  
-             } : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? {
-              set: item.asset.marketCapitalization  
-             } : undefined,
-          ebitda: item.asset.ebitda !== undefined ? {
-              set: item.asset.ebitda  
-             } : undefined,
-          peRatio: item.asset.peRatio !== undefined ? {
-              set: item.asset.peRatio  
-             } : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? {
-              set: item.asset.pegRatio  
-             } : undefined,
-          bookValue: item.asset.bookValue !== undefined ? {
-              set: item.asset.bookValue  
-             } : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? {
-              set: item.asset.dividendPerShare  
-             } : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? {
-              set: item.asset.dividendYield  
-             } : undefined,
-          eps: item.asset.eps !== undefined ? {
-              set: item.asset.eps  
-             } : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? {
-              set: item.asset.revenuePerShareTTM  
-             } : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? {
-              set: item.asset.profitMargin  
-             } : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? {
-              set: item.asset.operatingMarginTTM  
-             } : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? {
-              set: item.asset.returnOnAssetsTTM  
-             } : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? {
-              set: item.asset.returnOnEquityTTM  
-             } : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? {
-              set: item.asset.revenueTTM  
-             } : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? {
-              set: item.asset.grossProfitTTM  
-             } : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? {
-              set: item.asset.dilutedEPSTTM  
-             } : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? {
-              set: item.asset.analystTargetPrice  
-             } : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? {
-              set: item.asset.analystRatingStrongBuy  
-             } : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? {
-              set: item.asset.analystRatingBuy  
-             } : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? {
-              set: item.asset.analystRatingHold  
-             } : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? {
-              set: item.asset.analystRatingSell  
-             } : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? {
-              set: item.asset.analystRatingStrongSell  
-             } : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? {
-              set: item.asset.trailingPE  
-             } : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? {
-              set: item.asset.forwardPE  
-             } : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? {
-              set: item.asset.priceToSalesRatioTTM  
-             } : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? {
-              set: item.asset.priceToBookRatio  
-             } : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? {
-              set: item.asset.evToRevenue  
-             } : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? {
-              set: item.asset.evToEbitda  
-             } : undefined,
-          beta: item.asset.beta !== undefined ? {
-              set: item.asset.beta  
-             } : undefined,
-          week52High: item.asset.week52High !== undefined ? {
-              set: item.asset.week52High  
-             } : undefined,
-          week52Low: item.asset.week52Low !== undefined ? {
-              set: item.asset.week52Low  
-             } : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? {
-              set: item.asset.day50MovingAverage  
-             } : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? {
-              set: item.asset.day200MovingAverage  
-             } : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? {
-              set: item.asset.sharesOutstanding  
-             } : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? {
-              set: item.asset.dividendDate  
-             } : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? {
-              set: item.asset.exDividendDate  
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-    steps: item.steps ? {
-      upsert: item.steps.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          sequence: item.sequence !== undefined ? {
-              set: item.sequence  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          hedgeType: item.hedgeType !== undefined ? {
-              set: item.hedgeType  
-             } : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? {
-              set: item.hedgePrice  
-             } : undefined,
-          buyPrice: item.buyPrice !== undefined ? {
-              set: item.buyPrice  
-             } : undefined,
-          sellPrice: item.sellPrice !== undefined ? {
-              set: item.sellPrice  
-             } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
-             } : undefined,
-          side: item.side !== undefined ? {
-              set: item.side  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          stopLoss: item.stopLoss !== undefined ? {
-              set: item.stopLoss  
-             } : undefined,
-          targetPrice: item.targetPrice !== undefined ? {
-              set: item.targetPrice  
-             } : undefined,
-          note: item.note !== undefined ? {
-              set: item.note  
-             } : undefined,
-          executionTime: item.executionTime !== undefined ? {
-              set: item.executionTime  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-          fee: item.fee !== undefined ? {
-              set: item.fee  
-             } : undefined,
-        },
-        create: {
-          sequence: item.sequence !== undefined ? item.sequence : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          side: item.side !== undefined ? item.side : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-          note: item.note !== undefined ? item.note : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-          fee: item.fee !== undefined ? item.fee : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        action: item.action !== undefined ? item.action : undefined,
-        quantity: item.quantity !== undefined ? item.quantity : undefined,
-        price: item.price !== undefined ? item.price : undefined,
-        total: item.total !== undefined ? item.total : undefined,
-        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-        status: item.status !== undefined ? item.status : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-    steps: item.steps ? {
-      connectOrCreate: item.steps.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sequence: item.sequence !== undefined ? item.sequence : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          hedgeType: item.hedgeType !== undefined ? item.hedgeType : undefined,
-          hedgePrice: item.hedgePrice !== undefined ? item.hedgePrice : undefined,
-          buyPrice: item.buyPrice !== undefined ? item.buyPrice : undefined,
-          sellPrice: item.sellPrice !== undefined ? item.sellPrice : undefined,
-          qty: item.qty !== undefined ? item.qty : undefined,
-          side: item.side !== undefined ? item.side : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
-          targetPrice: item.targetPrice !== undefined ? item.targetPrice : undefined,
-          note: item.note !== undefined ? item.note : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-          fee: item.fee !== undefined ? item.fee : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }))
-  } : undefined,
   orders: prop.orders ? {
     upsert: prop.orders.map((item: any) => ({
       where: {
@@ -4169,37 +2036,39 @@ export const User = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
+          id: item.account.id !== undefined ? {
+              equals: item.account.id 
              } : undefined,
         },
         update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
+          id: item.account.id !== undefined ? {
+              set: item.account.id  
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          type: item.account.type !== undefined ? {
+              set: item.account.type  
              } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
+          APIKey: item.account.APIKey !== undefined ? {
+              set: item.account.APIKey  
              } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
+          APISecret: item.account.APISecret !== undefined ? {
+              set: item.account.APISecret  
+             } : undefined,
+          configuration: item.account.configuration !== undefined ? {
+              set: item.account.configuration  
+             } : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? {
+              set: item.account.marketOpen  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -4444,19 +2313,17 @@ export const User = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
+          id: item.account.id !== undefined ? item.account.id : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -4521,448 +2388,6 @@ export const User = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  aiRecommendations: prop.aiRecommendations ? {
-    upsert: prop.aiRecommendations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        action: item.action !== undefined ? {
-            set: item.action  
-           } : undefined,
-        confidence: item.confidence !== undefined ? {
-            set: item.confidence  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      upsert: {
-        where: {
-          id: item.asset.id !== undefined ? {
-              equals: item.asset.id 
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              equals: item.asset.symbol 
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              equals: item.asset.name 
-             } : undefined,
-        },
-        update: {
-          id: item.asset.id !== undefined ? {
-              set: item.asset.id  
-             } : undefined,
-          symbol: item.asset.symbol !== undefined ? {
-              set: item.asset.symbol  
-             } : undefined,
-          name: item.asset.name !== undefined ? {
-              set: item.asset.name  
-             } : undefined,
-          type: item.asset.type !== undefined ? {
-              set: item.asset.type  
-             } : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? {
-              set: item.asset.logoUrl  
-             } : undefined,
-          description: item.asset.description !== undefined ? {
-              set: item.asset.description  
-             } : undefined,
-          cik: item.asset.cik !== undefined ? {
-              set: item.asset.cik  
-             } : undefined,
-          exchange: item.asset.exchange !== undefined ? {
-              set: item.asset.exchange  
-             } : undefined,
-          currency: item.asset.currency !== undefined ? {
-              set: item.asset.currency  
-             } : undefined,
-          country: item.asset.country !== undefined ? {
-              set: item.asset.country  
-             } : undefined,
-          sector: item.asset.sector !== undefined ? {
-              set: item.asset.sector  
-             } : undefined,
-          industry: item.asset.industry !== undefined ? {
-              set: item.asset.industry  
-             } : undefined,
-          address: item.asset.address !== undefined ? {
-              set: item.asset.address  
-             } : undefined,
-          officialSite: item.asset.officialSite !== undefined ? {
-              set: item.asset.officialSite  
-             } : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? {
-              set: item.asset.fiscalYearEnd  
-             } : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? {
-              set: item.asset.latestQuarter  
-             } : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? {
-              set: item.asset.marketCapitalization  
-             } : undefined,
-          ebitda: item.asset.ebitda !== undefined ? {
-              set: item.asset.ebitda  
-             } : undefined,
-          peRatio: item.asset.peRatio !== undefined ? {
-              set: item.asset.peRatio  
-             } : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? {
-              set: item.asset.pegRatio  
-             } : undefined,
-          bookValue: item.asset.bookValue !== undefined ? {
-              set: item.asset.bookValue  
-             } : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? {
-              set: item.asset.dividendPerShare  
-             } : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? {
-              set: item.asset.dividendYield  
-             } : undefined,
-          eps: item.asset.eps !== undefined ? {
-              set: item.asset.eps  
-             } : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? {
-              set: item.asset.revenuePerShareTTM  
-             } : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? {
-              set: item.asset.profitMargin  
-             } : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? {
-              set: item.asset.operatingMarginTTM  
-             } : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? {
-              set: item.asset.returnOnAssetsTTM  
-             } : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? {
-              set: item.asset.returnOnEquityTTM  
-             } : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? {
-              set: item.asset.revenueTTM  
-             } : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? {
-              set: item.asset.grossProfitTTM  
-             } : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? {
-              set: item.asset.dilutedEPSTTM  
-             } : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: item.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? {
-              set: item.asset.analystTargetPrice  
-             } : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? {
-              set: item.asset.analystRatingStrongBuy  
-             } : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? {
-              set: item.asset.analystRatingBuy  
-             } : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? {
-              set: item.asset.analystRatingHold  
-             } : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? {
-              set: item.asset.analystRatingSell  
-             } : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? {
-              set: item.asset.analystRatingStrongSell  
-             } : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? {
-              set: item.asset.trailingPE  
-             } : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? {
-              set: item.asset.forwardPE  
-             } : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? {
-              set: item.asset.priceToSalesRatioTTM  
-             } : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? {
-              set: item.asset.priceToBookRatio  
-             } : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? {
-              set: item.asset.evToRevenue  
-             } : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? {
-              set: item.asset.evToEbitda  
-             } : undefined,
-          beta: item.asset.beta !== undefined ? {
-              set: item.asset.beta  
-             } : undefined,
-          week52High: item.asset.week52High !== undefined ? {
-              set: item.asset.week52High  
-             } : undefined,
-          week52Low: item.asset.week52Low !== undefined ? {
-              set: item.asset.week52Low  
-             } : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? {
-              set: item.asset.day50MovingAverage  
-             } : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? {
-              set: item.asset.day200MovingAverage  
-             } : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? {
-              set: item.asset.sharesOutstanding  
-             } : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? {
-              set: item.asset.dividendDate  
-             } : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? {
-              set: item.asset.exDividendDate  
-             } : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        action: item.action !== undefined ? item.action : undefined,
-        confidence: item.confidence !== undefined ? item.confidence : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
-        where: {
-          id: item.asset.id !== undefined ? item.asset.id : undefined,
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-        },
-        create: {
-          symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
-          name: item.asset.name !== undefined ? item.asset.name : undefined,
-          type: item.asset.type !== undefined ? item.asset.type : undefined,
-          logoUrl: item.asset.logoUrl !== undefined ? item.asset.logoUrl : undefined,
-          description: item.asset.description !== undefined ? item.asset.description : undefined,
-          cik: item.asset.cik !== undefined ? item.asset.cik : undefined,
-          exchange: item.asset.exchange !== undefined ? item.asset.exchange : undefined,
-          currency: item.asset.currency !== undefined ? item.asset.currency : undefined,
-          country: item.asset.country !== undefined ? item.asset.country : undefined,
-          sector: item.asset.sector !== undefined ? item.asset.sector : undefined,
-          industry: item.asset.industry !== undefined ? item.asset.industry : undefined,
-          address: item.asset.address !== undefined ? item.asset.address : undefined,
-          officialSite: item.asset.officialSite !== undefined ? item.asset.officialSite : undefined,
-          fiscalYearEnd: item.asset.fiscalYearEnd !== undefined ? item.asset.fiscalYearEnd : undefined,
-          latestQuarter: item.asset.latestQuarter !== undefined ? item.asset.latestQuarter : undefined,
-          marketCapitalization: item.asset.marketCapitalization !== undefined ? item.asset.marketCapitalization : undefined,
-          ebitda: item.asset.ebitda !== undefined ? item.asset.ebitda : undefined,
-          peRatio: item.asset.peRatio !== undefined ? item.asset.peRatio : undefined,
-          pegRatio: item.asset.pegRatio !== undefined ? item.asset.pegRatio : undefined,
-          bookValue: item.asset.bookValue !== undefined ? item.asset.bookValue : undefined,
-          dividendPerShare: item.asset.dividendPerShare !== undefined ? item.asset.dividendPerShare : undefined,
-          dividendYield: item.asset.dividendYield !== undefined ? item.asset.dividendYield : undefined,
-          eps: item.asset.eps !== undefined ? item.asset.eps : undefined,
-          revenuePerShareTTM: item.asset.revenuePerShareTTM !== undefined ? item.asset.revenuePerShareTTM : undefined,
-          profitMargin: item.asset.profitMargin !== undefined ? item.asset.profitMargin : undefined,
-          operatingMarginTTM: item.asset.operatingMarginTTM !== undefined ? item.asset.operatingMarginTTM : undefined,
-          returnOnAssetsTTM: item.asset.returnOnAssetsTTM !== undefined ? item.asset.returnOnAssetsTTM : undefined,
-          returnOnEquityTTM: item.asset.returnOnEquityTTM !== undefined ? item.asset.returnOnEquityTTM : undefined,
-          revenueTTM: item.asset.revenueTTM !== undefined ? item.asset.revenueTTM : undefined,
-          grossProfitTTM: item.asset.grossProfitTTM !== undefined ? item.asset.grossProfitTTM : undefined,
-          dilutedEPSTTM: item.asset.dilutedEPSTTM !== undefined ? item.asset.dilutedEPSTTM : undefined,
-          quarterlyEarningsGrowthYOY: item.asset.quarterlyEarningsGrowthYOY !== undefined ? item.asset.quarterlyEarningsGrowthYOY : undefined,
-          quarterlyRevenueGrowthYOY: item.asset.quarterlyRevenueGrowthYOY !== undefined ? item.asset.quarterlyRevenueGrowthYOY : undefined,
-          analystTargetPrice: item.asset.analystTargetPrice !== undefined ? item.asset.analystTargetPrice : undefined,
-          analystRatingStrongBuy: item.asset.analystRatingStrongBuy !== undefined ? item.asset.analystRatingStrongBuy : undefined,
-          analystRatingBuy: item.asset.analystRatingBuy !== undefined ? item.asset.analystRatingBuy : undefined,
-          analystRatingHold: item.asset.analystRatingHold !== undefined ? item.asset.analystRatingHold : undefined,
-          analystRatingSell: item.asset.analystRatingSell !== undefined ? item.asset.analystRatingSell : undefined,
-          analystRatingStrongSell: item.asset.analystRatingStrongSell !== undefined ? item.asset.analystRatingStrongSell : undefined,
-          trailingPE: item.asset.trailingPE !== undefined ? item.asset.trailingPE : undefined,
-          forwardPE: item.asset.forwardPE !== undefined ? item.asset.forwardPE : undefined,
-          priceToSalesRatioTTM: item.asset.priceToSalesRatioTTM !== undefined ? item.asset.priceToSalesRatioTTM : undefined,
-          priceToBookRatio: item.asset.priceToBookRatio !== undefined ? item.asset.priceToBookRatio : undefined,
-          evToRevenue: item.asset.evToRevenue !== undefined ? item.asset.evToRevenue : undefined,
-          evToEbitda: item.asset.evToEbitda !== undefined ? item.asset.evToEbitda : undefined,
-          beta: item.asset.beta !== undefined ? item.asset.beta : undefined,
-          week52High: item.asset.week52High !== undefined ? item.asset.week52High : undefined,
-          week52Low: item.asset.week52Low !== undefined ? item.asset.week52Low : undefined,
-          day50MovingAverage: item.asset.day50MovingAverage !== undefined ? item.asset.day50MovingAverage : undefined,
-          day200MovingAverage: item.asset.day200MovingAverage !== undefined ? item.asset.day200MovingAverage : undefined,
-          sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
-          dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
-          exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  riskAllocations: prop.riskAllocations ? {
-    upsert: prop.riskAllocations.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        assetType: item.assetType !== undefined ? {
-            set: item.assetType  
-           } : undefined,
-        allocation: item.allocation !== undefined ? {
-            set: item.allocation  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        assetType: item.assetType !== undefined ? item.assetType : undefined,
-        allocation: item.allocation !== undefined ? item.allocation : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
         },
       }
     } : undefined,
@@ -4987,37 +2412,39 @@ export const User = {
         isRead: item.isRead !== undefined ? {
             set: item.isRead  
            } : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       upsert: {
         where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
+          id: item.account.id !== undefined ? {
+              equals: item.account.id 
              } : undefined,
         },
         update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
+          id: item.account.id !== undefined ? {
+              set: item.account.id  
              } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
+          type: item.account.type !== undefined ? {
+              set: item.account.type  
              } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
+          APIKey: item.account.APIKey !== undefined ? {
+              set: item.account.APIKey  
              } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
+          APISecret: item.account.APISecret !== undefined ? {
+              set: item.account.APISecret  
+             } : undefined,
+          configuration: item.account.configuration !== undefined ? {
+              set: item.account.configuration  
+             } : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? {
+              set: item.account.marketOpen  
              } : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -5026,141 +2453,47 @@ export const User = {
         message: item.message !== undefined ? item.message : undefined,
         type: item.type !== undefined ? item.type : undefined,
         isRead: item.isRead !== undefined ? item.isRead : undefined,
-    portfolio: item.portfolio ? {
+    account: item.account ? {
       connectOrCreate: {
         where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
+          id: item.account.id !== undefined ? item.account.id : undefined,
         },
         create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
+          type: item.account.type !== undefined ? item.account.type : undefined,
+          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
+          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
+          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
+          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
         },
       }
     } : undefined,
       },
     }))
   } : undefined,
-  performanceMetrics: prop.performanceMetrics ? {
-    upsert: prop.performanceMetrics.map((item: any) => ({
+  alpacaAccounts: prop.alpacaAccounts ? {
+    upsert: prop.alpacaAccounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
       update: {
         id: item.id !== undefined ? {
             set: item.id  
-           } : undefined,
-        label: item.label !== undefined ? {
-            set: item.label  
-           } : undefined,
-        value: item.value !== undefined ? {
-            set: item.value  
-           } : undefined,
-    portfolio: item.portfolio ? {
-      upsert: {
-        where: {
-          id: item.portfolio.id !== undefined ? {
-              equals: item.portfolio.id 
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              equals: item.portfolio.slug 
-             } : undefined,
-        },
-        update: {
-          id: item.portfolio.id !== undefined ? {
-              set: item.portfolio.id  
-             } : undefined,
-          name: item.portfolio.name !== undefined ? {
-              set: item.portfolio.name  
-             } : undefined,
-          slug: item.portfolio.slug !== undefined ? {
-              set: item.portfolio.slug  
-             } : undefined,
-          type: item.portfolio.type !== undefined ? {
-              set: item.portfolio.type  
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-      create: {
-        label: item.label !== undefined ? item.label : undefined,
-        value: item.value !== undefined ? item.value : undefined,
-    portfolio: item.portfolio ? {
-      connectOrCreate: {
-        where: {
-          id: item.portfolio.id !== undefined ? item.portfolio.id : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          name: item.portfolio.name !== undefined ? {
-              equals: item.portfolio.name 
-             } : undefined,
-        },
-        create: {
-          name: item.portfolio.name !== undefined ? item.portfolio.name : undefined,
-          slug: item.portfolio.slug !== undefined ? item.portfolio.slug : undefined,
-          type: item.portfolio.type !== undefined ? item.portfolio.type : undefined,
-        },
-      }
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  tradingAccount: prop.tradingAccount ? {
-    upsert: prop.tradingAccount.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-        slug: item.slug !== undefined ? item.slug : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name 
-           } : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        name: item.name !== undefined ? {
-            set: item.name  
-           } : undefined,
-        slug: item.slug !== undefined ? {
-            set: item.slug  
            } : undefined,
         type: item.type !== undefined ? {
             set: item.type  
            } : undefined,
-    holdings: item.holdings ? {
-      upsert: item.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          averagePrice: item.averagePrice !== undefined ? {
-              set: item.averagePrice  
-             } : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
+        APIKey: item.APIKey !== undefined ? {
+            set: item.APIKey  
+           } : undefined,
+        APISecret: item.APISecret !== undefined ? {
+            set: item.APISecret  
+           } : undefined,
+        configuration: item.configuration !== undefined ? {
+            set: item.configuration  
+           } : undefined,
+        marketOpen: item.marketOpen !== undefined ? {
+            set: item.marketOpen  
+           } : undefined,
     trades: item.trades ? {
       upsert: item.trades.map((item: any) => ({
         where: {
@@ -5169,9 +2502,6 @@ export const User = {
         update: {
           id: item.id !== undefined ? {
               set: item.id  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
              } : undefined,
           quantity: item.quantity !== undefined ? {
               set: item.quantity  
@@ -5190,7 +2520,6 @@ export const User = {
              } : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
           quantity: item.quantity !== undefined ? item.quantity : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
@@ -5233,8 +2562,8 @@ export const User = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      upsert: item.aiRecommendations.map((item: any) => ({
+    positions: item.positions ? {
+      upsert: item.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -5242,43 +2571,65 @@ export const User = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          averageEntryPrice: item.averageEntryPrice !== undefined ? {
+              set: item.averageEntryPrice  
              } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? {
+              set: item.qtyAvailable  
+             } : undefined,
+          marketValue: item.marketValue !== undefined ? {
+              set: item.marketValue  
+             } : undefined,
+          costBasis: item.costBasis !== undefined ? {
+              set: item.costBasis  
+             } : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? {
+              set: item.unrealizedPL  
+             } : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
+              set: item.unrealizedPLPC  
+             } : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
+              set: item.unrealisedIntradayPL  
+             } : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
+              set: item.unrealisedIntradayPLPC  
+             } : undefined,
+          currentPrice: item.currentPrice !== undefined ? {
+              set: item.currentPrice  
+             } : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? {
+              set: item.lastTradePrice  
+             } : undefined,
+          changeToday: item.changeToday !== undefined ? {
+              set: item.changeToday  
+             } : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? {
+              set: item.assetMarginable  
              } : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
+          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
         },
       }))
     } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      upsert: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: item.alerts ? {
-      upsert: item.alerts.map((item: any) => ({
+    Alert: item.Alert ? {
+      upsert: item.Alert.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -5303,80 +2654,19 @@ export const User = {
         },
       }))
     } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      upsert: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: item.environmentVariables ? {
-      upsert: item.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          key: item.key !== undefined ? {
-              set: item.key  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-          description: item.description !== undefined ? {
-              set: item.description  
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        slug: item.slug !== undefined ? item.slug : undefined,
         type: item.type !== undefined ? item.type : undefined,
-    holdings: item.holdings ? {
-      connectOrCreate: item.holdings.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          averagePrice: item.averagePrice !== undefined ? item.averagePrice : undefined,
-        },
-      }))
-    } : undefined,
+        APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
+        APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
+        configuration: item.configuration !== undefined ? item.configuration : undefined,
+        marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
     trades: item.trades ? {
       connectOrCreate: item.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
           quantity: item.quantity !== undefined ? item.quantity : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
@@ -5399,30 +2689,30 @@ export const User = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      connectOrCreate: item.aiRecommendations.map((item: any) => ({
+    positions: item.positions ? {
+      connectOrCreate: item.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
+          averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
+          qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+          marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+          costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+          unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+          unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+          unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+          unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+          currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+          lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+          changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+          assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
         },
       }))
     } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      connectOrCreate: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: item.alerts ? {
-      connectOrCreate: item.alerts.map((item: any) => ({
+    Alert: item.Alert ? {
+      connectOrCreate: item.Alert.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -5433,66 +2723,6 @@ export const User = {
         },
       }))
     } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      connectOrCreate: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    environmentVariables: item.environmentVariables ? {
-      connectOrCreate: item.environmentVariables.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          key: item.key !== undefined ? {
-              equals: item.key 
-             } : undefined,
-        },
-        create: {
-          key: item.key !== undefined ? item.key : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-          description: item.description !== undefined ? item.description : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }))
-  } : undefined,
-  alpacaAccounts: prop.alpacaAccounts ? {
-    upsert: prop.alpacaAccounts.map((item: any) => ({
-      where: {
-        id: item.id !== undefined ? item.id : undefined,
-      },
-      update: {
-        id: item.id !== undefined ? {
-            set: item.id  
-           } : undefined,
-        type: item.type !== undefined ? {
-            set: item.type  
-           } : undefined,
-        APIKey: item.APIKey !== undefined ? {
-            set: item.APIKey  
-           } : undefined,
-        APISecret: item.APISecret !== undefined ? {
-            set: item.APISecret  
-           } : undefined,
-        configuration: item.configuration !== undefined ? {
-            set: item.configuration  
-           } : undefined,
-        marketOpen: item.marketOpen !== undefined ? {
-            set: item.marketOpen  
-           } : undefined,
-      },
-      create: {
-        type: item.type !== undefined ? item.type : undefined,
-        APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-        APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-        configuration: item.configuration !== undefined ? item.configuration : undefined,
-        marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
       },
     }))
   } : undefined,
@@ -5599,109 +2829,86 @@ export const User = {
             updatedAt
           }
           plan
-          trades {
+          orders {
             id
             userId
-            portfolioId
+            alpacaAccountId
             assetId
+            type
             action
             quantity
             price
-            total
-            timestamp
+            status
             createdAt
             updatedAt
-            status
             user {
               id
             }
-            portfolio {
+            account {
               id
-              name
-              slug
               type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
               user {
                 id
               }
               userId
-              holdings {
+              createdAt
+              updatedAt
+              trades {
                 id
-                tradingAccountId
+                alpacaAccountId
                 assetId
                 quantity
-                averagePrice
+                price
+                total
+                timestamp
                 createdAt
                 updatedAt
-                tradingAccount {
+                status
+                account {
                   id
                 }
                 asset {
                   id
                 }
-              }
-              trades {
-                id
+                actions {
+                  id
+                }
               }
               orders {
                 id
-                userId
-                portfolioId
+              }
+              positions {
+                id
                 assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
-              aiRecommendations {
+              Alert {
                 id
                 userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -5710,39 +2917,10 @@ export const User = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
             }
             asset {
               id
@@ -5801,16 +2979,13 @@ export const User = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -5829,60 +3004,12 @@ export const User = {
                 sentimentLabel
               }
             }
-            steps {
-              id
-              tradeId
-              sequence
-              action
-              hedgeType
-              hedgePrice
-              buyPrice
-              sellPrice
-              qty
-              side
-              type
-              stopLoss
-              targetPrice
-              note
-              executionTime
-              status
-              fee
-              trade {
-                id
-              }
-            }
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          riskAllocations {
-            id
           }
           alerts {
             id
           }
-          performanceMetrics {
-            id
-          }
-          tradingAccount {
-            id
-          }
           alpacaAccounts {
             id
-            type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
-              id
-            }
-            userId
-            createdAt
-            updatedAt
           }
       }
       }`;
@@ -5991,109 +3118,86 @@ export const User = {
             updatedAt
           }
           plan
-          trades {
+          orders {
             id
             userId
-            portfolioId
+            alpacaAccountId
             assetId
+            type
             action
             quantity
             price
-            total
-            timestamp
+            status
             createdAt
             updatedAt
-            status
             user {
               id
             }
-            portfolio {
+            account {
               id
-              name
-              slug
               type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
               user {
                 id
               }
               userId
-              holdings {
+              createdAt
+              updatedAt
+              trades {
                 id
-                tradingAccountId
+                alpacaAccountId
                 assetId
                 quantity
-                averagePrice
+                price
+                total
+                timestamp
                 createdAt
                 updatedAt
-                tradingAccount {
+                status
+                account {
                   id
                 }
                 asset {
                   id
                 }
-              }
-              trades {
-                id
+                actions {
+                  id
+                }
               }
               orders {
                 id
-                userId
-                portfolioId
+              }
+              positions {
+                id
                 assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
-              aiRecommendations {
+              Alert {
                 id
                 userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -6102,39 +3206,10 @@ export const User = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
             }
             asset {
               id
@@ -6193,16 +3268,13 @@ export const User = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -6221,60 +3293,12 @@ export const User = {
                 sentimentLabel
               }
             }
-            steps {
-              id
-              tradeId
-              sequence
-              action
-              hedgeType
-              hedgePrice
-              buyPrice
-              sellPrice
-              qty
-              side
-              type
-              stopLoss
-              targetPrice
-              note
-              executionTime
-              status
-              fee
-              trade {
-                id
-              }
-            }
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          riskAllocations {
-            id
           }
           alerts {
             id
           }
-          performanceMetrics {
-            id
-          }
-          tradingAccount {
-            id
-          }
           alpacaAccounts {
             id
-            type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
-              id
-            }
-            userId
-            createdAt
-            updatedAt
           }
         }
       }`;
@@ -6385,109 +3409,86 @@ export const User = {
             updatedAt
           }
           plan
-          trades {
+          orders {
             id
             userId
-            portfolioId
+            alpacaAccountId
             assetId
+            type
             action
             quantity
             price
-            total
-            timestamp
+            status
             createdAt
             updatedAt
-            status
             user {
               id
             }
-            portfolio {
+            account {
               id
-              name
-              slug
               type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
               user {
                 id
               }
               userId
-              holdings {
+              createdAt
+              updatedAt
+              trades {
                 id
-                tradingAccountId
+                alpacaAccountId
                 assetId
                 quantity
-                averagePrice
+                price
+                total
+                timestamp
                 createdAt
                 updatedAt
-                tradingAccount {
+                status
+                account {
                   id
                 }
                 asset {
                   id
                 }
-              }
-              trades {
-                id
+                actions {
+                  id
+                }
               }
               orders {
                 id
-                userId
-                portfolioId
+              }
+              positions {
+                id
                 assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
-              aiRecommendations {
+              Alert {
                 id
                 userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -6496,39 +3497,10 @@ export const User = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
             }
             asset {
               id
@@ -6587,16 +3559,13 @@ export const User = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -6615,60 +3584,12 @@ export const User = {
                 sentimentLabel
               }
             }
-            steps {
-              id
-              tradeId
-              sequence
-              action
-              hedgeType
-              hedgePrice
-              buyPrice
-              sellPrice
-              qty
-              side
-              type
-              stopLoss
-              targetPrice
-              note
-              executionTime
-              status
-              fee
-              trade {
-                id
-              }
-            }
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          riskAllocations {
-            id
           }
           alerts {
             id
           }
-          performanceMetrics {
-            id
-          }
-          tradingAccount {
-            id
-          }
           alpacaAccounts {
             id
-            type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
-              id
-            }
-            userId
-            createdAt
-            updatedAt
           }
       }
       }`;
@@ -6769,109 +3690,86 @@ export const User = {
             updatedAt
           }
           plan
-          trades {
+          orders {
             id
             userId
-            portfolioId
+            alpacaAccountId
             assetId
+            type
             action
             quantity
             price
-            total
-            timestamp
+            status
             createdAt
             updatedAt
-            status
             user {
               id
             }
-            portfolio {
+            account {
               id
-              name
-              slug
               type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
               user {
                 id
               }
               userId
-              holdings {
+              createdAt
+              updatedAt
+              trades {
                 id
-                tradingAccountId
+                alpacaAccountId
                 assetId
                 quantity
-                averagePrice
+                price
+                total
+                timestamp
                 createdAt
                 updatedAt
-                tradingAccount {
+                status
+                account {
                   id
                 }
                 asset {
                   id
                 }
-              }
-              trades {
-                id
+                actions {
+                  id
+                }
               }
               orders {
                 id
-                userId
-                portfolioId
+              }
+              positions {
+                id
                 assetId
-                type
-                action
-                quantity
-                price
-                status
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
                 asset {
                   id
                 }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                account {
+                  id
+                }
+                alpacaAccountId
               }
-              aiRecommendations {
+              Alert {
                 id
                 userId
-                portfolioId
-                assetId
-                action
-                confidence
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-                asset {
-                  id
-                }
-              }
-              riskAllocations {
-                id
-                userId
-                portfolioId
-                assetType
-                allocation
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              alerts {
-                id
-                userId
-                portfolioId
+                alpacaAccountId
                 message
                 type
                 isRead
@@ -6880,39 +3778,10 @@ export const User = {
                 user {
                   id
                 }
-                portfolio {
+                account {
                   id
                 }
               }
-              performanceMetrics {
-                id
-                userId
-                portfolioId
-                label
-                value
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-                portfolio {
-                  id
-                }
-              }
-              environmentVariables {
-                id
-                key
-                value
-                description
-                portfolioId
-                portfolio {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              createdAt
-              updatedAt
             }
             asset {
               id
@@ -6971,16 +3840,13 @@ export const User = {
               exDividendDate
               createdAt
               updatedAt
-              holdings {
-                id
-              }
               trades {
                 id
               }
               orders {
                 id
               }
-              aiRecommendations {
+              positions {
                 id
               }
               newsMentions {
@@ -6999,60 +3865,12 @@ export const User = {
                 sentimentLabel
               }
             }
-            steps {
-              id
-              tradeId
-              sequence
-              action
-              hedgeType
-              hedgePrice
-              buyPrice
-              sellPrice
-              qty
-              side
-              type
-              stopLoss
-              targetPrice
-              note
-              executionTime
-              status
-              fee
-              trade {
-                id
-              }
-            }
-          }
-          orders {
-            id
-          }
-          aiRecommendations {
-            id
-          }
-          riskAllocations {
-            id
           }
           alerts {
             id
           }
-          performanceMetrics {
-            id
-          }
-          tradingAccount {
-            id
-          }
           alpacaAccounts {
             id
-            type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
-              id
-            }
-            userId
-            createdAt
-            updatedAt
           }
       }
       }`;

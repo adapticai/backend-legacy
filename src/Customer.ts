@@ -93,57 +93,46 @@ export const Customer = {
               updatedAt
             }
             plan
-            trades {
+            orders {
               id
               userId
-              portfolioId
+              alpacaAccountId
               assetId
+              type
               action
               quantity
               price
-              total
-              timestamp
+              status
               createdAt
               updatedAt
-              status
               user {
                 id
               }
-              portfolio {
+              account {
                 id
-                name
-                slug
                 type
+                APIKey
+                APISecret
+                configuration
+                marketOpen
                 user {
                   id
                 }
                 userId
-                holdings {
-                  id
-                }
+                createdAt
+                updatedAt
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
-                riskAllocations {
+                Alert {
                   id
                 }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
               }
               asset {
                 id
@@ -202,105 +191,24 @@ export const Customer = {
                 exDividendDate
                 createdAt
                 updatedAt
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
                 newsMentions {
                   id
                 }
               }
-              steps {
-                id
-                tradeId
-                sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
-                type
-                stopLoss
-                targetPrice
-                note
-                executionTime
-                status
-                fee
-                trade {
-                  id
-                }
-              }
-            }
-            orders {
-              id
-              userId
-              portfolioId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            aiRecommendations {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              confidence
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            riskAllocations {
-              id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
             alerts {
               id
               userId
-              portfolioId
+              alpacaAccountId
               message
               type
               isRead
@@ -309,41 +217,12 @@ export const Customer = {
               user {
                 id
               }
-              portfolio {
+              account {
                 id
               }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            tradingAccount {
-              id
             }
             alpacaAccounts {
               id
-              type
-              APIKey
-              APISecret
-              configuration
-              marketOpen
-              user {
-                id
-              }
-              userId
-              createdAt
-              updatedAt
             }
           }
         }
@@ -420,21 +299,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    trades: item.trades ? {
-      connectOrCreate: item.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
     orders: item.orders ? {
       connectOrCreate: item.orders.map((item: any) => ({
         where: {
@@ -449,28 +313,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      connectOrCreate: item.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      connectOrCreate: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
     alerts: item.alerts ? {
       connectOrCreate: item.alerts.map((item: any) => ({
         where: {
@@ -480,33 +322,6 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      connectOrCreate: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    tradingAccount: item.tradingAccount ? {
-      connectOrCreate: item.tradingAccount.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          name: item.name !== undefined ? {
-              equals: item.name 
-             } : undefined,
-        },
-        create: {
-          name: item.name !== undefined ? item.name : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -672,57 +487,46 @@ export const Customer = {
               updatedAt
             }
             plan
-            trades {
+            orders {
               id
               userId
-              portfolioId
+              alpacaAccountId
               assetId
+              type
               action
               quantity
               price
-              total
-              timestamp
+              status
               createdAt
               updatedAt
-              status
               user {
                 id
               }
-              portfolio {
+              account {
                 id
-                name
-                slug
                 type
+                APIKey
+                APISecret
+                configuration
+                marketOpen
                 user {
                   id
                 }
                 userId
-                holdings {
-                  id
-                }
+                createdAt
+                updatedAt
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
-                riskAllocations {
+                Alert {
                   id
                 }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
               }
               asset {
                 id
@@ -781,105 +585,24 @@ export const Customer = {
                 exDividendDate
                 createdAt
                 updatedAt
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
                 newsMentions {
                   id
                 }
               }
-              steps {
-                id
-                tradeId
-                sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
-                type
-                stopLoss
-                targetPrice
-                note
-                executionTime
-                status
-                fee
-                trade {
-                  id
-                }
-              }
-            }
-            orders {
-              id
-              userId
-              portfolioId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            aiRecommendations {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              confidence
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            riskAllocations {
-              id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
             alerts {
               id
               userId
-              portfolioId
+              alpacaAccountId
               message
               type
               isRead
@@ -888,41 +611,12 @@ export const Customer = {
               user {
                 id
               }
-              portfolio {
+              account {
                 id
               }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            tradingAccount {
-              id
             }
             alpacaAccounts {
               id
-              type
-              APIKey
-              APISecret
-              configuration
-              marketOpen
-              user {
-                id
-              }
-              userId
-              createdAt
-              updatedAt
             }
           }
       }
@@ -1105,44 +799,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    trades: item.trades ? {
-      upsert: item.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          total: item.total !== undefined ? {
-              set: item.total  
-             } : undefined,
-          timestamp: item.timestamp !== undefined ? {
-              set: item.timestamp  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
     orders: item.orders ? {
       upsert: item.orders.map((item: any) => ({
         where: {
@@ -1177,50 +833,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      upsert: item.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      upsert: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
     alerts: item.alerts ? {
       upsert: item.alerts.map((item: any) => ({
         where: {
@@ -1244,58 +856,6 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      upsert: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    tradingAccount: item.tradingAccount ? {
-      upsert: item.tradingAccount.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          name: item.name !== undefined ? {
-              equals: item.name 
-             } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          name: item.name !== undefined ? {
-              set: item.name  
-             } : undefined,
-          slug: item.slug !== undefined ? {
-              set: item.slug  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-        },
-        create: {
-          name: item.name !== undefined ? item.name : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1386,21 +946,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    trades: item.trades ? {
-      connectOrCreate: item.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
     orders: item.orders ? {
       connectOrCreate: item.orders.map((item: any) => ({
         where: {
@@ -1415,28 +960,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      connectOrCreate: item.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      connectOrCreate: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
     alerts: item.alerts ? {
       connectOrCreate: item.alerts.map((item: any) => ({
         where: {
@@ -1446,33 +969,6 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      connectOrCreate: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    tradingAccount: item.tradingAccount ? {
-      connectOrCreate: item.tradingAccount.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          name: item.name !== undefined ? {
-              equals: item.name 
-             } : undefined,
-        },
-        create: {
-          name: item.name !== undefined ? item.name : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1706,44 +1202,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    trades: item.trades ? {
-      upsert: item.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          total: item.total !== undefined ? {
-              set: item.total  
-             } : undefined,
-          timestamp: item.timestamp !== undefined ? {
-              set: item.timestamp  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
     orders: item.orders ? {
       upsert: item.orders.map((item: any) => ({
         where: {
@@ -1778,50 +1236,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      upsert: item.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          confidence: item.confidence !== undefined ? {
-              set: item.confidence  
-             } : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      upsert: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          assetType: item.assetType !== undefined ? {
-              set: item.assetType  
-             } : undefined,
-          allocation: item.allocation !== undefined ? {
-              set: item.allocation  
-             } : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
     alerts: item.alerts ? {
       upsert: item.alerts.map((item: any) => ({
         where: {
@@ -1845,58 +1259,6 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      upsert: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          label: item.label !== undefined ? {
-              set: item.label  
-             } : undefined,
-          value: item.value !== undefined ? {
-              set: item.value  
-             } : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    tradingAccount: item.tradingAccount ? {
-      upsert: item.tradingAccount.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          name: item.name !== undefined ? {
-              equals: item.name 
-             } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          name: item.name !== undefined ? {
-              set: item.name  
-             } : undefined,
-          slug: item.slug !== undefined ? {
-              set: item.slug  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-        },
-        create: {
-          name: item.name !== undefined ? item.name : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -1987,21 +1349,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    trades: item.trades ? {
-      connectOrCreate: item.trades.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          total: item.total !== undefined ? item.total : undefined,
-          timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
     orders: item.orders ? {
       connectOrCreate: item.orders.map((item: any) => ({
         where: {
@@ -2016,28 +1363,6 @@ export const Customer = {
         },
       }))
     } : undefined,
-    aiRecommendations: item.aiRecommendations ? {
-      connectOrCreate: item.aiRecommendations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          action: item.action !== undefined ? item.action : undefined,
-          confidence: item.confidence !== undefined ? item.confidence : undefined,
-        },
-      }))
-    } : undefined,
-    riskAllocations: item.riskAllocations ? {
-      connectOrCreate: item.riskAllocations.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          assetType: item.assetType !== undefined ? item.assetType : undefined,
-          allocation: item.allocation !== undefined ? item.allocation : undefined,
-        },
-      }))
-    } : undefined,
     alerts: item.alerts ? {
       connectOrCreate: item.alerts.map((item: any) => ({
         where: {
@@ -2047,33 +1372,6 @@ export const Customer = {
           message: item.message !== undefined ? item.message : undefined,
           type: item.type !== undefined ? item.type : undefined,
           isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    performanceMetrics: item.performanceMetrics ? {
-      connectOrCreate: item.performanceMetrics.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          label: item.label !== undefined ? item.label : undefined,
-          value: item.value !== undefined ? item.value : undefined,
-        },
-      }))
-    } : undefined,
-    tradingAccount: item.tradingAccount ? {
-      connectOrCreate: item.tradingAccount.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          name: item.name !== undefined ? {
-              equals: item.name 
-             } : undefined,
-        },
-        create: {
-          name: item.name !== undefined ? item.name : undefined,
-          slug: item.slug !== undefined ? item.slug : undefined,
-          type: item.type !== undefined ? item.type : undefined,
         },
       }))
     } : undefined,
@@ -2196,57 +1494,46 @@ export const Customer = {
               updatedAt
             }
             plan
-            trades {
+            orders {
               id
               userId
-              portfolioId
+              alpacaAccountId
               assetId
+              type
               action
               quantity
               price
-              total
-              timestamp
+              status
               createdAt
               updatedAt
-              status
               user {
                 id
               }
-              portfolio {
+              account {
                 id
-                name
-                slug
                 type
+                APIKey
+                APISecret
+                configuration
+                marketOpen
                 user {
                   id
                 }
                 userId
-                holdings {
-                  id
-                }
+                createdAt
+                updatedAt
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
-                riskAllocations {
+                Alert {
                   id
                 }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
               }
               asset {
                 id
@@ -2305,105 +1592,24 @@ export const Customer = {
                 exDividendDate
                 createdAt
                 updatedAt
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
                 newsMentions {
                   id
                 }
               }
-              steps {
-                id
-                tradeId
-                sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
-                type
-                stopLoss
-                targetPrice
-                note
-                executionTime
-                status
-                fee
-                trade {
-                  id
-                }
-              }
-            }
-            orders {
-              id
-              userId
-              portfolioId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            aiRecommendations {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              confidence
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            riskAllocations {
-              id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
             alerts {
               id
               userId
-              portfolioId
+              alpacaAccountId
               message
               type
               isRead
@@ -2412,41 +1618,12 @@ export const Customer = {
               user {
                 id
               }
-              portfolio {
+              account {
                 id
               }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            tradingAccount {
-              id
             }
             alpacaAccounts {
               id
-              type
-              APIKey
-              APISecret
-              configuration
-              marketOpen
-              user {
-                id
-              }
-              userId
-              createdAt
-              updatedAt
             }
           }
       }
@@ -2555,57 +1732,46 @@ export const Customer = {
               updatedAt
             }
             plan
-            trades {
+            orders {
               id
               userId
-              portfolioId
+              alpacaAccountId
               assetId
+              type
               action
               quantity
               price
-              total
-              timestamp
+              status
               createdAt
               updatedAt
-              status
               user {
                 id
               }
-              portfolio {
+              account {
                 id
-                name
-                slug
                 type
+                APIKey
+                APISecret
+                configuration
+                marketOpen
                 user {
                   id
                 }
                 userId
-                holdings {
-                  id
-                }
+                createdAt
+                updatedAt
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
-                riskAllocations {
+                Alert {
                   id
                 }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
               }
               asset {
                 id
@@ -2664,105 +1830,24 @@ export const Customer = {
                 exDividendDate
                 createdAt
                 updatedAt
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
                 newsMentions {
                   id
                 }
               }
-              steps {
-                id
-                tradeId
-                sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
-                type
-                stopLoss
-                targetPrice
-                note
-                executionTime
-                status
-                fee
-                trade {
-                  id
-                }
-              }
-            }
-            orders {
-              id
-              userId
-              portfolioId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            aiRecommendations {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              confidence
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            riskAllocations {
-              id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
             alerts {
               id
               userId
-              portfolioId
+              alpacaAccountId
               message
               type
               isRead
@@ -2771,41 +1856,12 @@ export const Customer = {
               user {
                 id
               }
-              portfolio {
+              account {
                 id
               }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            tradingAccount {
-              id
             }
             alpacaAccounts {
               id
-              type
-              APIKey
-              APISecret
-              configuration
-              marketOpen
-              user {
-                id
-              }
-              userId
-              createdAt
-              updatedAt
             }
           }
         }
@@ -2915,57 +1971,46 @@ export const Customer = {
               updatedAt
             }
             plan
-            trades {
+            orders {
               id
               userId
-              portfolioId
+              alpacaAccountId
               assetId
+              type
               action
               quantity
               price
-              total
-              timestamp
+              status
               createdAt
               updatedAt
-              status
               user {
                 id
               }
-              portfolio {
+              account {
                 id
-                name
-                slug
                 type
+                APIKey
+                APISecret
+                configuration
+                marketOpen
                 user {
                   id
                 }
                 userId
-                holdings {
-                  id
-                }
+                createdAt
+                updatedAt
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
-                riskAllocations {
+                Alert {
                   id
                 }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
               }
               asset {
                 id
@@ -3024,105 +2069,24 @@ export const Customer = {
                 exDividendDate
                 createdAt
                 updatedAt
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
                 newsMentions {
                   id
                 }
               }
-              steps {
-                id
-                tradeId
-                sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
-                type
-                stopLoss
-                targetPrice
-                note
-                executionTime
-                status
-                fee
-                trade {
-                  id
-                }
-              }
-            }
-            orders {
-              id
-              userId
-              portfolioId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            aiRecommendations {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              confidence
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            riskAllocations {
-              id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
             alerts {
               id
               userId
-              portfolioId
+              alpacaAccountId
               message
               type
               isRead
@@ -3131,41 +2095,12 @@ export const Customer = {
               user {
                 id
               }
-              portfolio {
+              account {
                 id
               }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            tradingAccount {
-              id
             }
             alpacaAccounts {
               id
-              type
-              APIKey
-              APISecret
-              configuration
-              marketOpen
-              user {
-                id
-              }
-              userId
-              createdAt
-              updatedAt
             }
           }
       }
@@ -3266,57 +2201,46 @@ export const Customer = {
               updatedAt
             }
             plan
-            trades {
+            orders {
               id
               userId
-              portfolioId
+              alpacaAccountId
               assetId
+              type
               action
               quantity
               price
-              total
-              timestamp
+              status
               createdAt
               updatedAt
-              status
               user {
                 id
               }
-              portfolio {
+              account {
                 id
-                name
-                slug
                 type
+                APIKey
+                APISecret
+                configuration
+                marketOpen
                 user {
                   id
                 }
                 userId
-                holdings {
-                  id
-                }
+                createdAt
+                updatedAt
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
-                riskAllocations {
+                Alert {
                   id
                 }
-                alerts {
-                  id
-                }
-                performanceMetrics {
-                  id
-                }
-                environmentVariables {
-                  id
-                }
-                createdAt
-                updatedAt
               }
               asset {
                 id
@@ -3375,105 +2299,24 @@ export const Customer = {
                 exDividendDate
                 createdAt
                 updatedAt
-                holdings {
-                  id
-                }
                 trades {
                   id
                 }
                 orders {
                   id
                 }
-                aiRecommendations {
+                positions {
                   id
                 }
                 newsMentions {
                   id
                 }
               }
-              steps {
-                id
-                tradeId
-                sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
-                type
-                stopLoss
-                targetPrice
-                note
-                executionTime
-                status
-                fee
-                trade {
-                  id
-                }
-              }
-            }
-            orders {
-              id
-              userId
-              portfolioId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            aiRecommendations {
-              id
-              userId
-              portfolioId
-              assetId
-              action
-              confidence
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-              asset {
-                id
-              }
-            }
-            riskAllocations {
-              id
-              userId
-              portfolioId
-              assetType
-              allocation
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
             }
             alerts {
               id
               userId
-              portfolioId
+              alpacaAccountId
               message
               type
               isRead
@@ -3482,41 +2325,12 @@ export const Customer = {
               user {
                 id
               }
-              portfolio {
+              account {
                 id
               }
-            }
-            performanceMetrics {
-              id
-              userId
-              portfolioId
-              label
-              value
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              portfolio {
-                id
-              }
-            }
-            tradingAccount {
-              id
             }
             alpacaAccounts {
               id
-              type
-              APIKey
-              APISecret
-              configuration
-              marketOpen
-              user {
-                id
-              }
-              userId
-              createdAt
-              updatedAt
             }
           }
       }
