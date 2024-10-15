@@ -1185,6 +1185,15 @@ export const AIRecommendation = {
   action: props.action !== undefined ? {
             set: props.action 
            } : undefined,
+  confidence: props.confidence !== undefined ? {
+            set: props.confidence 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -2604,6 +2613,15 @@ export const AIRecommendation = {
            } : undefined,
   action: prop.action !== undefined ? {
             set: prop.action 
+           } : undefined,
+  confidence: prop.confidence !== undefined ? {
+            set: prop.confidence 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

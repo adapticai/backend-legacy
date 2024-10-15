@@ -938,6 +938,15 @@ export const Session = {
   sessionToken: props.sessionToken !== undefined ? {
             set: props.sessionToken 
            } : undefined,
+  expires: props.expires !== undefined ? {
+            set: props.expires 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -1548,6 +1557,15 @@ export const Session = {
            } : undefined,
   sessionToken: prop.sessionToken !== undefined ? {
             set: prop.sessionToken 
+           } : undefined,
+  expires: prop.expires !== undefined ? {
+            set: prop.expires 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

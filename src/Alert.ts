@@ -1069,6 +1069,15 @@ export const Alert = {
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
+  isRead: props.isRead !== undefined ? {
+            set: props.isRead 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -2068,6 +2077,15 @@ export const Alert = {
            } : undefined,
   type: prop.type !== undefined ? {
             set: prop.type 
+           } : undefined,
+  isRead: prop.isRead !== undefined ? {
+            set: prop.isRead 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

@@ -950,11 +950,26 @@ export const TradeStep = {
   id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
+  sequence: props.sequence !== undefined ? {
+            set: props.sequence 
+           } : undefined,
   action: props.action !== undefined ? {
             set: props.action 
            } : undefined,
   hedgeType: props.hedgeType !== undefined ? {
             set: props.hedgeType 
+           } : undefined,
+  hedgePrice: props.hedgePrice !== undefined ? {
+            set: props.hedgePrice 
+           } : undefined,
+  buyPrice: props.buyPrice !== undefined ? {
+            set: props.buyPrice 
+           } : undefined,
+  sellPrice: props.sellPrice !== undefined ? {
+            set: props.sellPrice 
+           } : undefined,
+  qty: props.qty !== undefined ? {
+            set: props.qty 
            } : undefined,
   side: props.side !== undefined ? {
             set: props.side 
@@ -962,11 +977,23 @@ export const TradeStep = {
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
+  stopLoss: props.stopLoss !== undefined ? {
+            set: props.stopLoss 
+           } : undefined,
+  targetPrice: props.targetPrice !== undefined ? {
+            set: props.targetPrice 
+           } : undefined,
   note: props.note !== undefined ? {
             set: props.note 
            } : undefined,
+  executionTime: props.executionTime !== undefined ? {
+            set: props.executionTime 
+           } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
+           } : undefined,
+  fee: props.fee !== undefined ? {
+            set: props.fee 
            } : undefined,
   trade: props.trade ? {
     upsert: {
@@ -1480,11 +1507,26 @@ export const TradeStep = {
           id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
+  sequence: prop.sequence !== undefined ? {
+            set: prop.sequence 
+           } : undefined,
   action: prop.action !== undefined ? {
             set: prop.action 
            } : undefined,
   hedgeType: prop.hedgeType !== undefined ? {
             set: prop.hedgeType 
+           } : undefined,
+  hedgePrice: prop.hedgePrice !== undefined ? {
+            set: prop.hedgePrice 
+           } : undefined,
+  buyPrice: prop.buyPrice !== undefined ? {
+            set: prop.buyPrice 
+           } : undefined,
+  sellPrice: prop.sellPrice !== undefined ? {
+            set: prop.sellPrice 
+           } : undefined,
+  qty: prop.qty !== undefined ? {
+            set: prop.qty 
            } : undefined,
   side: prop.side !== undefined ? {
             set: prop.side 
@@ -1492,11 +1534,23 @@ export const TradeStep = {
   type: prop.type !== undefined ? {
             set: prop.type 
            } : undefined,
+  stopLoss: prop.stopLoss !== undefined ? {
+            set: prop.stopLoss 
+           } : undefined,
+  targetPrice: prop.targetPrice !== undefined ? {
+            set: prop.targetPrice 
+           } : undefined,
   note: prop.note !== undefined ? {
             set: prop.note 
            } : undefined,
+  executionTime: prop.executionTime !== undefined ? {
+            set: prop.executionTime 
+           } : undefined,
   status: prop.status !== undefined ? {
             set: prop.status 
+           } : undefined,
+  fee: prop.fee !== undefined ? {
+            set: prop.fee 
            } : undefined,
   trade: prop.trade ? {
     upsert: {

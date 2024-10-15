@@ -1218,6 +1218,12 @@ export const Asset = {
   exDividendDate: props.exDividendDate !== undefined ? {
             set: props.exDividendDate 
            } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   holdings: props.holdings ? {
     upsert: props.holdings.map((item: any) => ({
       where: {
@@ -2207,6 +2213,12 @@ export const Asset = {
            } : undefined,
   exDividendDate: prop.exDividendDate !== undefined ? {
             set: prop.exDividendDate 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   holdings: prop.holdings ? {
     upsert: prop.holdings.map((item: any) => ({

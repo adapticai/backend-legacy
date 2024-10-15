@@ -593,6 +593,12 @@ export const NewsArticle = {
   logo: props.logo !== undefined ? {
             set: props.logo 
            } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   assets: props.assets ? {
     upsert: props.assets.map((item: any) => ({
       where: {
@@ -1002,6 +1008,12 @@ export const NewsArticle = {
            } : undefined,
   logo: prop.logo !== undefined ? {
             set: prop.logo 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   assets: prop.assets ? {
     upsert: prop.assets.map((item: any) => ({

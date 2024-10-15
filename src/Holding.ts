@@ -1069,6 +1069,18 @@ export const Holding = {
   id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
+  quantity: props.quantity !== undefined ? {
+            set: props.quantity 
+           } : undefined,
+  averagePrice: props.averagePrice !== undefined ? {
+            set: props.averagePrice 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   tradingAccount: props.tradingAccount ? {
     upsert: {
       where: {
@@ -1921,6 +1933,18 @@ export const Holding = {
       data: {
           id: prop.id !== undefined ? {
             set: prop.id 
+           } : undefined,
+  quantity: prop.quantity !== undefined ? {
+            set: prop.quantity 
+           } : undefined,
+  averagePrice: prop.averagePrice !== undefined ? {
+            set: prop.averagePrice 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   tradingAccount: prop.tradingAccount ? {
     upsert: {

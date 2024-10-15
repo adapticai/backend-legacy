@@ -942,6 +942,15 @@ export const Authenticator = {
   publicKey: props.publicKey !== undefined ? {
             set: props.publicKey 
            } : undefined,
+  counter: props.counter !== undefined ? {
+            set: props.counter 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -1550,6 +1559,15 @@ export const Authenticator = {
            } : undefined,
   publicKey: prop.publicKey !== undefined ? {
             set: prop.publicKey 
+           } : undefined,
+  counter: prop.counter !== undefined ? {
+            set: prop.counter 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

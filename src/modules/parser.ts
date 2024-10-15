@@ -209,7 +209,24 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
         isFieldUpdate = true;
       }
     }
-    
+
+    // if field.type.name is 'BoolFieldUpdateOperationsInput', set isScalar to true, isFieldUpdate to true
+    if (ts.isTypeReferenceNode(typeNode)) {
+      const typeName = typeNode.typeName.getText(sourceFile);
+      if (typeName === 'BoolFieldUpdateOperationsInput') {
+        isScalar = true;
+        isFieldUpdate = true;
+      }
+    }
+
+    // if field.type.name is 'Prisma.InputJsonValue', set isFieldUpdate to true
+    if (ts.isTypeReferenceNode(typeNode)) {
+      const typeName = typeNode.typeName.getText(sourceFile);
+      if (typeName === 'Prisma.InputJsonValue') {
+        isFieldUpdate = true;
+      }
+    }
+
     // Handle nullable types
     if (ts.isUnionTypeNode(typeNode)) {
       const types = typeNode.types.filter(t => !isNullOrUndefined(t, sourceFile));
@@ -323,9 +340,8 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
   ): FieldType {
     const typeName = node.typeName.getText(sourceFile);
     const isScalar = isScalarType(typeName);
-    const isFieldUpdate = typeName.includes('FieldUpdateOperationsInput');
+    const isFieldUpdate = typeName.includes('FieldUpdateOperationsInput') || typeName.includes('BoolFieldUpdateOperationsInput') || typeName.includes('Prisma.InputJsonValue');
     let isFilterObject = false;
-
 
     // if field.type.name includes 'Enum' and 'Filter', set isFilterObject to true
     if (typeName.includes('Filter')) {

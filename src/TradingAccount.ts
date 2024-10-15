@@ -1499,6 +1499,12 @@ export const TradingAccount = {
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -4091,6 +4097,12 @@ export const TradingAccount = {
            } : undefined,
   type: prop.type !== undefined ? {
             set: prop.type 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

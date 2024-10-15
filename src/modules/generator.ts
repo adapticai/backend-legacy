@@ -361,7 +361,7 @@ const handleUpdateOperation = (
     return '';
   }
 
-  if (field.type.isScalar && field.type.isFieldUpdate) {
+  if (field.type.isScalar && field.type.isFieldUpdate || field.type.isFieldUpdate) {
     return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}          set: ${accessor} \n ${indent}        } : undefined,\n`;
   } else {
     if (depth + 1 >= maxDepth) {

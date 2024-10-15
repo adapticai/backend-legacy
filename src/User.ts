@@ -1426,8 +1426,17 @@ export const User = {
   email: props.email !== undefined ? {
             set: props.email 
            } : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+            set: props.emailVerified 
+           } : undefined,
   image: props.image !== undefined ? {
             set: props.image 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
            } : undefined,
   role: props.role !== undefined ? {
             set: props.role 
@@ -1440,6 +1449,9 @@ export const User = {
            } : undefined,
   currentAccount: props.currentAccount !== undefined ? {
             set: props.currentAccount 
+           } : undefined,
+  plan: props.plan !== undefined ? {
+            set: props.plan 
            } : undefined,
   customer: props.customer ? {
     upsert: {
@@ -3476,8 +3488,17 @@ export const User = {
   email: prop.email !== undefined ? {
             set: prop.email 
            } : undefined,
+  emailVerified: prop.emailVerified !== undefined ? {
+            set: prop.emailVerified 
+           } : undefined,
   image: prop.image !== undefined ? {
             set: prop.image 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   role: prop.role !== undefined ? {
             set: prop.role 
@@ -3490,6 +3511,9 @@ export const User = {
            } : undefined,
   currentAccount: prop.currentAccount !== undefined ? {
             set: prop.currentAccount 
+           } : undefined,
+  plan: prop.plan !== undefined ? {
+            set: prop.plan 
            } : undefined,
   customer: prop.customer ? {
     upsert: {

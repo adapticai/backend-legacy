@@ -1066,6 +1066,15 @@ export const RiskAllocation = {
   assetType: props.assetType !== undefined ? {
             set: props.assetType 
            } : undefined,
+  allocation: props.allocation !== undefined ? {
+            set: props.allocation 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -2072,6 +2081,15 @@ export const RiskAllocation = {
            } : undefined,
   assetType: prop.assetType !== undefined ? {
             set: prop.assetType 
+           } : undefined,
+  allocation: prop.allocation !== undefined ? {
+            set: prop.allocation 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

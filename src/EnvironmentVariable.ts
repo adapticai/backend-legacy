@@ -900,6 +900,12 @@ export const EnvironmentVariable = {
   description: props.description !== undefined ? {
             set: props.description 
            } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   portfolio: props.portfolio ? {
     upsert: {
       where: {
@@ -1340,6 +1346,12 @@ export const EnvironmentVariable = {
            } : undefined,
   description: prop.description !== undefined ? {
             set: prop.description 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   portfolio: prop.portfolio ? {
     upsert: {

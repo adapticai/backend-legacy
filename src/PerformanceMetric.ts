@@ -1069,6 +1069,12 @@ export const PerformanceMetric = {
   value: props.value !== undefined ? {
             set: props.value 
            } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   user: props.user ? {
     upsert: {
       where: {
@@ -2078,6 +2084,12 @@ export const PerformanceMetric = {
            } : undefined,
   value: prop.value !== undefined ? {
             set: prop.value 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

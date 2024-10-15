@@ -1205,6 +1205,24 @@ export const Trade = {
   action: props.action !== undefined ? {
             set: props.action 
            } : undefined,
+  quantity: props.quantity !== undefined ? {
+            set: props.quantity 
+           } : undefined,
+  price: props.price !== undefined ? {
+            set: props.price 
+           } : undefined,
+  total: props.total !== undefined ? {
+            set: props.total 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
@@ -2641,6 +2659,24 @@ export const Trade = {
            } : undefined,
   action: prop.action !== undefined ? {
             set: prop.action 
+           } : undefined,
+  quantity: prop.quantity !== undefined ? {
+            set: prop.quantity 
+           } : undefined,
+  price: prop.price !== undefined ? {
+            set: prop.price 
+           } : undefined,
+  total: prop.total !== undefined ? {
+            set: prop.total 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   status: prop.status !== undefined ? {
             set: prop.status 

@@ -130,6 +130,9 @@ export const VerificationToken = {
   token: props.token !== undefined ? {
             set: props.token 
            } : undefined,
+  expires: props.expires !== undefined ? {
+            set: props.expires 
+           } : undefined,
       },
     };
 
@@ -179,6 +182,9 @@ export const VerificationToken = {
            } : undefined,
   token: prop.token !== undefined ? {
             set: prop.token 
+           } : undefined,
+  expires: prop.expires !== undefined ? {
+            set: prop.expires 
            } : undefined,
 
       },

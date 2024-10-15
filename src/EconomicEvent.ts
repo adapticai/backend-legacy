@@ -141,8 +141,17 @@ export const EconomicEvent = {
   description: props.description !== undefined ? {
             set: props.description 
            } : undefined,
+  date: props.date !== undefined ? {
+            set: props.date 
+           } : undefined,
   importance: props.importance !== undefined ? {
             set: props.importance 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
            } : undefined,
       },
     };
@@ -197,8 +206,17 @@ export const EconomicEvent = {
   description: prop.description !== undefined ? {
             set: prop.description 
            } : undefined,
+  date: prop.date !== undefined ? {
+            set: prop.date 
+           } : undefined,
   importance: prop.importance !== undefined ? {
             set: prop.importance 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
 
       },

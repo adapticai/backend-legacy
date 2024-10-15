@@ -958,6 +958,9 @@ export const Account = {
   access_token: props.access_token !== undefined ? {
             set: props.access_token 
            } : undefined,
+  expires_at: props.expires_at !== undefined ? {
+            set: props.expires_at 
+           } : undefined,
   token_type: props.token_type !== undefined ? {
             set: props.token_type 
            } : undefined,
@@ -969,6 +972,12 @@ export const Account = {
            } : undefined,
   session_state: props.session_state !== undefined ? {
             set: props.session_state 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
            } : undefined,
   user: props.user ? {
     upsert: {
@@ -1553,6 +1562,9 @@ export const Account = {
   access_token: prop.access_token !== undefined ? {
             set: prop.access_token 
            } : undefined,
+  expires_at: prop.expires_at !== undefined ? {
+            set: prop.expires_at 
+           } : undefined,
   token_type: prop.token_type !== undefined ? {
             set: prop.token_type 
            } : undefined,
@@ -1564,6 +1576,12 @@ export const Account = {
            } : undefined,
   session_state: prop.session_state !== undefined ? {
             set: prop.session_state 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   user: prop.user ? {
     upsert: {

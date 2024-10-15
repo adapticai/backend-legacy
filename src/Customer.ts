@@ -942,6 +942,9 @@ export const Customer = {
   name: props.name !== undefined ? {
             set: props.name 
            } : undefined,
+  plan: props.plan !== undefined ? {
+            set: props.plan 
+           } : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? {
             set: props.stripeCustomerId 
            } : undefined,
@@ -950,6 +953,15 @@ export const Customer = {
            } : undefined,
   stripePriceId: props.stripePriceId !== undefined ? {
             set: props.stripePriceId 
+           } : undefined,
+  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
+            set: props.stripeCurrentPeriodEnd 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
            } : undefined,
   users: props.users ? {
     upsert: props.users.map((item: any) => ({
@@ -1531,6 +1543,9 @@ export const Customer = {
   name: prop.name !== undefined ? {
             set: prop.name 
            } : undefined,
+  plan: prop.plan !== undefined ? {
+            set: prop.plan 
+           } : undefined,
   stripeCustomerId: prop.stripeCustomerId !== undefined ? {
             set: prop.stripeCustomerId 
            } : undefined,
@@ -1539,6 +1554,15 @@ export const Customer = {
            } : undefined,
   stripePriceId: prop.stripePriceId !== undefined ? {
             set: prop.stripePriceId 
+           } : undefined,
+  stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? {
+            set: prop.stripeCurrentPeriodEnd 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   users: prop.users ? {
     upsert: prop.users.map((item: any) => ({
