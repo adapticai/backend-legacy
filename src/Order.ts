@@ -25,7 +25,6 @@ export const Order = {
       mutation createOneOrder($data: OrderCreateInput!) {
         createOneOrder(data: $data) {
           id
-          userId
           alpacaAccountId
           assetId
           type
@@ -35,181 +34,89 @@ export const Order = {
           status
           createdAt
           updatedAt
-          user {
+          alpacaAccount {
             id
-            name
-            email
-            emailVerified
-            image
-            createdAt
-            updatedAt
-            role
-            bio
-            jobTitle
-            currentAccount
-            customer {
+            type
+            APIKey
+            APISecret
+            configuration
+            marketOpen
+            user {
               id
-              authUserId
               name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
+              email
+              emailVerified
+              image
               createdAt
               updatedAt
-              users {
+              role
+              bio
+              jobTitle
+              currentAccount
+              customer {
                 id
+                authUserId
+                name
+                plan
+                stripeCustomerId
+                stripeSubscriptionId
+                stripePriceId
+                stripeCurrentPeriodEnd
+                createdAt
+                updatedAt
+                users {
+                  id
+                }
               }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
+              customerId
+              accounts {
                 id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            orders {
-              id
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
+                userId
                 type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
+                provider
+                providerAccountId
+                refresh_token
+                access_token
+                expires_at
+                token_type
+                scope
+                id_token
+                session_state
+                createdAt
+                updatedAt
                 user {
                   id
                 }
+              }
+              sessions {
+                id
+                sessionToken
                 userId
+                expires
+                user {
+                  id
+                }
                 createdAt
                 updatedAt
-                trades {
+              }
+              authenticators {
+                id
+                userId
+                credentialID
+                publicKey
+                counter
+                user {
                   id
                 }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
+                createdAt
+                updatedAt
+              }
+              plan
+              alpacaAccounts {
+                id
               }
             }
-            alpacaAccounts {
-              id
-            }
-          }
-          account {
-            id
-          }
-          asset {
-            id
-            symbol
-            name
-            type
-            logoUrl
-            description
-            cik
-            exchange
-            currency
-            country
-            sector
-            industry
-            address
-            officialSite
-            fiscalYearEnd
-            latestQuarter
-            marketCapitalization
-            ebitda
-            peRatio
-            pegRatio
-            bookValue
-            dividendPerShare
-            dividendYield
-            eps
-            revenuePerShareTTM
-            profitMargin
-            operatingMarginTTM
-            returnOnAssetsTTM
-            returnOnEquityTTM
-            revenueTTM
-            grossProfitTTM
-            dilutedEPSTTM
-            quarterlyEarningsGrowthYOY
-            quarterlyRevenueGrowthYOY
-            analystTargetPrice
-            analystRatingStrongBuy
-            analystRatingBuy
-            analystRatingHold
-            analystRatingSell
-            analystRatingStrongSell
-            trailingPE
-            forwardPE
-            priceToSalesRatioTTM
-            priceToBookRatio
-            evToRevenue
-            evToEbitda
-            beta
-            week52High
-            week52Low
-            day50MovingAverage
-            day200MovingAverage
-            sharesOutstanding
-            dividendDate
-            exDividendDate
+            userId
             createdAt
             updatedAt
             trades {
@@ -223,11 +130,78 @@ export const Order = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
               }
               asset {
                 id
+                symbol
+                name
+                type
+                logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization
+                ebitda
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM
+                grossProfitTTM
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding
+                dividendDate
+                exDividendDate
+                createdAt
+                updatedAt
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                positions {
+                  id
+                }
+                newsMentions {
+                  id
+                }
               }
               actions {
                 id
@@ -274,44 +248,26 @@ export const Order = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
             }
-            newsMentions {
+            alerts {
               id
-              assetId
-              newsArticleId
-              url
-              news {
-                id
-                title
-                content
-                source
-                sourceDomain
-                url
-                sentiment
-                authors
-                summary
-                bannerImage
-                timePublished
-                category
-                topics
-                logo
-                createdAt
-                updatedAt
-                assets {
-                  id
-                }
-              }
-              asset {
+              alpacaAccountId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              alpacaAccount {
                 id
               }
-              relevancyScore
-              sentimentScore
-              sentimentLabel
             }
+          }
+          asset {
+            id
           }
         }
       }
@@ -324,150 +280,41 @@ export const Order = {
   quantity: props.quantity !== undefined ? props.quantity : undefined,
   price: props.price !== undefined ? props.price : undefined,
   status: props.status !== undefined ? props.status : undefined,
-  user: props.user ? {
+  alpacaAccount: props.alpacaAccount ? {
     connectOrCreate: {
       where: {
-        id: props.user.id !== undefined ? props.user.id : undefined,
-        email: props.user.email !== undefined ? props.user.email : undefined,
-        name: props.user.name !== undefined ? {
-            equals: props.user.name 
-           } : undefined,
+        id: props.alpacaAccount.id !== undefined ? props.alpacaAccount.id : undefined,
       },
       create: {
-        name: props.user.name !== undefined ? props.user.name : undefined,
-        email: props.user.email !== undefined ? props.user.email : undefined,
-        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
-        image: props.user.image !== undefined ? props.user.image : undefined,
-        role: props.user.role !== undefined ? props.user.role : undefined,
-        bio: props.user.bio !== undefined ? props.user.bio : undefined,
-        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
-        plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    customer: props.user.customer ? {
+        type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
+        APIKey: props.alpacaAccount.APIKey !== undefined ? props.alpacaAccount.APIKey : undefined,
+        APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
+        marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+    user: props.alpacaAccount.user ? {
       connectOrCreate: {
         where: {
-          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
-          name: props.user.customer.name !== undefined ? {
-              equals: props.user.customer.name 
+          id: props.alpacaAccount.user.id !== undefined ? props.alpacaAccount.user.id : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? {
+              equals: props.alpacaAccount.user.name 
              } : undefined,
         },
         create: {
-          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
-          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
-          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
+          image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
+          bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? props.alpacaAccount.user.currentAccount : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? props.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    accounts: props.user.accounts ? {
-      connectOrCreate: props.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: props.user.sessions ? {
-      connectOrCreate: props.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: props.user.authenticators ? {
-      connectOrCreate: props.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    alpacaAccounts: props.user.alpacaAccounts ? {
-      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-          configuration: item.configuration !== undefined ? item.configuration : undefined,
-          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  account: props.account ? {
-    connectOrCreate: {
-      where: {
-        id: props.account.id !== undefined ? props.account.id : undefined,
-      },
-      create: {
-        type: props.account.type !== undefined ? props.account.type : undefined,
-        APIKey: props.account.APIKey !== undefined ? props.account.APIKey : undefined,
-        APISecret: props.account.APISecret !== undefined ? props.account.APISecret : undefined,
-        configuration: props.account.configuration !== undefined ? props.account.configuration : undefined,
-        marketOpen: props.account.marketOpen !== undefined ? props.account.marketOpen : undefined,
-    user: props.account.user ? {
-      connectOrCreate: {
-        where: {
-          id: props.account.user.id !== undefined ? props.account.user.id : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          name: props.account.user.name !== undefined ? {
-              equals: props.account.user.name 
-             } : undefined,
-        },
-        create: {
-          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
-          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
-          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
-          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
-          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    trades: props.account.trades ? {
-      connectOrCreate: props.account.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? {
+      connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -480,8 +327,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    positions: props.account.positions ? {
-      connectOrCreate: props.account.positions.map((item: any) => ({
+    positions: props.alpacaAccount.positions ? {
+      connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -502,8 +349,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    Alert: props.account.Alert ? {
-      connectOrCreate: props.account.Alert.map((item: any) => ({
+    alerts: props.alpacaAccount.alerts ? {
+      connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -669,7 +516,6 @@ export const Order = {
 
     const variables = {
       data: props.map(prop => ({
-  userId: prop.userId !== undefined ? prop.userId : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
@@ -709,7 +555,6 @@ export const Order = {
       mutation updateOneOrder($data: OrderUpdateInput!, $where: OrderWhereUniqueInput!) {
         updateOneOrder(data: $data, where: $where) {
           id
-          userId
           alpacaAccountId
           assetId
           type
@@ -719,181 +564,89 @@ export const Order = {
           status
           createdAt
           updatedAt
-          user {
+          alpacaAccount {
             id
-            name
-            email
-            emailVerified
-            image
-            createdAt
-            updatedAt
-            role
-            bio
-            jobTitle
-            currentAccount
-            customer {
+            type
+            APIKey
+            APISecret
+            configuration
+            marketOpen
+            user {
               id
-              authUserId
               name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
+              email
+              emailVerified
+              image
               createdAt
               updatedAt
-              users {
+              role
+              bio
+              jobTitle
+              currentAccount
+              customer {
                 id
+                authUserId
+                name
+                plan
+                stripeCustomerId
+                stripeSubscriptionId
+                stripePriceId
+                stripeCurrentPeriodEnd
+                createdAt
+                updatedAt
+                users {
+                  id
+                }
               }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
+              customerId
+              accounts {
                 id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            orders {
-              id
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
+                userId
                 type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
+                provider
+                providerAccountId
+                refresh_token
+                access_token
+                expires_at
+                token_type
+                scope
+                id_token
+                session_state
+                createdAt
+                updatedAt
                 user {
                   id
                 }
+              }
+              sessions {
+                id
+                sessionToken
                 userId
+                expires
+                user {
+                  id
+                }
                 createdAt
                 updatedAt
-                trades {
+              }
+              authenticators {
+                id
+                userId
+                credentialID
+                publicKey
+                counter
+                user {
                   id
                 }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
+                createdAt
+                updatedAt
+              }
+              plan
+              alpacaAccounts {
+                id
               }
             }
-            alpacaAccounts {
-              id
-            }
-          }
-          account {
-            id
-          }
-          asset {
-            id
-            symbol
-            name
-            type
-            logoUrl
-            description
-            cik
-            exchange
-            currency
-            country
-            sector
-            industry
-            address
-            officialSite
-            fiscalYearEnd
-            latestQuarter
-            marketCapitalization
-            ebitda
-            peRatio
-            pegRatio
-            bookValue
-            dividendPerShare
-            dividendYield
-            eps
-            revenuePerShareTTM
-            profitMargin
-            operatingMarginTTM
-            returnOnAssetsTTM
-            returnOnEquityTTM
-            revenueTTM
-            grossProfitTTM
-            dilutedEPSTTM
-            quarterlyEarningsGrowthYOY
-            quarterlyRevenueGrowthYOY
-            analystTargetPrice
-            analystRatingStrongBuy
-            analystRatingBuy
-            analystRatingHold
-            analystRatingSell
-            analystRatingStrongSell
-            trailingPE
-            forwardPE
-            priceToSalesRatioTTM
-            priceToBookRatio
-            evToRevenue
-            evToEbitda
-            beta
-            week52High
-            week52Low
-            day50MovingAverage
-            day200MovingAverage
-            sharesOutstanding
-            dividendDate
-            exDividendDate
+            userId
             createdAt
             updatedAt
             trades {
@@ -907,11 +660,78 @@ export const Order = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
               }
               asset {
                 id
+                symbol
+                name
+                type
+                logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization
+                ebitda
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM
+                grossProfitTTM
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding
+                dividendDate
+                exDividendDate
+                createdAt
+                updatedAt
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                positions {
+                  id
+                }
+                newsMentions {
+                  id
+                }
               }
               actions {
                 id
@@ -958,44 +778,26 @@ export const Order = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
             }
-            newsMentions {
+            alerts {
               id
-              assetId
-              newsArticleId
-              url
-              news {
-                id
-                title
-                content
-                source
-                sourceDomain
-                url
-                sentiment
-                authors
-                summary
-                bannerImage
-                timePublished
-                category
-                topics
-                logo
-                createdAt
-                updatedAt
-                assets {
-                  id
-                }
-              }
-              asset {
+              alpacaAccountId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              alpacaAccount {
                 id
               }
-              relevancyScore
-              sentimentScore
-              sentimentLabel
             }
+          }
+          asset {
+            id
           }
       }
       }`;
@@ -1029,443 +831,92 @@ export const Order = {
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
-  user: props.user ? {
+  alpacaAccount: props.alpacaAccount ? {
     upsert: {
       where: {
-        id: props.user.id !== undefined ? {
-            equals: props.user.id 
-           } : undefined,
-        name: props.user.name !== undefined ? {
-            equals: props.user.name 
-           } : undefined,
-        email: props.user.email !== undefined ? {
-            equals: props.user.email 
+        id: props.alpacaAccount.id !== undefined ? {
+            equals: props.alpacaAccount.id 
            } : undefined,
       },
       update: {
-        id: props.user.id !== undefined ? {
-            set: props.user.id  
+        id: props.alpacaAccount.id !== undefined ? {
+            set: props.alpacaAccount.id  
            } : undefined,
-        name: props.user.name !== undefined ? {
-            set: props.user.name  
+        type: props.alpacaAccount.type !== undefined ? {
+            set: props.alpacaAccount.type  
            } : undefined,
-        email: props.user.email !== undefined ? {
-            set: props.user.email  
+        APIKey: props.alpacaAccount.APIKey !== undefined ? {
+            set: props.alpacaAccount.APIKey  
            } : undefined,
-        emailVerified: props.user.emailVerified !== undefined ? {
-            set: props.user.emailVerified  
+        APISecret: props.alpacaAccount.APISecret !== undefined ? {
+            set: props.alpacaAccount.APISecret  
            } : undefined,
-        image: props.user.image !== undefined ? {
-            set: props.user.image  
+        configuration: props.alpacaAccount.configuration !== undefined ? {
+            set: props.alpacaAccount.configuration  
            } : undefined,
-        role: props.user.role !== undefined ? {
-            set: props.user.role  
+        marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
+            set: props.alpacaAccount.marketOpen  
            } : undefined,
-        bio: props.user.bio !== undefined ? {
-            set: props.user.bio  
-           } : undefined,
-        jobTitle: props.user.jobTitle !== undefined ? {
-            set: props.user.jobTitle  
-           } : undefined,
-        currentAccount: props.user.currentAccount !== undefined ? {
-            set: props.user.currentAccount  
-           } : undefined,
-        plan: props.user.plan !== undefined ? {
-            set: props.user.plan  
-           } : undefined,
-    customer: props.user.customer ? {
+    user: props.alpacaAccount.user ? {
       upsert: {
         where: {
-          id: props.user.customer.id !== undefined ? {
-              equals: props.user.customer.id 
+          id: props.alpacaAccount.user.id !== undefined ? {
+              equals: props.alpacaAccount.user.id 
              } : undefined,
-          name: props.user.customer.name !== undefined ? {
-              equals: props.user.customer.name 
+          name: props.alpacaAccount.user.name !== undefined ? {
+              equals: props.alpacaAccount.user.name 
+             } : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? {
+              equals: props.alpacaAccount.user.email 
              } : undefined,
         },
         update: {
-          authUserId: props.user.customer.authUserId !== undefined ? {
-              set: props.user.customer.authUserId  
+          id: props.alpacaAccount.user.id !== undefined ? {
+              set: props.alpacaAccount.user.id  
              } : undefined,
-          name: props.user.customer.name !== undefined ? {
-              set: props.user.customer.name  
+          name: props.alpacaAccount.user.name !== undefined ? {
+              set: props.alpacaAccount.user.name  
              } : undefined,
-          plan: props.user.customer.plan !== undefined ? {
-              set: props.user.customer.plan  
+          email: props.alpacaAccount.user.email !== undefined ? {
+              set: props.alpacaAccount.user.email  
              } : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
-              set: props.user.customer.stripeCustomerId  
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? {
+              set: props.alpacaAccount.user.emailVerified  
              } : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
-              set: props.user.customer.stripeSubscriptionId  
+          image: props.alpacaAccount.user.image !== undefined ? {
+              set: props.alpacaAccount.user.image  
              } : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
-              set: props.user.customer.stripePriceId  
+          role: props.alpacaAccount.user.role !== undefined ? {
+              set: props.alpacaAccount.user.role  
              } : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? {
-              set: props.user.customer.stripeCurrentPeriodEnd  
+          bio: props.alpacaAccount.user.bio !== undefined ? {
+              set: props.alpacaAccount.user.bio  
+             } : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? {
+              set: props.alpacaAccount.user.jobTitle  
+             } : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? {
+              set: props.alpacaAccount.user.currentAccount  
+             } : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? {
+              set: props.alpacaAccount.user.plan  
              } : undefined,
         },
         create: {
-          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
-          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
-          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
+          image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
+          bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? props.alpacaAccount.user.currentAccount : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? props.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    accounts: props.user.accounts ? {
-      upsert: props.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          provider: item.provider !== undefined ? {
-              set: item.provider  
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              set: item.providerAccountId  
-             } : undefined,
-          refresh_token: item.refresh_token !== undefined ? {
-              set: item.refresh_token  
-             } : undefined,
-          access_token: item.access_token !== undefined ? {
-              set: item.access_token  
-             } : undefined,
-          expires_at: item.expires_at !== undefined ? {
-              set: item.expires_at  
-             } : undefined,
-          token_type: item.token_type !== undefined ? {
-              set: item.token_type  
-             } : undefined,
-          scope: item.scope !== undefined ? {
-              set: item.scope  
-             } : undefined,
-          id_token: item.id_token !== undefined ? {
-              set: item.id_token  
-             } : undefined,
-          session_state: item.session_state !== undefined ? {
-              set: item.session_state  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: props.user.sessions ? {
-      upsert: props.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          sessionToken: item.sessionToken !== undefined ? {
-              set: item.sessionToken  
-             } : undefined,
-          expires: item.expires !== undefined ? {
-              set: item.expires  
-             } : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: props.user.authenticators ? {
-      upsert: props.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          credentialID: item.credentialID !== undefined ? {
-              set: item.credentialID  
-             } : undefined,
-          publicKey: item.publicKey !== undefined ? {
-              set: item.publicKey  
-             } : undefined,
-          counter: item.counter !== undefined ? {
-              set: item.counter  
-             } : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      upsert: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    alpacaAccounts: props.user.alpacaAccounts ? {
-      upsert: props.user.alpacaAccounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          APIKey: item.APIKey !== undefined ? {
-              set: item.APIKey  
-             } : undefined,
-          APISecret: item.APISecret !== undefined ? {
-              set: item.APISecret  
-             } : undefined,
-          configuration: item.configuration !== undefined ? {
-              set: item.configuration  
-             } : undefined,
-          marketOpen: item.marketOpen !== undefined ? {
-              set: item.marketOpen  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-          configuration: item.configuration !== undefined ? item.configuration : undefined,
-          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        name: props.user.name !== undefined ? props.user.name : undefined,
-        email: props.user.email !== undefined ? props.user.email : undefined,
-        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
-        image: props.user.image !== undefined ? props.user.image : undefined,
-        role: props.user.role !== undefined ? props.user.role : undefined,
-        bio: props.user.bio !== undefined ? props.user.bio : undefined,
-        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
-        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
-        plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    customer: props.user.customer ? {
-      connectOrCreate: {
-        where: {
-          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
-          name: props.user.customer.name !== undefined ? {
-              equals: props.user.customer.name 
-             } : undefined,
-        },
-        create: {
-          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
-          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
-          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
-          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
-        },
-      }
-    } : undefined,
-    accounts: props.user.accounts ? {
-      connectOrCreate: props.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: props.user.sessions ? {
-      connectOrCreate: props.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: props.user.authenticators ? {
-      connectOrCreate: props.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    alpacaAccounts: props.user.alpacaAccounts ? {
-      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-          configuration: item.configuration !== undefined ? item.configuration : undefined,
-          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  account: props.account ? {
-    upsert: {
-      where: {
-        id: props.account.id !== undefined ? {
-            equals: props.account.id 
-           } : undefined,
-      },
-      update: {
-        id: props.account.id !== undefined ? {
-            set: props.account.id  
-           } : undefined,
-        type: props.account.type !== undefined ? {
-            set: props.account.type  
-           } : undefined,
-        APIKey: props.account.APIKey !== undefined ? {
-            set: props.account.APIKey  
-           } : undefined,
-        APISecret: props.account.APISecret !== undefined ? {
-            set: props.account.APISecret  
-           } : undefined,
-        configuration: props.account.configuration !== undefined ? {
-            set: props.account.configuration  
-           } : undefined,
-        marketOpen: props.account.marketOpen !== undefined ? {
-            set: props.account.marketOpen  
-           } : undefined,
-    user: props.account.user ? {
-      upsert: {
-        where: {
-          id: props.account.user.id !== undefined ? {
-              equals: props.account.user.id 
-             } : undefined,
-          name: props.account.user.name !== undefined ? {
-              equals: props.account.user.name 
-             } : undefined,
-          email: props.account.user.email !== undefined ? {
-              equals: props.account.user.email 
-             } : undefined,
-        },
-        update: {
-          id: props.account.user.id !== undefined ? {
-              set: props.account.user.id  
-             } : undefined,
-          name: props.account.user.name !== undefined ? {
-              set: props.account.user.name  
-             } : undefined,
-          email: props.account.user.email !== undefined ? {
-              set: props.account.user.email  
-             } : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? {
-              set: props.account.user.emailVerified  
-             } : undefined,
-          image: props.account.user.image !== undefined ? {
-              set: props.account.user.image  
-             } : undefined,
-          role: props.account.user.role !== undefined ? {
-              set: props.account.user.role  
-             } : undefined,
-          bio: props.account.user.bio !== undefined ? {
-              set: props.account.user.bio  
-             } : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? {
-              set: props.account.user.jobTitle  
-             } : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? {
-              set: props.account.user.currentAccount  
-             } : undefined,
-          plan: props.account.user.plan !== undefined ? {
-              set: props.account.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
-          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
-          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
-          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
-          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    trades: props.account.trades ? {
-      upsert: props.account.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? {
+      upsert: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1498,8 +949,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    positions: props.account.positions ? {
-      upsert: props.account.positions.map((item: any) => ({
+    positions: props.alpacaAccount.positions ? {
+      upsert: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1564,8 +1015,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    Alert: props.account.Alert ? {
-      upsert: props.account.Alert.map((item: any) => ({
+    alerts: props.alpacaAccount.alerts ? {
+      upsert: props.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1592,35 +1043,35 @@ export const Order = {
     } : undefined,
       },
       create: {
-        type: props.account.type !== undefined ? props.account.type : undefined,
-        APIKey: props.account.APIKey !== undefined ? props.account.APIKey : undefined,
-        APISecret: props.account.APISecret !== undefined ? props.account.APISecret : undefined,
-        configuration: props.account.configuration !== undefined ? props.account.configuration : undefined,
-        marketOpen: props.account.marketOpen !== undefined ? props.account.marketOpen : undefined,
-    user: props.account.user ? {
+        type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
+        APIKey: props.alpacaAccount.APIKey !== undefined ? props.alpacaAccount.APIKey : undefined,
+        APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
+        marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+    user: props.alpacaAccount.user ? {
       connectOrCreate: {
         where: {
-          id: props.account.user.id !== undefined ? props.account.user.id : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          name: props.account.user.name !== undefined ? {
-              equals: props.account.user.name 
+          id: props.alpacaAccount.user.id !== undefined ? props.alpacaAccount.user.id : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? {
+              equals: props.alpacaAccount.user.name 
              } : undefined,
         },
         create: {
-          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
-          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
-          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
-          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
-          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
+          image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
+          bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? props.alpacaAccount.user.currentAccount : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? props.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: props.account.trades ? {
-      connectOrCreate: props.account.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? {
+      connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1633,8 +1084,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    positions: props.account.positions ? {
-      connectOrCreate: props.account.positions.map((item: any) => ({
+    positions: props.alpacaAccount.positions ? {
+      connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1655,8 +1106,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    Alert: props.account.Alert ? {
-      connectOrCreate: props.account.Alert.map((item: any) => ({
+    alerts: props.alpacaAccount.alerts ? {
+      connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2150,443 +1601,92 @@ export const Order = {
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,
-  user: prop.user ? {
+  alpacaAccount: prop.alpacaAccount ? {
     upsert: {
       where: {
-        id: prop.user.id !== undefined ? {
-            equals: prop.user.id 
-           } : undefined,
-        name: prop.user.name !== undefined ? {
-            equals: prop.user.name 
-           } : undefined,
-        email: prop.user.email !== undefined ? {
-            equals: prop.user.email 
+        id: prop.alpacaAccount.id !== undefined ? {
+            equals: prop.alpacaAccount.id 
            } : undefined,
       },
       update: {
-        id: prop.user.id !== undefined ? {
-            set: prop.user.id  
+        id: prop.alpacaAccount.id !== undefined ? {
+            set: prop.alpacaAccount.id  
            } : undefined,
-        name: prop.user.name !== undefined ? {
-            set: prop.user.name  
+        type: prop.alpacaAccount.type !== undefined ? {
+            set: prop.alpacaAccount.type  
            } : undefined,
-        email: prop.user.email !== undefined ? {
-            set: prop.user.email  
+        APIKey: prop.alpacaAccount.APIKey !== undefined ? {
+            set: prop.alpacaAccount.APIKey  
            } : undefined,
-        emailVerified: prop.user.emailVerified !== undefined ? {
-            set: prop.user.emailVerified  
+        APISecret: prop.alpacaAccount.APISecret !== undefined ? {
+            set: prop.alpacaAccount.APISecret  
            } : undefined,
-        image: prop.user.image !== undefined ? {
-            set: prop.user.image  
+        configuration: prop.alpacaAccount.configuration !== undefined ? {
+            set: prop.alpacaAccount.configuration  
            } : undefined,
-        role: prop.user.role !== undefined ? {
-            set: prop.user.role  
+        marketOpen: prop.alpacaAccount.marketOpen !== undefined ? {
+            set: prop.alpacaAccount.marketOpen  
            } : undefined,
-        bio: prop.user.bio !== undefined ? {
-            set: prop.user.bio  
-           } : undefined,
-        jobTitle: prop.user.jobTitle !== undefined ? {
-            set: prop.user.jobTitle  
-           } : undefined,
-        currentAccount: prop.user.currentAccount !== undefined ? {
-            set: prop.user.currentAccount  
-           } : undefined,
-        plan: prop.user.plan !== undefined ? {
-            set: prop.user.plan  
-           } : undefined,
-    customer: prop.user.customer ? {
+    user: prop.alpacaAccount.user ? {
       upsert: {
         where: {
-          id: prop.user.customer.id !== undefined ? {
-              equals: prop.user.customer.id 
+          id: prop.alpacaAccount.user.id !== undefined ? {
+              equals: prop.alpacaAccount.user.id 
              } : undefined,
-          name: prop.user.customer.name !== undefined ? {
-              equals: prop.user.customer.name 
+          name: prop.alpacaAccount.user.name !== undefined ? {
+              equals: prop.alpacaAccount.user.name 
+             } : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? {
+              equals: prop.alpacaAccount.user.email 
              } : undefined,
         },
         update: {
-          authUserId: prop.user.customer.authUserId !== undefined ? {
-              set: prop.user.customer.authUserId  
+          id: prop.alpacaAccount.user.id !== undefined ? {
+              set: prop.alpacaAccount.user.id  
              } : undefined,
-          name: prop.user.customer.name !== undefined ? {
-              set: prop.user.customer.name  
+          name: prop.alpacaAccount.user.name !== undefined ? {
+              set: prop.alpacaAccount.user.name  
              } : undefined,
-          plan: prop.user.customer.plan !== undefined ? {
-              set: prop.user.customer.plan  
+          email: prop.alpacaAccount.user.email !== undefined ? {
+              set: prop.alpacaAccount.user.email  
              } : undefined,
-          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? {
-              set: prop.user.customer.stripeCustomerId  
+          emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? {
+              set: prop.alpacaAccount.user.emailVerified  
              } : undefined,
-          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? {
-              set: prop.user.customer.stripeSubscriptionId  
+          image: prop.alpacaAccount.user.image !== undefined ? {
+              set: prop.alpacaAccount.user.image  
              } : undefined,
-          stripePriceId: prop.user.customer.stripePriceId !== undefined ? {
-              set: prop.user.customer.stripePriceId  
+          role: prop.alpacaAccount.user.role !== undefined ? {
+              set: prop.alpacaAccount.user.role  
              } : undefined,
-          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? {
-              set: prop.user.customer.stripeCurrentPeriodEnd  
+          bio: prop.alpacaAccount.user.bio !== undefined ? {
+              set: prop.alpacaAccount.user.bio  
+             } : undefined,
+          jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? {
+              set: prop.alpacaAccount.user.jobTitle  
+             } : undefined,
+          currentAccount: prop.alpacaAccount.user.currentAccount !== undefined ? {
+              set: prop.alpacaAccount.user.currentAccount  
+             } : undefined,
+          plan: prop.alpacaAccount.user.plan !== undefined ? {
+              set: prop.alpacaAccount.user.plan  
              } : undefined,
         },
         create: {
-          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
-          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
-          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
-          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+          name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
+          emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
+          image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
+          bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
+          jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? prop.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: prop.alpacaAccount.user.currentAccount !== undefined ? prop.alpacaAccount.user.currentAccount : undefined,
+          plan: prop.alpacaAccount.user.plan !== undefined ? prop.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    accounts: prop.user.accounts ? {
-      upsert: prop.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          provider: item.provider !== undefined ? {
-              set: item.provider  
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              set: item.providerAccountId  
-             } : undefined,
-          refresh_token: item.refresh_token !== undefined ? {
-              set: item.refresh_token  
-             } : undefined,
-          access_token: item.access_token !== undefined ? {
-              set: item.access_token  
-             } : undefined,
-          expires_at: item.expires_at !== undefined ? {
-              set: item.expires_at  
-             } : undefined,
-          token_type: item.token_type !== undefined ? {
-              set: item.token_type  
-             } : undefined,
-          scope: item.scope !== undefined ? {
-              set: item.scope  
-             } : undefined,
-          id_token: item.id_token !== undefined ? {
-              set: item.id_token  
-             } : undefined,
-          session_state: item.session_state !== undefined ? {
-              set: item.session_state  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: prop.user.sessions ? {
-      upsert: prop.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          sessionToken: item.sessionToken !== undefined ? {
-              set: item.sessionToken  
-             } : undefined,
-          expires: item.expires !== undefined ? {
-              set: item.expires  
-             } : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: prop.user.authenticators ? {
-      upsert: prop.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          credentialID: item.credentialID !== undefined ? {
-              set: item.credentialID  
-             } : undefined,
-          publicKey: item.publicKey !== undefined ? {
-              set: item.publicKey  
-             } : undefined,
-          counter: item.counter !== undefined ? {
-              set: item.counter  
-             } : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: prop.user.alerts ? {
-      upsert: prop.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    alpacaAccounts: prop.user.alpacaAccounts ? {
-      upsert: prop.user.alpacaAccounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          APIKey: item.APIKey !== undefined ? {
-              set: item.APIKey  
-             } : undefined,
-          APISecret: item.APISecret !== undefined ? {
-              set: item.APISecret  
-             } : undefined,
-          configuration: item.configuration !== undefined ? {
-              set: item.configuration  
-             } : undefined,
-          marketOpen: item.marketOpen !== undefined ? {
-              set: item.marketOpen  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-          configuration: item.configuration !== undefined ? item.configuration : undefined,
-          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
-        },
-      }))
-    } : undefined,
-      },
-      create: {
-        name: prop.user.name !== undefined ? prop.user.name : undefined,
-        email: prop.user.email !== undefined ? prop.user.email : undefined,
-        emailVerified: prop.user.emailVerified !== undefined ? prop.user.emailVerified : undefined,
-        image: prop.user.image !== undefined ? prop.user.image : undefined,
-        role: prop.user.role !== undefined ? prop.user.role : undefined,
-        bio: prop.user.bio !== undefined ? prop.user.bio : undefined,
-        jobTitle: prop.user.jobTitle !== undefined ? prop.user.jobTitle : undefined,
-        currentAccount: prop.user.currentAccount !== undefined ? prop.user.currentAccount : undefined,
-        plan: prop.user.plan !== undefined ? prop.user.plan : undefined,
-    customer: prop.user.customer ? {
-      connectOrCreate: {
-        where: {
-          id: prop.user.customer.id !== undefined ? prop.user.customer.id : undefined,
-          name: prop.user.customer.name !== undefined ? {
-              equals: prop.user.customer.name 
-             } : undefined,
-        },
-        create: {
-          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
-          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
-          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
-          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
-          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
-          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
-          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
-        },
-      }
-    } : undefined,
-    accounts: prop.user.accounts ? {
-      connectOrCreate: prop.user.accounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
-          access_token: item.access_token !== undefined ? item.access_token : undefined,
-          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
-          token_type: item.token_type !== undefined ? item.token_type : undefined,
-          scope: item.scope !== undefined ? item.scope : undefined,
-          id_token: item.id_token !== undefined ? item.id_token : undefined,
-          session_state: item.session_state !== undefined ? item.session_state : undefined,
-        },
-      }))
-    } : undefined,
-    sessions: prop.user.sessions ? {
-      connectOrCreate: prop.user.sessions.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
-          expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    authenticators: prop.user.authenticators ? {
-      connectOrCreate: prop.user.authenticators.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
-          publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
-          counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: prop.user.alerts ? {
-      connectOrCreate: prop.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
-    alpacaAccounts: prop.user.alpacaAccounts ? {
-      connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
-          APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
-          configuration: item.configuration !== undefined ? item.configuration : undefined,
-          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
-        },
-      }))
-    } : undefined,
-      },
-    }
-  } : undefined,
-  account: prop.account ? {
-    upsert: {
-      where: {
-        id: prop.account.id !== undefined ? {
-            equals: prop.account.id 
-           } : undefined,
-      },
-      update: {
-        id: prop.account.id !== undefined ? {
-            set: prop.account.id  
-           } : undefined,
-        type: prop.account.type !== undefined ? {
-            set: prop.account.type  
-           } : undefined,
-        APIKey: prop.account.APIKey !== undefined ? {
-            set: prop.account.APIKey  
-           } : undefined,
-        APISecret: prop.account.APISecret !== undefined ? {
-            set: prop.account.APISecret  
-           } : undefined,
-        configuration: prop.account.configuration !== undefined ? {
-            set: prop.account.configuration  
-           } : undefined,
-        marketOpen: prop.account.marketOpen !== undefined ? {
-            set: prop.account.marketOpen  
-           } : undefined,
-    user: prop.account.user ? {
-      upsert: {
-        where: {
-          id: prop.account.user.id !== undefined ? {
-              equals: prop.account.user.id 
-             } : undefined,
-          name: prop.account.user.name !== undefined ? {
-              equals: prop.account.user.name 
-             } : undefined,
-          email: prop.account.user.email !== undefined ? {
-              equals: prop.account.user.email 
-             } : undefined,
-        },
-        update: {
-          id: prop.account.user.id !== undefined ? {
-              set: prop.account.user.id  
-             } : undefined,
-          name: prop.account.user.name !== undefined ? {
-              set: prop.account.user.name  
-             } : undefined,
-          email: prop.account.user.email !== undefined ? {
-              set: prop.account.user.email  
-             } : undefined,
-          emailVerified: prop.account.user.emailVerified !== undefined ? {
-              set: prop.account.user.emailVerified  
-             } : undefined,
-          image: prop.account.user.image !== undefined ? {
-              set: prop.account.user.image  
-             } : undefined,
-          role: prop.account.user.role !== undefined ? {
-              set: prop.account.user.role  
-             } : undefined,
-          bio: prop.account.user.bio !== undefined ? {
-              set: prop.account.user.bio  
-             } : undefined,
-          jobTitle: prop.account.user.jobTitle !== undefined ? {
-              set: prop.account.user.jobTitle  
-             } : undefined,
-          currentAccount: prop.account.user.currentAccount !== undefined ? {
-              set: prop.account.user.currentAccount  
-             } : undefined,
-          plan: prop.account.user.plan !== undefined ? {
-              set: prop.account.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: prop.account.user.name !== undefined ? prop.account.user.name : undefined,
-          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
-          emailVerified: prop.account.user.emailVerified !== undefined ? prop.account.user.emailVerified : undefined,
-          image: prop.account.user.image !== undefined ? prop.account.user.image : undefined,
-          role: prop.account.user.role !== undefined ? prop.account.user.role : undefined,
-          bio: prop.account.user.bio !== undefined ? prop.account.user.bio : undefined,
-          jobTitle: prop.account.user.jobTitle !== undefined ? prop.account.user.jobTitle : undefined,
-          currentAccount: prop.account.user.currentAccount !== undefined ? prop.account.user.currentAccount : undefined,
-          plan: prop.account.user.plan !== undefined ? prop.account.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    trades: prop.account.trades ? {
-      upsert: prop.account.trades.map((item: any) => ({
+    trades: prop.alpacaAccount.trades ? {
+      upsert: prop.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2619,8 +1719,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    positions: prop.account.positions ? {
-      upsert: prop.account.positions.map((item: any) => ({
+    positions: prop.alpacaAccount.positions ? {
+      upsert: prop.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2685,8 +1785,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    Alert: prop.account.Alert ? {
-      upsert: prop.account.Alert.map((item: any) => ({
+    alerts: prop.alpacaAccount.alerts ? {
+      upsert: prop.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2713,35 +1813,35 @@ export const Order = {
     } : undefined,
       },
       create: {
-        type: prop.account.type !== undefined ? prop.account.type : undefined,
-        APIKey: prop.account.APIKey !== undefined ? prop.account.APIKey : undefined,
-        APISecret: prop.account.APISecret !== undefined ? prop.account.APISecret : undefined,
-        configuration: prop.account.configuration !== undefined ? prop.account.configuration : undefined,
-        marketOpen: prop.account.marketOpen !== undefined ? prop.account.marketOpen : undefined,
-    user: prop.account.user ? {
+        type: prop.alpacaAccount.type !== undefined ? prop.alpacaAccount.type : undefined,
+        APIKey: prop.alpacaAccount.APIKey !== undefined ? prop.alpacaAccount.APIKey : undefined,
+        APISecret: prop.alpacaAccount.APISecret !== undefined ? prop.alpacaAccount.APISecret : undefined,
+        configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
+        marketOpen: prop.alpacaAccount.marketOpen !== undefined ? prop.alpacaAccount.marketOpen : undefined,
+    user: prop.alpacaAccount.user ? {
       connectOrCreate: {
         where: {
-          id: prop.account.user.id !== undefined ? prop.account.user.id : undefined,
-          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
-          name: prop.account.user.name !== undefined ? {
-              equals: prop.account.user.name 
+          id: prop.alpacaAccount.user.id !== undefined ? prop.alpacaAccount.user.id : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
+          name: prop.alpacaAccount.user.name !== undefined ? {
+              equals: prop.alpacaAccount.user.name 
              } : undefined,
         },
         create: {
-          name: prop.account.user.name !== undefined ? prop.account.user.name : undefined,
-          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
-          emailVerified: prop.account.user.emailVerified !== undefined ? prop.account.user.emailVerified : undefined,
-          image: prop.account.user.image !== undefined ? prop.account.user.image : undefined,
-          role: prop.account.user.role !== undefined ? prop.account.user.role : undefined,
-          bio: prop.account.user.bio !== undefined ? prop.account.user.bio : undefined,
-          jobTitle: prop.account.user.jobTitle !== undefined ? prop.account.user.jobTitle : undefined,
-          currentAccount: prop.account.user.currentAccount !== undefined ? prop.account.user.currentAccount : undefined,
-          plan: prop.account.user.plan !== undefined ? prop.account.user.plan : undefined,
+          name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
+          emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
+          image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
+          bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
+          jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? prop.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: prop.alpacaAccount.user.currentAccount !== undefined ? prop.alpacaAccount.user.currentAccount : undefined,
+          plan: prop.alpacaAccount.user.plan !== undefined ? prop.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: prop.account.trades ? {
-      connectOrCreate: prop.account.trades.map((item: any) => ({
+    trades: prop.alpacaAccount.trades ? {
+      connectOrCreate: prop.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2754,8 +1854,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    positions: prop.account.positions ? {
-      connectOrCreate: prop.account.positions.map((item: any) => ({
+    positions: prop.alpacaAccount.positions ? {
+      connectOrCreate: prop.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2776,8 +1876,8 @@ export const Order = {
         },
       }))
     } : undefined,
-    Alert: prop.account.Alert ? {
-      connectOrCreate: prop.account.Alert.map((item: any) => ({
+    alerts: prop.alpacaAccount.alerts ? {
+      connectOrCreate: prop.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -3240,7 +2340,6 @@ export const Order = {
       mutation deleteOneOrder($where: OrderWhereUniqueInput!) {
         deleteOneOrder(where: $where) {
           id
-          userId
           alpacaAccountId
           assetId
           type
@@ -3250,181 +2349,89 @@ export const Order = {
           status
           createdAt
           updatedAt
-          user {
+          alpacaAccount {
             id
-            name
-            email
-            emailVerified
-            image
-            createdAt
-            updatedAt
-            role
-            bio
-            jobTitle
-            currentAccount
-            customer {
+            type
+            APIKey
+            APISecret
+            configuration
+            marketOpen
+            user {
               id
-              authUserId
               name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
+              email
+              emailVerified
+              image
               createdAt
               updatedAt
-              users {
+              role
+              bio
+              jobTitle
+              currentAccount
+              customer {
                 id
+                authUserId
+                name
+                plan
+                stripeCustomerId
+                stripeSubscriptionId
+                stripePriceId
+                stripeCurrentPeriodEnd
+                createdAt
+                updatedAt
+                users {
+                  id
+                }
               }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
+              customerId
+              accounts {
                 id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            orders {
-              id
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
+                userId
                 type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
+                provider
+                providerAccountId
+                refresh_token
+                access_token
+                expires_at
+                token_type
+                scope
+                id_token
+                session_state
+                createdAt
+                updatedAt
                 user {
                   id
                 }
+              }
+              sessions {
+                id
+                sessionToken
                 userId
+                expires
+                user {
+                  id
+                }
                 createdAt
                 updatedAt
-                trades {
+              }
+              authenticators {
+                id
+                userId
+                credentialID
+                publicKey
+                counter
+                user {
                   id
                 }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
+                createdAt
+                updatedAt
+              }
+              plan
+              alpacaAccounts {
+                id
               }
             }
-            alpacaAccounts {
-              id
-            }
-          }
-          account {
-            id
-          }
-          asset {
-            id
-            symbol
-            name
-            type
-            logoUrl
-            description
-            cik
-            exchange
-            currency
-            country
-            sector
-            industry
-            address
-            officialSite
-            fiscalYearEnd
-            latestQuarter
-            marketCapitalization
-            ebitda
-            peRatio
-            pegRatio
-            bookValue
-            dividendPerShare
-            dividendYield
-            eps
-            revenuePerShareTTM
-            profitMargin
-            operatingMarginTTM
-            returnOnAssetsTTM
-            returnOnEquityTTM
-            revenueTTM
-            grossProfitTTM
-            dilutedEPSTTM
-            quarterlyEarningsGrowthYOY
-            quarterlyRevenueGrowthYOY
-            analystTargetPrice
-            analystRatingStrongBuy
-            analystRatingBuy
-            analystRatingHold
-            analystRatingSell
-            analystRatingStrongSell
-            trailingPE
-            forwardPE
-            priceToSalesRatioTTM
-            priceToBookRatio
-            evToRevenue
-            evToEbitda
-            beta
-            week52High
-            week52Low
-            day50MovingAverage
-            day200MovingAverage
-            sharesOutstanding
-            dividendDate
-            exDividendDate
+            userId
             createdAt
             updatedAt
             trades {
@@ -3438,11 +2445,78 @@ export const Order = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
               }
               asset {
                 id
+                symbol
+                name
+                type
+                logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization
+                ebitda
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM
+                grossProfitTTM
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding
+                dividendDate
+                exDividendDate
+                createdAt
+                updatedAt
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                positions {
+                  id
+                }
+                newsMentions {
+                  id
+                }
               }
               actions {
                 id
@@ -3489,44 +2563,26 @@ export const Order = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
             }
-            newsMentions {
+            alerts {
               id
-              assetId
-              newsArticleId
-              url
-              news {
-                id
-                title
-                content
-                source
-                sourceDomain
-                url
-                sentiment
-                authors
-                summary
-                bannerImage
-                timePublished
-                category
-                topics
-                logo
-                createdAt
-                updatedAt
-                assets {
-                  id
-                }
-              }
-              asset {
+              alpacaAccountId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              alpacaAccount {
                 id
               }
-              relevancyScore
-              sentimentScore
-              sentimentLabel
             }
+          }
+          asset {
+            id
           }
       }
       }`;
@@ -3566,7 +2622,6 @@ export const Order = {
       query getOrder($where: OrderWhereUniqueInput!) {
         getOrder(where: $where) {
           id
-          userId
           alpacaAccountId
           assetId
           type
@@ -3576,181 +2631,89 @@ export const Order = {
           status
           createdAt
           updatedAt
-          user {
+          alpacaAccount {
             id
-            name
-            email
-            emailVerified
-            image
-            createdAt
-            updatedAt
-            role
-            bio
-            jobTitle
-            currentAccount
-            customer {
+            type
+            APIKey
+            APISecret
+            configuration
+            marketOpen
+            user {
               id
-              authUserId
               name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
+              email
+              emailVerified
+              image
               createdAt
               updatedAt
-              users {
+              role
+              bio
+              jobTitle
+              currentAccount
+              customer {
                 id
+                authUserId
+                name
+                plan
+                stripeCustomerId
+                stripeSubscriptionId
+                stripePriceId
+                stripeCurrentPeriodEnd
+                createdAt
+                updatedAt
+                users {
+                  id
+                }
               }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
+              customerId
+              accounts {
                 id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            orders {
-              id
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
+                userId
                 type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
+                provider
+                providerAccountId
+                refresh_token
+                access_token
+                expires_at
+                token_type
+                scope
+                id_token
+                session_state
+                createdAt
+                updatedAt
                 user {
                   id
                 }
+              }
+              sessions {
+                id
+                sessionToken
                 userId
+                expires
+                user {
+                  id
+                }
                 createdAt
                 updatedAt
-                trades {
+              }
+              authenticators {
+                id
+                userId
+                credentialID
+                publicKey
+                counter
+                user {
                   id
                 }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
+                createdAt
+                updatedAt
+              }
+              plan
+              alpacaAccounts {
+                id
               }
             }
-            alpacaAccounts {
-              id
-            }
-          }
-          account {
-            id
-          }
-          asset {
-            id
-            symbol
-            name
-            type
-            logoUrl
-            description
-            cik
-            exchange
-            currency
-            country
-            sector
-            industry
-            address
-            officialSite
-            fiscalYearEnd
-            latestQuarter
-            marketCapitalization
-            ebitda
-            peRatio
-            pegRatio
-            bookValue
-            dividendPerShare
-            dividendYield
-            eps
-            revenuePerShareTTM
-            profitMargin
-            operatingMarginTTM
-            returnOnAssetsTTM
-            returnOnEquityTTM
-            revenueTTM
-            grossProfitTTM
-            dilutedEPSTTM
-            quarterlyEarningsGrowthYOY
-            quarterlyRevenueGrowthYOY
-            analystTargetPrice
-            analystRatingStrongBuy
-            analystRatingBuy
-            analystRatingHold
-            analystRatingSell
-            analystRatingStrongSell
-            trailingPE
-            forwardPE
-            priceToSalesRatioTTM
-            priceToBookRatio
-            evToRevenue
-            evToEbitda
-            beta
-            week52High
-            week52Low
-            day50MovingAverage
-            day200MovingAverage
-            sharesOutstanding
-            dividendDate
-            exDividendDate
+            userId
             createdAt
             updatedAt
             trades {
@@ -3764,11 +2727,78 @@ export const Order = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
               }
               asset {
                 id
+                symbol
+                name
+                type
+                logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization
+                ebitda
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM
+                grossProfitTTM
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding
+                dividendDate
+                exDividendDate
+                createdAt
+                updatedAt
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                positions {
+                  id
+                }
+                newsMentions {
+                  id
+                }
               }
               actions {
                 id
@@ -3815,44 +2845,26 @@ export const Order = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
             }
-            newsMentions {
+            alerts {
               id
-              assetId
-              newsArticleId
-              url
-              news {
-                id
-                title
-                content
-                source
-                sourceDomain
-                url
-                sentiment
-                authors
-                summary
-                bannerImage
-                timePublished
-                category
-                topics
-                logo
-                createdAt
-                updatedAt
-                assets {
-                  id
-                }
-              }
-              asset {
+              alpacaAccountId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              alpacaAccount {
                 id
               }
-              relevancyScore
-              sentimentScore
-              sentimentLabel
             }
+          }
+          asset {
+            id
           }
         }
       }`;
@@ -3890,7 +2902,6 @@ export const Order = {
       query getAllOrder {
         orders {
           id
-          userId
           alpacaAccountId
           assetId
           type
@@ -3900,181 +2911,89 @@ export const Order = {
           status
           createdAt
           updatedAt
-          user {
+          alpacaAccount {
             id
-            name
-            email
-            emailVerified
-            image
-            createdAt
-            updatedAt
-            role
-            bio
-            jobTitle
-            currentAccount
-            customer {
+            type
+            APIKey
+            APISecret
+            configuration
+            marketOpen
+            user {
               id
-              authUserId
               name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
+              email
+              emailVerified
+              image
               createdAt
               updatedAt
-              users {
+              role
+              bio
+              jobTitle
+              currentAccount
+              customer {
                 id
+                authUserId
+                name
+                plan
+                stripeCustomerId
+                stripeSubscriptionId
+                stripePriceId
+                stripeCurrentPeriodEnd
+                createdAt
+                updatedAt
+                users {
+                  id
+                }
               }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
+              customerId
+              accounts {
                 id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            orders {
-              id
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
+                userId
                 type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
+                provider
+                providerAccountId
+                refresh_token
+                access_token
+                expires_at
+                token_type
+                scope
+                id_token
+                session_state
+                createdAt
+                updatedAt
                 user {
                   id
                 }
+              }
+              sessions {
+                id
+                sessionToken
                 userId
+                expires
+                user {
+                  id
+                }
                 createdAt
                 updatedAt
-                trades {
+              }
+              authenticators {
+                id
+                userId
+                credentialID
+                publicKey
+                counter
+                user {
                   id
                 }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
+                createdAt
+                updatedAt
+              }
+              plan
+              alpacaAccounts {
+                id
               }
             }
-            alpacaAccounts {
-              id
-            }
-          }
-          account {
-            id
-          }
-          asset {
-            id
-            symbol
-            name
-            type
-            logoUrl
-            description
-            cik
-            exchange
-            currency
-            country
-            sector
-            industry
-            address
-            officialSite
-            fiscalYearEnd
-            latestQuarter
-            marketCapitalization
-            ebitda
-            peRatio
-            pegRatio
-            bookValue
-            dividendPerShare
-            dividendYield
-            eps
-            revenuePerShareTTM
-            profitMargin
-            operatingMarginTTM
-            returnOnAssetsTTM
-            returnOnEquityTTM
-            revenueTTM
-            grossProfitTTM
-            dilutedEPSTTM
-            quarterlyEarningsGrowthYOY
-            quarterlyRevenueGrowthYOY
-            analystTargetPrice
-            analystRatingStrongBuy
-            analystRatingBuy
-            analystRatingHold
-            analystRatingSell
-            analystRatingStrongSell
-            trailingPE
-            forwardPE
-            priceToSalesRatioTTM
-            priceToBookRatio
-            evToRevenue
-            evToEbitda
-            beta
-            week52High
-            week52Low
-            day50MovingAverage
-            day200MovingAverage
-            sharesOutstanding
-            dividendDate
-            exDividendDate
+            userId
             createdAt
             updatedAt
             trades {
@@ -4088,11 +3007,78 @@ export const Order = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
               }
               asset {
                 id
+                symbol
+                name
+                type
+                logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization
+                ebitda
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM
+                grossProfitTTM
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding
+                dividendDate
+                exDividendDate
+                createdAt
+                updatedAt
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                positions {
+                  id
+                }
+                newsMentions {
+                  id
+                }
               }
               actions {
                 id
@@ -4139,44 +3125,26 @@ export const Order = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
             }
-            newsMentions {
+            alerts {
               id
-              assetId
-              newsArticleId
-              url
-              news {
-                id
-                title
-                content
-                source
-                sourceDomain
-                url
-                sentiment
-                authors
-                summary
-                bannerImage
-                timePublished
-                category
-                topics
-                logo
-                createdAt
-                updatedAt
-                assets {
-                  id
-                }
-              }
-              asset {
+              alpacaAccountId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              alpacaAccount {
                 id
               }
-              relevancyScore
-              sentimentScore
-              sentimentLabel
             }
+          }
+          asset {
+            id
           }
       }
       }`;
@@ -4208,7 +3176,6 @@ export const Order = {
       query findManyOrder($where: OrderWhereInput!) {
         orders(where: $where) {
           id
-          userId
           alpacaAccountId
           assetId
           type
@@ -4218,181 +3185,89 @@ export const Order = {
           status
           createdAt
           updatedAt
-          user {
+          alpacaAccount {
             id
-            name
-            email
-            emailVerified
-            image
-            createdAt
-            updatedAt
-            role
-            bio
-            jobTitle
-            currentAccount
-            customer {
+            type
+            APIKey
+            APISecret
+            configuration
+            marketOpen
+            user {
               id
-              authUserId
               name
-              plan
-              stripeCustomerId
-              stripeSubscriptionId
-              stripePriceId
-              stripeCurrentPeriodEnd
+              email
+              emailVerified
+              image
               createdAt
               updatedAt
-              users {
+              role
+              bio
+              jobTitle
+              currentAccount
+              customer {
                 id
+                authUserId
+                name
+                plan
+                stripeCustomerId
+                stripeSubscriptionId
+                stripePriceId
+                stripeCurrentPeriodEnd
+                createdAt
+                updatedAt
+                users {
+                  id
+                }
               }
-            }
-            customerId
-            accounts {
-              id
-              userId
-              type
-              provider
-              providerAccountId
-              refresh_token
-              access_token
-              expires_at
-              token_type
-              scope
-              id_token
-              session_state
-              createdAt
-              updatedAt
-              user {
+              customerId
+              accounts {
                 id
-              }
-            }
-            sessions {
-              id
-              sessionToken
-              userId
-              expires
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            authenticators {
-              id
-              userId
-              credentialID
-              publicKey
-              counter
-              user {
-                id
-              }
-              createdAt
-              updatedAt
-            }
-            plan
-            orders {
-              id
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
+                userId
                 type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
+                provider
+                providerAccountId
+                refresh_token
+                access_token
+                expires_at
+                token_type
+                scope
+                id_token
+                session_state
+                createdAt
+                updatedAt
                 user {
                   id
                 }
+              }
+              sessions {
+                id
+                sessionToken
                 userId
+                expires
+                user {
+                  id
+                }
                 createdAt
                 updatedAt
-                trades {
+              }
+              authenticators {
+                id
+                userId
+                credentialID
+                publicKey
+                counter
+                user {
                   id
                 }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
+                createdAt
+                updatedAt
+              }
+              plan
+              alpacaAccounts {
+                id
               }
             }
-            alpacaAccounts {
-              id
-            }
-          }
-          account {
-            id
-          }
-          asset {
-            id
-            symbol
-            name
-            type
-            logoUrl
-            description
-            cik
-            exchange
-            currency
-            country
-            sector
-            industry
-            address
-            officialSite
-            fiscalYearEnd
-            latestQuarter
-            marketCapitalization
-            ebitda
-            peRatio
-            pegRatio
-            bookValue
-            dividendPerShare
-            dividendYield
-            eps
-            revenuePerShareTTM
-            profitMargin
-            operatingMarginTTM
-            returnOnAssetsTTM
-            returnOnEquityTTM
-            revenueTTM
-            grossProfitTTM
-            dilutedEPSTTM
-            quarterlyEarningsGrowthYOY
-            quarterlyRevenueGrowthYOY
-            analystTargetPrice
-            analystRatingStrongBuy
-            analystRatingBuy
-            analystRatingHold
-            analystRatingSell
-            analystRatingStrongSell
-            trailingPE
-            forwardPE
-            priceToSalesRatioTTM
-            priceToBookRatio
-            evToRevenue
-            evToEbitda
-            beta
-            week52High
-            week52Low
-            day50MovingAverage
-            day200MovingAverage
-            sharesOutstanding
-            dividendDate
-            exDividendDate
+            userId
             createdAt
             updatedAt
             trades {
@@ -4406,11 +3281,78 @@ export const Order = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
               }
               asset {
                 id
+                symbol
+                name
+                type
+                logoUrl
+                description
+                cik
+                exchange
+                currency
+                country
+                sector
+                industry
+                address
+                officialSite
+                fiscalYearEnd
+                latestQuarter
+                marketCapitalization
+                ebitda
+                peRatio
+                pegRatio
+                bookValue
+                dividendPerShare
+                dividendYield
+                eps
+                revenuePerShareTTM
+                profitMargin
+                operatingMarginTTM
+                returnOnAssetsTTM
+                returnOnEquityTTM
+                revenueTTM
+                grossProfitTTM
+                dilutedEPSTTM
+                quarterlyEarningsGrowthYOY
+                quarterlyRevenueGrowthYOY
+                analystTargetPrice
+                analystRatingStrongBuy
+                analystRatingBuy
+                analystRatingHold
+                analystRatingSell
+                analystRatingStrongSell
+                trailingPE
+                forwardPE
+                priceToSalesRatioTTM
+                priceToBookRatio
+                evToRevenue
+                evToEbitda
+                beta
+                week52High
+                week52Low
+                day50MovingAverage
+                day200MovingAverage
+                sharesOutstanding
+                dividendDate
+                exDividendDate
+                createdAt
+                updatedAt
+                trades {
+                  id
+                }
+                orders {
+                  id
+                }
+                positions {
+                  id
+                }
+                newsMentions {
+                  id
+                }
               }
               actions {
                 id
@@ -4457,44 +3399,26 @@ export const Order = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
             }
-            newsMentions {
+            alerts {
               id
-              assetId
-              newsArticleId
-              url
-              news {
-                id
-                title
-                content
-                source
-                sourceDomain
-                url
-                sentiment
-                authors
-                summary
-                bannerImage
-                timePublished
-                category
-                topics
-                logo
-                createdAt
-                updatedAt
-                assets {
-                  id
-                }
-              }
-              asset {
+              alpacaAccountId
+              message
+              type
+              isRead
+              createdAt
+              updatedAt
+              alpacaAccount {
                 id
               }
-              relevancyScore
-              sentimentScore
-              sentimentLabel
             }
+          }
+          asset {
+            id
           }
       }
       }`;

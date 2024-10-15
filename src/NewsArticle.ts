@@ -116,7 +116,7 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -128,7 +128,6 @@ export const NewsArticle = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -138,10 +137,7 @@ export const NewsArticle = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -167,7 +163,7 @@ export const NewsArticle = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
@@ -451,7 +447,7 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -463,7 +459,6 @@ export const NewsArticle = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -473,10 +468,7 @@ export const NewsArticle = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -502,7 +494,7 @@ export const NewsArticle = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
@@ -1439,7 +1431,7 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1451,7 +1443,6 @@ export const NewsArticle = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -1461,10 +1452,7 @@ export const NewsArticle = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1490,7 +1478,7 @@ export const NewsArticle = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
@@ -1632,7 +1620,7 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1644,7 +1632,6 @@ export const NewsArticle = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -1654,10 +1641,7 @@ export const NewsArticle = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1683,7 +1667,7 @@ export const NewsArticle = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
@@ -1827,7 +1811,7 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1839,7 +1823,6 @@ export const NewsArticle = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -1849,10 +1832,7 @@ export const NewsArticle = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1878,7 +1858,7 @@ export const NewsArticle = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
@@ -2012,7 +1992,7 @@ export const NewsArticle = {
                 createdAt
                 updatedAt
                 status
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2024,7 +2004,6 @@ export const NewsArticle = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -2034,10 +2013,7 @@ export const NewsArticle = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2063,7 +2039,7 @@ export const NewsArticle = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId

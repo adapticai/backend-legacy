@@ -117,7 +117,7 @@ export const NewsArticleAssetSentiment = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -139,7 +139,7 @@ export const NewsArticleAssetSentiment = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -171,7 +171,6 @@ export const NewsArticleAssetSentiment = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -181,43 +180,7 @@ export const NewsArticleAssetSentiment = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -243,7 +206,7 @@ export const NewsArticleAssetSentiment = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
@@ -573,7 +536,7 @@ export const NewsArticleAssetSentiment = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -595,7 +558,7 @@ export const NewsArticleAssetSentiment = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -627,7 +590,6 @@ export const NewsArticleAssetSentiment = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -637,43 +599,7 @@ export const NewsArticleAssetSentiment = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -699,7 +625,7 @@ export const NewsArticleAssetSentiment = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
@@ -1902,7 +1828,7 @@ export const NewsArticleAssetSentiment = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -1924,7 +1850,7 @@ export const NewsArticleAssetSentiment = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -1956,7 +1882,6 @@ export const NewsArticleAssetSentiment = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -1966,43 +1891,7 @@ export const NewsArticleAssetSentiment = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2028,7 +1917,7 @@ export const NewsArticleAssetSentiment = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
@@ -2170,7 +2059,7 @@ export const NewsArticleAssetSentiment = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -2192,7 +2081,7 @@ export const NewsArticleAssetSentiment = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -2224,7 +2113,6 @@ export const NewsArticleAssetSentiment = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -2234,43 +2122,7 @@ export const NewsArticleAssetSentiment = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2296,7 +2148,7 @@ export const NewsArticleAssetSentiment = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
@@ -2437,7 +2289,7 @@ export const NewsArticleAssetSentiment = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -2459,7 +2311,7 @@ export const NewsArticleAssetSentiment = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -2491,7 +2343,6 @@ export const NewsArticleAssetSentiment = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -2501,43 +2352,7 @@ export const NewsArticleAssetSentiment = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2563,7 +2378,7 @@ export const NewsArticleAssetSentiment = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId
@@ -2697,7 +2512,7 @@ export const NewsArticleAssetSentiment = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -2719,7 +2534,7 @@ export const NewsArticleAssetSentiment = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -2751,7 +2566,6 @@ export const NewsArticleAssetSentiment = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -2761,43 +2575,7 @@ export const NewsArticleAssetSentiment = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2823,7 +2601,7 @@ export const NewsArticleAssetSentiment = {
               lastTradePrice
               changeToday
               assetMarginable
-              account {
+              alpacaAccount {
                 id
               }
               alpacaAccountId

@@ -91,136 +91,94 @@ export const Authenticator = {
               id
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+              }
+              userId
+              createdAt
+              updatedAt
+              trades {
+                id
+                alpacaAccountId
+                assetId
+                quantity
+                price
+                total
+                timestamp
+                createdAt
+                updatedAt
+                status
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+                actions {
+                  id
+                }
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              alerts {
+                id
+                alpacaAccountId
+                message
+                type
+                isRead
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+              }
             }
           }
           createdAt
@@ -299,32 +257,6 @@ export const Authenticator = {
         create: {
           sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
           expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      connectOrCreate: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -485,136 +417,94 @@ export const Authenticator = {
               id
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+              }
+              userId
+              createdAt
+              updatedAt
+              trades {
+                id
+                alpacaAccountId
+                assetId
+                quantity
+                price
+                total
+                timestamp
+                createdAt
+                updatedAt
+                status
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+                actions {
+                  id
+                }
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              alerts {
+                id
+                alpacaAccountId
+                message
+                type
+                isRead
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+              }
             }
           }
           createdAt
@@ -809,66 +699,6 @@ export const Authenticator = {
         },
       }))
     } : undefined,
-    orders: props.user.orders ? {
-      upsert: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      upsert: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
     alpacaAccounts: props.user.alpacaAccounts ? {
       upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
@@ -960,32 +790,6 @@ export const Authenticator = {
         create: {
           sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
           expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      connectOrCreate: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -1229,66 +1033,6 @@ export const Authenticator = {
         },
       }))
     } : undefined,
-    orders: prop.user.orders ? {
-      upsert: prop.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: prop.user.alerts ? {
-      upsert: prop.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
     alpacaAccounts: prop.user.alpacaAccounts ? {
       upsert: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
@@ -1380,32 +1124,6 @@ export const Authenticator = {
         create: {
           sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
           expires: item.expires !== undefined ? item.expires : undefined,
-        },
-      }))
-    } : undefined,
-    orders: prop.user.orders ? {
-      connectOrCreate: prop.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: prop.user.alerts ? {
-      connectOrCreate: prop.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -1526,136 +1244,94 @@ export const Authenticator = {
               id
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+              }
+              userId
+              createdAt
+              updatedAt
+              trades {
+                id
+                alpacaAccountId
+                assetId
+                quantity
+                price
+                total
+                timestamp
+                createdAt
+                updatedAt
+                status
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+                actions {
+                  id
+                }
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              alerts {
+                id
+                alpacaAccountId
+                message
+                type
+                isRead
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+              }
             }
           }
           createdAt
@@ -1764,136 +1440,94 @@ export const Authenticator = {
               id
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+              }
+              userId
+              createdAt
+              updatedAt
+              trades {
+                id
+                alpacaAccountId
+                assetId
+                quantity
+                price
+                total
+                timestamp
+                createdAt
+                updatedAt
+                status
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+                actions {
+                  id
+                }
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              alerts {
+                id
+                alpacaAccountId
+                message
+                type
+                isRead
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+              }
             }
           }
           createdAt
@@ -2000,136 +1634,94 @@ export const Authenticator = {
               id
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+              }
+              userId
+              createdAt
+              updatedAt
+              trades {
+                id
+                alpacaAccountId
+                assetId
+                quantity
+                price
+                total
+                timestamp
+                createdAt
+                updatedAt
+                status
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+                actions {
+                  id
+                }
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              alerts {
+                id
+                alpacaAccountId
+                message
+                type
+                isRead
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+              }
             }
           }
           createdAt
@@ -2230,136 +1822,94 @@ export const Authenticator = {
               id
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-                type
-                APIKey
-                APISecret
-                configuration
-                marketOpen
-                user {
-                  id
-                }
-                userId
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                Alert {
-                  id
-                }
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
+              type
+              APIKey
+              APISecret
+              configuration
+              marketOpen
+              user {
+                id
+              }
+              userId
+              createdAt
+              updatedAt
+              trades {
+                id
+                alpacaAccountId
+                assetId
+                quantity
+                price
+                total
+                timestamp
+                createdAt
+                updatedAt
+                status
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+                actions {
+                  id
+                }
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              alerts {
+                id
+                alpacaAccountId
+                message
+                type
+                isRead
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+              }
             }
           }
           createdAt

@@ -101,111 +101,6 @@ export const AlpacaAccount = {
               updatedAt
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
             }
@@ -224,11 +119,126 @@ export const AlpacaAccount = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
             }
             asset {
               id
+              symbol
+              name
+              type
+              logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization
+              ebitda
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM
+              grossProfitTTM
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding
+              dividendDate
+              exDividendDate
+              createdAt
+              updatedAt
+              trades {
+                id
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              newsMentions {
+                id
+                assetId
+                newsArticleId
+                url
+                news {
+                  id
+                }
+                asset {
+                  id
+                }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
+              }
             }
             actions {
               id
@@ -258,30 +268,18 @@ export const AlpacaAccount = {
           }
           positions {
             id
-            assetId
-            asset {
-              id
-            }
-            averageEntryPrice
-            qty
-            qtyAvailable
-            marketValue
-            costBasis
-            unrealizedPL
-            unrealizedPLPC
-            unrealisedIntradayPL
-            unrealisedIntradayPLPC
-            currentPrice
-            lastTradePrice
-            changeToday
-            assetMarginable
-            account {
-              id
-            }
-            alpacaAccountId
           }
-          Alert {
+          alerts {
             id
+            alpacaAccountId
+            message
+            type
+            isRead
+            createdAt
+            updatedAt
+            alpacaAccount {
+              id
+            }
           }
         }
       }
@@ -371,32 +369,6 @@ export const AlpacaAccount = {
           credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
           publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
           counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      connectOrCreate: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -516,28 +488,6 @@ export const AlpacaAccount = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       connectOrCreate: {
         where: {
@@ -691,8 +641,8 @@ export const AlpacaAccount = {
       },
     }))
   } : undefined,
-  Alert: props.Alert ? {
-    connectOrCreate: props.Alert.map((item: any) => ({
+  alerts: props.alerts ? {
+    connectOrCreate: props.alerts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -700,28 +650,6 @@ export const AlpacaAccount = {
         message: item.message !== undefined ? item.message : undefined,
         type: item.type !== undefined ? item.type : undefined,
         isRead: item.isRead !== undefined ? item.isRead : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
       },
     }))
   } : undefined,
@@ -877,111 +805,6 @@ export const AlpacaAccount = {
               updatedAt
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
             }
@@ -1000,11 +823,126 @@ export const AlpacaAccount = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
             }
             asset {
               id
+              symbol
+              name
+              type
+              logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization
+              ebitda
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM
+              grossProfitTTM
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding
+              dividendDate
+              exDividendDate
+              createdAt
+              updatedAt
+              trades {
+                id
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              newsMentions {
+                id
+                assetId
+                newsArticleId
+                url
+                news {
+                  id
+                }
+                asset {
+                  id
+                }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
+              }
             }
             actions {
               id
@@ -1034,30 +972,18 @@ export const AlpacaAccount = {
           }
           positions {
             id
-            assetId
-            asset {
-              id
-            }
-            averageEntryPrice
-            qty
-            qtyAvailable
-            marketValue
-            costBasis
-            unrealizedPL
-            unrealizedPLPC
-            unrealisedIntradayPL
-            unrealisedIntradayPLPC
-            currentPrice
-            lastTradePrice
-            changeToday
-            assetMarginable
-            account {
-              id
-            }
-            alpacaAccountId
           }
-          Alert {
+          alerts {
             id
+            alpacaAccountId
+            message
+            type
+            isRead
+            createdAt
+            updatedAt
+            alpacaAccount {
+              id
+            }
           }
       }
       }`;
@@ -1281,66 +1207,6 @@ export const AlpacaAccount = {
         },
       }))
     } : undefined,
-    orders: props.user.orders ? {
-      upsert: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      upsert: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1410,32 +1276,6 @@ export const AlpacaAccount = {
           credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
           publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
           counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    orders: props.user.orders ? {
-      connectOrCreate: props.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: props.user.alerts ? {
-      connectOrCreate: props.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -1896,64 +1736,6 @@ export const AlpacaAccount = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    user: item.user ? {
-      upsert: {
-        where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
-             } : undefined,
-        },
-        update: {
-          id: item.user.id !== undefined ? {
-              set: item.user.id  
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
-             } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
-             } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
-             } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? {
-              set: item.user.currentAccount  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       upsert: {
         where: {
@@ -2195,28 +1977,6 @@ export const AlpacaAccount = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       connectOrCreate: {
         where: {
@@ -2648,8 +2408,8 @@ export const AlpacaAccount = {
       },
     }))
   } : undefined,
-  Alert: props.Alert ? {
-    upsert: props.Alert.map((item: any) => ({
+  alerts: props.alerts ? {
+    upsert: props.alerts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -2666,91 +2426,11 @@ export const AlpacaAccount = {
         isRead: item.isRead !== undefined ? {
             set: item.isRead  
            } : undefined,
-    user: item.user ? {
-      upsert: {
-        where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
-             } : undefined,
-        },
-        update: {
-          id: item.user.id !== undefined ? {
-              set: item.user.id  
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
-             } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
-             } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
-             } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? {
-              set: item.user.currentAccount  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
       },
       create: {
         message: item.message !== undefined ? item.message : undefined,
         type: item.type !== undefined ? item.type : undefined,
         isRead: item.isRead !== undefined ? item.isRead : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
       },
     }))
   } : undefined,
@@ -3009,66 +2689,6 @@ export const AlpacaAccount = {
         },
       }))
     } : undefined,
-    orders: prop.user.orders ? {
-      upsert: prop.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
-             } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
-             } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
-             } : undefined,
-          status: item.status !== undefined ? {
-              set: item.status  
-             } : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: prop.user.alerts ? {
-      upsert: prop.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id  
-             } : undefined,
-          message: item.message !== undefined ? {
-              set: item.message  
-             } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
-             } : undefined,
-          isRead: item.isRead !== undefined ? {
-              set: item.isRead  
-             } : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -3138,32 +2758,6 @@ export const AlpacaAccount = {
           credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
           publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
           counter: item.counter !== undefined ? item.counter : undefined,
-        },
-      }))
-    } : undefined,
-    orders: prop.user.orders ? {
-      connectOrCreate: prop.user.orders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          status: item.status !== undefined ? item.status : undefined,
-        },
-      }))
-    } : undefined,
-    alerts: prop.user.alerts ? {
-      connectOrCreate: prop.user.alerts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-        },
-        create: {
-          message: item.message !== undefined ? item.message : undefined,
-          type: item.type !== undefined ? item.type : undefined,
-          isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
     } : undefined,
@@ -3624,64 +3218,6 @@ export const AlpacaAccount = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    user: item.user ? {
-      upsert: {
-        where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
-             } : undefined,
-        },
-        update: {
-          id: item.user.id !== undefined ? {
-              set: item.user.id  
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
-             } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
-             } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
-             } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? {
-              set: item.user.currentAccount  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       upsert: {
         where: {
@@ -3923,28 +3459,6 @@ export const AlpacaAccount = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
     asset: item.asset ? {
       connectOrCreate: {
         where: {
@@ -4376,8 +3890,8 @@ export const AlpacaAccount = {
       },
     }))
   } : undefined,
-  Alert: prop.Alert ? {
-    upsert: prop.Alert.map((item: any) => ({
+  alerts: prop.alerts ? {
+    upsert: prop.alerts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -4394,91 +3908,11 @@ export const AlpacaAccount = {
         isRead: item.isRead !== undefined ? {
             set: item.isRead  
            } : undefined,
-    user: item.user ? {
-      upsert: {
-        where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
-             } : undefined,
-        },
-        update: {
-          id: item.user.id !== undefined ? {
-              set: item.user.id  
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
-             } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
-             } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
-             } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? {
-              set: item.user.currentAccount  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
       },
       create: {
         message: item.message !== undefined ? item.message : undefined,
         type: item.type !== undefined ? item.type : undefined,
         isRead: item.isRead !== undefined ? item.isRead : undefined,
-    user: item.user ? {
-      connectOrCreate: {
-        where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-        },
-        create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
       },
     }))
   } : undefined,
@@ -4592,111 +4026,6 @@ export const AlpacaAccount = {
               updatedAt
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
             }
@@ -4715,11 +4044,126 @@ export const AlpacaAccount = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
             }
             asset {
               id
+              symbol
+              name
+              type
+              logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization
+              ebitda
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM
+              grossProfitTTM
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding
+              dividendDate
+              exDividendDate
+              createdAt
+              updatedAt
+              trades {
+                id
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              newsMentions {
+                id
+                assetId
+                newsArticleId
+                url
+                news {
+                  id
+                }
+                asset {
+                  id
+                }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
+              }
             }
             actions {
               id
@@ -4749,30 +4193,18 @@ export const AlpacaAccount = {
           }
           positions {
             id
-            assetId
-            asset {
-              id
-            }
-            averageEntryPrice
-            qty
-            qtyAvailable
-            marketValue
-            costBasis
-            unrealizedPL
-            unrealizedPLPC
-            unrealisedIntradayPL
-            unrealisedIntradayPLPC
-            currentPrice
-            lastTradePrice
-            changeToday
-            assetMarginable
-            account {
-              id
-            }
-            alpacaAccountId
           }
-          Alert {
+          alerts {
             id
+            alpacaAccountId
+            message
+            type
+            isRead
+            createdAt
+            updatedAt
+            alpacaAccount {
+              id
+            }
           }
       }
       }`;
@@ -4888,111 +4320,6 @@ export const AlpacaAccount = {
               updatedAt
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
             }
@@ -5011,11 +4338,126 @@ export const AlpacaAccount = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
             }
             asset {
               id
+              symbol
+              name
+              type
+              logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization
+              ebitda
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM
+              grossProfitTTM
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding
+              dividendDate
+              exDividendDate
+              createdAt
+              updatedAt
+              trades {
+                id
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              newsMentions {
+                id
+                assetId
+                newsArticleId
+                url
+                news {
+                  id
+                }
+                asset {
+                  id
+                }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
+              }
             }
             actions {
               id
@@ -5045,30 +4487,18 @@ export const AlpacaAccount = {
           }
           positions {
             id
-            assetId
-            asset {
-              id
-            }
-            averageEntryPrice
-            qty
-            qtyAvailable
-            marketValue
-            costBasis
-            unrealizedPL
-            unrealizedPLPC
-            unrealisedIntradayPL
-            unrealisedIntradayPLPC
-            currentPrice
-            lastTradePrice
-            changeToday
-            assetMarginable
-            account {
-              id
-            }
-            alpacaAccountId
           }
-          Alert {
+          alerts {
             id
+            alpacaAccountId
+            message
+            type
+            isRead
+            createdAt
+            updatedAt
+            alpacaAccount {
+              id
+            }
           }
         }
       }`;
@@ -5182,111 +4612,6 @@ export const AlpacaAccount = {
               updatedAt
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
             }
@@ -5305,11 +4630,126 @@ export const AlpacaAccount = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
             }
             asset {
               id
+              symbol
+              name
+              type
+              logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization
+              ebitda
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM
+              grossProfitTTM
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding
+              dividendDate
+              exDividendDate
+              createdAt
+              updatedAt
+              trades {
+                id
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              newsMentions {
+                id
+                assetId
+                newsArticleId
+                url
+                news {
+                  id
+                }
+                asset {
+                  id
+                }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
+              }
             }
             actions {
               id
@@ -5339,30 +4779,18 @@ export const AlpacaAccount = {
           }
           positions {
             id
-            assetId
-            asset {
-              id
-            }
-            averageEntryPrice
-            qty
-            qtyAvailable
-            marketValue
-            costBasis
-            unrealizedPL
-            unrealizedPLPC
-            unrealisedIntradayPL
-            unrealisedIntradayPLPC
-            currentPrice
-            lastTradePrice
-            changeToday
-            assetMarginable
-            account {
-              id
-            }
-            alpacaAccountId
           }
-          Alert {
+          alerts {
             id
+            alpacaAccountId
+            message
+            type
+            isRead
+            createdAt
+            updatedAt
+            alpacaAccount {
+              id
+            }
           }
       }
       }`;
@@ -5470,111 +4898,6 @@ export const AlpacaAccount = {
               updatedAt
             }
             plan
-            orders {
-              id
-              userId
-              alpacaAccountId
-              assetId
-              type
-              action
-              quantity
-              price
-              status
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-              asset {
-                id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                }
-                positions {
-                  id
-                }
-                newsMentions {
-                  id
-                }
-              }
-            }
-            alerts {
-              id
-              userId
-              alpacaAccountId
-              message
-              type
-              isRead
-              createdAt
-              updatedAt
-              user {
-                id
-              }
-              account {
-                id
-              }
-            }
             alpacaAccounts {
               id
             }
@@ -5593,11 +4916,126 @@ export const AlpacaAccount = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
             }
             asset {
               id
+              symbol
+              name
+              type
+              logoUrl
+              description
+              cik
+              exchange
+              currency
+              country
+              sector
+              industry
+              address
+              officialSite
+              fiscalYearEnd
+              latestQuarter
+              marketCapitalization
+              ebitda
+              peRatio
+              pegRatio
+              bookValue
+              dividendPerShare
+              dividendYield
+              eps
+              revenuePerShareTTM
+              profitMargin
+              operatingMarginTTM
+              returnOnAssetsTTM
+              returnOnEquityTTM
+              revenueTTM
+              grossProfitTTM
+              dilutedEPSTTM
+              quarterlyEarningsGrowthYOY
+              quarterlyRevenueGrowthYOY
+              analystTargetPrice
+              analystRatingStrongBuy
+              analystRatingBuy
+              analystRatingHold
+              analystRatingSell
+              analystRatingStrongSell
+              trailingPE
+              forwardPE
+              priceToSalesRatioTTM
+              priceToBookRatio
+              evToRevenue
+              evToEbitda
+              beta
+              week52High
+              week52Low
+              day50MovingAverage
+              day200MovingAverage
+              sharesOutstanding
+              dividendDate
+              exDividendDate
+              createdAt
+              updatedAt
+              trades {
+                id
+              }
+              orders {
+                id
+                alpacaAccountId
+                assetId
+                type
+                action
+                quantity
+                price
+                status
+                createdAt
+                updatedAt
+                alpacaAccount {
+                  id
+                }
+                asset {
+                  id
+                }
+              }
+              positions {
+                id
+                assetId
+                asset {
+                  id
+                }
+                averageEntryPrice
+                qty
+                qtyAvailable
+                marketValue
+                costBasis
+                unrealizedPL
+                unrealizedPLPC
+                unrealisedIntradayPL
+                unrealisedIntradayPLPC
+                currentPrice
+                lastTradePrice
+                changeToday
+                assetMarginable
+                alpacaAccount {
+                  id
+                }
+                alpacaAccountId
+              }
+              newsMentions {
+                id
+                assetId
+                newsArticleId
+                url
+                news {
+                  id
+                }
+                asset {
+                  id
+                }
+                relevancyScore
+                sentimentScore
+                sentimentLabel
+              }
             }
             actions {
               id
@@ -5627,30 +5065,18 @@ export const AlpacaAccount = {
           }
           positions {
             id
-            assetId
-            asset {
-              id
-            }
-            averageEntryPrice
-            qty
-            qtyAvailable
-            marketValue
-            costBasis
-            unrealizedPL
-            unrealizedPLPC
-            unrealisedIntradayPL
-            unrealisedIntradayPLPC
-            currentPrice
-            lastTradePrice
-            changeToday
-            assetMarginable
-            account {
-              id
-            }
-            alpacaAccountId
           }
-          Alert {
+          alerts {
             id
+            alpacaAccountId
+            message
+            type
+            isRead
+            createdAt
+            updatedAt
+            alpacaAccount {
+              id
+            }
           }
       }
       }`;

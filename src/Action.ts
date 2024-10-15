@@ -52,7 +52,7 @@ export const Action = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -85,12 +85,6 @@ export const Action = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -103,7 +97,6 @@ export const Action = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -113,10 +106,7 @@ export const Action = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -142,24 +132,20 @@ export const Action = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -282,17 +268,17 @@ export const Action = {
         total: props.trade.total !== undefined ? props.trade.total : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
-    account: props.trade.account ? {
+    alpacaAccount: props.trade.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: props.trade.account.id !== undefined ? props.trade.account.id : undefined,
+          id: props.trade.alpacaAccount.id !== undefined ? props.trade.alpacaAccount.id : undefined,
         },
         create: {
-          type: props.trade.account.type !== undefined ? props.trade.account.type : undefined,
-          APIKey: props.trade.account.APIKey !== undefined ? props.trade.account.APIKey : undefined,
-          APISecret: props.trade.account.APISecret !== undefined ? props.trade.account.APISecret : undefined,
-          configuration: props.trade.account.configuration !== undefined ? props.trade.account.configuration : undefined,
-          marketOpen: props.trade.account.marketOpen !== undefined ? props.trade.account.marketOpen : undefined,
+          type: props.trade.alpacaAccount.type !== undefined ? props.trade.alpacaAccount.type : undefined,
+          APIKey: props.trade.alpacaAccount.APIKey !== undefined ? props.trade.alpacaAccount.APIKey : undefined,
+          APISecret: props.trade.alpacaAccount.APISecret !== undefined ? props.trade.alpacaAccount.APISecret : undefined,
+          configuration: props.trade.alpacaAccount.configuration !== undefined ? props.trade.alpacaAccount.configuration : undefined,
+          marketOpen: props.trade.alpacaAccount.marketOpen !== undefined ? props.trade.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -476,7 +462,7 @@ export const Action = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -509,12 +495,6 @@ export const Action = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -527,7 +507,6 @@ export const Action = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -537,10 +516,7 @@ export const Action = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -566,24 +542,20 @@ export const Action = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -756,39 +728,39 @@ export const Action = {
         status: props.trade.status !== undefined ? {
             set: props.trade.status  
            } : undefined,
-    account: props.trade.account ? {
+    alpacaAccount: props.trade.alpacaAccount ? {
       upsert: {
         where: {
-          id: props.trade.account.id !== undefined ? {
-              equals: props.trade.account.id 
+          id: props.trade.alpacaAccount.id !== undefined ? {
+              equals: props.trade.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: props.trade.account.id !== undefined ? {
-              set: props.trade.account.id  
+          id: props.trade.alpacaAccount.id !== undefined ? {
+              set: props.trade.alpacaAccount.id  
              } : undefined,
-          type: props.trade.account.type !== undefined ? {
-              set: props.trade.account.type  
+          type: props.trade.alpacaAccount.type !== undefined ? {
+              set: props.trade.alpacaAccount.type  
              } : undefined,
-          APIKey: props.trade.account.APIKey !== undefined ? {
-              set: props.trade.account.APIKey  
+          APIKey: props.trade.alpacaAccount.APIKey !== undefined ? {
+              set: props.trade.alpacaAccount.APIKey  
              } : undefined,
-          APISecret: props.trade.account.APISecret !== undefined ? {
-              set: props.trade.account.APISecret  
+          APISecret: props.trade.alpacaAccount.APISecret !== undefined ? {
+              set: props.trade.alpacaAccount.APISecret  
              } : undefined,
-          configuration: props.trade.account.configuration !== undefined ? {
-              set: props.trade.account.configuration  
+          configuration: props.trade.alpacaAccount.configuration !== undefined ? {
+              set: props.trade.alpacaAccount.configuration  
              } : undefined,
-          marketOpen: props.trade.account.marketOpen !== undefined ? {
-              set: props.trade.account.marketOpen  
+          marketOpen: props.trade.alpacaAccount.marketOpen !== undefined ? {
+              set: props.trade.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          type: props.trade.account.type !== undefined ? props.trade.account.type : undefined,
-          APIKey: props.trade.account.APIKey !== undefined ? props.trade.account.APIKey : undefined,
-          APISecret: props.trade.account.APISecret !== undefined ? props.trade.account.APISecret : undefined,
-          configuration: props.trade.account.configuration !== undefined ? props.trade.account.configuration : undefined,
-          marketOpen: props.trade.account.marketOpen !== undefined ? props.trade.account.marketOpen : undefined,
+          type: props.trade.alpacaAccount.type !== undefined ? props.trade.alpacaAccount.type : undefined,
+          APIKey: props.trade.alpacaAccount.APIKey !== undefined ? props.trade.alpacaAccount.APIKey : undefined,
+          APISecret: props.trade.alpacaAccount.APISecret !== undefined ? props.trade.alpacaAccount.APISecret : undefined,
+          configuration: props.trade.alpacaAccount.configuration !== undefined ? props.trade.alpacaAccount.configuration : undefined,
+          marketOpen: props.trade.alpacaAccount.marketOpen !== undefined ? props.trade.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1033,17 +1005,17 @@ export const Action = {
         total: props.trade.total !== undefined ? props.trade.total : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
-    account: props.trade.account ? {
+    alpacaAccount: props.trade.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: props.trade.account.id !== undefined ? props.trade.account.id : undefined,
+          id: props.trade.alpacaAccount.id !== undefined ? props.trade.alpacaAccount.id : undefined,
         },
         create: {
-          type: props.trade.account.type !== undefined ? props.trade.account.type : undefined,
-          APIKey: props.trade.account.APIKey !== undefined ? props.trade.account.APIKey : undefined,
-          APISecret: props.trade.account.APISecret !== undefined ? props.trade.account.APISecret : undefined,
-          configuration: props.trade.account.configuration !== undefined ? props.trade.account.configuration : undefined,
-          marketOpen: props.trade.account.marketOpen !== undefined ? props.trade.account.marketOpen : undefined,
+          type: props.trade.alpacaAccount.type !== undefined ? props.trade.alpacaAccount.type : undefined,
+          APIKey: props.trade.alpacaAccount.APIKey !== undefined ? props.trade.alpacaAccount.APIKey : undefined,
+          APISecret: props.trade.alpacaAccount.APISecret !== undefined ? props.trade.alpacaAccount.APISecret : undefined,
+          configuration: props.trade.alpacaAccount.configuration !== undefined ? props.trade.alpacaAccount.configuration : undefined,
+          marketOpen: props.trade.alpacaAccount.marketOpen !== undefined ? props.trade.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1229,39 +1201,39 @@ export const Action = {
         status: prop.trade.status !== undefined ? {
             set: prop.trade.status  
            } : undefined,
-    account: prop.trade.account ? {
+    alpacaAccount: prop.trade.alpacaAccount ? {
       upsert: {
         where: {
-          id: prop.trade.account.id !== undefined ? {
-              equals: prop.trade.account.id 
+          id: prop.trade.alpacaAccount.id !== undefined ? {
+              equals: prop.trade.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: prop.trade.account.id !== undefined ? {
-              set: prop.trade.account.id  
+          id: prop.trade.alpacaAccount.id !== undefined ? {
+              set: prop.trade.alpacaAccount.id  
              } : undefined,
-          type: prop.trade.account.type !== undefined ? {
-              set: prop.trade.account.type  
+          type: prop.trade.alpacaAccount.type !== undefined ? {
+              set: prop.trade.alpacaAccount.type  
              } : undefined,
-          APIKey: prop.trade.account.APIKey !== undefined ? {
-              set: prop.trade.account.APIKey  
+          APIKey: prop.trade.alpacaAccount.APIKey !== undefined ? {
+              set: prop.trade.alpacaAccount.APIKey  
              } : undefined,
-          APISecret: prop.trade.account.APISecret !== undefined ? {
-              set: prop.trade.account.APISecret  
+          APISecret: prop.trade.alpacaAccount.APISecret !== undefined ? {
+              set: prop.trade.alpacaAccount.APISecret  
              } : undefined,
-          configuration: prop.trade.account.configuration !== undefined ? {
-              set: prop.trade.account.configuration  
+          configuration: prop.trade.alpacaAccount.configuration !== undefined ? {
+              set: prop.trade.alpacaAccount.configuration  
              } : undefined,
-          marketOpen: prop.trade.account.marketOpen !== undefined ? {
-              set: prop.trade.account.marketOpen  
+          marketOpen: prop.trade.alpacaAccount.marketOpen !== undefined ? {
+              set: prop.trade.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          type: prop.trade.account.type !== undefined ? prop.trade.account.type : undefined,
-          APIKey: prop.trade.account.APIKey !== undefined ? prop.trade.account.APIKey : undefined,
-          APISecret: prop.trade.account.APISecret !== undefined ? prop.trade.account.APISecret : undefined,
-          configuration: prop.trade.account.configuration !== undefined ? prop.trade.account.configuration : undefined,
-          marketOpen: prop.trade.account.marketOpen !== undefined ? prop.trade.account.marketOpen : undefined,
+          type: prop.trade.alpacaAccount.type !== undefined ? prop.trade.alpacaAccount.type : undefined,
+          APIKey: prop.trade.alpacaAccount.APIKey !== undefined ? prop.trade.alpacaAccount.APIKey : undefined,
+          APISecret: prop.trade.alpacaAccount.APISecret !== undefined ? prop.trade.alpacaAccount.APISecret : undefined,
+          configuration: prop.trade.alpacaAccount.configuration !== undefined ? prop.trade.alpacaAccount.configuration : undefined,
+          marketOpen: prop.trade.alpacaAccount.marketOpen !== undefined ? prop.trade.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1506,17 +1478,17 @@ export const Action = {
         total: prop.trade.total !== undefined ? prop.trade.total : undefined,
         timestamp: prop.trade.timestamp !== undefined ? prop.trade.timestamp : undefined,
         status: prop.trade.status !== undefined ? prop.trade.status : undefined,
-    account: prop.trade.account ? {
+    alpacaAccount: prop.trade.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: prop.trade.account.id !== undefined ? prop.trade.account.id : undefined,
+          id: prop.trade.alpacaAccount.id !== undefined ? prop.trade.alpacaAccount.id : undefined,
         },
         create: {
-          type: prop.trade.account.type !== undefined ? prop.trade.account.type : undefined,
-          APIKey: prop.trade.account.APIKey !== undefined ? prop.trade.account.APIKey : undefined,
-          APISecret: prop.trade.account.APISecret !== undefined ? prop.trade.account.APISecret : undefined,
-          configuration: prop.trade.account.configuration !== undefined ? prop.trade.account.configuration : undefined,
-          marketOpen: prop.trade.account.marketOpen !== undefined ? prop.trade.account.marketOpen : undefined,
+          type: prop.trade.alpacaAccount.type !== undefined ? prop.trade.alpacaAccount.type : undefined,
+          APIKey: prop.trade.alpacaAccount.APIKey !== undefined ? prop.trade.alpacaAccount.APIKey : undefined,
+          APISecret: prop.trade.alpacaAccount.APISecret !== undefined ? prop.trade.alpacaAccount.APISecret : undefined,
+          configuration: prop.trade.alpacaAccount.configuration !== undefined ? prop.trade.alpacaAccount.configuration : undefined,
+          marketOpen: prop.trade.alpacaAccount.marketOpen !== undefined ? prop.trade.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1648,7 +1620,7 @@ export const Action = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -1681,12 +1653,6 @@ export const Action = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -1699,7 +1665,6 @@ export const Action = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -1709,10 +1674,7 @@ export const Action = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -1738,24 +1700,20 @@ export const Action = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -1911,7 +1869,7 @@ export const Action = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -1944,12 +1902,6 @@ export const Action = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -1962,7 +1914,6 @@ export const Action = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -1972,10 +1923,7 @@ export const Action = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2001,24 +1949,20 @@ export const Action = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -2172,7 +2116,7 @@ export const Action = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -2205,12 +2149,6 @@ export const Action = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -2223,7 +2161,6 @@ export const Action = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -2233,10 +2170,7 @@ export const Action = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2262,24 +2196,20 @@ export const Action = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -2427,7 +2357,7 @@ export const Action = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -2460,12 +2390,6 @@ export const Action = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -2478,7 +2402,6 @@ export const Action = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -2488,10 +2411,7 @@ export const Action = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2517,24 +2437,20 @@ export const Action = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }

@@ -94,7 +94,7 @@ export const Position = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -116,7 +116,7 @@ export const Position = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -148,7 +148,6 @@ export const Position = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -158,43 +157,7 @@ export const Position = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -251,7 +214,7 @@ export const Position = {
           lastTradePrice
           changeToday
           assetMarginable
-          account {
+          alpacaAccount {
             id
           }
           alpacaAccountId
@@ -380,41 +343,41 @@ export const Position = {
       },
     }
   } : undefined,
-  account: props.account ? {
+  alpacaAccount: props.alpacaAccount ? {
     connectOrCreate: {
       where: {
-        id: props.account.id !== undefined ? props.account.id : undefined,
+        id: props.alpacaAccount.id !== undefined ? props.alpacaAccount.id : undefined,
       },
       create: {
-        type: props.account.type !== undefined ? props.account.type : undefined,
-        APIKey: props.account.APIKey !== undefined ? props.account.APIKey : undefined,
-        APISecret: props.account.APISecret !== undefined ? props.account.APISecret : undefined,
-        configuration: props.account.configuration !== undefined ? props.account.configuration : undefined,
-        marketOpen: props.account.marketOpen !== undefined ? props.account.marketOpen : undefined,
-    user: props.account.user ? {
+        type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
+        APIKey: props.alpacaAccount.APIKey !== undefined ? props.alpacaAccount.APIKey : undefined,
+        APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
+        marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+    user: props.alpacaAccount.user ? {
       connectOrCreate: {
         where: {
-          id: props.account.user.id !== undefined ? props.account.user.id : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          name: props.account.user.name !== undefined ? {
-              equals: props.account.user.name 
+          id: props.alpacaAccount.user.id !== undefined ? props.alpacaAccount.user.id : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? {
+              equals: props.alpacaAccount.user.name 
              } : undefined,
         },
         create: {
-          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
-          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
-          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
-          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
-          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
+          image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
+          bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? props.alpacaAccount.user.currentAccount : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? props.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: props.account.trades ? {
-      connectOrCreate: props.account.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? {
+      connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -427,8 +390,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    orders: props.account.orders ? {
-      connectOrCreate: props.account.orders.map((item: any) => ({
+    orders: props.alpacaAccount.orders ? {
+      connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -441,8 +404,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    Alert: props.account.Alert ? {
-      connectOrCreate: props.account.Alert.map((item: any) => ({
+    alerts: props.alpacaAccount.alerts ? {
+      connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -610,7 +573,7 @@ export const Position = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -632,7 +595,7 @@ export const Position = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -664,7 +627,6 @@ export const Position = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -674,43 +636,7 @@ export const Position = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -767,7 +693,7 @@ export const Position = {
           lastTradePrice
           changeToday
           assetMarginable
-          account {
+          alpacaAccount {
             id
           }
           alpacaAccountId
@@ -1196,92 +1122,92 @@ export const Position = {
       },
     }
   } : undefined,
-  account: props.account ? {
+  alpacaAccount: props.alpacaAccount ? {
     upsert: {
       where: {
-        id: props.account.id !== undefined ? {
-            equals: props.account.id 
+        id: props.alpacaAccount.id !== undefined ? {
+            equals: props.alpacaAccount.id 
            } : undefined,
       },
       update: {
-        id: props.account.id !== undefined ? {
-            set: props.account.id  
+        id: props.alpacaAccount.id !== undefined ? {
+            set: props.alpacaAccount.id  
            } : undefined,
-        type: props.account.type !== undefined ? {
-            set: props.account.type  
+        type: props.alpacaAccount.type !== undefined ? {
+            set: props.alpacaAccount.type  
            } : undefined,
-        APIKey: props.account.APIKey !== undefined ? {
-            set: props.account.APIKey  
+        APIKey: props.alpacaAccount.APIKey !== undefined ? {
+            set: props.alpacaAccount.APIKey  
            } : undefined,
-        APISecret: props.account.APISecret !== undefined ? {
-            set: props.account.APISecret  
+        APISecret: props.alpacaAccount.APISecret !== undefined ? {
+            set: props.alpacaAccount.APISecret  
            } : undefined,
-        configuration: props.account.configuration !== undefined ? {
-            set: props.account.configuration  
+        configuration: props.alpacaAccount.configuration !== undefined ? {
+            set: props.alpacaAccount.configuration  
            } : undefined,
-        marketOpen: props.account.marketOpen !== undefined ? {
-            set: props.account.marketOpen  
+        marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
+            set: props.alpacaAccount.marketOpen  
            } : undefined,
-    user: props.account.user ? {
+    user: props.alpacaAccount.user ? {
       upsert: {
         where: {
-          id: props.account.user.id !== undefined ? {
-              equals: props.account.user.id 
+          id: props.alpacaAccount.user.id !== undefined ? {
+              equals: props.alpacaAccount.user.id 
              } : undefined,
-          name: props.account.user.name !== undefined ? {
-              equals: props.account.user.name 
+          name: props.alpacaAccount.user.name !== undefined ? {
+              equals: props.alpacaAccount.user.name 
              } : undefined,
-          email: props.account.user.email !== undefined ? {
-              equals: props.account.user.email 
+          email: props.alpacaAccount.user.email !== undefined ? {
+              equals: props.alpacaAccount.user.email 
              } : undefined,
         },
         update: {
-          id: props.account.user.id !== undefined ? {
-              set: props.account.user.id  
+          id: props.alpacaAccount.user.id !== undefined ? {
+              set: props.alpacaAccount.user.id  
              } : undefined,
-          name: props.account.user.name !== undefined ? {
-              set: props.account.user.name  
+          name: props.alpacaAccount.user.name !== undefined ? {
+              set: props.alpacaAccount.user.name  
              } : undefined,
-          email: props.account.user.email !== undefined ? {
-              set: props.account.user.email  
+          email: props.alpacaAccount.user.email !== undefined ? {
+              set: props.alpacaAccount.user.email  
              } : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? {
-              set: props.account.user.emailVerified  
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? {
+              set: props.alpacaAccount.user.emailVerified  
              } : undefined,
-          image: props.account.user.image !== undefined ? {
-              set: props.account.user.image  
+          image: props.alpacaAccount.user.image !== undefined ? {
+              set: props.alpacaAccount.user.image  
              } : undefined,
-          role: props.account.user.role !== undefined ? {
-              set: props.account.user.role  
+          role: props.alpacaAccount.user.role !== undefined ? {
+              set: props.alpacaAccount.user.role  
              } : undefined,
-          bio: props.account.user.bio !== undefined ? {
-              set: props.account.user.bio  
+          bio: props.alpacaAccount.user.bio !== undefined ? {
+              set: props.alpacaAccount.user.bio  
              } : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? {
-              set: props.account.user.jobTitle  
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? {
+              set: props.alpacaAccount.user.jobTitle  
              } : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? {
-              set: props.account.user.currentAccount  
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? {
+              set: props.alpacaAccount.user.currentAccount  
              } : undefined,
-          plan: props.account.user.plan !== undefined ? {
-              set: props.account.user.plan  
+          plan: props.alpacaAccount.user.plan !== undefined ? {
+              set: props.alpacaAccount.user.plan  
              } : undefined,
         },
         create: {
-          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
-          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
-          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
-          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
-          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
+          image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
+          bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? props.alpacaAccount.user.currentAccount : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? props.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: props.account.trades ? {
-      upsert: props.account.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? {
+      upsert: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1314,8 +1240,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    orders: props.account.orders ? {
-      upsert: props.account.orders.map((item: any) => ({
+    orders: props.alpacaAccount.orders ? {
+      upsert: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1348,8 +1274,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    Alert: props.account.Alert ? {
-      upsert: props.account.Alert.map((item: any) => ({
+    alerts: props.alpacaAccount.alerts ? {
+      upsert: props.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1376,35 +1302,35 @@ export const Position = {
     } : undefined,
       },
       create: {
-        type: props.account.type !== undefined ? props.account.type : undefined,
-        APIKey: props.account.APIKey !== undefined ? props.account.APIKey : undefined,
-        APISecret: props.account.APISecret !== undefined ? props.account.APISecret : undefined,
-        configuration: props.account.configuration !== undefined ? props.account.configuration : undefined,
-        marketOpen: props.account.marketOpen !== undefined ? props.account.marketOpen : undefined,
-    user: props.account.user ? {
+        type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
+        APIKey: props.alpacaAccount.APIKey !== undefined ? props.alpacaAccount.APIKey : undefined,
+        APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
+        marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+    user: props.alpacaAccount.user ? {
       connectOrCreate: {
         where: {
-          id: props.account.user.id !== undefined ? props.account.user.id : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          name: props.account.user.name !== undefined ? {
-              equals: props.account.user.name 
+          id: props.alpacaAccount.user.id !== undefined ? props.alpacaAccount.user.id : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? {
+              equals: props.alpacaAccount.user.name 
              } : undefined,
         },
         create: {
-          name: props.account.user.name !== undefined ? props.account.user.name : undefined,
-          email: props.account.user.email !== undefined ? props.account.user.email : undefined,
-          emailVerified: props.account.user.emailVerified !== undefined ? props.account.user.emailVerified : undefined,
-          image: props.account.user.image !== undefined ? props.account.user.image : undefined,
-          role: props.account.user.role !== undefined ? props.account.user.role : undefined,
-          bio: props.account.user.bio !== undefined ? props.account.user.bio : undefined,
-          jobTitle: props.account.user.jobTitle !== undefined ? props.account.user.jobTitle : undefined,
-          currentAccount: props.account.user.currentAccount !== undefined ? props.account.user.currentAccount : undefined,
-          plan: props.account.user.plan !== undefined ? props.account.user.plan : undefined,
+          name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
+          email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
+          emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
+          image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
+          bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
+          jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: props.alpacaAccount.user.currentAccount !== undefined ? props.alpacaAccount.user.currentAccount : undefined,
+          plan: props.alpacaAccount.user.plan !== undefined ? props.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: props.account.trades ? {
-      connectOrCreate: props.account.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? {
+      connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1417,8 +1343,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    orders: props.account.orders ? {
-      connectOrCreate: props.account.orders.map((item: any) => ({
+    orders: props.alpacaAccount.orders ? {
+      connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1431,8 +1357,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    Alert: props.account.Alert ? {
-      connectOrCreate: props.account.Alert.map((item: any) => ({
+    alerts: props.alpacaAccount.alerts ? {
+      connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1904,92 +1830,92 @@ export const Position = {
       },
     }
   } : undefined,
-  account: prop.account ? {
+  alpacaAccount: prop.alpacaAccount ? {
     upsert: {
       where: {
-        id: prop.account.id !== undefined ? {
-            equals: prop.account.id 
+        id: prop.alpacaAccount.id !== undefined ? {
+            equals: prop.alpacaAccount.id 
            } : undefined,
       },
       update: {
-        id: prop.account.id !== undefined ? {
-            set: prop.account.id  
+        id: prop.alpacaAccount.id !== undefined ? {
+            set: prop.alpacaAccount.id  
            } : undefined,
-        type: prop.account.type !== undefined ? {
-            set: prop.account.type  
+        type: prop.alpacaAccount.type !== undefined ? {
+            set: prop.alpacaAccount.type  
            } : undefined,
-        APIKey: prop.account.APIKey !== undefined ? {
-            set: prop.account.APIKey  
+        APIKey: prop.alpacaAccount.APIKey !== undefined ? {
+            set: prop.alpacaAccount.APIKey  
            } : undefined,
-        APISecret: prop.account.APISecret !== undefined ? {
-            set: prop.account.APISecret  
+        APISecret: prop.alpacaAccount.APISecret !== undefined ? {
+            set: prop.alpacaAccount.APISecret  
            } : undefined,
-        configuration: prop.account.configuration !== undefined ? {
-            set: prop.account.configuration  
+        configuration: prop.alpacaAccount.configuration !== undefined ? {
+            set: prop.alpacaAccount.configuration  
            } : undefined,
-        marketOpen: prop.account.marketOpen !== undefined ? {
-            set: prop.account.marketOpen  
+        marketOpen: prop.alpacaAccount.marketOpen !== undefined ? {
+            set: prop.alpacaAccount.marketOpen  
            } : undefined,
-    user: prop.account.user ? {
+    user: prop.alpacaAccount.user ? {
       upsert: {
         where: {
-          id: prop.account.user.id !== undefined ? {
-              equals: prop.account.user.id 
+          id: prop.alpacaAccount.user.id !== undefined ? {
+              equals: prop.alpacaAccount.user.id 
              } : undefined,
-          name: prop.account.user.name !== undefined ? {
-              equals: prop.account.user.name 
+          name: prop.alpacaAccount.user.name !== undefined ? {
+              equals: prop.alpacaAccount.user.name 
              } : undefined,
-          email: prop.account.user.email !== undefined ? {
-              equals: prop.account.user.email 
+          email: prop.alpacaAccount.user.email !== undefined ? {
+              equals: prop.alpacaAccount.user.email 
              } : undefined,
         },
         update: {
-          id: prop.account.user.id !== undefined ? {
-              set: prop.account.user.id  
+          id: prop.alpacaAccount.user.id !== undefined ? {
+              set: prop.alpacaAccount.user.id  
              } : undefined,
-          name: prop.account.user.name !== undefined ? {
-              set: prop.account.user.name  
+          name: prop.alpacaAccount.user.name !== undefined ? {
+              set: prop.alpacaAccount.user.name  
              } : undefined,
-          email: prop.account.user.email !== undefined ? {
-              set: prop.account.user.email  
+          email: prop.alpacaAccount.user.email !== undefined ? {
+              set: prop.alpacaAccount.user.email  
              } : undefined,
-          emailVerified: prop.account.user.emailVerified !== undefined ? {
-              set: prop.account.user.emailVerified  
+          emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? {
+              set: prop.alpacaAccount.user.emailVerified  
              } : undefined,
-          image: prop.account.user.image !== undefined ? {
-              set: prop.account.user.image  
+          image: prop.alpacaAccount.user.image !== undefined ? {
+              set: prop.alpacaAccount.user.image  
              } : undefined,
-          role: prop.account.user.role !== undefined ? {
-              set: prop.account.user.role  
+          role: prop.alpacaAccount.user.role !== undefined ? {
+              set: prop.alpacaAccount.user.role  
              } : undefined,
-          bio: prop.account.user.bio !== undefined ? {
-              set: prop.account.user.bio  
+          bio: prop.alpacaAccount.user.bio !== undefined ? {
+              set: prop.alpacaAccount.user.bio  
              } : undefined,
-          jobTitle: prop.account.user.jobTitle !== undefined ? {
-              set: prop.account.user.jobTitle  
+          jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? {
+              set: prop.alpacaAccount.user.jobTitle  
              } : undefined,
-          currentAccount: prop.account.user.currentAccount !== undefined ? {
-              set: prop.account.user.currentAccount  
+          currentAccount: prop.alpacaAccount.user.currentAccount !== undefined ? {
+              set: prop.alpacaAccount.user.currentAccount  
              } : undefined,
-          plan: prop.account.user.plan !== undefined ? {
-              set: prop.account.user.plan  
+          plan: prop.alpacaAccount.user.plan !== undefined ? {
+              set: prop.alpacaAccount.user.plan  
              } : undefined,
         },
         create: {
-          name: prop.account.user.name !== undefined ? prop.account.user.name : undefined,
-          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
-          emailVerified: prop.account.user.emailVerified !== undefined ? prop.account.user.emailVerified : undefined,
-          image: prop.account.user.image !== undefined ? prop.account.user.image : undefined,
-          role: prop.account.user.role !== undefined ? prop.account.user.role : undefined,
-          bio: prop.account.user.bio !== undefined ? prop.account.user.bio : undefined,
-          jobTitle: prop.account.user.jobTitle !== undefined ? prop.account.user.jobTitle : undefined,
-          currentAccount: prop.account.user.currentAccount !== undefined ? prop.account.user.currentAccount : undefined,
-          plan: prop.account.user.plan !== undefined ? prop.account.user.plan : undefined,
+          name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
+          emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
+          image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
+          bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
+          jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? prop.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: prop.alpacaAccount.user.currentAccount !== undefined ? prop.alpacaAccount.user.currentAccount : undefined,
+          plan: prop.alpacaAccount.user.plan !== undefined ? prop.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: prop.account.trades ? {
-      upsert: prop.account.trades.map((item: any) => ({
+    trades: prop.alpacaAccount.trades ? {
+      upsert: prop.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2022,8 +1948,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    orders: prop.account.orders ? {
-      upsert: prop.account.orders.map((item: any) => ({
+    orders: prop.alpacaAccount.orders ? {
+      upsert: prop.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2056,8 +1982,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    Alert: prop.account.Alert ? {
-      upsert: prop.account.Alert.map((item: any) => ({
+    alerts: prop.alpacaAccount.alerts ? {
+      upsert: prop.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2084,35 +2010,35 @@ export const Position = {
     } : undefined,
       },
       create: {
-        type: prop.account.type !== undefined ? prop.account.type : undefined,
-        APIKey: prop.account.APIKey !== undefined ? prop.account.APIKey : undefined,
-        APISecret: prop.account.APISecret !== undefined ? prop.account.APISecret : undefined,
-        configuration: prop.account.configuration !== undefined ? prop.account.configuration : undefined,
-        marketOpen: prop.account.marketOpen !== undefined ? prop.account.marketOpen : undefined,
-    user: prop.account.user ? {
+        type: prop.alpacaAccount.type !== undefined ? prop.alpacaAccount.type : undefined,
+        APIKey: prop.alpacaAccount.APIKey !== undefined ? prop.alpacaAccount.APIKey : undefined,
+        APISecret: prop.alpacaAccount.APISecret !== undefined ? prop.alpacaAccount.APISecret : undefined,
+        configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
+        marketOpen: prop.alpacaAccount.marketOpen !== undefined ? prop.alpacaAccount.marketOpen : undefined,
+    user: prop.alpacaAccount.user ? {
       connectOrCreate: {
         where: {
-          id: prop.account.user.id !== undefined ? prop.account.user.id : undefined,
-          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
-          name: prop.account.user.name !== undefined ? {
-              equals: prop.account.user.name 
+          id: prop.alpacaAccount.user.id !== undefined ? prop.alpacaAccount.user.id : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
+          name: prop.alpacaAccount.user.name !== undefined ? {
+              equals: prop.alpacaAccount.user.name 
              } : undefined,
         },
         create: {
-          name: prop.account.user.name !== undefined ? prop.account.user.name : undefined,
-          email: prop.account.user.email !== undefined ? prop.account.user.email : undefined,
-          emailVerified: prop.account.user.emailVerified !== undefined ? prop.account.user.emailVerified : undefined,
-          image: prop.account.user.image !== undefined ? prop.account.user.image : undefined,
-          role: prop.account.user.role !== undefined ? prop.account.user.role : undefined,
-          bio: prop.account.user.bio !== undefined ? prop.account.user.bio : undefined,
-          jobTitle: prop.account.user.jobTitle !== undefined ? prop.account.user.jobTitle : undefined,
-          currentAccount: prop.account.user.currentAccount !== undefined ? prop.account.user.currentAccount : undefined,
-          plan: prop.account.user.plan !== undefined ? prop.account.user.plan : undefined,
+          name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
+          email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
+          emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
+          image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
+          bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
+          jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? prop.alpacaAccount.user.jobTitle : undefined,
+          currentAccount: prop.alpacaAccount.user.currentAccount !== undefined ? prop.alpacaAccount.user.currentAccount : undefined,
+          plan: prop.alpacaAccount.user.plan !== undefined ? prop.alpacaAccount.user.plan : undefined,
         },
       }
     } : undefined,
-    trades: prop.account.trades ? {
-      connectOrCreate: prop.account.trades.map((item: any) => ({
+    trades: prop.alpacaAccount.trades ? {
+      connectOrCreate: prop.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2125,8 +2051,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    orders: prop.account.orders ? {
-      connectOrCreate: prop.account.orders.map((item: any) => ({
+    orders: prop.alpacaAccount.orders ? {
+      connectOrCreate: prop.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2139,8 +2065,8 @@ export const Position = {
         },
       }))
     } : undefined,
-    Alert: prop.account.Alert ? {
-      connectOrCreate: prop.account.Alert.map((item: any) => ({
+    alerts: prop.alpacaAccount.alerts ? {
+      connectOrCreate: prop.alpacaAccount.alerts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2257,7 +2183,7 @@ export const Position = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -2279,7 +2205,7 @@ export const Position = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -2311,7 +2237,6 @@ export const Position = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -2321,43 +2246,7 @@ export const Position = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2414,7 +2303,7 @@ export const Position = {
           lastTradePrice
           changeToday
           assetMarginable
-          account {
+          alpacaAccount {
             id
           }
           alpacaAccountId
@@ -2525,7 +2414,7 @@ export const Position = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -2547,7 +2436,7 @@ export const Position = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -2579,7 +2468,6 @@ export const Position = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -2589,43 +2477,7 @@ export const Position = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2682,7 +2534,7 @@ export const Position = {
           lastTradePrice
           changeToday
           assetMarginable
-          account {
+          alpacaAccount {
             id
           }
           alpacaAccountId
@@ -2791,7 +2643,7 @@ export const Position = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -2813,7 +2665,7 @@ export const Position = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -2845,7 +2697,6 @@ export const Position = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -2855,43 +2706,7 @@ export const Position = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -2948,7 +2763,7 @@ export const Position = {
           lastTradePrice
           changeToday
           assetMarginable
-          account {
+          alpacaAccount {
             id
           }
           alpacaAccountId
@@ -3051,7 +2866,7 @@ export const Position = {
               createdAt
               updatedAt
               status
-              account {
+              alpacaAccount {
                 id
                 type
                 APIKey
@@ -3073,7 +2888,7 @@ export const Position = {
                 positions {
                   id
                 }
-                Alert {
+                alerts {
                   id
                 }
               }
@@ -3105,7 +2920,6 @@ export const Position = {
             }
             orders {
               id
-              userId
               alpacaAccountId
               assetId
               type
@@ -3115,43 +2929,7 @@ export const Position = {
               status
               createdAt
               updatedAt
-              user {
-                id
-                name
-                email
-                emailVerified
-                image
-                createdAt
-                updatedAt
-                role
-                bio
-                jobTitle
-                currentAccount
-                customer {
-                  id
-                }
-                customerId
-                accounts {
-                  id
-                }
-                sessions {
-                  id
-                }
-                authenticators {
-                  id
-                }
-                plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
-                alpacaAccounts {
-                  id
-                }
-              }
-              account {
+              alpacaAccount {
                 id
               }
               asset {
@@ -3208,7 +2986,7 @@ export const Position = {
           lastTradePrice
           changeToday
           assetMarginable
-          account {
+          alpacaAccount {
             id
           }
           alpacaAccountId

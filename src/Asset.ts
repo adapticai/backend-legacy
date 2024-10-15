@@ -91,7 +91,7 @@ export const Asset = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -124,12 +124,6 @@ export const Asset = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -142,7 +136,6 @@ export const Asset = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -152,10 +145,7 @@ export const Asset = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -181,24 +171,20 @@ export const Asset = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -338,17 +324,17 @@ export const Asset = {
         total: item.total !== undefined ? item.total : undefined,
         timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -390,39 +376,17 @@ export const Asset = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    user: item.user ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    account: item.account ? {
-      connectOrCreate: {
-        where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
-        },
-        create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -448,17 +412,17 @@ export const Asset = {
         lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
         changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
         assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -694,7 +658,7 @@ export const Asset = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -727,12 +691,6 @@ export const Asset = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -745,7 +703,6 @@ export const Asset = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -755,10 +712,7 @@ export const Asset = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -784,24 +738,20 @@ export const Asset = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -1073,39 +1023,39 @@ export const Asset = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
-          id: item.account.id !== undefined ? {
-              equals: item.account.id 
+          id: item.alpacaAccount.id !== undefined ? {
+              equals: item.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: item.account.id !== undefined ? {
-              set: item.account.id  
+          id: item.alpacaAccount.id !== undefined ? {
+              set: item.alpacaAccount.id  
              } : undefined,
-          type: item.account.type !== undefined ? {
-              set: item.account.type  
+          type: item.alpacaAccount.type !== undefined ? {
+              set: item.alpacaAccount.type  
              } : undefined,
-          APIKey: item.account.APIKey !== undefined ? {
-              set: item.account.APIKey  
+          APIKey: item.alpacaAccount.APIKey !== undefined ? {
+              set: item.alpacaAccount.APIKey  
              } : undefined,
-          APISecret: item.account.APISecret !== undefined ? {
-              set: item.account.APISecret  
+          APISecret: item.alpacaAccount.APISecret !== undefined ? {
+              set: item.alpacaAccount.APISecret  
              } : undefined,
-          configuration: item.account.configuration !== undefined ? {
-              set: item.account.configuration  
+          configuration: item.alpacaAccount.configuration !== undefined ? {
+              set: item.alpacaAccount.configuration  
              } : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? {
-              set: item.account.marketOpen  
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+              set: item.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1190,17 +1140,17 @@ export const Asset = {
         total: item.total !== undefined ? item.total : undefined,
         timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1255,97 +1205,39 @@ export const Asset = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    user: item.user ? {
+    alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
+          id: item.alpacaAccount.id !== undefined ? {
+              equals: item.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: item.user.id !== undefined ? {
-              set: item.user.id  
+          id: item.alpacaAccount.id !== undefined ? {
+              set: item.alpacaAccount.id  
              } : undefined,
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
+          type: item.alpacaAccount.type !== undefined ? {
+              set: item.alpacaAccount.type  
              } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
+          APIKey: item.alpacaAccount.APIKey !== undefined ? {
+              set: item.alpacaAccount.APIKey  
              } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
+          APISecret: item.alpacaAccount.APISecret !== undefined ? {
+              set: item.alpacaAccount.APISecret  
              } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
+          configuration: item.alpacaAccount.configuration !== undefined ? {
+              set: item.alpacaAccount.configuration  
              } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? {
-              set: item.user.currentAccount  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+              set: item.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    account: item.account ? {
-      upsert: {
-        where: {
-          id: item.account.id !== undefined ? {
-              equals: item.account.id 
-             } : undefined,
-        },
-        update: {
-          id: item.account.id !== undefined ? {
-              set: item.account.id  
-             } : undefined,
-          type: item.account.type !== undefined ? {
-              set: item.account.type  
-             } : undefined,
-          APIKey: item.account.APIKey !== undefined ? {
-              set: item.account.APIKey  
-             } : undefined,
-          APISecret: item.account.APISecret !== undefined ? {
-              set: item.account.APISecret  
-             } : undefined,
-          configuration: item.account.configuration !== undefined ? {
-              set: item.account.configuration  
-             } : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? {
-              set: item.account.marketOpen  
-             } : undefined,
-        },
-        create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1356,39 +1248,17 @@ export const Asset = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    user: item.user ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    account: item.account ? {
-      connectOrCreate: {
-        where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
-        },
-        create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1443,39 +1313,39 @@ export const Asset = {
         assetMarginable: item.assetMarginable !== undefined ? {
             set: item.assetMarginable  
            } : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
-          id: item.account.id !== undefined ? {
-              equals: item.account.id 
+          id: item.alpacaAccount.id !== undefined ? {
+              equals: item.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: item.account.id !== undefined ? {
-              set: item.account.id  
+          id: item.alpacaAccount.id !== undefined ? {
+              set: item.alpacaAccount.id  
              } : undefined,
-          type: item.account.type !== undefined ? {
-              set: item.account.type  
+          type: item.alpacaAccount.type !== undefined ? {
+              set: item.alpacaAccount.type  
              } : undefined,
-          APIKey: item.account.APIKey !== undefined ? {
-              set: item.account.APIKey  
+          APIKey: item.alpacaAccount.APIKey !== undefined ? {
+              set: item.alpacaAccount.APIKey  
              } : undefined,
-          APISecret: item.account.APISecret !== undefined ? {
-              set: item.account.APISecret  
+          APISecret: item.alpacaAccount.APISecret !== undefined ? {
+              set: item.alpacaAccount.APISecret  
              } : undefined,
-          configuration: item.account.configuration !== undefined ? {
-              set: item.account.configuration  
+          configuration: item.alpacaAccount.configuration !== undefined ? {
+              set: item.alpacaAccount.configuration  
              } : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? {
-              set: item.account.marketOpen  
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+              set: item.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1494,17 +1364,17 @@ export const Asset = {
         lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
         changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
         assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1877,39 +1747,39 @@ export const Asset = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
-          id: item.account.id !== undefined ? {
-              equals: item.account.id 
+          id: item.alpacaAccount.id !== undefined ? {
+              equals: item.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: item.account.id !== undefined ? {
-              set: item.account.id  
+          id: item.alpacaAccount.id !== undefined ? {
+              set: item.alpacaAccount.id  
              } : undefined,
-          type: item.account.type !== undefined ? {
-              set: item.account.type  
+          type: item.alpacaAccount.type !== undefined ? {
+              set: item.alpacaAccount.type  
              } : undefined,
-          APIKey: item.account.APIKey !== undefined ? {
-              set: item.account.APIKey  
+          APIKey: item.alpacaAccount.APIKey !== undefined ? {
+              set: item.alpacaAccount.APIKey  
              } : undefined,
-          APISecret: item.account.APISecret !== undefined ? {
-              set: item.account.APISecret  
+          APISecret: item.alpacaAccount.APISecret !== undefined ? {
+              set: item.alpacaAccount.APISecret  
              } : undefined,
-          configuration: item.account.configuration !== undefined ? {
-              set: item.account.configuration  
+          configuration: item.alpacaAccount.configuration !== undefined ? {
+              set: item.alpacaAccount.configuration  
              } : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? {
-              set: item.account.marketOpen  
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+              set: item.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -1994,17 +1864,17 @@ export const Asset = {
         total: item.total !== undefined ? item.total : undefined,
         timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2059,97 +1929,39 @@ export const Asset = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-    user: item.user ? {
+    alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
-          id: item.user.id !== undefined ? {
-              equals: item.user.id 
-             } : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
-          email: item.user.email !== undefined ? {
-              equals: item.user.email 
+          id: item.alpacaAccount.id !== undefined ? {
+              equals: item.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: item.user.id !== undefined ? {
-              set: item.user.id  
+          id: item.alpacaAccount.id !== undefined ? {
+              set: item.alpacaAccount.id  
              } : undefined,
-          name: item.user.name !== undefined ? {
-              set: item.user.name  
+          type: item.alpacaAccount.type !== undefined ? {
+              set: item.alpacaAccount.type  
              } : undefined,
-          email: item.user.email !== undefined ? {
-              set: item.user.email  
+          APIKey: item.alpacaAccount.APIKey !== undefined ? {
+              set: item.alpacaAccount.APIKey  
              } : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? {
-              set: item.user.emailVerified  
+          APISecret: item.alpacaAccount.APISecret !== undefined ? {
+              set: item.alpacaAccount.APISecret  
              } : undefined,
-          image: item.user.image !== undefined ? {
-              set: item.user.image  
+          configuration: item.alpacaAccount.configuration !== undefined ? {
+              set: item.alpacaAccount.configuration  
              } : undefined,
-          role: item.user.role !== undefined ? {
-              set: item.user.role  
-             } : undefined,
-          bio: item.user.bio !== undefined ? {
-              set: item.user.bio  
-             } : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? {
-              set: item.user.jobTitle  
-             } : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? {
-              set: item.user.currentAccount  
-             } : undefined,
-          plan: item.user.plan !== undefined ? {
-              set: item.user.plan  
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+              set: item.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    account: item.account ? {
-      upsert: {
-        where: {
-          id: item.account.id !== undefined ? {
-              equals: item.account.id 
-             } : undefined,
-        },
-        update: {
-          id: item.account.id !== undefined ? {
-              set: item.account.id  
-             } : undefined,
-          type: item.account.type !== undefined ? {
-              set: item.account.type  
-             } : undefined,
-          APIKey: item.account.APIKey !== undefined ? {
-              set: item.account.APIKey  
-             } : undefined,
-          APISecret: item.account.APISecret !== undefined ? {
-              set: item.account.APISecret  
-             } : undefined,
-          configuration: item.account.configuration !== undefined ? {
-              set: item.account.configuration  
-             } : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? {
-              set: item.account.marketOpen  
-             } : undefined,
-        },
-        create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2160,39 +1972,17 @@ export const Asset = {
         quantity: item.quantity !== undefined ? item.quantity : undefined,
         price: item.price !== undefined ? item.price : undefined,
         status: item.status !== undefined ? item.status : undefined,
-    user: item.user ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.user.id !== undefined ? item.user.id : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          name: item.user.name !== undefined ? {
-              equals: item.user.name 
-             } : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          name: item.user.name !== undefined ? item.user.name : undefined,
-          email: item.user.email !== undefined ? item.user.email : undefined,
-          emailVerified: item.user.emailVerified !== undefined ? item.user.emailVerified : undefined,
-          image: item.user.image !== undefined ? item.user.image : undefined,
-          role: item.user.role !== undefined ? item.user.role : undefined,
-          bio: item.user.bio !== undefined ? item.user.bio : undefined,
-          jobTitle: item.user.jobTitle !== undefined ? item.user.jobTitle : undefined,
-          currentAccount: item.user.currentAccount !== undefined ? item.user.currentAccount : undefined,
-          plan: item.user.plan !== undefined ? item.user.plan : undefined,
-        },
-      }
-    } : undefined,
-    account: item.account ? {
-      connectOrCreate: {
-        where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
-        },
-        create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2247,39 +2037,39 @@ export const Asset = {
         assetMarginable: item.assetMarginable !== undefined ? {
             set: item.assetMarginable  
            } : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
-          id: item.account.id !== undefined ? {
-              equals: item.account.id 
+          id: item.alpacaAccount.id !== undefined ? {
+              equals: item.alpacaAccount.id 
              } : undefined,
         },
         update: {
-          id: item.account.id !== undefined ? {
-              set: item.account.id  
+          id: item.alpacaAccount.id !== undefined ? {
+              set: item.alpacaAccount.id  
              } : undefined,
-          type: item.account.type !== undefined ? {
-              set: item.account.type  
+          type: item.alpacaAccount.type !== undefined ? {
+              set: item.alpacaAccount.type  
              } : undefined,
-          APIKey: item.account.APIKey !== undefined ? {
-              set: item.account.APIKey  
+          APIKey: item.alpacaAccount.APIKey !== undefined ? {
+              set: item.alpacaAccount.APIKey  
              } : undefined,
-          APISecret: item.account.APISecret !== undefined ? {
-              set: item.account.APISecret  
+          APISecret: item.alpacaAccount.APISecret !== undefined ? {
+              set: item.alpacaAccount.APISecret  
              } : undefined,
-          configuration: item.account.configuration !== undefined ? {
-              set: item.account.configuration  
+          configuration: item.alpacaAccount.configuration !== undefined ? {
+              set: item.alpacaAccount.configuration  
              } : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? {
-              set: item.account.marketOpen  
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+              set: item.alpacaAccount.marketOpen  
              } : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2298,17 +2088,17 @@ export const Asset = {
         lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
         changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
         assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-    account: item.account ? {
+    alpacaAccount: item.alpacaAccount ? {
       connectOrCreate: {
         where: {
-          id: item.account.id !== undefined ? item.account.id : undefined,
+          id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
         },
         create: {
-          type: item.account.type !== undefined ? item.account.type : undefined,
-          APIKey: item.account.APIKey !== undefined ? item.account.APIKey : undefined,
-          APISecret: item.account.APISecret !== undefined ? item.account.APISecret : undefined,
-          configuration: item.account.configuration !== undefined ? item.account.configuration : undefined,
-          marketOpen: item.account.marketOpen !== undefined ? item.account.marketOpen : undefined,
+          type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+          APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+          APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+          configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+          marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
         },
       }
     } : undefined,
@@ -2546,7 +2336,7 @@ export const Asset = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -2579,12 +2369,6 @@ export const Asset = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -2597,7 +2381,6 @@ export const Asset = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -2607,10 +2390,7 @@ export const Asset = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2636,24 +2416,20 @@ export const Asset = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -2827,7 +2603,7 @@ export const Asset = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -2860,12 +2636,6 @@ export const Asset = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -2878,7 +2648,6 @@ export const Asset = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -2888,10 +2657,7 @@ export const Asset = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -2917,24 +2683,20 @@ export const Asset = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -3108,7 +2870,7 @@ export const Asset = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -3141,12 +2903,6 @@ export const Asset = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -3159,7 +2915,6 @@ export const Asset = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -3169,10 +2924,7 @@ export const Asset = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -3198,24 +2950,20 @@ export const Asset = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
@@ -3381,7 +3129,7 @@ export const Asset = {
             createdAt
             updatedAt
             status
-            account {
+            alpacaAccount {
               id
               type
               APIKey
@@ -3414,12 +3162,6 @@ export const Asset = {
                   id
                 }
                 plan
-                orders {
-                  id
-                }
-                alerts {
-                  id
-                }
                 alpacaAccounts {
                   id
                 }
@@ -3432,7 +3174,6 @@ export const Asset = {
               }
               orders {
                 id
-                userId
                 alpacaAccountId
                 assetId
                 type
@@ -3442,10 +3183,7 @@ export const Asset = {
                 status
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
                 asset {
@@ -3471,24 +3209,20 @@ export const Asset = {
                 lastTradePrice
                 changeToday
                 assetMarginable
-                account {
+                alpacaAccount {
                   id
                 }
                 alpacaAccountId
               }
-              Alert {
+              alerts {
                 id
-                userId
                 alpacaAccountId
                 message
                 type
                 isRead
                 createdAt
                 updatedAt
-                user {
-                  id
-                }
-                account {
+                alpacaAccount {
                   id
                 }
               }
