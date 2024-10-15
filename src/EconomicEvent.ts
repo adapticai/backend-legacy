@@ -14,7 +14,6 @@ export const EconomicEvent = {
   /**
    * Create a new EconomicEvent record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created EconomicEvent or null.
    */
 
@@ -64,8 +63,7 @@ export const EconomicEvent = {
 
   /**
    * Create multiple EconomicEvent records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of EconomicEvent objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
@@ -107,7 +105,6 @@ export const EconomicEvent = {
   /**
    * Update a single EconomicEvent record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated EconomicEvent or null.
    */
   async update(props: EconomicEventType): Promise<EconomicEventType> {
@@ -168,8 +165,7 @@ export const EconomicEvent = {
 
   /**
    * Update multiple EconomicEvent records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of EconomicEvent objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
@@ -228,7 +224,6 @@ export const EconomicEvent = {
   /**
    * Delete a single EconomicEvent record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted EconomicEvent or null.
    */
   async delete(props: EconomicEventType): Promise<EconomicEventType> {
@@ -273,7 +268,6 @@ export const EconomicEvent = {
   /**
    * Retrieve a single EconomicEvent record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved EconomicEvent or null.
    */
   async get(props: EconomicEventType): Promise<EconomicEventType | null> {
@@ -319,7 +313,6 @@ export const EconomicEvent = {
 
   /**
    * Retrieve all EconomicEvents records.
-   * @param client - Apollo Client instance.
    * @returns An array of EconomicEvent records or null.
    */
   async getAll(): Promise<EconomicEventType[] | null> {
@@ -355,8 +348,7 @@ export const EconomicEvent = {
 
   /**
    * Find multiple EconomicEvent records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found EconomicEvent records or null.
    */
   async findMany(props: EconomicEventType): Promise<EconomicEventType[] | null> {

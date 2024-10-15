@@ -161,9 +161,11 @@ model AlpacaAccount {
   APIKey        String
   APISecret     String
   configuration Json?
-  updatedAt     DateTime           @default(now()) @updatedAt
+  marketOpen    Boolean            @default(false)
   user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        String             @db.Uuid
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @default(now())
 
   @@map(name: "alpaca_accounts")
 }

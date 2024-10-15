@@ -14,7 +14,6 @@ export const NewsArticle = {
   /**
    * Create a new NewsArticle record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created NewsArticle or null.
    */
 
@@ -315,8 +314,7 @@ export const NewsArticle = {
 
   /**
    * Create multiple NewsArticle records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of NewsArticle objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
@@ -367,7 +365,6 @@ export const NewsArticle = {
   /**
    * Update a single NewsArticle record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated NewsArticle or null.
    */
   async update(props: NewsArticleType): Promise<NewsArticleType> {
@@ -946,8 +943,7 @@ export const NewsArticle = {
 
   /**
    * Update multiple NewsArticle records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of NewsArticle objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
@@ -1360,7 +1356,6 @@ export const NewsArticle = {
   /**
    * Delete a single NewsArticle record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted NewsArticle or null.
    */
   async delete(props: NewsArticleType): Promise<NewsArticleType> {
@@ -1569,7 +1564,6 @@ export const NewsArticle = {
   /**
    * Retrieve a single NewsArticle record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved NewsArticle or null.
    */
   async get(props: NewsArticleType): Promise<NewsArticleType | null> {
@@ -1780,7 +1774,6 @@ export const NewsArticle = {
 
   /**
    * Retrieve all NewsArticles records.
-   * @param client - Apollo Client instance.
    * @returns An array of NewsArticle records or null.
    */
   async getAll(): Promise<NewsArticleType[] | null> {
@@ -1980,8 +1973,7 @@ export const NewsArticle = {
 
   /**
    * Find multiple NewsArticle records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found NewsArticle records or null.
    */
   async findMany(props: NewsArticleType): Promise<NewsArticleType[] | null> {

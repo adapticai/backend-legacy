@@ -14,7 +14,6 @@ export const PerformanceMetric = {
   /**
    * Create a new PerformanceMetric record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created PerformanceMetric or null.
    */
 
@@ -335,11 +334,13 @@ export const PerformanceMetric = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -522,6 +523,7 @@ export const PerformanceMetric = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -677,8 +679,7 @@ export const PerformanceMetric = {
 
   /**
    * Create multiple PerformanceMetric records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of PerformanceMetric objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: PerformanceMetricType[]): Promise<{ count: number } | null> {
@@ -720,7 +721,6 @@ export const PerformanceMetric = {
   /**
    * Update a single PerformanceMetric record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated PerformanceMetric or null.
    */
   async update(props: PerformanceMetricType): Promise<PerformanceMetricType> {
@@ -1040,11 +1040,13 @@ export const PerformanceMetric = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -1450,12 +1452,16 @@ export const PerformanceMetric = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1620,6 +1626,7 @@ export const PerformanceMetric = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2043,8 +2050,7 @@ export const PerformanceMetric = {
 
   /**
    * Update multiple PerformanceMetric records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of PerformanceMetric objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: PerformanceMetricType[]): Promise<{ count: number } | null> {
@@ -2456,12 +2462,16 @@ export const PerformanceMetric = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2626,6 +2636,7 @@ export const PerformanceMetric = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3052,7 +3063,6 @@ export const PerformanceMetric = {
   /**
    * Delete a single PerformanceMetric record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted PerformanceMetric or null.
    */
   async delete(props: PerformanceMetricType): Promise<PerformanceMetricType> {
@@ -3372,11 +3382,13 @@ export const PerformanceMetric = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -3410,7 +3422,6 @@ export const PerformanceMetric = {
   /**
    * Retrieve a single PerformanceMetric record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved PerformanceMetric or null.
    */
   async get(props: PerformanceMetricType): Promise<PerformanceMetricType | null> {
@@ -3730,11 +3741,13 @@ export const PerformanceMetric = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -3766,7 +3779,6 @@ export const PerformanceMetric = {
 
   /**
    * Retrieve all PerformanceMetrics records.
-   * @param client - Apollo Client instance.
    * @returns An array of PerformanceMetric records or null.
    */
   async getAll(): Promise<PerformanceMetricType[] | null> {
@@ -4086,11 +4098,13 @@ export const PerformanceMetric = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4115,8 +4129,7 @@ export const PerformanceMetric = {
 
   /**
    * Find multiple PerformanceMetric records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found PerformanceMetric records or null.
    */
   async findMany(props: PerformanceMetricType): Promise<PerformanceMetricType[] | null> {
@@ -4436,11 +4449,13 @@ export const PerformanceMetric = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {

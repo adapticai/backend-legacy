@@ -14,7 +14,6 @@ export const Holding = {
   /**
    * Create a new Holding record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Holding or null.
    */
 
@@ -230,11 +229,13 @@ export const Holding = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -652,8 +653,7 @@ export const Holding = {
 
   /**
    * Create multiple Holding records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Holding objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: HoldingType[]): Promise<{ count: number } | null> {
@@ -695,7 +695,6 @@ export const Holding = {
   /**
    * Update a single Holding record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Holding or null.
    */
   async update(props: HoldingType): Promise<HoldingType> {
@@ -910,11 +909,13 @@ export const Holding = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -1898,8 +1899,7 @@ export const Holding = {
 
   /**
    * Update multiple Holding records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Holding objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: HoldingType[]): Promise<{ count: number } | null> {
@@ -2755,7 +2755,6 @@ export const Holding = {
   /**
    * Delete a single Holding record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Holding or null.
    */
   async delete(props: HoldingType): Promise<HoldingType> {
@@ -2970,11 +2969,13 @@ export const Holding = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -3145,7 +3146,6 @@ export const Holding = {
   /**
    * Retrieve a single Holding record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Holding or null.
    */
   async get(props: HoldingType): Promise<HoldingType | null> {
@@ -3360,11 +3360,13 @@ export const Holding = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -3533,7 +3535,6 @@ export const Holding = {
 
   /**
    * Retrieve all Holdings records.
-   * @param client - Apollo Client instance.
    * @returns An array of Holding records or null.
    */
   async getAll(): Promise<HoldingType[] | null> {
@@ -3748,11 +3749,13 @@ export const Holding = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -3914,8 +3917,7 @@ export const Holding = {
 
   /**
    * Find multiple Holding records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Holding records or null.
    */
   async findMany(props: HoldingType): Promise<HoldingType[] | null> {
@@ -4130,11 +4132,13 @@ export const Holding = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId

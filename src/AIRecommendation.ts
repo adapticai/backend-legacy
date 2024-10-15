@@ -14,7 +14,6 @@ export const AIRecommendation = {
   /**
    * Create a new AIRecommendation record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created AIRecommendation or null.
    */
 
@@ -332,11 +331,13 @@ export const AIRecommendation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -522,6 +523,7 @@ export const AIRecommendation = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -795,8 +797,7 @@ export const AIRecommendation = {
 
   /**
    * Create multiple AIRecommendation records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of AIRecommendation objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: AIRecommendationType[]): Promise<{ count: number } | null> {
@@ -839,7 +840,6 @@ export const AIRecommendation = {
   /**
    * Update a single AIRecommendation record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated AIRecommendation or null.
    */
   async update(props: AIRecommendationType): Promise<AIRecommendationType> {
@@ -1156,11 +1156,13 @@ export const AIRecommendation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -1566,12 +1568,16 @@ export const AIRecommendation = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1736,6 +1742,7 @@ export const AIRecommendation = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2572,8 +2579,7 @@ export const AIRecommendation = {
 
   /**
    * Update multiple AIRecommendation records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of AIRecommendation objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: AIRecommendationType[]): Promise<{ count: number } | null> {
@@ -2982,12 +2988,16 @@ export const AIRecommendation = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3152,6 +3162,7 @@ export const AIRecommendation = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3991,7 +4002,6 @@ export const AIRecommendation = {
   /**
    * Delete a single AIRecommendation record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted AIRecommendation or null.
    */
   async delete(props: AIRecommendationType): Promise<AIRecommendationType> {
@@ -4308,11 +4318,13 @@ export const AIRecommendation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4349,7 +4361,6 @@ export const AIRecommendation = {
   /**
    * Retrieve a single AIRecommendation record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved AIRecommendation or null.
    */
   async get(props: AIRecommendationType): Promise<AIRecommendationType | null> {
@@ -4666,11 +4677,13 @@ export const AIRecommendation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4705,7 +4718,6 @@ export const AIRecommendation = {
 
   /**
    * Retrieve all AIRecommendations records.
-   * @param client - Apollo Client instance.
    * @returns An array of AIRecommendation records or null.
    */
   async getAll(): Promise<AIRecommendationType[] | null> {
@@ -5022,11 +5034,13 @@ export const AIRecommendation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -5054,8 +5068,7 @@ export const AIRecommendation = {
 
   /**
    * Find multiple AIRecommendation records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found AIRecommendation records or null.
    */
   async findMany(props: AIRecommendationType): Promise<AIRecommendationType[] | null> {
@@ -5372,11 +5385,13 @@ export const AIRecommendation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {

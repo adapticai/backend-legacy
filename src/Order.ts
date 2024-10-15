@@ -14,7 +14,6 @@ export const Order = {
   /**
    * Create a new Order record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Order or null.
    */
 
@@ -332,11 +331,13 @@ export const Order = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -522,6 +523,7 @@ export const Order = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -789,8 +791,7 @@ export const Order = {
 
   /**
    * Create multiple Order records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Order objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: OrderType[]): Promise<{ count: number } | null> {
@@ -836,7 +837,6 @@ export const Order = {
   /**
    * Update a single Order record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Order or null.
    */
   async update(props: OrderType): Promise<OrderType> {
@@ -1153,11 +1153,13 @@ export const Order = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -1557,12 +1559,16 @@ export const Order = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1724,6 +1730,7 @@ export const Order = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2530,8 +2537,7 @@ export const Order = {
 
   /**
    * Update multiple Order records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Order objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: OrderType[]): Promise<{ count: number } | null> {
@@ -2934,12 +2940,16 @@ export const Order = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3101,6 +3111,7 @@ export const Order = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3910,7 +3921,6 @@ export const Order = {
   /**
    * Delete a single Order record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Order or null.
    */
   async delete(props: OrderType): Promise<OrderType> {
@@ -4227,11 +4237,13 @@ export const Order = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4268,7 +4280,6 @@ export const Order = {
   /**
    * Retrieve a single Order record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Order or null.
    */
   async get(props: OrderType): Promise<OrderType | null> {
@@ -4585,11 +4596,13 @@ export const Order = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4624,7 +4637,6 @@ export const Order = {
 
   /**
    * Retrieve all Orders records.
-   * @param client - Apollo Client instance.
    * @returns An array of Order records or null.
    */
   async getAll(): Promise<OrderType[] | null> {
@@ -4941,11 +4953,13 @@ export const Order = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4973,8 +4987,7 @@ export const Order = {
 
   /**
    * Find multiple Order records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Order records or null.
    */
   async findMany(props: OrderType): Promise<OrderType[] | null> {
@@ -5291,11 +5304,13 @@ export const Order = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {

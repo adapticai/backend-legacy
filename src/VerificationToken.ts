@@ -14,7 +14,6 @@ export const VerificationToken = {
   /**
    * Create a new VerificationToken record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created VerificationToken or null.
    */
 
@@ -60,8 +59,7 @@ export const VerificationToken = {
 
   /**
    * Create multiple VerificationToken records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of VerificationToken objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
@@ -102,7 +100,6 @@ export const VerificationToken = {
   /**
    * Update a single VerificationToken record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated VerificationToken or null.
    */
   async update(props: VerificationTokenType): Promise<VerificationTokenType> {
@@ -154,8 +151,7 @@ export const VerificationToken = {
 
   /**
    * Update multiple VerificationToken records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of VerificationToken objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
@@ -208,7 +204,6 @@ export const VerificationToken = {
   /**
    * Delete a single VerificationToken record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted VerificationToken or null.
    */
   async delete(props: VerificationTokenType): Promise<VerificationTokenType> {
@@ -250,7 +245,6 @@ export const VerificationToken = {
   /**
    * Retrieve a single VerificationToken record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved VerificationToken or null.
    */
   async get(props: VerificationTokenType): Promise<VerificationTokenType | null> {
@@ -290,7 +284,6 @@ export const VerificationToken = {
 
   /**
    * Retrieve all VerificationTokens records.
-   * @param client - Apollo Client instance.
    * @returns An array of VerificationToken records or null.
    */
   async getAll(): Promise<VerificationTokenType[] | null> {
@@ -323,8 +316,7 @@ export const VerificationToken = {
 
   /**
    * Find multiple VerificationToken records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found VerificationToken records or null.
    */
   async findMany(props: VerificationTokenType): Promise<VerificationTokenType[] | null> {

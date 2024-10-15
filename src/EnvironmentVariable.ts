@@ -14,7 +14,6 @@ export const EnvironmentVariable = {
   /**
    * Create a new EnvironmentVariable record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created EnvironmentVariable or null.
    */
 
@@ -228,11 +227,13 @@ export const EnvironmentVariable = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -501,8 +502,7 @@ export const EnvironmentVariable = {
 
   /**
    * Create multiple EnvironmentVariable records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of EnvironmentVariable objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: EnvironmentVariableType[]): Promise<{ count: number } | null> {
@@ -544,7 +544,6 @@ export const EnvironmentVariable = {
   /**
    * Update a single EnvironmentVariable record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated EnvironmentVariable or null.
    */
   async update(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
@@ -757,11 +756,13 @@ export const EnvironmentVariable = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -1305,8 +1306,7 @@ export const EnvironmentVariable = {
 
   /**
    * Update multiple EnvironmentVariable records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of EnvironmentVariable objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: EnvironmentVariableType[]): Promise<{ count: number } | null> {
@@ -1750,7 +1750,6 @@ export const EnvironmentVariable = {
   /**
    * Delete a single EnvironmentVariable record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted EnvironmentVariable or null.
    */
   async delete(props: EnvironmentVariableType): Promise<EnvironmentVariableType> {
@@ -1963,11 +1962,13 @@ export const EnvironmentVariable = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -2110,7 +2111,6 @@ export const EnvironmentVariable = {
   /**
    * Retrieve a single EnvironmentVariable record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved EnvironmentVariable or null.
    */
   async get(props: EnvironmentVariableType): Promise<EnvironmentVariableType | null> {
@@ -2323,11 +2323,13 @@ export const EnvironmentVariable = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -2471,7 +2473,6 @@ export const EnvironmentVariable = {
 
   /**
    * Retrieve all EnvironmentVariables records.
-   * @param client - Apollo Client instance.
    * @returns An array of EnvironmentVariable records or null.
    */
   async getAll(): Promise<EnvironmentVariableType[] | null> {
@@ -2684,11 +2685,13 @@ export const EnvironmentVariable = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId
@@ -2822,8 +2825,7 @@ export const EnvironmentVariable = {
 
   /**
    * Find multiple EnvironmentVariable records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found EnvironmentVariable records or null.
    */
   async findMany(props: EnvironmentVariableType): Promise<EnvironmentVariableType[] | null> {
@@ -3036,11 +3038,13 @@ export const EnvironmentVariable = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             userId

@@ -14,7 +14,6 @@ export const Asset = {
   /**
    * Create a new Asset record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Asset or null.
    */
 
@@ -649,8 +648,7 @@ export const Asset = {
 
   /**
    * Create multiple Asset records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Asset objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: AssetType[]): Promise<{ count: number } | null> {
@@ -741,7 +739,6 @@ export const Asset = {
   /**
    * Update a single Asset record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Asset or null.
    */
   async update(props: AssetType): Promise<AssetType> {
@@ -2027,8 +2024,7 @@ export const Asset = {
 
   /**
    * Update multiple Asset records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Asset objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: AssetType[]): Promise<{ count: number } | null> {
@@ -3021,7 +3017,6 @@ export const Asset = {
   /**
    * Delete a single Asset record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Asset or null.
    */
   async delete(props: AssetType): Promise<AssetType> {
@@ -3357,7 +3352,6 @@ export const Asset = {
   /**
    * Retrieve a single Asset record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Asset or null.
    */
   async get(props: AssetType): Promise<AssetType | null> {
@@ -3693,7 +3687,6 @@ export const Asset = {
 
   /**
    * Retrieve all Assets records.
-   * @param client - Apollo Client instance.
    * @returns An array of Asset records or null.
    */
   async getAll(): Promise<AssetType[] | null> {
@@ -4020,8 +4013,7 @@ export const Asset = {
 
   /**
    * Find multiple Asset records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Asset records or null.
    */
   async findMany(props: AssetType): Promise<AssetType[] | null> {

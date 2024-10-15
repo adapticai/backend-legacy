@@ -14,7 +14,6 @@ export const Account = {
   /**
    * Create a new Account record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Account or null.
    */
 
@@ -338,11 +337,13 @@ export const Account = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
         }
@@ -522,6 +523,7 @@ export const Account = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -550,8 +552,7 @@ export const Account = {
 
   /**
    * Create multiple Account records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Account objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: AccountType[]): Promise<{ count: number } | null> {
@@ -600,7 +601,6 @@ export const Account = {
   /**
    * Update a single Account record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Account or null.
    */
   async update(props: AccountType): Promise<AccountType> {
@@ -923,11 +923,13 @@ export const Account = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }
@@ -1319,12 +1321,16 @@ export const Account = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1481,6 +1487,7 @@ export const Account = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1508,8 +1515,7 @@ export const Account = {
 
   /**
    * Update multiple Account records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Account objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: AccountType[]): Promise<{ count: number } | null> {
@@ -1910,12 +1916,16 @@ export const Account = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2072,6 +2082,7 @@ export const Account = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2102,7 +2113,6 @@ export const Account = {
   /**
    * Delete a single Account record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Account or null.
    */
   async delete(props: AccountType): Promise<AccountType> {
@@ -2425,11 +2435,13 @@ export const Account = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }
@@ -2460,7 +2472,6 @@ export const Account = {
   /**
    * Retrieve a single Account record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Account or null.
    */
   async get(props: AccountType): Promise<AccountType | null> {
@@ -2783,11 +2794,13 @@ export const Account = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
         }
@@ -2816,7 +2829,6 @@ export const Account = {
 
   /**
    * Retrieve all Accounts records.
-   * @param client - Apollo Client instance.
    * @returns An array of Account records or null.
    */
   async getAll(): Promise<AccountType[] | null> {
@@ -3139,11 +3151,13 @@ export const Account = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }
@@ -3165,8 +3179,7 @@ export const Account = {
 
   /**
    * Find multiple Account records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Account records or null.
    */
   async findMany(props: AccountType): Promise<AccountType[] | null> {
@@ -3489,11 +3502,13 @@ export const Account = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }

@@ -14,7 +14,6 @@ export const Authenticator = {
   /**
    * Create a new Authenticator record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Authenticator or null.
    */
 
@@ -336,11 +335,13 @@ export const Authenticator = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -522,6 +523,7 @@ export const Authenticator = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -550,8 +552,7 @@ export const Authenticator = {
 
   /**
    * Create multiple Authenticator records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Authenticator objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
@@ -593,7 +594,6 @@ export const Authenticator = {
   /**
    * Update a single Authenticator record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Authenticator or null.
    */
   async update(props: AuthenticatorType): Promise<AuthenticatorType> {
@@ -914,11 +914,13 @@ export const Authenticator = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -1319,12 +1321,16 @@ export const Authenticator = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1488,6 +1494,7 @@ export const Authenticator = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1515,8 +1522,7 @@ export const Authenticator = {
 
   /**
    * Update multiple Authenticator records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Authenticator objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
@@ -1924,12 +1930,16 @@ export const Authenticator = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2093,6 +2103,7 @@ export const Authenticator = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2123,7 +2134,6 @@ export const Authenticator = {
   /**
    * Delete a single Authenticator record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Authenticator or null.
    */
   async delete(props: AuthenticatorType): Promise<AuthenticatorType> {
@@ -2444,11 +2454,13 @@ export const Authenticator = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -2481,7 +2493,6 @@ export const Authenticator = {
   /**
    * Retrieve a single Authenticator record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Authenticator or null.
    */
   async get(props: AuthenticatorType): Promise<AuthenticatorType | null> {
@@ -2802,11 +2813,13 @@ export const Authenticator = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -2837,7 +2850,6 @@ export const Authenticator = {
 
   /**
    * Retrieve all Authenticators records.
-   * @param client - Apollo Client instance.
    * @returns An array of Authenticator records or null.
    */
   async getAll(): Promise<AuthenticatorType[] | null> {
@@ -3158,11 +3170,13 @@ export const Authenticator = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -3186,8 +3200,7 @@ export const Authenticator = {
 
   /**
    * Find multiple Authenticator records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Authenticator records or null.
    */
   async findMany(props: AuthenticatorType): Promise<AuthenticatorType[] | null> {
@@ -3508,11 +3521,13 @@ export const Authenticator = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt

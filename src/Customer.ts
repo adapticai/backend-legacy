@@ -14,7 +14,6 @@ export const Customer = {
   /**
    * Create a new Customer record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Customer or null.
    */
 
@@ -338,11 +337,13 @@ export const Customer = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
         }
@@ -519,6 +520,7 @@ export const Customer = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -547,8 +549,7 @@ export const Customer = {
 
   /**
    * Create multiple Customer records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Customer objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: CustomerType[]): Promise<{ count: number } | null> {
@@ -593,7 +594,6 @@ export const Customer = {
   /**
    * Update a single Customer record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Customer or null.
    */
   async update(props: CustomerType): Promise<CustomerType> {
@@ -916,11 +916,13 @@ export const Customer = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }
@@ -1306,12 +1308,16 @@ export const Customer = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1468,6 +1474,7 @@ export const Customer = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1495,8 +1502,7 @@ export const Customer = {
 
   /**
    * Update multiple Customer records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Customer objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: CustomerType[]): Promise<{ count: number } | null> {
@@ -1891,12 +1897,16 @@ export const Customer = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2053,6 +2063,7 @@ export const Customer = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2083,7 +2094,6 @@ export const Customer = {
   /**
    * Delete a single Customer record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Customer or null.
    */
   async delete(props: CustomerType): Promise<CustomerType> {
@@ -2406,11 +2416,13 @@ export const Customer = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }
@@ -2441,7 +2453,6 @@ export const Customer = {
   /**
    * Retrieve a single Customer record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Customer or null.
    */
   async get(props: CustomerType): Promise<CustomerType | null> {
@@ -2764,11 +2775,13 @@ export const Customer = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
         }
@@ -2800,7 +2813,6 @@ export const Customer = {
 
   /**
    * Retrieve all Customers records.
-   * @param client - Apollo Client instance.
    * @returns An array of Customer records or null.
    */
   async getAll(): Promise<CustomerType[] | null> {
@@ -3123,11 +3135,13 @@ export const Customer = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }
@@ -3149,8 +3163,7 @@ export const Customer = {
 
   /**
    * Find multiple Customer records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Customer records or null.
    */
   async findMany(props: CustomerType): Promise<CustomerType[] | null> {
@@ -3473,11 +3486,13 @@ export const Customer = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
       }

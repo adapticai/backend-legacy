@@ -14,7 +14,6 @@ export const Session = {
   /**
    * Create a new Session record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Session or null.
    */
 
@@ -336,11 +335,13 @@ export const Session = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -522,6 +523,7 @@ export const Session = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -550,8 +552,7 @@ export const Session = {
 
   /**
    * Create multiple Session records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Session objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: SessionType[]): Promise<{ count: number } | null> {
@@ -592,7 +593,6 @@ export const Session = {
   /**
    * Update a single Session record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Session or null.
    */
   async update(props: SessionType): Promise<SessionType> {
@@ -913,11 +913,13 @@ export const Session = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -1319,12 +1321,16 @@ export const Session = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1489,6 +1495,7 @@ export const Session = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1516,8 +1523,7 @@ export const Session = {
 
   /**
    * Update multiple Session records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Session objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: SessionType[]): Promise<{ count: number } | null> {
@@ -1926,12 +1932,16 @@ export const Session = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2096,6 +2106,7 @@ export const Session = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2126,7 +2137,6 @@ export const Session = {
   /**
    * Delete a single Session record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Session or null.
    */
   async delete(props: SessionType): Promise<SessionType> {
@@ -2447,11 +2457,13 @@ export const Session = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -2484,7 +2496,6 @@ export const Session = {
   /**
    * Retrieve a single Session record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Session or null.
    */
   async get(props: SessionType): Promise<SessionType | null> {
@@ -2805,11 +2816,13 @@ export const Session = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -2840,7 +2853,6 @@ export const Session = {
 
   /**
    * Retrieve all Sessions records.
-   * @param client - Apollo Client instance.
    * @returns An array of Session records or null.
    */
   async getAll(): Promise<SessionType[] | null> {
@@ -3161,11 +3173,13 @@ export const Session = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt
@@ -3189,8 +3203,7 @@ export const Session = {
 
   /**
    * Find multiple Session records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Session records or null.
    */
   async findMany(props: SessionType): Promise<SessionType[] | null> {
@@ -3511,11 +3524,13 @@ export const Session = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           createdAt

@@ -14,7 +14,6 @@ export const Alert = {
   /**
    * Create a new Alert record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Alert or null.
    */
 
@@ -335,11 +334,13 @@ export const Alert = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -522,6 +523,7 @@ export const Alert = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -676,8 +678,7 @@ export const Alert = {
 
   /**
    * Create multiple Alert records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Alert objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: AlertType[]): Promise<{ count: number } | null> {
@@ -720,7 +721,6 @@ export const Alert = {
   /**
    * Update a single Alert record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Alert or null.
    */
   async update(props: AlertType): Promise<AlertType> {
@@ -1040,11 +1040,13 @@ export const Alert = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -1446,12 +1448,16 @@ export const Alert = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1615,6 +1621,7 @@ export const Alert = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2033,8 +2040,7 @@ export const Alert = {
 
   /**
    * Update multiple Alert records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Alert objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: AlertType[]): Promise<{ count: number } | null> {
@@ -2442,12 +2448,16 @@ export const Alert = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2611,6 +2621,7 @@ export const Alert = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3032,7 +3043,6 @@ export const Alert = {
   /**
    * Delete a single Alert record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Alert or null.
    */
   async delete(props: AlertType): Promise<AlertType> {
@@ -3352,11 +3362,13 @@ export const Alert = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -3390,7 +3402,6 @@ export const Alert = {
   /**
    * Retrieve a single Alert record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Alert or null.
    */
   async get(props: AlertType): Promise<AlertType | null> {
@@ -3710,11 +3721,13 @@ export const Alert = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -3746,7 +3759,6 @@ export const Alert = {
 
   /**
    * Retrieve all Alerts records.
-   * @param client - Apollo Client instance.
    * @returns An array of Alert records or null.
    */
   async getAll(): Promise<AlertType[] | null> {
@@ -4066,11 +4078,13 @@ export const Alert = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4095,8 +4109,7 @@ export const Alert = {
 
   /**
    * Find multiple Alert records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Alert records or null.
    */
   async findMany(props: AlertType): Promise<AlertType[] | null> {
@@ -4416,11 +4429,13 @@ export const Alert = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {

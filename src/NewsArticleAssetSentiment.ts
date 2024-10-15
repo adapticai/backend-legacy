@@ -14,7 +14,6 @@ export const NewsArticleAssetSentiment = {
   /**
    * Create a new NewsArticleAssetSentiment record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created NewsArticleAssetSentiment or null.
    */
 
@@ -469,8 +468,7 @@ export const NewsArticleAssetSentiment = {
 
   /**
    * Create multiple NewsArticleAssetSentiment records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of NewsArticleAssetSentiment objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
@@ -514,7 +512,6 @@ export const NewsArticleAssetSentiment = {
   /**
    * Update a single NewsArticleAssetSentiment record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated NewsArticleAssetSentiment or null.
    */
   async update(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
@@ -1315,8 +1312,7 @@ export const NewsArticleAssetSentiment = {
 
   /**
    * Update multiple NewsArticleAssetSentiment records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of NewsArticleAssetSentiment objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
@@ -1851,7 +1847,6 @@ export const NewsArticleAssetSentiment = {
   /**
    * Delete a single NewsArticleAssetSentiment record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted NewsArticleAssetSentiment or null.
    */
   async delete(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
@@ -2160,7 +2155,6 @@ export const NewsArticleAssetSentiment = {
   /**
    * Retrieve a single NewsArticleAssetSentiment record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
   async get(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType | null> {
@@ -2468,7 +2462,6 @@ export const NewsArticleAssetSentiment = {
 
   /**
    * Retrieve all NewsArticleAssetSentiments records.
-   * @param client - Apollo Client instance.
    * @returns An array of NewsArticleAssetSentiment records or null.
    */
   async getAll(): Promise<NewsArticleAssetSentimentType[] | null> {
@@ -2768,8 +2761,7 @@ export const NewsArticleAssetSentiment = {
 
   /**
    * Find multiple NewsArticleAssetSentiment records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
   async findMany(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType[] | null> {

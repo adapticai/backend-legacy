@@ -683,7 +683,6 @@ export const ${modelName} = {
   /**
    * Create a new ${capitalModelName} record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created ${capitalModelName} or null.
    */
 
@@ -730,7 +729,6 @@ ${selectionSet}        }
   /**
    * Create multiple ${capitalModelName} records.
    * @param props - Array of ${capitalModelName} objects for the new records.
-   * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
@@ -775,7 +773,6 @@ ${constructVariablesObject(
   /**
    * Update a single ${capitalModelName} record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
   async update(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
@@ -828,7 +825,6 @@ ${constructVariablesObject(
   /**
    * Update multiple ${capitalModelName} records.
    * @param props - Array of ${capitalModelName} objects for the updated records.
-   * @param client - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
@@ -885,7 +881,6 @@ ${constructVariablesObject(
   /**
    * Delete a single ${capitalModelName} record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
   async delete(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
@@ -923,7 +918,6 @@ ${selectionSet}      }
   /**
    * Retrieve a single ${capitalModelName} record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
   async get(props: ${capitalModelName}Type): Promise<${capitalModelName}Type | null> {
@@ -965,7 +959,6 @@ ${selectionSet}        }
 
   /**
    * Retrieve all ${pluralModelName} records.
-   * @param client - Apollo Client instance.
    * @returns An array of ${capitalModelName} records or null.
    */
   async getAll(): Promise<${capitalModelName}Type[] | null> {
@@ -994,8 +987,7 @@ ${selectionSet}      }
 
   /**
    * Find multiple ${capitalModelName} records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found ${capitalModelName} records or null.
    */
   async findMany(props: ${capitalModelName}Type): Promise<${capitalModelName}Type[] | null> {

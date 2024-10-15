@@ -14,7 +14,6 @@ export const Trade = {
   /**
    * Create a new Trade record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created Trade or null.
    */
 
@@ -310,11 +309,13 @@ export const Trade = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -522,6 +523,7 @@ export const Trade = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -811,8 +813,7 @@ export const Trade = {
 
   /**
    * Create multiple Trade records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Trade objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: TradeType[]): Promise<{ count: number } | null> {
@@ -859,7 +860,6 @@ export const Trade = {
   /**
    * Update a single Trade record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated Trade or null.
    */
   async update(props: TradeType): Promise<TradeType> {
@@ -1154,11 +1154,13 @@ export const Trade = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -1573,12 +1575,16 @@ export const Trade = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1739,6 +1745,7 @@ export const Trade = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2609,8 +2616,7 @@ export const Trade = {
 
   /**
    * Update multiple Trade records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of Trade objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: TradeType[]): Promise<{ count: number } | null> {
@@ -3006,12 +3012,16 @@ export const Trade = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3172,6 +3182,7 @@ export const Trade = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -4045,7 +4056,6 @@ export const Trade = {
   /**
    * Delete a single Trade record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted Trade or null.
    */
   async delete(props: TradeType): Promise<TradeType> {
@@ -4340,11 +4350,13 @@ export const Trade = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4403,7 +4415,6 @@ export const Trade = {
   /**
    * Retrieve a single Trade record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved Trade or null.
    */
   async get(props: TradeType): Promise<TradeType | null> {
@@ -4698,11 +4709,13 @@ export const Trade = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4759,7 +4772,6 @@ export const Trade = {
 
   /**
    * Retrieve all Trades records.
-   * @param client - Apollo Client instance.
    * @returns An array of Trade records or null.
    */
   async getAll(): Promise<TradeType[] | null> {
@@ -5054,11 +5066,13 @@ export const Trade = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -5108,8 +5122,7 @@ export const Trade = {
 
   /**
    * Find multiple Trade records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found Trade records or null.
    */
   async findMany(props: TradeType): Promise<TradeType[] | null> {
@@ -5404,11 +5417,13 @@ export const Trade = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {

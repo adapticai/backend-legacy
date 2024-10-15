@@ -14,7 +14,6 @@ export const TradeStep = {
   /**
    * Create a new TradeStep record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created TradeStep or null.
    */
 
@@ -258,11 +257,13 @@ export const TradeStep = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             portfolio {
@@ -529,8 +530,7 @@ export const TradeStep = {
 
   /**
    * Create multiple TradeStep records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of TradeStep objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: TradeStepType[]): Promise<{ count: number } | null> {
@@ -584,7 +584,6 @@ export const TradeStep = {
   /**
    * Update a single TradeStep record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated TradeStep or null.
    */
   async update(props: TradeStepType): Promise<TradeStepType> {
@@ -827,11 +826,13 @@ export const TradeStep = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             portfolio {
@@ -1456,8 +1457,7 @@ export const TradeStep = {
 
   /**
    * Update multiple TradeStep records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of TradeStep objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: TradeStepType[]): Promise<{ count: number } | null> {
@@ -1990,7 +1990,6 @@ export const TradeStep = {
   /**
    * Delete a single TradeStep record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted TradeStep or null.
    */
   async delete(props: TradeStepType): Promise<TradeStepType> {
@@ -2233,11 +2232,13 @@ export const TradeStep = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             portfolio {
@@ -2372,7 +2373,6 @@ export const TradeStep = {
   /**
    * Retrieve a single TradeStep record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved TradeStep or null.
    */
   async get(props: TradeStepType): Promise<TradeStepType | null> {
@@ -2615,11 +2615,13 @@ export const TradeStep = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             portfolio {
@@ -2752,7 +2754,6 @@ export const TradeStep = {
 
   /**
    * Retrieve all TradeSteps records.
-   * @param client - Apollo Client instance.
    * @returns An array of TradeStep records or null.
    */
   async getAll(): Promise<TradeStepType[] | null> {
@@ -2995,11 +2996,13 @@ export const TradeStep = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             portfolio {
@@ -3125,8 +3128,7 @@ export const TradeStep = {
 
   /**
    * Find multiple TradeStep records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found TradeStep records or null.
    */
   async findMany(props: TradeStepType): Promise<TradeStepType[] | null> {
@@ -3369,11 +3371,13 @@ export const TradeStep = {
                 APIKey
                 APISecret
                 configuration
-                updatedAt
+                marketOpen
                 user {
                   id
                 }
                 userId
+                createdAt
+                updatedAt
               }
             }
             portfolio {

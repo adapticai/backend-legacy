@@ -14,7 +14,6 @@ export const RiskAllocation = {
   /**
    * Create a new RiskAllocation record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created RiskAllocation or null.
    */
 
@@ -335,11 +334,13 @@ export const RiskAllocation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -522,6 +523,7 @@ export const RiskAllocation = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -677,8 +679,7 @@ export const RiskAllocation = {
 
   /**
    * Create multiple RiskAllocation records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of RiskAllocation objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: RiskAllocationType[]): Promise<{ count: number } | null> {
@@ -720,7 +721,6 @@ export const RiskAllocation = {
   /**
    * Update a single RiskAllocation record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated RiskAllocation or null.
    */
   async update(props: RiskAllocationType): Promise<RiskAllocationType> {
@@ -1040,11 +1040,13 @@ export const RiskAllocation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -1447,12 +1449,16 @@ export const RiskAllocation = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -1617,6 +1623,7 @@ export const RiskAllocation = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2040,8 +2047,7 @@ export const RiskAllocation = {
 
   /**
    * Update multiple RiskAllocation records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of RiskAllocation objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: RiskAllocationType[]): Promise<{ count: number } | null> {
@@ -2450,12 +2456,16 @@ export const RiskAllocation = {
           configuration: item.configuration !== undefined ? {
               set: item.configuration  
              } : undefined,
+          marketOpen: item.marketOpen !== undefined ? {
+              set: item.marketOpen  
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -2620,6 +2630,7 @@ export const RiskAllocation = {
           APIKey: item.APIKey !== undefined ? item.APIKey : undefined,
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
+          marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
         },
       }))
     } : undefined,
@@ -3046,7 +3057,6 @@ export const RiskAllocation = {
   /**
    * Delete a single RiskAllocation record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted RiskAllocation or null.
    */
   async delete(props: RiskAllocationType): Promise<RiskAllocationType> {
@@ -3366,11 +3376,13 @@ export const RiskAllocation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -3404,7 +3416,6 @@ export const RiskAllocation = {
   /**
    * Retrieve a single RiskAllocation record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved RiskAllocation or null.
    */
   async get(props: RiskAllocationType): Promise<RiskAllocationType | null> {
@@ -3724,11 +3735,13 @@ export const RiskAllocation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -3760,7 +3773,6 @@ export const RiskAllocation = {
 
   /**
    * Retrieve all RiskAllocations records.
-   * @param client - Apollo Client instance.
    * @returns An array of RiskAllocation records or null.
    */
   async getAll(): Promise<RiskAllocationType[] | null> {
@@ -4080,11 +4092,13 @@ export const RiskAllocation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {
@@ -4109,8 +4123,7 @@ export const RiskAllocation = {
 
   /**
    * Find multiple RiskAllocation records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found RiskAllocation records or null.
    */
   async findMany(props: RiskAllocationType): Promise<RiskAllocationType[] | null> {
@@ -4430,11 +4443,13 @@ export const RiskAllocation = {
               APIKey
               APISecret
               configuration
-              updatedAt
+              marketOpen
               user {
                 id
               }
               userId
+              createdAt
+              updatedAt
             }
           }
           portfolio {

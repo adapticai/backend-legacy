@@ -14,7 +14,6 @@ export const AlpacaAccount = {
   /**
    * Create a new AlpacaAccount record.
    * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
    * @returns The created AlpacaAccount or null.
    */
 
@@ -30,7 +29,7 @@ export const AlpacaAccount = {
           APIKey
           APISecret
           configuration
-          updatedAt
+          marketOpen
           user {
             id
             name
@@ -345,6 +344,8 @@ export const AlpacaAccount = {
             }
           }
           userId
+          createdAt
+          updatedAt
         }
       }
    `;
@@ -355,6 +356,7 @@ export const AlpacaAccount = {
   APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
   APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
   configuration: props.configuration !== undefined ? props.configuration : undefined,
+  marketOpen: props.marketOpen !== undefined ? props.marketOpen : undefined,
   user: props.user ? {
     connectOrCreate: {
       where: {
@@ -550,8 +552,7 @@ export const AlpacaAccount = {
 
   /**
    * Create multiple AlpacaAccount records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of AlpacaAccount objects for the new records.
    * @returns The count of created records or null.
    */
   async createMany(props: AlpacaAccountType[]): Promise<{ count: number } | null> {
@@ -571,6 +572,7 @@ export const AlpacaAccount = {
   APIKey: prop.APIKey !== undefined ? prop.APIKey : undefined,
   APISecret: prop.APISecret !== undefined ? prop.APISecret : undefined,
   configuration: prop.configuration !== undefined ? prop.configuration : undefined,
+  marketOpen: prop.marketOpen !== undefined ? prop.marketOpen : undefined,
   userId: prop.userId !== undefined ? prop.userId : undefined,
       })),
     };
@@ -594,7 +596,6 @@ export const AlpacaAccount = {
   /**
    * Update a single AlpacaAccount record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The updated AlpacaAccount or null.
    */
   async update(props: AlpacaAccountType): Promise<AlpacaAccountType> {
@@ -609,7 +610,7 @@ export const AlpacaAccount = {
           APIKey
           APISecret
           configuration
-          updatedAt
+          marketOpen
           user {
             id
             name
@@ -924,6 +925,8 @@ export const AlpacaAccount = {
             }
           }
           userId
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -1514,8 +1517,7 @@ export const AlpacaAccount = {
 
   /**
    * Update multiple AlpacaAccount records.
-   * @param props - Array of properties for the new records.
-   * @param client - Apollo Client instance.
+   * @param props - Array of AlpacaAccount objects for the updated records.
    * @returns The count of created records or null.
    */
   async updateMany(props: AlpacaAccountType[]): Promise<{ count: number } | null> {
@@ -2120,7 +2122,6 @@ export const AlpacaAccount = {
   /**
    * Delete a single AlpacaAccount record.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The deleted AlpacaAccount or null.
    */
   async delete(props: AlpacaAccountType): Promise<AlpacaAccountType> {
@@ -2135,7 +2136,7 @@ export const AlpacaAccount = {
           APIKey
           APISecret
           configuration
-          updatedAt
+          marketOpen
           user {
             id
             name
@@ -2450,6 +2451,8 @@ export const AlpacaAccount = {
             }
           }
           userId
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -2478,7 +2481,6 @@ export const AlpacaAccount = {
   /**
    * Retrieve a single AlpacaAccount record by ID.
    * @param props - Properties to update.
-   * @param client - Apollo Client instance.
    * @returns The retrieved AlpacaAccount or null.
    */
   async get(props: AlpacaAccountType): Promise<AlpacaAccountType | null> {
@@ -2493,7 +2495,7 @@ export const AlpacaAccount = {
           APIKey
           APISecret
           configuration
-          updatedAt
+          marketOpen
           user {
             id
             name
@@ -2808,6 +2810,8 @@ export const AlpacaAccount = {
             }
           }
           userId
+          createdAt
+          updatedAt
         }
       }`;
 
@@ -2834,7 +2838,6 @@ export const AlpacaAccount = {
 
   /**
    * Retrieve all AlpacaAccounts records.
-   * @param client - Apollo Client instance.
    * @returns An array of AlpacaAccount records or null.
    */
   async getAll(): Promise<AlpacaAccountType[] | null> {
@@ -2849,7 +2852,7 @@ export const AlpacaAccount = {
           APIKey
           APISecret
           configuration
-          updatedAt
+          marketOpen
           user {
             id
             name
@@ -3164,6 +3167,8 @@ export const AlpacaAccount = {
             }
           }
           userId
+          createdAt
+          updatedAt
       }
       }`;
 
@@ -3183,8 +3188,7 @@ export const AlpacaAccount = {
 
   /**
    * Find multiple AlpacaAccount records based on conditions.
-   * @param where - Conditions to find records.
-   * @param client - Apollo Client instance.
+   * @param props - Conditions to find records.
    * @returns An array of found AlpacaAccount records or null.
    */
   async findMany(props: AlpacaAccountType): Promise<AlpacaAccountType[] | null> {
@@ -3199,7 +3203,7 @@ export const AlpacaAccount = {
           APIKey
           APISecret
           configuration
-          updatedAt
+          marketOpen
           user {
             id
             name
@@ -3514,6 +3518,8 @@ export const AlpacaAccount = {
             }
           }
           userId
+          createdAt
+          updatedAt
       }
       }`;
 
