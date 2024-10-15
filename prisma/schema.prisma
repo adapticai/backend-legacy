@@ -44,20 +44,19 @@ enum AssetType {
   OTHER
 }
 
-enum TradingAccountType {
+enum AlpacaAccountType {
   PAPER
   LIVE
 }
 
 enum TradeAction {
   BUY
+  GET_OPTION_CONTRACTS
+  EXERCISE_OPTION
   SELL
-}
-
-enum TradeStepAction {
-  ENTER
+  CANCEL
+  ADJUST
   HEDGE
-  EXIT
 }
 
 enum TradeStepSide {
@@ -126,48 +125,68 @@ model Session {
 }
 
 model User {
-  id                 String              @id @default(uuid()) @db.Uuid
-  name               String?
-  email              String?             @unique
-  emailVerified      DateTime?
-  image              String?
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @default(now())
-  role               UserRole            @default(USER)
-  bio                String?
-  jobTitle           String?
-  currentAccount     TradingAccountType  @default(PAPER)
-  customer           Customer?           @relation(fields: [customerId], references: [id])
-  customerId         Int?
-  accounts           Account[]
-  sessions           Session[]
-  authenticators     Authenticator[]
-  plan               SubscriptionPlan?
-  trades             Trade[]
-  orders             Order[]
-  aiRecommendations  AIRecommendation[]
-  riskAllocations    RiskAllocation[]
-  alerts             Alert[]
-  performanceMetrics PerformanceMetric[]
-  tradingAccount     TradingAccount[]
-  alpacaAccounts     AlpacaAccount[]
+  id             String            @id @default(uuid()) @db.Uuid
+  name           String?
+  email          String?           @unique
+  emailVerified  DateTime?
+  image          String?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @default(now())
+  role           UserRole          @default(USER)
+  bio            String?
+  jobTitle       String?
+  currentAccount AlpacaAccountType @default(PAPER)
+  customer       Customer?         @relation(fields: [customerId], references: [id])
+  customerId     Int?
+  accounts       Account[]
+  sessions       Session[]
+  authenticators Authenticator[]
+  plan           SubscriptionPlan?
+  orders         Order[]
+  alerts         Alert[]
+  alpacaAccounts AlpacaAccount[]
 
   @@map(name: "users")
 }
 
 model AlpacaAccount {
-  id            String             @id @default(uuid()) @db.Uuid
-  type          TradingAccountType @default(PAPER)
+  id            String            @id @default(uuid()) @db.Uuid
+  type          AlpacaAccountType @default(PAPER)
   APIKey        String
   APISecret     String
   configuration Json?
-  marketOpen    Boolean            @default(false)
-  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String             @db.Uuid
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @default(now())
+  marketOpen    Boolean           @default(false)
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String            @db.Uuid
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @default(now())
+  trades        Trade[]
+  orders        Order[]
+  positions     Position[]
+  Alert         Alert[]
 
   @@map(name: "alpaca_accounts")
+}
+
+model Position {
+  id                     String         @id @default(uuid()) @db.Uuid
+  assetId                String         @db.Uuid
+  asset                  Asset          @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  averageEntryPrice      Float
+  qty                    Float
+  qtyAvailable           Float
+  marketValue            Float
+  costBasis              Float
+  unrealizedPL           Float
+  unrealizedPLPC         Float
+  unrealisedIntradayPL   Float
+  unrealisedIntradayPLPC Float
+  currentPrice           Float
+  lastTradePrice         Float
+  changeToday            Float
+  assetMarginable        Boolean
+  account                AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id])
+  alpacaAccountId        String         @db.Uuid
 }
 
 model Authenticator {
@@ -215,39 +234,6 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map(name: "verification_tokens")
-}
-
-model TradingAccount {
-  id                   String                @id @default(uuid()) @db.Uuid
-  name                 String
-  slug                 String                @unique
-  type                 TradingAccountType
-  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId               String                @db.Uuid
-  holdings             Holding[]
-  trades               Trade[]
-  orders               Order[]
-  aiRecommendations    AIRecommendation[]
-  riskAllocations      RiskAllocation[]
-  alerts               Alert[]
-  performanceMetrics   PerformanceMetric[]
-  environmentVariables EnvironmentVariable[]
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @default(now())
-}
-
-model EnvironmentVariable {
-  id          String         @id @default(uuid()) @db.Uuid
-  key         String
-  value       String
-  description String?
-  portfolioId String         @db.Uuid
-  portfolio   TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @default(now())
-
-  @@unique([portfolioId, key])
-  @@map(name: "environment_variables")
 }
 
 model Customer {
@@ -323,59 +309,39 @@ model Asset {
   exDividendDate             String?
   createdAt                  DateTime                    @default(now())
   updatedAt                  DateTime                    @default(now())
-  holdings                   Holding[]
   trades                     Trade[]
   orders                     Order[]
-  aiRecommendations          AIRecommendation[]
+  positions                  Position[]
   newsMentions               NewsArticleAssetSentiment[]
 
   @@map(name: "assets")
 }
 
-model Holding {
-  id               String   @id @default(uuid()) @db.Uuid
-  tradingAccountId String   @db.Uuid
-  assetId          String   @db.Uuid
-  quantity         Float
-  averagePrice     Float
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @default(now())
-
-  tradingAccount TradingAccount @relation(fields: [tradingAccountId], references: [id], onDelete: Cascade)
-  asset          Asset          @relation(fields: [assetId], references: [id], onDelete: Cascade)
-
-  @@unique([tradingAccountId, assetId])
-  @@map(name: "holdings")
-}
-
 model Trade {
-  id          String      @id @default(uuid()) @db.Uuid
-  userId      String      @db.Uuid
-  portfolioId String      @db.Uuid
-  assetId     String      @db.Uuid
-  action      TradeAction
-  quantity    Float
-  price       Float
-  total       Float
-  timestamp   DateTime    @default(now()) @map(name: "timestamp")
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @default(now())
-  status      TradeStatus @default(PENDING)
+  id              String      @id @default(uuid()) @db.Uuid
+  alpacaAccountId String      @db.Uuid
+  assetId         String      @db.Uuid
+  quantity        Float
+  price           Float
+  total           Float
+  timestamp       DateTime    @default(now()) @map(name: "timestamp")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
+  status          TradeStatus @default(PENDING)
 
   // Relations
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  portfolio TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-  asset     Asset          @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  steps     TradeStep[]
+  account AlpacaAccount @relation(fields: [alpacaAccountId], references: [id])
+  asset   Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  actions Action[]
 
   @@map(name: "trades")
 }
 
-model TradeStep {
+model Action {
   id            String          @id @default(uuid()) @db.Uuid
   tradeId       String          @db.Uuid
   sequence      Int
-  action        TradeStepAction
+  action        TradeAction
   hedgeType     String?
   hedgePrice    Float?
   buyPrice      Float?
@@ -397,74 +363,39 @@ model TradeStep {
 }
 
 model Order {
-  id          String      @id @default(uuid()) @db.Uuid
-  userId      String      @db.Uuid
-  portfolioId String      @db.Uuid
-  assetId     String      @db.Uuid
-  type        OrderType
-  action      TradeAction
-  quantity    Float
-  price       Float
-  status      OrderStatus
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @default(now())
+  id              String      @id @default(uuid()) @db.Uuid
+  userId          String      @db.Uuid
+  alpacaAccountId String      @db.Uuid
+  assetId         String      @db.Uuid
+  type            OrderType
+  action          TradeAction
+  quantity        Float
+  price           Float
+  status          OrderStatus
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @default(now())
 
   // Relations
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  portfolio TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-  asset     Asset          @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  asset   Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   @@map(name: "orders")
 }
 
-model AIRecommendation {
-  id          String      @id @default(uuid()) @db.Uuid
-  userId      String      @db.Uuid
-  portfolioId String      @db.Uuid
-  assetId     String      @db.Uuid
-  action      TradeAction
-  confidence  Float
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @default(now())
-
-  // Relations
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  portfolio TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-  asset     Asset          @relation(fields: [assetId], references: [id], onDelete: Cascade)
-
-  @@map(name: "ai_recommendations")
-}
-
-model RiskAllocation {
-  id          String    @id @default(uuid()) @db.Uuid
-  userId      String    @db.Uuid
-  portfolioId String    @db.Uuid
-  assetType   AssetType
-  allocation  Float
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
-
-  // Relations
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  portfolio TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, portfolioId, assetType])
-  @@map(name: "risk_allocations")
-}
-
 model Alert {
-  id          String    @id @default(uuid()) @db.Uuid
-  userId      String    @db.Uuid
-  portfolioId String    @db.Uuid
-  message     String
-  type        AlertType
-  isRead      Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @default(now())
+  id              String    @id @default(uuid()) @db.Uuid
+  userId          String    @db.Uuid
+  alpacaAccountId String    @db.Uuid
+  message         String
+  type            AlertType
+  isRead          Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now())
 
   // Relations
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  portfolio TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   @@map(name: "alerts")
 }
@@ -513,20 +444,4 @@ model EconomicEvent {
   updatedAt   DateTime        @default(now())
 
   @@map(name: "economic_events")
-}
-
-model PerformanceMetric {
-  id          String   @id @default(uuid()) @db.Uuid
-  userId      String   @db.Uuid
-  portfolioId String   @db.Uuid
-  label       String
-  value       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-
-  // Relations
-  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  portfolio TradingAccount @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
-
-  @@map(name: "performance_metrics")
 }
