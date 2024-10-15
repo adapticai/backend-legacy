@@ -142,8 +142,6 @@ model User {
   sessions       Session[]
   authenticators Authenticator[]
   plan           SubscriptionPlan?
-  orders         Order[]
-  alerts         Alert[]
   alpacaAccounts AlpacaAccount[]
 
   @@map(name: "users")
@@ -163,9 +161,7 @@ model AlpacaAccount {
   trades        Trade[]
   orders        Order[]
   positions     Position[]
-  Alert         Alert[]
-
-  @@map(name: "alpaca_accounts")
+  alerts        Alert[]
 }
 
 model Position {
@@ -185,7 +181,7 @@ model Position {
   lastTradePrice         Float
   changeToday            Float
   assetMarginable        Boolean
-  account                AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id])
+  alpacaAccount          AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
   alpacaAccountId        String         @db.Uuid
 }
 
@@ -218,8 +214,7 @@ model Account {
   session_state     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -318,21 +313,19 @@ model Asset {
 }
 
 model Trade {
-  id              String      @id @default(uuid()) @db.Uuid
-  alpacaAccountId String      @db.Uuid
-  assetId         String      @db.Uuid
+  id              String        @id @default(uuid()) @db.Uuid
+  alpacaAccountId String        @db.Uuid
+  assetId         String        @db.Uuid
   quantity        Float
   price           Float
   total           Float
-  timestamp       DateTime    @default(now()) @map(name: "timestamp")
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @default(now())
-  status          TradeStatus @default(PENDING)
-
-  // Relations
-  account AlpacaAccount @relation(fields: [alpacaAccountId], references: [id])
-  asset   Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  actions Action[]
+  timestamp       DateTime      @default(now()) @map(name: "timestamp")
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  status          TradeStatus   @default(PENDING)
+  alpacaAccount   AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  asset           Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  actions         Action[]
 
   @@map(name: "trades")
 }
@@ -363,39 +356,31 @@ model Action {
 }
 
 model Order {
-  id              String      @id @default(uuid()) @db.Uuid
-  userId          String      @db.Uuid
-  alpacaAccountId String      @db.Uuid
-  assetId         String      @db.Uuid
+  id              String        @id @default(uuid()) @db.Uuid
+  alpacaAccountId String        @db.Uuid
+  assetId         String        @db.Uuid
   type            OrderType
   action          TradeAction
   quantity        Float
   price           Float
   status          OrderStatus
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @default(now())
-
-  // Relations
-  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  account AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
-  asset   Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  alpacaAccount   AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  asset           Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   @@map(name: "orders")
 }
 
 model Alert {
-  id              String    @id @default(uuid()) @db.Uuid
-  userId          String    @db.Uuid
-  alpacaAccountId String    @db.Uuid
+  id              String        @id @default(uuid()) @db.Uuid
+  alpacaAccountId String        @db.Uuid
   message         String
   type            AlertType
-  isRead          Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @default(now())
-
-  // Relations
-  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  account AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  isRead          Boolean       @default(false)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now())
+  alpacaAccount   AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   @@map(name: "alerts")
 }
