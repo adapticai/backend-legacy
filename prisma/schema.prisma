@@ -176,6 +176,15 @@ enum OrderType {
   STOP_LIMIT
 }
 
+// Specifies the type of option contract (CALL or PUT).
+enum OptionType {
+  /// A contract that gives the holder the right to buy the underlying asset.
+  CALL
+
+  /// A contract that gives the holder the right to sell the underlying asset.
+  PUT
+}
+
 // Represents the current status of an order.
 enum OrderStatus {
   /// The order has been received but not yet processed.
@@ -792,6 +801,9 @@ model Trade {
 
   /// Relation to the Asset model.
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
+  optionType OptionType? @map(name: "optionType")
 
   /// List of actions associated with this trade.
   actions Action[]
