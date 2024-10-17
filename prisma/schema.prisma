@@ -177,7 +177,7 @@ enum OrderType {
 }
 
 // Specifies the type of option contract (CALL or PUT).
-enum OptionType {
+enum OptionContractType {
   /// A contract that gives the holder the right to buy the underlying asset.
   CALL
 
@@ -803,7 +803,7 @@ model Trade {
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
-  optionType OptionType? @map(name: "optionType")
+  optionType OptionContractType? @default(CALL)
 
   /// List of actions associated with this trade.
   actions Action[]
