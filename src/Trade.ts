@@ -27,9 +27,13 @@ export const Trade = {
           id
           alpacaAccountId
           assetId
-          quantity
+          qty
           price
           total
+          signal
+          strategy
+          analysis
+          confidence
           timestamp
           createdAt
           updatedAt
@@ -128,7 +132,7 @@ export const Trade = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -275,9 +279,13 @@ export const Trade = {
 
     const variables = {
       data: {
-          quantity: props.quantity !== undefined ? props.quantity : undefined,
+          qty: props.qty !== undefined ? props.qty : undefined,
   price: props.price !== undefined ? props.price : undefined,
   total: props.total !== undefined ? props.total : undefined,
+  signal: props.signal !== undefined ? props.signal : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  analysis: props.analysis !== undefined ? props.analysis : undefined,
+  confidence: props.confidence !== undefined ? props.confidence : undefined,
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   status: props.status !== undefined ? props.status : undefined,
   alpacaAccount: props.alpacaAccount ? {
@@ -321,7 +329,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -433,7 +441,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -542,9 +550,13 @@ export const Trade = {
       data: props.map(prop => ({
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
-  quantity: prop.quantity !== undefined ? prop.quantity : undefined,
+  qty: prop.qty !== undefined ? prop.qty : undefined,
   price: prop.price !== undefined ? prop.price : undefined,
   total: prop.total !== undefined ? prop.total : undefined,
+  signal: prop.signal !== undefined ? prop.signal : undefined,
+  strategy: prop.strategy !== undefined ? prop.strategy : undefined,
+  analysis: prop.analysis !== undefined ? prop.analysis : undefined,
+  confidence: prop.confidence !== undefined ? prop.confidence : undefined,
   timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
       })),
@@ -581,9 +593,13 @@ export const Trade = {
           id
           alpacaAccountId
           assetId
-          quantity
+          qty
           price
           total
+          signal
+          strategy
+          analysis
+          confidence
           timestamp
           createdAt
           updatedAt
@@ -682,7 +698,7 @@ export const Trade = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -834,14 +850,26 @@ export const Trade = {
   id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  quantity: props.quantity !== undefined ? {
-            set: props.quantity 
+  qty: props.qty !== undefined ? {
+            set: props.qty 
            } : undefined,
   price: props.price !== undefined ? {
             set: props.price 
            } : undefined,
   total: props.total !== undefined ? {
             set: props.total 
+           } : undefined,
+  signal: props.signal !== undefined ? {
+            set: props.signal 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  analysis: props.analysis !== undefined ? {
+            set: props.analysis 
+           } : undefined,
+  confidence: props.confidence !== undefined ? {
+            set: props.confidence 
            } : undefined,
   timestamp: props.timestamp !== undefined ? {
             set: props.timestamp 
@@ -954,8 +982,8 @@ export const Trade = {
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
@@ -967,7 +995,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1102,7 +1130,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1336,8 +1364,8 @@ export const Trade = {
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
@@ -1349,7 +1377,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1515,7 +1543,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1678,14 +1706,26 @@ export const Trade = {
           id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  quantity: prop.quantity !== undefined ? {
-            set: prop.quantity 
+  qty: prop.qty !== undefined ? {
+            set: prop.qty 
            } : undefined,
   price: prop.price !== undefined ? {
             set: prop.price 
            } : undefined,
   total: prop.total !== undefined ? {
             set: prop.total 
+           } : undefined,
+  signal: prop.signal !== undefined ? {
+            set: prop.signal 
+           } : undefined,
+  strategy: prop.strategy !== undefined ? {
+            set: prop.strategy 
+           } : undefined,
+  analysis: prop.analysis !== undefined ? {
+            set: prop.analysis 
+           } : undefined,
+  confidence: prop.confidence !== undefined ? {
+            set: prop.confidence 
            } : undefined,
   timestamp: prop.timestamp !== undefined ? {
             set: prop.timestamp 
@@ -1798,8 +1838,8 @@ export const Trade = {
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
@@ -1811,7 +1851,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1946,7 +1986,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -2180,8 +2220,8 @@ export const Trade = {
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
@@ -2193,7 +2233,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -2359,7 +2399,7 @@ export const Trade = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -2514,9 +2554,13 @@ export const Trade = {
           id
           alpacaAccountId
           assetId
-          quantity
+          qty
           price
           total
+          signal
+          strategy
+          analysis
+          confidence
           timestamp
           createdAt
           updatedAt
@@ -2615,7 +2659,7 @@ export const Trade = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -2796,9 +2840,13 @@ export const Trade = {
           id
           alpacaAccountId
           assetId
-          quantity
+          qty
           price
           total
+          signal
+          strategy
+          analysis
+          confidence
           timestamp
           createdAt
           updatedAt
@@ -2897,7 +2945,7 @@ export const Trade = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -3076,9 +3124,13 @@ export const Trade = {
           id
           alpacaAccountId
           assetId
-          quantity
+          qty
           price
           total
+          signal
+          strategy
+          analysis
+          confidence
           timestamp
           createdAt
           updatedAt
@@ -3177,7 +3229,7 @@ export const Trade = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -3350,9 +3402,13 @@ export const Trade = {
           id
           alpacaAccountId
           assetId
-          quantity
+          qty
           price
           total
+          signal
+          strategy
+          analysis
+          confidence
           timestamp
           createdAt
           updatedAt
@@ -3451,7 +3507,7 @@ export const Trade = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt

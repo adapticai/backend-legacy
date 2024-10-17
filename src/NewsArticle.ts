@@ -109,9 +109,13 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -132,7 +136,7 @@ export const NewsArticle = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -440,9 +444,13 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -463,7 +471,7 @@ export const NewsArticle = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1424,9 +1432,13 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1447,7 +1459,7 @@ export const NewsArticle = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1613,9 +1625,13 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1636,7 +1652,7 @@ export const NewsArticle = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1804,9 +1820,13 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1827,7 +1847,7 @@ export const NewsArticle = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1985,9 +2005,13 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -2008,7 +2032,7 @@ export const NewsArticle = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt

@@ -110,9 +110,13 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -133,7 +137,7 @@ export const Account = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -443,9 +447,13 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -466,7 +474,7 @@ export const Account = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1242,9 +1250,13 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1265,7 +1277,7 @@ export const Account = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1438,9 +1450,13 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1461,7 +1477,7 @@ export const Account = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1632,9 +1648,13 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1655,7 +1675,7 @@ export const Account = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1820,9 +1840,13 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1843,7 +1867,7 @@ export const Account = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt

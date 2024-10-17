@@ -29,7 +29,7 @@ export const Order = {
           assetId
           type
           action
-          quantity
+          qty
           price
           status
           createdAt
@@ -123,9 +123,13 @@ export const Order = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -277,7 +281,7 @@ export const Order = {
       data: {
           type: props.type !== undefined ? props.type : undefined,
   action: props.action !== undefined ? props.action : undefined,
-  quantity: props.quantity !== undefined ? props.quantity : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
   price: props.price !== undefined ? props.price : undefined,
   status: props.status !== undefined ? props.status : undefined,
   alpacaAccount: props.alpacaAccount ? {
@@ -319,9 +323,13 @@ export const Order = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -431,9 +439,13 @@ export const Order = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -520,7 +532,7 @@ export const Order = {
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
   action: prop.action !== undefined ? prop.action : undefined,
-  quantity: prop.quantity !== undefined ? prop.quantity : undefined,
+  qty: prop.qty !== undefined ? prop.qty : undefined,
   price: prop.price !== undefined ? prop.price : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
       })),
@@ -559,7 +571,7 @@ export const Order = {
           assetId
           type
           action
-          quantity
+          qty
           price
           status
           createdAt
@@ -653,9 +665,13 @@ export const Order = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -816,8 +832,8 @@ export const Order = {
   action: props.action !== undefined ? {
             set: props.action 
            } : undefined,
-  quantity: props.quantity !== undefined ? {
-            set: props.quantity 
+  qty: props.qty !== undefined ? {
+            set: props.qty 
            } : undefined,
   price: props.price !== undefined ? {
             set: props.price 
@@ -924,14 +940,26 @@ export const Order = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
           total: item.total !== undefined ? {
               set: item.total  
+             } : undefined,
+          signal: item.signal !== undefined ? {
+              set: item.signal  
+             } : undefined,
+          strategy: item.strategy !== undefined ? {
+              set: item.strategy  
+             } : undefined,
+          analysis: item.analysis !== undefined ? {
+              set: item.analysis  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
              } : undefined,
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
@@ -941,9 +969,13 @@ export const Order = {
              } : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1076,9 +1108,13 @@ export const Order = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1306,14 +1342,26 @@ export const Order = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
           total: item.total !== undefined ? {
               set: item.total  
+             } : undefined,
+          signal: item.signal !== undefined ? {
+              set: item.signal  
+             } : undefined,
+          strategy: item.strategy !== undefined ? {
+              set: item.strategy  
+             } : undefined,
+          analysis: item.analysis !== undefined ? {
+              set: item.analysis  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
              } : undefined,
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
@@ -1323,9 +1371,13 @@ export const Order = {
              } : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1489,9 +1541,13 @@ export const Order = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1586,8 +1642,8 @@ export const Order = {
   action: prop.action !== undefined ? {
             set: prop.action 
            } : undefined,
-  quantity: prop.quantity !== undefined ? {
-            set: prop.quantity 
+  qty: prop.qty !== undefined ? {
+            set: prop.qty 
            } : undefined,
   price: prop.price !== undefined ? {
             set: prop.price 
@@ -1694,14 +1750,26 @@ export const Order = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
           total: item.total !== undefined ? {
               set: item.total  
+             } : undefined,
+          signal: item.signal !== undefined ? {
+              set: item.signal  
+             } : undefined,
+          strategy: item.strategy !== undefined ? {
+              set: item.strategy  
+             } : undefined,
+          analysis: item.analysis !== undefined ? {
+              set: item.analysis  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
              } : undefined,
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
@@ -1711,9 +1779,13 @@ export const Order = {
              } : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1846,9 +1918,13 @@ export const Order = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -2076,14 +2152,26 @@ export const Order = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
           total: item.total !== undefined ? {
               set: item.total  
+             } : undefined,
+          signal: item.signal !== undefined ? {
+              set: item.signal  
+             } : undefined,
+          strategy: item.strategy !== undefined ? {
+              set: item.strategy  
+             } : undefined,
+          analysis: item.analysis !== undefined ? {
+              set: item.analysis  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
              } : undefined,
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
@@ -2093,9 +2181,13 @@ export const Order = {
              } : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -2259,9 +2351,13 @@ export const Order = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -2344,7 +2440,7 @@ export const Order = {
           assetId
           type
           action
-          quantity
+          qty
           price
           status
           createdAt
@@ -2438,9 +2534,13 @@ export const Order = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -2626,7 +2726,7 @@ export const Order = {
           assetId
           type
           action
-          quantity
+          qty
           price
           status
           createdAt
@@ -2720,9 +2820,13 @@ export const Order = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -2906,7 +3010,7 @@ export const Order = {
           assetId
           type
           action
-          quantity
+          qty
           price
           status
           createdAt
@@ -3000,9 +3104,13 @@ export const Order = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -3180,7 +3288,7 @@ export const Order = {
           assetId
           type
           action
-          quantity
+          qty
           price
           status
           createdAt
@@ -3274,9 +3382,13 @@ export const Order = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt

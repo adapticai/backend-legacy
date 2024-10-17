@@ -45,9 +45,13 @@ export const Action = {
             id
             alpacaAccountId
             assetId
-            quantity
+            qty
             price
             total
+            signal
+            strategy
+            analysis
+            confidence
             timestamp
             createdAt
             updatedAt
@@ -101,7 +105,7 @@ export const Action = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -263,9 +267,13 @@ export const Action = {
         id: props.trade.id !== undefined ? props.trade.id : undefined,
       },
       create: {
-        quantity: props.trade.quantity !== undefined ? props.trade.quantity : undefined,
+        qty: props.trade.qty !== undefined ? props.trade.qty : undefined,
         price: props.trade.price !== undefined ? props.trade.price : undefined,
         total: props.trade.total !== undefined ? props.trade.total : undefined,
+        signal: props.trade.signal !== undefined ? props.trade.signal : undefined,
+        strategy: props.trade.strategy !== undefined ? props.trade.strategy : undefined,
+        analysis: props.trade.analysis !== undefined ? props.trade.analysis : undefined,
+        confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
     alpacaAccount: props.trade.alpacaAccount ? {
@@ -455,9 +463,13 @@ export const Action = {
             id
             alpacaAccountId
             assetId
-            quantity
+            qty
             price
             total
+            signal
+            strategy
+            analysis
+            confidence
             timestamp
             createdAt
             updatedAt
@@ -511,7 +523,7 @@ export const Action = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -713,14 +725,26 @@ export const Action = {
         id: props.trade.id !== undefined ? {
             set: props.trade.id  
            } : undefined,
-        quantity: props.trade.quantity !== undefined ? {
-            set: props.trade.quantity  
+        qty: props.trade.qty !== undefined ? {
+            set: props.trade.qty  
            } : undefined,
         price: props.trade.price !== undefined ? {
             set: props.trade.price  
            } : undefined,
         total: props.trade.total !== undefined ? {
             set: props.trade.total  
+           } : undefined,
+        signal: props.trade.signal !== undefined ? {
+            set: props.trade.signal  
+           } : undefined,
+        strategy: props.trade.strategy !== undefined ? {
+            set: props.trade.strategy  
+           } : undefined,
+        analysis: props.trade.analysis !== undefined ? {
+            set: props.trade.analysis  
+           } : undefined,
+        confidence: props.trade.confidence !== undefined ? {
+            set: props.trade.confidence  
            } : undefined,
         timestamp: props.trade.timestamp !== undefined ? {
             set: props.trade.timestamp  
@@ -1000,9 +1024,13 @@ export const Action = {
     } : undefined,
       },
       create: {
-        quantity: props.trade.quantity !== undefined ? props.trade.quantity : undefined,
+        qty: props.trade.qty !== undefined ? props.trade.qty : undefined,
         price: props.trade.price !== undefined ? props.trade.price : undefined,
         total: props.trade.total !== undefined ? props.trade.total : undefined,
+        signal: props.trade.signal !== undefined ? props.trade.signal : undefined,
+        strategy: props.trade.strategy !== undefined ? props.trade.strategy : undefined,
+        analysis: props.trade.analysis !== undefined ? props.trade.analysis : undefined,
+        confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
     alpacaAccount: props.trade.alpacaAccount ? {
@@ -1186,14 +1214,26 @@ export const Action = {
         id: prop.trade.id !== undefined ? {
             set: prop.trade.id  
            } : undefined,
-        quantity: prop.trade.quantity !== undefined ? {
-            set: prop.trade.quantity  
+        qty: prop.trade.qty !== undefined ? {
+            set: prop.trade.qty  
            } : undefined,
         price: prop.trade.price !== undefined ? {
             set: prop.trade.price  
            } : undefined,
         total: prop.trade.total !== undefined ? {
             set: prop.trade.total  
+           } : undefined,
+        signal: prop.trade.signal !== undefined ? {
+            set: prop.trade.signal  
+           } : undefined,
+        strategy: prop.trade.strategy !== undefined ? {
+            set: prop.trade.strategy  
+           } : undefined,
+        analysis: prop.trade.analysis !== undefined ? {
+            set: prop.trade.analysis  
+           } : undefined,
+        confidence: prop.trade.confidence !== undefined ? {
+            set: prop.trade.confidence  
            } : undefined,
         timestamp: prop.trade.timestamp !== undefined ? {
             set: prop.trade.timestamp  
@@ -1473,9 +1513,13 @@ export const Action = {
     } : undefined,
       },
       create: {
-        quantity: prop.trade.quantity !== undefined ? prop.trade.quantity : undefined,
+        qty: prop.trade.qty !== undefined ? prop.trade.qty : undefined,
         price: prop.trade.price !== undefined ? prop.trade.price : undefined,
         total: prop.trade.total !== undefined ? prop.trade.total : undefined,
+        signal: prop.trade.signal !== undefined ? prop.trade.signal : undefined,
+        strategy: prop.trade.strategy !== undefined ? prop.trade.strategy : undefined,
+        analysis: prop.trade.analysis !== undefined ? prop.trade.analysis : undefined,
+        confidence: prop.trade.confidence !== undefined ? prop.trade.confidence : undefined,
         timestamp: prop.trade.timestamp !== undefined ? prop.trade.timestamp : undefined,
         status: prop.trade.status !== undefined ? prop.trade.status : undefined,
     alpacaAccount: prop.trade.alpacaAccount ? {
@@ -1613,9 +1657,13 @@ export const Action = {
             id
             alpacaAccountId
             assetId
-            quantity
+            qty
             price
             total
+            signal
+            strategy
+            analysis
+            confidence
             timestamp
             createdAt
             updatedAt
@@ -1669,7 +1717,7 @@ export const Action = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1862,9 +1910,13 @@ export const Action = {
             id
             alpacaAccountId
             assetId
-            quantity
+            qty
             price
             total
+            signal
+            strategy
+            analysis
+            confidence
             timestamp
             createdAt
             updatedAt
@@ -1918,7 +1970,7 @@ export const Action = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -2109,9 +2161,13 @@ export const Action = {
             id
             alpacaAccountId
             assetId
-            quantity
+            qty
             price
             total
+            signal
+            strategy
+            analysis
+            confidence
             timestamp
             createdAt
             updatedAt
@@ -2165,7 +2221,7 @@ export const Action = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -2350,9 +2406,13 @@ export const Action = {
             id
             alpacaAccountId
             assetId
-            quantity
+            qty
             price
             total
+            signal
+            strategy
+            analysis
+            confidence
             timestamp
             createdAt
             updatedAt
@@ -2406,7 +2466,7 @@ export const Action = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt

@@ -13,420 +13,1030 @@ datasource db {
 }
 
 /// ### Enums
+
+// Defines the different roles a user can have within the platform, determining their permissions and access levels.
 enum UserRole {
+  /// The primary owner with full control over the platform.
   OWNER
+
+  /// An administrative user with elevated permissions.
   ADMIN
+
+  /// A regular user with standard access.
   USER
 }
 
+// Represents the various types of financial assets supported by the trading platform.
 enum AssetType {
+  /// Represents a share of ownership in a corporation.
   STOCK
+
+  /// Exchange-Traded Fund, a type of investment fund traded on stock exchanges.
   ETF
+
+  /// A mutual fund that pools money from many investors to purchase securities.
   MUTUAL_FUND
+
+  /// Digital or virtual currencies using cryptography for security.
   CRYPTOCURRENCY
+
+  /// A market index representing a collection of stocks.
   INDEX
+
+  /// Physical goods such as gold, oil, or agricultural products.
   COMMODITY
+
+  /// Traditional currencies used in international trade.
   CURRENCY
+
+  /// Contracts that give the holder the right to buy or sell an asset at a set price.
   OPTION
+
+  /// Financial contracts obligating the buyer to purchase an asset at a future date.
   FUTURE
+
+  /// Debt securities issued by entities to raise capital.
   BOND
+
+  /// Securities that give the holder the right to purchase stock at a specific price.
   WARRANT
+
+  /// American Depositary Receipts representing shares in foreign companies.
   ADR
+
+  /// Global Depositary Receipts representing shares in foreign companies.
   GDR
+
+  /// Units of ownership in investment funds or trusts.
   UNIT
+
+  /// Rights granted to shareholders, such as voting or dividend rights.
   RIGHT
+
+  /// Real Estate Investment Trusts, companies that own or finance income-producing real estate.
   REIT
-  CLOSED_END_FUND
+
+  /// Investment products structured to meet specific needs.
   STRUCTURED_PRODUCT
+
+  /// Financial contracts to exchange cash flows between parties.
   SWAP
+
+  /// Immediate exchange of financial instruments.
   SPOT
+
+  /// Agreements to buy or sell an asset at a future date.
   FORWARD
+
+  /// Any other type of asset not classified above.
   OTHER
 }
 
+// Specifies the type of Alpaca account being used.
 enum AlpacaAccountType {
+  /// A simulated trading account for testing strategies without real money.
   PAPER
+
+  /// A live trading account with real funds.
   LIVE
 }
 
+// Enumerates the possible actions that can be performed on a trade.
 enum TradeAction {
+  /// Initiates a purchase of an asset.
   BUY
+
+  /// Retrieves option contracts related to the trade.
   GET_OPTION_CONTRACTS
+
+  /// Exercises an option to buy or sell the underlying asset.
   EXERCISE_OPTION
+
+  /// Initiates the sale of an asset.
   SELL
+
+  /// Cancels an existing trade action.
   CANCEL
+
+  /// Modifies the parameters of an existing trade.
   ADJUST
+
+  /// Implements a hedging strategy to mitigate risk.
   HEDGE
 }
 
-enum TradeStepSide {
+// Indicates the side of a trade action, whether buying or selling.
+enum TradeActionSide {
+  /// Represents the buying side of a trade action.
   BUY
+
+  /// Represents the selling side of a trade action.
   SELL
 }
 
-enum TradeStepStatus {
+// Represents the current status of a trade action.
+enum TradeActionStatus {
+  /// The trade action is planned and awaiting execution.
   STAGED
+
+  /// The trade action has been executed but not yet finalized.
   EXECUTED
+
+  /// The trade action has been fully completed.
   COMPLETED
 }
 
+// Indicates the current status of a trade.
 enum TradeStatus {
+  /// The trade is pending and has not yet been processed.
   PENDING
+
+  /// The trade is currently open and active.
   OPEN
+
+  /// The trade is partially filled.
   PARTIAL
+
+  /// The trade has been fully completed.
   COMPLETED
 }
 
+// Defines the types of orders that can be placed in the market.
 enum OrderType {
+  /// An order to buy or sell immediately at the current market price.
   MARKET
+
+  /// An order to buy or sell at a specified price or better.
   LIMIT
+
+  /// An order to buy or sell once the price reaches a specified level.
   STOP
+
+  /// An order that combines a stop order and a limit order.
   STOP_LIMIT
 }
 
+// Represents the current status of an order.
 enum OrderStatus {
+  /// The order has been received but not yet processed.
   PENDING
+
+  /// The order has been fully executed.
   FILLED
+
+  /// The order has been cancelled by the user or system.
   CANCELLED
+
+  /// The order was rejected by the broker or exchange.
   REJECTED
 }
 
+// Categorizes the types of alerts that can be generated.
 enum AlertType {
+  /// Indicates a successful operation or event.
   SUCCESS
+
+  /// Represents a warning that requires attention.
   WARNING
+
+  /// Signifies an error that needs to be addressed.
   ERROR
+
+  /// Provides informational messages to the user.
   INFO
 }
 
+// Specifies the importance level of an event.
 enum EventImportance {
+  /// Low importance events with minimal impact.
   LOW
+
+  /// Medium importance events with noticeable impact.
   MEDIUM
+
+  /// High importance events with significant impact.
   HIGH
 }
 
+// Defines the subscription plans available to users.
 enum SubscriptionPlan {
+  /// A free plan with limited features.
   FREE
+
+  /// A professional plan with enhanced features.
   PRO
+
+  /// A business plan tailored for organizational needs.
   BUSINESS
 }
 
 /// ### Models
+
+// Represents a user session for authentication purposes.
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String   @db.Uuid
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
+  /// Unique identifier for the session.
+  id String @id @default(cuid())
+
+  /// Token associated with the session for authentication.
+  sessionToken String @unique
+
+  /// Reference to the user who owns this session.
+  userId String @db.Uuid
+
+  /// Expiration date and time of the session.
+  expires DateTime
+
+  /// Relation to the User model.
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Timestamp when the session was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the session was last updated.
+  updatedAt DateTime @default(now())
 
   @@index([userId])
   @@map(name: "sessions")
 }
 
+// Represents a user of the trading platform.
 model User {
-  id             String            @id @default(uuid()) @db.Uuid
-  name           String?
-  email          String?           @unique
-  emailVerified  DateTime?
-  image          String?
-  createdAt      DateTime          @default(now())
-  updatedAt      DateTime          @default(now())
-  role           UserRole          @default(USER)
-  bio            String?
-  jobTitle       String?
+  /// Unique identifier for the user.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// The user's full name.
+  name String?
+
+  /// The user's email address, must be unique.
+  email String? @unique
+
+  /// Timestamp when the user's email was verified.
+  emailVerified DateTime?
+
+  /// URL to the user's profile image.
+  image String?
+
+  /// Timestamp when the user account was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the user account was last updated.
+  updatedAt DateTime @default(now())
+
+  /// The role assigned to the user, determining permissions.
+  role UserRole @default(USER)
+
+  /// A short biography or description of the user.
+  bio String?
+
+  /// The user's job title or position.
+  jobTitle String?
+
+  /// The type of Alpaca account the user currently holds.
   currentAccount AlpacaAccountType @default(PAPER)
-  customer       Customer?         @relation(fields: [customerId], references: [id])
-  customerId     Int?
-  accounts       Account[]
-  sessions       Session[]
+
+  /// Relation to the Customer model, if applicable.
+  customer Customer? @relation(fields: [customerId], references: [id])
+
+  /// Foreign key referencing the Customer.
+  customerId Int?
+
+  /// List of accounts associated with the user.
+  accounts Account[]
+
+  /// List of sessions associated with the user.
+  sessions Session[]
+
+  /// List of authenticators for the user.
   authenticators Authenticator[]
-  plan           SubscriptionPlan?
+
+  /// The subscription plan the user is enrolled in.
+  plan SubscriptionPlan?
+
+  /// List of Alpaca accounts linked to the user.
   alpacaAccounts AlpacaAccount[]
 
   @@map(name: "users")
 }
 
+// Represents an Alpaca trading account linked to a user.
 model AlpacaAccount {
-  id            String            @id @default(uuid()) @db.Uuid
-  type          AlpacaAccountType @default(PAPER)
-  APIKey        String
-  APISecret     String
+  /// Unique identifier for the Alpaca account.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// The type of Alpaca account (PAPER or LIVE).
+  type AlpacaAccountType @default(PAPER)
+
+  /// API key for authenticating requests to Alpaca.
+  APIKey String
+
+  /// API secret for authenticating requests to Alpaca.
+  APISecret String
+
+  /// JSON configuration settings for the Alpaca account.
   configuration Json?
-  marketOpen    Boolean           @default(false)
-  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId        String            @db.Uuid
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @default(now())
-  trades        Trade[]
-  orders        Order[]
-  positions     Position[]
-  alerts        Alert[]
+
+  /// Indicates whether the market is currently open for trading.
+  marketOpen Boolean @default(false)
+
+  /// Relation to the User model who owns this Alpaca account.
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the User.
+  userId String @db.Uuid
+
+  /// Timestamp when the Alpaca account was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the Alpaca account was last updated.
+  updatedAt DateTime @default(now())
+
+  /// List of trades executed through this Alpaca account.
+  trades Trade[]
+
+  /// List of orders placed through this Alpaca account.
+  orders Order[]
+
+  /// List of positions held in this Alpaca account.
+  positions Position[]
+
+  /// List of alerts generated for this Alpaca account.
+  alerts Alert[]
 }
 
+// Represents a financial position held in an Alpaca account.
 model Position {
-  id                     String         @id @default(uuid()) @db.Uuid
-  assetId                String         @db.Uuid
-  asset                  Asset          @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  averageEntryPrice      Float
-  qty                    Float
-  qtyAvailable           Float
-  marketValue            Float
-  costBasis              Float
-  unrealizedPL           Float
-  unrealizedPLPC         Float
-  unrealisedIntradayPL   Float
+  /// Unique identifier for the position.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the associated asset.
+  assetId String @db.Uuid
+
+  /// Relation to the Asset model.
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  /// The average price at which the asset was acquired.
+  averageEntryPrice Float
+
+  /// Total quantity of the asset held.
+  qty Float
+
+  /// Quantity of the asset available for trading.
+  qtyAvailable Float
+
+  /// Current market value of the position.
+  marketValue Float
+
+  /// Total cost basis of the position.
+  costBasis Float
+
+  /// Unrealized profit or loss of the position.
+  unrealizedPL Float
+
+  /// Unrealized profit or loss as a percentage.
+  unrealizedPLPC Float
+
+  /// Unrealized intraday profit or loss.
+  unrealisedIntradayPL Float
+
+  /// Unrealized intraday profit or loss as a percentage.
   unrealisedIntradayPLPC Float
-  currentPrice           Float
-  lastTradePrice         Float
-  changeToday            Float
-  assetMarginable        Boolean
-  alpacaAccount          AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
-  alpacaAccountId        String         @db.Uuid
+
+  /// Current price of the asset.
+  currentPrice Float
+
+  /// Last traded price of the asset.
+  lastTradePrice Float
+
+  /// Price change of the asset for the day.
+  changeToday Float
+
+  /// Indicates if the asset is marginable.
+  assetMarginable Boolean
+
+  /// Relation to the AlpacaAccount model, if applicable.
+  alpacaAccount AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the AlpacaAccount.
+  alpacaAccountId String @db.Uuid
 }
 
+// Represents an authenticator for multi-factor authentication.
 model Authenticator {
-  id           String   @id @default(uuid()) @db.Uuid
-  userId       String   @db.Uuid
-  credentialID String   @unique
-  publicKey    String
-  counter      Int
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
+  /// Unique identifier for the authenticator.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the user who owns this authenticator.
+  userId String @db.Uuid
+
+  /// Unique credential ID for the authenticator.
+  credentialID String @unique
+
+  /// Public key associated with the authenticator.
+  publicKey String
+
+  /// Counter for the number of authentication attempts.
+  counter Int
+
+  /// Relation to the User model.
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Timestamp when the authenticator was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the authenticator was last updated.
+  updatedAt DateTime @default(now())
 
   @@index([userId])
   @@map(name: "authenticators")
 }
 
+// Represents an external account linked to a user for authentication.
 model Account {
-  id                String   @id @default(cuid())
-  userId            String   @db.Uuid
-  type              String
-  provider          String
+  /// Unique identifier for the account.
+  id String @id @default(cuid())
+
+  /// Reference to the user who owns this account.
+  userId String @db.Uuid
+
+  /// Type of the account (e.g., OAuth provider).
+  type String
+
+  /// Provider of the account (e.g., Google, GitHub).
+  provider String
+
+  /// Unique identifier provided by the external provider.
   providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?  @db.Text
-  session_state     String?
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @default(now())
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Refresh token for the external account, if applicable.
+  refresh_token String? @db.Text
+
+  /// Access token for the external account, if applicable.
+  access_token String? @db.Text
+
+  /// Expiration time of the access token.
+  expires_at Int?
+
+  /// Type of the token (e.g., Bearer).
+  token_type String?
+
+  /// Scope of access granted by the token.
+  scope String?
+
+  /// ID token for authentication, if applicable.
+  id_token String? @db.Text
+
+  /// State of the session associated with the account.
+  session_state String?
+
+  /// Timestamp when the account was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the account was last updated.
+  updatedAt DateTime @default(now())
+
+  /// Relation to the User model.
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
   @@map(name: "accounts")
 }
 
+// Represents a token used for verifying user actions, such as password resets.
 model VerificationToken {
-  id         String   @id @default(cuid())
+  /// Unique identifier for the verification token.
+  id String @id @default(cuid())
+
+  /// Identifier associated with the token (e.g., user ID).
   identifier String
-  token      String   @unique
-  expires    DateTime
+
+  /// The verification token string, must be unique.
+  token String @unique
+
+  /// Expiration date and time of the token.
+  expires DateTime
 
   @@unique([identifier, token])
   @@map(name: "verification_tokens")
 }
 
+// Represents a customer entity, which may include multiple users.
 model Customer {
-  id                     Int               @id @default(autoincrement())
-  authUserId             String
-  name                   String?
-  plan                   SubscriptionPlan?
-  stripeCustomerId       String?           @unique
-  stripeSubscriptionId   String?           @unique
-  stripePriceId          String?
+  /// Unique identifier for the customer.
+  id Int @id @default(autoincrement())
+
+  /// Reference to the authenticated user associated with the customer.
+  authUserId String
+
+  /// Name of the customer.
+  name String?
+
+  /// Subscription plan the customer is enrolled in.
+  plan SubscriptionPlan?
+
+  /// Unique Stripe customer ID for billing.
+  stripeCustomerId String? @unique
+
+  /// Unique Stripe subscription ID.
+  stripeSubscriptionId String? @unique
+
+  /// Stripe price ID associated with the customer's subscription.
+  stripePriceId String?
+
+  /// End date of the current billing period in Stripe.
   stripeCurrentPeriodEnd DateTime?
-  createdAt              DateTime          @default(now())
-  updatedAt              DateTime          @default(now())
-  users                  User[]
+
+  /// Timestamp when the customer was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the customer was last updated.
+  updatedAt DateTime @default(now())
+
+  /// List of users associated with the customer.
+  users User[]
 
   @@index([authUserId])
 }
 
+// Represents a financial asset available for trading.
 model Asset {
-  id                         String                      @id @default(uuid()) @db.Uuid
-  symbol                     String                      @unique
-  name                       String                      @unique
-  type                       AssetType
-  logoUrl                    String?
-  description                String?
-  cik                        String?
-  exchange                   String?
-  currency                   String?
-  country                    String?
-  sector                     String?
-  industry                   String?
-  address                    String?
-  officialSite               String?
-  fiscalYearEnd              String?
-  latestQuarter              String?
-  marketCapitalization       String?
-  ebitda                     String?
-  peRatio                    String?
-  pegRatio                   String?
-  bookValue                  String?
-  dividendPerShare           String?
-  dividendYield              String?
-  eps                        String?
-  revenuePerShareTTM         String?
-  profitMargin               String?
-  operatingMarginTTM         String?
-  returnOnAssetsTTM          String?
-  returnOnEquityTTM          String?
-  revenueTTM                 String?
-  grossProfitTTM             String?
-  dilutedEPSTTM              String?
+  /// Unique identifier for the asset.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Ticker symbol of the asset, must be unique.
+  symbol String @unique
+
+  /// Full name of the asset, must be unique.
+  name String @unique
+
+  /// Type of the asset, defined by AssetType enum.
+  type AssetType
+
+  /// URL to the asset's logo image.
+  logoUrl String?
+
+  /// Description of the asset.
+  description String?
+
+  /// Central Index Key for the asset.
+  cik String?
+
+  /// Stock exchange where the asset is listed.
+  exchange String?
+
+  /// Currency in which the asset is traded.
+  currency String?
+
+  /// Country where the asset is based.
+  country String?
+
+  /// Sector classification of the asset.
+  sector String?
+
+  /// Industry classification of the asset.
+  industry String?
+
+  /// Physical address associated with the asset.
+  address String?
+
+  /// Official website of the asset.
+  officialSite String?
+
+  /// Fiscal year-end date of the asset.
+  fiscalYearEnd String?
+
+  /// Date of the latest financial quarter.
+  latestQuarter String?
+
+  /// Market capitalization of the asset.
+  marketCapitalization String?
+
+  /// Earnings Before Interest, Taxes, Depreciation, and Amortization.
+  ebitda String?
+
+  /// Price-to-Earnings ratio.
+  peRatio String?
+
+  /// Price/Earnings to Growth ratio.
+  pegRatio String?
+
+  /// Book value per share.
+  bookValue String?
+
+  /// Dividend per share.
+  dividendPerShare String?
+
+  /// Dividend yield percentage.
+  dividendYield String?
+
+  /// Earnings per share.
+  eps String?
+
+  /// Revenue per share over the trailing twelve months.
+  revenuePerShareTTM String?
+
+  /// Profit margin percentage.
+  profitMargin String?
+
+  /// Operating margin over the trailing twelve months.
+  operatingMarginTTM String?
+
+  /// Return on assets over the trailing twelve months.
+  returnOnAssetsTTM String?
+
+  /// Return on equity over the trailing twelve months.
+  returnOnEquityTTM String?
+
+  /// Total revenue over the trailing twelve months.
+  revenueTTM String?
+
+  /// Gross profit over the trailing twelve months.
+  grossProfitTTM String?
+
+  /// Diluted earnings per share over the trailing twelve months.
+  dilutedEPSTTM String?
+
+  /// Year-over-year growth in quarterly earnings.
   quarterlyEarningsGrowthYOY String?
-  quarterlyRevenueGrowthYOY  String?
-  analystTargetPrice         String?
-  analystRatingStrongBuy     String?
-  analystRatingBuy           String?
-  analystRatingHold          String?
-  analystRatingSell          String?
-  analystRatingStrongSell    String?
-  trailingPE                 String?
-  forwardPE                  String?
-  priceToSalesRatioTTM       String?
-  priceToBookRatio           String?
-  evToRevenue                String?
-  evToEbitda                 String?
-  beta                       String?
-  week52High                 String?
-  week52Low                  String?
-  day50MovingAverage         String?
-  day200MovingAverage        String?
-  sharesOutstanding          String?
-  dividendDate               String?
-  exDividendDate             String?
-  createdAt                  DateTime                    @default(now())
-  updatedAt                  DateTime                    @default(now())
-  trades                     Trade[]
-  orders                     Order[]
-  positions                  Position[]
-  newsMentions               NewsArticleAssetSentiment[]
+
+  /// Year-over-year growth in quarterly revenue.
+  quarterlyRevenueGrowthYOY String?
+
+  /// Analyst target price for the asset.
+  analystTargetPrice String?
+
+  /// Percentage of analysts rating the asset as Strong Buy.
+  analystRatingStrongBuy String?
+
+  /// Percentage of analysts rating the asset as Buy.
+  analystRatingBuy String?
+
+  /// Percentage of analysts rating the asset as Hold.
+  analystRatingHold String?
+
+  /// Percentage of analysts rating the asset as Sell.
+  analystRatingSell String?
+
+  /// Percentage of analysts rating the asset as Strong Sell.
+  analystRatingStrongSell String?
+
+  /// Trailing Price-to-Earnings ratio.
+  trailingPE String?
+
+  /// Forward Price-to-Earnings ratio.
+  forwardPE String?
+
+  /// Price-to-Sales ratio over the trailing twelve months.
+  priceToSalesRatioTTM String?
+
+  /// Price-to-Book ratio.
+  priceToBookRatio String?
+
+  /// Enterprise Value to Revenue ratio.
+  evToRevenue String?
+
+  /// Enterprise Value to EBITDA ratio.
+  evToEbitda String?
+
+  /// Beta coefficient measuring volatility.
+  beta String?
+
+  /// 52-week high price of the asset.
+  week52High String?
+
+  /// 52-week low price of the asset.
+  week52Low String?
+
+  /// 50-day moving average price.
+  day50MovingAverage String?
+
+  /// 200-day moving average price.
+  day200MovingAverage String?
+
+  /// Total number of shares outstanding.
+  sharesOutstanding String?
+
+  /// Date when the next dividend is paid.
+  dividendDate String?
+
+  /// Date when the asset goes ex-dividend.
+  exDividendDate String?
+
+  /// Timestamp when the asset was created in the database.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the asset was last updated in the database.
+  updatedAt DateTime @default(now())
+
+  /// List of trades involving this asset.
+  trades Trade[]
+
+  /// List of orders involving this asset.
+  orders Order[]
+
+  /// List of positions involving this asset.
+  positions Position[]
+
+  /// List of news article sentiments related to this asset.
+  newsMentions NewsArticleAssetSentiment[]
 
   @@map(name: "assets")
 }
 
+// Represents a trade executed through an Alpaca account.
 model Trade {
-  id              String        @id @default(uuid()) @db.Uuid
-  alpacaAccountId String        @db.Uuid
-  assetId         String        @db.Uuid
-  quantity        Float
-  price           Float
-  total           Float
-  timestamp       DateTime      @default(now()) @map(name: "timestamp")
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
-  status          TradeStatus   @default(PENDING)
-  alpacaAccount   AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
-  asset           Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
-  actions         Action[]
+  /// Unique identifier for the trade.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the Alpaca account used for the trade.
+  alpacaAccountId String @db.Uuid
+
+  /// Reference to the asset being traded.
+  assetId String @db.Uuid
+
+  /// Quantity of the asset being traded.
+  qty Float
+
+  /// Price at which the asset was traded.
+  price Float
+
+  /// Total value of the trade (qty * price).
+  total Float
+
+  /// Signal that triggered the trade.
+  signal String
+
+  /// Strategy used to execute the trade.
+  strategy String
+
+  /// Analysis supporting the trade decision.
+  analysis String
+
+  /// Confidence level in the trade decision.
+  confidence Float
+
+  /// Timestamp when the trade was executed.
+  timestamp DateTime @default(now()) @map(name: "timestamp")
+
+  /// Timestamp when the trade record was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the trade record was last updated.
+  updatedAt DateTime @default(now())
+
+  /// Current status of the trade.
+  status TradeStatus @default(PENDING)
+
+  /// Relation to the AlpacaAccount model.
+  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  /// Relation to the Asset model.
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  /// List of actions associated with this trade.
+  actions Action[]
 
   @@map(name: "trades")
 }
 
+// Represents an action performed as part of a trade.
 model Action {
-  id            String          @id @default(uuid()) @db.Uuid
-  tradeId       String          @db.Uuid
-  sequence      Int
-  action        TradeAction
-  hedgeType     String?
-  hedgePrice    Float?
-  buyPrice      Float?
-  sellPrice     Float?
-  qty           Float
-  side          TradeStepSide
-  type          OrderType
-  stopLoss      Float?
-  targetPrice   Float?
-  note          String
+  /// Unique identifier for the action.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the trade this action is part of.
+  tradeId String @db.Uuid
+
+  /// Sequence number of the action within the trade.
+  sequence Int
+
+  /// Type of trade action, defined by TradeAction enum.
+  action TradeAction
+
+  /// Type of hedge applied, if any.
+  hedgeType String?
+
+  /// Price at which the hedge was executed.
+  hedgePrice Float?
+
+  /// Price at which the asset was bought.
+  buyPrice Float?
+
+  /// Price at which the asset was sold.
+  sellPrice Float?
+
+  /// Quantity of the asset involved in the action.
+  qty Float
+
+  /// Side of the trade action (BUY or SELL).
+  side TradeActionSide
+
+  /// Type of order used in the action, defined by OrderType enum.
+  type OrderType
+
+  /// Stop-loss price set for the action.
+  stopLoss Float?
+
+  /// Target price set for the action.
+  targetPrice Float?
+
+  /// Additional notes or comments about the action.
+  note String
+
+  /// Timestamp when the action was executed.
   executionTime DateTime?
-  status        TradeStepStatus
-  fee           Float?
+
+  /// Current status of the trade action.
+  status TradeActionStatus
+
+  /// Fees associated with the action.
+  fee Float?
 
   // Relations
+  /// Relation to the Trade model.
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
-  @@map(name: "trade_steps")
+  @@map(name: "trade_actions")
 }
 
+// Represents an order placed through an Alpaca account.
 model Order {
-  id              String        @id @default(uuid()) @db.Uuid
-  alpacaAccountId String        @db.Uuid
-  assetId         String        @db.Uuid
-  type            OrderType
-  action          TradeAction
-  quantity        Float
-  price           Float
-  status          OrderStatus
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
-  alpacaAccount   AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
-  asset           Asset         @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  /// Unique identifier for the order.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the Alpaca account used for the order.
+  alpacaAccountId String @db.Uuid
+
+  /// Reference to the asset being ordered.
+  assetId String @db.Uuid
+
+  /// Type of order, defined by OrderType enum.
+  type OrderType
+
+  /// Action of the order, defined by TradeAction enum.
+  action TradeAction
+
+  /// Quantity of the asset to be ordered.
+  qty Float
+
+  /// Price at which the asset is to be bought or sold.
+  price Float
+
+  /// Current status of the order, defined by OrderStatus enum.
+  status OrderStatus
+
+  /// Timestamp when the order was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the order was last updated.
+  updatedAt DateTime @default(now())
+
+  /// Relation to the AlpacaAccount model.
+  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  /// Relation to the Asset model.
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   @@map(name: "orders")
 }
 
+// Represents an alert generated by the system for the user.
 model Alert {
-  id              String        @id @default(uuid()) @db.Uuid
-  alpacaAccountId String        @db.Uuid
-  message         String
-  type            AlertType
-  isRead          Boolean       @default(false)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now())
-  alpacaAccount   AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  /// Unique identifier for the alert.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the Alpaca account associated with the alert.
+  alpacaAccountId String @db.Uuid
+
+  /// Message content of the alert.
+  message String
+
+  /// Type of the alert, defined by AlertType enum.
+  type AlertType
+
+  /// Indicates whether the alert has been read by the user.
+  isRead Boolean @default(false)
+
+  /// Timestamp when the alert was created.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the alert was last updated.
+  updatedAt DateTime @default(now())
+
+  /// Relation to the AlpacaAccount model.
+  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   @@map(name: "alerts")
 }
 
+// Represents a news article related to financial markets.
 model NewsArticle {
-  id            String                      @id @default(uuid()) @db.Uuid
-  title         String
-  content       String?
-  source        String
-  sourceDomain  String?
-  url           String                      @unique
-  sentiment     String
-  authors       String[]
-  summary       String?
-  bannerImage   String?
+  /// Unique identifier for the news article.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Title of the news article.
+  title String
+
+  /// Full content of the news article.
+  content String?
+
+  /// Source of the news article (e.g., Bloomberg, Reuters).
+  source String
+
+  /// Domain of the source website.
+  sourceDomain String?
+
+  /// URL to the original news article, must be unique.
+  url String @unique
+
+  /// Sentiment analysis result of the article.
+  sentiment String
+
+  /// List of authors who wrote the article.
+  authors String[]
+
+  /// Summary or abstract of the news article.
+  summary String?
+
+  /// URL to the banner image of the article.
+  bannerImage String?
+
+  /// Publication time of the article.
   timePublished String
-  category      String?
-  topics        String[]
-  logo          String?
-  createdAt     DateTime                    @default(now())
-  updatedAt     DateTime                    @default(now())
-  assets        NewsArticleAssetSentiment[]
+
+  /// Category or genre of the news article.
+  category String?
+
+  /// Topics covered in the news article.
+  topics String[]
+
+  /// URL to the logo image of the news source.
+  logo String?
+
+  /// Timestamp when the news article was added to the database.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the news article was last updated.
+  updatedAt DateTime @default(now())
+
+  /// List of asset sentiments associated with this news article.
+  assets NewsArticleAssetSentiment[]
 
   @@map(name: "news")
 }
 
+// Represents the sentiment of a news article towards a specific asset.
 model NewsArticleAssetSentiment {
-  id             String      @id @default(uuid()) @db.Uuid
-  assetId        String      @db.Uuid
-  newsArticleId  String      @db.Uuid
-  url            String      @unique
-  news           NewsArticle @relation(fields: [newsArticleId], references: [id])
-  asset          Asset       @relation(fields: [assetId], references: [id])
+  /// Unique identifier for the sentiment record.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the associated asset.
+  assetId String @db.Uuid
+
+  /// Reference to the associated news article.
+  newsArticleId String @db.Uuid
+
+  /// URL of the news article, must be unique.
+  url String @unique
+
+  /// Relation to the NewsArticle model.
+  news NewsArticle @relation(fields: [newsArticleId], references: [id])
+
+  /// Relation to the Asset model.
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  /// Relevancy score indicating how relevant the news is to the asset.
   relevancyScore String?
+
+  /// Sentiment score derived from the news content.
   sentimentScore String?
+
+  /// Label indicating the overall sentiment (e.g., Positive, Negative, Neutral).
   sentimentLabel String?
 }
 
+// Represents an economic event that may impact the markets.
 model EconomicEvent {
-  id          String          @id @default(uuid()) @db.Uuid
-  title       String
+  /// Unique identifier for the economic event.
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Title or name of the economic event.
+  title String
+
+  /// Detailed description of the economic event.
   description String?
-  date        DateTime
-  importance  EventImportance
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @default(now())
+
+  /// Date and time when the economic event is scheduled to occur.
+  date DateTime
+
+  /// Importance level of the event, defined by EventImportance enum.
+  importance EventImportance
+
+  /// Timestamp when the economic event was created in the database.
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the economic event was last updated in the database.
+  updatedAt DateTime @default(now())
 
   @@map(name: "economic_events")
 }

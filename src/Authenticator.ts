@@ -108,9 +108,13 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -131,7 +135,7 @@ export const Authenticator = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -434,9 +438,13 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -457,7 +465,7 @@ export const Authenticator = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1261,9 +1269,13 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1284,7 +1296,7 @@ export const Authenticator = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1457,9 +1469,13 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1480,7 +1496,7 @@ export const Authenticator = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1651,9 +1667,13 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1674,7 +1694,7 @@ export const Authenticator = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt
@@ -1839,9 +1859,13 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
-                quantity
+                qty
                 price
                 total
+                signal
+                strategy
+                analysis
+                confidence
                 timestamp
                 createdAt
                 updatedAt
@@ -1862,7 +1886,7 @@ export const Authenticator = {
                 assetId
                 type
                 action
-                quantity
+                qty
                 price
                 status
                 createdAt

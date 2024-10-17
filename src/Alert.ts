@@ -120,9 +120,13 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -229,7 +233,7 @@ export const Alert = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -317,9 +321,13 @@ export const Alert = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -333,7 +341,7 @@ export const Alert = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -533,9 +541,13 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -642,7 +654,7 @@ export const Alert = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -801,14 +813,26 @@ export const Alert = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
           total: item.total !== undefined ? {
               set: item.total  
+             } : undefined,
+          signal: item.signal !== undefined ? {
+              set: item.signal  
+             } : undefined,
+          strategy: item.strategy !== undefined ? {
+              set: item.strategy  
+             } : undefined,
+          analysis: item.analysis !== undefined ? {
+              set: item.analysis  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
              } : undefined,
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
@@ -818,9 +842,13 @@ export const Alert = {
              } : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -841,8 +869,8 @@ export const Alert = {
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
@@ -854,7 +882,7 @@ export const Alert = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -961,9 +989,13 @@ export const Alert = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -977,7 +1009,7 @@ export const Alert = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1160,14 +1192,26 @@ export const Alert = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
           total: item.total !== undefined ? {
               set: item.total  
+             } : undefined,
+          signal: item.signal !== undefined ? {
+              set: item.signal  
+             } : undefined,
+          strategy: item.strategy !== undefined ? {
+              set: item.strategy  
+             } : undefined,
+          analysis: item.analysis !== undefined ? {
+              set: item.analysis  
+             } : undefined,
+          confidence: item.confidence !== undefined ? {
+              set: item.confidence  
              } : undefined,
           timestamp: item.timestamp !== undefined ? {
               set: item.timestamp  
@@ -1177,9 +1221,13 @@ export const Alert = {
              } : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1200,8 +1248,8 @@ export const Alert = {
           action: item.action !== undefined ? {
               set: item.action  
              } : undefined,
-          quantity: item.quantity !== undefined ? {
-              set: item.quantity  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
              } : undefined,
           price: item.price !== undefined ? {
               set: item.price  
@@ -1213,7 +1261,7 @@ export const Alert = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1320,9 +1368,13 @@ export const Alert = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           total: item.total !== undefined ? item.total : undefined,
+          signal: item.signal !== undefined ? item.signal : undefined,
+          strategy: item.strategy !== undefined ? item.strategy : undefined,
+          analysis: item.analysis !== undefined ? item.analysis : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1336,7 +1388,7 @@ export const Alert = {
         create: {
           type: item.type !== undefined ? item.type : undefined,
           action: item.action !== undefined ? item.action : undefined,
-          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
           status: item.status !== undefined ? item.status : undefined,
         },
@@ -1496,9 +1548,13 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -1605,7 +1661,7 @@ export const Alert = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -1778,9 +1834,13 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -1887,7 +1947,7 @@ export const Alert = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -2058,9 +2118,13 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -2167,7 +2231,7 @@ export const Alert = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
@@ -2332,9 +2396,13 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              quantity
+              qty
               price
               total
+              signal
+              strategy
+              analysis
+              confidence
               timestamp
               createdAt
               updatedAt
@@ -2441,7 +2509,7 @@ export const Alert = {
               assetId
               type
               action
-              quantity
+              qty
               price
               status
               createdAt
