@@ -78,10 +78,10 @@ function generateModelsSection() {
   const enums = enumFiles.map(file => path.basename(file, '.mjs'));
 
   // Start building the Markdown section
-  let section = `### Model Types and CRUD Resolvers\n\n`;
+  let section = `### Model TypeStrings, Types, and available CRUD Resolvers\n\n`;
   section += `The \`adaptic-backend\` package includes a comprehensive set of CRUD (Create, Read, Update, Delete) resolvers for each of your models. Each model has the following functions (available directly under the \`${GLOBAL_NAMESPACE}\` namespace) and types (under the \`types\` namespace):\n\n`;
-  section += `| Model Name | Type | CRUD Resolvers |\n`;
-  section += `|------------|-------|-----------------|\n`;
+  section += `| Model Name | TypeString | Type | CRUD Resolvers |\n`;
+  section += `|------------|------------|------------|-----------------|\n`;
 
   models.forEach(model => {
     // Capitalize the first letter for consistency
@@ -90,11 +90,14 @@ function generateModelsSection() {
     // Define the type name
     const typeName = `types.${ModelName}`;
 
+    // Define the typeString name
+    const typeString = `typeStrings.${ModelName}`;
+
     // Define the CRUD resolvers
     const crudResolvers = `\`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.create\`, \`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.createMany\`, \`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.update\`, \`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.delete\`, \`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.get\`, \`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.getAll\`, \`${GLOBAL_NAMESPACE}.${lowerCaseFirstLetter(ModelName)}.findMany\``;
 
     // Append the row to the table
-    section += `| ${ModelName} | \`${typeName}\` | ${crudResolvers} |\n`;
+    section += `| ${ModelName} | \`${typeString}\` | \`${typeName}\` | ${crudResolvers} |\n`;
   });
 
   // Add a section for enums
@@ -184,8 +187,6 @@ try {
   process.exit(1);
 }
 
-
-
 // Step 3b: Rename .js to .cjs in dist/
 try {
   const cjsFiles = getFilesRecursively(distDir);
@@ -200,6 +201,33 @@ try {
   console.error('Error processing dist:', err);
   process.exit(1);
 }
+
+// Step 3c: update import for ./generated/typeStrings/index in dist/index.cjs to ./generated/typeStrings/index.cjs
+
+try {
+  const indexPath = path.join(distDir, 'index.cjs');
+  let content = fs.readFileSync(indexPath, 'utf8');
+  content = content.replace(/\.\/generated\/typeStrings\/index/g, './generated/typeStrings/index.cjs');
+  fs.writeFileSync(indexPath, content, 'utf8');
+  console.log('Updated import for "./generated/typeStrings/index" in dist/index.cjs to "./generated/typeStrings/index.cjs".');
+} catch (err) {
+  console.error('Error updating import for "./generated/typeStrings/index" in dist/index.cjs:', err);
+  process.exit(1);
+}
+
+// Step 3d: update import for ./generated/typeStrings/index in dist/server/index.mjs to ./generated/typeStrings/index.mjs
+
+try {
+  const serverIndexPath = path.join(distServerDir, 'index.mjs');
+  let content = fs.readFileSync(serverIndexPath, 'utf8');
+  content = content.replace(/\.\/generated\/typeStrings\/index/g, './generated/typeStrings/index.mjs');
+  fs.writeFileSync(serverIndexPath, content, 'utf8');
+  console.log('Updated import for "./generated/typeStrings/index" in dist/server/index.mjs to "./generated/typeStrings/index.mjs".');
+} catch (err) {
+  console.error('Error updating import for "./generated/typeStrings/index" in dist/server/index.mjs:', err);
+  process.exit(1);
+}
+
 // Step 4: Update the README.md with Models and CRUD Resolvers section based on the models in the project
 
 // Read the current README

@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rm -rf dist && rm -rf src/generated",
     "dev": "npm run migrate:dev  && npm run fix-imports && nodemon --exec ts-node src/server.ts",
-    "build": "npm run clean && npm run generate && npm run fix-imports && npm run generate:functions && tsc && npm run build:server",
+    "build": "npm run clean && npm run generate && npm run fix-imports && npm run generate:functions && npm run generate:strings && tsc && npm run build:server",
     "build:server": "tsc --project tsconfig.server.json",
     "build:package": "npm run build && npm run prepare-package-folder",
     "start": "npm run migrate && node dist/server.js",
@@ -24,6 +24,7 @@
     "migrate": "npx prisma migrate deploy",
     "update-backend-functions": "node update-backend-functions.mjs",
     "generate:functions": "ts-node src/modules/index.ts",
+    "generate:strings": "ts-node src/modules/generateStrings.ts",
     "fix-imports": "node fix-import-paths.cjs",
     "prepare-package-folder": "node prepare-package.mjs"
   },
@@ -57,7 +58,6 @@
     "@apollo/server": "^4.10.4",
     "@aws-sdk/client-lambda": "^3.624.0",
     "@prisma/client": "^5.17.0",
-    "@prisma/sdk": "^3.15.2",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

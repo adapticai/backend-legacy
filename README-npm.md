@@ -20,6 +20,7 @@ This package offers a robust backend solution tailored for the Adaptic AI platfo
 - **Dynamically contructed variables and arguments**: No need to worry about constructing gql operations, simply pass through the data as an object that conforms to the model's type definition.
 - **Server-Side and Client-Side Support**: Versatile usage in both environments, including AWS Lambda functions.
 - **Enums Namespace**: Organized enums for consistent value usage across models.
+- **TypeStrings Namespace**: TypeStrings const definitions that are stringified versions of the various model types (including any nested types or enums within them). This is useful when wanting to pass these on to an LLM as a reference (e.g. when asking it to return a specific type of data).
 - **Automated Documentation**: The build script dynamically generates a list of all models and their CRUD resolvers in the `README.md`.
 
 ## Prerequisites
@@ -30,9 +31,7 @@ To use the `adaptic-backend` package, the only requirement is to ensure you have
 
 Add the folowing to your `.env` file or add them as environment variables in your deployment environment:
 
-- `GRAPHQL_ENDPOINT`: The URI of your GraphQL server (e.g., `http://localhost:4000/graphql` for local development, or a production endpoint for deployment e.g. `https://api.example.com/graphql`).
-- `BACKEND_HTTPS_URL`: The HTTPS URL of your GraphQL server. E.g. `https://api.example.com/graphql`.
-- `BACKEND_WS_URL`: The WebSocket URL of your GraphQL server. E.g. `wss://api.example.com/subscriptions`.
+- `BACKEND_HTTPS_URL`: The HTTPS URL of your GraphQL server. E.g. `https://api.adaptic.ai/graphql` for production, and `https://localhost:4000/graphql` for local development.
 
 Example `.env` file:
 
@@ -111,11 +110,11 @@ updateUser();
 
 #### Server-Side Usage (Within a Lambda Function)
 
-The only difference between client-side and server-side usage is the import statement. On the server-side, you import the functions from `adaptic-backend/server` instead of `adaptic-backend`, and you need to provide an Apollo Client instance to the functions with the use of 'fetch' for the HTTP link.
+The only difference between client-side and server-side usage is the import statement. On the server-side, you import the functions from `adaptic-backend/server/index` instead of `adaptic-backend`, and you need to provide an Apollo Client instance to the functions with the use of 'fetch' for the HTTP link.
 
 ```javascript
 // server-side/lambdaFunction.mjs
-import adaptic from 'adaptic-backend/server';
+import adaptic from 'adaptic-backend/server/index';
 
 export const handler = async (event) => {
   // Parse the incoming event data
@@ -157,7 +156,7 @@ export const handler = async (event) => {
 
 ### Types Namespace
 
-Types associated with your data models are available under the `adaptic.types` namespace. This provides type safety and consistency when working with your models.
+Types associated with your data models are available under the `types` namespace. This provides type safety and consistency when working with your models.
 
 ```typescript
 // types-example.ts
@@ -180,7 +179,7 @@ const updateUser: types.UserUpdateInput = {
 
 ### Enums Namespace
 
-Enums associated with your data models are available under the `adaptic.enums` namespace. This provides type safety and consistency when working with your models.
+Enums associated with your data models are available under the `enums` namespace. This provides type safety and consistency when working with your models.
 
 ```typescript
 // enums-example.ts
@@ -195,7 +194,30 @@ const setUserRole = (role: enums.UserRole) => {
 };
 ```
 
-### Models and CRUD Resolvers
+### TypeStrings Namespace
+
+TypeStrings are stringified versions of the various model types (including any nested types or enums within them). These are available under the `typeStrings` namespace.
+
+Their purpose is to provide a reference to the type of data being requested, which can be passed on to an LLM (Language Learning Model) as a reference within a prompt or query. This is useful when asking the LLM to return a specific type of data that should conform to the model's structure.
+
+```typescript
+
+// typeStrings-example.ts
+
+import { typeStrings } from 'adaptic-backend';
+
+// Use typeStrings in a prompt being sent to an LLM
+const prompt = `
+
+... some other prompt text
+
+\${typeStrings.User}
+
+`;
+
+```
+
+### Model CRUD Resolvers
 
 The `adaptic-backend` package includes a comprehensive set of CRUD (Create, Read, Update, Delete) resolvers for each of your models. Each model has the following functions:
 
@@ -206,5 +228,3 @@ The `adaptic-backend` package includes a comprehensive set of CRUD (Create, Read
 - `ModelName.get`: Retrieve a single record by unique identifier.
 - `ModelName.getAll`: Retrieve all records.
 - `ModelName.findMany`: Retrieve multiple records based on criteria.
-
-
