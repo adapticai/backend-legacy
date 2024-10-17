@@ -878,6 +878,9 @@ model Order {
   /// Price at which the asset is to be bought or sold.
   price Float
 
+  // Stop loss price for the order.
+  stopLoss Float?
+
   /// Current status of the order, defined by OrderStatus enum.
   status OrderStatus
 
@@ -898,6 +901,9 @@ model Order {
 
   /// The asset this order is for.
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  /// Fee associated with the order.
+  fee Float?
 
   @@map(name: "orders")
 }
