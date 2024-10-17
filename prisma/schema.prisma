@@ -102,7 +102,7 @@ enum AlpacaAccountType {
 }
 
 // Enumerates the possible actions that can be performed on a trade.
-enum TradeAction {
+enum ActionType {
   /// Initiates a purchase of an asset.
   BUY
 
@@ -126,7 +126,7 @@ enum TradeAction {
 }
 
 // Indicates the side of a trade action, whether buying or selling.
-enum TradeActionSide {
+enum OrderSide {
   /// Represents the buying side of a trade action.
   BUY
 
@@ -135,7 +135,7 @@ enum TradeActionSide {
 }
 
 // Represents the current status of a trade action.
-enum TradeActionStatus {
+enum ActionStatus {
   /// The trade action is planned and awaiting execution.
   STAGED
 
@@ -822,51 +822,32 @@ model Action {
   /// Unique identifier for the action.
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the trade this action is part of.
-  tradeId String @db.Uuid
-
   /// Sequence number of the action within the trade.
   sequence Int
 
-  /// Type of trade action, defined by TradeAction enum.
-  action TradeAction
+  /// Reference to the trade this action is part of.
+  tradeId String @db.Uuid
 
-  /// Quantity of the asset involved in the action.
-  qty Float
+  /// Type of trade action, defined by ActionType enum.
+  type ActionType
 
-  /// Side of the trade action (BUY or SELL).
-  side TradeActionSide
-
-  /// Type of order used in the action, defined by OrderType enum.
-  type OrderType
-
-  /// Price at which the asset was bought.
-  boughtPrice Float?
-
-  /// Price at which the asset was sold.
-  soldPrice Float?
-
-  /// Stop-loss price set for the action.
-  stopLoss Float?
-
-  /// Target price set for the action.
-  targetPrice Float?
+  /// Reference to the order ID associated with the action.
+  orderId String? @unique @db.Uuid
 
   /// Additional notes or comments about the action.
   note String
 
-  /// Timestamp when the action was executed.
-  executionTime DateTime?
-
   /// Current status of the trade action.
-  status TradeActionStatus
+  status ActionStatus @default(STAGED)
 
   /// Fees associated with the action.
   fee Float?
 
-  // Relations
-  /// Relation to the Trade model.
+  /// The trade this action is part of.
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+
+  /// The order associated with this action.
+  order Order?
 
   @@map(name: "trade_actions")
 }
@@ -880,13 +861,16 @@ model Order {
   alpacaAccountId String @db.Uuid
 
   /// Reference to the asset being ordered.
-  assetId String @db.Uuid
+  assetId String @unique @db.Uuid
+
+  /// Reference to the action associated with the order.
+  actionId String @unique @db.Uuid
 
   /// Type of order, defined by OrderType enum.
   type OrderType
 
-  /// Action of the order, defined by TradeAction enum.
-  action TradeAction
+  /// Side of the order (BUY or SELL).
+  side OrderSide
 
   /// Quantity of the asset to be ordered.
   qty Float
@@ -903,10 +887,16 @@ model Order {
   /// Timestamp when the order was last updated.
   updatedAt DateTime @default(now())
 
-  /// Relation to the AlpacaAccount model.
+  /// Timestamp when the action was executed.
+  executionTime DateTime?
+
+  /// The Alpaca account this order is associated with.
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Relation to the Asset model.
+  /// The action this order is associated with.
+  action Action @relation(fields: [actionId], references: [id], onDelete: Cascade)
+
+  /// The asset this order is for.
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   @@map(name: "orders")
