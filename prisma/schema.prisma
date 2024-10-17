@@ -803,7 +803,7 @@ model Trade {
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
-  optionType OptionContractType? @default(CALL)
+  optionContractType OptionContractType? @default(CALL)
 
   /// List of actions associated with this trade.
   actions Action[]
