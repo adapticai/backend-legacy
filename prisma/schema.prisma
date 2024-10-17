@@ -731,6 +731,12 @@ model Asset {
   /// Date when the asset goes ex-dividend.
   exDividendDate String?
 
+  /// Last sell price of the asset.
+  sellPrice String?
+
+  /// Last buy price of the asset.
+  buyPrice String?
+
   /// Timestamp when the asset was created in the database.
   createdAt DateTime @default(now())
 
@@ -825,18 +831,6 @@ model Action {
   /// Type of trade action, defined by TradeAction enum.
   action TradeAction
 
-  /// Type of hedge applied, if any.
-  hedgeType String?
-
-  /// Price at which the hedge was executed.
-  hedgePrice Float?
-
-  /// Price at which the asset was bought.
-  buyPrice Float?
-
-  /// Price at which the asset was sold.
-  sellPrice Float?
-
   /// Quantity of the asset involved in the action.
   qty Float
 
@@ -845,6 +839,12 @@ model Action {
 
   /// Type of order used in the action, defined by OrderType enum.
   type OrderType
+
+  /// Price at which the asset was bought.
+  boughtPrice Float?
+
+  /// Price at which the asset was sold.
+  soldPrice Float?
 
   /// Stop-loss price set for the action.
   stopLoss Float?
