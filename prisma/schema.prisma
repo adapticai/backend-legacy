@@ -174,6 +174,9 @@ enum OrderType {
 
   /// An order that combines a stop order and a limit order.
   STOP_LIMIT
+
+  /// An order that adjusts the stop price based on the asset's price movement.
+  TRAILING_STOP
 }
 
 // Specifies the type of option contract (CALL or PUT).
@@ -186,18 +189,46 @@ enum OptionContractType {
 }
 
 // Represents the current status of an order.
+
 enum OrderStatus {
   /// The order has been received but not yet processed.
-  PENDING
+  NEW
 
-  /// The order has been fully executed.
+  /// The order has been received and is being processed.
+  PARTIALLY_FILLED
+
+  /// The order has been fully executed
   FILLED
 
-  /// The order has been cancelled by the user or system.
-  CANCELLED
+  /// The order has been canceled by the user or system.
+  CANCELED
 
   /// The order was rejected by the broker or exchange.
   REJECTED
+
+  /// The order has expired and is no longer valid.
+  EXPIRED
+}
+
+/// Time in force enum (day, gtc, opg, cls, etc.).
+enum TimeInForce {
+  /// The order is valid for the day and expires at market close.
+  DAY
+
+  /// The order is valid until canceled by the user.
+  GTC
+
+  /// The order is valid for the opening of the market.
+  OPG
+
+  /// The order is valid until the close of the market.
+  CLS
+
+  /// The order must be executed immediately or canceled.
+  IOC
+
+  /// The order must be executed immediately or canceled.
+  FOK
 }
 
 // Categorizes the types of alerts that can be generated.
@@ -863,25 +894,43 @@ model Order {
   /// Reference to the asset being ordered.
   assetId String @unique @db.Uuid
 
-  /// Reference to the action associated with the order.
-  actionId String @unique @db.Uuid
+  /// Symbol of the asset (ticker symbol).
+  symbol String
 
-  /// Type of order, defined by OrderType enum.
-  type OrderType
+  /// Quantity of the asset to be ordered.
+  qty Float?
+
+  /// Notional value of the order. Optional, used if qty is not provided.
+  notional Float?
 
   /// Side of the order (BUY or SELL).
   side OrderSide
 
-  /// Quantity of the asset to be ordered.
-  qty Float
+  /// Type of order (market, limit, stop, stop_limit, trailing_stop).
+  type OrderType
 
-  /// Price at which the asset is to be bought or sold.
-  price Float
+  /// Time in force for the order (day, gtc, opg, cls, ioc, fok).
+  timeInForce TimeInForce
 
-  // Stop loss price for the order.
-  stopLoss Float?
+  /// Limit price for limit or stop-limit orders.
+  limitPrice Float?
 
-  /// Current status of the order, defined by OrderStatus enum.
+  /// Stop price for stop or stop-limit orders.
+  stopPrice Float?
+
+  /// Trailing price for trailing stop orders.
+  trailPrice Float?
+
+  /// Trailing percent for trailing stop orders.
+  trailPercent Float?
+
+  /// Whether the order is eligible for extended hours.
+  extendedHours Boolean?
+
+  /// Client-supplied identifier for the order.
+  clientOrderId String? @unique
+
+  /// Current status of the order.
   status OrderStatus
 
   /// Timestamp when the order was created.
@@ -890,8 +939,17 @@ model Order {
   /// Timestamp when the order was last updated.
   updatedAt DateTime @default(now())
 
-  /// Timestamp when the action was executed.
-  executionTime DateTime?
+  /// Timestamp when the order was submitted.
+  submittedAt DateTime?
+
+  /// Timestamp when the order was filled.
+  filledAt DateTime?
+
+  /// Average price at which the order was filled.
+  filledAvgPrice Float?
+
+  /// Reference to the action associated with the order.
+  actionId String @unique @db.Uuid
 
   /// The Alpaca account this order is associated with.
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
