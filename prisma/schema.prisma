@@ -894,9 +894,6 @@ model Order {
   /// Reference to the asset being ordered.
   assetId String @unique @db.Uuid
 
-  /// Symbol of the asset (ticker symbol).
-  symbol String
-
   /// Quantity of the asset to be ordered.
   qty Float?
 
