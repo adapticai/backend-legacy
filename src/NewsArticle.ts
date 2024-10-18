@@ -103,6 +103,8 @@ export const NewsArticle = {
               sharesOutstanding
               dividendDate
               exDividendDate
+              sellPrice
+              buyPrice
               createdAt
               updatedAt
               trades {
@@ -126,6 +128,7 @@ export const NewsArticle = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -134,19 +137,26 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -271,6 +281,8 @@ export const NewsArticle = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? item.asset.sellPrice : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? item.asset.buyPrice : undefined,
         },
       }
     } : undefined,
@@ -438,6 +450,8 @@ export const NewsArticle = {
               sharesOutstanding
               dividendDate
               exDividendDate
+              sellPrice
+              buyPrice
               createdAt
               updatedAt
               trades {
@@ -461,6 +475,7 @@ export const NewsArticle = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -469,19 +484,26 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -767,6 +789,12 @@ export const NewsArticle = {
           exDividendDate: item.asset.exDividendDate !== undefined ? {
               set: item.asset.exDividendDate  
              } : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? {
+              set: item.asset.sellPrice  
+             } : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? {
+              set: item.asset.buyPrice  
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -822,6 +850,8 @@ export const NewsArticle = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? item.asset.sellPrice : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? item.asset.buyPrice : undefined,
         },
       }
     } : undefined,
@@ -892,6 +922,8 @@ export const NewsArticle = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? item.asset.sellPrice : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? item.asset.buyPrice : undefined,
         },
       }
     } : undefined,
@@ -1183,6 +1215,12 @@ export const NewsArticle = {
           exDividendDate: item.asset.exDividendDate !== undefined ? {
               set: item.asset.exDividendDate  
              } : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? {
+              set: item.asset.sellPrice  
+             } : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? {
+              set: item.asset.buyPrice  
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1238,6 +1276,8 @@ export const NewsArticle = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? item.asset.sellPrice : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? item.asset.buyPrice : undefined,
         },
       }
     } : undefined,
@@ -1308,6 +1348,8 @@ export const NewsArticle = {
           sharesOutstanding: item.asset.sharesOutstanding !== undefined ? item.asset.sharesOutstanding : undefined,
           dividendDate: item.asset.dividendDate !== undefined ? item.asset.dividendDate : undefined,
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
+          sellPrice: item.asset.sellPrice !== undefined ? item.asset.sellPrice : undefined,
+          buyPrice: item.asset.buyPrice !== undefined ? item.asset.buyPrice : undefined,
         },
       }
     } : undefined,
@@ -1426,6 +1468,8 @@ export const NewsArticle = {
               sharesOutstanding
               dividendDate
               exDividendDate
+              sellPrice
+              buyPrice
               createdAt
               updatedAt
               trades {
@@ -1449,6 +1493,7 @@ export const NewsArticle = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1457,19 +1502,26 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1619,6 +1671,8 @@ export const NewsArticle = {
               sharesOutstanding
               dividendDate
               exDividendDate
+              sellPrice
+              buyPrice
               createdAt
               updatedAt
               trades {
@@ -1642,6 +1696,7 @@ export const NewsArticle = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1650,19 +1705,26 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1814,6 +1876,8 @@ export const NewsArticle = {
               sharesOutstanding
               dividendDate
               exDividendDate
+              sellPrice
+              buyPrice
               createdAt
               updatedAt
               trades {
@@ -1837,6 +1901,7 @@ export const NewsArticle = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1845,19 +1910,26 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1999,6 +2071,8 @@ export const NewsArticle = {
               sharesOutstanding
               dividendDate
               exDividendDate
+              sellPrice
+              buyPrice
               createdAt
               updatedAt
               trades {
@@ -2022,6 +2096,7 @@ export const NewsArticle = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -2030,19 +2105,26 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id

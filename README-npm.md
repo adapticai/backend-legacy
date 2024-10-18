@@ -160,7 +160,7 @@ Types associated with your data models are available under the `types` namespace
 
 ```typescript
 // types-example.ts
-import { types } from 'adaptic-backend';
+import { types } from 'adaptic-backend'; 
 
 // Define a new user
 const newUser: types.UserCreateInput = {

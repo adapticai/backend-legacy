@@ -81,6 +81,8 @@ export const Position = {
             sharesOutstanding
             dividendDate
             exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
@@ -127,25 +129,20 @@ export const Position = {
               asset {
                 id
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -154,19 +151,26 @@ export const Position = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -302,6 +306,8 @@ export const Position = {
         sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
         dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
+        sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
+        buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? {
       connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
@@ -317,6 +323,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -327,10 +334,13 @@ export const Position = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -399,6 +409,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -409,10 +420,13 @@ export const Position = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -572,6 +586,8 @@ export const Position = {
             sharesOutstanding
             dividendDate
             exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
@@ -618,25 +634,20 @@ export const Position = {
               asset {
                 id
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -645,19 +656,26 @@ export const Position = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -939,6 +957,12 @@ export const Position = {
         exDividendDate: props.asset.exDividendDate !== undefined ? {
             set: props.asset.exDividendDate  
            } : undefined,
+        sellPrice: props.asset.sellPrice !== undefined ? {
+            set: props.asset.sellPrice  
+           } : undefined,
+        buyPrice: props.asset.buyPrice !== undefined ? {
+            set: props.asset.buyPrice  
+           } : undefined,
     trades: props.asset.trades ? {
       upsert: props.asset.trades.map((item: any) => ({
         where: {
@@ -975,6 +999,9 @@ export const Position = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -986,6 +1013,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1001,8 +1029,8 @@ export const Position = {
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          side: item.side !== undefined ? {
+              set: item.side  
              } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
@@ -1010,16 +1038,28 @@ export const Position = {
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
              } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1109,6 +1149,8 @@ export const Position = {
         sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
         dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
+        sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
+        buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? {
       connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
@@ -1124,6 +1166,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1134,10 +1177,13 @@ export const Position = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1278,6 +1324,9 @@ export const Position = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1289,6 +1338,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1304,8 +1354,8 @@ export const Position = {
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          side: item.side !== undefined ? {
+              set: item.side  
              } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
@@ -1313,16 +1363,28 @@ export const Position = {
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
              } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1396,6 +1458,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1406,10 +1469,13 @@ export const Position = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1687,6 +1753,12 @@ export const Position = {
         exDividendDate: prop.asset.exDividendDate !== undefined ? {
             set: prop.asset.exDividendDate  
            } : undefined,
+        sellPrice: prop.asset.sellPrice !== undefined ? {
+            set: prop.asset.sellPrice  
+           } : undefined,
+        buyPrice: prop.asset.buyPrice !== undefined ? {
+            set: prop.asset.buyPrice  
+           } : undefined,
     trades: prop.asset.trades ? {
       upsert: prop.asset.trades.map((item: any) => ({
         where: {
@@ -1723,6 +1795,9 @@ export const Position = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1734,6 +1809,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1749,8 +1825,8 @@ export const Position = {
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          side: item.side !== undefined ? {
+              set: item.side  
              } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
@@ -1758,16 +1834,28 @@ export const Position = {
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
              } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1857,6 +1945,8 @@ export const Position = {
         sharesOutstanding: prop.asset.sharesOutstanding !== undefined ? prop.asset.sharesOutstanding : undefined,
         dividendDate: prop.asset.dividendDate !== undefined ? prop.asset.dividendDate : undefined,
         exDividendDate: prop.asset.exDividendDate !== undefined ? prop.asset.exDividendDate : undefined,
+        sellPrice: prop.asset.sellPrice !== undefined ? prop.asset.sellPrice : undefined,
+        buyPrice: prop.asset.buyPrice !== undefined ? prop.asset.buyPrice : undefined,
     trades: prop.asset.trades ? {
       connectOrCreate: prop.asset.trades.map((item: any) => ({
         where: {
@@ -1872,6 +1962,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1882,10 +1973,13 @@ export const Position = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -2026,6 +2120,9 @@ export const Position = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -2037,6 +2134,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -2052,8 +2150,8 @@ export const Position = {
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          side: item.side !== undefined ? {
+              set: item.side  
              } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
@@ -2061,16 +2159,28 @@ export const Position = {
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
              } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -2144,6 +2254,7 @@ export const Position = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -2154,10 +2265,13 @@ export const Position = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -2266,6 +2380,8 @@ export const Position = {
             sharesOutstanding
             dividendDate
             exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
@@ -2312,25 +2428,20 @@ export const Position = {
               asset {
                 id
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2339,19 +2450,26 @@ export const Position = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -2501,6 +2619,8 @@ export const Position = {
             sharesOutstanding
             dividendDate
             exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
@@ -2547,25 +2667,20 @@ export const Position = {
               asset {
                 id
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2574,19 +2689,26 @@ export const Position = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -2734,6 +2856,8 @@ export const Position = {
             sharesOutstanding
             dividendDate
             exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
@@ -2780,25 +2904,20 @@ export const Position = {
               asset {
                 id
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2807,19 +2926,26 @@ export const Position = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -2961,6 +3087,8 @@ export const Position = {
             sharesOutstanding
             dividendDate
             exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
@@ -3007,25 +3135,20 @@ export const Position = {
               asset {
                 id
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -3034,19 +3157,26 @@ export const Position = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id

@@ -127,6 +127,7 @@ export const Customer = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -135,19 +136,26 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -457,6 +465,7 @@ export const Customer = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -465,19 +474,26 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1254,6 +1270,7 @@ export const Customer = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1262,19 +1279,26 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1454,6 +1478,7 @@ export const Customer = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1462,19 +1487,26 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1655,6 +1687,7 @@ export const Customer = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1663,19 +1696,26 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1847,6 +1887,7 @@ export const Customer = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1855,19 +1896,26 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id

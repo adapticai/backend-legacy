@@ -180,6 +180,8 @@ export const User = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -195,25 +197,20 @@ export const User = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -222,19 +219,26 @@ export const User = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -375,6 +379,7 @@ export const User = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -385,10 +390,13 @@ export const User = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -664,6 +672,8 @@ export const User = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -679,25 +689,20 @@ export const User = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -706,19 +711,26 @@ export const User = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -1011,6 +1023,9 @@ export const User = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1022,6 +1037,7 @@ export const User = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1037,8 +1053,8 @@ export const User = {
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          side: item.side !== undefined ? {
+              set: item.side  
              } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
@@ -1046,16 +1062,28 @@ export const User = {
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
              } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1173,6 +1201,7 @@ export const User = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1183,10 +1212,13 @@ export const User = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1514,6 +1546,9 @@ export const User = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1525,6 +1560,7 @@ export const User = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1540,8 +1576,8 @@ export const User = {
           type: item.type !== undefined ? {
               set: item.type  
              } : undefined,
-          action: item.action !== undefined ? {
-              set: item.action  
+          side: item.side !== undefined ? {
+              set: item.side  
              } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
@@ -1549,16 +1585,28 @@ export const User = {
           price: item.price !== undefined ? {
               set: item.price  
              } : undefined,
+          stopLoss: item.stopLoss !== undefined ? {
+              set: item.stopLoss  
+             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
+             } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime  
+             } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee  
              } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1676,6 +1724,7 @@ export const User = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1686,10 +1735,13 @@ export const User = {
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
-          action: item.action !== undefined ? item.action : undefined,
+          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           price: item.price !== undefined ? item.price : undefined,
+          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
@@ -1919,6 +1971,8 @@ export const User = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -1934,25 +1988,20 @@ export const User = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -1961,19 +2010,26 @@ export const User = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -2205,6 +2261,8 @@ export const User = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -2220,25 +2278,20 @@ export const User = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2247,19 +2300,26 @@ export const User = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -2493,6 +2553,8 @@ export const User = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -2508,25 +2570,20 @@ export const User = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2535,19 +2592,26 @@ export const User = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id
@@ -2771,6 +2835,8 @@ export const User = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -2786,25 +2852,20 @@ export const User = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2813,19 +2874,26 @@ export const User = {
               id
               alpacaAccountId
               assetId
+              actionId
               type
-              action
+              side
               qty
               price
+              stopLoss
               status
               createdAt
               updatedAt
+              executionTime
               alpacaAccount {
+                id
+              }
+              action {
                 id
               }
               asset {
                 id
               }
+              fee
             }
             positions {
               id

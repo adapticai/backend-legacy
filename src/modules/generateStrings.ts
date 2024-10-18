@@ -4,10 +4,14 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { getDMMF } from '@prisma/internals';
 import { DMMF } from '@prisma/generator-helper';
+
 const SCHEMA_PATH = path.join(__dirname, '../../prisma', 'schema.prisma');
 const OUTPUT_DIR = path.join(__dirname, '../../src', 'generated', 'typeStrings');
 const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
 const MAX_DEPTH = 4; // Set maximum recursion depth
+
+// Define the list of fields to exclude from content models
+const EXCLUDED_FIELDS = ['id', 'createdAt', 'updatedAt', 'slug'];
 
 /**
  * Converts Prisma scalar types to TypeScript types.
@@ -40,17 +44,26 @@ const generateEnumTS = (enums: DMMF.DatamodelEnum[]): string => {
     .join('\n');
 };
 
+// /**
+//  * Generates a simplified TypeScript interface with only the ID field.
+//  */
+// const generateSimplifiedInterface = (model: DMMF.Model): string => {
+//   const idField = model.fields.find((field) => field.isId) || model.fields[0];
+//   const tsType = prismaToTsType(idField.type);
+//   const isArray = idField.isList ? '[]' : '';
+//   const fieldDescription = idField.documentation
+//     ? `// ${idField.documentation}\n`
+//     : '';
+//   return `// Simplified reference to ${model.name}.\nexport interface ${model.name} {\n${fieldDescription}  ${idField.name}: ${tsType}${isArray};\n}\n\n`;
+// };
+
 /**
- * Generates a simplified TypeScript interface with only the ID field.
+ * Determines if a model is a content model based on the presence of excluded fields.
+ * @param model The Prisma model.
+ * @returns True if the model is a content model; otherwise, false.
  */
-const generateSimplifiedInterface = (model: DMMF.Model): string => {
-  const idField = model.fields.find((field) => field.isId) || model.fields[0];
-  const tsType = prismaToTsType(idField.type);
-  const isArray = idField.isList ? '[]' : '';
-  const fieldDescription = idField.documentation
-    ? `// ${idField.documentation}\n`
-    : '';
-  return `// Simplified reference to ${model.name}.\nexport interface ${model.name} {\n${fieldDescription}  ${idField.name}: ${tsType}${isArray};\n}\n\n`;
+const isContentModel = (model: DMMF.Model): boolean => {
+  return model.fields.some((field) => EXCLUDED_FIELDS.includes(field.name));
 };
 
 /**
@@ -96,8 +109,6 @@ const collectDependencies = (
       processed.add(referencedModel.name); // Mark as processed
 
       if (currentDepth === maxDepth) {
-        // At max depth, include only simplified interface
-        dependencyString += generateSimplifiedInterface(referencedModel);
         continue;
       }
 
@@ -108,8 +119,14 @@ const collectDependencies = (
       const modelDescription = referencedModel.documentation
         ? `// ${referencedModel.documentation}\n`
         : '';
-      dependencyString += `${modelDescription}export interface ${referencedModel.name} {\n`;
+      dependencyString += `${modelDescription}export type ${referencedModel.name} = {\n`;
       for (const refField of referencedModel.fields) {
+        // Determine if the referenced model is a content model
+        const excludeField = isContentModel(referencedModel) && EXCLUDED_FIELDS.includes(refField.name);
+        if (excludeField) {
+          continue; // Exclude this field
+        }
+
         const tsType = prismaToTsType(refField.type);
         const isOptional = refField.isRequired ? '' : '?';
         const isArray = refField.isList ? '[]' : '';
@@ -165,11 +182,15 @@ const generateModelTypeString = (
   let instructionLine = `Your response should adhere to the following type definition for the "${model.name}" type`;
 
   if (nestedTypes.size > 0) {
-    instructionLine += `, and its nested object types (which include ${Array.from(nestedTypes).map((t) => `'${t}'`).join(', ')} ${nestedTypes.size > 1 ? 'types' : 'type'})`;
+    instructionLine += `, and its nested object types (which include ${Array.from(nestedTypes)
+      .map((t) => `'${t}'`)
+      .join(', ')} ${nestedTypes.size > 1 ? 'types' : 'type'})`;
   }
 
   if (usedEnums.size > 0) {
-    instructionLine += `, as well as any ENUMS used by it (which include ${Array.from(usedEnums).map((e) => `'${e}'`).join(', ')} enum${usedEnums.size > 1 ? 's' : ''})`;
+    instructionLine += `, as well as any ENUMS used by it (which include ${Array.from(usedEnums)
+      .map((e) => `'${e}'`)
+      .join(', ')} enum${usedEnums.size > 1 ? 's' : ''})`;
   }
 
   instructionLine += '.\n\nImportantly, DO NOT include any annotations in your response (i.e. remove the ones we have provided for your reference below).\n\n';
@@ -181,9 +202,17 @@ const generateModelTypeString = (
     typeString += `// ${model.documentation}\n`;
   }
 
+  // Determine if the model is a content model
+  const contentModel = isContentModel(model);
+
   // Define the TypeScript interface for the main model
-  typeString += `export interface ${model.name} {\n`;
+  typeString += `export type ${model.name} = {\n`;
   for (const field of model.fields) {
+    // Exclude specified fields if the model is a content model
+    if (contentModel && EXCLUDED_FIELDS.includes(field.name)) {
+      continue; // Exclude this field
+    }
+
     const tsType = prismaToTsType(field.type);
     const isOptional = field.isRequired ? '' : '?';
     const isArray = field.isList ? '[]' : '';
@@ -209,11 +238,12 @@ const main = async () => {
     // Ensure output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-    // Delete all files within the output directory
+    // Delete all files within the output directory except index.ts and enums.ts
     const files = await fs.readdir(OUTPUT_DIR);
     for (const file of files) {
-      await fs.unlink(path.join(OUTPUT_DIR, file));
-
+      if (file !== 'index.ts' && file !== 'enums.ts') {
+        await fs.unlink(path.join(OUTPUT_DIR, file));
+      }
     }
 
     // Read Prisma schema
@@ -274,8 +304,7 @@ const main = async () => {
         .join('\n') +
       `\n\nexport const typeStrings = {\n` +
       exportStatements.join('\n') +
-      `\n} as const;\n
-      \nexport default typeStrings;`;
+      `\n} as const;\n\nexport default typeStrings;`;
 
     await fs.writeFile(INDEX_FILE, indexContent, 'utf-8');
     console.log('Generated index.ts');

@@ -125,6 +125,7 @@ export const Authenticator = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -133,19 +134,26 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -455,6 +463,7 @@ export const Authenticator = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -463,19 +472,26 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1286,6 +1302,7 @@ export const Authenticator = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1294,19 +1311,26 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1486,6 +1510,7 @@ export const Authenticator = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1494,19 +1519,26 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1684,6 +1716,7 @@ export const Authenticator = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1692,19 +1725,26 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id
@@ -1876,6 +1916,7 @@ export const Authenticator = {
                 asset {
                   id
                 }
+                optionContractType
                 actions {
                   id
                 }
@@ -1884,19 +1925,26 @@ export const Authenticator = {
                 id
                 alpacaAccountId
                 assetId
+                actionId
                 type
-                action
+                side
                 qty
                 price
+                stopLoss
                 status
                 createdAt
                 updatedAt
+                executionTime
                 alpacaAccount {
+                  id
+                }
+                action {
                   id
                 }
                 asset {
                   id
                 }
+                fee
               }
               positions {
                 id

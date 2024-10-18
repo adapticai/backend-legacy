@@ -27,13 +27,16 @@ export const Order = {
           id
           alpacaAccountId
           assetId
+          actionId
           type
-          action
+          side
           qty
           price
+          stopLoss
           status
           createdAt
           updatedAt
+          executionTime
           alpacaAccount {
             id
             type
@@ -192,6 +195,8 @@ export const Order = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -207,25 +212,20 @@ export const Order = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -270,9 +270,13 @@ export const Order = {
               }
             }
           }
+          action {
+            id
+          }
           asset {
             id
           }
+          fee
         }
       }
    `;
@@ -280,10 +284,13 @@ export const Order = {
     const variables = {
       data: {
           type: props.type !== undefined ? props.type : undefined,
-  action: props.action !== undefined ? props.action : undefined,
+  side: props.side !== undefined ? props.side : undefined,
   qty: props.qty !== undefined ? props.qty : undefined,
   price: props.price !== undefined ? props.price : undefined,
+  stopLoss: props.stopLoss !== undefined ? props.stopLoss : undefined,
   status: props.status !== undefined ? props.status : undefined,
+  executionTime: props.executionTime !== undefined ? props.executionTime : undefined,
+  fee: props.fee !== undefined ? props.fee : undefined,
   alpacaAccount: props.alpacaAccount ? {
     connectOrCreate: {
       where: {
@@ -332,6 +339,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -368,6 +376,40 @@ export const Order = {
           isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  action: props.action ? {
+    connectOrCreate: {
+      where: {
+        id: props.action.id !== undefined ? props.action.id : undefined,
+      },
+      create: {
+        sequence: props.action.sequence !== undefined ? props.action.sequence : undefined,
+        type: props.action.type !== undefined ? props.action.type : undefined,
+        orderId: props.action.orderId !== undefined ? props.action.orderId : undefined,
+        note: props.action.note !== undefined ? props.action.note : undefined,
+        status: props.action.status !== undefined ? props.action.status : undefined,
+        fee: props.action.fee !== undefined ? props.action.fee : undefined,
+    trade: props.action.trade ? {
+      connectOrCreate: {
+        where: {
+          id: props.action.trade.id !== undefined ? props.action.trade.id : undefined,
+        },
+        create: {
+          qty: props.action.trade.qty !== undefined ? props.action.trade.qty : undefined,
+          price: props.action.trade.price !== undefined ? props.action.trade.price : undefined,
+          total: props.action.trade.total !== undefined ? props.action.trade.total : undefined,
+          signal: props.action.trade.signal !== undefined ? props.action.trade.signal : undefined,
+          strategy: props.action.trade.strategy !== undefined ? props.action.trade.strategy : undefined,
+          analysis: props.action.trade.analysis !== undefined ? props.action.trade.analysis : undefined,
+          confidence: props.action.trade.confidence !== undefined ? props.action.trade.confidence : undefined,
+          timestamp: props.action.trade.timestamp !== undefined ? props.action.trade.timestamp : undefined,
+          status: props.action.trade.status !== undefined ? props.action.trade.status : undefined,
+          optionContractType: props.action.trade.optionContractType !== undefined ? props.action.trade.optionContractType : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -433,6 +475,8 @@ export const Order = {
         sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
         dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
+        sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
+        buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? {
       connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
@@ -448,6 +492,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -530,11 +575,15 @@ export const Order = {
       data: props.map(prop => ({
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  actionId: prop.actionId !== undefined ? prop.actionId : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
-  action: prop.action !== undefined ? prop.action : undefined,
+  side: prop.side !== undefined ? prop.side : undefined,
   qty: prop.qty !== undefined ? prop.qty : undefined,
   price: prop.price !== undefined ? prop.price : undefined,
+  stopLoss: prop.stopLoss !== undefined ? prop.stopLoss : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
+  executionTime: prop.executionTime !== undefined ? prop.executionTime : undefined,
+  fee: prop.fee !== undefined ? prop.fee : undefined,
       })),
     };
 
@@ -569,13 +618,16 @@ export const Order = {
           id
           alpacaAccountId
           assetId
+          actionId
           type
-          action
+          side
           qty
           price
+          stopLoss
           status
           createdAt
           updatedAt
+          executionTime
           alpacaAccount {
             id
             type
@@ -734,6 +786,8 @@ export const Order = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -749,25 +803,20 @@ export const Order = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -812,9 +861,13 @@ export const Order = {
               }
             }
           }
+          action {
+            id
+          }
           asset {
             id
           }
+          fee
       }
       }`;
 
@@ -829,14 +882,17 @@ export const Order = {
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
-  action: props.action !== undefined ? {
-            set: props.action 
+  side: props.side !== undefined ? {
+            set: props.side 
            } : undefined,
   qty: props.qty !== undefined ? {
             set: props.qty 
            } : undefined,
   price: props.price !== undefined ? {
             set: props.price 
+           } : undefined,
+  stopLoss: props.stopLoss !== undefined ? {
+            set: props.stopLoss 
            } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
@@ -846,6 +902,12 @@ export const Order = {
            } : undefined,
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
+           } : undefined,
+  executionTime: props.executionTime !== undefined ? {
+            set: props.executionTime 
+           } : undefined,
+  fee: props.fee !== undefined ? {
+            set: props.fee 
            } : undefined,
   alpacaAccount: props.alpacaAccount ? {
     upsert: {
@@ -967,6 +1029,9 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -978,6 +1043,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1117,6 +1183,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1153,6 +1220,121 @@ export const Order = {
           isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  action: props.action ? {
+    upsert: {
+      where: {
+        id: props.action.id !== undefined ? {
+            equals: props.action.id 
+           } : undefined,
+      },
+      update: {
+        id: props.action.id !== undefined ? {
+            set: props.action.id  
+           } : undefined,
+        sequence: props.action.sequence !== undefined ? {
+            set: props.action.sequence  
+           } : undefined,
+        type: props.action.type !== undefined ? {
+            set: props.action.type  
+           } : undefined,
+        orderId: props.action.orderId !== undefined ? {
+            set: props.action.orderId  
+           } : undefined,
+        note: props.action.note !== undefined ? {
+            set: props.action.note  
+           } : undefined,
+        status: props.action.status !== undefined ? {
+            set: props.action.status  
+           } : undefined,
+        fee: props.action.fee !== undefined ? {
+            set: props.action.fee  
+           } : undefined,
+    trade: props.action.trade ? {
+      upsert: {
+        where: {
+          id: props.action.trade.id !== undefined ? {
+              equals: props.action.trade.id 
+             } : undefined,
+        },
+        update: {
+          id: props.action.trade.id !== undefined ? {
+              set: props.action.trade.id  
+             } : undefined,
+          qty: props.action.trade.qty !== undefined ? {
+              set: props.action.trade.qty  
+             } : undefined,
+          price: props.action.trade.price !== undefined ? {
+              set: props.action.trade.price  
+             } : undefined,
+          total: props.action.trade.total !== undefined ? {
+              set: props.action.trade.total  
+             } : undefined,
+          signal: props.action.trade.signal !== undefined ? {
+              set: props.action.trade.signal  
+             } : undefined,
+          strategy: props.action.trade.strategy !== undefined ? {
+              set: props.action.trade.strategy  
+             } : undefined,
+          analysis: props.action.trade.analysis !== undefined ? {
+              set: props.action.trade.analysis  
+             } : undefined,
+          confidence: props.action.trade.confidence !== undefined ? {
+              set: props.action.trade.confidence  
+             } : undefined,
+          timestamp: props.action.trade.timestamp !== undefined ? {
+              set: props.action.trade.timestamp  
+             } : undefined,
+          status: props.action.trade.status !== undefined ? {
+              set: props.action.trade.status  
+             } : undefined,
+          optionContractType: props.action.trade.optionContractType !== undefined ? {
+              set: props.action.trade.optionContractType  
+             } : undefined,
+        },
+        create: {
+          qty: props.action.trade.qty !== undefined ? props.action.trade.qty : undefined,
+          price: props.action.trade.price !== undefined ? props.action.trade.price : undefined,
+          total: props.action.trade.total !== undefined ? props.action.trade.total : undefined,
+          signal: props.action.trade.signal !== undefined ? props.action.trade.signal : undefined,
+          strategy: props.action.trade.strategy !== undefined ? props.action.trade.strategy : undefined,
+          analysis: props.action.trade.analysis !== undefined ? props.action.trade.analysis : undefined,
+          confidence: props.action.trade.confidence !== undefined ? props.action.trade.confidence : undefined,
+          timestamp: props.action.trade.timestamp !== undefined ? props.action.trade.timestamp : undefined,
+          status: props.action.trade.status !== undefined ? props.action.trade.status : undefined,
+          optionContractType: props.action.trade.optionContractType !== undefined ? props.action.trade.optionContractType : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        sequence: props.action.sequence !== undefined ? props.action.sequence : undefined,
+        type: props.action.type !== undefined ? props.action.type : undefined,
+        orderId: props.action.orderId !== undefined ? props.action.orderId : undefined,
+        note: props.action.note !== undefined ? props.action.note : undefined,
+        status: props.action.status !== undefined ? props.action.status : undefined,
+        fee: props.action.fee !== undefined ? props.action.fee : undefined,
+    trade: props.action.trade ? {
+      connectOrCreate: {
+        where: {
+          id: props.action.trade.id !== undefined ? props.action.trade.id : undefined,
+        },
+        create: {
+          qty: props.action.trade.qty !== undefined ? props.action.trade.qty : undefined,
+          price: props.action.trade.price !== undefined ? props.action.trade.price : undefined,
+          total: props.action.trade.total !== undefined ? props.action.trade.total : undefined,
+          signal: props.action.trade.signal !== undefined ? props.action.trade.signal : undefined,
+          strategy: props.action.trade.strategy !== undefined ? props.action.trade.strategy : undefined,
+          analysis: props.action.trade.analysis !== undefined ? props.action.trade.analysis : undefined,
+          confidence: props.action.trade.confidence !== undefined ? props.action.trade.confidence : undefined,
+          timestamp: props.action.trade.timestamp !== undefined ? props.action.trade.timestamp : undefined,
+          status: props.action.trade.status !== undefined ? props.action.trade.status : undefined,
+          optionContractType: props.action.trade.optionContractType !== undefined ? props.action.trade.optionContractType : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -1333,6 +1515,12 @@ export const Order = {
         exDividendDate: props.asset.exDividendDate !== undefined ? {
             set: props.asset.exDividendDate  
            } : undefined,
+        sellPrice: props.asset.sellPrice !== undefined ? {
+            set: props.asset.sellPrice  
+           } : undefined,
+        buyPrice: props.asset.buyPrice !== undefined ? {
+            set: props.asset.buyPrice  
+           } : undefined,
     trades: props.asset.trades ? {
       upsert: props.asset.trades.map((item: any) => ({
         where: {
@@ -1369,6 +1557,9 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1380,6 +1571,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1535,6 +1727,8 @@ export const Order = {
         sharesOutstanding: props.asset.sharesOutstanding !== undefined ? props.asset.sharesOutstanding : undefined,
         dividendDate: props.asset.dividendDate !== undefined ? props.asset.dividendDate : undefined,
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
+        sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
+        buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? {
       connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
@@ -1550,6 +1744,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1639,14 +1834,17 @@ export const Order = {
   type: prop.type !== undefined ? {
             set: prop.type 
            } : undefined,
-  action: prop.action !== undefined ? {
-            set: prop.action 
+  side: prop.side !== undefined ? {
+            set: prop.side 
            } : undefined,
   qty: prop.qty !== undefined ? {
             set: prop.qty 
            } : undefined,
   price: prop.price !== undefined ? {
             set: prop.price 
+           } : undefined,
+  stopLoss: prop.stopLoss !== undefined ? {
+            set: prop.stopLoss 
            } : undefined,
   status: prop.status !== undefined ? {
             set: prop.status 
@@ -1656,6 +1854,12 @@ export const Order = {
            } : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
+           } : undefined,
+  executionTime: prop.executionTime !== undefined ? {
+            set: prop.executionTime 
+           } : undefined,
+  fee: prop.fee !== undefined ? {
+            set: prop.fee 
            } : undefined,
   alpacaAccount: prop.alpacaAccount ? {
     upsert: {
@@ -1777,6 +1981,9 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1788,6 +1995,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1927,6 +2135,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -1963,6 +2172,121 @@ export const Order = {
           isRead: item.isRead !== undefined ? item.isRead : undefined,
         },
       }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  action: prop.action ? {
+    upsert: {
+      where: {
+        id: prop.action.id !== undefined ? {
+            equals: prop.action.id 
+           } : undefined,
+      },
+      update: {
+        id: prop.action.id !== undefined ? {
+            set: prop.action.id  
+           } : undefined,
+        sequence: prop.action.sequence !== undefined ? {
+            set: prop.action.sequence  
+           } : undefined,
+        type: prop.action.type !== undefined ? {
+            set: prop.action.type  
+           } : undefined,
+        orderId: prop.action.orderId !== undefined ? {
+            set: prop.action.orderId  
+           } : undefined,
+        note: prop.action.note !== undefined ? {
+            set: prop.action.note  
+           } : undefined,
+        status: prop.action.status !== undefined ? {
+            set: prop.action.status  
+           } : undefined,
+        fee: prop.action.fee !== undefined ? {
+            set: prop.action.fee  
+           } : undefined,
+    trade: prop.action.trade ? {
+      upsert: {
+        where: {
+          id: prop.action.trade.id !== undefined ? {
+              equals: prop.action.trade.id 
+             } : undefined,
+        },
+        update: {
+          id: prop.action.trade.id !== undefined ? {
+              set: prop.action.trade.id  
+             } : undefined,
+          qty: prop.action.trade.qty !== undefined ? {
+              set: prop.action.trade.qty  
+             } : undefined,
+          price: prop.action.trade.price !== undefined ? {
+              set: prop.action.trade.price  
+             } : undefined,
+          total: prop.action.trade.total !== undefined ? {
+              set: prop.action.trade.total  
+             } : undefined,
+          signal: prop.action.trade.signal !== undefined ? {
+              set: prop.action.trade.signal  
+             } : undefined,
+          strategy: prop.action.trade.strategy !== undefined ? {
+              set: prop.action.trade.strategy  
+             } : undefined,
+          analysis: prop.action.trade.analysis !== undefined ? {
+              set: prop.action.trade.analysis  
+             } : undefined,
+          confidence: prop.action.trade.confidence !== undefined ? {
+              set: prop.action.trade.confidence  
+             } : undefined,
+          timestamp: prop.action.trade.timestamp !== undefined ? {
+              set: prop.action.trade.timestamp  
+             } : undefined,
+          status: prop.action.trade.status !== undefined ? {
+              set: prop.action.trade.status  
+             } : undefined,
+          optionContractType: prop.action.trade.optionContractType !== undefined ? {
+              set: prop.action.trade.optionContractType  
+             } : undefined,
+        },
+        create: {
+          qty: prop.action.trade.qty !== undefined ? prop.action.trade.qty : undefined,
+          price: prop.action.trade.price !== undefined ? prop.action.trade.price : undefined,
+          total: prop.action.trade.total !== undefined ? prop.action.trade.total : undefined,
+          signal: prop.action.trade.signal !== undefined ? prop.action.trade.signal : undefined,
+          strategy: prop.action.trade.strategy !== undefined ? prop.action.trade.strategy : undefined,
+          analysis: prop.action.trade.analysis !== undefined ? prop.action.trade.analysis : undefined,
+          confidence: prop.action.trade.confidence !== undefined ? prop.action.trade.confidence : undefined,
+          timestamp: prop.action.trade.timestamp !== undefined ? prop.action.trade.timestamp : undefined,
+          status: prop.action.trade.status !== undefined ? prop.action.trade.status : undefined,
+          optionContractType: prop.action.trade.optionContractType !== undefined ? prop.action.trade.optionContractType : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        sequence: prop.action.sequence !== undefined ? prop.action.sequence : undefined,
+        type: prop.action.type !== undefined ? prop.action.type : undefined,
+        orderId: prop.action.orderId !== undefined ? prop.action.orderId : undefined,
+        note: prop.action.note !== undefined ? prop.action.note : undefined,
+        status: prop.action.status !== undefined ? prop.action.status : undefined,
+        fee: prop.action.fee !== undefined ? prop.action.fee : undefined,
+    trade: prop.action.trade ? {
+      connectOrCreate: {
+        where: {
+          id: prop.action.trade.id !== undefined ? prop.action.trade.id : undefined,
+        },
+        create: {
+          qty: prop.action.trade.qty !== undefined ? prop.action.trade.qty : undefined,
+          price: prop.action.trade.price !== undefined ? prop.action.trade.price : undefined,
+          total: prop.action.trade.total !== undefined ? prop.action.trade.total : undefined,
+          signal: prop.action.trade.signal !== undefined ? prop.action.trade.signal : undefined,
+          strategy: prop.action.trade.strategy !== undefined ? prop.action.trade.strategy : undefined,
+          analysis: prop.action.trade.analysis !== undefined ? prop.action.trade.analysis : undefined,
+          confidence: prop.action.trade.confidence !== undefined ? prop.action.trade.confidence : undefined,
+          timestamp: prop.action.trade.timestamp !== undefined ? prop.action.trade.timestamp : undefined,
+          status: prop.action.trade.status !== undefined ? prop.action.trade.status : undefined,
+          optionContractType: prop.action.trade.optionContractType !== undefined ? prop.action.trade.optionContractType : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -2143,6 +2467,12 @@ export const Order = {
         exDividendDate: prop.asset.exDividendDate !== undefined ? {
             set: prop.asset.exDividendDate  
            } : undefined,
+        sellPrice: prop.asset.sellPrice !== undefined ? {
+            set: prop.asset.sellPrice  
+           } : undefined,
+        buyPrice: prop.asset.buyPrice !== undefined ? {
+            set: prop.asset.buyPrice  
+           } : undefined,
     trades: prop.asset.trades ? {
       upsert: prop.asset.trades.map((item: any) => ({
         where: {
@@ -2179,6 +2509,9 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
+          optionContractType: item.optionContractType !== undefined ? {
+              set: item.optionContractType  
+             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -2190,6 +2523,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -2345,6 +2679,8 @@ export const Order = {
         sharesOutstanding: prop.asset.sharesOutstanding !== undefined ? prop.asset.sharesOutstanding : undefined,
         dividendDate: prop.asset.dividendDate !== undefined ? prop.asset.dividendDate : undefined,
         exDividendDate: prop.asset.exDividendDate !== undefined ? prop.asset.exDividendDate : undefined,
+        sellPrice: prop.asset.sellPrice !== undefined ? prop.asset.sellPrice : undefined,
+        buyPrice: prop.asset.buyPrice !== undefined ? prop.asset.buyPrice : undefined,
     trades: prop.asset.trades ? {
       connectOrCreate: prop.asset.trades.map((item: any) => ({
         where: {
@@ -2360,6 +2696,7 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
+          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
         },
       }))
     } : undefined,
@@ -2438,13 +2775,16 @@ export const Order = {
           id
           alpacaAccountId
           assetId
+          actionId
           type
-          action
+          side
           qty
           price
+          stopLoss
           status
           createdAt
           updatedAt
+          executionTime
           alpacaAccount {
             id
             type
@@ -2603,6 +2943,8 @@ export const Order = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -2618,25 +2960,20 @@ export const Order = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2681,9 +3018,13 @@ export const Order = {
               }
             }
           }
+          action {
+            id
+          }
           asset {
             id
           }
+          fee
       }
       }`;
 
@@ -2724,13 +3065,16 @@ export const Order = {
           id
           alpacaAccountId
           assetId
+          actionId
           type
-          action
+          side
           qty
           price
+          stopLoss
           status
           createdAt
           updatedAt
+          executionTime
           alpacaAccount {
             id
             type
@@ -2889,6 +3233,8 @@ export const Order = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -2904,25 +3250,20 @@ export const Order = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -2967,9 +3308,13 @@ export const Order = {
               }
             }
           }
+          action {
+            id
+          }
           asset {
             id
           }
+          fee
         }
       }`;
 
@@ -3008,13 +3353,16 @@ export const Order = {
           id
           alpacaAccountId
           assetId
+          actionId
           type
-          action
+          side
           qty
           price
+          stopLoss
           status
           createdAt
           updatedAt
+          executionTime
           alpacaAccount {
             id
             type
@@ -3173,6 +3521,8 @@ export const Order = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -3188,25 +3538,20 @@ export const Order = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -3251,9 +3596,13 @@ export const Order = {
               }
             }
           }
+          action {
+            id
+          }
           asset {
             id
           }
+          fee
       }
       }`;
 
@@ -3286,13 +3635,16 @@ export const Order = {
           id
           alpacaAccountId
           assetId
+          actionId
           type
-          action
+          side
           qty
           price
+          stopLoss
           status
           createdAt
           updatedAt
+          executionTime
           alpacaAccount {
             id
             type
@@ -3451,6 +3803,8 @@ export const Order = {
                 sharesOutstanding
                 dividendDate
                 exDividendDate
+                sellPrice
+                buyPrice
                 createdAt
                 updatedAt
                 trades {
@@ -3466,25 +3820,20 @@ export const Order = {
                   id
                 }
               }
+              optionContractType
               actions {
                 id
-                tradeId
                 sequence
-                action
-                hedgeType
-                hedgePrice
-                buyPrice
-                sellPrice
-                qty
-                side
+                tradeId
                 type
-                stopLoss
-                targetPrice
+                orderId
                 note
-                executionTime
                 status
                 fee
                 trade {
+                  id
+                }
+                order {
                   id
                 }
               }
@@ -3529,9 +3878,13 @@ export const Order = {
               }
             }
           }
+          action {
+            id
+          }
           asset {
             id
           }
+          fee
       }
       }`;
 
