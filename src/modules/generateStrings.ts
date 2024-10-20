@@ -8,7 +8,7 @@ import { DMMF } from '@prisma/generator-helper';
 const SCHEMA_PATH = path.join(__dirname, '../../prisma', 'schema.prisma');
 const OUTPUT_DIR = path.join(__dirname, '../../src', 'generated', 'typeStrings');
 const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
-const MAX_DEPTH = 4; // Set maximum recursion depth
+const MAX_DEPTH = 3; // Set maximum recursion depth
 
 // Define the list of fields to exclude from content models
 const EXCLUDED_FIELDS = ['id', 'createdAt', 'updatedAt', 'slug'];
@@ -44,19 +44,6 @@ const generateEnumTS = (enums: DMMF.DatamodelEnum[]): string => {
     .join('\n');
 };
 
-// /**
-//  * Generates a simplified TypeScript interface with only the ID field.
-//  */
-// const generateSimplifiedInterface = (model: DMMF.Model): string => {
-//   const idField = model.fields.find((field) => field.isId) || model.fields[0];
-//   const tsType = prismaToTsType(idField.type);
-//   const isArray = idField.isList ? '[]' : '';
-//   const fieldDescription = idField.documentation
-//     ? `// ${idField.documentation}\n`
-//     : '';
-//   return `// Simplified reference to ${model.name}.\nexport interface ${model.name} {\n${fieldDescription}  ${idField.name}: ${tsType}${isArray};\n}\n\n`;
-// };
-
 /**
  * Determines if a model is a content model based on the presence of excluded fields.
  * @param model The Prisma model.
@@ -67,8 +54,31 @@ const isContentModel = (model: DMMF.Model): boolean => {
 };
 
 /**
+ * Determines if a field should be excluded based on its name.
+ * Excludes fields that are in EXCLUDED_FIELDS, exactly "id", or contain "Id" (exact casing).
+ * @param fieldName The name of the field.
+ * @returns True if the field should be excluded; otherwise, false.
+ */
+const shouldExcludeField = (fieldName: string): boolean => {
+  // Exclude if field name is in EXCLUDED_FIELDS
+  if (EXCLUDED_FIELDS.includes(fieldName)) {
+    return true;
+  }
+  // Exclude if field name is exactly 'id'
+  if (fieldName === 'id') {
+    return true;
+  }
+  // Exclude if field name includes 'Id' (exact casing)
+  if (fieldName.includes('Id')) {
+    return true;
+  }
+  return false;
+};
+
+/**
  * Recursively collects all dependent types (enums and models) for a given model.
  * Incorporates maxDepth to limit recursion and prevent stack overflow.
+ * Prevents self-referencing loops by tracking ancestor models.
  */
 const collectDependencies = (
   model: DMMF.Model,
@@ -77,7 +87,8 @@ const collectDependencies = (
   collected: Set<string>,
   processed: Set<string>,
   currentDepth: number,
-  maxDepth: number
+  maxDepth: number,
+  ancestors: Set<string>
 ): string => {
   if (currentDepth > maxDepth) {
     return ''; // Exceeded max depth, do not collect further dependencies
@@ -86,7 +97,7 @@ const collectDependencies = (
   let dependencyString = '';
 
   for (const field of model.fields) {
-    // If the field type is an enum and not yet collected
+    // Handle Enums
     if (enums.some((e) => e.name === field.type) && !collected.has(field.type)) {
       const enumObj = enums.find((e) => e.name === field.type)!;
       const enumDescription = enumObj.documentation
@@ -97,9 +108,14 @@ const collectDependencies = (
       collected.add(field.type); // Mark enum as collected
     }
 
-    // If the field type is another model and not yet collected
+    // Handle Models
     if (models.some((m) => m.name === field.type) && !collected.has(field.type)) {
       const referencedModel = models.find((m) => m.name === field.type)!;
+
+      // Prevent self-referencing loops
+      if (ancestors.has(referencedModel.name)) {
+        continue; // Skip to avoid self-reference
+      }
 
       if (processed.has(referencedModel.name)) {
         continue; // Already processed this model in this type string
@@ -107,24 +123,41 @@ const collectDependencies = (
 
       collected.add(referencedModel.name); // Mark model as collected before processing to prevent recursion
       processed.add(referencedModel.name); // Mark as processed
+      ancestors.add(referencedModel.name); // Add to ancestors
 
       if (currentDepth === maxDepth) {
-        continue;
+        ancestors.delete(referencedModel.name); // Clean up ancestors
+        continue; // Do not recurse further
       }
 
       // Recursively collect dependencies for the referenced model
-      dependencyString += collectDependencies(referencedModel, enums, models, collected, processed, currentDepth + 1, maxDepth);
+      dependencyString += collectDependencies(
+        referencedModel,
+        enums,
+        models,
+        collected,
+        processed,
+        currentDepth + 1,
+        maxDepth,
+        ancestors
+      );
 
-      // Generate the TypeScript interface for the referenced model
+      // Generate the TypeScript type for the referenced model
       const modelDescription = referencedModel.documentation
         ? `// ${referencedModel.documentation}\n`
         : '';
       dependencyString += `${modelDescription}export type ${referencedModel.name} = {\n`;
       for (const refField of referencedModel.fields) {
-        // Determine if the referenced model is a content model
-        const excludeField = isContentModel(referencedModel) && EXCLUDED_FIELDS.includes(refField.name);
-        if (excludeField) {
+        // Exclude fields based on name
+        if (shouldExcludeField(refField.name)) {
           continue; // Exclude this field
+        }
+
+        // Exclude fields that reference ancestor models
+        if (models.some((m) => m.name === refField.type)) {
+          if (ancestors.has(refField.type)) {
+            continue; // Exclude to prevent self-reference
+          }
         }
 
         const tsType = prismaToTsType(refField.type);
@@ -137,6 +170,8 @@ const collectDependencies = (
         dependencyString += `${fieldDescription}  ${refField.name}${isOptional}: ${tsType}${isArray};\n`;
       }
       dependencyString += '}\n\n';
+
+      ancestors.delete(referencedModel.name); // Clean up ancestors after processing
     }
   }
 
@@ -205,12 +240,20 @@ const generateModelTypeString = (
   // Determine if the model is a content model
   const contentModel = isContentModel(model);
 
-  // Define the TypeScript interface for the main model
+  // Define the TypeScript type for the main model
   typeString += `export type ${model.name} = {\n`;
   for (const field of model.fields) {
     // Exclude specified fields if the model is a content model
-    if (contentModel && EXCLUDED_FIELDS.includes(field.name)) {
+    if (contentModel && shouldExcludeField(field.name)) {
       continue; // Exclude this field
+    }
+
+    // Exclude fields that reference ancestor models
+    if (models.some((m) => m.name === field.type)) {
+      // If the field's type is already in the collected set (ancestors), skip it
+      if (collected.has(field.type)) {
+        continue;
+      }
     }
 
     const tsType = prismaToTsType(field.type);
@@ -224,8 +267,21 @@ const generateModelTypeString = (
   }
   typeString += '}\n\n';
 
+  // Initialize ancestors with the current model to prevent self-references
+  const ancestors = new Set<string>();
+  ancestors.add(model.name);
+
   // Collect and append dependencies
-  typeString += collectDependencies(model, enums, models, collected, processed, currentDepth, maxDepth);
+  typeString += collectDependencies(
+    model,
+    enums,
+    models,
+    collected,
+    processed,
+    currentDepth,
+    maxDepth,
+    ancestors
+  );
 
   return typeString;
 };
