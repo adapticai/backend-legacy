@@ -106,6 +106,9 @@ enum ActionType {
   /// Initiates a purchase of an asset.
   BUY
 
+  /// Initiates a purchase of an option contract.
+  BUY_OPTION
+
   /// Retrieves option contracts related to the trade.
   GET_OPTION_CONTRACTS
 
