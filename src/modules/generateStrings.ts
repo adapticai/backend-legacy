@@ -4,286 +4,237 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { getDMMF } from '@prisma/internals';
 import { DMMF } from '@prisma/generator-helper';
+import pluralize from 'pluralize';
 
-const SCHEMA_PATH = path.join(__dirname, '../../prisma', 'schema.prisma');
-const OUTPUT_DIR = path.join(__dirname, '../../src', 'generated', 'typeStrings');
+const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
+const OUTPUT_DIR = path.join(__dirname, '../../src/generated/typeStrings');
 const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
 const MAX_DEPTH = 3; // Set maximum recursion depth
 
-// Define the list of fields to exclude from content models
-const EXCLUDED_FIELDS = ['id', 'createdAt', 'updatedAt', 'slug'];
+// Define the list of fields to exclude globally
+const EXCLUDED_FIELDS = new Set([
+  'id',
+  'createdAt',
+  'updatedAt',
+  'slug',
+  'alpacaAccountId',
+]);
 
 /**
- * Converts Prisma scalar types to TypeScript types.
+ * Maps Prisma scalar types to TypeScript types.
  */
-const prismaToTsType = (type: string): string => {
-  const typeMap: { [key: string]: string } = {
-    String: 'string',
-    Int: 'number',
-    Float: 'number',
-    Boolean: 'boolean',
-    DateTime: 'Date',
-    Json: 'any',
-    // Add more mappings as needed
-  };
-  return typeMap[type] || type; // Return the type itself for enums and models
+const SCALAR_TYPE_MAP: { [key: string]: string } = {
+  String: 'string',
+  Int: 'number',
+  Float: 'number',
+  Decimal: 'number',
+  Boolean: 'boolean',
+  DateTime: 'Date',
+  Json: 'any',
+  // Add more mappings as needed
 };
 
 /**
- * Generates TypeScript enum declarations with inline comments.
+ * Converts a Prisma field to a TypeScript type.
  */
-const generateEnumTS = (enums: DMMF.DatamodelEnum[]): string => {
-  return enums
-    .map((enumObj) => {
-      const enumDescription = enumObj.documentation
-        ? `// ${enumObj.documentation}\n`
-        : '';
-      const values = enumObj.values.map((v) => `  ${v.name} = "${v.name}"`).join(',\n');
-      return `${enumDescription}export enum ${enumObj.name} {\n${values}\n}\n`;
-    })
-    .join('\n');
-};
-
-/**
- * Determines if a model is a content model based on the presence of excluded fields.
- * @param model The Prisma model.
- * @returns True if the model is a content model; otherwise, false.
- */
-const isContentModel = (model: DMMF.Model): boolean => {
-  return model.fields.some((field) => EXCLUDED_FIELDS.includes(field.name));
+const prismaFieldToTsType = (field: DMMF.Field): string => {
+  if (field.kind === 'scalar') {
+    return SCALAR_TYPE_MAP[field.type] || 'any';
+  } else if (field.kind === 'enum') {
+    return field.type;
+  } else if (field.kind === 'object') {
+    return field.type;
+  } else {
+    return 'any';
+  }
 };
 
 /**
  * Determines if a field should be excluded based on its name.
- * Excludes fields that are in EXCLUDED_FIELDS, exactly "id", or contain "Id" (exact casing).
- * @param fieldName The name of the field.
- * @returns True if the field should be excluded; otherwise, false.
  */
 const shouldExcludeField = (fieldName: string): boolean => {
-  // Exclude if field name is in EXCLUDED_FIELDS
-  if (EXCLUDED_FIELDS.includes(fieldName)) {
-    return true;
-  }
-  // Exclude if field name is exactly 'id'
-  if (fieldName === 'id') {
-    return true;
-  }
-  // Exclude if field name includes 'Id' (exact casing)
-  if (fieldName.includes('Id')) {
-    return true;
-  }
-  return false;
+  return (
+    EXCLUDED_FIELDS.has(fieldName) ||
+    fieldName === 'id' ||
+    fieldName.endsWith('Id')
+  );
 };
 
 /**
- * Recursively collects all dependent types (enums and models) for a given model.
- * Incorporates maxDepth to limit recursion and prevent stack overflow.
- * Prevents self-referencing loops by tracking ancestor models.
+ * Parses meta tags from field documentation and returns the cleaned description.
  */
-const collectDependencies = (
-  model: DMMF.Model,
+const parseMetaTags = (documentation?: string): { meta: { [key: string]: any }; description: string } => {
+  const meta: { [key: string]: any } = {};
+  if (!documentation) return { meta, description: '' };
+
+  // Extract meta tags and description
+  const metaTagRegex = /([A-Z]+)=((?:\[[^\]]+\])|(?:[^\s]+))/g;
+  let match: RegExpExecArray | null;
+  let description = documentation;
+
+  while ((match = metaTagRegex.exec(documentation)) !== null) {
+    const fullMatch = match[0];
+    const key = match[1];
+    const value = match[2];
+
+    // Handle boolean values
+    let parsedValue: any = value;
+    if (value.toLowerCase() === 'true') parsedValue = true;
+    else if (value.toLowerCase() === 'false') parsedValue = false;
+    // Handle arrays
+    else if (value.startsWith('[') && value.endsWith(']')) {
+      parsedValue = value.slice(1, -1).split(',').map((s) => s.trim().replace(/['"]/g, ''));
+    } else {
+      // Remove any surrounding quotes
+      parsedValue = value.replace(/['"]/g, '');
+    }
+
+    meta[key] = parsedValue;
+    // Remove meta tag from description
+    description = description.replace(fullMatch, '').trim();
+  }
+
+  return { meta, description };
+};
+
+
+/**
+ * Generates TypeScript enum declarations.
+ */
+const generateEnumDeclarations = (
   enums: DMMF.DatamodelEnum[],
-  models: DMMF.Model[],
-  collected: Set<string>,
-  processed: Set<string>,
-  currentDepth: number,
-  maxDepth: number,
-  ancestors: Set<string>
+  includedEnums: Set<string>
 ): string => {
-  if (currentDepth > maxDepth) {
-    return ''; // Exceeded max depth, do not collect further dependencies
-  }
+  let enumDeclarations = '';
+  for (const enumObj of enums) {
+    if (includedEnums.has(enumObj.name)) continue;
 
-  let dependencyString = '';
-
-  for (const field of model.fields) {
-    // Handle Enums
-    if (enums.some((e) => e.name === field.type) && !collected.has(field.type)) {
-      const enumObj = enums.find((e) => e.name === field.type)!;
-      const enumDescription = enumObj.documentation
-        ? `// ${enumObj.documentation}\n`
-        : '';
-      const values = enumObj.values.map((v) => `  ${v.name} = "${v.name}"`).join(',\n');
-      dependencyString += `${enumDescription}export enum ${enumObj.name} {\n${values}\n}\n\n`;
-      collected.add(field.type); // Mark enum as collected
-    }
-
-    // Handle Models
-    if (models.some((m) => m.name === field.type) && !collected.has(field.type)) {
-      const referencedModel = models.find((m) => m.name === field.type)!;
-
-      // Prevent self-referencing loops
-      if (ancestors.has(referencedModel.name)) {
-        continue; // Skip to avoid self-reference
-      }
-
-      if (processed.has(referencedModel.name)) {
-        continue; // Already processed this model in this type string
-      }
-
-      collected.add(referencedModel.name); // Mark model as collected before processing to prevent recursion
-      processed.add(referencedModel.name); // Mark as processed
-      ancestors.add(referencedModel.name); // Add to ancestors
-
-      if (currentDepth === maxDepth) {
-        ancestors.delete(referencedModel.name); // Clean up ancestors
-        continue; // Do not recurse further
-      }
-
-      // Recursively collect dependencies for the referenced model
-      dependencyString += collectDependencies(
-        referencedModel,
-        enums,
-        models,
-        collected,
-        processed,
-        currentDepth + 1,
-        maxDepth,
-        ancestors
-      );
-
-      // Generate the TypeScript type for the referenced model
-      const modelDescription = referencedModel.documentation
-        ? `// ${referencedModel.documentation}\n`
-        : '';
-      dependencyString += `${modelDescription}export type ${referencedModel.name} = {\n`;
-      for (const refField of referencedModel.fields) {
-        // Exclude fields based on name
-        if (shouldExcludeField(refField.name)) {
-          continue; // Exclude this field
-        }
-
-        // Exclude fields that reference ancestor models
-        if (models.some((m) => m.name === refField.type)) {
-          if (ancestors.has(refField.type)) {
-            continue; // Exclude to prevent self-reference
-          }
-        }
-
-        const tsType = prismaToTsType(refField.type);
-        const isOptional = refField.isRequired ? '' : '?';
-        const isArray = refField.isList ? '[]' : '';
-        // Add inline comments for fields
-        const fieldDescription = refField.documentation
-          ? `  // ${refField.documentation}\n`
-          : '';
-        dependencyString += `${fieldDescription}  ${refField.name}${isOptional}: ${tsType}${isArray};\n`;
-      }
-      dependencyString += '}\n\n';
-
-      ancestors.delete(referencedModel.name); // Clean up ancestors after processing
-    }
-  }
-
-  return dependencyString;
-};
-
-/**
- * Helper to lowercase the first letter of a string.
- * @param str The input string.
- * @returns The string with the first letter in lowercase.
- */
-const lowerFirst = (str: string): string => {
-  return str.charAt(0).toLowerCase() + str.slice(1);
-};
-
-/**
- * Generates TypeScript type declarations for a given model with dependencies and inline comments.
- */
-const generateModelTypeString = (
-  model: DMMF.Model,
-  enums: DMMF.DatamodelEnum[],
-  models: DMMF.Model[],
-  collected: Set<string>,
-  processed: Set<string>,
-  currentDepth: number,
-  maxDepth: number
-): string => {
-  let typeString = '';
-
-  // Collect nested types and enums used by this model
-  const nestedTypes = new Set<string>();
-  const usedEnums = new Set<string>();
-
-  for (const field of model.fields) {
-    if (enums.some((e) => e.name === field.type)) {
-      usedEnums.add(field.type);
-    } else if (models.some((m) => m.name === field.type)) {
-      nestedTypes.add(field.type);
-    }
-  }
-
-  // Generate the custom instruction line
-  let instructionLine = `Your response should adhere to the following type definition for the "${model.name}" type`;
-
-  if (nestedTypes.size > 0) {
-    instructionLine += `, and its nested object types (which include ${Array.from(nestedTypes)
-      .map((t) => `'${t}'`)
-      .join(', ')} ${nestedTypes.size > 1 ? 'types' : 'type'})`;
-  }
-
-  if (usedEnums.size > 0) {
-    instructionLine += `, as well as any ENUMS used by it (which include ${Array.from(usedEnums)
-      .map((e) => `'${e}'`)
-      .join(', ')} enum${usedEnums.size > 1 ? 's' : ''})`;
-  }
-
-  instructionLine += '.\n\nImportantly, DO NOT include any annotations in your response (i.e. remove the ones we have provided for your reference below).\n\n';
-
-  typeString += instructionLine;
-
-  // Add model description as inline comment
-  if (model.documentation) {
-    typeString += `// ${model.documentation}\n`;
-  }
-
-  // Determine if the model is a content model
-  const contentModel = isContentModel(model);
-
-  // Define the TypeScript type for the main model
-  typeString += `export type ${model.name} = {\n`;
-  for (const field of model.fields) {
-    // Exclude specified fields if the model is a content model
-    if (contentModel && shouldExcludeField(field.name)) {
-      continue; // Exclude this field
-    }
-
-    // Exclude fields that reference ancestor models
-    if (models.some((m) => m.name === field.type)) {
-      // If the field's type is already in the collected set (ancestors), skip it
-      if (collected.has(field.type)) {
-        continue;
-      }
-    }
-
-    const tsType = prismaToTsType(field.type);
-    const isOptional = field.isRequired ? '' : '?';
-    const isArray = field.isList ? '[]' : '';
-    // Add inline comments for fields
-    const fieldDescription = field.documentation
-      ? `  // ${field.documentation}\n`
+    const enumDescription = enumObj.documentation
+      ? `// ${enumObj.documentation}\n`
       : '';
-    typeString += `${fieldDescription}  ${field.name}${isOptional}: ${tsType}${isArray};\n`;
+    const values = enumObj.values
+      .map((v) => `  ${v.name} = "${v.name}"`)
+      .join(',\n');
+    enumDeclarations += `${enumDescription}export enum ${enumObj.name} {\n${values}\n}\n\n`;
+    includedEnums.add(enumObj.name);
   }
-  typeString += '}\n\n';
+  return enumDeclarations;
+};
 
-  // Initialize ancestors with the current model to prevent self-references
-  const ancestors = new Set<string>();
+/**
+ * Generates a fully inlined TypeScript type string for a model with proper indentation.
+ */
+const generateTypeString = (
+  model: DMMF.Model,
+  models: Map<string, DMMF.Model>,
+  enums: Map<string, DMMF.DatamodelEnum>,
+  includedEnums: Set<string>,
+  depth: number,
+  ancestors: Set<string>,
+  indentLevel: number
+): string => {
+  if (depth > MAX_DEPTH) {
+    return 'any';
+  }
+
   ancestors.add(model.name);
 
-  // Collect and append dependencies
-  typeString += collectDependencies(
-    model,
-    enums,
-    models,
-    collected,
-    processed,
-    currentDepth,
-    maxDepth,
-    ancestors
-  );
+  const indent = (level: number) => '  '.repeat(level);
 
-  return typeString;
+  const fieldsDeclarations: string[] = [];
+
+  for (const field of model.fields) {
+    if (shouldExcludeField(field.name)) continue;
+
+    // Parse meta tags and get cleaned description
+    const { meta: metaTags, description } = parseMetaTags(field.documentation);
+    if (metaTags['SKIP'] === true) continue;
+
+    // Handle field inclusion
+    const includeFields = metaTags['INCLUDE'] as string[] | undefined;
+
+    const isOptional = field.isRequired ? '' : '?';
+    const isArray = field.isList ? '[]' : '';
+    let tsType: string;
+
+    // Add field documentation
+    const fieldDescription = description
+      ? `${indent(indentLevel + 1)}// ${description}\n`
+      : '';
+
+    if (field.kind === 'scalar') {
+      tsType = prismaFieldToTsType(field);
+    } else if (field.kind === 'enum') {
+      tsType = field.type;
+      // Handle enums
+      const enumObj = enums.get(field.type);
+      if (enumObj && !includedEnums.has(enumObj.name)) {
+        includedEnums.add(enumObj.name);
+      }
+    } else if (field.kind === 'object') {
+      if (ancestors.has(field.type)) {
+        // Check if the field name is the singular or plural form of the ancestor (case-insensitive)
+        const singularTypeName = field.type;
+        const pluralTypeName = pluralize(field.type);
+        if (
+          field.name.toLowerCase() === singularTypeName.toLowerCase() ||
+          field.name.toLowerCase() === pluralTypeName.toLowerCase()
+        ) {
+          console.log(
+            `Skipping field "${field.name}" in model "${model.name}" as it references the ancestor "${field.type}".`
+          );
+          continue; // Skip the field
+        } else {
+          tsType = field.type; // Reference by name to prevent endless loop
+        }
+      } else {
+        const relatedModel = models.get(field.type);
+        if (relatedModel) {
+          // Recursively generate the nested type
+          let nestedType: string;
+          if (includeFields && includeFields.length > 0) {
+            // Include only specified fields
+            nestedType = `{\n${includeFields
+              .map((f) => {
+                const nestedField = relatedModel.fields.find((nf) => nf.name === f);
+                if (!nestedField) return '';
+                const nfIsOptional = nestedField.isRequired ? '' : '?';
+                const nfType = prismaFieldToTsType(nestedField);
+                return `${indent(indentLevel + 2)}${nestedField.name}${nfIsOptional}: ${nfType};`;
+              })
+              .join('\n')}\n${indent(indentLevel + 1)}}`;
+          } else {
+            nestedType = generateTypeString(
+              relatedModel,
+              models,
+              enums,
+              includedEnums,
+              depth + 1,
+              new Set(ancestors),
+              indentLevel + 1
+            );
+          }
+
+          // Wrap the nested type with proper indentation
+          tsType = nestedType.startsWith('{')
+            ? nestedType
+            : `{\n${indent(indentLevel + 2)}${nestedType}\n${indent(indentLevel + 1)}}`;
+        } else {
+          tsType = 'any';
+        }
+      }
+    } else {
+      tsType = 'any';
+    }
+
+    fieldsDeclarations.push(
+      `${fieldDescription}${indent(indentLevel + 1)}${field.name}${isOptional}: ${tsType}${isArray};`
+    );
+  }
+
+  ancestors.delete(model.name);
+
+  return `{\n${fieldsDeclarations.join('\n')}\n${indent(indentLevel)}}`;
 };
 
 /**
@@ -294,10 +245,10 @@ const main = async () => {
     // Ensure output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-    // Delete all files within the output directory except index.ts and enums.ts
+    // Clean up output directory
     const files = await fs.readdir(OUTPUT_DIR);
     for (const file of files) {
-      if (file !== 'index.ts' && file !== 'enums.ts') {
+      if (file !== 'index.ts') {
         await fs.unlink(path.join(OUTPUT_DIR, file));
       }
     }
@@ -305,41 +256,47 @@ const main = async () => {
     // Read Prisma schema
     const schema = await fs.readFile(SCHEMA_PATH, 'utf-8');
 
-    // Parse Prisma schema using Prisma Internals
+    // Parse schema
     const dmmf = await getDMMF({ datamodel: schema });
 
-    // Separate enums and models
-    const enums = dmmf.datamodel.enums;
-    const models = dmmf.datamodel.models;
-
-    // Generate enums.ts
-    const enumsTS = generateEnumTS([...enums]);
-    await fs.writeFile(path.join(OUTPUT_DIR, 'enums.ts'), enumsTS, 'utf-8');
-    console.log('Generated enums.ts');
+    const enums = new Map(dmmf.datamodel.enums.map((e) => [e.name, e]));
+    const models = new Map(dmmf.datamodel.models.map((m) => [m.name, m]));
 
     // Generate type strings for each model
     const exportStatements: string[] = [];
 
-    for (const model of models) {
-      const collected = new Set<string>();
-      const processed = new Set<string>();
-      collected.add(model.name); // Mark the main model as collected to avoid self-reference
-      processed.add(model.name); // Mark the main model as processed
+    for (const [modelName, model] of models) {
+      const includedEnums = new Set<string>();
+      const ancestors = new Set<string>();
 
-      const typeString = generateModelTypeString(
+      const instructionLine = `Your response should adhere to the following type definition for the "${model.name}" type.\n\nImportantly, DO NOT include any annotations in your response (i.e., remove the ones we have provided for your reference below).\n\n`;
+
+      // Generate the fully inlined type string with proper indentation
+      const typeBody = generateTypeString(
         model,
-        enums as DMMF.DatamodelEnum[],
-        models as DMMF.Model[],
-        collected,
-        processed,
-        1, // Start at depth 1
-        MAX_DEPTH
+        models,
+        enums,
+        includedEnums,
+        1,
+        ancestors,
+        0
       );
+
+      const typeDeclaration = `export type ${model.name} = ${typeBody};\n`;
+
+      // Generate enum declarations
+      const enumDeclarations = generateEnumDeclarations(
+        Array.from(includedEnums).map((name) => enums.get(name)!),
+        new Set()
+      );
+
+      const typeString = instructionLine + typeDeclaration + enumDeclarations;
+
       const fileName = `${model.name}.ts`;
       const filePath = path.join(OUTPUT_DIR, fileName);
       const constName = `${model.name}TypeString`;
 
-      // Escape backticks and dollar signs to prevent breaking the template literal
+      // Escape backticks and dollar signs
       const escapedTypeString = typeString
         .replace(/\\/g, '\\\\')
         .replace(/`/g, '\\`')
@@ -349,14 +306,15 @@ const main = async () => {
       await fs.writeFile(filePath, fileContent, 'utf-8');
       console.log(`Generated ${fileName}`);
 
-      // Prepare export statement for index.ts
-      exportStatements.push(`  ${lowerFirst(model.name)}: ${constName},`);
+      // Prepare export statement
+      const exportName = modelName.charAt(0).toLowerCase() + modelName.slice(1);
+      exportStatements.push(`  ${exportName}: ${constName},`);
     }
 
     // Generate index.ts
     const indexContent =
-      models
-        .map((model) => `import { ${model.name}TypeString } from './${model.name}';`)
+      Array.from(models.keys())
+        .map((modelName) => `import { ${modelName}TypeString } from './${modelName}';`)
         .join('\n') +
       `\n\nexport const typeStrings = {\n` +
       exportStatements.join('\n') +
