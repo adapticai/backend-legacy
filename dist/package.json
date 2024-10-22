@@ -38,5 +38,27 @@
     "type-graphql": "^2.0.0-rc.2",
     "reflect-metadata": "^0.2.2",
     "typegraphql-prisma": "^0.27.2"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.cjs",
+      "require": "./index.cjs",
+      "types": "./index.d.ts"
+    },
+    "./*": {
+      "import": "./*.cjs",
+      "require": "./*.cjs",
+      "types": "./*.d.ts"
+    },
+    "./server": {
+      "import": "./server/index.mjs",
+      "require": "./server/index.cjs",
+      "types": "./server/index.d.ts"
+    },
+    "./server/*": {
+      "import": "./server/*.mjs",
+      "require": "./server/*.cjs",
+      "types": "./server/*.d.ts"
+    }
   }
 }
