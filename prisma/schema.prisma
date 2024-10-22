@@ -899,13 +899,13 @@ model Order {
   notional Float?
 
   /// Side of the order (BUY or SELL).
-  side OrderSide
+  side OrderSide @default(BUY)
 
   /// Type of order (market, limit, stop, stop_limit, trailing_stop).
-  type OrderType
+  type OrderType @default(MARKET)
 
   /// Time in force for the order (day, gtc, opg, cls, ioc, fok).
-  timeInForce TimeInForce
+  timeInForce TimeInForce @default(GTC)
 
   /// Limit price for limit or stop-limit orders.
   limitPrice Float?
@@ -926,7 +926,7 @@ model Order {
   clientOrderId String? @unique
 
   /// Current status of the order.
-  status OrderStatus
+  status OrderStatus @default(NEW)
 
   /// Timestamp when the order was created. SKIP=true
   createdAt DateTime @default(now())
