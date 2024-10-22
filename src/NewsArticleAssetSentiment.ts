@@ -363,6 +363,44 @@ export const NewsArticleAssetSentiment = {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
           optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? 
+        Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.actions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -393,6 +431,44 @@ export const NewsArticleAssetSentiment = {
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? 
+        typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+    ? { connect: {
+            id: item.action.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.id !== undefined ? item.action.id : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -420,6 +496,25 @@ export const NewsArticleAssetSentiment = {
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1029,6 +1124,76 @@ export const NewsArticleAssetSentiment = {
           optionContractType: item.optionContractType !== undefined ? {
               set: item.optionContractType  
              } : undefined,
+      alpacaAccount: item.alpacaAccount ? {
+        upsert: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? {
+                equals: item.alpacaAccount.id 
+               } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.id !== undefined ? {
+                set: item.alpacaAccount.id  
+               } : undefined,
+            type: item.alpacaAccount.type !== undefined ? {
+                set: item.alpacaAccount.type  
+               } : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? {
+                set: item.alpacaAccount.APIKey  
+               } : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? {
+                set: item.alpacaAccount.APISecret  
+               } : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? {
+                set: item.alpacaAccount.configuration  
+               } : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.marketOpen  
+               } : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? {
+        upsert: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence  
+               } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type  
+               } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note  
+               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status  
+               } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee  
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1041,6 +1206,44 @@ export const NewsArticleAssetSentiment = {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
           optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? 
+        Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.actions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1101,6 +1304,78 @@ export const NewsArticleAssetSentiment = {
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
+      alpacaAccount: item.alpacaAccount ? {
+        upsert: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? {
+                equals: item.alpacaAccount.id 
+               } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.id !== undefined ? {
+                set: item.alpacaAccount.id  
+               } : undefined,
+            type: item.alpacaAccount.type !== undefined ? {
+                set: item.alpacaAccount.type  
+               } : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? {
+                set: item.alpacaAccount.APIKey  
+               } : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? {
+                set: item.alpacaAccount.APISecret  
+               } : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? {
+                set: item.alpacaAccount.configuration  
+               } : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.marketOpen  
+               } : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? {
+        upsert: {
+          where: {
+            id: item.action.id !== undefined ? {
+                equals: item.action.id 
+               } : undefined,
+          },
+          update: {
+            id: item.action.id !== undefined ? {
+                set: item.action.id  
+               } : undefined,
+            sequence: item.action.sequence !== undefined ? {
+                set: item.action.sequence  
+               } : undefined,
+            type: item.action.type !== undefined ? {
+                set: item.action.type  
+               } : undefined,
+            note: item.action.note !== undefined ? {
+                set: item.action.note  
+               } : undefined,
+            status: item.action.status !== undefined ? {
+                set: item.action.status  
+               } : undefined,
+            fee: item.action.fee !== undefined ? {
+                set: item.action.fee  
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1119,6 +1394,44 @@ export const NewsArticleAssetSentiment = {
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? 
+        typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+    ? { connect: {
+            id: item.action.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.id !== undefined ? item.action.id : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1170,6 +1483,42 @@ export const NewsArticleAssetSentiment = {
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+      alpacaAccount: item.alpacaAccount ? {
+        upsert: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? {
+                equals: item.alpacaAccount.id 
+               } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.id !== undefined ? {
+                set: item.alpacaAccount.id  
+               } : undefined,
+            type: item.alpacaAccount.type !== undefined ? {
+                set: item.alpacaAccount.type  
+               } : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? {
+                set: item.alpacaAccount.APIKey  
+               } : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? {
+                set: item.alpacaAccount.APISecret  
+               } : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? {
+                set: item.alpacaAccount.configuration  
+               } : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.marketOpen  
+               } : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -1185,6 +1534,25 @@ export const NewsArticleAssetSentiment = {
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1266,6 +1634,44 @@ export const NewsArticleAssetSentiment = {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
           optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? 
+        Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.actions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1296,6 +1702,44 @@ export const NewsArticleAssetSentiment = {
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? 
+        typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+    ? { connect: {
+            id: item.action.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.id !== undefined ? item.action.id : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1323,6 +1767,25 @@ export const NewsArticleAssetSentiment = {
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1681,6 +2144,76 @@ export const NewsArticleAssetSentiment = {
           optionContractType: item.optionContractType !== undefined ? {
               set: item.optionContractType  
              } : undefined,
+      alpacaAccount: item.alpacaAccount ? {
+        upsert: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? {
+                equals: item.alpacaAccount.id 
+               } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.id !== undefined ? {
+                set: item.alpacaAccount.id  
+               } : undefined,
+            type: item.alpacaAccount.type !== undefined ? {
+                set: item.alpacaAccount.type  
+               } : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? {
+                set: item.alpacaAccount.APIKey  
+               } : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? {
+                set: item.alpacaAccount.APISecret  
+               } : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? {
+                set: item.alpacaAccount.configuration  
+               } : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.marketOpen  
+               } : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? {
+        upsert: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence  
+               } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type  
+               } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note  
+               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status  
+               } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee  
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1693,6 +2226,44 @@ export const NewsArticleAssetSentiment = {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
           optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? 
+        Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.actions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1753,6 +2324,78 @@ export const NewsArticleAssetSentiment = {
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
+      alpacaAccount: item.alpacaAccount ? {
+        upsert: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? {
+                equals: item.alpacaAccount.id 
+               } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.id !== undefined ? {
+                set: item.alpacaAccount.id  
+               } : undefined,
+            type: item.alpacaAccount.type !== undefined ? {
+                set: item.alpacaAccount.type  
+               } : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? {
+                set: item.alpacaAccount.APIKey  
+               } : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? {
+                set: item.alpacaAccount.APISecret  
+               } : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? {
+                set: item.alpacaAccount.configuration  
+               } : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.marketOpen  
+               } : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? {
+        upsert: {
+          where: {
+            id: item.action.id !== undefined ? {
+                equals: item.action.id 
+               } : undefined,
+          },
+          update: {
+            id: item.action.id !== undefined ? {
+                set: item.action.id  
+               } : undefined,
+            sequence: item.action.sequence !== undefined ? {
+                set: item.action.sequence  
+               } : undefined,
+            type: item.action.type !== undefined ? {
+                set: item.action.type  
+               } : undefined,
+            note: item.action.note !== undefined ? {
+                set: item.action.note  
+               } : undefined,
+            status: item.action.status !== undefined ? {
+                set: item.action.status  
+               } : undefined,
+            fee: item.action.fee !== undefined ? {
+                set: item.action.fee  
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -1771,6 +2414,44 @@ export const NewsArticleAssetSentiment = {
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? 
+        typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+    ? { connect: {
+            id: item.action.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.id !== undefined ? item.action.id : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1822,6 +2503,42 @@ export const NewsArticleAssetSentiment = {
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+      alpacaAccount: item.alpacaAccount ? {
+        upsert: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? {
+                equals: item.alpacaAccount.id 
+               } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.id !== undefined ? {
+                set: item.alpacaAccount.id  
+               } : undefined,
+            type: item.alpacaAccount.type !== undefined ? {
+                set: item.alpacaAccount.type  
+               } : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? {
+                set: item.alpacaAccount.APIKey  
+               } : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? {
+                set: item.alpacaAccount.APISecret  
+               } : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? {
+                set: item.alpacaAccount.configuration  
+               } : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.marketOpen  
+               } : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -1837,6 +2554,25 @@ export const NewsArticleAssetSentiment = {
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1918,6 +2654,44 @@ export const NewsArticleAssetSentiment = {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
           optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      actions: item.actions ? 
+        Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.actions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1948,6 +2722,44 @@ export const NewsArticleAssetSentiment = {
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
+      action: item.action ? 
+        typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+    ? { connect: {
+            id: item.action.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.id !== undefined ? item.action.id : undefined,
+          },
+          create: {
+            sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
+            type: item.action.type !== undefined ? item.action.type : undefined,
+            note: item.action.note !== undefined ? item.action.note : undefined,
+            status: item.action.status !== undefined ? item.action.status : undefined,
+            fee: item.action.fee !== undefined ? item.action.fee : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1975,6 +2787,25 @@ export const NewsArticleAssetSentiment = {
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+      alpacaAccount: item.alpacaAccount ? 
+        typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.id !== undefined ? item.alpacaAccount.id : undefined,
+          },
+          create: {
+            type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
+            APIKey: item.alpacaAccount.APIKey !== undefined ? item.alpacaAccount.APIKey : undefined,
+            APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
+            configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,

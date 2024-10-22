@@ -316,6 +316,104 @@ export const Authenticator = {
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? 
+        Array.isArray(item.orders) && item.orders.length > 0 &&  item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.orders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? 
+        Array.isArray(item.positions) && item.positions.length > 0 &&  item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.positions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? 
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -788,6 +886,230 @@ export const Authenticator = {
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen  
              } : undefined,
+      trades: item.trades ? {
+        upsert: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            qty: item.qty !== undefined ? {
+                set: item.qty  
+               } : undefined,
+            price: item.price !== undefined ? {
+                set: item.price  
+               } : undefined,
+            total: item.total !== undefined ? {
+                set: item.total  
+               } : undefined,
+            signal: item.signal !== undefined ? {
+                set: item.signal  
+               } : undefined,
+            strategy: item.strategy !== undefined ? {
+                set: item.strategy  
+               } : undefined,
+            analysis: item.analysis !== undefined ? {
+                set: item.analysis  
+               } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence  
+               } : undefined,
+            timestamp: item.timestamp !== undefined ? {
+                set: item.timestamp  
+               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status  
+               } : undefined,
+            optionContractType: item.optionContractType !== undefined ? {
+                set: item.optionContractType  
+               } : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? {
+        upsert: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            qty: item.qty !== undefined ? {
+                set: item.qty  
+               } : undefined,
+            notional: item.notional !== undefined ? {
+                set: item.notional  
+               } : undefined,
+            side: item.side !== undefined ? {
+                set: item.side  
+               } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type  
+               } : undefined,
+            timeInForce: item.timeInForce !== undefined ? {
+                set: item.timeInForce  
+               } : undefined,
+            limitPrice: item.limitPrice !== undefined ? {
+                set: item.limitPrice  
+               } : undefined,
+            stopPrice: item.stopPrice !== undefined ? {
+                set: item.stopPrice  
+               } : undefined,
+            trailPrice: item.trailPrice !== undefined ? {
+                set: item.trailPrice  
+               } : undefined,
+            trailPercent: item.trailPercent !== undefined ? {
+                set: item.trailPercent  
+               } : undefined,
+            extendedHours: item.extendedHours !== undefined ? {
+                set: item.extendedHours  
+               } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status  
+               } : undefined,
+            submittedAt: item.submittedAt !== undefined ? {
+                set: item.submittedAt  
+               } : undefined,
+            filledAt: item.filledAt !== undefined ? {
+                set: item.filledAt  
+               } : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? {
+                set: item.filledAvgPrice  
+               } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee  
+               } : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? {
+        upsert: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            averageEntryPrice: item.averageEntryPrice !== undefined ? {
+                set: item.averageEntryPrice  
+               } : undefined,
+            qty: item.qty !== undefined ? {
+                set: item.qty  
+               } : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? {
+                set: item.qtyAvailable  
+               } : undefined,
+            marketValue: item.marketValue !== undefined ? {
+                set: item.marketValue  
+               } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis  
+               } : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? {
+                set: item.unrealizedPL  
+               } : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
+                set: item.unrealizedPLPC  
+               } : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
+                set: item.unrealisedIntradayPL  
+               } : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
+                set: item.unrealisedIntradayPLPC  
+               } : undefined,
+            currentPrice: item.currentPrice !== undefined ? {
+                set: item.currentPrice  
+               } : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? {
+                set: item.lastTradePrice  
+               } : undefined,
+            changeToday: item.changeToday !== undefined ? {
+                set: item.changeToday  
+               } : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? {
+                set: item.assetMarginable  
+               } : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? {
+        upsert: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            message: item.message !== undefined ? {
+                set: item.message  
+               } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type  
+               } : undefined,
+            isRead: item.isRead !== undefined ? {
+                set: item.isRead  
+               } : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -795,6 +1117,104 @@ export const Authenticator = {
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? 
+        Array.isArray(item.orders) && item.orders.length > 0 &&  item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.orders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? 
+        Array.isArray(item.positions) && item.positions.length > 0 &&  item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.positions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? 
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -889,6 +1309,104 @@ export const Authenticator = {
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? 
+        Array.isArray(item.orders) && item.orders.length > 0 &&  item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.orders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? 
+        Array.isArray(item.positions) && item.positions.length > 0 &&  item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.positions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? 
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1142,6 +1660,230 @@ export const Authenticator = {
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen  
              } : undefined,
+      trades: item.trades ? {
+        upsert: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            qty: item.qty !== undefined ? {
+                set: item.qty  
+               } : undefined,
+            price: item.price !== undefined ? {
+                set: item.price  
+               } : undefined,
+            total: item.total !== undefined ? {
+                set: item.total  
+               } : undefined,
+            signal: item.signal !== undefined ? {
+                set: item.signal  
+               } : undefined,
+            strategy: item.strategy !== undefined ? {
+                set: item.strategy  
+               } : undefined,
+            analysis: item.analysis !== undefined ? {
+                set: item.analysis  
+               } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence  
+               } : undefined,
+            timestamp: item.timestamp !== undefined ? {
+                set: item.timestamp  
+               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status  
+               } : undefined,
+            optionContractType: item.optionContractType !== undefined ? {
+                set: item.optionContractType  
+               } : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? {
+        upsert: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            qty: item.qty !== undefined ? {
+                set: item.qty  
+               } : undefined,
+            notional: item.notional !== undefined ? {
+                set: item.notional  
+               } : undefined,
+            side: item.side !== undefined ? {
+                set: item.side  
+               } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type  
+               } : undefined,
+            timeInForce: item.timeInForce !== undefined ? {
+                set: item.timeInForce  
+               } : undefined,
+            limitPrice: item.limitPrice !== undefined ? {
+                set: item.limitPrice  
+               } : undefined,
+            stopPrice: item.stopPrice !== undefined ? {
+                set: item.stopPrice  
+               } : undefined,
+            trailPrice: item.trailPrice !== undefined ? {
+                set: item.trailPrice  
+               } : undefined,
+            trailPercent: item.trailPercent !== undefined ? {
+                set: item.trailPercent  
+               } : undefined,
+            extendedHours: item.extendedHours !== undefined ? {
+                set: item.extendedHours  
+               } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status  
+               } : undefined,
+            submittedAt: item.submittedAt !== undefined ? {
+                set: item.submittedAt  
+               } : undefined,
+            filledAt: item.filledAt !== undefined ? {
+                set: item.filledAt  
+               } : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? {
+                set: item.filledAvgPrice  
+               } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee  
+               } : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? {
+        upsert: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            averageEntryPrice: item.averageEntryPrice !== undefined ? {
+                set: item.averageEntryPrice  
+               } : undefined,
+            qty: item.qty !== undefined ? {
+                set: item.qty  
+               } : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? {
+                set: item.qtyAvailable  
+               } : undefined,
+            marketValue: item.marketValue !== undefined ? {
+                set: item.marketValue  
+               } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis  
+               } : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? {
+                set: item.unrealizedPL  
+               } : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
+                set: item.unrealizedPLPC  
+               } : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
+                set: item.unrealisedIntradayPL  
+               } : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
+                set: item.unrealisedIntradayPLPC  
+               } : undefined,
+            currentPrice: item.currentPrice !== undefined ? {
+                set: item.currentPrice  
+               } : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? {
+                set: item.lastTradePrice  
+               } : undefined,
+            changeToday: item.changeToday !== undefined ? {
+                set: item.changeToday  
+               } : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? {
+                set: item.assetMarginable  
+               } : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? {
+        upsert: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id  
+               } : undefined,
+            message: item.message !== undefined ? {
+                set: item.message  
+               } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type  
+               } : undefined,
+            isRead: item.isRead !== undefined ? {
+                set: item.isRead  
+               } : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -1149,6 +1891,104 @@ export const Authenticator = {
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? 
+        Array.isArray(item.orders) && item.orders.length > 0 &&  item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.orders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? 
+        Array.isArray(item.positions) && item.positions.length > 0 &&  item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.positions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? 
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1243,6 +2083,104 @@ export const Authenticator = {
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            price: item.price !== undefined ? item.price : undefined,
+            total: item.total !== undefined ? item.total : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
+          },
+        }))
+      } : undefined,
+      orders: item.orders ? 
+        Array.isArray(item.orders) && item.orders.length > 0 &&  item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.orders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.orders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            qty: item.qty !== undefined ? item.qty : undefined,
+            notional: item.notional !== undefined ? item.notional : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+            stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+            trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+            trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+            extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+            filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+      positions: item.positions ? 
+        Array.isArray(item.positions) && item.positions.length > 0 &&  item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.positions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.positions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
+            qty: item.qty !== undefined ? item.qty : undefined,
+            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
+            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
+            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
+            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
+            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
+            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
+            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
+            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
+            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          },
+        }))
+      } : undefined,
+      alerts: item.alerts ? 
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alerts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+          },
+          create: {
+            message: item.message !== undefined ? item.message : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            isRead: item.isRead !== undefined ? item.isRead : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
