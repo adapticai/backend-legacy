@@ -67,16 +67,61 @@ export const Action = {
                 currentAccount
                 customer {
                   id
+                  authUserId
+                  name
+                  plan
+                  stripeCustomerId
+                  stripeSubscriptionId
+                  stripePriceId
+                  stripeCurrentPeriodEnd
+                  createdAt
+                  updatedAt
+                  users {
+                    id
+                  }
                 }
                 customerId
                 accounts {
                   id
+                  userId
+                  type
+                  provider
+                  providerAccountId
+                  refresh_token
+                  access_token
+                  expires_at
+                  token_type
+                  scope
+                  id_token
+                  session_state
+                  createdAt
+                  updatedAt
+                  user {
+                    id
+                  }
                 }
                 sessions {
                   id
+                  sessionToken
+                  userId
+                  expires
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 authenticators {
                   id
+                  userId
+                  credentialID
+                  publicKey
+                  counter
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 plan
                 alpacaAccounts {
@@ -119,32 +164,113 @@ export const Action = {
                 }
                 asset {
                   id
+                  symbol
+                  name
+                  type
+                  logoUrl
+                  description
+                  cik
+                  exchange
+                  currency
+                  country
+                  sector
+                  industry
+                  address
+                  officialSite
+                  fiscalYearEnd
+                  latestQuarter
+                  marketCapitalization
+                  ebitda
+                  peRatio
+                  pegRatio
+                  bookValue
+                  dividendPerShare
+                  dividendYield
+                  eps
+                  revenuePerShareTTM
+                  profitMargin
+                  operatingMarginTTM
+                  returnOnAssetsTTM
+                  returnOnEquityTTM
+                  revenueTTM
+                  grossProfitTTM
+                  dilutedEPSTTM
+                  quarterlyEarningsGrowthYOY
+                  quarterlyRevenueGrowthYOY
+                  analystTargetPrice
+                  analystRatingStrongBuy
+                  analystRatingBuy
+                  analystRatingHold
+                  analystRatingSell
+                  analystRatingStrongSell
+                  trailingPE
+                  forwardPE
+                  priceToSalesRatioTTM
+                  priceToBookRatio
+                  evToRevenue
+                  evToEbitda
+                  beta
+                  week52High
+                  week52Low
+                  day50MovingAverage
+                  day200MovingAverage
+                  sharesOutstanding
+                  dividendDate
+                  exDividendDate
+                  sellPrice
+                  buyPrice
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  newsMentions {
+                    id
+                    assetId
+                    newsArticleId
+                    url
+                    news {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    relevancyScore
+                    sentimentScore
+                    sentimentLabel
+                  }
                 }
                 fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               alerts {
                 id
@@ -161,87 +287,6 @@ export const Action = {
             }
             asset {
               id
-              symbol
-              name
-              type
-              logoUrl
-              description
-              cik
-              exchange
-              currency
-              country
-              sector
-              industry
-              address
-              officialSite
-              fiscalYearEnd
-              latestQuarter
-              marketCapitalization
-              ebitda
-              peRatio
-              pegRatio
-              bookValue
-              dividendPerShare
-              dividendYield
-              eps
-              revenuePerShareTTM
-              profitMargin
-              operatingMarginTTM
-              returnOnAssetsTTM
-              returnOnEquityTTM
-              revenueTTM
-              grossProfitTTM
-              dilutedEPSTTM
-              quarterlyEarningsGrowthYOY
-              quarterlyRevenueGrowthYOY
-              analystTargetPrice
-              analystRatingStrongBuy
-              analystRatingBuy
-              analystRatingHold
-              analystRatingSell
-              analystRatingStrongSell
-              trailingPE
-              forwardPE
-              priceToSalesRatioTTM
-              priceToBookRatio
-              evToRevenue
-              evToEbitda
-              beta
-              week52High
-              week52Low
-              day50MovingAverage
-              day200MovingAverage
-              sharesOutstanding
-              dividendDate
-              exDividendDate
-              sellPrice
-              buyPrice
-              createdAt
-              updatedAt
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              positions {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsArticleId
-                url
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
             }
             optionContractType
             actions {
@@ -956,16 +1001,61 @@ export const Action = {
                 currentAccount
                 customer {
                   id
+                  authUserId
+                  name
+                  plan
+                  stripeCustomerId
+                  stripeSubscriptionId
+                  stripePriceId
+                  stripeCurrentPeriodEnd
+                  createdAt
+                  updatedAt
+                  users {
+                    id
+                  }
                 }
                 customerId
                 accounts {
                   id
+                  userId
+                  type
+                  provider
+                  providerAccountId
+                  refresh_token
+                  access_token
+                  expires_at
+                  token_type
+                  scope
+                  id_token
+                  session_state
+                  createdAt
+                  updatedAt
+                  user {
+                    id
+                  }
                 }
                 sessions {
                   id
+                  sessionToken
+                  userId
+                  expires
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 authenticators {
                   id
+                  userId
+                  credentialID
+                  publicKey
+                  counter
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 plan
                 alpacaAccounts {
@@ -1008,32 +1098,113 @@ export const Action = {
                 }
                 asset {
                   id
+                  symbol
+                  name
+                  type
+                  logoUrl
+                  description
+                  cik
+                  exchange
+                  currency
+                  country
+                  sector
+                  industry
+                  address
+                  officialSite
+                  fiscalYearEnd
+                  latestQuarter
+                  marketCapitalization
+                  ebitda
+                  peRatio
+                  pegRatio
+                  bookValue
+                  dividendPerShare
+                  dividendYield
+                  eps
+                  revenuePerShareTTM
+                  profitMargin
+                  operatingMarginTTM
+                  returnOnAssetsTTM
+                  returnOnEquityTTM
+                  revenueTTM
+                  grossProfitTTM
+                  dilutedEPSTTM
+                  quarterlyEarningsGrowthYOY
+                  quarterlyRevenueGrowthYOY
+                  analystTargetPrice
+                  analystRatingStrongBuy
+                  analystRatingBuy
+                  analystRatingHold
+                  analystRatingSell
+                  analystRatingStrongSell
+                  trailingPE
+                  forwardPE
+                  priceToSalesRatioTTM
+                  priceToBookRatio
+                  evToRevenue
+                  evToEbitda
+                  beta
+                  week52High
+                  week52Low
+                  day50MovingAverage
+                  day200MovingAverage
+                  sharesOutstanding
+                  dividendDate
+                  exDividendDate
+                  sellPrice
+                  buyPrice
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  newsMentions {
+                    id
+                    assetId
+                    newsArticleId
+                    url
+                    news {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    relevancyScore
+                    sentimentScore
+                    sentimentLabel
+                  }
                 }
                 fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               alerts {
                 id
@@ -1050,87 +1221,6 @@ export const Action = {
             }
             asset {
               id
-              symbol
-              name
-              type
-              logoUrl
-              description
-              cik
-              exchange
-              currency
-              country
-              sector
-              industry
-              address
-              officialSite
-              fiscalYearEnd
-              latestQuarter
-              marketCapitalization
-              ebitda
-              peRatio
-              pegRatio
-              bookValue
-              dividendPerShare
-              dividendYield
-              eps
-              revenuePerShareTTM
-              profitMargin
-              operatingMarginTTM
-              returnOnAssetsTTM
-              returnOnEquityTTM
-              revenueTTM
-              grossProfitTTM
-              dilutedEPSTTM
-              quarterlyEarningsGrowthYOY
-              quarterlyRevenueGrowthYOY
-              analystTargetPrice
-              analystRatingStrongBuy
-              analystRatingBuy
-              analystRatingHold
-              analystRatingSell
-              analystRatingStrongSell
-              trailingPE
-              forwardPE
-              priceToSalesRatioTTM
-              priceToBookRatio
-              evToRevenue
-              evToEbitda
-              beta
-              week52High
-              week52Low
-              day50MovingAverage
-              day200MovingAverage
-              sharesOutstanding
-              dividendDate
-              exDividendDate
-              sellPrice
-              buyPrice
-              createdAt
-              updatedAt
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              positions {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsArticleId
-                url
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
             }
             optionContractType
             actions {
@@ -5929,16 +6019,61 @@ export const Action = {
                 currentAccount
                 customer {
                   id
+                  authUserId
+                  name
+                  plan
+                  stripeCustomerId
+                  stripeSubscriptionId
+                  stripePriceId
+                  stripeCurrentPeriodEnd
+                  createdAt
+                  updatedAt
+                  users {
+                    id
+                  }
                 }
                 customerId
                 accounts {
                   id
+                  userId
+                  type
+                  provider
+                  providerAccountId
+                  refresh_token
+                  access_token
+                  expires_at
+                  token_type
+                  scope
+                  id_token
+                  session_state
+                  createdAt
+                  updatedAt
+                  user {
+                    id
+                  }
                 }
                 sessions {
                   id
+                  sessionToken
+                  userId
+                  expires
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 authenticators {
                   id
+                  userId
+                  credentialID
+                  publicKey
+                  counter
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 plan
                 alpacaAccounts {
@@ -5981,32 +6116,113 @@ export const Action = {
                 }
                 asset {
                   id
+                  symbol
+                  name
+                  type
+                  logoUrl
+                  description
+                  cik
+                  exchange
+                  currency
+                  country
+                  sector
+                  industry
+                  address
+                  officialSite
+                  fiscalYearEnd
+                  latestQuarter
+                  marketCapitalization
+                  ebitda
+                  peRatio
+                  pegRatio
+                  bookValue
+                  dividendPerShare
+                  dividendYield
+                  eps
+                  revenuePerShareTTM
+                  profitMargin
+                  operatingMarginTTM
+                  returnOnAssetsTTM
+                  returnOnEquityTTM
+                  revenueTTM
+                  grossProfitTTM
+                  dilutedEPSTTM
+                  quarterlyEarningsGrowthYOY
+                  quarterlyRevenueGrowthYOY
+                  analystTargetPrice
+                  analystRatingStrongBuy
+                  analystRatingBuy
+                  analystRatingHold
+                  analystRatingSell
+                  analystRatingStrongSell
+                  trailingPE
+                  forwardPE
+                  priceToSalesRatioTTM
+                  priceToBookRatio
+                  evToRevenue
+                  evToEbitda
+                  beta
+                  week52High
+                  week52Low
+                  day50MovingAverage
+                  day200MovingAverage
+                  sharesOutstanding
+                  dividendDate
+                  exDividendDate
+                  sellPrice
+                  buyPrice
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  newsMentions {
+                    id
+                    assetId
+                    newsArticleId
+                    url
+                    news {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    relevancyScore
+                    sentimentScore
+                    sentimentLabel
+                  }
                 }
                 fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               alerts {
                 id
@@ -6023,87 +6239,6 @@ export const Action = {
             }
             asset {
               id
-              symbol
-              name
-              type
-              logoUrl
-              description
-              cik
-              exchange
-              currency
-              country
-              sector
-              industry
-              address
-              officialSite
-              fiscalYearEnd
-              latestQuarter
-              marketCapitalization
-              ebitda
-              peRatio
-              pegRatio
-              bookValue
-              dividendPerShare
-              dividendYield
-              eps
-              revenuePerShareTTM
-              profitMargin
-              operatingMarginTTM
-              returnOnAssetsTTM
-              returnOnEquityTTM
-              revenueTTM
-              grossProfitTTM
-              dilutedEPSTTM
-              quarterlyEarningsGrowthYOY
-              quarterlyRevenueGrowthYOY
-              analystTargetPrice
-              analystRatingStrongBuy
-              analystRatingBuy
-              analystRatingHold
-              analystRatingSell
-              analystRatingStrongSell
-              trailingPE
-              forwardPE
-              priceToSalesRatioTTM
-              priceToBookRatio
-              evToRevenue
-              evToEbitda
-              beta
-              week52High
-              week52Low
-              day50MovingAverage
-              day200MovingAverage
-              sharesOutstanding
-              dividendDate
-              exDividendDate
-              sellPrice
-              buyPrice
-              createdAt
-              updatedAt
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              positions {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsArticleId
-                url
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
             }
             optionContractType
             actions {
@@ -6193,16 +6328,61 @@ export const Action = {
                 currentAccount
                 customer {
                   id
+                  authUserId
+                  name
+                  plan
+                  stripeCustomerId
+                  stripeSubscriptionId
+                  stripePriceId
+                  stripeCurrentPeriodEnd
+                  createdAt
+                  updatedAt
+                  users {
+                    id
+                  }
                 }
                 customerId
                 accounts {
                   id
+                  userId
+                  type
+                  provider
+                  providerAccountId
+                  refresh_token
+                  access_token
+                  expires_at
+                  token_type
+                  scope
+                  id_token
+                  session_state
+                  createdAt
+                  updatedAt
+                  user {
+                    id
+                  }
                 }
                 sessions {
                   id
+                  sessionToken
+                  userId
+                  expires
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 authenticators {
                   id
+                  userId
+                  credentialID
+                  publicKey
+                  counter
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 plan
                 alpacaAccounts {
@@ -6245,32 +6425,113 @@ export const Action = {
                 }
                 asset {
                   id
+                  symbol
+                  name
+                  type
+                  logoUrl
+                  description
+                  cik
+                  exchange
+                  currency
+                  country
+                  sector
+                  industry
+                  address
+                  officialSite
+                  fiscalYearEnd
+                  latestQuarter
+                  marketCapitalization
+                  ebitda
+                  peRatio
+                  pegRatio
+                  bookValue
+                  dividendPerShare
+                  dividendYield
+                  eps
+                  revenuePerShareTTM
+                  profitMargin
+                  operatingMarginTTM
+                  returnOnAssetsTTM
+                  returnOnEquityTTM
+                  revenueTTM
+                  grossProfitTTM
+                  dilutedEPSTTM
+                  quarterlyEarningsGrowthYOY
+                  quarterlyRevenueGrowthYOY
+                  analystTargetPrice
+                  analystRatingStrongBuy
+                  analystRatingBuy
+                  analystRatingHold
+                  analystRatingSell
+                  analystRatingStrongSell
+                  trailingPE
+                  forwardPE
+                  priceToSalesRatioTTM
+                  priceToBookRatio
+                  evToRevenue
+                  evToEbitda
+                  beta
+                  week52High
+                  week52Low
+                  day50MovingAverage
+                  day200MovingAverage
+                  sharesOutstanding
+                  dividendDate
+                  exDividendDate
+                  sellPrice
+                  buyPrice
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  newsMentions {
+                    id
+                    assetId
+                    newsArticleId
+                    url
+                    news {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    relevancyScore
+                    sentimentScore
+                    sentimentLabel
+                  }
                 }
                 fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               alerts {
                 id
@@ -6287,87 +6548,6 @@ export const Action = {
             }
             asset {
               id
-              symbol
-              name
-              type
-              logoUrl
-              description
-              cik
-              exchange
-              currency
-              country
-              sector
-              industry
-              address
-              officialSite
-              fiscalYearEnd
-              latestQuarter
-              marketCapitalization
-              ebitda
-              peRatio
-              pegRatio
-              bookValue
-              dividendPerShare
-              dividendYield
-              eps
-              revenuePerShareTTM
-              profitMargin
-              operatingMarginTTM
-              returnOnAssetsTTM
-              returnOnEquityTTM
-              revenueTTM
-              grossProfitTTM
-              dilutedEPSTTM
-              quarterlyEarningsGrowthYOY
-              quarterlyRevenueGrowthYOY
-              analystTargetPrice
-              analystRatingStrongBuy
-              analystRatingBuy
-              analystRatingHold
-              analystRatingSell
-              analystRatingStrongSell
-              trailingPE
-              forwardPE
-              priceToSalesRatioTTM
-              priceToBookRatio
-              evToRevenue
-              evToEbitda
-              beta
-              week52High
-              week52Low
-              day50MovingAverage
-              day200MovingAverage
-              sharesOutstanding
-              dividendDate
-              exDividendDate
-              sellPrice
-              buyPrice
-              createdAt
-              updatedAt
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              positions {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsArticleId
-                url
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
             }
             optionContractType
             actions {
@@ -6455,16 +6635,61 @@ export const Action = {
                 currentAccount
                 customer {
                   id
+                  authUserId
+                  name
+                  plan
+                  stripeCustomerId
+                  stripeSubscriptionId
+                  stripePriceId
+                  stripeCurrentPeriodEnd
+                  createdAt
+                  updatedAt
+                  users {
+                    id
+                  }
                 }
                 customerId
                 accounts {
                   id
+                  userId
+                  type
+                  provider
+                  providerAccountId
+                  refresh_token
+                  access_token
+                  expires_at
+                  token_type
+                  scope
+                  id_token
+                  session_state
+                  createdAt
+                  updatedAt
+                  user {
+                    id
+                  }
                 }
                 sessions {
                   id
+                  sessionToken
+                  userId
+                  expires
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 authenticators {
                   id
+                  userId
+                  credentialID
+                  publicKey
+                  counter
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 plan
                 alpacaAccounts {
@@ -6507,32 +6732,113 @@ export const Action = {
                 }
                 asset {
                   id
+                  symbol
+                  name
+                  type
+                  logoUrl
+                  description
+                  cik
+                  exchange
+                  currency
+                  country
+                  sector
+                  industry
+                  address
+                  officialSite
+                  fiscalYearEnd
+                  latestQuarter
+                  marketCapitalization
+                  ebitda
+                  peRatio
+                  pegRatio
+                  bookValue
+                  dividendPerShare
+                  dividendYield
+                  eps
+                  revenuePerShareTTM
+                  profitMargin
+                  operatingMarginTTM
+                  returnOnAssetsTTM
+                  returnOnEquityTTM
+                  revenueTTM
+                  grossProfitTTM
+                  dilutedEPSTTM
+                  quarterlyEarningsGrowthYOY
+                  quarterlyRevenueGrowthYOY
+                  analystTargetPrice
+                  analystRatingStrongBuy
+                  analystRatingBuy
+                  analystRatingHold
+                  analystRatingSell
+                  analystRatingStrongSell
+                  trailingPE
+                  forwardPE
+                  priceToSalesRatioTTM
+                  priceToBookRatio
+                  evToRevenue
+                  evToEbitda
+                  beta
+                  week52High
+                  week52Low
+                  day50MovingAverage
+                  day200MovingAverage
+                  sharesOutstanding
+                  dividendDate
+                  exDividendDate
+                  sellPrice
+                  buyPrice
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  newsMentions {
+                    id
+                    assetId
+                    newsArticleId
+                    url
+                    news {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    relevancyScore
+                    sentimentScore
+                    sentimentLabel
+                  }
                 }
                 fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               alerts {
                 id
@@ -6549,87 +6855,6 @@ export const Action = {
             }
             asset {
               id
-              symbol
-              name
-              type
-              logoUrl
-              description
-              cik
-              exchange
-              currency
-              country
-              sector
-              industry
-              address
-              officialSite
-              fiscalYearEnd
-              latestQuarter
-              marketCapitalization
-              ebitda
-              peRatio
-              pegRatio
-              bookValue
-              dividendPerShare
-              dividendYield
-              eps
-              revenuePerShareTTM
-              profitMargin
-              operatingMarginTTM
-              returnOnAssetsTTM
-              returnOnEquityTTM
-              revenueTTM
-              grossProfitTTM
-              dilutedEPSTTM
-              quarterlyEarningsGrowthYOY
-              quarterlyRevenueGrowthYOY
-              analystTargetPrice
-              analystRatingStrongBuy
-              analystRatingBuy
-              analystRatingHold
-              analystRatingSell
-              analystRatingStrongSell
-              trailingPE
-              forwardPE
-              priceToSalesRatioTTM
-              priceToBookRatio
-              evToRevenue
-              evToEbitda
-              beta
-              week52High
-              week52Low
-              day50MovingAverage
-              day200MovingAverage
-              sharesOutstanding
-              dividendDate
-              exDividendDate
-              sellPrice
-              buyPrice
-              createdAt
-              updatedAt
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              positions {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsArticleId
-                url
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
             }
             optionContractType
             actions {
@@ -6711,16 +6936,61 @@ export const Action = {
                 currentAccount
                 customer {
                   id
+                  authUserId
+                  name
+                  plan
+                  stripeCustomerId
+                  stripeSubscriptionId
+                  stripePriceId
+                  stripeCurrentPeriodEnd
+                  createdAt
+                  updatedAt
+                  users {
+                    id
+                  }
                 }
                 customerId
                 accounts {
                   id
+                  userId
+                  type
+                  provider
+                  providerAccountId
+                  refresh_token
+                  access_token
+                  expires_at
+                  token_type
+                  scope
+                  id_token
+                  session_state
+                  createdAt
+                  updatedAt
+                  user {
+                    id
+                  }
                 }
                 sessions {
                   id
+                  sessionToken
+                  userId
+                  expires
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 authenticators {
                   id
+                  userId
+                  credentialID
+                  publicKey
+                  counter
+                  user {
+                    id
+                  }
+                  createdAt
+                  updatedAt
                 }
                 plan
                 alpacaAccounts {
@@ -6763,32 +7033,113 @@ export const Action = {
                 }
                 asset {
                   id
+                  symbol
+                  name
+                  type
+                  logoUrl
+                  description
+                  cik
+                  exchange
+                  currency
+                  country
+                  sector
+                  industry
+                  address
+                  officialSite
+                  fiscalYearEnd
+                  latestQuarter
+                  marketCapitalization
+                  ebitda
+                  peRatio
+                  pegRatio
+                  bookValue
+                  dividendPerShare
+                  dividendYield
+                  eps
+                  revenuePerShareTTM
+                  profitMargin
+                  operatingMarginTTM
+                  returnOnAssetsTTM
+                  returnOnEquityTTM
+                  revenueTTM
+                  grossProfitTTM
+                  dilutedEPSTTM
+                  quarterlyEarningsGrowthYOY
+                  quarterlyRevenueGrowthYOY
+                  analystTargetPrice
+                  analystRatingStrongBuy
+                  analystRatingBuy
+                  analystRatingHold
+                  analystRatingSell
+                  analystRatingStrongSell
+                  trailingPE
+                  forwardPE
+                  priceToSalesRatioTTM
+                  priceToBookRatio
+                  evToRevenue
+                  evToEbitda
+                  beta
+                  week52High
+                  week52Low
+                  day50MovingAverage
+                  day200MovingAverage
+                  sharesOutstanding
+                  dividendDate
+                  exDividendDate
+                  sellPrice
+                  buyPrice
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  newsMentions {
+                    id
+                    assetId
+                    newsArticleId
+                    url
+                    news {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    relevancyScore
+                    sentimentScore
+                    sentimentLabel
+                  }
                 }
                 fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               alerts {
                 id
@@ -6805,87 +7156,6 @@ export const Action = {
             }
             asset {
               id
-              symbol
-              name
-              type
-              logoUrl
-              description
-              cik
-              exchange
-              currency
-              country
-              sector
-              industry
-              address
-              officialSite
-              fiscalYearEnd
-              latestQuarter
-              marketCapitalization
-              ebitda
-              peRatio
-              pegRatio
-              bookValue
-              dividendPerShare
-              dividendYield
-              eps
-              revenuePerShareTTM
-              profitMargin
-              operatingMarginTTM
-              returnOnAssetsTTM
-              returnOnEquityTTM
-              revenueTTM
-              grossProfitTTM
-              dilutedEPSTTM
-              quarterlyEarningsGrowthYOY
-              quarterlyRevenueGrowthYOY
-              analystTargetPrice
-              analystRatingStrongBuy
-              analystRatingBuy
-              analystRatingHold
-              analystRatingSell
-              analystRatingStrongSell
-              trailingPE
-              forwardPE
-              priceToSalesRatioTTM
-              priceToBookRatio
-              evToRevenue
-              evToEbitda
-              beta
-              week52High
-              week52Low
-              day50MovingAverage
-              day200MovingAverage
-              sharesOutstanding
-              dividendDate
-              exDividendDate
-              sellPrice
-              buyPrice
-              createdAt
-              updatedAt
-              trades {
-                id
-              }
-              orders {
-                id
-              }
-              positions {
-                id
-              }
-              newsMentions {
-                id
-                assetId
-                newsArticleId
-                url
-                news {
-                  id
-                }
-                asset {
-                  id
-                }
-                relevancyScore
-                sentimentScore
-                sentimentLabel
-              }
             }
             optionContractType
             actions {

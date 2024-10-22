@@ -24,7 +24,7 @@ function constructSelectionSet(
   visited: Set<string> = new Set(),
   indent: string = '          ',
   currentDepth: number = 0,
-  maxDepth: number = 4
+  maxDepth: number = 7
 ): string {
   // Trim inputs to remove unintended whitespace or line breaks
   modelName = modelName.trim();

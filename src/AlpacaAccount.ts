@@ -215,6 +215,18 @@ export const AlpacaAccount = {
                 }
                 action {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -252,6 +264,24 @@ export const AlpacaAccount = {
                 url
                 news {
                   id
+                  title
+                  content
+                  source
+                  sourceDomain
+                  url
+                  sentiment
+                  authors
+                  summary
+                  bannerImage
+                  timePublished
+                  category
+                  topics
+                  logo
+                  createdAt
+                  updatedAt
+                  assets {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -264,18 +294,6 @@ export const AlpacaAccount = {
             optionContractType
             actions {
               id
-              sequence
-              tradeId
-              type
-              note
-              status
-              fee
-              trade {
-                id
-              }
-              order {
-                id
-              }
             }
           }
           orders {
@@ -1303,6 +1321,18 @@ export const AlpacaAccount = {
                 }
                 action {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -1340,6 +1370,24 @@ export const AlpacaAccount = {
                 url
                 news {
                   id
+                  title
+                  content
+                  source
+                  sourceDomain
+                  url
+                  sentiment
+                  authors
+                  summary
+                  bannerImage
+                  timePublished
+                  category
+                  topics
+                  logo
+                  createdAt
+                  updatedAt
+                  assets {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -1352,18 +1400,6 @@ export const AlpacaAccount = {
             optionContractType
             actions {
               id
-              sequence
-              tradeId
-              type
-              note
-              status
-              fee
-              trade {
-                id
-              }
-              order {
-                id
-              }
             }
           }
           orders {
@@ -7159,6 +7195,18 @@ export const AlpacaAccount = {
                 }
                 action {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -7196,6 +7244,24 @@ export const AlpacaAccount = {
                 url
                 news {
                   id
+                  title
+                  content
+                  source
+                  sourceDomain
+                  url
+                  sentiment
+                  authors
+                  summary
+                  bannerImage
+                  timePublished
+                  category
+                  topics
+                  logo
+                  createdAt
+                  updatedAt
+                  assets {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -7208,18 +7274,6 @@ export const AlpacaAccount = {
             optionContractType
             actions {
               id
-              sequence
-              tradeId
-              type
-              note
-              status
-              fee
-              trade {
-                id
-              }
-              order {
-                id
-              }
             }
           }
           orders {
@@ -7468,6 +7522,18 @@ export const AlpacaAccount = {
                 }
                 action {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -7505,6 +7571,24 @@ export const AlpacaAccount = {
                 url
                 news {
                   id
+                  title
+                  content
+                  source
+                  sourceDomain
+                  url
+                  sentiment
+                  authors
+                  summary
+                  bannerImage
+                  timePublished
+                  category
+                  topics
+                  logo
+                  createdAt
+                  updatedAt
+                  assets {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -7517,18 +7601,6 @@ export const AlpacaAccount = {
             optionContractType
             actions {
               id
-              sequence
-              tradeId
-              type
-              note
-              status
-              fee
-              trade {
-                id
-              }
-              order {
-                id
-              }
             }
           }
           orders {
@@ -7775,6 +7847,18 @@ export const AlpacaAccount = {
                 }
                 action {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -7812,6 +7896,24 @@ export const AlpacaAccount = {
                 url
                 news {
                   id
+                  title
+                  content
+                  source
+                  sourceDomain
+                  url
+                  sentiment
+                  authors
+                  summary
+                  bannerImage
+                  timePublished
+                  category
+                  topics
+                  logo
+                  createdAt
+                  updatedAt
+                  assets {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -7824,18 +7926,6 @@ export const AlpacaAccount = {
             optionContractType
             actions {
               id
-              sequence
-              tradeId
-              type
-              note
-              status
-              fee
-              trade {
-                id
-              }
-              order {
-                id
-              }
             }
           }
           orders {
@@ -8076,6 +8166,18 @@ export const AlpacaAccount = {
                 }
                 action {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -8113,6 +8215,24 @@ export const AlpacaAccount = {
                 url
                 news {
                   id
+                  title
+                  content
+                  source
+                  sourceDomain
+                  url
+                  sentiment
+                  authors
+                  summary
+                  bannerImage
+                  timePublished
+                  category
+                  topics
+                  logo
+                  createdAt
+                  updatedAt
+                  assets {
+                    id
+                  }
                 }
                 asset {
                   id
@@ -8125,18 +8245,6 @@ export const AlpacaAccount = {
             optionContractType
             actions {
               id
-              sequence
-              tradeId
-              type
-              note
-              status
-              fee
-              trade {
-                id
-              }
-              order {
-                id
-              }
             }
           }
           orders {

@@ -109,6 +109,78 @@ export const Position = {
                 marketOpen
                 user {
                   id
+                  name
+                  email
+                  emailVerified
+                  image
+                  createdAt
+                  updatedAt
+                  role
+                  bio
+                  jobTitle
+                  currentAccount
+                  customer {
+                    id
+                    authUserId
+                    name
+                    plan
+                    stripeCustomerId
+                    stripeSubscriptionId
+                    stripePriceId
+                    stripeCurrentPeriodEnd
+                    createdAt
+                    updatedAt
+                    users {
+                      id
+                    }
+                  }
+                  customerId
+                  accounts {
+                    id
+                    userId
+                    type
+                    provider
+                    providerAccountId
+                    refresh_token
+                    access_token
+                    expires_at
+                    token_type
+                    scope
+                    id_token
+                    session_state
+                    createdAt
+                    updatedAt
+                    user {
+                      id
+                    }
+                  }
+                  sessions {
+                    id
+                    sessionToken
+                    userId
+                    expires
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  authenticators {
+                    id
+                    userId
+                    credentialID
+                    publicKey
+                    counter
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  plan
+                  alpacaAccounts {
+                    id
+                  }
                 }
                 userId
                 createdAt
@@ -118,12 +190,63 @@ export const Position = {
                 }
                 orders {
                   id
+                  alpacaAccountId
+                  assetId
+                  qty
+                  notional
+                  side
+                  type
+                  timeInForce
+                  limitPrice
+                  stopPrice
+                  trailPrice
+                  trailPercent
+                  extendedHours
+                  clientOrderId
+                  status
+                  createdAt
+                  updatedAt
+                  submittedAt
+                  filledAt
+                  filledAvgPrice
+                  actionId
+                  alpacaAccount {
+                    id
+                  }
+                  action {
+                    id
+                    sequence
+                    tradeId
+                    type
+                    note
+                    status
+                    fee
+                    trade {
+                      id
+                    }
+                    order {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  fee
                 }
                 positions {
                   id
                 }
                 alerts {
                   id
+                  alpacaAccountId
+                  message
+                  type
+                  isRead
+                  createdAt
+                  updatedAt
+                  alpacaAccount {
+                    id
+                  }
                 }
               }
               asset {
@@ -132,52 +255,10 @@ export const Position = {
               optionContractType
               actions {
                 id
-                sequence
-                tradeId
-                type
-                note
-                status
-                fee
-                trade {
-                  id
-                }
-                order {
-                  id
-                }
               }
             }
             orders {
               id
-              alpacaAccountId
-              assetId
-              qty
-              notional
-              side
-              type
-              timeInForce
-              limitPrice
-              stopPrice
-              trailPrice
-              trailPercent
-              extendedHours
-              clientOrderId
-              status
-              createdAt
-              updatedAt
-              submittedAt
-              filledAt
-              filledAvgPrice
-              actionId
-              alpacaAccount {
-                id
-              }
-              action {
-                id
-              }
-              asset {
-                id
-              }
-              fee
             }
             positions {
               id
@@ -1050,6 +1131,78 @@ export const Position = {
                 marketOpen
                 user {
                   id
+                  name
+                  email
+                  emailVerified
+                  image
+                  createdAt
+                  updatedAt
+                  role
+                  bio
+                  jobTitle
+                  currentAccount
+                  customer {
+                    id
+                    authUserId
+                    name
+                    plan
+                    stripeCustomerId
+                    stripeSubscriptionId
+                    stripePriceId
+                    stripeCurrentPeriodEnd
+                    createdAt
+                    updatedAt
+                    users {
+                      id
+                    }
+                  }
+                  customerId
+                  accounts {
+                    id
+                    userId
+                    type
+                    provider
+                    providerAccountId
+                    refresh_token
+                    access_token
+                    expires_at
+                    token_type
+                    scope
+                    id_token
+                    session_state
+                    createdAt
+                    updatedAt
+                    user {
+                      id
+                    }
+                  }
+                  sessions {
+                    id
+                    sessionToken
+                    userId
+                    expires
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  authenticators {
+                    id
+                    userId
+                    credentialID
+                    publicKey
+                    counter
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  plan
+                  alpacaAccounts {
+                    id
+                  }
                 }
                 userId
                 createdAt
@@ -1059,12 +1212,63 @@ export const Position = {
                 }
                 orders {
                   id
+                  alpacaAccountId
+                  assetId
+                  qty
+                  notional
+                  side
+                  type
+                  timeInForce
+                  limitPrice
+                  stopPrice
+                  trailPrice
+                  trailPercent
+                  extendedHours
+                  clientOrderId
+                  status
+                  createdAt
+                  updatedAt
+                  submittedAt
+                  filledAt
+                  filledAvgPrice
+                  actionId
+                  alpacaAccount {
+                    id
+                  }
+                  action {
+                    id
+                    sequence
+                    tradeId
+                    type
+                    note
+                    status
+                    fee
+                    trade {
+                      id
+                    }
+                    order {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  fee
                 }
                 positions {
                   id
                 }
                 alerts {
                   id
+                  alpacaAccountId
+                  message
+                  type
+                  isRead
+                  createdAt
+                  updatedAt
+                  alpacaAccount {
+                    id
+                  }
                 }
               }
               asset {
@@ -1073,52 +1277,10 @@ export const Position = {
               optionContractType
               actions {
                 id
-                sequence
-                tradeId
-                type
-                note
-                status
-                fee
-                trade {
-                  id
-                }
-                order {
-                  id
-                }
               }
             }
             orders {
               id
-              alpacaAccountId
-              assetId
-              qty
-              notional
-              side
-              type
-              timeInForce
-              limitPrice
-              stopPrice
-              trailPrice
-              trailPercent
-              extendedHours
-              clientOrderId
-              status
-              createdAt
-              updatedAt
-              submittedAt
-              filledAt
-              filledAvgPrice
-              actionId
-              alpacaAccount {
-                id
-              }
-              action {
-                id
-              }
-              asset {
-                id
-              }
-              fee
             }
             positions {
               id
@@ -6385,6 +6547,78 @@ export const Position = {
                 marketOpen
                 user {
                   id
+                  name
+                  email
+                  emailVerified
+                  image
+                  createdAt
+                  updatedAt
+                  role
+                  bio
+                  jobTitle
+                  currentAccount
+                  customer {
+                    id
+                    authUserId
+                    name
+                    plan
+                    stripeCustomerId
+                    stripeSubscriptionId
+                    stripePriceId
+                    stripeCurrentPeriodEnd
+                    createdAt
+                    updatedAt
+                    users {
+                      id
+                    }
+                  }
+                  customerId
+                  accounts {
+                    id
+                    userId
+                    type
+                    provider
+                    providerAccountId
+                    refresh_token
+                    access_token
+                    expires_at
+                    token_type
+                    scope
+                    id_token
+                    session_state
+                    createdAt
+                    updatedAt
+                    user {
+                      id
+                    }
+                  }
+                  sessions {
+                    id
+                    sessionToken
+                    userId
+                    expires
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  authenticators {
+                    id
+                    userId
+                    credentialID
+                    publicKey
+                    counter
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  plan
+                  alpacaAccounts {
+                    id
+                  }
                 }
                 userId
                 createdAt
@@ -6394,12 +6628,63 @@ export const Position = {
                 }
                 orders {
                   id
+                  alpacaAccountId
+                  assetId
+                  qty
+                  notional
+                  side
+                  type
+                  timeInForce
+                  limitPrice
+                  stopPrice
+                  trailPrice
+                  trailPercent
+                  extendedHours
+                  clientOrderId
+                  status
+                  createdAt
+                  updatedAt
+                  submittedAt
+                  filledAt
+                  filledAvgPrice
+                  actionId
+                  alpacaAccount {
+                    id
+                  }
+                  action {
+                    id
+                    sequence
+                    tradeId
+                    type
+                    note
+                    status
+                    fee
+                    trade {
+                      id
+                    }
+                    order {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  fee
                 }
                 positions {
                   id
                 }
                 alerts {
                   id
+                  alpacaAccountId
+                  message
+                  type
+                  isRead
+                  createdAt
+                  updatedAt
+                  alpacaAccount {
+                    id
+                  }
                 }
               }
               asset {
@@ -6408,52 +6693,10 @@ export const Position = {
               optionContractType
               actions {
                 id
-                sequence
-                tradeId
-                type
-                note
-                status
-                fee
-                trade {
-                  id
-                }
-                order {
-                  id
-                }
               }
             }
             orders {
               id
-              alpacaAccountId
-              assetId
-              qty
-              notional
-              side
-              type
-              timeInForce
-              limitPrice
-              stopPrice
-              trailPrice
-              trailPercent
-              extendedHours
-              clientOrderId
-              status
-              createdAt
-              updatedAt
-              submittedAt
-              filledAt
-              filledAvgPrice
-              actionId
-              alpacaAccount {
-                id
-              }
-              action {
-                id
-              }
-              asset {
-                id
-              }
-              fee
             }
             positions {
               id
@@ -6631,6 +6874,78 @@ export const Position = {
                 marketOpen
                 user {
                   id
+                  name
+                  email
+                  emailVerified
+                  image
+                  createdAt
+                  updatedAt
+                  role
+                  bio
+                  jobTitle
+                  currentAccount
+                  customer {
+                    id
+                    authUserId
+                    name
+                    plan
+                    stripeCustomerId
+                    stripeSubscriptionId
+                    stripePriceId
+                    stripeCurrentPeriodEnd
+                    createdAt
+                    updatedAt
+                    users {
+                      id
+                    }
+                  }
+                  customerId
+                  accounts {
+                    id
+                    userId
+                    type
+                    provider
+                    providerAccountId
+                    refresh_token
+                    access_token
+                    expires_at
+                    token_type
+                    scope
+                    id_token
+                    session_state
+                    createdAt
+                    updatedAt
+                    user {
+                      id
+                    }
+                  }
+                  sessions {
+                    id
+                    sessionToken
+                    userId
+                    expires
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  authenticators {
+                    id
+                    userId
+                    credentialID
+                    publicKey
+                    counter
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  plan
+                  alpacaAccounts {
+                    id
+                  }
                 }
                 userId
                 createdAt
@@ -6640,12 +6955,63 @@ export const Position = {
                 }
                 orders {
                   id
+                  alpacaAccountId
+                  assetId
+                  qty
+                  notional
+                  side
+                  type
+                  timeInForce
+                  limitPrice
+                  stopPrice
+                  trailPrice
+                  trailPercent
+                  extendedHours
+                  clientOrderId
+                  status
+                  createdAt
+                  updatedAt
+                  submittedAt
+                  filledAt
+                  filledAvgPrice
+                  actionId
+                  alpacaAccount {
+                    id
+                  }
+                  action {
+                    id
+                    sequence
+                    tradeId
+                    type
+                    note
+                    status
+                    fee
+                    trade {
+                      id
+                    }
+                    order {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  fee
                 }
                 positions {
                   id
                 }
                 alerts {
                   id
+                  alpacaAccountId
+                  message
+                  type
+                  isRead
+                  createdAt
+                  updatedAt
+                  alpacaAccount {
+                    id
+                  }
                 }
               }
               asset {
@@ -6654,52 +7020,10 @@ export const Position = {
               optionContractType
               actions {
                 id
-                sequence
-                tradeId
-                type
-                note
-                status
-                fee
-                trade {
-                  id
-                }
-                order {
-                  id
-                }
               }
             }
             orders {
               id
-              alpacaAccountId
-              assetId
-              qty
-              notional
-              side
-              type
-              timeInForce
-              limitPrice
-              stopPrice
-              trailPrice
-              trailPercent
-              extendedHours
-              clientOrderId
-              status
-              createdAt
-              updatedAt
-              submittedAt
-              filledAt
-              filledAvgPrice
-              actionId
-              alpacaAccount {
-                id
-              }
-              action {
-                id
-              }
-              asset {
-                id
-              }
-              fee
             }
             positions {
               id
@@ -6875,6 +7199,78 @@ export const Position = {
                 marketOpen
                 user {
                   id
+                  name
+                  email
+                  emailVerified
+                  image
+                  createdAt
+                  updatedAt
+                  role
+                  bio
+                  jobTitle
+                  currentAccount
+                  customer {
+                    id
+                    authUserId
+                    name
+                    plan
+                    stripeCustomerId
+                    stripeSubscriptionId
+                    stripePriceId
+                    stripeCurrentPeriodEnd
+                    createdAt
+                    updatedAt
+                    users {
+                      id
+                    }
+                  }
+                  customerId
+                  accounts {
+                    id
+                    userId
+                    type
+                    provider
+                    providerAccountId
+                    refresh_token
+                    access_token
+                    expires_at
+                    token_type
+                    scope
+                    id_token
+                    session_state
+                    createdAt
+                    updatedAt
+                    user {
+                      id
+                    }
+                  }
+                  sessions {
+                    id
+                    sessionToken
+                    userId
+                    expires
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  authenticators {
+                    id
+                    userId
+                    credentialID
+                    publicKey
+                    counter
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  plan
+                  alpacaAccounts {
+                    id
+                  }
                 }
                 userId
                 createdAt
@@ -6884,12 +7280,63 @@ export const Position = {
                 }
                 orders {
                   id
+                  alpacaAccountId
+                  assetId
+                  qty
+                  notional
+                  side
+                  type
+                  timeInForce
+                  limitPrice
+                  stopPrice
+                  trailPrice
+                  trailPercent
+                  extendedHours
+                  clientOrderId
+                  status
+                  createdAt
+                  updatedAt
+                  submittedAt
+                  filledAt
+                  filledAvgPrice
+                  actionId
+                  alpacaAccount {
+                    id
+                  }
+                  action {
+                    id
+                    sequence
+                    tradeId
+                    type
+                    note
+                    status
+                    fee
+                    trade {
+                      id
+                    }
+                    order {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  fee
                 }
                 positions {
                   id
                 }
                 alerts {
                   id
+                  alpacaAccountId
+                  message
+                  type
+                  isRead
+                  createdAt
+                  updatedAt
+                  alpacaAccount {
+                    id
+                  }
                 }
               }
               asset {
@@ -6898,52 +7345,10 @@ export const Position = {
               optionContractType
               actions {
                 id
-                sequence
-                tradeId
-                type
-                note
-                status
-                fee
-                trade {
-                  id
-                }
-                order {
-                  id
-                }
               }
             }
             orders {
               id
-              alpacaAccountId
-              assetId
-              qty
-              notional
-              side
-              type
-              timeInForce
-              limitPrice
-              stopPrice
-              trailPrice
-              trailPercent
-              extendedHours
-              clientOrderId
-              status
-              createdAt
-              updatedAt
-              submittedAt
-              filledAt
-              filledAvgPrice
-              actionId
-              alpacaAccount {
-                id
-              }
-              action {
-                id
-              }
-              asset {
-                id
-              }
-              fee
             }
             positions {
               id
@@ -7113,6 +7518,78 @@ export const Position = {
                 marketOpen
                 user {
                   id
+                  name
+                  email
+                  emailVerified
+                  image
+                  createdAt
+                  updatedAt
+                  role
+                  bio
+                  jobTitle
+                  currentAccount
+                  customer {
+                    id
+                    authUserId
+                    name
+                    plan
+                    stripeCustomerId
+                    stripeSubscriptionId
+                    stripePriceId
+                    stripeCurrentPeriodEnd
+                    createdAt
+                    updatedAt
+                    users {
+                      id
+                    }
+                  }
+                  customerId
+                  accounts {
+                    id
+                    userId
+                    type
+                    provider
+                    providerAccountId
+                    refresh_token
+                    access_token
+                    expires_at
+                    token_type
+                    scope
+                    id_token
+                    session_state
+                    createdAt
+                    updatedAt
+                    user {
+                      id
+                    }
+                  }
+                  sessions {
+                    id
+                    sessionToken
+                    userId
+                    expires
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  authenticators {
+                    id
+                    userId
+                    credentialID
+                    publicKey
+                    counter
+                    user {
+                      id
+                    }
+                    createdAt
+                    updatedAt
+                  }
+                  plan
+                  alpacaAccounts {
+                    id
+                  }
                 }
                 userId
                 createdAt
@@ -7122,12 +7599,63 @@ export const Position = {
                 }
                 orders {
                   id
+                  alpacaAccountId
+                  assetId
+                  qty
+                  notional
+                  side
+                  type
+                  timeInForce
+                  limitPrice
+                  stopPrice
+                  trailPrice
+                  trailPercent
+                  extendedHours
+                  clientOrderId
+                  status
+                  createdAt
+                  updatedAt
+                  submittedAt
+                  filledAt
+                  filledAvgPrice
+                  actionId
+                  alpacaAccount {
+                    id
+                  }
+                  action {
+                    id
+                    sequence
+                    tradeId
+                    type
+                    note
+                    status
+                    fee
+                    trade {
+                      id
+                    }
+                    order {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  fee
                 }
                 positions {
                   id
                 }
                 alerts {
                   id
+                  alpacaAccountId
+                  message
+                  type
+                  isRead
+                  createdAt
+                  updatedAt
+                  alpacaAccount {
+                    id
+                  }
                 }
               }
               asset {
@@ -7136,52 +7664,10 @@ export const Position = {
               optionContractType
               actions {
                 id
-                sequence
-                tradeId
-                type
-                note
-                status
-                fee
-                trade {
-                  id
-                }
-                order {
-                  id
-                }
               }
             }
             orders {
               id
-              alpacaAccountId
-              assetId
-              qty
-              notional
-              side
-              type
-              timeInForce
-              limitPrice
-              stopPrice
-              trailPrice
-              trailPercent
-              extendedHours
-              clientOrderId
-              status
-              createdAt
-              updatedAt
-              submittedAt
-              filledAt
-              filledAvgPrice
-              actionId
-              alpacaAccount {
-                id
-              }
-              action {
-                id
-              }
-              asset {
-                id
-              }
-              fee
             }
             positions {
               id

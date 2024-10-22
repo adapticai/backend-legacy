@@ -124,6 +124,116 @@ export const NewsArticle = {
                 status
                 alpacaAccount {
                   id
+                  type
+                  APIKey
+                  APISecret
+                  configuration
+                  marketOpen
+                  user {
+                    id
+                    name
+                    email
+                    emailVerified
+                    image
+                    createdAt
+                    updatedAt
+                    role
+                    bio
+                    jobTitle
+                    currentAccount
+                    customer {
+                      id
+                    }
+                    customerId
+                    accounts {
+                      id
+                    }
+                    sessions {
+                      id
+                    }
+                    authenticators {
+                      id
+                    }
+                    plan
+                    alpacaAccounts {
+                      id
+                    }
+                  }
+                  userId
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                    alpacaAccountId
+                    assetId
+                    qty
+                    notional
+                    side
+                    type
+                    timeInForce
+                    limitPrice
+                    stopPrice
+                    trailPrice
+                    trailPercent
+                    extendedHours
+                    clientOrderId
+                    status
+                    createdAt
+                    updatedAt
+                    submittedAt
+                    filledAt
+                    filledAvgPrice
+                    actionId
+                    alpacaAccount {
+                      id
+                    }
+                    action {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    fee
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  alerts {
+                    id
+                    alpacaAccountId
+                    message
+                    type
+                    isRead
+                    createdAt
+                    updatedAt
+                    alpacaAccount {
+                      id
+                    }
+                  }
                 }
                 asset {
                   id
@@ -131,64 +241,25 @@ export const NewsArticle = {
                 optionContractType
                 actions {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
               }
               orders {
                 id
-                alpacaAccountId
-                assetId
-                qty
-                notional
-                side
-                type
-                timeInForce
-                limitPrice
-                stopPrice
-                trailPrice
-                trailPercent
-                extendedHours
-                clientOrderId
-                status
-                createdAt
-                updatedAt
-                submittedAt
-                filledAt
-                filledAvgPrice
-                actionId
-                alpacaAccount {
-                  id
-                }
-                action {
-                  id
-                }
-                asset {
-                  id
-                }
-                fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               newsMentions {
                 id
@@ -570,6 +641,116 @@ export const NewsArticle = {
                 status
                 alpacaAccount {
                   id
+                  type
+                  APIKey
+                  APISecret
+                  configuration
+                  marketOpen
+                  user {
+                    id
+                    name
+                    email
+                    emailVerified
+                    image
+                    createdAt
+                    updatedAt
+                    role
+                    bio
+                    jobTitle
+                    currentAccount
+                    customer {
+                      id
+                    }
+                    customerId
+                    accounts {
+                      id
+                    }
+                    sessions {
+                      id
+                    }
+                    authenticators {
+                      id
+                    }
+                    plan
+                    alpacaAccounts {
+                      id
+                    }
+                  }
+                  userId
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                    alpacaAccountId
+                    assetId
+                    qty
+                    notional
+                    side
+                    type
+                    timeInForce
+                    limitPrice
+                    stopPrice
+                    trailPrice
+                    trailPercent
+                    extendedHours
+                    clientOrderId
+                    status
+                    createdAt
+                    updatedAt
+                    submittedAt
+                    filledAt
+                    filledAvgPrice
+                    actionId
+                    alpacaAccount {
+                      id
+                    }
+                    action {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    fee
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  alerts {
+                    id
+                    alpacaAccountId
+                    message
+                    type
+                    isRead
+                    createdAt
+                    updatedAt
+                    alpacaAccount {
+                      id
+                    }
+                  }
                 }
                 asset {
                   id
@@ -577,64 +758,25 @@ export const NewsArticle = {
                 optionContractType
                 actions {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
               }
               orders {
                 id
-                alpacaAccountId
-                assetId
-                qty
-                notional
-                side
-                type
-                timeInForce
-                limitPrice
-                stopPrice
-                trailPrice
-                trailPercent
-                extendedHours
-                clientOrderId
-                status
-                createdAt
-                updatedAt
-                submittedAt
-                filledAt
-                filledAvgPrice
-                actionId
-                alpacaAccount {
-                  id
-                }
-                action {
-                  id
-                }
-                asset {
-                  id
-                }
-                fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               newsMentions {
                 id
@@ -2326,6 +2468,116 @@ export const NewsArticle = {
                 status
                 alpacaAccount {
                   id
+                  type
+                  APIKey
+                  APISecret
+                  configuration
+                  marketOpen
+                  user {
+                    id
+                    name
+                    email
+                    emailVerified
+                    image
+                    createdAt
+                    updatedAt
+                    role
+                    bio
+                    jobTitle
+                    currentAccount
+                    customer {
+                      id
+                    }
+                    customerId
+                    accounts {
+                      id
+                    }
+                    sessions {
+                      id
+                    }
+                    authenticators {
+                      id
+                    }
+                    plan
+                    alpacaAccounts {
+                      id
+                    }
+                  }
+                  userId
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                    alpacaAccountId
+                    assetId
+                    qty
+                    notional
+                    side
+                    type
+                    timeInForce
+                    limitPrice
+                    stopPrice
+                    trailPrice
+                    trailPercent
+                    extendedHours
+                    clientOrderId
+                    status
+                    createdAt
+                    updatedAt
+                    submittedAt
+                    filledAt
+                    filledAvgPrice
+                    actionId
+                    alpacaAccount {
+                      id
+                    }
+                    action {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    fee
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  alerts {
+                    id
+                    alpacaAccountId
+                    message
+                    type
+                    isRead
+                    createdAt
+                    updatedAt
+                    alpacaAccount {
+                      id
+                    }
+                  }
                 }
                 asset {
                   id
@@ -2333,64 +2585,25 @@ export const NewsArticle = {
                 optionContractType
                 actions {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
               }
               orders {
                 id
-                alpacaAccountId
-                assetId
-                qty
-                notional
-                side
-                type
-                timeInForce
-                limitPrice
-                stopPrice
-                trailPrice
-                trailPercent
-                extendedHours
-                clientOrderId
-                status
-                createdAt
-                updatedAt
-                submittedAt
-                filledAt
-                filledAvgPrice
-                actionId
-                alpacaAccount {
-                  id
-                }
-                action {
-                  id
-                }
-                asset {
-                  id
-                }
-                fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               newsMentions {
                 id
@@ -2537,6 +2750,116 @@ export const NewsArticle = {
                 status
                 alpacaAccount {
                   id
+                  type
+                  APIKey
+                  APISecret
+                  configuration
+                  marketOpen
+                  user {
+                    id
+                    name
+                    email
+                    emailVerified
+                    image
+                    createdAt
+                    updatedAt
+                    role
+                    bio
+                    jobTitle
+                    currentAccount
+                    customer {
+                      id
+                    }
+                    customerId
+                    accounts {
+                      id
+                    }
+                    sessions {
+                      id
+                    }
+                    authenticators {
+                      id
+                    }
+                    plan
+                    alpacaAccounts {
+                      id
+                    }
+                  }
+                  userId
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                    alpacaAccountId
+                    assetId
+                    qty
+                    notional
+                    side
+                    type
+                    timeInForce
+                    limitPrice
+                    stopPrice
+                    trailPrice
+                    trailPercent
+                    extendedHours
+                    clientOrderId
+                    status
+                    createdAt
+                    updatedAt
+                    submittedAt
+                    filledAt
+                    filledAvgPrice
+                    actionId
+                    alpacaAccount {
+                      id
+                    }
+                    action {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    fee
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  alerts {
+                    id
+                    alpacaAccountId
+                    message
+                    type
+                    isRead
+                    createdAt
+                    updatedAt
+                    alpacaAccount {
+                      id
+                    }
+                  }
                 }
                 asset {
                   id
@@ -2544,64 +2867,25 @@ export const NewsArticle = {
                 optionContractType
                 actions {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
               }
               orders {
                 id
-                alpacaAccountId
-                assetId
-                qty
-                notional
-                side
-                type
-                timeInForce
-                limitPrice
-                stopPrice
-                trailPrice
-                trailPercent
-                extendedHours
-                clientOrderId
-                status
-                createdAt
-                updatedAt
-                submittedAt
-                filledAt
-                filledAvgPrice
-                actionId
-                alpacaAccount {
-                  id
-                }
-                action {
-                  id
-                }
-                asset {
-                  id
-                }
-                fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               newsMentions {
                 id
@@ -2750,6 +3034,116 @@ export const NewsArticle = {
                 status
                 alpacaAccount {
                   id
+                  type
+                  APIKey
+                  APISecret
+                  configuration
+                  marketOpen
+                  user {
+                    id
+                    name
+                    email
+                    emailVerified
+                    image
+                    createdAt
+                    updatedAt
+                    role
+                    bio
+                    jobTitle
+                    currentAccount
+                    customer {
+                      id
+                    }
+                    customerId
+                    accounts {
+                      id
+                    }
+                    sessions {
+                      id
+                    }
+                    authenticators {
+                      id
+                    }
+                    plan
+                    alpacaAccounts {
+                      id
+                    }
+                  }
+                  userId
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                    alpacaAccountId
+                    assetId
+                    qty
+                    notional
+                    side
+                    type
+                    timeInForce
+                    limitPrice
+                    stopPrice
+                    trailPrice
+                    trailPercent
+                    extendedHours
+                    clientOrderId
+                    status
+                    createdAt
+                    updatedAt
+                    submittedAt
+                    filledAt
+                    filledAvgPrice
+                    actionId
+                    alpacaAccount {
+                      id
+                    }
+                    action {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    fee
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  alerts {
+                    id
+                    alpacaAccountId
+                    message
+                    type
+                    isRead
+                    createdAt
+                    updatedAt
+                    alpacaAccount {
+                      id
+                    }
+                  }
                 }
                 asset {
                   id
@@ -2757,64 +3151,25 @@ export const NewsArticle = {
                 optionContractType
                 actions {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
               }
               orders {
                 id
-                alpacaAccountId
-                assetId
-                qty
-                notional
-                side
-                type
-                timeInForce
-                limitPrice
-                stopPrice
-                trailPrice
-                trailPercent
-                extendedHours
-                clientOrderId
-                status
-                createdAt
-                updatedAt
-                submittedAt
-                filledAt
-                filledAvgPrice
-                actionId
-                alpacaAccount {
-                  id
-                }
-                action {
-                  id
-                }
-                asset {
-                  id
-                }
-                fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               newsMentions {
                 id
@@ -2953,6 +3308,116 @@ export const NewsArticle = {
                 status
                 alpacaAccount {
                   id
+                  type
+                  APIKey
+                  APISecret
+                  configuration
+                  marketOpen
+                  user {
+                    id
+                    name
+                    email
+                    emailVerified
+                    image
+                    createdAt
+                    updatedAt
+                    role
+                    bio
+                    jobTitle
+                    currentAccount
+                    customer {
+                      id
+                    }
+                    customerId
+                    accounts {
+                      id
+                    }
+                    sessions {
+                      id
+                    }
+                    authenticators {
+                      id
+                    }
+                    plan
+                    alpacaAccounts {
+                      id
+                    }
+                  }
+                  userId
+                  createdAt
+                  updatedAt
+                  trades {
+                    id
+                  }
+                  orders {
+                    id
+                    alpacaAccountId
+                    assetId
+                    qty
+                    notional
+                    side
+                    type
+                    timeInForce
+                    limitPrice
+                    stopPrice
+                    trailPrice
+                    trailPercent
+                    extendedHours
+                    clientOrderId
+                    status
+                    createdAt
+                    updatedAt
+                    submittedAt
+                    filledAt
+                    filledAvgPrice
+                    actionId
+                    alpacaAccount {
+                      id
+                    }
+                    action {
+                      id
+                    }
+                    asset {
+                      id
+                    }
+                    fee
+                  }
+                  positions {
+                    id
+                    assetId
+                    asset {
+                      id
+                    }
+                    averageEntryPrice
+                    qty
+                    qtyAvailable
+                    marketValue
+                    costBasis
+                    unrealizedPL
+                    unrealizedPLPC
+                    unrealisedIntradayPL
+                    unrealisedIntradayPLPC
+                    currentPrice
+                    lastTradePrice
+                    changeToday
+                    assetMarginable
+                    alpacaAccount {
+                      id
+                    }
+                    alpacaAccountId
+                  }
+                  alerts {
+                    id
+                    alpacaAccountId
+                    message
+                    type
+                    isRead
+                    createdAt
+                    updatedAt
+                    alpacaAccount {
+                      id
+                    }
+                  }
                 }
                 asset {
                   id
@@ -2960,64 +3425,25 @@ export const NewsArticle = {
                 optionContractType
                 actions {
                   id
+                  sequence
+                  tradeId
+                  type
+                  note
+                  status
+                  fee
+                  trade {
+                    id
+                  }
+                  order {
+                    id
+                  }
                 }
               }
               orders {
                 id
-                alpacaAccountId
-                assetId
-                qty
-                notional
-                side
-                type
-                timeInForce
-                limitPrice
-                stopPrice
-                trailPrice
-                trailPercent
-                extendedHours
-                clientOrderId
-                status
-                createdAt
-                updatedAt
-                submittedAt
-                filledAt
-                filledAvgPrice
-                actionId
-                alpacaAccount {
-                  id
-                }
-                action {
-                  id
-                }
-                asset {
-                  id
-                }
-                fee
               }
               positions {
                 id
-                assetId
-                asset {
-                  id
-                }
-                averageEntryPrice
-                qty
-                qtyAvailable
-                marketValue
-                costBasis
-                unrealizedPL
-                unrealizedPLPC
-                unrealisedIntradayPL
-                unrealisedIntradayPLPC
-                currentPrice
-                lastTradePrice
-                changeToday
-                assetMarginable
-                alpacaAccount {
-                  id
-                }
-                alpacaAccountId
               }
               newsMentions {
                 id

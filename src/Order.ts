@@ -215,9 +215,60 @@ export const Order = {
                 }
                 positions {
                   id
+                  assetId
+                  asset {
+                    id
+                  }
+                  averageEntryPrice
+                  qty
+                  qtyAvailable
+                  marketValue
+                  costBasis
+                  unrealizedPL
+                  unrealizedPLPC
+                  unrealisedIntradayPL
+                  unrealisedIntradayPLPC
+                  currentPrice
+                  lastTradePrice
+                  changeToday
+                  assetMarginable
+                  alpacaAccount {
+                    id
+                  }
+                  alpacaAccountId
                 }
                 newsMentions {
                   id
+                  assetId
+                  newsArticleId
+                  url
+                  news {
+                    id
+                    title
+                    content
+                    source
+                    sourceDomain
+                    url
+                    sentiment
+                    authors
+                    summary
+                    bannerImage
+                    timePublished
+                    category
+                    topics
+                    logo
+                    createdAt
+                    updatedAt
+                    assets {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  relevancyScore
+                  sentimentScore
+                  sentimentLabel
                 }
               }
               optionContractType
@@ -242,27 +293,6 @@ export const Order = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              alpacaAccount {
-                id
-              }
-              alpacaAccountId
             }
             alerts {
               id
@@ -1303,9 +1333,60 @@ export const Order = {
                 }
                 positions {
                   id
+                  assetId
+                  asset {
+                    id
+                  }
+                  averageEntryPrice
+                  qty
+                  qtyAvailable
+                  marketValue
+                  costBasis
+                  unrealizedPL
+                  unrealizedPLPC
+                  unrealisedIntradayPL
+                  unrealisedIntradayPLPC
+                  currentPrice
+                  lastTradePrice
+                  changeToday
+                  assetMarginable
+                  alpacaAccount {
+                    id
+                  }
+                  alpacaAccountId
                 }
                 newsMentions {
                   id
+                  assetId
+                  newsArticleId
+                  url
+                  news {
+                    id
+                    title
+                    content
+                    source
+                    sourceDomain
+                    url
+                    sentiment
+                    authors
+                    summary
+                    bannerImage
+                    timePublished
+                    category
+                    topics
+                    logo
+                    createdAt
+                    updatedAt
+                    assets {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  relevancyScore
+                  sentimentScore
+                  sentimentLabel
                 }
               }
               optionContractType
@@ -1330,27 +1411,6 @@ export const Order = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              alpacaAccount {
-                id
-              }
-              alpacaAccountId
             }
             alerts {
               id
@@ -7511,9 +7571,60 @@ export const Order = {
                 }
                 positions {
                   id
+                  assetId
+                  asset {
+                    id
+                  }
+                  averageEntryPrice
+                  qty
+                  qtyAvailable
+                  marketValue
+                  costBasis
+                  unrealizedPL
+                  unrealizedPLPC
+                  unrealisedIntradayPL
+                  unrealisedIntradayPLPC
+                  currentPrice
+                  lastTradePrice
+                  changeToday
+                  assetMarginable
+                  alpacaAccount {
+                    id
+                  }
+                  alpacaAccountId
                 }
                 newsMentions {
                   id
+                  assetId
+                  newsArticleId
+                  url
+                  news {
+                    id
+                    title
+                    content
+                    source
+                    sourceDomain
+                    url
+                    sentiment
+                    authors
+                    summary
+                    bannerImage
+                    timePublished
+                    category
+                    topics
+                    logo
+                    createdAt
+                    updatedAt
+                    assets {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  relevancyScore
+                  sentimentScore
+                  sentimentLabel
                 }
               }
               optionContractType
@@ -7538,27 +7649,6 @@ export const Order = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              alpacaAccount {
-                id
-              }
-              alpacaAccountId
             }
             alerts {
               id
@@ -7808,9 +7898,60 @@ export const Order = {
                 }
                 positions {
                   id
+                  assetId
+                  asset {
+                    id
+                  }
+                  averageEntryPrice
+                  qty
+                  qtyAvailable
+                  marketValue
+                  costBasis
+                  unrealizedPL
+                  unrealizedPLPC
+                  unrealisedIntradayPL
+                  unrealisedIntradayPLPC
+                  currentPrice
+                  lastTradePrice
+                  changeToday
+                  assetMarginable
+                  alpacaAccount {
+                    id
+                  }
+                  alpacaAccountId
                 }
                 newsMentions {
                   id
+                  assetId
+                  newsArticleId
+                  url
+                  news {
+                    id
+                    title
+                    content
+                    source
+                    sourceDomain
+                    url
+                    sentiment
+                    authors
+                    summary
+                    bannerImage
+                    timePublished
+                    category
+                    topics
+                    logo
+                    createdAt
+                    updatedAt
+                    assets {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  relevancyScore
+                  sentimentScore
+                  sentimentLabel
                 }
               }
               optionContractType
@@ -7835,27 +7976,6 @@ export const Order = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              alpacaAccount {
-                id
-              }
-              alpacaAccountId
             }
             alerts {
               id
@@ -8103,9 +8223,60 @@ export const Order = {
                 }
                 positions {
                   id
+                  assetId
+                  asset {
+                    id
+                  }
+                  averageEntryPrice
+                  qty
+                  qtyAvailable
+                  marketValue
+                  costBasis
+                  unrealizedPL
+                  unrealizedPLPC
+                  unrealisedIntradayPL
+                  unrealisedIntradayPLPC
+                  currentPrice
+                  lastTradePrice
+                  changeToday
+                  assetMarginable
+                  alpacaAccount {
+                    id
+                  }
+                  alpacaAccountId
                 }
                 newsMentions {
                   id
+                  assetId
+                  newsArticleId
+                  url
+                  news {
+                    id
+                    title
+                    content
+                    source
+                    sourceDomain
+                    url
+                    sentiment
+                    authors
+                    summary
+                    bannerImage
+                    timePublished
+                    category
+                    topics
+                    logo
+                    createdAt
+                    updatedAt
+                    assets {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  relevancyScore
+                  sentimentScore
+                  sentimentLabel
                 }
               }
               optionContractType
@@ -8130,27 +8301,6 @@ export const Order = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              alpacaAccount {
-                id
-              }
-              alpacaAccountId
             }
             alerts {
               id
@@ -8392,9 +8542,60 @@ export const Order = {
                 }
                 positions {
                   id
+                  assetId
+                  asset {
+                    id
+                  }
+                  averageEntryPrice
+                  qty
+                  qtyAvailable
+                  marketValue
+                  costBasis
+                  unrealizedPL
+                  unrealizedPLPC
+                  unrealisedIntradayPL
+                  unrealisedIntradayPLPC
+                  currentPrice
+                  lastTradePrice
+                  changeToday
+                  assetMarginable
+                  alpacaAccount {
+                    id
+                  }
+                  alpacaAccountId
                 }
                 newsMentions {
                   id
+                  assetId
+                  newsArticleId
+                  url
+                  news {
+                    id
+                    title
+                    content
+                    source
+                    sourceDomain
+                    url
+                    sentiment
+                    authors
+                    summary
+                    bannerImage
+                    timePublished
+                    category
+                    topics
+                    logo
+                    createdAt
+                    updatedAt
+                    assets {
+                      id
+                    }
+                  }
+                  asset {
+                    id
+                  }
+                  relevancyScore
+                  sentimentScore
+                  sentimentLabel
                 }
               }
               optionContractType
@@ -8419,27 +8620,6 @@ export const Order = {
             }
             positions {
               id
-              assetId
-              asset {
-                id
-              }
-              averageEntryPrice
-              qty
-              qtyAvailable
-              marketValue
-              costBasis
-              unrealizedPL
-              unrealizedPLPC
-              unrealisedIntradayPL
-              unrealisedIntradayPLPC
-              currentPrice
-              lastTradePrice
-              changeToday
-              assetMarginable
-              alpacaAccount {
-                id
-              }
-              alpacaAccountId
             }
             alerts {
               id
