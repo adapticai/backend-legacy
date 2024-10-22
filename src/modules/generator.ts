@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import pluralize from 'pluralize'; // Accurate pluralization
+import pluralize, { singular } from 'pluralize';
 import { FieldDefinition, InputTypePaths } from './types';
 import { capitalizeFirstLetter, lowerCaseFirstLetter } from './utils';
 import { getInputTypeDefinition, isScalarType } from './parser';
@@ -285,10 +285,11 @@ const handleCreateOperation = (
 
     // Add dynamic handling for cases where accessor is an object with only one field 'id'. If so, use 'connect' instead of 'connectOrCreate', and use accessor.id instead of accessor.
     const openingLine = field.type.isList
-      ? `typeof ${accessor}[0] === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'
-    ? { connect: ${indent} ${accessor}.map((item: any) => ({
-    ${indent} id: item.id
-    ${indent} }))\n }\n : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
+      ? `Array.isArray(${accessor}) && ${accessor}.length > 0
+    ? ${accessor}.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    ${indent}connect: ${indent} ${accessor}.map((item: any) => ({
+    ${indent}   id: item.id
+    ${indent}}))\n }\n : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
       : `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'
     ? { connect: {
      ${indent} id: ${accessor}.id

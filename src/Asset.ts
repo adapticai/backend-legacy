@@ -331,10 +331,11 @@ export const Asset = {
   sellPrice: props.sellPrice !== undefined ? props.sellPrice : undefined,
   buyPrice: props.buyPrice !== undefined ? props.buyPrice : undefined,
   trades: props.trades ? 
-    typeof props.trades[0] === 'object' && Object.keys(props.trades).length === 1 && Object.keys(props.trades)[0] === 'id'
-    ? { connect:    props.trades.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.trades) && props.trades.length > 0
+    ? props.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.trades.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.trades.map((item: any) => ({
       where: {
@@ -371,10 +372,11 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect:      item.actions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.actions) && item.actions.length > 0
+    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.actions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
@@ -393,10 +395,11 @@ export const Asset = {
     }))
   } : undefined,
   orders: props.orders ? 
-    typeof props.orders[0] === 'object' && Object.keys(props.orders).length === 1 && Object.keys(props.orders)[0] === 'id'
-    ? { connect:    props.orders.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.orders) && props.orders.length > 0
+    ? props.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.orders.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.orders.map((item: any) => ({
       where: {
@@ -461,10 +464,11 @@ export const Asset = {
     }))
   } : undefined,
   positions: props.positions ? 
-    typeof props.positions[0] === 'object' && Object.keys(props.positions).length === 1 && Object.keys(props.positions)[0] === 'id'
-    ? { connect:    props.positions.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.positions) && props.positions.length > 0
+    ? props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.positions.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.positions.map((item: any) => ({
       where: {
@@ -507,10 +511,11 @@ export const Asset = {
     }))
   } : undefined,
   newsMentions: props.newsMentions ? 
-    typeof props.newsMentions[0] === 'object' && Object.keys(props.newsMentions).length === 1 && Object.keys(props.newsMentions)[0] === 'id'
-    ? { connect:    props.newsMentions.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.newsMentions) && props.newsMentions.length > 0
+    ? props.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.newsMentions.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.newsMentions.map((item: any) => ({
       where: {
@@ -1250,10 +1255,11 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect:      item.actions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.actions) && item.actions.length > 0
+    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.actions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
@@ -2074,10 +2080,11 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect:      item.actions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.actions) && item.actions.length > 0
+    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.actions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.actions.map((item: any) => ({
         where: {

@@ -356,10 +356,11 @@ export const AlpacaAccount = {
       }
     } : undefined,
     accounts: props.user.accounts ? 
-      typeof props.user.accounts[0] === 'object' && Object.keys(props.user.accounts).length === 1 && Object.keys(props.user.accounts)[0] === 'id'
-    ? { connect:      props.user.accounts.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0
+    ? props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      props.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
@@ -380,10 +381,11 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     sessions: props.user.sessions ? 
-      typeof props.user.sessions[0] === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
-    ? { connect:      props.user.sessions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0
+    ? props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      props.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
@@ -396,10 +398,11 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     authenticators: props.user.authenticators ? 
-      typeof props.user.authenticators[0] === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
-    ? { connect:      props.user.authenticators.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0
+    ? props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      props.user.authenticators.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
@@ -416,10 +419,11 @@ export const AlpacaAccount = {
     }
   } : undefined,
   trades: props.trades ? 
-    typeof props.trades[0] === 'object' && Object.keys(props.trades).length === 1 && Object.keys(props.trades)[0] === 'id'
-    ? { connect:    props.trades.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.trades) && props.trades.length > 0
+    ? props.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.trades.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.trades.map((item: any) => ({
       where: {
@@ -508,10 +512,11 @@ export const AlpacaAccount = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect:      item.actions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.actions) && item.actions.length > 0
+    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.actions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
@@ -530,10 +535,11 @@ export const AlpacaAccount = {
     }))
   } : undefined,
   orders: props.orders ? 
-    typeof props.orders[0] === 'object' && Object.keys(props.orders).length === 1 && Object.keys(props.orders)[0] === 'id'
-    ? { connect:    props.orders.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.orders) && props.orders.length > 0
+    ? props.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.orders.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.orders.map((item: any) => ({
       where: {
@@ -650,10 +656,11 @@ export const AlpacaAccount = {
     }))
   } : undefined,
   positions: props.positions ? 
-    typeof props.positions[0] === 'object' && Object.keys(props.positions).length === 1 && Object.keys(props.positions)[0] === 'id'
-    ? { connect:    props.positions.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.positions) && props.positions.length > 0
+    ? props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.positions.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.positions.map((item: any) => ({
       where: {
@@ -748,10 +755,11 @@ export const AlpacaAccount = {
     }))
   } : undefined,
   alerts: props.alerts ? 
-    typeof props.alerts[0] === 'object' && Object.keys(props.alerts).length === 1 && Object.keys(props.alerts)[0] === 'id'
-    ? { connect:    props.alerts.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.alerts) && props.alerts.length > 0
+    ? props.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.alerts.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.alerts.map((item: any) => ({
       where: {
@@ -1369,10 +1377,11 @@ export const AlpacaAccount = {
       }
     } : undefined,
     accounts: props.user.accounts ? 
-      typeof props.user.accounts[0] === 'object' && Object.keys(props.user.accounts).length === 1 && Object.keys(props.user.accounts)[0] === 'id'
-    ? { connect:      props.user.accounts.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0
+    ? props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      props.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
@@ -1393,10 +1402,11 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     sessions: props.user.sessions ? 
-      typeof props.user.sessions[0] === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
-    ? { connect:      props.user.sessions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0
+    ? props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      props.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
@@ -1409,10 +1419,11 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     authenticators: props.user.authenticators ? 
-      typeof props.user.authenticators[0] === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
-    ? { connect:      props.user.authenticators.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0
+    ? props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      props.user.authenticators.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
@@ -1827,10 +1838,11 @@ export const AlpacaAccount = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect:      item.actions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.actions) && item.actions.length > 0
+    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.actions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
@@ -2990,10 +3002,11 @@ export const AlpacaAccount = {
       }
     } : undefined,
     accounts: prop.user.accounts ? 
-      typeof prop.user.accounts[0] === 'object' && Object.keys(prop.user.accounts).length === 1 && Object.keys(prop.user.accounts)[0] === 'id'
-    ? { connect:      prop.user.accounts.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0
+    ? prop.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      prop.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: prop.user.accounts.map((item: any) => ({
         where: {
@@ -3014,10 +3027,11 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     sessions: prop.user.sessions ? 
-      typeof prop.user.sessions[0] === 'object' && Object.keys(prop.user.sessions).length === 1 && Object.keys(prop.user.sessions)[0] === 'id'
-    ? { connect:      prop.user.sessions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0
+    ? prop.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      prop.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: prop.user.sessions.map((item: any) => ({
         where: {
@@ -3030,10 +3044,11 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     authenticators: prop.user.authenticators ? 
-      typeof prop.user.authenticators[0] === 'object' && Object.keys(prop.user.authenticators).length === 1 && Object.keys(prop.user.authenticators)[0] === 'id'
-    ? { connect:      prop.user.authenticators.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(prop.user.authenticators) && prop.user.authenticators.length > 0
+    ? prop.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      prop.user.authenticators.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: prop.user.authenticators.map((item: any) => ({
         where: {
@@ -3448,10 +3463,11 @@ export const AlpacaAccount = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect:      item.actions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.actions) && item.actions.length > 0
+    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.actions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.actions.map((item: any) => ({
         where: {

@@ -324,10 +324,11 @@ export const User = {
     }
   } : undefined,
   accounts: props.accounts ? 
-    typeof props.accounts[0] === 'object' && Object.keys(props.accounts).length === 1 && Object.keys(props.accounts)[0] === 'id'
-    ? { connect:    props.accounts.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.accounts) && props.accounts.length > 0
+    ? props.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.accounts.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.accounts.map((item: any) => ({
       where: {
@@ -348,10 +349,11 @@ export const User = {
     }))
   } : undefined,
   sessions: props.sessions ? 
-    typeof props.sessions[0] === 'object' && Object.keys(props.sessions).length === 1 && Object.keys(props.sessions)[0] === 'id'
-    ? { connect:    props.sessions.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.sessions) && props.sessions.length > 0
+    ? props.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.sessions.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.sessions.map((item: any) => ({
       where: {
@@ -364,10 +366,11 @@ export const User = {
     }))
   } : undefined,
   authenticators: props.authenticators ? 
-    typeof props.authenticators[0] === 'object' && Object.keys(props.authenticators).length === 1 && Object.keys(props.authenticators)[0] === 'id'
-    ? { connect:    props.authenticators.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.authenticators) && props.authenticators.length > 0
+    ? props.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.authenticators.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.authenticators.map((item: any) => ({
       where: {
@@ -381,10 +384,11 @@ export const User = {
     }))
   } : undefined,
   alpacaAccounts: props.alpacaAccounts ? 
-    typeof props.alpacaAccounts[0] === 'object' && Object.keys(props.alpacaAccounts).length === 1 && Object.keys(props.alpacaAccounts)[0] === 'id'
-    ? { connect:    props.alpacaAccounts.map((item: any) => ({
-       id: item.id
-       }))
+    Array.isArray(props.alpacaAccounts) && props.alpacaAccounts.length > 0
+    ? props.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      connect:    props.alpacaAccounts.map((item: any) => ({
+         id: item.id
+      }))
  }
  : { connectOrCreate: props.alpacaAccounts.map((item: any) => ({
       where: {
@@ -397,10 +401,11 @@ export const User = {
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
     trades: item.trades ? 
-      typeof item.trades[0] === 'object' && Object.keys(item.trades).length === 1 && Object.keys(item.trades)[0] === 'id'
-    ? { connect:      item.trades.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.trades) && item.trades.length > 0
+    ? item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.trades.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.trades.map((item: any) => ({
         where: {
@@ -421,10 +426,11 @@ export const User = {
       }))
     } : undefined,
     orders: item.orders ? 
-      typeof item.orders[0] === 'object' && Object.keys(item.orders).length === 1 && Object.keys(item.orders)[0] === 'id'
-    ? { connect:      item.orders.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.orders) && item.orders.length > 0
+    ? item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.orders.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.orders.map((item: any) => ({
         where: {
@@ -451,10 +457,11 @@ export const User = {
       }))
     } : undefined,
     positions: item.positions ? 
-      typeof item.positions[0] === 'object' && Object.keys(item.positions).length === 1 && Object.keys(item.positions)[0] === 'id'
-    ? { connect:      item.positions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.positions) && item.positions.length > 0
+    ? item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.positions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.positions.map((item: any) => ({
         where: {
@@ -478,10 +485,11 @@ export const User = {
       }))
     } : undefined,
     alerts: item.alerts ? 
-      typeof item.alerts[0] === 'object' && Object.keys(item.alerts).length === 1 && Object.keys(item.alerts)[0] === 'id'
-    ? { connect:      item.alerts.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.alerts) && item.alerts.length > 0
+    ? item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.alerts.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.alerts.map((item: any) => ({
         where: {
@@ -1286,10 +1294,11 @@ export const User = {
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
     trades: item.trades ? 
-      typeof item.trades[0] === 'object' && Object.keys(item.trades).length === 1 && Object.keys(item.trades)[0] === 'id'
-    ? { connect:      item.trades.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.trades) && item.trades.length > 0
+    ? item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.trades.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.trades.map((item: any) => ({
         where: {
@@ -1310,10 +1319,11 @@ export const User = {
       }))
     } : undefined,
     orders: item.orders ? 
-      typeof item.orders[0] === 'object' && Object.keys(item.orders).length === 1 && Object.keys(item.orders)[0] === 'id'
-    ? { connect:      item.orders.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.orders) && item.orders.length > 0
+    ? item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.orders.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.orders.map((item: any) => ({
         where: {
@@ -1340,10 +1350,11 @@ export const User = {
       }))
     } : undefined,
     positions: item.positions ? 
-      typeof item.positions[0] === 'object' && Object.keys(item.positions).length === 1 && Object.keys(item.positions)[0] === 'id'
-    ? { connect:      item.positions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.positions) && item.positions.length > 0
+    ? item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.positions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.positions.map((item: any) => ({
         where: {
@@ -1367,10 +1378,11 @@ export const User = {
       }))
     } : undefined,
     alerts: item.alerts ? 
-      typeof item.alerts[0] === 'object' && Object.keys(item.alerts).length === 1 && Object.keys(item.alerts)[0] === 'id'
-    ? { connect:      item.alerts.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.alerts) && item.alerts.length > 0
+    ? item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.alerts.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.alerts.map((item: any) => ({
         where: {
@@ -1869,10 +1881,11 @@ export const User = {
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
     trades: item.trades ? 
-      typeof item.trades[0] === 'object' && Object.keys(item.trades).length === 1 && Object.keys(item.trades)[0] === 'id'
-    ? { connect:      item.trades.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.trades) && item.trades.length > 0
+    ? item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.trades.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.trades.map((item: any) => ({
         where: {
@@ -1893,10 +1906,11 @@ export const User = {
       }))
     } : undefined,
     orders: item.orders ? 
-      typeof item.orders[0] === 'object' && Object.keys(item.orders).length === 1 && Object.keys(item.orders)[0] === 'id'
-    ? { connect:      item.orders.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.orders) && item.orders.length > 0
+    ? item.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.orders.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.orders.map((item: any) => ({
         where: {
@@ -1923,10 +1937,11 @@ export const User = {
       }))
     } : undefined,
     positions: item.positions ? 
-      typeof item.positions[0] === 'object' && Object.keys(item.positions).length === 1 && Object.keys(item.positions)[0] === 'id'
-    ? { connect:      item.positions.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.positions) && item.positions.length > 0
+    ? item.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.positions.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.positions.map((item: any) => ({
         where: {
@@ -1950,10 +1965,11 @@ export const User = {
       }))
     } : undefined,
     alerts: item.alerts ? 
-      typeof item.alerts[0] === 'object' && Object.keys(item.alerts).length === 1 && Object.keys(item.alerts)[0] === 'id'
-    ? { connect:      item.alerts.map((item: any) => ({
-         id: item.id
-         }))
+      Array.isArray(item.alerts) && item.alerts.length > 0
+    ? item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+        connect:      item.alerts.map((item: any) => ({
+           id: item.id
+        }))
  }
  : { connectOrCreate: item.alerts.map((item: any) => ({
         where: {
