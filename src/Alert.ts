@@ -24,99 +24,955 @@ export const Alert = {
   const CREATE_ONE_ALERT = gql`
       mutation createOneAlert($data: AlertCreateInput!) {
         createOneAlert(data: $data) {
+  id
+  alpacaAccountId
+  message
+  type
+  isRead
+  createdAt
+  updatedAt
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+        users {
+          id
+        }
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+      }
+    }
+    userId
+    createdAt
+    updatedAt
+    trades {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      price
+      total
+      signal
+      strategy
+      analysis
+      confidence
+      timestamp
+      createdAt
+      updatedAt
+      status
+      alpacaAccount {
+        id
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+        }
+        orders {
           id
           alpacaAccountId
-          message
+          assetId
+          qty
+          notional
+          side
           type
-          isRead
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
           createdAt
           updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
           alpacaAccount {
             id
+          }
+          action {
+            id
+            sequence
+            tradeId
             type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
+            note
+            status
+            fee
+            trade {
               id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              alpacaAccounts {
-                id
-              }
             }
-            userId
+            order {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      optionContractType
+      actions {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+        }
+        order {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          fee
+        }
+      }
+    }
+    orders {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      notional
+      side
+      type
+      timeInForce
+      limitPrice
+      stopPrice
+      trailPrice
+      trailPercent
+      extendedHours
+      clientOrderId
+      status
+      createdAt
+      updatedAt
+      submittedAt
+      filledAt
+      filledAvgPrice
+      actionId
+      alpacaAccount {
+        id
+      }
+      action {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
+            createdAt
+            updatedAt
+            trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          optionContractType
+          actions {
+            id
+          }
+        }
+        order {
+          id
+        }
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+            }
+          }
+        }
+        orders {
+          id
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      fee
+    }
+    positions {
+      id
+      assetId
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+              alpacaAccountId
+              assetId
+              qty
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
+              status
+              createdAt
+              updatedAt
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
+              alpacaAccount {
+                id
+              }
+              action {
+                id
+              }
+              asset {
+                id
+              }
+              fee
+            }
+          }
+        }
+        orders {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
               id
               alpacaAccountId
               assetId
@@ -136,184 +992,80 @@ export const Alert = {
               }
               asset {
                 id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                sellPrice
-                buyPrice
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                  alpacaAccountId
-                  assetId
-                  qty
-                  notional
-                  side
-                  type
-                  timeInForce
-                  limitPrice
-                  stopPrice
-                  trailPrice
-                  trailPercent
-                  extendedHours
-                  clientOrderId
-                  status
-                  createdAt
-                  updatedAt
-                  submittedAt
-                  filledAt
-                  filledAvgPrice
-                  actionId
-                  alpacaAccount {
-                    id
-                  }
-                  action {
-                    id
-                    sequence
-                    tradeId
-                    type
-                    note
-                    status
-                    fee
-                    trade {
-                      id
-                    }
-                    order {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  fee
-                }
-                positions {
-                  id
-                  assetId
-                  asset {
-                    id
-                  }
-                  averageEntryPrice
-                  qty
-                  qtyAvailable
-                  marketValue
-                  costBasis
-                  unrealizedPL
-                  unrealizedPLPC
-                  unrealisedIntradayPL
-                  unrealisedIntradayPLPC
-                  currentPrice
-                  lastTradePrice
-                  changeToday
-                  assetMarginable
-                  alpacaAccount {
-                    id
-                  }
-                  alpacaAccountId
-                }
-                newsMentions {
-                  id
-                  assetId
-                  newsArticleId
-                  url
-                  news {
-                    id
-                    title
-                    content
-                    source
-                    sourceDomain
-                    url
-                    sentiment
-                    authors
-                    summary
-                    bannerImage
-                    timePublished
-                    category
-                    topics
-                    logo
-                    createdAt
-                    updatedAt
-                    assets {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  relevancyScore
-                  sentimentScore
-                  sentimentLabel
-                }
               }
               optionContractType
               actions {
                 id
               }
             }
-            orders {
-              id
-            }
-            positions {
-              id
-            }
-            alerts {
+            order {
               id
             }
           }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      averageEntryPrice
+      qty
+      qtyAvailable
+      marketValue
+      costBasis
+      unrealizedPL
+      unrealizedPLPC
+      unrealisedIntradayPL
+      unrealisedIntradayPLPC
+      currentPrice
+      lastTradePrice
+      changeToday
+      assetMarginable
+      alpacaAccount {
+        id
+      }
+      alpacaAccountId
+    }
+    alerts {
+      id
+    }
+  }
         }
       }
    `;
@@ -855,99 +1607,955 @@ export const Alert = {
       const UPDATE_ONE_ALERT = gql`
       mutation updateOneAlert($data: AlertUpdateInput!, $where: AlertWhereUniqueInput!) {
         updateOneAlert(data: $data, where: $where) {
+  id
+  alpacaAccountId
+  message
+  type
+  isRead
+  createdAt
+  updatedAt
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+        users {
+          id
+        }
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+      }
+    }
+    userId
+    createdAt
+    updatedAt
+    trades {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      price
+      total
+      signal
+      strategy
+      analysis
+      confidence
+      timestamp
+      createdAt
+      updatedAt
+      status
+      alpacaAccount {
+        id
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+        }
+        orders {
           id
           alpacaAccountId
-          message
+          assetId
+          qty
+          notional
+          side
           type
-          isRead
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
           createdAt
           updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
           alpacaAccount {
             id
+          }
+          action {
+            id
+            sequence
+            tradeId
             type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
+            note
+            status
+            fee
+            trade {
               id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              alpacaAccounts {
-                id
-              }
             }
-            userId
+            order {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      optionContractType
+      actions {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+        }
+        order {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          fee
+        }
+      }
+    }
+    orders {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      notional
+      side
+      type
+      timeInForce
+      limitPrice
+      stopPrice
+      trailPrice
+      trailPercent
+      extendedHours
+      clientOrderId
+      status
+      createdAt
+      updatedAt
+      submittedAt
+      filledAt
+      filledAvgPrice
+      actionId
+      alpacaAccount {
+        id
+      }
+      action {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
+            createdAt
+            updatedAt
+            trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          optionContractType
+          actions {
+            id
+          }
+        }
+        order {
+          id
+        }
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+            }
+          }
+        }
+        orders {
+          id
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      fee
+    }
+    positions {
+      id
+      assetId
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+              alpacaAccountId
+              assetId
+              qty
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
+              status
+              createdAt
+              updatedAt
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
+              alpacaAccount {
+                id
+              }
+              action {
+                id
+              }
+              asset {
+                id
+              }
+              fee
+            }
+          }
+        }
+        orders {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
               id
               alpacaAccountId
               assetId
@@ -967,184 +2575,80 @@ export const Alert = {
               }
               asset {
                 id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                sellPrice
-                buyPrice
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                  alpacaAccountId
-                  assetId
-                  qty
-                  notional
-                  side
-                  type
-                  timeInForce
-                  limitPrice
-                  stopPrice
-                  trailPrice
-                  trailPercent
-                  extendedHours
-                  clientOrderId
-                  status
-                  createdAt
-                  updatedAt
-                  submittedAt
-                  filledAt
-                  filledAvgPrice
-                  actionId
-                  alpacaAccount {
-                    id
-                  }
-                  action {
-                    id
-                    sequence
-                    tradeId
-                    type
-                    note
-                    status
-                    fee
-                    trade {
-                      id
-                    }
-                    order {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  fee
-                }
-                positions {
-                  id
-                  assetId
-                  asset {
-                    id
-                  }
-                  averageEntryPrice
-                  qty
-                  qtyAvailable
-                  marketValue
-                  costBasis
-                  unrealizedPL
-                  unrealizedPLPC
-                  unrealisedIntradayPL
-                  unrealisedIntradayPLPC
-                  currentPrice
-                  lastTradePrice
-                  changeToday
-                  assetMarginable
-                  alpacaAccount {
-                    id
-                  }
-                  alpacaAccountId
-                }
-                newsMentions {
-                  id
-                  assetId
-                  newsArticleId
-                  url
-                  news {
-                    id
-                    title
-                    content
-                    source
-                    sourceDomain
-                    url
-                    sentiment
-                    authors
-                    summary
-                    bannerImage
-                    timePublished
-                    category
-                    topics
-                    logo
-                    createdAt
-                    updatedAt
-                    assets {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  relevancyScore
-                  sentimentScore
-                  sentimentLabel
-                }
               }
               optionContractType
               actions {
                 id
               }
             }
-            orders {
-              id
-            }
-            positions {
-              id
-            }
-            alerts {
+            order {
               id
             }
           }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      averageEntryPrice
+      qty
+      qtyAvailable
+      marketValue
+      costBasis
+      unrealizedPL
+      unrealizedPLPC
+      unrealisedIntradayPL
+      unrealisedIntradayPLPC
+      currentPrice
+      lastTradePrice
+      changeToday
+      assetMarginable
+      alpacaAccount {
+        id
+      }
+      alpacaAccountId
+    }
+    alerts {
+      id
+    }
+  }
       }
       }`;
 
@@ -5275,99 +6779,955 @@ export const Alert = {
       const DELETE_ONE_ALERT = gql`
       mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
         deleteOneAlert(where: $where) {
+  id
+  alpacaAccountId
+  message
+  type
+  isRead
+  createdAt
+  updatedAt
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+        users {
+          id
+        }
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+      }
+    }
+    userId
+    createdAt
+    updatedAt
+    trades {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      price
+      total
+      signal
+      strategy
+      analysis
+      confidence
+      timestamp
+      createdAt
+      updatedAt
+      status
+      alpacaAccount {
+        id
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+        }
+        orders {
           id
           alpacaAccountId
-          message
+          assetId
+          qty
+          notional
+          side
           type
-          isRead
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
           createdAt
           updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
           alpacaAccount {
             id
+          }
+          action {
+            id
+            sequence
+            tradeId
             type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
+            note
+            status
+            fee
+            trade {
               id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              alpacaAccounts {
-                id
-              }
             }
-            userId
+            order {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      optionContractType
+      actions {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+        }
+        order {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          fee
+        }
+      }
+    }
+    orders {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      notional
+      side
+      type
+      timeInForce
+      limitPrice
+      stopPrice
+      trailPrice
+      trailPercent
+      extendedHours
+      clientOrderId
+      status
+      createdAt
+      updatedAt
+      submittedAt
+      filledAt
+      filledAvgPrice
+      actionId
+      alpacaAccount {
+        id
+      }
+      action {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
+            createdAt
+            updatedAt
+            trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          optionContractType
+          actions {
+            id
+          }
+        }
+        order {
+          id
+        }
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+            }
+          }
+        }
+        orders {
+          id
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      fee
+    }
+    positions {
+      id
+      assetId
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+              alpacaAccountId
+              assetId
+              qty
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
+              status
+              createdAt
+              updatedAt
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
+              alpacaAccount {
+                id
+              }
+              action {
+                id
+              }
+              asset {
+                id
+              }
+              fee
+            }
+          }
+        }
+        orders {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
               id
               alpacaAccountId
               assetId
@@ -5387,184 +7747,80 @@ export const Alert = {
               }
               asset {
                 id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                sellPrice
-                buyPrice
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                  alpacaAccountId
-                  assetId
-                  qty
-                  notional
-                  side
-                  type
-                  timeInForce
-                  limitPrice
-                  stopPrice
-                  trailPrice
-                  trailPercent
-                  extendedHours
-                  clientOrderId
-                  status
-                  createdAt
-                  updatedAt
-                  submittedAt
-                  filledAt
-                  filledAvgPrice
-                  actionId
-                  alpacaAccount {
-                    id
-                  }
-                  action {
-                    id
-                    sequence
-                    tradeId
-                    type
-                    note
-                    status
-                    fee
-                    trade {
-                      id
-                    }
-                    order {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  fee
-                }
-                positions {
-                  id
-                  assetId
-                  asset {
-                    id
-                  }
-                  averageEntryPrice
-                  qty
-                  qtyAvailable
-                  marketValue
-                  costBasis
-                  unrealizedPL
-                  unrealizedPLPC
-                  unrealisedIntradayPL
-                  unrealisedIntradayPLPC
-                  currentPrice
-                  lastTradePrice
-                  changeToday
-                  assetMarginable
-                  alpacaAccount {
-                    id
-                  }
-                  alpacaAccountId
-                }
-                newsMentions {
-                  id
-                  assetId
-                  newsArticleId
-                  url
-                  news {
-                    id
-                    title
-                    content
-                    source
-                    sourceDomain
-                    url
-                    sentiment
-                    authors
-                    summary
-                    bannerImage
-                    timePublished
-                    category
-                    topics
-                    logo
-                    createdAt
-                    updatedAt
-                    assets {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  relevancyScore
-                  sentimentScore
-                  sentimentLabel
-                }
               }
               optionContractType
               actions {
                 id
               }
             }
-            orders {
-              id
-            }
-            positions {
-              id
-            }
-            alerts {
+            order {
               id
             }
           }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      averageEntryPrice
+      qty
+      qtyAvailable
+      marketValue
+      costBasis
+      unrealizedPL
+      unrealizedPLPC
+      unrealisedIntradayPL
+      unrealisedIntradayPLPC
+      currentPrice
+      lastTradePrice
+      changeToday
+      assetMarginable
+      alpacaAccount {
+        id
+      }
+      alpacaAccountId
+    }
+    alerts {
+      id
+    }
+  }
       }
       }`;
 
@@ -5602,99 +7858,955 @@ export const Alert = {
       const GET_ALERT = gql`
       query getAlert($where: AlertWhereUniqueInput!) {
         getAlert(where: $where) {
+  id
+  alpacaAccountId
+  message
+  type
+  isRead
+  createdAt
+  updatedAt
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+        users {
+          id
+        }
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+      }
+    }
+    userId
+    createdAt
+    updatedAt
+    trades {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      price
+      total
+      signal
+      strategy
+      analysis
+      confidence
+      timestamp
+      createdAt
+      updatedAt
+      status
+      alpacaAccount {
+        id
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+        }
+        orders {
           id
           alpacaAccountId
-          message
+          assetId
+          qty
+          notional
+          side
           type
-          isRead
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
           createdAt
           updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
           alpacaAccount {
             id
+          }
+          action {
+            id
+            sequence
+            tradeId
             type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
+            note
+            status
+            fee
+            trade {
               id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              alpacaAccounts {
-                id
-              }
             }
-            userId
+            order {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      optionContractType
+      actions {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+        }
+        order {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          fee
+        }
+      }
+    }
+    orders {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      notional
+      side
+      type
+      timeInForce
+      limitPrice
+      stopPrice
+      trailPrice
+      trailPercent
+      extendedHours
+      clientOrderId
+      status
+      createdAt
+      updatedAt
+      submittedAt
+      filledAt
+      filledAvgPrice
+      actionId
+      alpacaAccount {
+        id
+      }
+      action {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
+            createdAt
+            updatedAt
+            trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          optionContractType
+          actions {
+            id
+          }
+        }
+        order {
+          id
+        }
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+            }
+          }
+        }
+        orders {
+          id
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      fee
+    }
+    positions {
+      id
+      assetId
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+              alpacaAccountId
+              assetId
+              qty
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
+              status
+              createdAt
+              updatedAt
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
+              alpacaAccount {
+                id
+              }
+              action {
+                id
+              }
+              asset {
+                id
+              }
+              fee
+            }
+          }
+        }
+        orders {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
               id
               alpacaAccountId
               assetId
@@ -5714,184 +8826,80 @@ export const Alert = {
               }
               asset {
                 id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                sellPrice
-                buyPrice
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                  alpacaAccountId
-                  assetId
-                  qty
-                  notional
-                  side
-                  type
-                  timeInForce
-                  limitPrice
-                  stopPrice
-                  trailPrice
-                  trailPercent
-                  extendedHours
-                  clientOrderId
-                  status
-                  createdAt
-                  updatedAt
-                  submittedAt
-                  filledAt
-                  filledAvgPrice
-                  actionId
-                  alpacaAccount {
-                    id
-                  }
-                  action {
-                    id
-                    sequence
-                    tradeId
-                    type
-                    note
-                    status
-                    fee
-                    trade {
-                      id
-                    }
-                    order {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  fee
-                }
-                positions {
-                  id
-                  assetId
-                  asset {
-                    id
-                  }
-                  averageEntryPrice
-                  qty
-                  qtyAvailable
-                  marketValue
-                  costBasis
-                  unrealizedPL
-                  unrealizedPLPC
-                  unrealisedIntradayPL
-                  unrealisedIntradayPLPC
-                  currentPrice
-                  lastTradePrice
-                  changeToday
-                  assetMarginable
-                  alpacaAccount {
-                    id
-                  }
-                  alpacaAccountId
-                }
-                newsMentions {
-                  id
-                  assetId
-                  newsArticleId
-                  url
-                  news {
-                    id
-                    title
-                    content
-                    source
-                    sourceDomain
-                    url
-                    sentiment
-                    authors
-                    summary
-                    bannerImage
-                    timePublished
-                    category
-                    topics
-                    logo
-                    createdAt
-                    updatedAt
-                    assets {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  relevancyScore
-                  sentimentScore
-                  sentimentLabel
-                }
               }
               optionContractType
               actions {
                 id
               }
             }
-            orders {
-              id
-            }
-            positions {
-              id
-            }
-            alerts {
+            order {
               id
             }
           }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      averageEntryPrice
+      qty
+      qtyAvailable
+      marketValue
+      costBasis
+      unrealizedPL
+      unrealizedPLPC
+      unrealisedIntradayPL
+      unrealisedIntradayPLPC
+      currentPrice
+      lastTradePrice
+      changeToday
+      assetMarginable
+      alpacaAccount {
+        id
+      }
+      alpacaAccountId
+    }
+    alerts {
+      id
+    }
+  }
         }
       }`;
 
@@ -5927,99 +8935,955 @@ export const Alert = {
       const GET_ALL_ALERT = gql`
       query getAllAlert {
         alerts {
+  id
+  alpacaAccountId
+  message
+  type
+  isRead
+  createdAt
+  updatedAt
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+        users {
+          id
+        }
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+      }
+    }
+    userId
+    createdAt
+    updatedAt
+    trades {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      price
+      total
+      signal
+      strategy
+      analysis
+      confidence
+      timestamp
+      createdAt
+      updatedAt
+      status
+      alpacaAccount {
+        id
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+        }
+        orders {
           id
           alpacaAccountId
-          message
+          assetId
+          qty
+          notional
+          side
           type
-          isRead
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
           createdAt
           updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
           alpacaAccount {
             id
+          }
+          action {
+            id
+            sequence
+            tradeId
             type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
+            note
+            status
+            fee
+            trade {
               id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              alpacaAccounts {
-                id
-              }
             }
-            userId
+            order {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      optionContractType
+      actions {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+        }
+        order {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          fee
+        }
+      }
+    }
+    orders {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      notional
+      side
+      type
+      timeInForce
+      limitPrice
+      stopPrice
+      trailPrice
+      trailPercent
+      extendedHours
+      clientOrderId
+      status
+      createdAt
+      updatedAt
+      submittedAt
+      filledAt
+      filledAvgPrice
+      actionId
+      alpacaAccount {
+        id
+      }
+      action {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
+            createdAt
+            updatedAt
+            trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          optionContractType
+          actions {
+            id
+          }
+        }
+        order {
+          id
+        }
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+            }
+          }
+        }
+        orders {
+          id
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      fee
+    }
+    positions {
+      id
+      assetId
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+              alpacaAccountId
+              assetId
+              qty
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
+              status
+              createdAt
+              updatedAt
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
+              alpacaAccount {
+                id
+              }
+              action {
+                id
+              }
+              asset {
+                id
+              }
+              fee
+            }
+          }
+        }
+        orders {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
               id
               alpacaAccountId
               assetId
@@ -6039,184 +9903,80 @@ export const Alert = {
               }
               asset {
                 id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                sellPrice
-                buyPrice
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                  alpacaAccountId
-                  assetId
-                  qty
-                  notional
-                  side
-                  type
-                  timeInForce
-                  limitPrice
-                  stopPrice
-                  trailPrice
-                  trailPercent
-                  extendedHours
-                  clientOrderId
-                  status
-                  createdAt
-                  updatedAt
-                  submittedAt
-                  filledAt
-                  filledAvgPrice
-                  actionId
-                  alpacaAccount {
-                    id
-                  }
-                  action {
-                    id
-                    sequence
-                    tradeId
-                    type
-                    note
-                    status
-                    fee
-                    trade {
-                      id
-                    }
-                    order {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  fee
-                }
-                positions {
-                  id
-                  assetId
-                  asset {
-                    id
-                  }
-                  averageEntryPrice
-                  qty
-                  qtyAvailable
-                  marketValue
-                  costBasis
-                  unrealizedPL
-                  unrealizedPLPC
-                  unrealisedIntradayPL
-                  unrealisedIntradayPLPC
-                  currentPrice
-                  lastTradePrice
-                  changeToday
-                  assetMarginable
-                  alpacaAccount {
-                    id
-                  }
-                  alpacaAccountId
-                }
-                newsMentions {
-                  id
-                  assetId
-                  newsArticleId
-                  url
-                  news {
-                    id
-                    title
-                    content
-                    source
-                    sourceDomain
-                    url
-                    sentiment
-                    authors
-                    summary
-                    bannerImage
-                    timePublished
-                    category
-                    topics
-                    logo
-                    createdAt
-                    updatedAt
-                    assets {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  relevancyScore
-                  sentimentScore
-                  sentimentLabel
-                }
               }
               optionContractType
               actions {
                 id
               }
             }
-            orders {
-              id
-            }
-            positions {
-              id
-            }
-            alerts {
+            order {
               id
             }
           }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      averageEntryPrice
+      qty
+      qtyAvailable
+      marketValue
+      costBasis
+      unrealizedPL
+      unrealizedPLPC
+      unrealisedIntradayPL
+      unrealisedIntradayPLPC
+      currentPrice
+      lastTradePrice
+      changeToday
+      assetMarginable
+      alpacaAccount {
+        id
+      }
+      alpacaAccountId
+    }
+    alerts {
+      id
+    }
+  }
       }
       }`;
 
@@ -6246,99 +10006,955 @@ export const Alert = {
       const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {
         alerts(where: $where) {
+  id
+  alpacaAccountId
+  message
+  type
+  isRead
+  createdAt
+  updatedAt
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+        users {
+          id
+        }
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+        user {
+          id
+        }
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        user {
+          id
+        }
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+      }
+    }
+    userId
+    createdAt
+    updatedAt
+    trades {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      price
+      total
+      signal
+      strategy
+      analysis
+      confidence
+      timestamp
+      createdAt
+      updatedAt
+      status
+      alpacaAccount {
+        id
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+        }
+        orders {
           id
           alpacaAccountId
-          message
+          assetId
+          qty
+          notional
+          side
           type
-          isRead
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
           createdAt
           updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
           alpacaAccount {
             id
+          }
+          action {
+            id
+            sequence
+            tradeId
             type
-            APIKey
-            APISecret
-            configuration
-            marketOpen
-            user {
+            note
+            status
+            fee
+            trade {
               id
-              name
-              email
-              emailVerified
-              image
-              createdAt
-              updatedAt
-              role
-              bio
-              jobTitle
-              currentAccount
-              customer {
-                id
-                authUserId
-                name
-                plan
-                stripeCustomerId
-                stripeSubscriptionId
-                stripePriceId
-                stripeCurrentPeriodEnd
-                createdAt
-                updatedAt
-                users {
-                  id
-                }
-              }
-              customerId
-              accounts {
-                id
-                userId
-                type
-                provider
-                providerAccountId
-                refresh_token
-                access_token
-                expires_at
-                token_type
-                scope
-                id_token
-                session_state
-                createdAt
-                updatedAt
-                user {
-                  id
-                }
-              }
-              sessions {
-                id
-                sessionToken
-                userId
-                expires
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              authenticators {
-                id
-                userId
-                credentialID
-                publicKey
-                counter
-                user {
-                  id
-                }
-                createdAt
-                updatedAt
-              }
-              plan
-              alpacaAccounts {
-                id
-              }
             }
-            userId
+            order {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      optionContractType
+      actions {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+        }
+        order {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
             createdAt
             updatedAt
             trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          fee
+        }
+      }
+    }
+    orders {
+      id
+      alpacaAccountId
+      assetId
+      qty
+      notional
+      side
+      type
+      timeInForce
+      limitPrice
+      stopPrice
+      trailPrice
+      trailPercent
+      extendedHours
+      clientOrderId
+      status
+      createdAt
+      updatedAt
+      submittedAt
+      filledAt
+      filledAvgPrice
+      actionId
+      alpacaAccount {
+        id
+      }
+      action {
+        id
+        sequence
+        tradeId
+        type
+        note
+        status
+        fee
+        trade {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+            symbol
+            name
+            type
+            logoUrl
+            description
+            cik
+            exchange
+            currency
+            country
+            sector
+            industry
+            address
+            officialSite
+            fiscalYearEnd
+            latestQuarter
+            marketCapitalization
+            ebitda
+            peRatio
+            pegRatio
+            bookValue
+            dividendPerShare
+            dividendYield
+            eps
+            revenuePerShareTTM
+            profitMargin
+            operatingMarginTTM
+            returnOnAssetsTTM
+            returnOnEquityTTM
+            revenueTTM
+            grossProfitTTM
+            dilutedEPSTTM
+            quarterlyEarningsGrowthYOY
+            quarterlyRevenueGrowthYOY
+            analystTargetPrice
+            analystRatingStrongBuy
+            analystRatingBuy
+            analystRatingHold
+            analystRatingSell
+            analystRatingStrongSell
+            trailingPE
+            forwardPE
+            priceToSalesRatioTTM
+            priceToBookRatio
+            evToRevenue
+            evToEbitda
+            beta
+            week52High
+            week52Low
+            day50MovingAverage
+            day200MovingAverage
+            sharesOutstanding
+            dividendDate
+            exDividendDate
+            sellPrice
+            buyPrice
+            createdAt
+            updatedAt
+            trades {
+              id
+            }
+            orders {
+              id
+            }
+            positions {
+              id
+              assetId
+              asset {
+                id
+              }
+              averageEntryPrice
+              qty
+              qtyAvailable
+              marketValue
+              costBasis
+              unrealizedPL
+              unrealizedPLPC
+              unrealisedIntradayPL
+              unrealisedIntradayPLPC
+              currentPrice
+              lastTradePrice
+              changeToday
+              assetMarginable
+              alpacaAccount {
+                id
+              }
+              alpacaAccountId
+            }
+            newsMentions {
+              id
+              assetId
+              newsArticleId
+              url
+              news {
+                id
+                title
+                content
+                source
+                sourceDomain
+                url
+                sentiment
+                authors
+                summary
+                bannerImage
+                timePublished
+                category
+                topics
+                logo
+                createdAt
+                updatedAt
+                assets {
+                  id
+                }
+              }
+              asset {
+                id
+              }
+              relevancyScore
+              sentimentScore
+              sentimentLabel
+            }
+          }
+          optionContractType
+          actions {
+            id
+          }
+        }
+        order {
+          id
+        }
+      }
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+            }
+          }
+        }
+        orders {
+          id
+        }
+        positions {
+          id
+          assetId
+          asset {
+            id
+          }
+          averageEntryPrice
+          qty
+          qtyAvailable
+          marketValue
+          costBasis
+          unrealizedPL
+          unrealizedPLPC
+          unrealisedIntradayPL
+          unrealisedIntradayPLPC
+          currentPrice
+          lastTradePrice
+          changeToday
+          assetMarginable
+          alpacaAccount {
+            id
+          }
+          alpacaAccountId
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      fee
+    }
+    positions {
+      id
+      assetId
+      asset {
+        id
+        symbol
+        name
+        type
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        sellPrice
+        buyPrice
+        createdAt
+        updatedAt
+        trades {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          price
+          total
+          signal
+          strategy
+          analysis
+          confidence
+          timestamp
+          createdAt
+          updatedAt
+          status
+          alpacaAccount {
+            id
+          }
+          asset {
+            id
+          }
+          optionContractType
+          actions {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
+              id
+            }
+            order {
+              id
+              alpacaAccountId
+              assetId
+              qty
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
+              status
+              createdAt
+              updatedAt
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
+              alpacaAccount {
+                id
+              }
+              action {
+                id
+              }
+              asset {
+                id
+              }
+              fee
+            }
+          }
+        }
+        orders {
+          id
+          alpacaAccountId
+          assetId
+          qty
+          notional
+          side
+          type
+          timeInForce
+          limitPrice
+          stopPrice
+          trailPrice
+          trailPercent
+          extendedHours
+          clientOrderId
+          status
+          createdAt
+          updatedAt
+          submittedAt
+          filledAt
+          filledAvgPrice
+          actionId
+          alpacaAccount {
+            id
+          }
+          action {
+            id
+            sequence
+            tradeId
+            type
+            note
+            status
+            fee
+            trade {
               id
               alpacaAccountId
               assetId
@@ -6358,184 +10974,80 @@ export const Alert = {
               }
               asset {
                 id
-                symbol
-                name
-                type
-                logoUrl
-                description
-                cik
-                exchange
-                currency
-                country
-                sector
-                industry
-                address
-                officialSite
-                fiscalYearEnd
-                latestQuarter
-                marketCapitalization
-                ebitda
-                peRatio
-                pegRatio
-                bookValue
-                dividendPerShare
-                dividendYield
-                eps
-                revenuePerShareTTM
-                profitMargin
-                operatingMarginTTM
-                returnOnAssetsTTM
-                returnOnEquityTTM
-                revenueTTM
-                grossProfitTTM
-                dilutedEPSTTM
-                quarterlyEarningsGrowthYOY
-                quarterlyRevenueGrowthYOY
-                analystTargetPrice
-                analystRatingStrongBuy
-                analystRatingBuy
-                analystRatingHold
-                analystRatingSell
-                analystRatingStrongSell
-                trailingPE
-                forwardPE
-                priceToSalesRatioTTM
-                priceToBookRatio
-                evToRevenue
-                evToEbitda
-                beta
-                week52High
-                week52Low
-                day50MovingAverage
-                day200MovingAverage
-                sharesOutstanding
-                dividendDate
-                exDividendDate
-                sellPrice
-                buyPrice
-                createdAt
-                updatedAt
-                trades {
-                  id
-                }
-                orders {
-                  id
-                  alpacaAccountId
-                  assetId
-                  qty
-                  notional
-                  side
-                  type
-                  timeInForce
-                  limitPrice
-                  stopPrice
-                  trailPrice
-                  trailPercent
-                  extendedHours
-                  clientOrderId
-                  status
-                  createdAt
-                  updatedAt
-                  submittedAt
-                  filledAt
-                  filledAvgPrice
-                  actionId
-                  alpacaAccount {
-                    id
-                  }
-                  action {
-                    id
-                    sequence
-                    tradeId
-                    type
-                    note
-                    status
-                    fee
-                    trade {
-                      id
-                    }
-                    order {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  fee
-                }
-                positions {
-                  id
-                  assetId
-                  asset {
-                    id
-                  }
-                  averageEntryPrice
-                  qty
-                  qtyAvailable
-                  marketValue
-                  costBasis
-                  unrealizedPL
-                  unrealizedPLPC
-                  unrealisedIntradayPL
-                  unrealisedIntradayPLPC
-                  currentPrice
-                  lastTradePrice
-                  changeToday
-                  assetMarginable
-                  alpacaAccount {
-                    id
-                  }
-                  alpacaAccountId
-                }
-                newsMentions {
-                  id
-                  assetId
-                  newsArticleId
-                  url
-                  news {
-                    id
-                    title
-                    content
-                    source
-                    sourceDomain
-                    url
-                    sentiment
-                    authors
-                    summary
-                    bannerImage
-                    timePublished
-                    category
-                    topics
-                    logo
-                    createdAt
-                    updatedAt
-                    assets {
-                      id
-                    }
-                  }
-                  asset {
-                    id
-                  }
-                  relevancyScore
-                  sentimentScore
-                  sentimentLabel
-                }
               }
               optionContractType
               actions {
                 id
               }
             }
-            orders {
-              id
-            }
-            positions {
-              id
-            }
-            alerts {
+            order {
               id
             }
           }
+          asset {
+            id
+          }
+          fee
+        }
+        positions {
+          id
+        }
+        newsMentions {
+          id
+          assetId
+          newsArticleId
+          url
+          news {
+            id
+            title
+            content
+            source
+            sourceDomain
+            url
+            sentiment
+            authors
+            summary
+            bannerImage
+            timePublished
+            category
+            topics
+            logo
+            createdAt
+            updatedAt
+            assets {
+              id
+            }
+          }
+          asset {
+            id
+          }
+          relevancyScore
+          sentimentScore
+          sentimentLabel
+        }
+      }
+      averageEntryPrice
+      qty
+      qtyAvailable
+      marketValue
+      costBasis
+      unrealizedPL
+      unrealizedPLPC
+      unrealisedIntradayPL
+      unrealisedIntradayPLPC
+      currentPrice
+      lastTradePrice
+      changeToday
+      assetMarginable
+      alpacaAccount {
+        id
+      }
+      alpacaAccountId
+    }
+    alerts {
+      id
+    }
+  }
       }
       }`;
 

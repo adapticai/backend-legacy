@@ -24,10 +24,10 @@ export const VerificationToken = {
   const CREATE_ONE_VERIFICATIONTOKEN = gql`
       mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
         createOneVerificationToken(data: $data) {
-          id
-          identifier
-          token
-          expires
+  id
+  identifier
+  token
+  expires
         }
       }
    `;
@@ -109,10 +109,10 @@ export const VerificationToken = {
       const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
         updateOneVerificationToken(data: $data, where: $where) {
-          id
-          identifier
-          token
-          expires
+  id
+  identifier
+  token
+  expires
       }
       }`;
 
@@ -219,10 +219,10 @@ export const VerificationToken = {
       const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
-          id
-          identifier
-          token
-          expires
+  id
+  identifier
+  token
+  expires
       }
       }`;
 
@@ -260,10 +260,10 @@ export const VerificationToken = {
       const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
-          id
-          identifier
-          token
-          expires
+  id
+  identifier
+  token
+  expires
         }
       }`;
 
@@ -299,10 +299,10 @@ export const VerificationToken = {
       const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
-          id
-          identifier
-          token
-          expires
+  id
+  identifier
+  token
+  expires
       }
       }`;
 
@@ -332,10 +332,10 @@ export const VerificationToken = {
       const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
-          id
-          identifier
-          token
-          expires
+  id
+  identifier
+  token
+  expires
       }
       }`;
 

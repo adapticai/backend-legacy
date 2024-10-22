@@ -12,7 +12,7 @@ type OperationType = 'create' | 'createMany' | 'update' | 'updateMany' | 'where'
  * Constructs a GraphQL selection set for a given model.
  * @param modelName - Name of the model.
  * @param modelsPath - Path to the models directory.
- * @param visited - Set of already visited models to prevent circular references.
+ * @param visited - Set of models in the current recursion path to prevent circular references.
  * @param indent - Current indentation for formatting.
  * @param currentDepth - Current recursion depth.
  * @param maxDepth - Maximum recursion depth.
@@ -22,20 +22,25 @@ function constructSelectionSet(
   modelName: string,
   modelsPath: string,
   visited: Set<string> = new Set(),
-  indent: string = '          ',
+  indent: string = '  ',
   currentDepth: number = 0,
-  maxDepth: number = 7
+  maxDepth: number = 10
 ): string {
   // Trim inputs to remove unintended whitespace or line breaks
   modelName = modelName.trim();
   modelsPath = modelsPath.trim();
 
-  // Check if we've already visited this model or reached max depth
-  if (visited.has(modelName) || currentDepth >= maxDepth) {
+  // Check if we've reached the maximum depth
+  if (currentDepth >= maxDepth) {
+    return `${indent}id\n`; // Return basic id to avoid excessive recursion
+  }
+
+  // Check if the model is already in the current recursion path to prevent circular references
+  if (visited.has(modelName)) {
     return `${indent}id\n`; // Return basic id to avoid circular references
   }
 
-  // Mark this model as visited
+  // Add the current model to the visited set to track the recursion path
   visited.add(modelName);
 
   // Use path.join to construct the file path
@@ -43,6 +48,8 @@ function constructSelectionSet(
 
   if (!fs.existsSync(modelPath)) {
     console.warn(`Warning: Model file does not exist: ${modelPath}`);
+    // Remove the model from visited before returning
+    visited.delete(modelName);
     return '';
   }
 
@@ -50,6 +57,8 @@ function constructSelectionSet(
 
   if (fields.length === 0) {
     console.warn(`Warning: No fields found in model file: ${modelPath}`);
+    // Remove the model from visited before returning
+    visited.delete(modelName);
     return '';
   }
 
@@ -96,7 +105,7 @@ function constructSelectionSet(
     } else {
       const nestedInputTypeName = capitalizeFirstLetter(typeName);
 
-      if (nestedInputTypeName === modelName || visited.has(nestedInputTypeName)) {
+      if (visited.has(nestedInputTypeName)) {
         // Avoid circular references by only selecting 'id'
         selectionSet += `${indent}${fieldName} {\n${indent}  id\n${indent}}\n`;
       } else if (currentDepth + 1 >= maxDepth) {
@@ -117,6 +126,9 @@ function constructSelectionSet(
       }
     }
   });
+
+  // After processing all fields, remove the current model from the visited set
+  visited.delete(modelName);
 
   return selectionSet;
 }
@@ -672,7 +684,7 @@ export const generateModelFunctions = (
     where: path.join(inputsPath, inputTypes.where),
   };
 
-  const selectionSet = constructSelectionSet(capitalModelName, modelsPath);
+  const selectionSet = constructSelectionSet(capitalModelName, modelsPath, new Set());
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';

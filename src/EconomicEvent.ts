@@ -24,13 +24,13 @@ export const EconomicEvent = {
   const CREATE_ONE_ECONOMICEVENT = gql`
       mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
         createOneEconomicEvent(data: $data) {
-          id
-          title
-          description
-          date
-          importance
-          createdAt
-          updatedAt
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
         }
       }
    `;
@@ -114,13 +114,13 @@ export const EconomicEvent = {
       const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
         updateOneEconomicEvent(data: $data, where: $where) {
-          id
-          title
-          description
-          date
-          importance
-          createdAt
-          updatedAt
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
       }
       }`;
 
@@ -251,13 +251,13 @@ export const EconomicEvent = {
       const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
-          id
-          title
-          description
-          date
-          importance
-          createdAt
-          updatedAt
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
       }
       }`;
 
@@ -295,13 +295,13 @@ export const EconomicEvent = {
       const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         getEconomicEvent(where: $where) {
-          id
-          title
-          description
-          date
-          importance
-          createdAt
-          updatedAt
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
         }
       }`;
 
@@ -340,13 +340,13 @@ export const EconomicEvent = {
       const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
         economicEvents {
-          id
-          title
-          description
-          date
-          importance
-          createdAt
-          updatedAt
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
       }
       }`;
 
@@ -376,13 +376,13 @@ export const EconomicEvent = {
       const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {
         economicEvents(where: $where) {
-          id
-          title
-          description
-          date
-          importance
-          createdAt
-          updatedAt
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
       }
       }`;
 
