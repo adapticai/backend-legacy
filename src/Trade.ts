@@ -348,12 +348,11 @@ export const Trade = {
                         }
                       } : undefined,
                   orders: props.alpacaAccount.orders ?
-                    Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0
-                      ? props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                        connect: props.alpacaAccount.orders.map((item: any) => ({
-                          id: item.id
-                        }))
-                      }
+                    Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 && props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                      connect: props.alpacaAccount.orders.map((item: any) => ({
+                        id: item.id
+                      }))
+                    }
                       : {
                         connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
                           where: {
@@ -380,12 +379,11 @@ export const Trade = {
                         }))
                       } : undefined,
                   positions: props.alpacaAccount.positions ?
-                    Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0
-                      ? props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                        connect: props.alpacaAccount.positions.map((item: any) => ({
-                          id: item.id
-                        }))
-                      }
+                    Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0 && props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                      connect: props.alpacaAccount.positions.map((item: any) => ({
+                        id: item.id
+                      }))
+                    }
                       : {
                         connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
                           where: {
@@ -409,12 +407,11 @@ export const Trade = {
                         }))
                       } : undefined,
                   alerts: props.alpacaAccount.alerts ?
-                    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0
-                      ? props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                        connect: props.alpacaAccount.alerts.map((item: any) => ({
-                          id: item.id
-                        }))
-                      }
+                    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                      connect: props.alpacaAccount.alerts.map((item: any) => ({
+                        id: item.id
+                      }))
+                    }
                       : {
                         connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
                           where: {
@@ -501,12 +498,11 @@ export const Trade = {
                   sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
                   buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
                   orders: props.asset.orders ?
-                    Array.isArray(props.asset.orders) && props.asset.orders.length > 0
-                      ? props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                        connect: props.asset.orders.map((item: any) => ({
-                          id: item.id
-                        }))
-                      }
+                    Array.isArray(props.asset.orders) && props.asset.orders.length > 0 && props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                      connect: props.asset.orders.map((item: any) => ({
+                        id: item.id
+                      }))
+                    }
                       : {
                         connectOrCreate: props.asset.orders.map((item: any) => ({
                           where: {
@@ -533,12 +529,11 @@ export const Trade = {
                         }))
                       } : undefined,
                   positions: props.asset.positions ?
-                    Array.isArray(props.asset.positions) && props.asset.positions.length > 0
-                      ? props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                        connect: props.asset.positions.map((item: any) => ({
-                          id: item.id
-                        }))
-                      }
+                    Array.isArray(props.asset.positions) && props.asset.positions.length > 0 && props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                      connect: props.asset.positions.map((item: any) => ({
+                        id: item.id
+                      }))
+                    }
                       : {
                         connectOrCreate: props.asset.positions.map((item: any) => ({
                           where: {
@@ -562,12 +557,11 @@ export const Trade = {
                         }))
                       } : undefined,
                   newsMentions: props.asset.newsMentions ?
-                    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0
-                      ? props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                        connect: props.asset.newsMentions.map((item: any) => ({
-                          id: item.id
-                        }))
-                      }
+                    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                      connect: props.asset.newsMentions.map((item: any) => ({
+                        id: item.id
+                      }))
+                    }
                       : {
                         connectOrCreate: props.asset.newsMentions.map((item: any) => ({
                           where: {
@@ -586,12 +580,11 @@ export const Trade = {
               }
             } : undefined,
         actions: props.actions ?
-          Array.isArray(props.actions) && props.actions.length > 0
-            ? props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-              connect: props.actions.map((item: any) => ({
-                id: item.id
-              }))
-            }
+          Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+            connect: props.actions.map((item: any) => ({
+              id: item.id
+            }))
+          }
             : {
               connectOrCreate: props.actions.map((item: any) => ({
                 where: {
@@ -1317,12 +1310,11 @@ export const Trade = {
                     }
                   } : undefined,
               orders: props.alpacaAccount.orders ?
-                Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0
-                  ? props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: props.alpacaAccount.orders.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 && props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: props.alpacaAccount.orders.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
                       where: {
@@ -1349,12 +1341,11 @@ export const Trade = {
                     }))
                   } : undefined,
               positions: props.alpacaAccount.positions ?
-                Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0
-                  ? props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: props.alpacaAccount.positions.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0 && props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: props.alpacaAccount.positions.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
                       where: {
@@ -1378,12 +1369,11 @@ export const Trade = {
                     }))
                   } : undefined,
               alerts: props.alpacaAccount.alerts ?
-                Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0
-                  ? props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: props.alpacaAccount.alerts.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: props.alpacaAccount.alerts.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
                       where: {
@@ -1814,12 +1804,11 @@ export const Trade = {
               sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
               buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
               orders: props.asset.orders ?
-                Array.isArray(props.asset.orders) && props.asset.orders.length > 0
-                  ? props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: props.asset.orders.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(props.asset.orders) && props.asset.orders.length > 0 && props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: props.asset.orders.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: props.asset.orders.map((item: any) => ({
                       where: {
@@ -1846,12 +1835,11 @@ export const Trade = {
                     }))
                   } : undefined,
               positions: props.asset.positions ?
-                Array.isArray(props.asset.positions) && props.asset.positions.length > 0
-                  ? props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: props.asset.positions.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(props.asset.positions) && props.asset.positions.length > 0 && props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: props.asset.positions.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: props.asset.positions.map((item: any) => ({
                       where: {
@@ -1875,12 +1863,11 @@ export const Trade = {
                     }))
                   } : undefined,
               newsMentions: props.asset.newsMentions ?
-                Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0
-                  ? props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: props.asset.newsMentions.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: props.asset.newsMentions.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: props.asset.newsMentions.map((item: any) => ({
                       where: {
@@ -2415,12 +2402,11 @@ export const Trade = {
                     }
                   } : undefined,
               orders: prop.alpacaAccount.orders ?
-                Array.isArray(prop.alpacaAccount.orders) && prop.alpacaAccount.orders.length > 0
-                  ? prop.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: prop.alpacaAccount.orders.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(prop.alpacaAccount.orders) && prop.alpacaAccount.orders.length > 0 && prop.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: prop.alpacaAccount.orders.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: prop.alpacaAccount.orders.map((item: any) => ({
                       where: {
@@ -2447,12 +2433,11 @@ export const Trade = {
                     }))
                   } : undefined,
               positions: prop.alpacaAccount.positions ?
-                Array.isArray(prop.alpacaAccount.positions) && prop.alpacaAccount.positions.length > 0
-                  ? prop.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: prop.alpacaAccount.positions.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(prop.alpacaAccount.positions) && prop.alpacaAccount.positions.length > 0 && prop.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: prop.alpacaAccount.positions.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: prop.alpacaAccount.positions.map((item: any) => ({
                       where: {
@@ -2476,12 +2461,11 @@ export const Trade = {
                     }))
                   } : undefined,
               alerts: prop.alpacaAccount.alerts ?
-                Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0
-                  ? prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: prop.alpacaAccount.alerts.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 && prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: prop.alpacaAccount.alerts.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: prop.alpacaAccount.alerts.map((item: any) => ({
                       where: {
@@ -2912,12 +2896,11 @@ export const Trade = {
               sellPrice: prop.asset.sellPrice !== undefined ? prop.asset.sellPrice : undefined,
               buyPrice: prop.asset.buyPrice !== undefined ? prop.asset.buyPrice : undefined,
               orders: prop.asset.orders ?
-                Array.isArray(prop.asset.orders) && prop.asset.orders.length > 0
-                  ? prop.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: prop.asset.orders.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(prop.asset.orders) && prop.asset.orders.length > 0 && prop.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: prop.asset.orders.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: prop.asset.orders.map((item: any) => ({
                       where: {
@@ -2944,12 +2927,11 @@ export const Trade = {
                     }))
                   } : undefined,
               positions: prop.asset.positions ?
-                Array.isArray(prop.asset.positions) && prop.asset.positions.length > 0
-                  ? prop.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: prop.asset.positions.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(prop.asset.positions) && prop.asset.positions.length > 0 && prop.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: prop.asset.positions.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: prop.asset.positions.map((item: any) => ({
                       where: {
@@ -2973,12 +2955,11 @@ export const Trade = {
                     }))
                   } : undefined,
               newsMentions: prop.asset.newsMentions ?
-                Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0
-                  ? prop.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
-                    connect: prop.asset.newsMentions.map((item: any) => ({
-                      id: item.id
-                    }))
-                  }
+                Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0 && prop.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+                  connect: prop.asset.newsMentions.map((item: any) => ({
+                    id: item.id
+                  }))
+                }
                   : {
                     connectOrCreate: prop.asset.newsMentions.map((item: any) => ({
                       where: {

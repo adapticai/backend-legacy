@@ -331,8 +331,7 @@ export const Asset = {
   sellPrice: props.sellPrice !== undefined ? props.sellPrice : undefined,
   buyPrice: props.buyPrice !== undefined ? props.buyPrice : undefined,
   trades: props.trades ? 
-    Array.isArray(props.trades) && props.trades.length > 0
-    ? props.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.trades) && props.trades.length > 0 &&  props.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.trades.map((item: any) => ({
          id: item.id
       }))
@@ -372,8 +371,7 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0
-    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.actions.map((item: any) => ({
            id: item.id
         }))
@@ -395,8 +393,7 @@ export const Asset = {
     }))
   } : undefined,
   orders: props.orders ? 
-    Array.isArray(props.orders) && props.orders.length > 0
-    ? props.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.orders) && props.orders.length > 0 &&  props.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.orders.map((item: any) => ({
          id: item.id
       }))
@@ -464,8 +461,7 @@ export const Asset = {
     }))
   } : undefined,
   positions: props.positions ? 
-    Array.isArray(props.positions) && props.positions.length > 0
-    ? props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.positions) && props.positions.length > 0 &&  props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.positions.map((item: any) => ({
          id: item.id
       }))
@@ -511,8 +507,7 @@ export const Asset = {
     }))
   } : undefined,
   newsMentions: props.newsMentions ? 
-    Array.isArray(props.newsMentions) && props.newsMentions.length > 0
-    ? props.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.newsMentions) && props.newsMentions.length > 0 &&  props.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.newsMentions.map((item: any) => ({
          id: item.id
       }))
@@ -1255,8 +1250,7 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0
-    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.actions.map((item: any) => ({
            id: item.id
         }))
@@ -2080,8 +2074,7 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0
-    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.actions.map((item: any) => ({
            id: item.id
         }))

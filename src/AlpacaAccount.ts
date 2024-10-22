@@ -356,8 +356,7 @@ export const AlpacaAccount = {
       }
     } : undefined,
     accounts: props.user.accounts ? 
-      Array.isArray(props.user.accounts) && props.user.accounts.length > 0
-    ? props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.accounts.map((item: any) => ({
            id: item.id
         }))
@@ -381,8 +380,7 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     sessions: props.user.sessions ? 
-      Array.isArray(props.user.sessions) && props.user.sessions.length > 0
-    ? props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.sessions.map((item: any) => ({
            id: item.id
         }))
@@ -398,8 +396,7 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     authenticators: props.user.authenticators ? 
-      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0
-    ? props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.authenticators.map((item: any) => ({
            id: item.id
         }))
@@ -419,8 +416,7 @@ export const AlpacaAccount = {
     }
   } : undefined,
   trades: props.trades ? 
-    Array.isArray(props.trades) && props.trades.length > 0
-    ? props.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.trades) && props.trades.length > 0 &&  props.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.trades.map((item: any) => ({
          id: item.id
       }))
@@ -512,8 +508,7 @@ export const AlpacaAccount = {
       }
     } : undefined,
     actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0
-    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.actions.map((item: any) => ({
            id: item.id
         }))
@@ -535,8 +530,7 @@ export const AlpacaAccount = {
     }))
   } : undefined,
   orders: props.orders ? 
-    Array.isArray(props.orders) && props.orders.length > 0
-    ? props.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.orders) && props.orders.length > 0 &&  props.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.orders.map((item: any) => ({
          id: item.id
       }))
@@ -656,8 +650,7 @@ export const AlpacaAccount = {
     }))
   } : undefined,
   positions: props.positions ? 
-    Array.isArray(props.positions) && props.positions.length > 0
-    ? props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.positions) && props.positions.length > 0 &&  props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.positions.map((item: any) => ({
          id: item.id
       }))
@@ -755,8 +748,7 @@ export const AlpacaAccount = {
     }))
   } : undefined,
   alerts: props.alerts ? 
-    Array.isArray(props.alerts) && props.alerts.length > 0
-    ? props.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.alerts) && props.alerts.length > 0 &&  props.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.alerts.map((item: any) => ({
          id: item.id
       }))
@@ -1377,8 +1369,7 @@ export const AlpacaAccount = {
       }
     } : undefined,
     accounts: props.user.accounts ? 
-      Array.isArray(props.user.accounts) && props.user.accounts.length > 0
-    ? props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.accounts.map((item: any) => ({
            id: item.id
         }))
@@ -1402,8 +1393,7 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     sessions: props.user.sessions ? 
-      Array.isArray(props.user.sessions) && props.user.sessions.length > 0
-    ? props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.sessions.map((item: any) => ({
            id: item.id
         }))
@@ -1419,8 +1409,7 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     authenticators: props.user.authenticators ? 
-      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0
-    ? props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.authenticators.map((item: any) => ({
            id: item.id
         }))
@@ -1838,8 +1827,7 @@ export const AlpacaAccount = {
       }
     } : undefined,
     actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0
-    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.actions.map((item: any) => ({
            id: item.id
         }))
@@ -3002,8 +2990,7 @@ export const AlpacaAccount = {
       }
     } : undefined,
     accounts: prop.user.accounts ? 
-      Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0
-    ? prop.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0 &&  prop.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.user.accounts.map((item: any) => ({
            id: item.id
         }))
@@ -3027,8 +3014,7 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     sessions: prop.user.sessions ? 
-      Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0
-    ? prop.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 &&  prop.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.user.sessions.map((item: any) => ({
            id: item.id
         }))
@@ -3044,8 +3030,7 @@ export const AlpacaAccount = {
       }))
     } : undefined,
     authenticators: prop.user.authenticators ? 
-      Array.isArray(prop.user.authenticators) && prop.user.authenticators.length > 0
-    ? prop.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.user.authenticators) && prop.user.authenticators.length > 0 &&  prop.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.user.authenticators.map((item: any) => ({
            id: item.id
         }))
@@ -3463,8 +3448,7 @@ export const AlpacaAccount = {
       }
     } : undefined,
     actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0
-    ? item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(item.actions) && item.actions.length > 0 &&  item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.actions.map((item: any) => ({
            id: item.id
         }))

@@ -337,8 +337,7 @@ export const Alert = {
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0
-    ? props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 &&  props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.trades.map((item: any) => ({
            id: item.id
         }))
@@ -362,8 +361,7 @@ export const Alert = {
       }))
     } : undefined,
     orders: props.alpacaAccount.orders ? 
-      Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0
-    ? props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 &&  props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.orders.map((item: any) => ({
            id: item.id
         }))
@@ -393,8 +391,7 @@ export const Alert = {
       }))
     } : undefined,
     positions: props.alpacaAccount.positions ? 
-      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0
-    ? props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0 &&  props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.positions.map((item: any) => ({
            id: item.id
         }))
@@ -1099,8 +1096,7 @@ export const Alert = {
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0
-    ? props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 &&  props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.trades.map((item: any) => ({
            id: item.id
         }))
@@ -1124,8 +1120,7 @@ export const Alert = {
       }))
     } : undefined,
     orders: props.alpacaAccount.orders ? 
-      Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0
-    ? props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 &&  props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.orders.map((item: any) => ({
            id: item.id
         }))
@@ -1155,8 +1150,7 @@ export const Alert = {
       }))
     } : undefined,
     positions: props.alpacaAccount.positions ? 
-      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0
-    ? props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0 &&  props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.positions.map((item: any) => ({
            id: item.id
         }))
@@ -1561,8 +1555,7 @@ export const Alert = {
       }
     } : undefined,
     trades: prop.alpacaAccount.trades ? 
-      Array.isArray(prop.alpacaAccount.trades) && prop.alpacaAccount.trades.length > 0
-    ? prop.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.alpacaAccount.trades) && prop.alpacaAccount.trades.length > 0 &&  prop.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.trades.map((item: any) => ({
            id: item.id
         }))
@@ -1586,8 +1579,7 @@ export const Alert = {
       }))
     } : undefined,
     orders: prop.alpacaAccount.orders ? 
-      Array.isArray(prop.alpacaAccount.orders) && prop.alpacaAccount.orders.length > 0
-    ? prop.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.alpacaAccount.orders) && prop.alpacaAccount.orders.length > 0 &&  prop.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.orders.map((item: any) => ({
            id: item.id
         }))
@@ -1617,8 +1609,7 @@ export const Alert = {
       }))
     } : undefined,
     positions: prop.alpacaAccount.positions ? 
-      Array.isArray(prop.alpacaAccount.positions) && prop.alpacaAccount.positions.length > 0
-    ? prop.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.alpacaAccount.positions) && prop.alpacaAccount.positions.length > 0 &&  prop.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.positions.map((item: any) => ({
            id: item.id
         }))

@@ -350,8 +350,7 @@ export const Order = {
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0
-    ? props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 &&  props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.trades.map((item: any) => ({
            id: item.id
         }))
@@ -375,8 +374,7 @@ export const Order = {
       }))
     } : undefined,
     positions: props.alpacaAccount.positions ? 
-      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0
-    ? props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0 &&  props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.positions.map((item: any) => ({
            id: item.id
         }))
@@ -403,8 +401,7 @@ export const Order = {
       }))
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0
-    ? props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.alerts.map((item: any) => ({
            id: item.id
         }))
@@ -535,8 +532,7 @@ export const Order = {
         sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
         buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? 
-      Array.isArray(props.asset.trades) && props.asset.trades.length > 0
-    ? props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.trades) && props.asset.trades.length > 0 &&  props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.trades.map((item: any) => ({
            id: item.id
         }))
@@ -560,8 +556,7 @@ export const Order = {
       }))
     } : undefined,
     positions: props.asset.positions ? 
-      Array.isArray(props.asset.positions) && props.asset.positions.length > 0
-    ? props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.positions) && props.asset.positions.length > 0 &&  props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.positions.map((item: any) => ({
            id: item.id
         }))
@@ -588,8 +583,7 @@ export const Order = {
       }))
     } : undefined,
     newsMentions: props.asset.newsMentions ? 
-      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0
-    ? props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 &&  props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
@@ -1288,8 +1282,7 @@ export const Order = {
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0
-    ? props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 &&  props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.trades.map((item: any) => ({
            id: item.id
         }))
@@ -1313,8 +1306,7 @@ export const Order = {
       }))
     } : undefined,
     positions: props.alpacaAccount.positions ? 
-      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0
-    ? props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.positions) && props.alpacaAccount.positions.length > 0 &&  props.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.positions.map((item: any) => ({
            id: item.id
         }))
@@ -1341,8 +1333,7 @@ export const Order = {
       }))
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0
-    ? props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.alerts.map((item: any) => ({
            id: item.id
         }))
@@ -1868,8 +1859,7 @@ export const Order = {
         sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
         buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? 
-      Array.isArray(props.asset.trades) && props.asset.trades.length > 0
-    ? props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.trades) && props.asset.trades.length > 0 &&  props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.trades.map((item: any) => ({
            id: item.id
         }))
@@ -1893,8 +1883,7 @@ export const Order = {
       }))
     } : undefined,
     positions: props.asset.positions ? 
-      Array.isArray(props.asset.positions) && props.asset.positions.length > 0
-    ? props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.positions) && props.asset.positions.length > 0 &&  props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.positions.map((item: any) => ({
            id: item.id
         }))
@@ -1921,8 +1910,7 @@ export const Order = {
       }))
     } : undefined,
     newsMentions: props.asset.newsMentions ? 
-      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0
-    ? props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 &&  props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
@@ -2306,8 +2294,7 @@ export const Order = {
       }
     } : undefined,
     trades: prop.alpacaAccount.trades ? 
-      Array.isArray(prop.alpacaAccount.trades) && prop.alpacaAccount.trades.length > 0
-    ? prop.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.alpacaAccount.trades) && prop.alpacaAccount.trades.length > 0 &&  prop.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.trades.map((item: any) => ({
            id: item.id
         }))
@@ -2331,8 +2318,7 @@ export const Order = {
       }))
     } : undefined,
     positions: prop.alpacaAccount.positions ? 
-      Array.isArray(prop.alpacaAccount.positions) && prop.alpacaAccount.positions.length > 0
-    ? prop.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.alpacaAccount.positions) && prop.alpacaAccount.positions.length > 0 &&  prop.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.positions.map((item: any) => ({
            id: item.id
         }))
@@ -2359,8 +2345,7 @@ export const Order = {
       }))
     } : undefined,
     alerts: prop.alpacaAccount.alerts ? 
-      Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0
-    ? prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 &&  prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.alerts.map((item: any) => ({
            id: item.id
         }))
@@ -2886,8 +2871,7 @@ export const Order = {
         sellPrice: prop.asset.sellPrice !== undefined ? prop.asset.sellPrice : undefined,
         buyPrice: prop.asset.buyPrice !== undefined ? prop.asset.buyPrice : undefined,
     trades: prop.asset.trades ? 
-      Array.isArray(prop.asset.trades) && prop.asset.trades.length > 0
-    ? prop.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.asset.trades) && prop.asset.trades.length > 0 &&  prop.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.asset.trades.map((item: any) => ({
            id: item.id
         }))
@@ -2911,8 +2895,7 @@ export const Order = {
       }))
     } : undefined,
     positions: prop.asset.positions ? 
-      Array.isArray(prop.asset.positions) && prop.asset.positions.length > 0
-    ? prop.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.asset.positions) && prop.asset.positions.length > 0 &&  prop.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.asset.positions.map((item: any) => ({
            id: item.id
         }))
@@ -2939,8 +2922,7 @@ export const Order = {
       }))
     } : undefined,
     newsMentions: prop.asset.newsMentions ? 
-      Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0
-    ? prop.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0 &&  prop.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))

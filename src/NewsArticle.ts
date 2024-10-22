@@ -218,8 +218,7 @@ export const NewsArticle = {
   topics: props.topics !== undefined ? props.topics : undefined,
   logo: props.logo !== undefined ? props.logo : undefined,
   assets: props.assets ? 
-    Array.isArray(props.assets) && props.assets.length > 0
-    ? props.assets.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+    Array.isArray(props.assets) && props.assets.length > 0 &&  props.assets.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.assets.map((item: any) => ({
          id: item.id
       }))

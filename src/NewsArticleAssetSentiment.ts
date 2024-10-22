@@ -343,8 +343,7 @@ export const NewsArticleAssetSentiment = {
         sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
         buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? 
-      Array.isArray(props.asset.trades) && props.asset.trades.length > 0
-    ? props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.trades) && props.asset.trades.length > 0 &&  props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.trades.map((item: any) => ({
            id: item.id
         }))
@@ -368,8 +367,7 @@ export const NewsArticleAssetSentiment = {
       }))
     } : undefined,
     orders: props.asset.orders ? 
-      Array.isArray(props.asset.orders) && props.asset.orders.length > 0
-    ? props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.orders) && props.asset.orders.length > 0 &&  props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.orders.map((item: any) => ({
            id: item.id
         }))
@@ -399,8 +397,7 @@ export const NewsArticleAssetSentiment = {
       }))
     } : undefined,
     positions: props.asset.positions ? 
-      Array.isArray(props.asset.positions) && props.asset.positions.length > 0
-    ? props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.positions) && props.asset.positions.length > 0 &&  props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.positions.map((item: any) => ({
            id: item.id
         }))
@@ -1249,8 +1246,7 @@ export const NewsArticleAssetSentiment = {
         sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
         buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
     trades: props.asset.trades ? 
-      Array.isArray(props.asset.trades) && props.asset.trades.length > 0
-    ? props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.trades) && props.asset.trades.length > 0 &&  props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.trades.map((item: any) => ({
            id: item.id
         }))
@@ -1274,8 +1270,7 @@ export const NewsArticleAssetSentiment = {
       }))
     } : undefined,
     orders: props.asset.orders ? 
-      Array.isArray(props.asset.orders) && props.asset.orders.length > 0
-    ? props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.orders) && props.asset.orders.length > 0 &&  props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.orders.map((item: any) => ({
            id: item.id
         }))
@@ -1305,8 +1300,7 @@ export const NewsArticleAssetSentiment = {
       }))
     } : undefined,
     positions: props.asset.positions ? 
-      Array.isArray(props.asset.positions) && props.asset.positions.length > 0
-    ? props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(props.asset.positions) && props.asset.positions.length > 0 &&  props.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.asset.positions.map((item: any) => ({
            id: item.id
         }))
@@ -1904,8 +1898,7 @@ export const NewsArticleAssetSentiment = {
         sellPrice: prop.asset.sellPrice !== undefined ? prop.asset.sellPrice : undefined,
         buyPrice: prop.asset.buyPrice !== undefined ? prop.asset.buyPrice : undefined,
     trades: prop.asset.trades ? 
-      Array.isArray(prop.asset.trades) && prop.asset.trades.length > 0
-    ? prop.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.asset.trades) && prop.asset.trades.length > 0 &&  prop.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.asset.trades.map((item: any) => ({
            id: item.id
         }))
@@ -1929,8 +1922,7 @@ export const NewsArticleAssetSentiment = {
       }))
     } : undefined,
     orders: prop.asset.orders ? 
-      Array.isArray(prop.asset.orders) && prop.asset.orders.length > 0
-    ? prop.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.asset.orders) && prop.asset.orders.length > 0 &&  prop.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.asset.orders.map((item: any) => ({
            id: item.id
         }))
@@ -1960,8 +1952,7 @@ export const NewsArticleAssetSentiment = {
       }))
     } : undefined,
     positions: prop.asset.positions ? 
-      Array.isArray(prop.asset.positions) && prop.asset.positions.length > 0
-    ? prop.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) && {
+      Array.isArray(prop.asset.positions) && prop.asset.positions.length > 0 &&  prop.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.asset.positions.map((item: any) => ({
            id: item.id
         }))
