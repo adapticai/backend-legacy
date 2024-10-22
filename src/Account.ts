@@ -268,12 +268,12 @@ export const Account = {
       }
     } : undefined,
     sessions: props.user.sessions ? 
-      typeof props.user.sessions === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
-    ? { connect: {
-          id: props.user.sessions.id
-          }
-        }
-    : { connectOrCreate: props.user.sessions.map((item: any) => ({
+      typeof props.user.sessions[0] === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
+    ? { connect:      props.user.sessions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -284,12 +284,12 @@ export const Account = {
       }))
     } : undefined,
     authenticators: props.user.authenticators ? 
-      typeof props.user.authenticators === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
-    ? { connect: {
-          id: props.user.authenticators.id
-          }
-        }
-    : { connectOrCreate: props.user.authenticators.map((item: any) => ({
+      typeof props.user.authenticators[0] === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
+    ? { connect:      props.user.authenticators.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -301,12 +301,12 @@ export const Account = {
       }))
     } : undefined,
     alpacaAccounts: props.user.alpacaAccounts ? 
-      typeof props.user.alpacaAccounts === 'object' && Object.keys(props.user.alpacaAccounts).length === 1 && Object.keys(props.user.alpacaAccounts)[0] === 'id'
-    ? { connect: {
-          id: props.user.alpacaAccounts.id
-          }
-        }
-    : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
+      typeof props.user.alpacaAccounts[0] === 'object' && Object.keys(props.user.alpacaAccounts).length === 1 && Object.keys(props.user.alpacaAccounts)[0] === 'id'
+    ? { connect:      props.user.alpacaAccounts.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -834,12 +834,12 @@ export const Account = {
       }
     } : undefined,
     sessions: props.user.sessions ? 
-      typeof props.user.sessions === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
-    ? { connect: {
-          id: props.user.sessions.id
-          }
-        }
-    : { connectOrCreate: props.user.sessions.map((item: any) => ({
+      typeof props.user.sessions[0] === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
+    ? { connect:      props.user.sessions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -850,12 +850,12 @@ export const Account = {
       }))
     } : undefined,
     authenticators: props.user.authenticators ? 
-      typeof props.user.authenticators === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
-    ? { connect: {
-          id: props.user.authenticators.id
-          }
-        }
-    : { connectOrCreate: props.user.authenticators.map((item: any) => ({
+      typeof props.user.authenticators[0] === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
+    ? { connect:      props.user.authenticators.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -867,12 +867,12 @@ export const Account = {
       }))
     } : undefined,
     alpacaAccounts: props.user.alpacaAccounts ? 
-      typeof props.user.alpacaAccounts === 'object' && Object.keys(props.user.alpacaAccounts).length === 1 && Object.keys(props.user.alpacaAccounts)[0] === 'id'
-    ? { connect: {
-          id: props.user.alpacaAccounts.id
-          }
-        }
-    : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
+      typeof props.user.alpacaAccounts[0] === 'object' && Object.keys(props.user.alpacaAccounts).length === 1 && Object.keys(props.user.alpacaAccounts)[0] === 'id'
+    ? { connect:      props.user.alpacaAccounts.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1174,12 +1174,12 @@ export const Account = {
       }
     } : undefined,
     sessions: prop.user.sessions ? 
-      typeof prop.user.sessions === 'object' && Object.keys(prop.user.sessions).length === 1 && Object.keys(prop.user.sessions)[0] === 'id'
-    ? { connect: {
-          id: prop.user.sessions.id
-          }
-        }
-    : { connectOrCreate: prop.user.sessions.map((item: any) => ({
+      typeof prop.user.sessions[0] === 'object' && Object.keys(prop.user.sessions).length === 1 && Object.keys(prop.user.sessions)[0] === 'id'
+    ? { connect:      prop.user.sessions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: prop.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1190,12 +1190,12 @@ export const Account = {
       }))
     } : undefined,
     authenticators: prop.user.authenticators ? 
-      typeof prop.user.authenticators === 'object' && Object.keys(prop.user.authenticators).length === 1 && Object.keys(prop.user.authenticators)[0] === 'id'
-    ? { connect: {
-          id: prop.user.authenticators.id
-          }
-        }
-    : { connectOrCreate: prop.user.authenticators.map((item: any) => ({
+      typeof prop.user.authenticators[0] === 'object' && Object.keys(prop.user.authenticators).length === 1 && Object.keys(prop.user.authenticators)[0] === 'id'
+    ? { connect:      prop.user.authenticators.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: prop.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1207,12 +1207,12 @@ export const Account = {
       }))
     } : undefined,
     alpacaAccounts: prop.user.alpacaAccounts ? 
-      typeof prop.user.alpacaAccounts === 'object' && Object.keys(prop.user.alpacaAccounts).length === 1 && Object.keys(prop.user.alpacaAccounts)[0] === 'id'
-    ? { connect: {
-          id: prop.user.alpacaAccounts.id
-          }
-        }
-    : { connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
+      typeof prop.user.alpacaAccounts[0] === 'object' && Object.keys(prop.user.alpacaAccounts).length === 1 && Object.keys(prop.user.alpacaAccounts)[0] === 'id'
+    ? { connect:      prop.user.alpacaAccounts.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },

@@ -331,12 +331,12 @@ export const Asset = {
   sellPrice: props.sellPrice !== undefined ? props.sellPrice : undefined,
   buyPrice: props.buyPrice !== undefined ? props.buyPrice : undefined,
   trades: props.trades ? 
-    typeof props.trades === 'object' && Object.keys(props.trades).length === 1 && Object.keys(props.trades)[0] === 'id'
-    ? { connect: {
-        id: props.trades.id
-        }
-      }
-    : { connectOrCreate: props.trades.map((item: any) => ({
+    typeof props.trades[0] === 'object' && Object.keys(props.trades).length === 1 && Object.keys(props.trades)[0] === 'id'
+    ? { connect:    props.trades.map((item: any) => ({
+       id: item.id
+       }))
+ }
+ : { connectOrCreate: props.trades.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -371,12 +371,12 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect: {
-          id: item.actions.id
-          }
-        }
-    : { connectOrCreate: item.actions.map((item: any) => ({
+      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
+    ? { connect:      item.actions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -393,12 +393,12 @@ export const Asset = {
     }))
   } : undefined,
   orders: props.orders ? 
-    typeof props.orders === 'object' && Object.keys(props.orders).length === 1 && Object.keys(props.orders)[0] === 'id'
-    ? { connect: {
-        id: props.orders.id
-        }
-      }
-    : { connectOrCreate: props.orders.map((item: any) => ({
+    typeof props.orders[0] === 'object' && Object.keys(props.orders).length === 1 && Object.keys(props.orders)[0] === 'id'
+    ? { connect:    props.orders.map((item: any) => ({
+       id: item.id
+       }))
+ }
+ : { connectOrCreate: props.orders.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -461,12 +461,12 @@ export const Asset = {
     }))
   } : undefined,
   positions: props.positions ? 
-    typeof props.positions === 'object' && Object.keys(props.positions).length === 1 && Object.keys(props.positions)[0] === 'id'
-    ? { connect: {
-        id: props.positions.id
-        }
-      }
-    : { connectOrCreate: props.positions.map((item: any) => ({
+    typeof props.positions[0] === 'object' && Object.keys(props.positions).length === 1 && Object.keys(props.positions)[0] === 'id'
+    ? { connect:    props.positions.map((item: any) => ({
+       id: item.id
+       }))
+ }
+ : { connectOrCreate: props.positions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
       },
@@ -507,12 +507,12 @@ export const Asset = {
     }))
   } : undefined,
   newsMentions: props.newsMentions ? 
-    typeof props.newsMentions === 'object' && Object.keys(props.newsMentions).length === 1 && Object.keys(props.newsMentions)[0] === 'id'
-    ? { connect: {
-        id: props.newsMentions.id
-        }
-      }
-    : { connectOrCreate: props.newsMentions.map((item: any) => ({
+    typeof props.newsMentions[0] === 'object' && Object.keys(props.newsMentions).length === 1 && Object.keys(props.newsMentions)[0] === 'id'
+    ? { connect:    props.newsMentions.map((item: any) => ({
+       id: item.id
+       }))
+ }
+ : { connectOrCreate: props.newsMentions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         url: item.url !== undefined ? item.url : undefined,
@@ -1250,12 +1250,12 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect: {
-          id: item.actions.id
-          }
-        }
-    : { connectOrCreate: item.actions.map((item: any) => ({
+      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
+    ? { connect:      item.actions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -2074,12 +2074,12 @@ export const Asset = {
       }
     } : undefined,
     actions: item.actions ? 
-      typeof item.actions === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
-    ? { connect: {
-          id: item.actions.id
-          }
-        }
-    : { connectOrCreate: item.actions.map((item: any) => ({
+      typeof item.actions[0] === 'object' && Object.keys(item.actions).length === 1 && Object.keys(item.actions)[0] === 'id'
+    ? { connect:      item.actions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: item.actions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },

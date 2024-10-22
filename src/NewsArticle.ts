@@ -218,12 +218,12 @@ export const NewsArticle = {
   topics: props.topics !== undefined ? props.topics : undefined,
   logo: props.logo !== undefined ? props.logo : undefined,
   assets: props.assets ? 
-    typeof props.assets === 'object' && Object.keys(props.assets).length === 1 && Object.keys(props.assets)[0] === 'id'
-    ? { connect: {
-        id: props.assets.id
-        }
-      }
-    : { connectOrCreate: props.assets.map((item: any) => ({
+    typeof props.assets[0] === 'object' && Object.keys(props.assets).length === 1 && Object.keys(props.assets)[0] === 'id'
+    ? { connect:    props.assets.map((item: any) => ({
+       id: item.id
+       }))
+ }
+ : { connectOrCreate: props.assets.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         url: item.url !== undefined ? item.url : undefined,

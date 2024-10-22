@@ -337,12 +337,12 @@ export const Alert = {
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-      typeof props.alpacaAccount.trades === 'object' && Object.keys(props.alpacaAccount.trades).length === 1 && Object.keys(props.alpacaAccount.trades)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.trades.id
-          }
-        }
-    : { connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
+      typeof props.alpacaAccount.trades[0] === 'object' && Object.keys(props.alpacaAccount.trades).length === 1 && Object.keys(props.alpacaAccount.trades)[0] === 'id'
+    ? { connect:      props.alpacaAccount.trades.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -361,12 +361,12 @@ export const Alert = {
       }))
     } : undefined,
     orders: props.alpacaAccount.orders ? 
-      typeof props.alpacaAccount.orders === 'object' && Object.keys(props.alpacaAccount.orders).length === 1 && Object.keys(props.alpacaAccount.orders)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.orders.id
-          }
-        }
-    : { connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
+      typeof props.alpacaAccount.orders[0] === 'object' && Object.keys(props.alpacaAccount.orders).length === 1 && Object.keys(props.alpacaAccount.orders)[0] === 'id'
+    ? { connect:      props.alpacaAccount.orders.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -391,12 +391,12 @@ export const Alert = {
       }))
     } : undefined,
     positions: props.alpacaAccount.positions ? 
-      typeof props.alpacaAccount.positions === 'object' && Object.keys(props.alpacaAccount.positions).length === 1 && Object.keys(props.alpacaAccount.positions)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.positions.id
-          }
-        }
-    : { connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
+      typeof props.alpacaAccount.positions[0] === 'object' && Object.keys(props.alpacaAccount.positions).length === 1 && Object.keys(props.alpacaAccount.positions)[0] === 'id'
+    ? { connect:      props.alpacaAccount.positions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1096,12 +1096,12 @@ export const Alert = {
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-      typeof props.alpacaAccount.trades === 'object' && Object.keys(props.alpacaAccount.trades).length === 1 && Object.keys(props.alpacaAccount.trades)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.trades.id
-          }
-        }
-    : { connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
+      typeof props.alpacaAccount.trades[0] === 'object' && Object.keys(props.alpacaAccount.trades).length === 1 && Object.keys(props.alpacaAccount.trades)[0] === 'id'
+    ? { connect:      props.alpacaAccount.trades.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1120,12 +1120,12 @@ export const Alert = {
       }))
     } : undefined,
     orders: props.alpacaAccount.orders ? 
-      typeof props.alpacaAccount.orders === 'object' && Object.keys(props.alpacaAccount.orders).length === 1 && Object.keys(props.alpacaAccount.orders)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.orders.id
-          }
-        }
-    : { connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
+      typeof props.alpacaAccount.orders[0] === 'object' && Object.keys(props.alpacaAccount.orders).length === 1 && Object.keys(props.alpacaAccount.orders)[0] === 'id'
+    ? { connect:      props.alpacaAccount.orders.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1150,12 +1150,12 @@ export const Alert = {
       }))
     } : undefined,
     positions: props.alpacaAccount.positions ? 
-      typeof props.alpacaAccount.positions === 'object' && Object.keys(props.alpacaAccount.positions).length === 1 && Object.keys(props.alpacaAccount.positions)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.positions.id
-          }
-        }
-    : { connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
+      typeof props.alpacaAccount.positions[0] === 'object' && Object.keys(props.alpacaAccount.positions).length === 1 && Object.keys(props.alpacaAccount.positions)[0] === 'id'
+    ? { connect:      props.alpacaAccount.positions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1555,12 +1555,12 @@ export const Alert = {
       }
     } : undefined,
     trades: prop.alpacaAccount.trades ? 
-      typeof prop.alpacaAccount.trades === 'object' && Object.keys(prop.alpacaAccount.trades).length === 1 && Object.keys(prop.alpacaAccount.trades)[0] === 'id'
-    ? { connect: {
-          id: prop.alpacaAccount.trades.id
-          }
-        }
-    : { connectOrCreate: prop.alpacaAccount.trades.map((item: any) => ({
+      typeof prop.alpacaAccount.trades[0] === 'object' && Object.keys(prop.alpacaAccount.trades).length === 1 && Object.keys(prop.alpacaAccount.trades)[0] === 'id'
+    ? { connect:      prop.alpacaAccount.trades.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1579,12 +1579,12 @@ export const Alert = {
       }))
     } : undefined,
     orders: prop.alpacaAccount.orders ? 
-      typeof prop.alpacaAccount.orders === 'object' && Object.keys(prop.alpacaAccount.orders).length === 1 && Object.keys(prop.alpacaAccount.orders)[0] === 'id'
-    ? { connect: {
-          id: prop.alpacaAccount.orders.id
-          }
-        }
-    : { connectOrCreate: prop.alpacaAccount.orders.map((item: any) => ({
+      typeof prop.alpacaAccount.orders[0] === 'object' && Object.keys(prop.alpacaAccount.orders).length === 1 && Object.keys(prop.alpacaAccount.orders)[0] === 'id'
+    ? { connect:      prop.alpacaAccount.orders.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1609,12 +1609,12 @@ export const Alert = {
       }))
     } : undefined,
     positions: prop.alpacaAccount.positions ? 
-      typeof prop.alpacaAccount.positions === 'object' && Object.keys(prop.alpacaAccount.positions).length === 1 && Object.keys(prop.alpacaAccount.positions)[0] === 'id'
-    ? { connect: {
-          id: prop.alpacaAccount.positions.id
-          }
-        }
-    : { connectOrCreate: prop.alpacaAccount.positions.map((item: any) => ({
+      typeof prop.alpacaAccount.positions[0] === 'object' && Object.keys(prop.alpacaAccount.positions).length === 1 && Object.keys(prop.alpacaAccount.positions)[0] === 'id'
+    ? { connect:      prop.alpacaAccount.positions.map((item: any) => ({
+         id: item.id
+         }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
