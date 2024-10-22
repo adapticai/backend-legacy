@@ -212,7 +212,6 @@ export const Alert = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -228,16 +227,24 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -286,8 +293,13 @@ export const Alert = {
           message: props.message !== undefined ? props.message : undefined,
   type: props.type !== undefined ? props.type : undefined,
   isRead: props.isRead !== undefined ? props.isRead : undefined,
-  alpacaAccount: props.alpacaAccount ? {
-    connectOrCreate: {
+  alpacaAccount: props.alpacaAccount ? 
+    typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
+    ? { connect: {
+        id: props.alpacaAccount.id
+        }
+      }
+    : { connectOrCreate: {
       where: {
         id: props.alpacaAccount.id !== undefined ? props.alpacaAccount.id : undefined,
       },
@@ -297,8 +309,13 @@ export const Alert = {
         APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
-    user: props.alpacaAccount.user ? {
-      connectOrCreate: {
+    user: props.alpacaAccount.user ? 
+      typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.user.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: props.alpacaAccount.user.id !== undefined ? props.alpacaAccount.user.id : undefined,
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
@@ -319,8 +336,13 @@ export const Alert = {
         },
       }
     } : undefined,
-    trades: props.alpacaAccount.trades ? {
-      connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? 
+      typeof props.alpacaAccount.trades === 'object' && Object.keys(props.alpacaAccount.trades).length === 1 && Object.keys(props.alpacaAccount.trades)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.trades.id
+          }
+        }
+    : { connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -338,25 +360,43 @@ export const Alert = {
         },
       }))
     } : undefined,
-    orders: props.alpacaAccount.orders ? {
-      connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
+    orders: props.alpacaAccount.orders ? 
+      typeof props.alpacaAccount.orders === 'object' && Object.keys(props.alpacaAccount.orders).length === 1 && Object.keys(props.alpacaAccount.orders)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.orders.id
+          }
+        }
+    : { connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
-    positions: props.alpacaAccount.positions ? {
-      connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
+    positions: props.alpacaAccount.positions ? 
+      typeof props.alpacaAccount.positions === 'object' && Object.keys(props.alpacaAccount.positions).length === 1 && Object.keys(props.alpacaAccount.positions)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.positions.id
+          }
+        }
+    : { connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -641,7 +681,6 @@ export const Alert = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -657,16 +696,24 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -879,39 +926,71 @@ export const Alert = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          notional: item.notional !== undefined ? {
+              set: item.notional  
              } : undefined,
           side: item.side !== undefined ? {
               set: item.side  
              } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce  
              } : undefined,
-          stopLoss: item.stopLoss !== undefined ? {
-              set: item.stopLoss  
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice  
+             } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice  
+             } : undefined,
+          trailPrice: item.trailPrice !== undefined ? {
+              set: item.trailPrice  
+             } : undefined,
+          trailPercent: item.trailPercent !== undefined ? {
+              set: item.trailPercent  
+             } : undefined,
+          extendedHours: item.extendedHours !== undefined ? {
+              set: item.extendedHours  
+             } : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? {
+              set: item.clientOrderId  
              } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          executionTime: item.executionTime !== undefined ? {
-              set: item.executionTime  
+          submittedAt: item.submittedAt !== undefined ? {
+              set: item.submittedAt  
+             } : undefined,
+          filledAt: item.filledAt !== undefined ? {
+              set: item.filledAt  
+             } : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? {
+              set: item.filledAvgPrice  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
@@ -989,8 +1068,13 @@ export const Alert = {
         APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
-    user: props.alpacaAccount.user ? {
-      connectOrCreate: {
+    user: props.alpacaAccount.user ? 
+      typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.user.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: props.alpacaAccount.user.id !== undefined ? props.alpacaAccount.user.id : undefined,
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
@@ -1011,8 +1095,13 @@ export const Alert = {
         },
       }
     } : undefined,
-    trades: props.alpacaAccount.trades ? {
-      connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
+    trades: props.alpacaAccount.trades ? 
+      typeof props.alpacaAccount.trades === 'object' && Object.keys(props.alpacaAccount.trades).length === 1 && Object.keys(props.alpacaAccount.trades)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.trades.id
+          }
+        }
+    : { connectOrCreate: props.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1030,25 +1119,43 @@ export const Alert = {
         },
       }))
     } : undefined,
-    orders: props.alpacaAccount.orders ? {
-      connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
+    orders: props.alpacaAccount.orders ? 
+      typeof props.alpacaAccount.orders === 'object' && Object.keys(props.alpacaAccount.orders).length === 1 && Object.keys(props.alpacaAccount.orders)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.orders.id
+          }
+        }
+    : { connectOrCreate: props.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
-    positions: props.alpacaAccount.positions ? {
-      connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
+    positions: props.alpacaAccount.positions ? 
+      typeof props.alpacaAccount.positions === 'object' && Object.keys(props.alpacaAccount.positions).length === 1 && Object.keys(props.alpacaAccount.positions)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.positions.id
+          }
+        }
+    : { connectOrCreate: props.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1278,39 +1385,71 @@ export const Alert = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          notional: item.notional !== undefined ? {
+              set: item.notional  
              } : undefined,
           side: item.side !== undefined ? {
               set: item.side  
              } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce  
              } : undefined,
-          stopLoss: item.stopLoss !== undefined ? {
-              set: item.stopLoss  
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice  
+             } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice  
+             } : undefined,
+          trailPrice: item.trailPrice !== undefined ? {
+              set: item.trailPrice  
+             } : undefined,
+          trailPercent: item.trailPercent !== undefined ? {
+              set: item.trailPercent  
+             } : undefined,
+          extendedHours: item.extendedHours !== undefined ? {
+              set: item.extendedHours  
+             } : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? {
+              set: item.clientOrderId  
              } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          executionTime: item.executionTime !== undefined ? {
-              set: item.executionTime  
+          submittedAt: item.submittedAt !== undefined ? {
+              set: item.submittedAt  
+             } : undefined,
+          filledAt: item.filledAt !== undefined ? {
+              set: item.filledAt  
+             } : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? {
+              set: item.filledAvgPrice  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
@@ -1388,8 +1527,13 @@ export const Alert = {
         APISecret: prop.alpacaAccount.APISecret !== undefined ? prop.alpacaAccount.APISecret : undefined,
         configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
         marketOpen: prop.alpacaAccount.marketOpen !== undefined ? prop.alpacaAccount.marketOpen : undefined,
-    user: prop.alpacaAccount.user ? {
-      connectOrCreate: {
+    user: prop.alpacaAccount.user ? 
+      typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && Object.keys(prop.alpacaAccount.user)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.user.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: prop.alpacaAccount.user.id !== undefined ? prop.alpacaAccount.user.id : undefined,
           email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
@@ -1410,8 +1554,13 @@ export const Alert = {
         },
       }
     } : undefined,
-    trades: prop.alpacaAccount.trades ? {
-      connectOrCreate: prop.alpacaAccount.trades.map((item: any) => ({
+    trades: prop.alpacaAccount.trades ? 
+      typeof prop.alpacaAccount.trades === 'object' && Object.keys(prop.alpacaAccount.trades).length === 1 && Object.keys(prop.alpacaAccount.trades)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.trades.id
+          }
+        }
+    : { connectOrCreate: prop.alpacaAccount.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1429,25 +1578,43 @@ export const Alert = {
         },
       }))
     } : undefined,
-    orders: prop.alpacaAccount.orders ? {
-      connectOrCreate: prop.alpacaAccount.orders.map((item: any) => ({
+    orders: prop.alpacaAccount.orders ? 
+      typeof prop.alpacaAccount.orders === 'object' && Object.keys(prop.alpacaAccount.orders).length === 1 && Object.keys(prop.alpacaAccount.orders)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.orders.id
+          }
+        }
+    : { connectOrCreate: prop.alpacaAccount.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
-    positions: prop.alpacaAccount.positions ? {
-      connectOrCreate: prop.alpacaAccount.positions.map((item: any) => ({
+    positions: prop.alpacaAccount.positions ? 
+      typeof prop.alpacaAccount.positions === 'object' && Object.keys(prop.alpacaAccount.positions).length === 1 && Object.keys(prop.alpacaAccount.positions)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.positions.id
+          }
+        }
+    : { connectOrCreate: prop.alpacaAccount.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1692,7 +1859,6 @@ export const Alert = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -1708,16 +1874,24 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -1982,7 +2156,6 @@ export const Alert = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -1998,16 +2171,24 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -2270,7 +2451,6 @@ export const Alert = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -2286,16 +2466,24 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -2552,7 +2740,6 @@ export const Alert = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -2568,16 +2755,24 @@ export const Alert = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }

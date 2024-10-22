@@ -136,16 +136,24 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -208,8 +216,13 @@ export const Customer = {
   stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
   stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
-  users: props.users ? {
-    connectOrCreate: props.users.map((item: any) => ({
+  users: props.users ? 
+    typeof props.users === 'object' && Object.keys(props.users).length === 1 && Object.keys(props.users)[0] === 'id'
+    ? { connect: {
+        id: props.users.id
+        }
+      }
+    : { connectOrCreate: props.users.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         email: item.email !== undefined ? item.email : undefined,
@@ -227,8 +240,13 @@ export const Customer = {
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
         currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
-    accounts: item.accounts ? {
-      connectOrCreate: item.accounts.map((item: any) => ({
+    accounts: item.accounts ? 
+      typeof item.accounts === 'object' && Object.keys(item.accounts).length === 1 && Object.keys(item.accounts)[0] === 'id'
+    ? { connect: {
+          id: item.accounts.id
+          }
+        }
+    : { connectOrCreate: item.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -246,8 +264,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    sessions: item.sessions ? {
-      connectOrCreate: item.sessions.map((item: any) => ({
+    sessions: item.sessions ? 
+      typeof item.sessions === 'object' && Object.keys(item.sessions).length === 1 && Object.keys(item.sessions)[0] === 'id'
+    ? { connect: {
+          id: item.sessions.id
+          }
+        }
+    : { connectOrCreate: item.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -257,8 +280,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? {
-      connectOrCreate: item.authenticators.map((item: any) => ({
+    authenticators: item.authenticators ? 
+      typeof item.authenticators === 'object' && Object.keys(item.authenticators).length === 1 && Object.keys(item.authenticators)[0] === 'id'
+    ? { connect: {
+          id: item.authenticators.id
+          }
+        }
+    : { connectOrCreate: item.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -269,8 +297,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? {
-      connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: item.alpacaAccounts ? 
+      typeof item.alpacaAccounts === 'object' && Object.keys(item.alpacaAccounts).length === 1 && Object.keys(item.alpacaAccounts)[0] === 'id'
+    ? { connect: {
+          id: item.alpacaAccounts.id
+          }
+        }
+    : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -474,16 +507,24 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -758,8 +799,13 @@ export const Customer = {
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
         currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
-    accounts: item.accounts ? {
-      connectOrCreate: item.accounts.map((item: any) => ({
+    accounts: item.accounts ? 
+      typeof item.accounts === 'object' && Object.keys(item.accounts).length === 1 && Object.keys(item.accounts)[0] === 'id'
+    ? { connect: {
+          id: item.accounts.id
+          }
+        }
+    : { connectOrCreate: item.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -777,8 +823,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    sessions: item.sessions ? {
-      connectOrCreate: item.sessions.map((item: any) => ({
+    sessions: item.sessions ? 
+      typeof item.sessions === 'object' && Object.keys(item.sessions).length === 1 && Object.keys(item.sessions)[0] === 'id'
+    ? { connect: {
+          id: item.sessions.id
+          }
+        }
+    : { connectOrCreate: item.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -788,8 +839,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? {
-      connectOrCreate: item.authenticators.map((item: any) => ({
+    authenticators: item.authenticators ? 
+      typeof item.authenticators === 'object' && Object.keys(item.authenticators).length === 1 && Object.keys(item.authenticators)[0] === 'id'
+    ? { connect: {
+          id: item.authenticators.id
+          }
+        }
+    : { connectOrCreate: item.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -800,8 +856,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? {
-      connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: item.alpacaAccounts ? 
+      typeof item.alpacaAccounts === 'object' && Object.keys(item.alpacaAccounts).length === 1 && Object.keys(item.alpacaAccounts)[0] === 'id'
+    ? { connect: {
+          id: item.alpacaAccounts.id
+          }
+        }
+    : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1075,8 +1136,13 @@ export const Customer = {
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
         currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
         plan: item.plan !== undefined ? item.plan : undefined,
-    accounts: item.accounts ? {
-      connectOrCreate: item.accounts.map((item: any) => ({
+    accounts: item.accounts ? 
+      typeof item.accounts === 'object' && Object.keys(item.accounts).length === 1 && Object.keys(item.accounts)[0] === 'id'
+    ? { connect: {
+          id: item.accounts.id
+          }
+        }
+    : { connectOrCreate: item.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1094,8 +1160,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    sessions: item.sessions ? {
-      connectOrCreate: item.sessions.map((item: any) => ({
+    sessions: item.sessions ? 
+      typeof item.sessions === 'object' && Object.keys(item.sessions).length === 1 && Object.keys(item.sessions)[0] === 'id'
+    ? { connect: {
+          id: item.sessions.id
+          }
+        }
+    : { connectOrCreate: item.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1105,8 +1176,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? {
-      connectOrCreate: item.authenticators.map((item: any) => ({
+    authenticators: item.authenticators ? 
+      typeof item.authenticators === 'object' && Object.keys(item.authenticators).length === 1 && Object.keys(item.authenticators)[0] === 'id'
+    ? { connect: {
+          id: item.authenticators.id
+          }
+        }
+    : { connectOrCreate: item.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1117,8 +1193,13 @@ export const Customer = {
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? {
-      connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: item.alpacaAccounts ? 
+      typeof item.alpacaAccounts === 'object' && Object.keys(item.alpacaAccounts).length === 1 && Object.keys(item.alpacaAccounts)[0] === 'id'
+    ? { connect: {
+          id: item.alpacaAccounts.id
+          }
+        }
+    : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1279,16 +1360,24 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1487,16 +1576,24 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1696,16 +1793,24 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1896,16 +2001,24 @@ export const Customer = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }

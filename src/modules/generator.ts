@@ -283,9 +283,20 @@ const handleCreateOperation = (
       return '';
     }
 
+    // Add dynamic handling for cases where accessor is an object with only one field 'id'. If so, use 'connect' instead of 'connectOrCreate', and use accessor.id instead of accessor.
     const openingLine = field.type.isList
-      ? `${operationFieldName}: ${accessor}.map((item: any) => ({\n`
-      : `${operationFieldName}: {\n`;
+      ? `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'
+    ? { connect: {
+     ${indent} id: ${accessor}.id
+     ${indent} }
+    ${indent}}
+    : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
+      : `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'
+    ? { connect: {
+     ${indent} id: ${accessor}.id
+     ${indent} }
+    ${indent}}
+    : { ${operationFieldName}: {\n`;
 
     const closingLine = field.type.isList ? `${indent}  }))\n` : `${indent}  }\n`;
 
@@ -294,7 +305,7 @@ const handleCreateOperation = (
     }
 
     let code =
-      `${indent}${field.name}: ${accessor} ? {\n` +
+      `${indent}${field.name}: ${accessor} ? \n` +
       `${indent}  ${openingLine}` +
       `${indent}    where: {\n` +
       whereFields

@@ -158,7 +158,6 @@ export const NewsArticleAssetSentiment = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -174,16 +173,24 @@ export const NewsArticleAssetSentiment = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -236,8 +243,13 @@ export const NewsArticleAssetSentiment = {
   relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
   sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
   sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
-  news: props.news ? {
-    connectOrCreate: {
+  news: props.news ? 
+    typeof props.news === 'object' && Object.keys(props.news).length === 1 && Object.keys(props.news)[0] === 'id'
+    ? { connect: {
+        id: props.news.id
+        }
+      }
+    : { connectOrCreate: {
       where: {
         id: props.news.id !== undefined ? props.news.id : undefined,
         url: props.news.url !== undefined ? props.news.url : undefined,
@@ -262,8 +274,13 @@ export const NewsArticleAssetSentiment = {
       },
     }
   } : undefined,
-  asset: props.asset ? {
-    connectOrCreate: {
+  asset: props.asset ? 
+    typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
+    ? { connect: {
+        id: props.asset.id
+        }
+      }
+    : { connectOrCreate: {
       where: {
         id: props.asset.id !== undefined ? props.asset.id : undefined,
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
@@ -325,8 +342,13 @@ export const NewsArticleAssetSentiment = {
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
         sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
         buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
-    trades: props.asset.trades ? {
-      connectOrCreate: props.asset.trades.map((item: any) => ({
+    trades: props.asset.trades ? 
+      typeof props.asset.trades === 'object' && Object.keys(props.asset.trades).length === 1 && Object.keys(props.asset.trades)[0] === 'id'
+    ? { connect: {
+          id: props.asset.trades.id
+          }
+        }
+    : { connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -344,25 +366,43 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    orders: props.asset.orders ? {
-      connectOrCreate: props.asset.orders.map((item: any) => ({
+    orders: props.asset.orders ? 
+      typeof props.asset.orders === 'object' && Object.keys(props.asset.orders).length === 1 && Object.keys(props.asset.orders)[0] === 'id'
+    ? { connect: {
+          id: props.asset.orders.id
+          }
+        }
+    : { connectOrCreate: props.asset.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
-    positions: props.asset.positions ? {
-      connectOrCreate: props.asset.positions.map((item: any) => ({
+    positions: props.asset.positions ? 
+      typeof props.asset.positions === 'object' && Object.keys(props.asset.positions).length === 1 && Object.keys(props.asset.positions)[0] === 'id'
+    ? { connect: {
+          id: props.asset.positions.id
+          }
+        }
+    : { connectOrCreate: props.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -595,7 +635,6 @@ export const NewsArticleAssetSentiment = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -611,16 +650,24 @@ export const NewsArticleAssetSentiment = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -1006,39 +1053,71 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          notional: item.notional !== undefined ? {
+              set: item.notional  
              } : undefined,
           side: item.side !== undefined ? {
               set: item.side  
              } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce  
              } : undefined,
-          stopLoss: item.stopLoss !== undefined ? {
-              set: item.stopLoss  
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice  
+             } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice  
+             } : undefined,
+          trailPrice: item.trailPrice !== undefined ? {
+              set: item.trailPrice  
+             } : undefined,
+          trailPercent: item.trailPercent !== undefined ? {
+              set: item.trailPercent  
+             } : undefined,
+          extendedHours: item.extendedHours !== undefined ? {
+              set: item.extendedHours  
+             } : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? {
+              set: item.clientOrderId  
              } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          executionTime: item.executionTime !== undefined ? {
-              set: item.executionTime  
+          submittedAt: item.submittedAt !== undefined ? {
+              set: item.submittedAt  
+             } : undefined,
+          filledAt: item.filledAt !== undefined ? {
+              set: item.filledAt  
+             } : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? {
+              set: item.filledAvgPrice  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
@@ -1166,8 +1245,13 @@ export const NewsArticleAssetSentiment = {
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
         sellPrice: props.asset.sellPrice !== undefined ? props.asset.sellPrice : undefined,
         buyPrice: props.asset.buyPrice !== undefined ? props.asset.buyPrice : undefined,
-    trades: props.asset.trades ? {
-      connectOrCreate: props.asset.trades.map((item: any) => ({
+    trades: props.asset.trades ? 
+      typeof props.asset.trades === 'object' && Object.keys(props.asset.trades).length === 1 && Object.keys(props.asset.trades)[0] === 'id'
+    ? { connect: {
+          id: props.asset.trades.id
+          }
+        }
+    : { connectOrCreate: props.asset.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1185,25 +1269,43 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    orders: props.asset.orders ? {
-      connectOrCreate: props.asset.orders.map((item: any) => ({
+    orders: props.asset.orders ? 
+      typeof props.asset.orders === 'object' && Object.keys(props.asset.orders).length === 1 && Object.keys(props.asset.orders)[0] === 'id'
+    ? { connect: {
+          id: props.asset.orders.id
+          }
+        }
+    : { connectOrCreate: props.asset.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
-    positions: props.asset.positions ? {
-      connectOrCreate: props.asset.positions.map((item: any) => ({
+    positions: props.asset.positions ? 
+      typeof props.asset.positions === 'object' && Object.keys(props.asset.positions).length === 1 && Object.keys(props.asset.positions)[0] === 'id'
+    ? { connect: {
+          id: props.asset.positions.id
+          }
+        }
+    : { connectOrCreate: props.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1603,39 +1705,71 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
-          type: item.type !== undefined ? {
-              set: item.type  
+          qty: item.qty !== undefined ? {
+              set: item.qty  
+             } : undefined,
+          notional: item.notional !== undefined ? {
+              set: item.notional  
              } : undefined,
           side: item.side !== undefined ? {
               set: item.side  
              } : undefined,
-          qty: item.qty !== undefined ? {
-              set: item.qty  
+          type: item.type !== undefined ? {
+              set: item.type  
              } : undefined,
-          price: item.price !== undefined ? {
-              set: item.price  
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce  
              } : undefined,
-          stopLoss: item.stopLoss !== undefined ? {
-              set: item.stopLoss  
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice  
+             } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice  
+             } : undefined,
+          trailPrice: item.trailPrice !== undefined ? {
+              set: item.trailPrice  
+             } : undefined,
+          trailPercent: item.trailPercent !== undefined ? {
+              set: item.trailPercent  
+             } : undefined,
+          extendedHours: item.extendedHours !== undefined ? {
+              set: item.extendedHours  
+             } : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? {
+              set: item.clientOrderId  
              } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          executionTime: item.executionTime !== undefined ? {
-              set: item.executionTime  
+          submittedAt: item.submittedAt !== undefined ? {
+              set: item.submittedAt  
+             } : undefined,
+          filledAt: item.filledAt !== undefined ? {
+              set: item.filledAt  
+             } : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? {
+              set: item.filledAvgPrice  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
@@ -1763,8 +1897,13 @@ export const NewsArticleAssetSentiment = {
         exDividendDate: prop.asset.exDividendDate !== undefined ? prop.asset.exDividendDate : undefined,
         sellPrice: prop.asset.sellPrice !== undefined ? prop.asset.sellPrice : undefined,
         buyPrice: prop.asset.buyPrice !== undefined ? prop.asset.buyPrice : undefined,
-    trades: prop.asset.trades ? {
-      connectOrCreate: prop.asset.trades.map((item: any) => ({
+    trades: prop.asset.trades ? 
+      typeof prop.asset.trades === 'object' && Object.keys(prop.asset.trades).length === 1 && Object.keys(prop.asset.trades)[0] === 'id'
+    ? { connect: {
+          id: prop.asset.trades.id
+          }
+        }
+    : { connectOrCreate: prop.asset.trades.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1782,25 +1921,43 @@ export const NewsArticleAssetSentiment = {
         },
       }))
     } : undefined,
-    orders: prop.asset.orders ? {
-      connectOrCreate: prop.asset.orders.map((item: any) => ({
+    orders: prop.asset.orders ? 
+      typeof prop.asset.orders === 'object' && Object.keys(prop.asset.orders).length === 1 && Object.keys(prop.asset.orders)[0] === 'id'
+    ? { connect: {
+          id: prop.asset.orders.id
+          }
+        }
+    : { connectOrCreate: prop.asset.orders.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
-          type: item.type !== undefined ? item.type : undefined,
-          side: item.side !== undefined ? item.side : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
-          price: item.price !== undefined ? item.price : undefined,
-          stopLoss: item.stopLoss !== undefined ? item.stopLoss : undefined,
+          notional: item.notional !== undefined ? item.notional : undefined,
+          side: item.side !== undefined ? item.side : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
+          stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
+          trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
+          trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
+          extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
+          filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
         },
       }))
     } : undefined,
-    positions: prop.asset.positions ? {
-      connectOrCreate: prop.asset.positions.map((item: any) => ({
+    positions: prop.asset.positions ? 
+      typeof prop.asset.positions === 'object' && Object.keys(prop.asset.positions).length === 1 && Object.keys(prop.asset.positions)[0] === 'id'
+    ? { connect: {
+          id: prop.asset.positions.id
+          }
+        }
+    : { connectOrCreate: prop.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1991,7 +2148,6 @@ export const NewsArticleAssetSentiment = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -2007,16 +2163,24 @@ export const NewsArticleAssetSentiment = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -2230,7 +2394,6 @@ export const NewsArticleAssetSentiment = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -2246,16 +2409,24 @@ export const NewsArticleAssetSentiment = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -2468,7 +2639,6 @@ export const NewsArticleAssetSentiment = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -2484,16 +2654,24 @@ export const NewsArticleAssetSentiment = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }
@@ -2699,7 +2877,6 @@ export const NewsArticleAssetSentiment = {
                 sequence
                 tradeId
                 type
-                orderId
                 note
                 status
                 fee
@@ -2715,16 +2892,24 @@ export const NewsArticleAssetSentiment = {
               id
               alpacaAccountId
               assetId
-              actionId
-              type
-              side
               qty
-              price
-              stopLoss
+              notional
+              side
+              type
+              timeInForce
+              limitPrice
+              stopPrice
+              trailPrice
+              trailPercent
+              extendedHours
+              clientOrderId
               status
               createdAt
               updatedAt
-              executionTime
+              submittedAt
+              filledAt
+              filledAvgPrice
+              actionId
               alpacaAccount {
                 id
               }

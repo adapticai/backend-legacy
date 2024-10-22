@@ -136,16 +136,24 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -211,8 +219,13 @@ export const Account = {
   scope: props.scope !== undefined ? props.scope : undefined,
   id_token: props.id_token !== undefined ? props.id_token : undefined,
   session_state: props.session_state !== undefined ? props.session_state : undefined,
-  user: props.user ? {
-    connectOrCreate: {
+  user: props.user ? 
+    typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
+    ? { connect: {
+        id: props.user.id
+        }
+      }
+    : { connectOrCreate: {
       where: {
         id: props.user.id !== undefined ? props.user.id : undefined,
         email: props.user.email !== undefined ? props.user.email : undefined,
@@ -230,8 +243,13 @@ export const Account = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    customer: props.user.customer ? {
-      connectOrCreate: {
+    customer: props.user.customer ? 
+      typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
+    ? { connect: {
+          id: props.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
           name: props.user.customer.name !== undefined ? {
@@ -249,8 +267,13 @@ export const Account = {
         },
       }
     } : undefined,
-    sessions: props.user.sessions ? {
-      connectOrCreate: props.user.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+      typeof props.user.sessions === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
+    ? { connect: {
+          id: props.user.sessions.id
+          }
+        }
+    : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -260,8 +283,13 @@ export const Account = {
         },
       }))
     } : undefined,
-    authenticators: props.user.authenticators ? {
-      connectOrCreate: props.user.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+      typeof props.user.authenticators === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
+    ? { connect: {
+          id: props.user.authenticators.id
+          }
+        }
+    : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -272,8 +300,13 @@ export const Account = {
         },
       }))
     } : undefined,
-    alpacaAccounts: props.user.alpacaAccounts ? {
-      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+      typeof props.user.alpacaAccounts === 'object' && Object.keys(props.user.alpacaAccounts).length === 1 && Object.keys(props.user.alpacaAccounts)[0] === 'id'
+    ? { connect: {
+          id: props.user.alpacaAccounts.id
+          }
+        }
+    : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -481,16 +514,24 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -768,8 +809,13 @@ export const Account = {
         jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
         currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
-    customer: props.user.customer ? {
-      connectOrCreate: {
+    customer: props.user.customer ? 
+      typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
+    ? { connect: {
+          id: props.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
           name: props.user.customer.name !== undefined ? {
@@ -787,8 +833,13 @@ export const Account = {
         },
       }
     } : undefined,
-    sessions: props.user.sessions ? {
-      connectOrCreate: props.user.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+      typeof props.user.sessions === 'object' && Object.keys(props.user.sessions).length === 1 && Object.keys(props.user.sessions)[0] === 'id'
+    ? { connect: {
+          id: props.user.sessions.id
+          }
+        }
+    : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -798,8 +849,13 @@ export const Account = {
         },
       }))
     } : undefined,
-    authenticators: props.user.authenticators ? {
-      connectOrCreate: props.user.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+      typeof props.user.authenticators === 'object' && Object.keys(props.user.authenticators).length === 1 && Object.keys(props.user.authenticators)[0] === 'id'
+    ? { connect: {
+          id: props.user.authenticators.id
+          }
+        }
+    : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -810,8 +866,13 @@ export const Account = {
         },
       }))
     } : undefined,
-    alpacaAccounts: props.user.alpacaAccounts ? {
-      connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+      typeof props.user.alpacaAccounts === 'object' && Object.keys(props.user.alpacaAccounts).length === 1 && Object.keys(props.user.alpacaAccounts)[0] === 'id'
+    ? { connect: {
+          id: props.user.alpacaAccounts.id
+          }
+        }
+    : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1088,8 +1149,13 @@ export const Account = {
         jobTitle: prop.user.jobTitle !== undefined ? prop.user.jobTitle : undefined,
         currentAccount: prop.user.currentAccount !== undefined ? prop.user.currentAccount : undefined,
         plan: prop.user.plan !== undefined ? prop.user.plan : undefined,
-    customer: prop.user.customer ? {
-      connectOrCreate: {
+    customer: prop.user.customer ? 
+      typeof prop.user.customer === 'object' && Object.keys(prop.user.customer).length === 1 && Object.keys(prop.user.customer)[0] === 'id'
+    ? { connect: {
+          id: prop.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: prop.user.customer.id !== undefined ? prop.user.customer.id : undefined,
           name: prop.user.customer.name !== undefined ? {
@@ -1107,8 +1173,13 @@ export const Account = {
         },
       }
     } : undefined,
-    sessions: prop.user.sessions ? {
-      connectOrCreate: prop.user.sessions.map((item: any) => ({
+    sessions: prop.user.sessions ? 
+      typeof prop.user.sessions === 'object' && Object.keys(prop.user.sessions).length === 1 && Object.keys(prop.user.sessions)[0] === 'id'
+    ? { connect: {
+          id: prop.user.sessions.id
+          }
+        }
+    : { connectOrCreate: prop.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1118,8 +1189,13 @@ export const Account = {
         },
       }))
     } : undefined,
-    authenticators: prop.user.authenticators ? {
-      connectOrCreate: prop.user.authenticators.map((item: any) => ({
+    authenticators: prop.user.authenticators ? 
+      typeof prop.user.authenticators === 'object' && Object.keys(prop.user.authenticators).length === 1 && Object.keys(prop.user.authenticators)[0] === 'id'
+    ? { connect: {
+          id: prop.user.authenticators.id
+          }
+        }
+    : { connectOrCreate: prop.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1130,8 +1206,13 @@ export const Account = {
         },
       }))
     } : undefined,
-    alpacaAccounts: prop.user.alpacaAccounts ? {
-      connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: prop.user.alpacaAccounts ? 
+      typeof prop.user.alpacaAccounts === 'object' && Object.keys(prop.user.alpacaAccounts).length === 1 && Object.keys(prop.user.alpacaAccounts)[0] === 'id'
+    ? { connect: {
+          id: prop.user.alpacaAccounts.id
+          }
+        }
+    : { connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
         },
@@ -1292,16 +1373,24 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1500,16 +1589,24 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1706,16 +1803,24 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1906,16 +2011,24 @@ export const Account = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }

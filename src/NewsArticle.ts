@@ -137,16 +137,24 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -209,8 +217,13 @@ export const NewsArticle = {
   category: props.category !== undefined ? props.category : undefined,
   topics: props.topics !== undefined ? props.topics : undefined,
   logo: props.logo !== undefined ? props.logo : undefined,
-  assets: props.assets ? {
-    connectOrCreate: props.assets.map((item: any) => ({
+  assets: props.assets ? 
+    typeof props.assets === 'object' && Object.keys(props.assets).length === 1 && Object.keys(props.assets)[0] === 'id'
+    ? { connect: {
+        id: props.assets.id
+        }
+      }
+    : { connectOrCreate: props.assets.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         url: item.url !== undefined ? item.url : undefined,
@@ -220,8 +233,13 @@ export const NewsArticle = {
         relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
         sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
         sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
+    asset: item.asset ? 
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+    ? { connect: {
+          id: item.asset.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -484,16 +502,24 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -861,8 +887,13 @@ export const NewsArticle = {
         relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
         sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
         sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
+    asset: item.asset ? 
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+    ? { connect: {
+          id: item.asset.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1287,8 +1318,13 @@ export const NewsArticle = {
         relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
         sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
         sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-    asset: item.asset ? {
-      connectOrCreate: {
+    asset: item.asset ? 
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+    ? { connect: {
+          id: item.asset.id
+          }
+        }
+    : { connectOrCreate: {
         where: {
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1502,16 +1538,24 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1705,16 +1749,24 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -1910,16 +1962,24 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
@@ -2105,16 +2165,24 @@ export const NewsArticle = {
                 id
                 alpacaAccountId
                 assetId
-                actionId
-                type
-                side
                 qty
-                price
-                stopLoss
+                notional
+                side
+                type
+                timeInForce
+                limitPrice
+                stopPrice
+                trailPrice
+                trailPercent
+                extendedHours
+                clientOrderId
                 status
                 createdAt
                 updatedAt
-                executionTime
+                submittedAt
+                filledAt
+                filledAvgPrice
+                actionId
                 alpacaAccount {
                   id
                 }
