@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import pluralize, { singular } from 'pluralize';
+import pluralize from 'pluralize';
 import { FieldDefinition, InputTypePaths } from './types';
 import { capitalizeFirstLetter, lowerCaseFirstLetter } from './utils';
 import { getInputTypeDefinition, isScalarType } from './parser';

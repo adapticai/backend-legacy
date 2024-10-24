@@ -289,11 +289,8 @@ enum ActionType {
   /// Initiates a purchase of an asset.
   BUY
 
-  /// Initiates a purchase of an option contract.
+  /// Identifies a suitable option contract and initiates its purchase.
   BUY_OPTION
-
-  /// Retrieves option contracts related to the trade.
-  GET_OPTION_CONTRACTS
 
   /// Exercises an option to buy or sell the underlying asset.
   EXERCISE_OPTION
@@ -366,7 +363,7 @@ enum OrderType {
 }
 
 // Specifies the type of option contract (CALL or PUT).
-enum OptionContractType {
+enum OptionType {
   /// A contract that gives the holder the right to buy the underlying asset.
   CALL
 
@@ -1025,9 +1022,6 @@ model Trade {
   /// Relation to the Asset model. INCLUDE=['symbol','name','type']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
-  optionContractType OptionContractType? @default(CALL)
-
   /// List of actions associated with this trade.
   actions Action[]
 
@@ -1140,6 +1134,15 @@ model Order {
 
   /// Fee associated with the order.
   fee Float?
+
+  /// Strike price for option orders.
+  strikePrice Float?
+
+  /// Expiration date for option orders.
+  expirationDate DateTime?
+
+  /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
+  optionType OptionType? @default(CALL)
 
   @@map(name: "orders")
 }
