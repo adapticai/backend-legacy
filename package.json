@@ -5,12 +5,11 @@
   "main": "dist/server.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/",
-    "dist/node_modules/",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.js.map",
     "README.md",
-    "package.json",
-    "server.ts",
-    "client.ts"
+    "package.json"
   ],
   "scripts": {
     "clean": "rm -rf dist && rm -rf src/generated",
@@ -32,7 +31,6 @@
   "author": "Mehran",
   "license": "ISC",
   "devDependencies": {
-    "@apollo/client": "^3.11.8",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
@@ -46,8 +44,8 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.10.4",
-    "@aws-sdk/client-lambda": "^3.624.0",
     "@prisma/client": "^5.17.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -61,6 +59,9 @@
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
     "ws": "^8.18.0"
+  },
+  "optionalDependencies": {
+    "@aws-sdk/client-lambda": "^3.624.0"
   },
   "engines": {
     "node": ">=20.0.0"
