@@ -1189,10 +1189,10 @@ model StopLoss {
   id String @id @default(uuid()) @db.Uuid
 
   /// Stop price for the stop loss order.
-  stopPrice Float
+  stopPrice Float?
 
   /// Limit price for the stop loss order.
-  limitPrice Float
+  limitPrice Float?
 
   /// Timestamp when the stop loss order was created. SKIP=true
   createdAt DateTime @default(now())
@@ -1213,10 +1213,10 @@ model TakeProfit {
   id String @id @default(uuid()) @db.Uuid
 
   /// Limit price for the take profit order.
-  limitPrice Float
+  limitPrice Float?
 
   /// Stop price for the take profit order.
-  stopPrice Float
+  stopPrice Float?
 
   /// Timestamp when the take profit order was created. SKIP=true
   createdAt DateTime @default(now())
