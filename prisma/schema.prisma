@@ -556,6 +556,9 @@ model User {
   /// List of Alpaca accounts linked to the user. INCLUDE=['id','type']
   alpacaAccounts AlpacaAccount[]
 
+  /// OpenAI API key for the user.
+  openaiAPIKey String?
+
   @@map(name: "users")
 }
 
