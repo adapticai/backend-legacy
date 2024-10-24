@@ -82,14 +82,20 @@ jobs:
             echo "::set-output name=diff_output::false"
           fi
 
+      - name: Check always-build-npm flag
+        id: check_always_build
+        run: |
+          ALWAYS_BUILD=$(jq -r '."always-build-npm" // false' package-npm.json)
+          echo "::set-output name=always_build::$ALWAYS_BUILD"
+
       - name: Determine if publish is necessary
         id: should_publish
         run: |
-          if [ "${{ steps.compare_dist.outputs.diff_output }}" == "false" ]; then
-            echo "No changes detected. Skipping publish."
+          if [ "${{ steps.compare_dist.outputs.diff_output }}" == "false" ] && [ "${{ steps.check_always_build.outputs.always_build }}" != "true" ]; then
+            echo "No changes detected and always-build-npm is not true. Skipping publish."
             echo "::set-output name=should_publish::false"
           else
-            echo "Changes detected. Proceeding with publish."
+            echo "Changes detected or always-build-npm is true. Proceeding with publish."
             echo "::set-output name=should_publish::true"
           fi
 
