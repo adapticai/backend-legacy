@@ -87,6 +87,9 @@ enum TradeStrategy {
 
   /// Utilizes machine vision techniques to analyze market data and execute trades.
   MACHINE_VISION_ANALYSIS
+
+  /// No specific strategy or approach to trading.
+  NO_STRATEGY
 }
 
 // Represents the various types of signals that can be discerned from market data.
@@ -207,6 +210,9 @@ enum TradeSignal {
 
   /// Triggers based on sentiment analysis.
   SENTIMENT_ANALYSIS_TRIGGER
+
+  /// No specific signal or reason for the trade.
+  NO_SIGNAL
 }
 
 // Represents the various types of financial assets supported by the trading platform.
@@ -1371,7 +1377,7 @@ model NewsArticleAssetSentiment {
   news NewsArticle @relation(fields: [newsArticleId], references: [id])
 
   /// Relation to the Asset model. INCLUDE=['symbol','name','type']
-  asset Asset @relation(fields: [assetId], references: [id])
+  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Relevancy score indicating how relevant the news is to the asset.
   relevancyScore String?
