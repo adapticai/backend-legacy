@@ -106,24 +106,34 @@ function constructSelectionSet(
       const nestedInputTypeName = capitalizeFirstLetter(typeName);
 
       if (visited.has(nestedInputTypeName)) {
-        // Avoid circular references by only selecting 'id'
-        selectionSet += `${indent}${fieldName} {\n${indent}  id\n${indent}}\n`;
-      } else if (currentDepth + 1 >= maxDepth) {
+        // Skip the field entirely to avoid circular references
+        // Alternatively, include only 'id' if preferred
+        // selectionSet += `${indent}${fieldName} {\n${indent}  id\n${indent}}\n`;
+        return; // Skip adding this field
+      }
+
+      if (currentDepth + 1 >= maxDepth) {
         // If approaching max depth, limit to 'id'
         selectionSet += `${indent}${fieldName} {\n${indent}  id\n${indent}}\n`;
-      } else {
-        // Recursively construct the selection set for the nested model
-        selectionSet += `${indent}${fieldName} {\n`;
-        selectionSet += constructSelectionSet(
-          nestedInputTypeName,
-          modelsPath,
-          visited, // Pass the same visited set by reference
-          indent + '  ',
-          currentDepth + 1,
-          maxDepth
-        );
-        selectionSet += `${indent}}\n`;
+        return;
       }
+
+      // Recursively construct the selection set for the nested model
+      const nestedSelection = constructSelectionSet(
+        nestedInputTypeName,
+        modelsPath,
+        visited, // Pass the same visited set by reference
+        indent + '  ',
+        currentDepth + 1,
+        maxDepth
+      );
+
+      if (nestedSelection.trim() === '') {
+        // If the nested selection is empty, skip adding this field
+        return;
+      }
+
+      selectionSet += `${indent}${fieldName} {\n${nestedSelection}${indent}}\n`;
     }
   });
 
