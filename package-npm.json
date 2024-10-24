@@ -1,6 +1,6 @@
 {
   "name": "adaptic-backend",
-  "version": "1.0.93",
+  "version": "1.0.134",
   "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
   "type": "module",
   "types": "index.d.ts",
@@ -35,6 +35,10 @@
   },
   "devDependencies": {
     "prisma": "^5.17.0",
-    "typegraphql-prisma": "^0.27.2"
+    "typegraphql-prisma": "^0.27.2",
+    "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }
