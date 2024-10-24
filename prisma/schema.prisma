@@ -346,20 +346,38 @@ enum TradeStatus {
 
 // Defines the types of orders that can be placed in the market.
 enum OrderType {
-  /// An order to buy or sell immediately at the current market price.
+  /// Executes immediately at the best available current market price.
   MARKET
 
-  /// An order to buy or sell at a specified price or better.
+  /// Executes only at the specified limit price or better.
   LIMIT
 
-  /// An order to buy or sell once the price reaches a specified level.
+  /// Becomes a market order once the stop price is triggered.
   STOP
 
-  /// An order that combines a stop order and a limit order.
+  /// Becomes a limit order once the stop price is triggered.
   STOP_LIMIT
 
-  /// An order that adjusts the stop price based on the asset's price movement.
+  /// Adjusts the stop price based on a specified trail amount or percentage.
   TRAILING_STOP
+}
+
+// Defines the class of advanced order types that can be placed.
+enum OrderClass {
+  /// A single standalone order without additional conditions.
+  SIMPLE
+
+  /// A primary order with attached take-profit and stop-loss orders to automatically manage the trade.
+  BRACKET
+
+  /// OCO (One-Cancels-Other): A pair of orders where the execution of one cancels the other.
+  OCO
+
+  /// OSO (One Sends Other): A chain of orders where the execution of one order triggers the placement of another.
+  OSO
+
+  /// OTO (One-Triggers-Other): Similar to BRACKET, where the execution of one order triggers the placement of another.
+  OTO
 }
 
 // Specifies the type of option contract (CALL or PUT).
@@ -560,6 +578,12 @@ model AlpacaAccount {
 
   /// Indicates whether the market is currently open for trading.
   marketOpen Boolean @default(false)
+
+  /// Minimum order size for the account.
+  minOrderSize Float @default(500)
+
+  /// Maximum order size for the account.
+  maxOrderSize Float @default(100000)
 
   /// Relation to the User model who owns this Alpaca account. SKIP=true
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1063,6 +1087,9 @@ model Order {
   /// Unique identifier for the order. SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
+  /// Client-supplied unique identifier for the order (from Alpaca). SKIP=true
+  clientOrderId String? @unique
+
   /// Reference to the Alpaca account used for the order. SKIP=true
   alpacaAccountId String @db.Uuid
 
@@ -1081,6 +1108,9 @@ model Order {
   /// Type of order (market, limit, stop, stop_limit, trailing_stop).
   type OrderType @default(MARKET)
 
+  /// Order class for advanced order types (simple, bracket, oco, oso).
+  orderClass OrderClass @default(SIMPLE)
+
   /// Time in force for the order (day, gtc, opg, cls, ioc, fok).
   timeInForce TimeInForce @default(GTC)
 
@@ -1090,6 +1120,12 @@ model Order {
   /// Stop price for stop or stop-limit orders.
   stopPrice Float?
 
+  /// Stop loss object required for bracket orders.
+  stopLoss StopLoss? @relation
+
+  /// Take profit object required for bracket orders.
+  takeProfit TakeProfit? @relation
+
   /// Trailing price for trailing stop orders.
   trailPrice Float?
 
@@ -1098,9 +1134,6 @@ model Order {
 
   /// Whether the order is eligible for extended hours.
   extendedHours Boolean?
-
-  /// Client-supplied identifier for the order.
-  clientOrderId String? @unique
 
   /// Current status of the order.
   status OrderStatus @default(NEW)
@@ -1144,7 +1177,58 @@ model Order {
   /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
   optionType OptionType? @default(CALL)
 
+  stopLossId   String? @unique @db.Uuid
+  takeProfitId String? @db.Uuid
+
   @@map(name: "orders")
+}
+
+// Represents a stop loss order for a bracket order.
+model StopLoss {
+  /// Unique identifier for the stop loss order. SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Stop price for the stop loss order.
+  stopPrice Float
+
+  /// Limit price for the stop loss order.
+  limitPrice Float
+
+  /// Timestamp when the stop loss order was created. SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the stop loss order was last updated. SKIP=true
+  updatedAt DateTime @default(now())
+
+  /// Reference to the order associated with this stop loss.
+  orderId String @unique @db.Uuid
+
+  /// An order that is associated with this stop loss.
+  Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+// Represents a take profit order for a bracket order.
+model TakeProfit {
+  /// Unique identifier for the take profit order. SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Limit price for the take profit order.
+  limitPrice Float
+
+  /// Stop price for the take profit order.
+  stopPrice Float
+
+  /// Timestamp when the take profit order was created. SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the take profit order was last updated. SKIP=true
+  updatedAt DateTime @default(now())
+
+  /// Reference to the order associated with this take profit.
+  orderId String @unique @db.Uuid
+
+  /// An order that is associated with this take profit.
+  Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 // Represents an alert generated by the system for the user.

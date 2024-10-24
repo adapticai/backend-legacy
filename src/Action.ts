@@ -136,19 +136,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -286,6 +309,11 @@ export const Action = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -354,19 +382,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -384,6 +435,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -517,19 +573,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -672,6 +751,11 @@ export const Action = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -782,19 +866,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -812,6 +919,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -865,26 +977,48 @@ export const Action = {
         sentimentLabel
       }
     }
-    optionContractType
     actions {
       id
     }
   }
   order {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -1118,7 +1252,6 @@ export const Action = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
         }
@@ -1209,7 +1342,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -1493,7 +1625,6 @@ export const Action = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -1626,7 +1757,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -1687,6 +1817,11 @@ export const Action = {
       }
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
         }
       }
@@ -1719,7 +1854,6 @@ export const Action = {
         confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
-        optionContractType: props.trade.optionContractType !== undefined ? props.trade.optionContractType : undefined,
     alpacaAccount: props.trade.alpacaAccount ? 
       typeof props.trade.alpacaAccount === 'object' && Object.keys(props.trade.alpacaAccount).length === 1 && Object.keys(props.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1774,22 +1908,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -1919,22 +2059,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -2001,22 +2147,60 @@ export const Action = {
         id: props.order.id !== undefined ? props.order.id : undefined,
       },
       create: {
+        clientOrderId: props.order.clientOrderId !== undefined ? props.order.clientOrderId : undefined,
         qty: props.order.qty !== undefined ? props.order.qty : undefined,
         notional: props.order.notional !== undefined ? props.order.notional : undefined,
         side: props.order.side !== undefined ? props.order.side : undefined,
         type: props.order.type !== undefined ? props.order.type : undefined,
+        orderClass: props.order.orderClass !== undefined ? props.order.orderClass : undefined,
         timeInForce: props.order.timeInForce !== undefined ? props.order.timeInForce : undefined,
         limitPrice: props.order.limitPrice !== undefined ? props.order.limitPrice : undefined,
         stopPrice: props.order.stopPrice !== undefined ? props.order.stopPrice : undefined,
         trailPrice: props.order.trailPrice !== undefined ? props.order.trailPrice : undefined,
         trailPercent: props.order.trailPercent !== undefined ? props.order.trailPercent : undefined,
         extendedHours: props.order.extendedHours !== undefined ? props.order.extendedHours : undefined,
-        clientOrderId: props.order.clientOrderId !== undefined ? props.order.clientOrderId : undefined,
         status: props.order.status !== undefined ? props.order.status : undefined,
         submittedAt: props.order.submittedAt !== undefined ? props.order.submittedAt : undefined,
         filledAt: props.order.filledAt !== undefined ? props.order.filledAt : undefined,
         filledAvgPrice: props.order.filledAvgPrice !== undefined ? props.order.filledAvgPrice : undefined,
         fee: props.order.fee !== undefined ? props.order.fee : undefined,
+        strikePrice: props.order.strikePrice !== undefined ? props.order.strikePrice : undefined,
+        expirationDate: props.order.expirationDate !== undefined ? props.order.expirationDate : undefined,
+        optionType: props.order.optionType !== undefined ? props.order.optionType : undefined,
+        stopLossId: props.order.stopLossId !== undefined ? props.order.stopLossId : undefined,
+        takeProfitId: props.order.takeProfitId !== undefined ? props.order.takeProfitId : undefined,
+    stopLoss: props.order.stopLoss ? 
+      typeof props.order.stopLoss === 'object' && Object.keys(props.order.stopLoss).length === 1 && Object.keys(props.order.stopLoss)[0] === 'id'
+    ? { connect: {
+          id: props.order.stopLoss.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.order.stopLoss.id !== undefined ? props.order.stopLoss.id : undefined,
+        },
+        create: {
+          stopPrice: props.order.stopLoss.stopPrice !== undefined ? props.order.stopLoss.stopPrice : undefined,
+          limitPrice: props.order.stopLoss.limitPrice !== undefined ? props.order.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: props.order.takeProfit ? 
+      typeof props.order.takeProfit === 'object' && Object.keys(props.order.takeProfit).length === 1 && Object.keys(props.order.takeProfit)[0] === 'id'
+    ? { connect: {
+          id: props.order.takeProfit.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.order.takeProfit.id !== undefined ? props.order.takeProfit.id : undefined,
+        },
+        create: {
+          limitPrice: props.order.takeProfit.limitPrice !== undefined ? props.order.takeProfit.limitPrice : undefined,
+          stopPrice: props.order.takeProfit.stopPrice !== undefined ? props.order.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: props.order.alpacaAccount ? 
       typeof props.order.alpacaAccount === 'object' && Object.keys(props.order.alpacaAccount).length === 1 && Object.keys(props.order.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -2080,7 +2264,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -2219,7 +2402,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -2462,19 +2644,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -2612,6 +2817,11 @@ export const Action = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -2680,19 +2890,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -2710,6 +2943,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -2843,19 +3081,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -2998,6 +3259,11 @@ export const Action = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -3108,19 +3374,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -3138,6 +3427,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -3191,26 +3485,48 @@ export const Action = {
         sentimentLabel
       }
     }
-    optionContractType
     actions {
       id
     }
   }
   order {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -3444,7 +3760,6 @@ export const Action = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
         }
@@ -3535,7 +3850,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -3819,7 +4133,6 @@ export const Action = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -3952,7 +4265,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -4013,6 +4325,11 @@ export const Action = {
       }
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
       }
       }`;
@@ -4077,9 +4394,6 @@ export const Action = {
            } : undefined,
         status: props.trade.status !== undefined ? {
             set: props.trade.status  
-           } : undefined,
-        optionContractType: props.trade.optionContractType !== undefined ? {
-            set: props.trade.optionContractType  
            } : undefined,
     alpacaAccount: props.trade.alpacaAccount ? {
       upsert: {
@@ -4174,6 +4488,9 @@ export const Action = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -4185,6 +4502,9 @@ export const Action = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -4204,9 +4524,6 @@ export const Action = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -4222,24 +4539,45 @@ export const Action = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4380,22 +4718,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4637,6 +4981,9 @@ export const Action = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -4648,6 +4995,9 @@ export const Action = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -4667,9 +5017,6 @@ export const Action = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -4685,24 +5032,45 @@ export const Action = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4871,22 +5239,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4950,7 +5324,6 @@ export const Action = {
         confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
-        optionContractType: props.trade.optionContractType !== undefined ? props.trade.optionContractType : undefined,
     alpacaAccount: props.trade.alpacaAccount ? 
       typeof props.trade.alpacaAccount === 'object' && Object.keys(props.trade.alpacaAccount).length === 1 && Object.keys(props.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -5005,22 +5378,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -5150,22 +5529,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -5232,6 +5617,9 @@ export const Action = {
         id: props.order.id !== undefined ? {
             set: props.order.id  
            } : undefined,
+        clientOrderId: props.order.clientOrderId !== undefined ? {
+            set: props.order.clientOrderId  
+           } : undefined,
         qty: props.order.qty !== undefined ? {
             set: props.order.qty  
            } : undefined,
@@ -5243,6 +5631,9 @@ export const Action = {
            } : undefined,
         type: props.order.type !== undefined ? {
             set: props.order.type  
+           } : undefined,
+        orderClass: props.order.orderClass !== undefined ? {
+            set: props.order.orderClass  
            } : undefined,
         timeInForce: props.order.timeInForce !== undefined ? {
             set: props.order.timeInForce  
@@ -5262,9 +5653,6 @@ export const Action = {
         extendedHours: props.order.extendedHours !== undefined ? {
             set: props.order.extendedHours  
            } : undefined,
-        clientOrderId: props.order.clientOrderId !== undefined ? {
-            set: props.order.clientOrderId  
-           } : undefined,
         status: props.order.status !== undefined ? {
             set: props.order.status  
            } : undefined,
@@ -5280,6 +5668,69 @@ export const Action = {
         fee: props.order.fee !== undefined ? {
             set: props.order.fee  
            } : undefined,
+        strikePrice: props.order.strikePrice !== undefined ? {
+            set: props.order.strikePrice  
+           } : undefined,
+        expirationDate: props.order.expirationDate !== undefined ? {
+            set: props.order.expirationDate  
+           } : undefined,
+        optionType: props.order.optionType !== undefined ? {
+            set: props.order.optionType  
+           } : undefined,
+        stopLossId: props.order.stopLossId !== undefined ? {
+            set: props.order.stopLossId  
+           } : undefined,
+        takeProfitId: props.order.takeProfitId !== undefined ? {
+            set: props.order.takeProfitId  
+           } : undefined,
+    stopLoss: props.order.stopLoss ? {
+      upsert: {
+        where: {
+          id: props.order.stopLoss.id !== undefined ? {
+              equals: props.order.stopLoss.id 
+             } : undefined,
+        },
+        update: {
+          id: props.order.stopLoss.id !== undefined ? {
+              set: props.order.stopLoss.id  
+             } : undefined,
+          stopPrice: props.order.stopLoss.stopPrice !== undefined ? {
+              set: props.order.stopLoss.stopPrice  
+             } : undefined,
+          limitPrice: props.order.stopLoss.limitPrice !== undefined ? {
+              set: props.order.stopLoss.limitPrice  
+             } : undefined,
+        },
+        create: {
+          stopPrice: props.order.stopLoss.stopPrice !== undefined ? props.order.stopLoss.stopPrice : undefined,
+          limitPrice: props.order.stopLoss.limitPrice !== undefined ? props.order.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: props.order.takeProfit ? {
+      upsert: {
+        where: {
+          id: props.order.takeProfit.id !== undefined ? {
+              equals: props.order.takeProfit.id 
+             } : undefined,
+        },
+        update: {
+          id: props.order.takeProfit.id !== undefined ? {
+              set: props.order.takeProfit.id  
+             } : undefined,
+          limitPrice: props.order.takeProfit.limitPrice !== undefined ? {
+              set: props.order.takeProfit.limitPrice  
+             } : undefined,
+          stopPrice: props.order.takeProfit.stopPrice !== undefined ? {
+              set: props.order.takeProfit.stopPrice  
+             } : undefined,
+        },
+        create: {
+          limitPrice: props.order.takeProfit.limitPrice !== undefined ? props.order.takeProfit.limitPrice : undefined,
+          stopPrice: props.order.takeProfit.stopPrice !== undefined ? props.order.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: props.order.alpacaAccount ? {
       upsert: {
         where: {
@@ -5400,9 +5851,6 @@ export const Action = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -5414,7 +5862,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -5564,7 +6011,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -5833,9 +6279,6 @@ export const Action = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -5847,7 +6290,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6025,7 +6467,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6080,22 +6521,60 @@ export const Action = {
     } : undefined,
       },
       create: {
+        clientOrderId: props.order.clientOrderId !== undefined ? props.order.clientOrderId : undefined,
         qty: props.order.qty !== undefined ? props.order.qty : undefined,
         notional: props.order.notional !== undefined ? props.order.notional : undefined,
         side: props.order.side !== undefined ? props.order.side : undefined,
         type: props.order.type !== undefined ? props.order.type : undefined,
+        orderClass: props.order.orderClass !== undefined ? props.order.orderClass : undefined,
         timeInForce: props.order.timeInForce !== undefined ? props.order.timeInForce : undefined,
         limitPrice: props.order.limitPrice !== undefined ? props.order.limitPrice : undefined,
         stopPrice: props.order.stopPrice !== undefined ? props.order.stopPrice : undefined,
         trailPrice: props.order.trailPrice !== undefined ? props.order.trailPrice : undefined,
         trailPercent: props.order.trailPercent !== undefined ? props.order.trailPercent : undefined,
         extendedHours: props.order.extendedHours !== undefined ? props.order.extendedHours : undefined,
-        clientOrderId: props.order.clientOrderId !== undefined ? props.order.clientOrderId : undefined,
         status: props.order.status !== undefined ? props.order.status : undefined,
         submittedAt: props.order.submittedAt !== undefined ? props.order.submittedAt : undefined,
         filledAt: props.order.filledAt !== undefined ? props.order.filledAt : undefined,
         filledAvgPrice: props.order.filledAvgPrice !== undefined ? props.order.filledAvgPrice : undefined,
         fee: props.order.fee !== undefined ? props.order.fee : undefined,
+        strikePrice: props.order.strikePrice !== undefined ? props.order.strikePrice : undefined,
+        expirationDate: props.order.expirationDate !== undefined ? props.order.expirationDate : undefined,
+        optionType: props.order.optionType !== undefined ? props.order.optionType : undefined,
+        stopLossId: props.order.stopLossId !== undefined ? props.order.stopLossId : undefined,
+        takeProfitId: props.order.takeProfitId !== undefined ? props.order.takeProfitId : undefined,
+    stopLoss: props.order.stopLoss ? 
+      typeof props.order.stopLoss === 'object' && Object.keys(props.order.stopLoss).length === 1 && Object.keys(props.order.stopLoss)[0] === 'id'
+    ? { connect: {
+          id: props.order.stopLoss.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.order.stopLoss.id !== undefined ? props.order.stopLoss.id : undefined,
+        },
+        create: {
+          stopPrice: props.order.stopLoss.stopPrice !== undefined ? props.order.stopLoss.stopPrice : undefined,
+          limitPrice: props.order.stopLoss.limitPrice !== undefined ? props.order.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: props.order.takeProfit ? 
+      typeof props.order.takeProfit === 'object' && Object.keys(props.order.takeProfit).length === 1 && Object.keys(props.order.takeProfit)[0] === 'id'
+    ? { connect: {
+          id: props.order.takeProfit.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.order.takeProfit.id !== undefined ? props.order.takeProfit.id : undefined,
+        },
+        create: {
+          limitPrice: props.order.takeProfit.limitPrice !== undefined ? props.order.takeProfit.limitPrice : undefined,
+          stopPrice: props.order.takeProfit.stopPrice !== undefined ? props.order.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: props.order.alpacaAccount ? 
       typeof props.order.alpacaAccount === 'object' && Object.keys(props.order.alpacaAccount).length === 1 && Object.keys(props.order.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -6159,7 +6638,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6298,7 +6776,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6451,9 +6928,6 @@ export const Action = {
         status: prop.trade.status !== undefined ? {
             set: prop.trade.status  
            } : undefined,
-        optionContractType: prop.trade.optionContractType !== undefined ? {
-            set: prop.trade.optionContractType  
-           } : undefined,
     alpacaAccount: prop.trade.alpacaAccount ? {
       upsert: {
         where: {
@@ -6547,6 +7021,9 @@ export const Action = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -6558,6 +7035,9 @@ export const Action = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -6577,9 +7057,6 @@ export const Action = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -6595,24 +7072,45 @@ export const Action = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -6753,22 +7251,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7010,6 +7514,9 @@ export const Action = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -7021,6 +7528,9 @@ export const Action = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -7040,9 +7550,6 @@ export const Action = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -7058,24 +7565,45 @@ export const Action = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7244,22 +7772,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7323,7 +7857,6 @@ export const Action = {
         confidence: prop.trade.confidence !== undefined ? prop.trade.confidence : undefined,
         timestamp: prop.trade.timestamp !== undefined ? prop.trade.timestamp : undefined,
         status: prop.trade.status !== undefined ? prop.trade.status : undefined,
-        optionContractType: prop.trade.optionContractType !== undefined ? prop.trade.optionContractType : undefined,
     alpacaAccount: prop.trade.alpacaAccount ? 
       typeof prop.trade.alpacaAccount === 'object' && Object.keys(prop.trade.alpacaAccount).length === 1 && Object.keys(prop.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -7378,22 +7911,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7523,22 +8062,28 @@ export const Action = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7605,6 +8150,9 @@ export const Action = {
         id: prop.order.id !== undefined ? {
             set: prop.order.id  
            } : undefined,
+        clientOrderId: prop.order.clientOrderId !== undefined ? {
+            set: prop.order.clientOrderId  
+           } : undefined,
         qty: prop.order.qty !== undefined ? {
             set: prop.order.qty  
            } : undefined,
@@ -7616,6 +8164,9 @@ export const Action = {
            } : undefined,
         type: prop.order.type !== undefined ? {
             set: prop.order.type  
+           } : undefined,
+        orderClass: prop.order.orderClass !== undefined ? {
+            set: prop.order.orderClass  
            } : undefined,
         timeInForce: prop.order.timeInForce !== undefined ? {
             set: prop.order.timeInForce  
@@ -7635,9 +8186,6 @@ export const Action = {
         extendedHours: prop.order.extendedHours !== undefined ? {
             set: prop.order.extendedHours  
            } : undefined,
-        clientOrderId: prop.order.clientOrderId !== undefined ? {
-            set: prop.order.clientOrderId  
-           } : undefined,
         status: prop.order.status !== undefined ? {
             set: prop.order.status  
            } : undefined,
@@ -7653,6 +8201,69 @@ export const Action = {
         fee: prop.order.fee !== undefined ? {
             set: prop.order.fee  
            } : undefined,
+        strikePrice: prop.order.strikePrice !== undefined ? {
+            set: prop.order.strikePrice  
+           } : undefined,
+        expirationDate: prop.order.expirationDate !== undefined ? {
+            set: prop.order.expirationDate  
+           } : undefined,
+        optionType: prop.order.optionType !== undefined ? {
+            set: prop.order.optionType  
+           } : undefined,
+        stopLossId: prop.order.stopLossId !== undefined ? {
+            set: prop.order.stopLossId  
+           } : undefined,
+        takeProfitId: prop.order.takeProfitId !== undefined ? {
+            set: prop.order.takeProfitId  
+           } : undefined,
+    stopLoss: prop.order.stopLoss ? {
+      upsert: {
+        where: {
+          id: prop.order.stopLoss.id !== undefined ? {
+              equals: prop.order.stopLoss.id 
+             } : undefined,
+        },
+        update: {
+          id: prop.order.stopLoss.id !== undefined ? {
+              set: prop.order.stopLoss.id  
+             } : undefined,
+          stopPrice: prop.order.stopLoss.stopPrice !== undefined ? {
+              set: prop.order.stopLoss.stopPrice  
+             } : undefined,
+          limitPrice: prop.order.stopLoss.limitPrice !== undefined ? {
+              set: prop.order.stopLoss.limitPrice  
+             } : undefined,
+        },
+        create: {
+          stopPrice: prop.order.stopLoss.stopPrice !== undefined ? prop.order.stopLoss.stopPrice : undefined,
+          limitPrice: prop.order.stopLoss.limitPrice !== undefined ? prop.order.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: prop.order.takeProfit ? {
+      upsert: {
+        where: {
+          id: prop.order.takeProfit.id !== undefined ? {
+              equals: prop.order.takeProfit.id 
+             } : undefined,
+        },
+        update: {
+          id: prop.order.takeProfit.id !== undefined ? {
+              set: prop.order.takeProfit.id  
+             } : undefined,
+          limitPrice: prop.order.takeProfit.limitPrice !== undefined ? {
+              set: prop.order.takeProfit.limitPrice  
+             } : undefined,
+          stopPrice: prop.order.takeProfit.stopPrice !== undefined ? {
+              set: prop.order.takeProfit.stopPrice  
+             } : undefined,
+        },
+        create: {
+          limitPrice: prop.order.takeProfit.limitPrice !== undefined ? prop.order.takeProfit.limitPrice : undefined,
+          stopPrice: prop.order.takeProfit.stopPrice !== undefined ? prop.order.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: prop.order.alpacaAccount ? {
       upsert: {
         where: {
@@ -7773,9 +8384,6 @@ export const Action = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -7787,7 +8395,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -7937,7 +8544,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -8206,9 +8812,6 @@ export const Action = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -8220,7 +8823,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -8398,7 +9000,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -8453,22 +9054,60 @@ export const Action = {
     } : undefined,
       },
       create: {
+        clientOrderId: prop.order.clientOrderId !== undefined ? prop.order.clientOrderId : undefined,
         qty: prop.order.qty !== undefined ? prop.order.qty : undefined,
         notional: prop.order.notional !== undefined ? prop.order.notional : undefined,
         side: prop.order.side !== undefined ? prop.order.side : undefined,
         type: prop.order.type !== undefined ? prop.order.type : undefined,
+        orderClass: prop.order.orderClass !== undefined ? prop.order.orderClass : undefined,
         timeInForce: prop.order.timeInForce !== undefined ? prop.order.timeInForce : undefined,
         limitPrice: prop.order.limitPrice !== undefined ? prop.order.limitPrice : undefined,
         stopPrice: prop.order.stopPrice !== undefined ? prop.order.stopPrice : undefined,
         trailPrice: prop.order.trailPrice !== undefined ? prop.order.trailPrice : undefined,
         trailPercent: prop.order.trailPercent !== undefined ? prop.order.trailPercent : undefined,
         extendedHours: prop.order.extendedHours !== undefined ? prop.order.extendedHours : undefined,
-        clientOrderId: prop.order.clientOrderId !== undefined ? prop.order.clientOrderId : undefined,
         status: prop.order.status !== undefined ? prop.order.status : undefined,
         submittedAt: prop.order.submittedAt !== undefined ? prop.order.submittedAt : undefined,
         filledAt: prop.order.filledAt !== undefined ? prop.order.filledAt : undefined,
         filledAvgPrice: prop.order.filledAvgPrice !== undefined ? prop.order.filledAvgPrice : undefined,
         fee: prop.order.fee !== undefined ? prop.order.fee : undefined,
+        strikePrice: prop.order.strikePrice !== undefined ? prop.order.strikePrice : undefined,
+        expirationDate: prop.order.expirationDate !== undefined ? prop.order.expirationDate : undefined,
+        optionType: prop.order.optionType !== undefined ? prop.order.optionType : undefined,
+        stopLossId: prop.order.stopLossId !== undefined ? prop.order.stopLossId : undefined,
+        takeProfitId: prop.order.takeProfitId !== undefined ? prop.order.takeProfitId : undefined,
+    stopLoss: prop.order.stopLoss ? 
+      typeof prop.order.stopLoss === 'object' && Object.keys(prop.order.stopLoss).length === 1 && Object.keys(prop.order.stopLoss)[0] === 'id'
+    ? { connect: {
+          id: prop.order.stopLoss.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.order.stopLoss.id !== undefined ? prop.order.stopLoss.id : undefined,
+        },
+        create: {
+          stopPrice: prop.order.stopLoss.stopPrice !== undefined ? prop.order.stopLoss.stopPrice : undefined,
+          limitPrice: prop.order.stopLoss.limitPrice !== undefined ? prop.order.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: prop.order.takeProfit ? 
+      typeof prop.order.takeProfit === 'object' && Object.keys(prop.order.takeProfit).length === 1 && Object.keys(prop.order.takeProfit)[0] === 'id'
+    ? { connect: {
+          id: prop.order.takeProfit.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.order.takeProfit.id !== undefined ? prop.order.takeProfit.id : undefined,
+        },
+        create: {
+          limitPrice: prop.order.takeProfit.limitPrice !== undefined ? prop.order.takeProfit.limitPrice : undefined,
+          stopPrice: prop.order.takeProfit.stopPrice !== undefined ? prop.order.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: prop.order.alpacaAccount ? 
       typeof prop.order.alpacaAccount === 'object' && Object.keys(prop.order.alpacaAccount).length === 1 && Object.keys(prop.order.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -8532,7 +9171,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -8671,7 +9309,6 @@ export const Action = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -8872,19 +9509,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -9022,6 +9682,11 @@ export const Action = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -9090,19 +9755,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -9120,6 +9808,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -9253,19 +9946,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -9408,6 +10124,11 @@ export const Action = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -9518,19 +10239,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -9548,6 +10292,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -9601,26 +10350,48 @@ export const Action = {
         sentimentLabel
       }
     }
-    optionContractType
     actions {
       id
     }
   }
   order {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -9854,7 +10625,6 @@ export const Action = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
         }
@@ -9945,7 +10715,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -10229,7 +10998,6 @@ export const Action = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -10362,7 +11130,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -10423,6 +11190,11 @@ export const Action = {
       }
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
       }
       }`;
@@ -10573,19 +11345,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -10723,6 +11518,11 @@ export const Action = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -10791,19 +11591,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -10821,6 +11644,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -10954,19 +11782,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -11109,6 +11960,11 @@ export const Action = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -11219,19 +12075,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -11249,6 +12128,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -11302,26 +12186,48 @@ export const Action = {
         sentimentLabel
       }
     }
-    optionContractType
     actions {
       id
     }
   }
   order {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -11555,7 +12461,6 @@ export const Action = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
         }
@@ -11646,7 +12551,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -11930,7 +12834,6 @@ export const Action = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -12063,7 +12966,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -12124,6 +13026,11 @@ export const Action = {
       }
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
         }
       }`;
@@ -12272,19 +13179,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -12422,6 +13352,11 @@ export const Action = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -12490,19 +13425,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -12520,6 +13478,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -12653,19 +13616,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -12808,6 +13794,11 @@ export const Action = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -12918,19 +13909,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -12948,6 +13962,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -13001,26 +14020,48 @@ export const Action = {
         sentimentLabel
       }
     }
-    optionContractType
     actions {
       id
     }
   }
   order {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -13254,7 +14295,6 @@ export const Action = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
         }
@@ -13345,7 +14385,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -13629,7 +14668,6 @@ export const Action = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -13762,7 +14800,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -13823,6 +14860,11 @@ export const Action = {
       }
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
       }
       }`;
@@ -13965,19 +15007,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -14115,6 +15180,11 @@ export const Action = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -14183,19 +15253,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -14213,6 +15306,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -14346,19 +15444,42 @@ export const Action = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -14501,6 +15622,11 @@ export const Action = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -14611,19 +15737,42 @@ export const Action = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -14641,6 +15790,11 @@ export const Action = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -14694,26 +15848,48 @@ export const Action = {
         sentimentLabel
       }
     }
-    optionContractType
     actions {
       id
     }
   }
   order {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -14947,7 +16123,6 @@ export const Action = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
         }
@@ -15038,7 +16213,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -15322,7 +16496,6 @@ export const Action = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -15455,7 +16628,6 @@ export const Action = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -15516,6 +16688,11 @@ export const Action = {
       }
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
       }
       }`;

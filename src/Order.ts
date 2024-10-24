@@ -25,19 +25,42 @@ export const Order = {
       mutation createOneOrder($data: OrderCreateInput!) {
         createOneOrder(data: $data) {
   id
+  clientOrderId
   alpacaAccountId
   assetId
   qty
   notional
   side
   type
+  orderClass
   timeInForce
   limitPrice
   stopPrice
+  stopLoss {
+    id
+    stopPrice
+    limitPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
+  takeProfit {
+    id
+    limitPrice
+    stopPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
   trailPrice
   trailPercent
   extendedHours
-  clientOrderId
   status
   createdAt
   updatedAt
@@ -271,7 +294,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
         sequence
@@ -374,7 +396,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -939,7 +960,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
       }
@@ -1153,7 +1173,6 @@ export const Order = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -1298,7 +1317,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -1371,28 +1389,71 @@ export const Order = {
     }
   }
   fee
+  strikePrice
+  expirationDate
+  optionType
+  stopLossId
+  takeProfitId
         }
       }
    `;
 
     const variables = {
       data: {
-          qty: props.qty !== undefined ? props.qty : undefined,
+          clientOrderId: props.clientOrderId !== undefined ? props.clientOrderId : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
   notional: props.notional !== undefined ? props.notional : undefined,
   side: props.side !== undefined ? props.side : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
   timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
   limitPrice: props.limitPrice !== undefined ? props.limitPrice : undefined,
   stopPrice: props.stopPrice !== undefined ? props.stopPrice : undefined,
   trailPrice: props.trailPrice !== undefined ? props.trailPrice : undefined,
   trailPercent: props.trailPercent !== undefined ? props.trailPercent : undefined,
   extendedHours: props.extendedHours !== undefined ? props.extendedHours : undefined,
-  clientOrderId: props.clientOrderId !== undefined ? props.clientOrderId : undefined,
   status: props.status !== undefined ? props.status : undefined,
   submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
   filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
   filledAvgPrice: props.filledAvgPrice !== undefined ? props.filledAvgPrice : undefined,
   fee: props.fee !== undefined ? props.fee : undefined,
+  strikePrice: props.strikePrice !== undefined ? props.strikePrice : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  stopLossId: props.stopLossId !== undefined ? props.stopLossId : undefined,
+  takeProfitId: props.takeProfitId !== undefined ? props.takeProfitId : undefined,
+  stopLoss: props.stopLoss ? 
+    typeof props.stopLoss === 'object' && Object.keys(props.stopLoss).length === 1 && Object.keys(props.stopLoss)[0] === 'id'
+    ? { connect: {
+        id: props.stopLoss.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.stopLoss.id !== undefined ? props.stopLoss.id : undefined,
+      },
+      create: {
+        stopPrice: props.stopLoss.stopPrice !== undefined ? props.stopLoss.stopPrice : undefined,
+        limitPrice: props.stopLoss.limitPrice !== undefined ? props.stopLoss.limitPrice : undefined,
+      },
+    }
+  } : undefined,
+  takeProfit: props.takeProfit ? 
+    typeof props.takeProfit === 'object' && Object.keys(props.takeProfit).length === 1 && Object.keys(props.takeProfit)[0] === 'id'
+    ? { connect: {
+        id: props.takeProfit.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.takeProfit.id !== undefined ? props.takeProfit.id : undefined,
+      },
+      create: {
+        limitPrice: props.takeProfit.limitPrice !== undefined ? props.takeProfit.limitPrice : undefined,
+        stopPrice: props.takeProfit.stopPrice !== undefined ? props.takeProfit.stopPrice : undefined,
+      },
+    }
+  } : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1537,7 +1598,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -1785,7 +1845,6 @@ export const Order = {
           confidence: props.action.trade.confidence !== undefined ? props.action.trade.confidence : undefined,
           timestamp: props.action.trade.timestamp !== undefined ? props.action.trade.timestamp : undefined,
           status: props.action.trade.status !== undefined ? props.action.trade.status : undefined,
-          optionContractType: props.action.trade.optionContractType !== undefined ? props.action.trade.optionContractType : undefined,
       alpacaAccount: props.action.trade.alpacaAccount ? 
         typeof props.action.trade.alpacaAccount === 'object' && Object.keys(props.action.trade.alpacaAccount).length === 1 && Object.keys(props.action.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1970,7 +2029,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -2149,25 +2207,31 @@ export const Order = {
 
     const variables = {
       data: props.map(prop => ({
+  clientOrderId: prop.clientOrderId !== undefined ? prop.clientOrderId : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
   qty: prop.qty !== undefined ? prop.qty : undefined,
   notional: prop.notional !== undefined ? prop.notional : undefined,
   side: prop.side !== undefined ? prop.side : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
+  orderClass: prop.orderClass !== undefined ? prop.orderClass : undefined,
   timeInForce: prop.timeInForce !== undefined ? prop.timeInForce : undefined,
   limitPrice: prop.limitPrice !== undefined ? prop.limitPrice : undefined,
   stopPrice: prop.stopPrice !== undefined ? prop.stopPrice : undefined,
   trailPrice: prop.trailPrice !== undefined ? prop.trailPrice : undefined,
   trailPercent: prop.trailPercent !== undefined ? prop.trailPercent : undefined,
   extendedHours: prop.extendedHours !== undefined ? prop.extendedHours : undefined,
-  clientOrderId: prop.clientOrderId !== undefined ? prop.clientOrderId : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
   submittedAt: prop.submittedAt !== undefined ? prop.submittedAt : undefined,
   filledAt: prop.filledAt !== undefined ? prop.filledAt : undefined,
   filledAvgPrice: prop.filledAvgPrice !== undefined ? prop.filledAvgPrice : undefined,
   actionId: prop.actionId !== undefined ? prop.actionId : undefined,
   fee: prop.fee !== undefined ? prop.fee : undefined,
+  strikePrice: prop.strikePrice !== undefined ? prop.strikePrice : undefined,
+  expirationDate: prop.expirationDate !== undefined ? prop.expirationDate : undefined,
+  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
+  stopLossId: prop.stopLossId !== undefined ? prop.stopLossId : undefined,
+  takeProfitId: prop.takeProfitId !== undefined ? prop.takeProfitId : undefined,
       })),
     };
 
@@ -2200,19 +2264,42 @@ export const Order = {
       mutation updateOneOrder($data: OrderUpdateInput!, $where: OrderWhereUniqueInput!) {
         updateOneOrder(data: $data, where: $where) {
   id
+  clientOrderId
   alpacaAccountId
   assetId
   qty
   notional
   side
   type
+  orderClass
   timeInForce
   limitPrice
   stopPrice
+  stopLoss {
+    id
+    stopPrice
+    limitPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
+  takeProfit {
+    id
+    limitPrice
+    stopPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
   trailPrice
   trailPercent
   extendedHours
-  clientOrderId
   status
   createdAt
   updatedAt
@@ -2446,7 +2533,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
         sequence
@@ -2549,7 +2635,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -3114,7 +3199,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
       }
@@ -3328,7 +3412,6 @@ export const Order = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -3473,7 +3556,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -3546,6 +3628,11 @@ export const Order = {
     }
   }
   fee
+  strikePrice
+  expirationDate
+  optionType
+  stopLossId
+  takeProfitId
       }
       }`;
 
@@ -3556,6 +3643,9 @@ export const Order = {
       data: {
   id: props.id !== undefined ? {
             set: props.id 
+           } : undefined,
+  clientOrderId: props.clientOrderId !== undefined ? {
+            set: props.clientOrderId 
            } : undefined,
   qty: props.qty !== undefined ? {
             set: props.qty 
@@ -3568,6 +3658,9 @@ export const Order = {
            } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
+           } : undefined,
+  orderClass: props.orderClass !== undefined ? {
+            set: props.orderClass 
            } : undefined,
   timeInForce: props.timeInForce !== undefined ? {
             set: props.timeInForce 
@@ -3586,9 +3679,6 @@ export const Order = {
            } : undefined,
   extendedHours: props.extendedHours !== undefined ? {
             set: props.extendedHours 
-           } : undefined,
-  clientOrderId: props.clientOrderId !== undefined ? {
-            set: props.clientOrderId 
            } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
@@ -3611,6 +3701,69 @@ export const Order = {
   fee: props.fee !== undefined ? {
             set: props.fee 
            } : undefined,
+  strikePrice: props.strikePrice !== undefined ? {
+            set: props.strikePrice 
+           } : undefined,
+  expirationDate: props.expirationDate !== undefined ? {
+            set: props.expirationDate 
+           } : undefined,
+  optionType: props.optionType !== undefined ? {
+            set: props.optionType 
+           } : undefined,
+  stopLossId: props.stopLossId !== undefined ? {
+            set: props.stopLossId 
+           } : undefined,
+  takeProfitId: props.takeProfitId !== undefined ? {
+            set: props.takeProfitId 
+           } : undefined,
+  stopLoss: props.stopLoss ? {
+    upsert: {
+      where: {
+        id: props.stopLoss.id !== undefined ? {
+            equals: props.stopLoss.id 
+           } : undefined,
+      },
+      update: {
+        id: props.stopLoss.id !== undefined ? {
+            set: props.stopLoss.id  
+           } : undefined,
+        stopPrice: props.stopLoss.stopPrice !== undefined ? {
+            set: props.stopLoss.stopPrice  
+           } : undefined,
+        limitPrice: props.stopLoss.limitPrice !== undefined ? {
+            set: props.stopLoss.limitPrice  
+           } : undefined,
+      },
+      create: {
+        stopPrice: props.stopLoss.stopPrice !== undefined ? props.stopLoss.stopPrice : undefined,
+        limitPrice: props.stopLoss.limitPrice !== undefined ? props.stopLoss.limitPrice : undefined,
+      },
+    }
+  } : undefined,
+  takeProfit: props.takeProfit ? {
+    upsert: {
+      where: {
+        id: props.takeProfit.id !== undefined ? {
+            equals: props.takeProfit.id 
+           } : undefined,
+      },
+      update: {
+        id: props.takeProfit.id !== undefined ? {
+            set: props.takeProfit.id  
+           } : undefined,
+        limitPrice: props.takeProfit.limitPrice !== undefined ? {
+            set: props.takeProfit.limitPrice  
+           } : undefined,
+        stopPrice: props.takeProfit.stopPrice !== undefined ? {
+            set: props.takeProfit.stopPrice  
+           } : undefined,
+      },
+      create: {
+        limitPrice: props.takeProfit.limitPrice !== undefined ? props.takeProfit.limitPrice : undefined,
+        stopPrice: props.takeProfit.stopPrice !== undefined ? props.takeProfit.stopPrice : undefined,
+      },
+    }
+  } : undefined,
   alpacaAccount: props.alpacaAccount ? {
     upsert: {
       where: {
@@ -3958,9 +4111,6 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          optionContractType: item.optionContractType !== undefined ? {
-              set: item.optionContractType  
-             } : undefined,
       asset: item.asset ? {
         upsert: {
           where: {
@@ -4248,7 +4398,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -4882,7 +5031,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -5157,9 +5305,6 @@ export const Order = {
              } : undefined,
           status: props.action.trade.status !== undefined ? {
               set: props.action.trade.status  
-             } : undefined,
-          optionContractType: props.action.trade.optionContractType !== undefined ? {
-              set: props.action.trade.optionContractType  
              } : undefined,
       alpacaAccount: props.action.trade.alpacaAccount ? {
         upsert: {
@@ -5450,7 +5595,6 @@ export const Order = {
           confidence: props.action.trade.confidence !== undefined ? props.action.trade.confidence : undefined,
           timestamp: props.action.trade.timestamp !== undefined ? props.action.trade.timestamp : undefined,
           status: props.action.trade.status !== undefined ? props.action.trade.status : undefined,
-          optionContractType: props.action.trade.optionContractType !== undefined ? props.action.trade.optionContractType : undefined,
       alpacaAccount: props.action.trade.alpacaAccount ? 
         typeof props.action.trade.alpacaAccount === 'object' && Object.keys(props.action.trade.alpacaAccount).length === 1 && Object.keys(props.action.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -5571,7 +5715,6 @@ export const Order = {
           confidence: props.action.trade.confidence !== undefined ? props.action.trade.confidence : undefined,
           timestamp: props.action.trade.timestamp !== undefined ? props.action.trade.timestamp : undefined,
           status: props.action.trade.status !== undefined ? props.action.trade.status : undefined,
-          optionContractType: props.action.trade.optionContractType !== undefined ? props.action.trade.optionContractType : undefined,
       alpacaAccount: props.action.trade.alpacaAccount ? 
         typeof props.action.trade.alpacaAccount === 'object' && Object.keys(props.action.trade.alpacaAccount).length === 1 && Object.keys(props.action.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -5886,9 +6029,6 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          optionContractType: item.optionContractType !== undefined ? {
-              set: item.optionContractType  
-             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -5970,7 +6110,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -6346,7 +6485,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -6531,6 +6669,9 @@ export const Order = {
           id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
+  clientOrderId: prop.clientOrderId !== undefined ? {
+            set: prop.clientOrderId 
+           } : undefined,
   qty: prop.qty !== undefined ? {
             set: prop.qty 
            } : undefined,
@@ -6542,6 +6683,9 @@ export const Order = {
            } : undefined,
   type: prop.type !== undefined ? {
             set: prop.type 
+           } : undefined,
+  orderClass: prop.orderClass !== undefined ? {
+            set: prop.orderClass 
            } : undefined,
   timeInForce: prop.timeInForce !== undefined ? {
             set: prop.timeInForce 
@@ -6560,9 +6704,6 @@ export const Order = {
            } : undefined,
   extendedHours: prop.extendedHours !== undefined ? {
             set: prop.extendedHours 
-           } : undefined,
-  clientOrderId: prop.clientOrderId !== undefined ? {
-            set: prop.clientOrderId 
            } : undefined,
   status: prop.status !== undefined ? {
             set: prop.status 
@@ -6585,6 +6726,69 @@ export const Order = {
   fee: prop.fee !== undefined ? {
             set: prop.fee 
            } : undefined,
+  strikePrice: prop.strikePrice !== undefined ? {
+            set: prop.strikePrice 
+           } : undefined,
+  expirationDate: prop.expirationDate !== undefined ? {
+            set: prop.expirationDate 
+           } : undefined,
+  optionType: prop.optionType !== undefined ? {
+            set: prop.optionType 
+           } : undefined,
+  stopLossId: prop.stopLossId !== undefined ? {
+            set: prop.stopLossId 
+           } : undefined,
+  takeProfitId: prop.takeProfitId !== undefined ? {
+            set: prop.takeProfitId 
+           } : undefined,
+  stopLoss: prop.stopLoss ? {
+    upsert: {
+      where: {
+        id: prop.stopLoss.id !== undefined ? {
+            equals: prop.stopLoss.id 
+           } : undefined,
+      },
+      update: {
+        id: prop.stopLoss.id !== undefined ? {
+            set: prop.stopLoss.id  
+           } : undefined,
+        stopPrice: prop.stopLoss.stopPrice !== undefined ? {
+            set: prop.stopLoss.stopPrice  
+           } : undefined,
+        limitPrice: prop.stopLoss.limitPrice !== undefined ? {
+            set: prop.stopLoss.limitPrice  
+           } : undefined,
+      },
+      create: {
+        stopPrice: prop.stopLoss.stopPrice !== undefined ? prop.stopLoss.stopPrice : undefined,
+        limitPrice: prop.stopLoss.limitPrice !== undefined ? prop.stopLoss.limitPrice : undefined,
+      },
+    }
+  } : undefined,
+  takeProfit: prop.takeProfit ? {
+    upsert: {
+      where: {
+        id: prop.takeProfit.id !== undefined ? {
+            equals: prop.takeProfit.id 
+           } : undefined,
+      },
+      update: {
+        id: prop.takeProfit.id !== undefined ? {
+            set: prop.takeProfit.id  
+           } : undefined,
+        limitPrice: prop.takeProfit.limitPrice !== undefined ? {
+            set: prop.takeProfit.limitPrice  
+           } : undefined,
+        stopPrice: prop.takeProfit.stopPrice !== undefined ? {
+            set: prop.takeProfit.stopPrice  
+           } : undefined,
+      },
+      create: {
+        limitPrice: prop.takeProfit.limitPrice !== undefined ? prop.takeProfit.limitPrice : undefined,
+        stopPrice: prop.takeProfit.stopPrice !== undefined ? prop.takeProfit.stopPrice : undefined,
+      },
+    }
+  } : undefined,
   alpacaAccount: prop.alpacaAccount ? {
     upsert: {
       where: {
@@ -6932,9 +7136,6 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          optionContractType: item.optionContractType !== undefined ? {
-              set: item.optionContractType  
-             } : undefined,
       asset: item.asset ? {
         upsert: {
           where: {
@@ -7222,7 +7423,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -7856,7 +8056,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -8131,9 +8330,6 @@ export const Order = {
              } : undefined,
           status: prop.action.trade.status !== undefined ? {
               set: prop.action.trade.status  
-             } : undefined,
-          optionContractType: prop.action.trade.optionContractType !== undefined ? {
-              set: prop.action.trade.optionContractType  
              } : undefined,
       alpacaAccount: prop.action.trade.alpacaAccount ? {
         upsert: {
@@ -8424,7 +8620,6 @@ export const Order = {
           confidence: prop.action.trade.confidence !== undefined ? prop.action.trade.confidence : undefined,
           timestamp: prop.action.trade.timestamp !== undefined ? prop.action.trade.timestamp : undefined,
           status: prop.action.trade.status !== undefined ? prop.action.trade.status : undefined,
-          optionContractType: prop.action.trade.optionContractType !== undefined ? prop.action.trade.optionContractType : undefined,
       alpacaAccount: prop.action.trade.alpacaAccount ? 
         typeof prop.action.trade.alpacaAccount === 'object' && Object.keys(prop.action.trade.alpacaAccount).length === 1 && Object.keys(prop.action.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -8545,7 +8740,6 @@ export const Order = {
           confidence: prop.action.trade.confidence !== undefined ? prop.action.trade.confidence : undefined,
           timestamp: prop.action.trade.timestamp !== undefined ? prop.action.trade.timestamp : undefined,
           status: prop.action.trade.status !== undefined ? prop.action.trade.status : undefined,
-          optionContractType: prop.action.trade.optionContractType !== undefined ? prop.action.trade.optionContractType : undefined,
       alpacaAccount: prop.action.trade.alpacaAccount ? 
         typeof prop.action.trade.alpacaAccount === 'object' && Object.keys(prop.action.trade.alpacaAccount).length === 1 && Object.keys(prop.action.trade.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -8860,9 +9054,6 @@ export const Order = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          optionContractType: item.optionContractType !== undefined ? {
-              set: item.optionContractType  
-             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -8944,7 +9135,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -9320,7 +9510,6 @@ export const Order = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -9495,19 +9684,42 @@ export const Order = {
       mutation deleteOneOrder($where: OrderWhereUniqueInput!) {
         deleteOneOrder(where: $where) {
   id
+  clientOrderId
   alpacaAccountId
   assetId
   qty
   notional
   side
   type
+  orderClass
   timeInForce
   limitPrice
   stopPrice
+  stopLoss {
+    id
+    stopPrice
+    limitPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
+  takeProfit {
+    id
+    limitPrice
+    stopPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
   trailPrice
   trailPercent
   extendedHours
-  clientOrderId
   status
   createdAt
   updatedAt
@@ -9741,7 +9953,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
         sequence
@@ -9844,7 +10055,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -10409,7 +10619,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
       }
@@ -10623,7 +10832,6 @@ export const Order = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -10768,7 +10976,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -10841,6 +11048,11 @@ export const Order = {
     }
   }
   fee
+  strikePrice
+  expirationDate
+  optionType
+  stopLossId
+  takeProfitId
       }
       }`;
 
@@ -10879,19 +11091,42 @@ export const Order = {
       query getOrder($where: OrderWhereUniqueInput!) {
         getOrder(where: $where) {
   id
+  clientOrderId
   alpacaAccountId
   assetId
   qty
   notional
   side
   type
+  orderClass
   timeInForce
   limitPrice
   stopPrice
+  stopLoss {
+    id
+    stopPrice
+    limitPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
+  takeProfit {
+    id
+    limitPrice
+    stopPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
   trailPrice
   trailPercent
   extendedHours
-  clientOrderId
   status
   createdAt
   updatedAt
@@ -11125,7 +11360,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
         sequence
@@ -11228,7 +11462,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -11793,7 +12026,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
       }
@@ -12007,7 +12239,6 @@ export const Order = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -12152,7 +12383,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -12225,6 +12455,11 @@ export const Order = {
     }
   }
   fee
+  strikePrice
+  expirationDate
+  optionType
+  stopLossId
+  takeProfitId
         }
       }`;
 
@@ -12261,19 +12496,42 @@ export const Order = {
       query getAllOrder {
         orders {
   id
+  clientOrderId
   alpacaAccountId
   assetId
   qty
   notional
   side
   type
+  orderClass
   timeInForce
   limitPrice
   stopPrice
+  stopLoss {
+    id
+    stopPrice
+    limitPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
+  takeProfit {
+    id
+    limitPrice
+    stopPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
   trailPrice
   trailPercent
   extendedHours
-  clientOrderId
   status
   createdAt
   updatedAt
@@ -12507,7 +12765,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
         sequence
@@ -12610,7 +12867,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -13175,7 +13431,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
       }
@@ -13389,7 +13644,6 @@ export const Order = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -13534,7 +13788,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -13607,6 +13860,11 @@ export const Order = {
     }
   }
   fee
+  strikePrice
+  expirationDate
+  optionType
+  stopLossId
+  takeProfitId
       }
       }`;
 
@@ -13637,19 +13895,42 @@ export const Order = {
       query findManyOrder($where: OrderWhereInput!) {
         orders(where: $where) {
   id
+  clientOrderId
   alpacaAccountId
   assetId
   qty
   notional
   side
   type
+  orderClass
   timeInForce
   limitPrice
   stopPrice
+  stopLoss {
+    id
+    stopPrice
+    limitPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
+  takeProfit {
+    id
+    limitPrice
+    stopPrice
+    createdAt
+    updatedAt
+    orderId
+    Order {
+      id
+    }
+  }
   trailPrice
   trailPercent
   extendedHours
-  clientOrderId
   status
   createdAt
   updatedAt
@@ -13883,7 +14164,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
         sequence
@@ -13986,7 +14266,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -14551,7 +14830,6 @@ export const Order = {
           sentimentLabel
         }
       }
-      optionContractType
       actions {
         id
       }
@@ -14765,7 +15043,6 @@ export const Order = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -14910,7 +15187,6 @@ export const Order = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -14983,6 +15259,11 @@ export const Order = {
     }
   }
   fee
+  strikePrice
+  expirationDate
+  optionType
+  stopLossId
+  takeProfitId
       }
       }`;
 

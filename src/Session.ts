@@ -186,19 +186,42 @@ export const Session = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -228,6 +251,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -287,7 +315,6 @@ export const Session = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
           sequence
@@ -301,19 +328,42 @@ export const Session = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -451,24 +501,52 @@ export const Session = {
               }
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -628,7 +706,6 @@ export const Session = {
                 sentimentLabel
               }
             }
-            optionContractType
             actions {
               id
             }
@@ -717,7 +794,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -796,6 +872,11 @@ export const Session = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -880,7 +961,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -894,19 +974,42 @@ export const Session = {
               }
               order {
                 id
+                clientOrderId
                 alpacaAccountId
                 assetId
                 qty
                 notional
                 side
                 type
+                orderClass
                 timeInForce
                 limitPrice
                 stopPrice
+                stopLoss {
+                  id
+                  stopPrice
+                  limitPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
+                takeProfit {
+                  id
+                  limitPrice
+                  stopPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
                 trailPrice
                 trailPercent
                 extendedHours
-                clientOrderId
                 status
                 createdAt
                 updatedAt
@@ -924,24 +1027,52 @@ export const Session = {
                   id
                 }
                 fee
+                strikePrice
+                expirationDate
+                optionType
+                stopLossId
+                takeProfitId
               }
             }
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -981,7 +1112,6 @@ export const Session = {
                 asset {
                   id
                 }
-                optionContractType
                 actions {
                   id
                 }
@@ -994,6 +1124,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -1199,7 +1334,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -1214,22 +1348,28 @@ export const Session = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -1517,19 +1657,42 @@ export const Session = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -1559,6 +1722,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -1618,7 +1786,6 @@ export const Session = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
           sequence
@@ -1632,19 +1799,42 @@ export const Session = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -1782,24 +1972,52 @@ export const Session = {
               }
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -1959,7 +2177,6 @@ export const Session = {
                 sentimentLabel
               }
             }
-            optionContractType
             actions {
               id
             }
@@ -2048,7 +2265,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -2127,6 +2343,11 @@ export const Session = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -2211,7 +2432,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -2225,19 +2445,42 @@ export const Session = {
               }
               order {
                 id
+                clientOrderId
                 alpacaAccountId
                 assetId
                 qty
                 notional
                 side
                 type
+                orderClass
                 timeInForce
                 limitPrice
                 stopPrice
+                stopLoss {
+                  id
+                  stopPrice
+                  limitPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
+                takeProfit {
+                  id
+                  limitPrice
+                  stopPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
                 trailPrice
                 trailPercent
                 extendedHours
-                clientOrderId
                 status
                 createdAt
                 updatedAt
@@ -2255,24 +2498,52 @@ export const Session = {
                   id
                 }
                 fee
+                strikePrice
+                expirationDate
+                optionType
+                stopLossId
+                takeProfitId
               }
             }
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -2312,7 +2583,6 @@ export const Session = {
                 asset {
                   id
                 }
-                optionContractType
                 actions {
                   id
                 }
@@ -2325,6 +2595,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -2648,9 +2923,6 @@ export const Session = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -2662,7 +2934,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -2675,6 +2946,9 @@ export const Session = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -2686,6 +2960,9 @@ export const Session = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -2705,9 +2982,6 @@ export const Session = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -2723,24 +2997,45 @@ export const Session = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -2863,7 +3158,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -2878,22 +3172,28 @@ export const Session = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3056,7 +3356,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -3071,22 +3370,28 @@ export const Session = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3424,9 +3729,6 @@ export const Session = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -3438,7 +3740,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -3451,6 +3752,9 @@ export const Session = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -3462,6 +3766,9 @@ export const Session = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -3481,9 +3788,6 @@ export const Session = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -3499,24 +3803,45 @@ export const Session = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3639,7 +3964,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -3654,22 +3978,28 @@ export const Session = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3832,7 +4162,6 @@ export const Session = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -3847,22 +4176,28 @@ export const Session = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4111,19 +4446,42 @@ export const Session = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -4153,6 +4511,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -4212,7 +4575,6 @@ export const Session = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
           sequence
@@ -4226,19 +4588,42 @@ export const Session = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -4376,24 +4761,52 @@ export const Session = {
               }
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -4553,7 +4966,6 @@ export const Session = {
                 sentimentLabel
               }
             }
-            optionContractType
             actions {
               id
             }
@@ -4642,7 +5054,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -4721,6 +5132,11 @@ export const Session = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -4805,7 +5221,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -4819,19 +5234,42 @@ export const Session = {
               }
               order {
                 id
+                clientOrderId
                 alpacaAccountId
                 assetId
                 qty
                 notional
                 side
                 type
+                orderClass
                 timeInForce
                 limitPrice
                 stopPrice
+                stopLoss {
+                  id
+                  stopPrice
+                  limitPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
+                takeProfit {
+                  id
+                  limitPrice
+                  stopPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
                 trailPrice
                 trailPercent
                 extendedHours
-                clientOrderId
                 status
                 createdAt
                 updatedAt
@@ -4849,24 +5287,52 @@ export const Session = {
                   id
                 }
                 fee
+                strikePrice
+                expirationDate
+                optionType
+                stopLossId
+                takeProfitId
               }
             }
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -4906,7 +5372,6 @@ export const Session = {
                 asset {
                   id
                 }
-                optionContractType
                 actions {
                   id
                 }
@@ -4919,6 +5384,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -5190,19 +5660,42 @@ export const Session = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -5232,6 +5725,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -5291,7 +5789,6 @@ export const Session = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
           sequence
@@ -5305,19 +5802,42 @@ export const Session = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -5455,24 +5975,52 @@ export const Session = {
               }
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -5632,7 +6180,6 @@ export const Session = {
                 sentimentLabel
               }
             }
-            optionContractType
             actions {
               id
             }
@@ -5721,7 +6268,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -5800,6 +6346,11 @@ export const Session = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -5884,7 +6435,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -5898,19 +6448,42 @@ export const Session = {
               }
               order {
                 id
+                clientOrderId
                 alpacaAccountId
                 assetId
                 qty
                 notional
                 side
                 type
+                orderClass
                 timeInForce
                 limitPrice
                 stopPrice
+                stopLoss {
+                  id
+                  stopPrice
+                  limitPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
+                takeProfit {
+                  id
+                  limitPrice
+                  stopPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
                 trailPrice
                 trailPercent
                 extendedHours
-                clientOrderId
                 status
                 createdAt
                 updatedAt
@@ -5928,24 +6501,52 @@ export const Session = {
                   id
                 }
                 fee
+                strikePrice
+                expirationDate
+                optionType
+                stopLossId
+                takeProfitId
               }
             }
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -5985,7 +6586,6 @@ export const Session = {
                 asset {
                   id
                 }
-                optionContractType
                 actions {
                   id
                 }
@@ -5998,6 +6598,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -6267,19 +6872,42 @@ export const Session = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -6309,6 +6937,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -6368,7 +7001,6 @@ export const Session = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
           sequence
@@ -6382,19 +7014,42 @@ export const Session = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -6532,24 +7187,52 @@ export const Session = {
               }
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -6709,7 +7392,6 @@ export const Session = {
                 sentimentLabel
               }
             }
-            optionContractType
             actions {
               id
             }
@@ -6798,7 +7480,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -6877,6 +7558,11 @@ export const Session = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -6961,7 +7647,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -6975,19 +7660,42 @@ export const Session = {
               }
               order {
                 id
+                clientOrderId
                 alpacaAccountId
                 assetId
                 qty
                 notional
                 side
                 type
+                orderClass
                 timeInForce
                 limitPrice
                 stopPrice
+                stopLoss {
+                  id
+                  stopPrice
+                  limitPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
+                takeProfit {
+                  id
+                  limitPrice
+                  stopPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
                 trailPrice
                 trailPercent
                 extendedHours
-                clientOrderId
                 status
                 createdAt
                 updatedAt
@@ -7005,24 +7713,52 @@ export const Session = {
                   id
                 }
                 fee
+                strikePrice
+                expirationDate
+                optionType
+                stopLossId
+                takeProfitId
               }
             }
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -7062,7 +7798,6 @@ export const Session = {
                 asset {
                   id
                 }
-                optionContractType
                 actions {
                   id
                 }
@@ -7075,6 +7810,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -7338,19 +8078,42 @@ export const Session = {
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -7380,6 +8143,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id
@@ -7439,7 +8207,6 @@ export const Session = {
             sentimentLabel
           }
         }
-        optionContractType
         actions {
           id
           sequence
@@ -7453,19 +8220,42 @@ export const Session = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -7603,24 +8393,52 @@ export const Session = {
               }
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -7780,7 +8598,6 @@ export const Session = {
                 sentimentLabel
               }
             }
-            optionContractType
             actions {
               id
             }
@@ -7869,7 +8686,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -7948,6 +8764,11 @@ export const Session = {
           }
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -8032,7 +8853,6 @@ export const Session = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
               sequence
@@ -8046,19 +8866,42 @@ export const Session = {
               }
               order {
                 id
+                clientOrderId
                 alpacaAccountId
                 assetId
                 qty
                 notional
                 side
                 type
+                orderClass
                 timeInForce
                 limitPrice
                 stopPrice
+                stopLoss {
+                  id
+                  stopPrice
+                  limitPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
+                takeProfit {
+                  id
+                  limitPrice
+                  stopPrice
+                  createdAt
+                  updatedAt
+                  orderId
+                  Order {
+                    id
+                  }
+                }
                 trailPrice
                 trailPercent
                 extendedHours
-                clientOrderId
                 status
                 createdAt
                 updatedAt
@@ -8076,24 +8919,52 @@ export const Session = {
                   id
                 }
                 fee
+                strikePrice
+                expirationDate
+                optionType
+                stopLossId
+                takeProfitId
               }
             }
           }
           orders {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -8133,7 +9004,6 @@ export const Session = {
                 asset {
                   id
                 }
-                optionContractType
                 actions {
                   id
                 }
@@ -8146,6 +9016,11 @@ export const Session = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
           positions {
             id

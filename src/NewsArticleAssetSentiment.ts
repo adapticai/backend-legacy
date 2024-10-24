@@ -213,19 +213,42 @@ export const NewsArticleAssetSentiment = {
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -255,6 +278,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -296,7 +324,6 @@ export const NewsArticleAssetSentiment = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -310,19 +337,42 @@ export const NewsArticleAssetSentiment = {
         }
         order {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -465,24 +515,52 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
       }
     }
     orders {
       id
+      clientOrderId
       alpacaAccountId
       assetId
       qty
       notional
       side
       type
+      orderClass
       timeInForce
       limitPrice
       stopPrice
+      stopLoss {
+        id
+        stopPrice
+        limitPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
+      takeProfit {
+        id
+        limitPrice
+        stopPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
       trailPrice
       trailPercent
       extendedHours
-      clientOrderId
       status
       createdAt
       updatedAt
@@ -596,7 +674,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -807,7 +884,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
           }
@@ -820,6 +896,11 @@ export const NewsArticleAssetSentiment = {
         id
       }
       fee
+      strikePrice
+      expirationDate
+      optionType
+      stopLossId
+      takeProfitId
     }
     positions {
       id
@@ -946,7 +1027,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -960,19 +1040,42 @@ export const NewsArticleAssetSentiment = {
             }
             order {
               id
+              clientOrderId
               alpacaAccountId
               assetId
               qty
               notional
               side
               type
+              orderClass
               timeInForce
               limitPrice
               stopPrice
+              stopLoss {
+                id
+                stopPrice
+                limitPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
+              takeProfit {
+                id
+                limitPrice
+                stopPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
               trailPrice
               trailPercent
               extendedHours
-              clientOrderId
               status
               createdAt
               updatedAt
@@ -990,24 +1093,52 @@ export const NewsArticleAssetSentiment = {
                 id
               }
               fee
+              strikePrice
+              expirationDate
+              optionType
+              stopLossId
+              takeProfitId
             }
           }
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -1047,7 +1178,6 @@ export const NewsArticleAssetSentiment = {
               asset {
                 id
               }
-              optionContractType
               actions {
                 id
               }
@@ -1060,6 +1190,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -1215,7 +1350,6 @@ export const NewsArticleAssetSentiment = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1268,22 +1402,60 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           notional: item.notional !== undefined ? item.notional : undefined,
           side: item.side !== undefined ? item.side : undefined,
           type: item.type !== undefined ? item.type : undefined,
+          orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
           timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
           limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
           stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
           trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
           trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
           extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+          strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+          expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+          optionType: item.optionType !== undefined ? item.optionType : undefined,
+          stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+      stopLoss: item.stopLoss ? 
+        typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+            id: item.stopLoss.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? 
+        typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+            id: item.takeProfit.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1638,19 +1810,42 @@ export const NewsArticleAssetSentiment = {
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -1680,6 +1875,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -1721,7 +1921,6 @@ export const NewsArticleAssetSentiment = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -1735,19 +1934,42 @@ export const NewsArticleAssetSentiment = {
         }
         order {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -1890,24 +2112,52 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
       }
     }
     orders {
       id
+      clientOrderId
       alpacaAccountId
       assetId
       qty
       notional
       side
       type
+      orderClass
       timeInForce
       limitPrice
       stopPrice
+      stopLoss {
+        id
+        stopPrice
+        limitPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
+      takeProfit {
+        id
+        limitPrice
+        stopPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
       trailPrice
       trailPercent
       extendedHours
-      clientOrderId
       status
       createdAt
       updatedAt
@@ -2021,7 +2271,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -2232,7 +2481,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
           }
@@ -2245,6 +2493,11 @@ export const NewsArticleAssetSentiment = {
         id
       }
       fee
+      strikePrice
+      expirationDate
+      optionType
+      stopLossId
+      takeProfitId
     }
     positions {
       id
@@ -2371,7 +2624,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -2385,19 +2637,42 @@ export const NewsArticleAssetSentiment = {
             }
             order {
               id
+              clientOrderId
               alpacaAccountId
               assetId
               qty
               notional
               side
               type
+              orderClass
               timeInForce
               limitPrice
               stopPrice
+              stopLoss {
+                id
+                stopPrice
+                limitPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
+              takeProfit {
+                id
+                limitPrice
+                stopPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
               trailPrice
               trailPercent
               extendedHours
-              clientOrderId
               status
               createdAt
               updatedAt
@@ -2415,24 +2690,52 @@ export const NewsArticleAssetSentiment = {
                 id
               }
               fee
+              strikePrice
+              expirationDate
+              optionType
+              stopLossId
+              takeProfitId
             }
           }
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -2472,7 +2775,6 @@ export const NewsArticleAssetSentiment = {
               asset {
                 id
               }
-              optionContractType
               actions {
                 id
               }
@@ -2485,6 +2787,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -2827,9 +3134,6 @@ export const NewsArticleAssetSentiment = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          optionContractType: item.optionContractType !== undefined ? {
-              set: item.optionContractType  
-             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -2911,7 +3215,6 @@ export const NewsArticleAssetSentiment = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -2962,6 +3265,9 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? {
+              set: item.clientOrderId  
+             } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
              } : undefined,
@@ -2973,6 +3279,9 @@ export const NewsArticleAssetSentiment = {
              } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
+             } : undefined,
+          orderClass: item.orderClass !== undefined ? {
+              set: item.orderClass  
              } : undefined,
           timeInForce: item.timeInForce !== undefined ? {
               set: item.timeInForce  
@@ -2992,9 +3301,6 @@ export const NewsArticleAssetSentiment = {
           extendedHours: item.extendedHours !== undefined ? {
               set: item.extendedHours  
              } : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? {
-              set: item.clientOrderId  
-             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
@@ -3010,6 +3316,69 @@ export const NewsArticleAssetSentiment = {
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
+          strikePrice: item.strikePrice !== undefined ? {
+              set: item.strikePrice  
+             } : undefined,
+          expirationDate: item.expirationDate !== undefined ? {
+              set: item.expirationDate  
+             } : undefined,
+          optionType: item.optionType !== undefined ? {
+              set: item.optionType  
+             } : undefined,
+          stopLossId: item.stopLossId !== undefined ? {
+              set: item.stopLossId  
+             } : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? {
+              set: item.takeProfitId  
+             } : undefined,
+      stopLoss: item.stopLoss ? {
+        upsert: {
+          where: {
+            id: item.stopLoss.id !== undefined ? {
+                equals: item.stopLoss.id 
+               } : undefined,
+          },
+          update: {
+            id: item.stopLoss.id !== undefined ? {
+                set: item.stopLoss.id  
+               } : undefined,
+            stopPrice: item.stopLoss.stopPrice !== undefined ? {
+                set: item.stopLoss.stopPrice  
+               } : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? {
+                set: item.stopLoss.limitPrice  
+               } : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? {
+        upsert: {
+          where: {
+            id: item.takeProfit.id !== undefined ? {
+                equals: item.takeProfit.id 
+               } : undefined,
+          },
+          update: {
+            id: item.takeProfit.id !== undefined ? {
+                set: item.takeProfit.id  
+               } : undefined,
+            limitPrice: item.takeProfit.limitPrice !== undefined ? {
+                set: item.takeProfit.limitPrice  
+               } : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? {
+                set: item.takeProfit.stopPrice  
+               } : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -3084,22 +3453,60 @@ export const NewsArticleAssetSentiment = {
       } : undefined,
         },
         create: {
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           notional: item.notional !== undefined ? item.notional : undefined,
           side: item.side !== undefined ? item.side : undefined,
           type: item.type !== undefined ? item.type : undefined,
+          orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
           timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
           limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
           stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
           trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
           trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
           extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+          strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+          expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+          optionType: item.optionType !== undefined ? item.optionType : undefined,
+          stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+      stopLoss: item.stopLoss ? 
+        typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+            id: item.stopLoss.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? 
+        typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+            id: item.takeProfit.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -3339,7 +3746,6 @@ export const NewsArticleAssetSentiment = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -3392,22 +3798,60 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           notional: item.notional !== undefined ? item.notional : undefined,
           side: item.side !== undefined ? item.side : undefined,
           type: item.type !== undefined ? item.type : undefined,
+          orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
           timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
           limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
           stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
           trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
           trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
           extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+          strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+          expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+          optionType: item.optionType !== undefined ? item.optionType : undefined,
+          stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+      stopLoss: item.stopLoss ? 
+        typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+            id: item.stopLoss.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? 
+        typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+            id: item.takeProfit.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -3847,9 +4291,6 @@ export const NewsArticleAssetSentiment = {
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
-          optionContractType: item.optionContractType !== undefined ? {
-              set: item.optionContractType  
-             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -3931,7 +4372,6 @@ export const NewsArticleAssetSentiment = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -3982,6 +4422,9 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? {
               set: item.id  
              } : undefined,
+          clientOrderId: item.clientOrderId !== undefined ? {
+              set: item.clientOrderId  
+             } : undefined,
           qty: item.qty !== undefined ? {
               set: item.qty  
              } : undefined,
@@ -3993,6 +4436,9 @@ export const NewsArticleAssetSentiment = {
              } : undefined,
           type: item.type !== undefined ? {
               set: item.type  
+             } : undefined,
+          orderClass: item.orderClass !== undefined ? {
+              set: item.orderClass  
              } : undefined,
           timeInForce: item.timeInForce !== undefined ? {
               set: item.timeInForce  
@@ -4012,9 +4458,6 @@ export const NewsArticleAssetSentiment = {
           extendedHours: item.extendedHours !== undefined ? {
               set: item.extendedHours  
              } : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? {
-              set: item.clientOrderId  
-             } : undefined,
           status: item.status !== undefined ? {
               set: item.status  
              } : undefined,
@@ -4030,6 +4473,69 @@ export const NewsArticleAssetSentiment = {
           fee: item.fee !== undefined ? {
               set: item.fee  
              } : undefined,
+          strikePrice: item.strikePrice !== undefined ? {
+              set: item.strikePrice  
+             } : undefined,
+          expirationDate: item.expirationDate !== undefined ? {
+              set: item.expirationDate  
+             } : undefined,
+          optionType: item.optionType !== undefined ? {
+              set: item.optionType  
+             } : undefined,
+          stopLossId: item.stopLossId !== undefined ? {
+              set: item.stopLossId  
+             } : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? {
+              set: item.takeProfitId  
+             } : undefined,
+      stopLoss: item.stopLoss ? {
+        upsert: {
+          where: {
+            id: item.stopLoss.id !== undefined ? {
+                equals: item.stopLoss.id 
+               } : undefined,
+          },
+          update: {
+            id: item.stopLoss.id !== undefined ? {
+                set: item.stopLoss.id  
+               } : undefined,
+            stopPrice: item.stopLoss.stopPrice !== undefined ? {
+                set: item.stopLoss.stopPrice  
+               } : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? {
+                set: item.stopLoss.limitPrice  
+               } : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? {
+        upsert: {
+          where: {
+            id: item.takeProfit.id !== undefined ? {
+                equals: item.takeProfit.id 
+               } : undefined,
+          },
+          update: {
+            id: item.takeProfit.id !== undefined ? {
+                set: item.takeProfit.id  
+               } : undefined,
+            limitPrice: item.takeProfit.limitPrice !== undefined ? {
+                set: item.takeProfit.limitPrice  
+               } : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? {
+                set: item.takeProfit.stopPrice  
+               } : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -4104,22 +4610,60 @@ export const NewsArticleAssetSentiment = {
       } : undefined,
         },
         create: {
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           notional: item.notional !== undefined ? item.notional : undefined,
           side: item.side !== undefined ? item.side : undefined,
           type: item.type !== undefined ? item.type : undefined,
+          orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
           timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
           limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
           stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
           trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
           trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
           extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+          strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+          expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+          optionType: item.optionType !== undefined ? item.optionType : undefined,
+          stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+      stopLoss: item.stopLoss ? 
+        typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+            id: item.stopLoss.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? 
+        typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+            id: item.takeProfit.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4359,7 +4903,6 @@ export const NewsArticleAssetSentiment = {
           confidence: item.confidence !== undefined ? item.confidence : undefined,
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
           status: item.status !== undefined ? item.status : undefined,
-          optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4412,22 +4955,60 @@ export const NewsArticleAssetSentiment = {
           id: item.id !== undefined ? item.id : undefined,
         },
         create: {
+          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           qty: item.qty !== undefined ? item.qty : undefined,
           notional: item.notional !== undefined ? item.notional : undefined,
           side: item.side !== undefined ? item.side : undefined,
           type: item.type !== undefined ? item.type : undefined,
+          orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
           timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
           limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
           stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
           trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
           trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
           extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-          clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
+          strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+          expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+          optionType: item.optionType !== undefined ? item.optionType : undefined,
+          stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+      stopLoss: item.stopLoss ? 
+        typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+            id: item.stopLoss.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+          },
+          create: {
+            stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+            limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+          },
+        }
+      } : undefined,
+      takeProfit: item.takeProfit ? 
+        typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+            id: item.takeProfit.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+          },
+          create: {
+            limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+            stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+          },
+        }
+      } : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4740,19 +5321,42 @@ export const NewsArticleAssetSentiment = {
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -4782,6 +5386,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -4823,7 +5432,6 @@ export const NewsArticleAssetSentiment = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -4837,19 +5445,42 @@ export const NewsArticleAssetSentiment = {
         }
         order {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -4992,24 +5623,52 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
       }
     }
     orders {
       id
+      clientOrderId
       alpacaAccountId
       assetId
       qty
       notional
       side
       type
+      orderClass
       timeInForce
       limitPrice
       stopPrice
+      stopLoss {
+        id
+        stopPrice
+        limitPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
+      takeProfit {
+        id
+        limitPrice
+        stopPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
       trailPrice
       trailPercent
       extendedHours
-      clientOrderId
       status
       createdAt
       updatedAt
@@ -5123,7 +5782,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -5334,7 +5992,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
           }
@@ -5347,6 +6004,11 @@ export const NewsArticleAssetSentiment = {
         id
       }
       fee
+      strikePrice
+      expirationDate
+      optionType
+      stopLossId
+      takeProfitId
     }
     positions {
       id
@@ -5473,7 +6135,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -5487,19 +6148,42 @@ export const NewsArticleAssetSentiment = {
             }
             order {
               id
+              clientOrderId
               alpacaAccountId
               assetId
               qty
               notional
               side
               type
+              orderClass
               timeInForce
               limitPrice
               stopPrice
+              stopLoss {
+                id
+                stopPrice
+                limitPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
+              takeProfit {
+                id
+                limitPrice
+                stopPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
               trailPrice
               trailPercent
               extendedHours
-              clientOrderId
               status
               createdAt
               updatedAt
@@ -5517,24 +6201,52 @@ export const NewsArticleAssetSentiment = {
                 id
               }
               fee
+              strikePrice
+              expirationDate
+              optionType
+              stopLossId
+              takeProfitId
             }
           }
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -5574,7 +6286,6 @@ export const NewsArticleAssetSentiment = {
               asset {
                 id
               }
-              optionContractType
               actions {
                 id
               }
@@ -5587,6 +6298,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -5839,19 +6555,42 @@ export const NewsArticleAssetSentiment = {
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -5881,6 +6620,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -5922,7 +6666,6 @@ export const NewsArticleAssetSentiment = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -5936,19 +6679,42 @@ export const NewsArticleAssetSentiment = {
         }
         order {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -6091,24 +6857,52 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
       }
     }
     orders {
       id
+      clientOrderId
       alpacaAccountId
       assetId
       qty
       notional
       side
       type
+      orderClass
       timeInForce
       limitPrice
       stopPrice
+      stopLoss {
+        id
+        stopPrice
+        limitPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
+      takeProfit {
+        id
+        limitPrice
+        stopPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
       trailPrice
       trailPercent
       extendedHours
-      clientOrderId
       status
       createdAt
       updatedAt
@@ -6222,7 +7016,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -6433,7 +7226,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
           }
@@ -6446,6 +7238,11 @@ export const NewsArticleAssetSentiment = {
         id
       }
       fee
+      strikePrice
+      expirationDate
+      optionType
+      stopLossId
+      takeProfitId
     }
     positions {
       id
@@ -6572,7 +7369,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -6586,19 +7382,42 @@ export const NewsArticleAssetSentiment = {
             }
             order {
               id
+              clientOrderId
               alpacaAccountId
               assetId
               qty
               notional
               side
               type
+              orderClass
               timeInForce
               limitPrice
               stopPrice
+              stopLoss {
+                id
+                stopPrice
+                limitPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
+              takeProfit {
+                id
+                limitPrice
+                stopPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
               trailPrice
               trailPercent
               extendedHours
-              clientOrderId
               status
               createdAt
               updatedAt
@@ -6616,24 +7435,52 @@ export const NewsArticleAssetSentiment = {
                 id
               }
               fee
+              strikePrice
+              expirationDate
+              optionType
+              stopLossId
+              takeProfitId
             }
           }
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -6673,7 +7520,6 @@ export const NewsArticleAssetSentiment = {
               asset {
                 id
               }
-              optionContractType
               actions {
                 id
               }
@@ -6686,6 +7532,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -6937,19 +7788,42 @@ export const NewsArticleAssetSentiment = {
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -6979,6 +7853,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -7020,7 +7899,6 @@ export const NewsArticleAssetSentiment = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -7034,19 +7912,42 @@ export const NewsArticleAssetSentiment = {
         }
         order {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -7189,24 +8090,52 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
       }
     }
     orders {
       id
+      clientOrderId
       alpacaAccountId
       assetId
       qty
       notional
       side
       type
+      orderClass
       timeInForce
       limitPrice
       stopPrice
+      stopLoss {
+        id
+        stopPrice
+        limitPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
+      takeProfit {
+        id
+        limitPrice
+        stopPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
       trailPrice
       trailPercent
       extendedHours
-      clientOrderId
       status
       createdAt
       updatedAt
@@ -7320,7 +8249,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -7531,7 +8459,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
           }
@@ -7544,6 +8471,11 @@ export const NewsArticleAssetSentiment = {
         id
       }
       fee
+      strikePrice
+      expirationDate
+      optionType
+      stopLossId
+      takeProfitId
     }
     positions {
       id
@@ -7670,7 +8602,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -7684,19 +8615,42 @@ export const NewsArticleAssetSentiment = {
             }
             order {
               id
+              clientOrderId
               alpacaAccountId
               assetId
               qty
               notional
               side
               type
+              orderClass
               timeInForce
               limitPrice
               stopPrice
+              stopLoss {
+                id
+                stopPrice
+                limitPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
+              takeProfit {
+                id
+                limitPrice
+                stopPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
               trailPrice
               trailPercent
               extendedHours
-              clientOrderId
               status
               createdAt
               updatedAt
@@ -7714,24 +8668,52 @@ export const NewsArticleAssetSentiment = {
                 id
               }
               fee
+              strikePrice
+              expirationDate
+              optionType
+              stopLossId
+              takeProfitId
             }
           }
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -7771,7 +8753,6 @@ export const NewsArticleAssetSentiment = {
               asset {
                 id
               }
-              optionContractType
               actions {
                 id
               }
@@ -7784,6 +8765,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -8028,19 +9014,42 @@ export const NewsArticleAssetSentiment = {
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -8070,6 +9079,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id
@@ -8111,7 +9125,6 @@ export const NewsArticleAssetSentiment = {
       asset {
         id
       }
-      optionContractType
       actions {
         id
         sequence
@@ -8125,19 +9138,42 @@ export const NewsArticleAssetSentiment = {
         }
         order {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -8280,24 +9316,52 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
       }
     }
     orders {
       id
+      clientOrderId
       alpacaAccountId
       assetId
       qty
       notional
       side
       type
+      orderClass
       timeInForce
       limitPrice
       stopPrice
+      stopLoss {
+        id
+        stopPrice
+        limitPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
+      takeProfit {
+        id
+        limitPrice
+        stopPrice
+        createdAt
+        updatedAt
+        orderId
+        Order {
+          id
+        }
+      }
       trailPrice
       trailPercent
       extendedHours
-      clientOrderId
       status
       createdAt
       updatedAt
@@ -8411,7 +9475,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -8622,7 +9685,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
           }
@@ -8635,6 +9697,11 @@ export const NewsArticleAssetSentiment = {
         id
       }
       fee
+      strikePrice
+      expirationDate
+      optionType
+      stopLossId
+      takeProfitId
     }
     positions {
       id
@@ -8761,7 +9828,6 @@ export const NewsArticleAssetSentiment = {
           asset {
             id
           }
-          optionContractType
           actions {
             id
             sequence
@@ -8775,19 +9841,42 @@ export const NewsArticleAssetSentiment = {
             }
             order {
               id
+              clientOrderId
               alpacaAccountId
               assetId
               qty
               notional
               side
               type
+              orderClass
               timeInForce
               limitPrice
               stopPrice
+              stopLoss {
+                id
+                stopPrice
+                limitPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
+              takeProfit {
+                id
+                limitPrice
+                stopPrice
+                createdAt
+                updatedAt
+                orderId
+                Order {
+                  id
+                }
+              }
               trailPrice
               trailPercent
               extendedHours
-              clientOrderId
               status
               createdAt
               updatedAt
@@ -8805,24 +9894,52 @@ export const NewsArticleAssetSentiment = {
                 id
               }
               fee
+              strikePrice
+              expirationDate
+              optionType
+              stopLossId
+              takeProfitId
             }
           }
         }
         orders {
           id
+          clientOrderId
           alpacaAccountId
           assetId
           qty
           notional
           side
           type
+          orderClass
           timeInForce
           limitPrice
           stopPrice
+          stopLoss {
+            id
+            stopPrice
+            limitPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
+          takeProfit {
+            id
+            limitPrice
+            stopPrice
+            createdAt
+            updatedAt
+            orderId
+            Order {
+              id
+            }
+          }
           trailPrice
           trailPercent
           extendedHours
-          clientOrderId
           status
           createdAt
           updatedAt
@@ -8862,7 +9979,6 @@ export const NewsArticleAssetSentiment = {
               asset {
                 id
               }
-              optionContractType
               actions {
                 id
               }
@@ -8875,6 +9991,11 @@ export const NewsArticleAssetSentiment = {
             id
           }
           fee
+          strikePrice
+          expirationDate
+          optionType
+          stopLossId
+          takeProfitId
         }
         positions {
           id

@@ -16,6 +16,8 @@ import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
 import { Order } from './Order';
 import { Position } from './Position';
 import { Session } from './Session';
+import { StopLoss } from './StopLoss';
+import { TakeProfit } from './TakeProfit';
 import { Trade } from './Trade';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
@@ -34,6 +36,8 @@ const adaptic = {
   order: Order,
   position: Position,
   session: Session,
+  stopLoss: StopLoss,
+  takeProfit: TakeProfit,
   trade: Trade,
   user: User,
   verificationToken: VerificationToken,

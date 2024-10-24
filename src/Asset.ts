@@ -187,19 +187,42 @@ export const Asset = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -229,6 +252,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -270,7 +298,6 @@ export const Asset = {
     asset {
       id
     }
-    optionContractType
     actions {
       id
       sequence
@@ -284,19 +311,42 @@ export const Asset = {
       }
       order {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -439,24 +489,52 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
     }
   }
   orders {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -570,7 +648,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -781,7 +858,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -794,6 +870,11 @@ export const Asset = {
       id
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
   positions {
     id
@@ -920,7 +1001,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -934,19 +1014,42 @@ export const Asset = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -964,24 +1067,52 @@ export const Asset = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -1021,7 +1152,6 @@ export const Asset = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -1034,6 +1164,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -1167,7 +1302,6 @@ export const Asset = {
         confidence: item.confidence !== undefined ? item.confidence : undefined,
         timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
         status: item.status !== undefined ? item.status : undefined,
-        optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
     alpacaAccount: item.alpacaAccount ? 
       typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1222,22 +1356,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -1315,22 +1455,28 @@ export const Asset = {
             id: item.order.id !== undefined ? item.order.id : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -1351,22 +1497,60 @@ export const Asset = {
         id: item.id !== undefined ? item.id : undefined,
       },
       create: {
+        clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
         qty: item.qty !== undefined ? item.qty : undefined,
         notional: item.notional !== undefined ? item.notional : undefined,
         side: item.side !== undefined ? item.side : undefined,
         type: item.type !== undefined ? item.type : undefined,
+        orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
         timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
         limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
         stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
         trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
         trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
         extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-        clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
         status: item.status !== undefined ? item.status : undefined,
         submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
         filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
         filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
         fee: item.fee !== undefined ? item.fee : undefined,
+        strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+        expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        optionType: item.optionType !== undefined ? item.optionType : undefined,
+        stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+        takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+    stopLoss: item.stopLoss ? 
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+          id: item.stopLoss.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+        },
+        create: {
+          stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: item.takeProfit ? 
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+          id: item.takeProfit.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+        },
+        create: {
+          limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: item.alpacaAccount ? 
       typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1430,7 +1614,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -1517,7 +1700,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -1614,7 +1796,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -1629,22 +1810,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -2008,19 +2195,42 @@ export const Asset = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -2050,6 +2260,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -2091,7 +2306,6 @@ export const Asset = {
     asset {
       id
     }
-    optionContractType
     actions {
       id
       sequence
@@ -2105,19 +2319,42 @@ export const Asset = {
       }
       order {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -2260,24 +2497,52 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
     }
   }
   orders {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -2391,7 +2656,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -2602,7 +2866,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -2615,6 +2878,11 @@ export const Asset = {
       id
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
   positions {
     id
@@ -2741,7 +3009,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -2755,19 +3022,42 @@ export const Asset = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -2785,24 +3075,52 @@ export const Asset = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -2842,7 +3160,6 @@ export const Asset = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -2855,6 +3172,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -3127,9 +3449,6 @@ export const Asset = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-        optionContractType: item.optionContractType !== undefined ? {
-            set: item.optionContractType  
-           } : undefined,
     alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
@@ -3223,6 +3542,9 @@ export const Asset = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -3234,6 +3556,9 @@ export const Asset = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -3253,9 +3578,6 @@ export const Asset = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -3271,24 +3593,45 @@ export const Asset = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3429,22 +3772,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3530,6 +3879,9 @@ export const Asset = {
             id: item.order.id !== undefined ? {
                 set: item.order.id  
                } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                set: item.order.clientOrderId  
+               } : undefined,
             qty: item.order.qty !== undefined ? {
                 set: item.order.qty  
                } : undefined,
@@ -3541,6 +3893,9 @@ export const Asset = {
                } : undefined,
             type: item.order.type !== undefined ? {
                 set: item.order.type  
+               } : undefined,
+            orderClass: item.order.orderClass !== undefined ? {
+                set: item.order.orderClass  
                } : undefined,
             timeInForce: item.order.timeInForce !== undefined ? {
                 set: item.order.timeInForce  
@@ -3560,9 +3915,6 @@ export const Asset = {
             extendedHours: item.order.extendedHours !== undefined ? {
                 set: item.order.extendedHours  
                } : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? {
-                set: item.order.clientOrderId  
-               } : undefined,
             status: item.order.status !== undefined ? {
                 set: item.order.status  
                } : undefined,
@@ -3578,24 +3930,45 @@ export const Asset = {
             fee: item.order.fee !== undefined ? {
                 set: item.order.fee  
                } : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? {
+                set: item.order.strikePrice  
+               } : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? {
+                set: item.order.expirationDate  
+               } : undefined,
+            optionType: item.order.optionType !== undefined ? {
+                set: item.order.optionType  
+               } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                set: item.order.stopLossId  
+               } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                set: item.order.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -3617,22 +3990,28 @@ export const Asset = {
             id: item.order.id !== undefined ? item.order.id : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -3650,7 +4029,6 @@ export const Asset = {
         confidence: item.confidence !== undefined ? item.confidence : undefined,
         timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
         status: item.status !== undefined ? item.status : undefined,
-        optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
     alpacaAccount: item.alpacaAccount ? 
       typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -3705,22 +4083,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -3798,22 +4182,28 @@ export const Asset = {
             id: item.order.id !== undefined ? item.order.id : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -3832,6 +4222,9 @@ export const Asset = {
         id: item.id !== undefined ? {
             set: item.id  
            } : undefined,
+        clientOrderId: item.clientOrderId !== undefined ? {
+            set: item.clientOrderId  
+           } : undefined,
         qty: item.qty !== undefined ? {
             set: item.qty  
            } : undefined,
@@ -3843,6 +4236,9 @@ export const Asset = {
            } : undefined,
         type: item.type !== undefined ? {
             set: item.type  
+           } : undefined,
+        orderClass: item.orderClass !== undefined ? {
+            set: item.orderClass  
            } : undefined,
         timeInForce: item.timeInForce !== undefined ? {
             set: item.timeInForce  
@@ -3862,9 +4258,6 @@ export const Asset = {
         extendedHours: item.extendedHours !== undefined ? {
             set: item.extendedHours  
            } : undefined,
-        clientOrderId: item.clientOrderId !== undefined ? {
-            set: item.clientOrderId  
-           } : undefined,
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
@@ -3880,6 +4273,69 @@ export const Asset = {
         fee: item.fee !== undefined ? {
             set: item.fee  
            } : undefined,
+        strikePrice: item.strikePrice !== undefined ? {
+            set: item.strikePrice  
+           } : undefined,
+        expirationDate: item.expirationDate !== undefined ? {
+            set: item.expirationDate  
+           } : undefined,
+        optionType: item.optionType !== undefined ? {
+            set: item.optionType  
+           } : undefined,
+        stopLossId: item.stopLossId !== undefined ? {
+            set: item.stopLossId  
+           } : undefined,
+        takeProfitId: item.takeProfitId !== undefined ? {
+            set: item.takeProfitId  
+           } : undefined,
+    stopLoss: item.stopLoss ? {
+      upsert: {
+        where: {
+          id: item.stopLoss.id !== undefined ? {
+              equals: item.stopLoss.id 
+             } : undefined,
+        },
+        update: {
+          id: item.stopLoss.id !== undefined ? {
+              set: item.stopLoss.id  
+             } : undefined,
+          stopPrice: item.stopLoss.stopPrice !== undefined ? {
+              set: item.stopLoss.stopPrice  
+             } : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? {
+              set: item.stopLoss.limitPrice  
+             } : undefined,
+        },
+        create: {
+          stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: item.takeProfit ? {
+      upsert: {
+        where: {
+          id: item.takeProfit.id !== undefined ? {
+              equals: item.takeProfit.id 
+             } : undefined,
+        },
+        update: {
+          id: item.takeProfit.id !== undefined ? {
+              set: item.takeProfit.id  
+             } : undefined,
+          limitPrice: item.takeProfit.limitPrice !== undefined ? {
+              set: item.takeProfit.limitPrice  
+             } : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? {
+              set: item.takeProfit.stopPrice  
+             } : undefined,
+        },
+        create: {
+          limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
@@ -4000,9 +4456,6 @@ export const Asset = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -4014,7 +4467,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -4164,7 +4616,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -4279,9 +4730,6 @@ export const Asset = {
             status: item.action.trade.status !== undefined ? {
                 set: item.action.trade.status  
                } : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? {
-                set: item.action.trade.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.action.trade.qty !== undefined ? item.action.trade.qty : undefined,
@@ -4293,7 +4741,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -4324,7 +4771,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -4333,22 +4779,60 @@ export const Asset = {
     } : undefined,
       },
       create: {
+        clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
         qty: item.qty !== undefined ? item.qty : undefined,
         notional: item.notional !== undefined ? item.notional : undefined,
         side: item.side !== undefined ? item.side : undefined,
         type: item.type !== undefined ? item.type : undefined,
+        orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
         timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
         limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
         stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
         trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
         trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
         extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-        clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
         status: item.status !== undefined ? item.status : undefined,
         submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
         filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
         filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
         fee: item.fee !== undefined ? item.fee : undefined,
+        strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+        expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        optionType: item.optionType !== undefined ? item.optionType : undefined,
+        stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+        takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+    stopLoss: item.stopLoss ? 
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+          id: item.stopLoss.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+        },
+        create: {
+          stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: item.takeProfit ? 
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+          id: item.takeProfit.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+        },
+        create: {
+          limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: item.alpacaAccount ? 
       typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4412,7 +4896,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -4499,7 +4982,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -4677,9 +5159,6 @@ export const Asset = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -4691,7 +5170,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -4704,6 +5182,9 @@ export const Asset = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -4715,6 +5196,9 @@ export const Asset = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -4734,9 +5218,6 @@ export const Asset = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -4752,24 +5233,45 @@ export const Asset = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4853,7 +5355,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -4868,22 +5369,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -4985,7 +5492,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -5000,22 +5506,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -5431,9 +5943,6 @@ export const Asset = {
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
-        optionContractType: item.optionContractType !== undefined ? {
-            set: item.optionContractType  
-           } : undefined,
     alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
@@ -5527,6 +6036,9 @@ export const Asset = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -5538,6 +6050,9 @@ export const Asset = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -5557,9 +6072,6 @@ export const Asset = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -5575,24 +6087,45 @@ export const Asset = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -5733,22 +6266,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -5834,6 +6373,9 @@ export const Asset = {
             id: item.order.id !== undefined ? {
                 set: item.order.id  
                } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                set: item.order.clientOrderId  
+               } : undefined,
             qty: item.order.qty !== undefined ? {
                 set: item.order.qty  
                } : undefined,
@@ -5845,6 +6387,9 @@ export const Asset = {
                } : undefined,
             type: item.order.type !== undefined ? {
                 set: item.order.type  
+               } : undefined,
+            orderClass: item.order.orderClass !== undefined ? {
+                set: item.order.orderClass  
                } : undefined,
             timeInForce: item.order.timeInForce !== undefined ? {
                 set: item.order.timeInForce  
@@ -5864,9 +6409,6 @@ export const Asset = {
             extendedHours: item.order.extendedHours !== undefined ? {
                 set: item.order.extendedHours  
                } : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? {
-                set: item.order.clientOrderId  
-               } : undefined,
             status: item.order.status !== undefined ? {
                 set: item.order.status  
                } : undefined,
@@ -5882,24 +6424,45 @@ export const Asset = {
             fee: item.order.fee !== undefined ? {
                 set: item.order.fee  
                } : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? {
+                set: item.order.strikePrice  
+               } : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? {
+                set: item.order.expirationDate  
+               } : undefined,
+            optionType: item.order.optionType !== undefined ? {
+                set: item.order.optionType  
+               } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                set: item.order.stopLossId  
+               } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                set: item.order.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -5921,22 +6484,28 @@ export const Asset = {
             id: item.order.id !== undefined ? item.order.id : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -5954,7 +6523,6 @@ export const Asset = {
         confidence: item.confidence !== undefined ? item.confidence : undefined,
         timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
         status: item.status !== undefined ? item.status : undefined,
-        optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
     alpacaAccount: item.alpacaAccount ? 
       typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -6009,22 +6577,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -6102,22 +6676,28 @@ export const Asset = {
             id: item.order.id !== undefined ? item.order.id : undefined,
           },
           create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             qty: item.order.qty !== undefined ? item.order.qty : undefined,
             notional: item.order.notional !== undefined ? item.order.notional : undefined,
             side: item.order.side !== undefined ? item.order.side : undefined,
             type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
             timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
             limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
             stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
             trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
             trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
             extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
-            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
             status: item.order.status !== undefined ? item.order.status : undefined,
             submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
             filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
             filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
       } : undefined,
@@ -6136,6 +6716,9 @@ export const Asset = {
         id: item.id !== undefined ? {
             set: item.id  
            } : undefined,
+        clientOrderId: item.clientOrderId !== undefined ? {
+            set: item.clientOrderId  
+           } : undefined,
         qty: item.qty !== undefined ? {
             set: item.qty  
            } : undefined,
@@ -6147,6 +6730,9 @@ export const Asset = {
            } : undefined,
         type: item.type !== undefined ? {
             set: item.type  
+           } : undefined,
+        orderClass: item.orderClass !== undefined ? {
+            set: item.orderClass  
            } : undefined,
         timeInForce: item.timeInForce !== undefined ? {
             set: item.timeInForce  
@@ -6166,9 +6752,6 @@ export const Asset = {
         extendedHours: item.extendedHours !== undefined ? {
             set: item.extendedHours  
            } : undefined,
-        clientOrderId: item.clientOrderId !== undefined ? {
-            set: item.clientOrderId  
-           } : undefined,
         status: item.status !== undefined ? {
             set: item.status  
            } : undefined,
@@ -6184,6 +6767,69 @@ export const Asset = {
         fee: item.fee !== undefined ? {
             set: item.fee  
            } : undefined,
+        strikePrice: item.strikePrice !== undefined ? {
+            set: item.strikePrice  
+           } : undefined,
+        expirationDate: item.expirationDate !== undefined ? {
+            set: item.expirationDate  
+           } : undefined,
+        optionType: item.optionType !== undefined ? {
+            set: item.optionType  
+           } : undefined,
+        stopLossId: item.stopLossId !== undefined ? {
+            set: item.stopLossId  
+           } : undefined,
+        takeProfitId: item.takeProfitId !== undefined ? {
+            set: item.takeProfitId  
+           } : undefined,
+    stopLoss: item.stopLoss ? {
+      upsert: {
+        where: {
+          id: item.stopLoss.id !== undefined ? {
+              equals: item.stopLoss.id 
+             } : undefined,
+        },
+        update: {
+          id: item.stopLoss.id !== undefined ? {
+              set: item.stopLoss.id  
+             } : undefined,
+          stopPrice: item.stopLoss.stopPrice !== undefined ? {
+              set: item.stopLoss.stopPrice  
+             } : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? {
+              set: item.stopLoss.limitPrice  
+             } : undefined,
+        },
+        create: {
+          stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: item.takeProfit ? {
+      upsert: {
+        where: {
+          id: item.takeProfit.id !== undefined ? {
+              equals: item.takeProfit.id 
+             } : undefined,
+        },
+        update: {
+          id: item.takeProfit.id !== undefined ? {
+              set: item.takeProfit.id  
+             } : undefined,
+          limitPrice: item.takeProfit.limitPrice !== undefined ? {
+              set: item.takeProfit.limitPrice  
+             } : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? {
+              set: item.takeProfit.stopPrice  
+             } : undefined,
+        },
+        create: {
+          limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: item.alpacaAccount ? {
       upsert: {
         where: {
@@ -6304,9 +6950,6 @@ export const Asset = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -6318,7 +6961,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6468,7 +7110,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6583,9 +7224,6 @@ export const Asset = {
             status: item.action.trade.status !== undefined ? {
                 set: item.action.trade.status  
                } : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? {
-                set: item.action.trade.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.action.trade.qty !== undefined ? item.action.trade.qty : undefined,
@@ -6597,7 +7235,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -6628,7 +7265,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -6637,22 +7273,60 @@ export const Asset = {
     } : undefined,
       },
       create: {
+        clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
         qty: item.qty !== undefined ? item.qty : undefined,
         notional: item.notional !== undefined ? item.notional : undefined,
         side: item.side !== undefined ? item.side : undefined,
         type: item.type !== undefined ? item.type : undefined,
+        orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
         timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
         limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
         stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
         trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
         trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
         extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-        clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
         status: item.status !== undefined ? item.status : undefined,
         submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
         filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
         filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
         fee: item.fee !== undefined ? item.fee : undefined,
+        strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+        expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        optionType: item.optionType !== undefined ? item.optionType : undefined,
+        stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+        takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
+    stopLoss: item.stopLoss ? 
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+    ? { connect: {
+          id: item.stopLoss.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.stopLoss.id !== undefined ? item.stopLoss.id : undefined,
+        },
+        create: {
+          stopPrice: item.stopLoss.stopPrice !== undefined ? item.stopLoss.stopPrice : undefined,
+          limitPrice: item.stopLoss.limitPrice !== undefined ? item.stopLoss.limitPrice : undefined,
+        },
+      }
+    } : undefined,
+    takeProfit: item.takeProfit ? 
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+    ? { connect: {
+          id: item.takeProfit.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.takeProfit.id !== undefined ? item.takeProfit.id : undefined,
+        },
+        create: {
+          limitPrice: item.takeProfit.limitPrice !== undefined ? item.takeProfit.limitPrice : undefined,
+          stopPrice: item.takeProfit.stopPrice !== undefined ? item.takeProfit.stopPrice : undefined,
+        },
+      }
+    } : undefined,
     alpacaAccount: item.alpacaAccount ? 
       typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -6716,7 +7390,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -6803,7 +7476,6 @@ export const Asset = {
             confidence: item.action.trade.confidence !== undefined ? item.action.trade.confidence : undefined,
             timestamp: item.action.trade.timestamp !== undefined ? item.action.trade.timestamp : undefined,
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
-            optionContractType: item.action.trade.optionContractType !== undefined ? item.action.trade.optionContractType : undefined,
           },
         }
       } : undefined,
@@ -6981,9 +7653,6 @@ export const Asset = {
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
-            optionContractType: item.optionContractType !== undefined ? {
-                set: item.optionContractType  
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -6995,7 +7664,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -7008,6 +7676,9 @@ export const Asset = {
             id: item.id !== undefined ? {
                 set: item.id  
                } : undefined,
+            clientOrderId: item.clientOrderId !== undefined ? {
+                set: item.clientOrderId  
+               } : undefined,
             qty: item.qty !== undefined ? {
                 set: item.qty  
                } : undefined,
@@ -7019,6 +7690,9 @@ export const Asset = {
                } : undefined,
             type: item.type !== undefined ? {
                 set: item.type  
+               } : undefined,
+            orderClass: item.orderClass !== undefined ? {
+                set: item.orderClass  
                } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
                 set: item.timeInForce  
@@ -7038,9 +7712,6 @@ export const Asset = {
             extendedHours: item.extendedHours !== undefined ? {
                 set: item.extendedHours  
                } : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
             status: item.status !== undefined ? {
                 set: item.status  
                } : undefined,
@@ -7056,24 +7727,45 @@ export const Asset = {
             fee: item.fee !== undefined ? {
                 set: item.fee  
                } : undefined,
+            strikePrice: item.strikePrice !== undefined ? {
+                set: item.strikePrice  
+               } : undefined,
+            expirationDate: item.expirationDate !== undefined ? {
+                set: item.expirationDate  
+               } : undefined,
+            optionType: item.optionType !== undefined ? {
+                set: item.optionType  
+               } : undefined,
+            stopLossId: item.stopLossId !== undefined ? {
+                set: item.stopLossId  
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                set: item.takeProfitId  
+               } : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7157,7 +7849,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -7172,22 +7863,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7289,7 +7986,6 @@ export const Asset = {
             confidence: item.confidence !== undefined ? item.confidence : undefined,
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
             status: item.status !== undefined ? item.status : undefined,
-            optionContractType: item.optionContractType !== undefined ? item.optionContractType : undefined,
           },
         }))
       } : undefined,
@@ -7304,22 +8000,28 @@ export const Asset = {
             id: item.id !== undefined ? item.id : undefined,
           },
           create: {
+            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             qty: item.qty !== undefined ? item.qty : undefined,
             notional: item.notional !== undefined ? item.notional : undefined,
             side: item.side !== undefined ? item.side : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            orderClass: item.orderClass !== undefined ? item.orderClass : undefined,
             timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
             limitPrice: item.limitPrice !== undefined ? item.limitPrice : undefined,
             stopPrice: item.stopPrice !== undefined ? item.stopPrice : undefined,
             trailPrice: item.trailPrice !== undefined ? item.trailPrice : undefined,
             trailPercent: item.trailPercent !== undefined ? item.trailPercent : undefined,
             extendedHours: item.extendedHours !== undefined ? item.extendedHours : undefined,
-            clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
+            expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            optionType: item.optionType !== undefined ? item.optionType : undefined,
+            stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
           },
         }))
       } : undefined,
@@ -7678,19 +8380,42 @@ export const Asset = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -7720,6 +8445,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -7761,7 +8491,6 @@ export const Asset = {
     asset {
       id
     }
-    optionContractType
     actions {
       id
       sequence
@@ -7775,19 +8504,42 @@ export const Asset = {
       }
       order {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -7930,24 +8682,52 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
     }
   }
   orders {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -8061,7 +8841,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -8272,7 +9051,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -8285,6 +9063,11 @@ export const Asset = {
       id
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
   positions {
     id
@@ -8411,7 +9194,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -8425,19 +9207,42 @@ export const Asset = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -8455,24 +9260,52 @@ export const Asset = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -8512,7 +9345,6 @@ export const Asset = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -8525,6 +9357,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -8777,19 +9614,42 @@ export const Asset = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -8819,6 +9679,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -8860,7 +9725,6 @@ export const Asset = {
     asset {
       id
     }
-    optionContractType
     actions {
       id
       sequence
@@ -8874,19 +9738,42 @@ export const Asset = {
       }
       order {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -9029,24 +9916,52 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
     }
   }
   orders {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -9160,7 +10075,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -9371,7 +10285,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -9384,6 +10297,11 @@ export const Asset = {
       id
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
   positions {
     id
@@ -9510,7 +10428,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -9524,19 +10441,42 @@ export const Asset = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -9554,24 +10494,52 @@ export const Asset = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -9611,7 +10579,6 @@ export const Asset = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -9624,6 +10591,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -9876,19 +10848,42 @@ export const Asset = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -9918,6 +10913,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -9959,7 +10959,6 @@ export const Asset = {
     asset {
       id
     }
-    optionContractType
     actions {
       id
       sequence
@@ -9973,19 +10972,42 @@ export const Asset = {
       }
       order {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -10128,24 +11150,52 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
     }
   }
   orders {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -10259,7 +11309,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -10470,7 +11519,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -10483,6 +11531,11 @@ export const Asset = {
       id
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
   positions {
     id
@@ -10609,7 +11662,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -10623,19 +11675,42 @@ export const Asset = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -10653,24 +11728,52 @@ export const Asset = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -10710,7 +11813,6 @@ export const Asset = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -10723,6 +11825,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -10967,19 +12074,42 @@ export const Asset = {
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -11009,6 +12139,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id
@@ -11050,7 +12185,6 @@ export const Asset = {
     asset {
       id
     }
-    optionContractType
     actions {
       id
       sequence
@@ -11064,19 +12198,42 @@ export const Asset = {
       }
       order {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -11219,24 +12376,52 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
     }
   }
   orders {
     id
+    clientOrderId
     alpacaAccountId
     assetId
     qty
     notional
     side
     type
+    orderClass
     timeInForce
     limitPrice
     stopPrice
+    stopLoss {
+      id
+      stopPrice
+      limitPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
+    takeProfit {
+      id
+      limitPrice
+      stopPrice
+      createdAt
+      updatedAt
+      orderId
+      Order {
+        id
+      }
+    }
     trailPrice
     trailPercent
     extendedHours
-    clientOrderId
     status
     createdAt
     updatedAt
@@ -11350,7 +12535,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -11561,7 +12745,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
         }
@@ -11574,6 +12757,11 @@ export const Asset = {
       id
     }
     fee
+    strikePrice
+    expirationDate
+    optionType
+    stopLossId
+    takeProfitId
   }
   positions {
     id
@@ -11700,7 +12888,6 @@ export const Asset = {
         asset {
           id
         }
-        optionContractType
         actions {
           id
           sequence
@@ -11714,19 +12901,42 @@ export const Asset = {
           }
           order {
             id
+            clientOrderId
             alpacaAccountId
             assetId
             qty
             notional
             side
             type
+            orderClass
             timeInForce
             limitPrice
             stopPrice
+            stopLoss {
+              id
+              stopPrice
+              limitPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
+            takeProfit {
+              id
+              limitPrice
+              stopPrice
+              createdAt
+              updatedAt
+              orderId
+              Order {
+                id
+              }
+            }
             trailPrice
             trailPercent
             extendedHours
-            clientOrderId
             status
             createdAt
             updatedAt
@@ -11744,24 +12954,52 @@ export const Asset = {
               id
             }
             fee
+            strikePrice
+            expirationDate
+            optionType
+            stopLossId
+            takeProfitId
           }
         }
       }
       orders {
         id
+        clientOrderId
         alpacaAccountId
         assetId
         qty
         notional
         side
         type
+        orderClass
         timeInForce
         limitPrice
         stopPrice
+        stopLoss {
+          id
+          stopPrice
+          limitPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
+        takeProfit {
+          id
+          limitPrice
+          stopPrice
+          createdAt
+          updatedAt
+          orderId
+          Order {
+            id
+          }
+        }
         trailPrice
         trailPercent
         extendedHours
-        clientOrderId
         status
         createdAt
         updatedAt
@@ -11801,7 +13039,6 @@ export const Asset = {
             asset {
               id
             }
-            optionContractType
             actions {
               id
             }
@@ -11814,6 +13051,11 @@ export const Asset = {
           id
         }
         fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
       }
       positions {
         id

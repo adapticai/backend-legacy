@@ -9,7 +9,7 @@ import pluralize from 'pluralize';
 const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
 const OUTPUT_DIR = path.join(__dirname, '../../src/generated/typeStrings');
 const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
-const MAX_DEPTH = 3; // Set maximum recursion depth
+const MAX_DEPTH = 4; // Set maximum recursion depth
 
 // Define the list of fields to exclude globally
 const EXCLUDED_FIELDS = new Set([
