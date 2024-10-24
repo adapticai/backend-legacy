@@ -1020,7 +1020,7 @@ model Trade {
   total Float
 
   /// Option Type (CALL or PUT) if the asset is an option.
-  optionType OptionType
+  optionType OptionType? @default(CALL)
 
   /// Signal that triggered the trade.
   signal TradeSignal @default(PRICE_ACTION)
