@@ -10,33 +10,31 @@
     "build": "tsc --declaration --emitDeclarationOnly"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mehran",
   "license": "ISC",
-  "devDependencies": {
-    "typegraphql-prisma": "^0.27.2"
-  },
   "files": [
-    "package.json",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "dist/**/*.js.map",
+    "!dist/server.js",
+    "!dist/server.d.ts",
+    "!dist/server.js.map",
+    "!dist/middleware/",
+    "!dist/esm/",
     "README.md",
-    "generated/",
-    "server/",
-    "node_modules/",
-    "README.md",
-    "package.json",
-    "*.d.ts",
-    "*.js",
-    "*.cjs",
-    "*.mjs",
-    "*.ts",
-    "*.map.js"
+    "package.json"
   ],
-  "dependencies": {
+  "peerDependencies": {
     "@apollo/client": "^3.11.8",
-    "@prisma/client": "^5.17.0",
     "graphql": "^16.9.0",
+    "type-graphql": "^2.0.0-rc.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.17.0",
+    "reflect-metadata": "^0.2.2"
+  },
+  "devDependencies": {
     "prisma": "^5.17.0",
-    "type-graphql": "^2.0.0-rc.2",
-    "reflect-metadata": "^0.2.2",
     "typegraphql-prisma": "^0.27.2"
   }
 }
