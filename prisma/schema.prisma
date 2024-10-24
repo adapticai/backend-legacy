@@ -1016,6 +1016,9 @@ model Trade {
   /// Total value of the trade (qty * price).
   total Float
 
+  /// Option Type (CALL or PUT) if the asset is an option.
+  optionType OptionType
+
   /// Signal that triggered the trade.
   signal TradeSignal @default(PRICE_ACTION)
 
