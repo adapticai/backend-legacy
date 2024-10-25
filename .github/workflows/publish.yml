@@ -11,14 +11,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
+          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org/'
 
       - name: Clean node_modules
@@ -62,7 +62,7 @@ jobs:
       - name: Get current package content from npm
         id: get_npm_package_content
         run: |
-          npm view ${{ env.PACKAGE_NAME }}@${{ env.PACKAGE_VERSION }} dist.tarball | xargs curl -sL | tar -tzf - > ../npm_package_files.txt
+          npm view ${{ env.PACKAGE_NAME }} dist.tarball | xargs curl -sL | tar -tzf - > ../npm_package_files.txt
 
       - name: List local dist files
         id: list_dist_files
