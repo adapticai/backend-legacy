@@ -612,7 +612,7 @@ model User {
   openaiAPIKey String?
 
   /// OpenAI API Language model selected by the user.
-  openaiModel OpenaiModel?
+  openaiModel OpenaiModel? @default(O1_MINI)
 
   @@map(name: "users")
 }
