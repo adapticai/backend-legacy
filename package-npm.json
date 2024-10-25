@@ -41,5 +41,6 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "always-build-npm": true
+  "always-build-npm": false,
+  "danas-notes": "Set always-build-npm to true if you want to build the package with every push regardless of changes to code (e.g. just to push a new version with some config changes)"
 }
