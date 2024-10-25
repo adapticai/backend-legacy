@@ -13,9 +13,16 @@
   "author": "Mehran",
   "license": "ISC",
   "files": [
-    "dist/**/*",
     "package.json",
-    "README.md"
+    "README.md",
+    "generated/",
+    "server/",
+    "*.d.ts",
+    "*.js",
+    "*.cjs",
+    "*.mjs",
+    "*.ts",
+    "*.map.js"
   ],
   "peerDependencies": {
     "@apollo/client": "^3.11.8",
