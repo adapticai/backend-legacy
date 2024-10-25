@@ -1,6 +1,6 @@
 {
   "name": "adaptic-backend",
-  "version": "1.0.135",
+  "version": "1.0.134",
   "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
   "type": "module",
   "types": "index.d.ts",
@@ -13,16 +13,9 @@
   "author": "Mehran",
   "license": "ISC",
   "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts",
-    "dist/**/*.js.map",
-    "!dist/server.js",
-    "!dist/server.d.ts",
-    "!dist/server.js.map",
-    "!dist/middleware/",
-    "!dist/esm/",
-    "README.md",
-    "package.json"
+    "dist/**/*",
+    "package.json",
+    "README.md"
   ],
   "peerDependencies": {
     "@apollo/client": "^3.11.8",
