@@ -508,6 +508,21 @@ enum SubscriptionPlan {
   BUSINESS
 }
 
+// OpenAI API language models available for text generation.
+enum OpenaiModel {
+  // gpt-4o model (OpenAI's high-intelligence flagship model for complex, multi-step tasks)
+  GPT_4O
+
+  // gpt-4o-mini model (OpenAI's affordable and intelligent small model for fast, lightweight tasks)
+  GPT_4O_MINI
+
+  // o1-preview model (OpenAI's latest model, trained with reinforcement learning to perform complex reasoning)
+  O1_PREVIEW
+
+  // o1-mini model (OpenAI's lightweight model for quick, simple tasks, of its latest language model)
+  O1_MINI
+}
+
 /// ### Models
 
 // Represents a user session for authentication purposes.
@@ -595,6 +610,9 @@ model User {
 
   /// OpenAI API key for the user.
   openaiAPIKey String?
+
+  /// OpenAI API Language model selected by the user.
+  openaiModel OpenaiModel?
 
   @@map(name: "users")
 }
