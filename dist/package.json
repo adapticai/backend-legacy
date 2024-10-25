@@ -41,5 +41,27 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "always-build-npm": true
+  "always-build-npm": true,
+  "exports": {
+    ".": {
+      "import": "./index.cjs",
+      "require": "./index.cjs",
+      "types": "./index.d.ts"
+    },
+    "./*": {
+      "import": "./*.cjs",
+      "require": "./*.cjs",
+      "types": "./*.d.ts"
+    },
+    "./server": {
+      "import": "./server/index.mjs",
+      "require": "./server/index.cjs",
+      "types": "./server/index.d.ts"
+    },
+    "./server/*": {
+      "import": "./server/*.mjs",
+      "require": "./server/*.cjs",
+      "types": "./server/*.d.ts"
+    }
+  }
 }
