@@ -611,7 +611,7 @@ model User {
   /// OpenAI API key for the user.
   openaiAPIKey String?
 
-  /// OpenAI API Language model selected by the user.
+  /// OpenAI API Language model selected by the user
   openaiModel OpenaiModel? @default(O1_MINI)
 
   @@map(name: "users")
@@ -637,11 +637,17 @@ model AlpacaAccount {
   /// Indicates whether the market is currently open for trading.
   marketOpen Boolean @default(false)
 
-  /// Minimum order size for the account.
+  /// Minimum order size for the account. SKIP=true
   minOrderSize Float @default(500)
 
-  /// Maximum order size for the account.
+  /// Maximum order size for the account. SKIP=true
   maxOrderSize Float @default(100000)
+
+  /// Minimum percentage change (from intraday high/low) to consider for a trade signal. SKIP=true
+  minPercentageChange Float @default(0.01)
+
+  /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). SKIP=true
+  volumeThreshold Float @default(50000)
 
   /// Relation to the User model who owns this Alpaca account. SKIP=true
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1027,11 +1033,11 @@ model Asset {
   /// Date when the asset goes ex-dividend. SKIP=true
   exDividendDate String?
 
-  /// Last sell price of the asset. SKIP=true
-  sellPrice String?
+  /// Last ask price of the asset. SKIP=true
+  askPrice String?
 
-  /// Last buy price of the asset. SKIP=true
-  buyPrice String?
+  /// Last bid price of the asset. SKIP=true
+  bidPrice String?
 
   /// Timestamp when the asset was created in the database. SKIP=true
   createdAt DateTime @default(now())
