@@ -1089,8 +1089,11 @@ model Trade {
   /// Strategy used to execute the trade.
   strategy TradeStrategy @default(TECHNICAL_ANALYSIS)
 
-  /// Analysis supporting the trade decision.
+  /// Analysis supporting the trade decision as markdown text. SKIP=true
   analysis String
+
+  /// summary of the trade decision (this should be a short description of the trade).
+  summary String
 
   /// Confidence level in the trade decision.
   confidence Float
