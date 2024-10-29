@@ -1169,7 +1169,7 @@ model Order {
   /// Quantity of the asset to be ordered.
   qty Float?
 
-  /// Notional value of the order. Optional, used if qty is not provided.
+  /// Notional value of the order. Optional, used if qty is not provided. But importantly, either qty or notional must be provided.
   notional Float?
 
   /// Side of the order (BUY or SELL).
