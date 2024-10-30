@@ -1,29 +1,31 @@
 
-
+  
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
 import { ApolloError, gql } from '@apollo/client';
 import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
-/**
- * CRUD operations for the EconomicEvent model.
- */
-
-export const EconomicEvent = {
-
   /**
-   * Create a new EconomicEvent record.
-   * @param props - Properties for the new record.
-   * @returns The created EconomicEvent or null.
+   * CRUD operations for the EconomicEvent model.
    */
 
-  async create(props: EconomicEventType): Promise<EconomicEventType> {
+  export const EconomicEvent = {
 
-  const client = createApolloClient();
+    /**
+     * Create a new EconomicEvent record.
+     * @param props - Properties for the new record.
+     * @returns The created EconomicEvent or null.
+     */
 
-  const CREATE_ONE_ECONOMICEVENT = gql`
-      mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
-        createOneEconomicEvent(data: $data) {
+    async create(props: EconomicEventType): Promise<EconomicEventType> {
+
+    const client = createApolloClient();
+
+    const CREATE_ONE_ECONOMICEVENT = gql`
+        mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
+          createOneEconomicEvent(data: $data) {
+            
+{
   id
   title
   description
@@ -31,23 +33,24 @@ export const EconomicEvent = {
   importance
   createdAt
   updatedAt
+}        
+          }
         }
-      }
-   `;
+     `;
 
-    const variables = {
-      data: {
-          title: props.title !== undefined ? props.title : undefined,
+      const variables = {
+        data: {
+            title: props.title !== undefined ? props.title : undefined,
   description: props.description !== undefined ? props.description : undefined,
   date: props.date !== undefined ? props.date : undefined,
   importance: props.importance !== undefined ? props.importance : undefined,
 
-      },
-    };
+        },
+      };
 
-    const filteredVariables = removeUndefinedProps(variables);
+      const filteredVariables = removeUndefinedProps(variables);
 
-    try {
+      try {
       const response = await client.mutate({ mutation: CREATE_ONE_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneEconomicEvent) {
@@ -114,6 +117,8 @@ export const EconomicEvent = {
       const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
         updateOneEconomicEvent(data: $data, where: $where) {
+          
+{
   id
   title
   description
@@ -121,15 +126,33 @@ export const EconomicEvent = {
   importance
   createdAt
   updatedAt
-      }
+}
+        }
       }`;
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
-        title: props.title !== undefined ? {
-            equals: props.title 
-           } : undefined,
+        id: props.id !== undefined ? {
+    equals: props.id
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title
+  } : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description
+  } : undefined,
+  date: props.date !== undefined ? {
+    equals: props.date
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt
+  } : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -190,10 +213,27 @@ export const EconomicEvent = {
 
     const variables = props.map(prop => ({
       where: {
-                id: prop.id !== undefined ? prop.id : undefined,
-        title: prop.title !== undefined ? {
-            equals: prop.title 
-           } : undefined,
+          id: prop.id !== undefined ? {
+    equals: prop.id
+  } : undefined,
+  title: prop.title !== undefined ? {
+    equals: prop.title
+  } : undefined,
+  description: prop.description !== undefined ? {
+    equals: prop.description
+  } : undefined,
+  date: prop.date !== undefined ? {
+    equals: prop.date
+  } : undefined,
+  importance: prop.importance !== undefined ? {
+    equals: prop.importance
+  } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt
+  } : undefined,
 
       },
       data: {
@@ -251,6 +291,8 @@ export const EconomicEvent = {
       const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
+          
+{
   id
   title
   description
@@ -258,7 +300,8 @@ export const EconomicEvent = {
   importance
   createdAt
   updatedAt
-      }
+}
+        }
       }`;
 
     const variables = {
@@ -295,6 +338,8 @@ export const EconomicEvent = {
       const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         getEconomicEvent(where: $where) {
+          
+{
   id
   title
   description
@@ -302,15 +347,33 @@ export const EconomicEvent = {
   importance
   createdAt
   updatedAt
+}
         }
       }`;
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
-        title: props.title !== undefined ? {
-            equals: props.title 
-           } : undefined,
+        id: props.id !== undefined ? {
+    equals: props.id
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title
+  } : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description
+  } : undefined,
+  date: props.date !== undefined ? {
+    equals: props.date
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt
+  } : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -340,6 +403,8 @@ export const EconomicEvent = {
       const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
         economicEvents {
+          
+{
   id
   title
   description
@@ -347,7 +412,8 @@ export const EconomicEvent = {
   importance
   createdAt
   updatedAt
-      }
+}
+        }
       }`;
 
     try {
@@ -376,6 +442,8 @@ export const EconomicEvent = {
       const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {
         economicEvents(where: $where) {
+          
+{
   id
   title
   description
@@ -383,17 +451,33 @@ export const EconomicEvent = {
   importance
   createdAt
   updatedAt
-      }
+}
+        }
       }`;
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
-        title: props.title !== undefined ? {
-            equals: props.title 
-           } : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title
+  } : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description
+  } : undefined,
+  date: props.date !== undefined ? {
+    equals: props.date
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt
+  } : undefined,
       },
     };
 

@@ -148,10 +148,10 @@ const generateTypeString = (
 
     // Parse meta tags and get cleaned description
     const { meta: metaTags, description } = parseMetaTags(field.documentation);
-    if (metaTags['SKIP'] === true) continue;
+    if (metaTags['TYPESTRING.SKIP'] === true) continue;
 
     // Handle field inclusion
-    const includeFields = metaTags['INCLUDE'] as string[] | undefined;
+    const includeFields = metaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
 
     const isOptional = field.isRequired ? '' : '?';
     const isArray = field.isList ? '[]' : '';

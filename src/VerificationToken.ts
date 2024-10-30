@@ -1,49 +1,52 @@
 
-
+  
 import { VerificationToken as VerificationTokenType } from './generated/typegraphql-prisma/models/VerificationToken';
 import { ApolloError, gql } from '@apollo/client';
 import { createApolloClient } from './client';
 import { removeUndefinedProps } from './utils';
   
-/**
- * CRUD operations for the VerificationToken model.
- */
-
-export const VerificationToken = {
-
   /**
-   * Create a new VerificationToken record.
-   * @param props - Properties for the new record.
-   * @returns The created VerificationToken or null.
+   * CRUD operations for the VerificationToken model.
    */
 
-  async create(props: VerificationTokenType): Promise<VerificationTokenType> {
+  export const VerificationToken = {
 
-  const client = createApolloClient();
+    /**
+     * Create a new VerificationToken record.
+     * @param props - Properties for the new record.
+     * @returns The created VerificationToken or null.
+     */
 
-  const CREATE_ONE_VERIFICATIONTOKEN = gql`
-      mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
-        createOneVerificationToken(data: $data) {
+    async create(props: VerificationTokenType): Promise<VerificationTokenType> {
+
+    const client = createApolloClient();
+
+    const CREATE_ONE_VERIFICATIONTOKEN = gql`
+        mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
+          createOneVerificationToken(data: $data) {
+            
+{
   id
   identifier
   token
   expires
+}        
+          }
         }
-      }
-   `;
+     `;
 
-    const variables = {
-      data: {
-          identifier: props.identifier !== undefined ? props.identifier : undefined,
+      const variables = {
+        data: {
+            identifier: props.identifier !== undefined ? props.identifier : undefined,
   token: props.token !== undefined ? props.token : undefined,
   expires: props.expires !== undefined ? props.expires : undefined,
 
-      },
-    };
+        },
+      };
 
-    const filteredVariables = removeUndefinedProps(variables);
+      const filteredVariables = removeUndefinedProps(variables);
 
-    try {
+      try {
       const response = await client.mutate({ mutation: CREATE_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOneVerificationToken) {
@@ -109,16 +112,30 @@ export const VerificationToken = {
       const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
         updateOneVerificationToken(data: $data, where: $where) {
+          
+{
   id
   identifier
   token
   expires
-      }
+}
+        }
       }`;
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+        id: props.id !== undefined ? {
+    equals: props.id
+  } : undefined,
+  token: props.token !== undefined ? {
+    equals: props.token
+  } : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires
+  } : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -170,7 +187,18 @@ export const VerificationToken = {
 
     const variables = props.map(prop => ({
       where: {
-                id: prop.id !== undefined ? prop.id : undefined,
+          id: prop.id !== undefined ? {
+    equals: prop.id
+  } : undefined,
+  token: prop.token !== undefined ? {
+    equals: prop.token
+  } : undefined,
+  identifier: prop.identifier !== undefined ? {
+    equals: prop.identifier
+  } : undefined,
+  expires: prop.expires !== undefined ? {
+    equals: prop.expires
+  } : undefined,
 
       },
       data: {
@@ -219,11 +247,14 @@ export const VerificationToken = {
       const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
+          
+{
   id
   identifier
   token
   expires
-      }
+}
+        }
       }`;
 
     const variables = {
@@ -260,16 +291,30 @@ export const VerificationToken = {
       const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
+          
+{
   id
   identifier
   token
   expires
+}
         }
       }`;
 
     const variables = {
       where: {
-              id: props.id !== undefined ? props.id : undefined,
+        id: props.id !== undefined ? {
+    equals: props.id
+  } : undefined,
+  token: props.token !== undefined ? {
+    equals: props.token
+  } : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires
+  } : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -299,11 +344,14 @@ export const VerificationToken = {
       const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
+          
+{
   id
   identifier
   token
   expires
-      }
+}
+        }
       }`;
 
     try {
@@ -332,18 +380,30 @@ export const VerificationToken = {
       const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
+          
+{
   id
   identifier
   token
   expires
-      }
+}
+        }
       }`;
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-            equals: props.id 
-           } : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id
+  } : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier
+  } : undefined,
+  token: props.token !== undefined ? {
+    equals: props.token
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires
+  } : undefined,
       },
     };
 

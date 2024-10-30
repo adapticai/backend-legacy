@@ -527,25 +527,25 @@ enum OpenaiModel {
 
 // Represents a user session for authentication purposes.
 model Session {
-  /// Unique identifier for the session. SKIP=true
+  /// Unique identifier for the session. TYPESTRING.SKIP=true
   id String @id @default(cuid())
 
-  /// Token associated with the session for authentication. SKIP=true
+  /// Token associated with the session for authentication. TYPESTRING.SKIP=true
   sessionToken String @unique
 
-  /// Reference to the user who owns this session. SKIP=true
+  /// Reference to the user who owns this session. TYPESTRING.SKIP=true
   userId String @db.Uuid
 
   /// Expiration date and time of the session.
   expires DateTime
 
-  /// Relation to the User model. INCLUDE=['id','name','email']
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['alpacaAccounts']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  /// Timestamp when the session was created. SKIP=true
+  /// Timestamp when the session was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the session was last updated. SKIP=true
+  /// Timestamp when the session was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   @@index([userId])
@@ -554,7 +554,7 @@ model Session {
 
 // Represents a user of the trading platform.
 model User {
-  /// Unique identifier for the user. SKIP=true
+  /// Unique identifier for the user. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// The user's full name.
@@ -563,16 +563,16 @@ model User {
   /// The user's email address, must be unique.
   email String? @unique
 
-  /// Timestamp when the user's email was verified. SKIP=true
+  /// Timestamp when the user's email was verified. TYPESTRING.SKIP=true
   emailVerified DateTime?
 
   /// URL to the user's profile image.
   image String?
 
-  /// Timestamp when the user account was created. SKIP=true
+  /// Timestamp when the user account was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the user account was last updated. SKIP=true
+  /// Timestamp when the user account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   /// The role assigned to the user, determining permissions.
@@ -587,25 +587,25 @@ model User {
   /// The type of Alpaca account the user currently holds.
   currentAccount AlpacaAccountType @default(PAPER)
 
-  /// Relation to the Customer model. INCLUDE=['id','name','plan']
+  /// Relation to the Customer model. TYPESTRING.INCLUDE=['id','name','plan'] GQL.EXCLUDE=['users']
   customer Customer? @relation(fields: [customerId], references: [id])
 
-  /// Foreign key referencing the Customer. SKIP=true
+  /// Foreign key referencing the Customer. TYPESTRING.SKIP=true
   customerId Int?
 
-  /// List of accounts associated with the user. SKIP=true
+  /// List of accounts associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccounts','user']
   accounts Account[]
 
-  /// List of sessions associated with the user. SKIP=true
+  /// List of sessions associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
   sessions Session[]
 
-  /// List of authenticators for the user. SKIP=true
+  /// List of authenticators for the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
   authenticators Authenticator[]
 
   /// The subscription plan the user is enrolled in.
   plan SubscriptionPlan?
 
-  /// List of Alpaca accounts linked to the user. INCLUDE=['id','type']
+  /// List of Alpaca accounts linked to the user. TYPESTRING.INCLUDE=['id','type'] GQL.EXCLUDE=['user']
   alpacaAccounts AlpacaAccount[]
 
   /// OpenAI API key for the user.
@@ -619,16 +619,16 @@ model User {
 
 // Represents an Alpaca trading account linked to a user.
 model AlpacaAccount {
-  /// Unique identifier for the Alpaca account. SKIP=true
+  /// Unique identifier for the Alpaca account. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// The type of Alpaca account (PAPER or LIVE).
   type AlpacaAccountType @default(PAPER)
 
-  /// API key for authenticating requests to Alpaca. SKIP=true
+  /// API key for authenticating requests to Alpaca. TYPESTRING.SKIP=true
   APIKey String
 
-  /// API secret for authenticating requests to Alpaca. SKIP=true
+  /// API secret for authenticating requests to Alpaca. TYPESTRING.SKIP=true
   APISecret String
 
   /// JSON configuration settings for the Alpaca account.
@@ -637,52 +637,54 @@ model AlpacaAccount {
   /// Indicates whether the market is currently open for trading.
   marketOpen Boolean @default(false)
 
-  /// Minimum order size for the account. SKIP=true
+  /// Minimum order size for the account. TYPESTRING.SKIP=true
   minOrderSize Float @default(500)
 
-  /// Maximum order size for the account. SKIP=true
+  /// Maximum order size for the account. TYPESTRING.SKIP=true
   maxOrderSize Float @default(100000)
 
-  /// Minimum percentage change (from intraday high/low) to consider for a trade signal. SKIP=true
+  /// Minimum percentage change (from intraday high/low) to consider for a trade signal. TYPESTRING.SKIP=true
   minPercentageChange Float @default(0.01)
 
-  /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). SKIP=true
+  /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). TYPESTRING.SKIP=true
   volumeThreshold Float @default(50000)
 
-  /// Relation to the User model who owns this Alpaca account. SKIP=true
+  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  /// Foreign key referencing the User. SKIP=true
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
   userId String @db.Uuid
 
-  /// Timestamp when the Alpaca account was created. SKIP=true
+  /// Timestamp when the Alpaca account was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the Alpaca account was last updated. SKIP=true
+  /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of trades executed through this Alpaca account. SKIP=true
+  /// List of trades executed through this Alpaca account. TYPESTRING.SKIP=true
   trades Trade[]
 
-  /// List of orders placed through this Alpaca account. SKIP=true
+  /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true
   orders Order[]
 
-  /// List of positions held in this Alpaca account. INCLUDE=['id','qty','asset']
+  /// List of positions held in this Alpaca account. TYPESTRING.INCLUDE=['id','qty','asset'] GQL.EXCLUDE=['id','qty','asset']
   positions Position[]
 
-  /// List of alerts generated for this Alpaca account. SKIP=true
+  /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true
   alerts Alert[]
+
+  @@map(name: "alpaca_accounts")
 }
 
 // Represents a financial position held in an Alpaca account.
 model Position {
-  /// Unique identifier for the position. SKIP=true
+  /// Unique identifier for the position. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the associated asset. SKIP=true
+  /// Reference to the associated asset. TYPESTRING.SKIP=true
   assetId String @db.Uuid
 
-  /// Relation to the Asset model. INCLUDE=['symbol','name','type']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['symbol','name','type']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// The average price at which the asset was acquired.
@@ -724,37 +726,37 @@ model Position {
   /// Indicates if the asset is marginable.
   assetMarginable Boolean
 
-  /// Relation to the AlpacaAccount model, if applicable. SKIP=true
+  /// Relation to the AlpacaAccount model, if applicable. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   alpacaAccount AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Foreign key referencing the AlpacaAccount. SKIP=true
+  /// Foreign key referencing the AlpacaAccount. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 }
 
 // Represents an authenticator for multi-factor authentication.
 model Authenticator {
-  /// Unique identifier for the authenticator. SKIP=true
+  /// Unique identifier for the authenticator. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the user who owns this authenticator. SKIP=true
+  /// Reference to the user who owns this authenticator. TYPESTRING.SKIP=true
   userId String @db.Uuid
 
-  /// Unique credential ID for the authenticator. SKIP=true
+  /// Unique credential ID for the authenticator. TYPESTRING.SKIP=true
   credentialID String @unique
 
-  /// Public key associated with the authenticator. SKIP=true
+  /// Public key associated with the authenticator. TYPESTRING.SKIP=true
   publicKey String
 
-  /// Counter for the number of authentication attempts. SKIP=true
+  /// Counter for the number of authentication attempts. TYPESTRING.SKIP=true
   counter Int
 
-  /// Relation to the User model. SKIP=true
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['authenticators']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  /// Timestamp when the authenticator was created. SKIP=true
+  /// Timestamp when the authenticator was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the authenticator was last updated. SKIP=true
+  /// Timestamp when the authenticator was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   @@index([userId])
@@ -763,10 +765,10 @@ model Authenticator {
 
 // Represents an external account linked to a user for authentication.
 model Account {
-  /// Unique identifier for the account. SKIP=true
+  /// Unique identifier for the account. TYPESTRING.SKIP=true
   id String @id @default(cuid())
 
-  /// Reference to the user who owns this account. SKIP=true
+  /// Reference to the user who owns this account. TYPESTRING.SKIP=true
   userId String @db.Uuid
 
   /// Type of the account (e.g., OAuth provider).
@@ -778,10 +780,10 @@ model Account {
   /// Unique identifier provided by the external provider.
   providerAccountId String
 
-  /// Refresh token for the external account, if applicable. SKIP=true
+  /// Refresh token for the external account, if applicable. TYPESTRING.SKIP=true
   refresh_token String? @db.Text
 
-  /// Access token for the external account, if applicable. SKIP=true
+  /// Access token for the external account, if applicable. TYPESTRING.SKIP=true
   access_token String? @db.Text
 
   /// Expiration time of the access token.
@@ -793,19 +795,19 @@ model Account {
   /// Scope of access granted by the token.
   scope String?
 
-  /// ID token for authentication, if applicable. SKIP=true
+  /// ID token for authentication, if applicable. TYPESTRING.SKIP=true
   id_token String? @db.Text
 
   /// State of the session associated with the account.
   session_state String?
 
-  /// Timestamp when the account was created. SKIP=true
+  /// Timestamp when the account was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the account was last updated. SKIP=true
+  /// Timestamp when the account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// Relation to the User model. SKIP=true
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['accounts']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -815,16 +817,16 @@ model Account {
 
 // Represents a token used for verifying user actions, such as password resets.
 model VerificationToken {
-  /// Unique identifier for the verification token. SKIP=true
+  /// Unique identifier for the verification token. TYPESTRING.SKIP=true
   id String @id @default(cuid())
 
-  /// Identifier associated with the token (e.g., user ID). SKIP=true
+  /// Identifier associated with the token (e.g., user ID). TYPESTRING.SKIP=true
   identifier String
 
-  /// The verification token string, must be unique. SKIP=true
+  /// The verification token string, must be unique. TYPESTRING.SKIP=true
   token String @unique
 
-  /// Expiration date and time of the token. SKIP=true
+  /// Expiration date and time of the token. TYPESTRING.SKIP=true
   expires DateTime
 
   @@unique([identifier, token])
@@ -833,10 +835,10 @@ model VerificationToken {
 
 // Represents a customer entity, which may include multiple users.
 model Customer {
-  /// Unique identifier for the customer. SKIP=true
+  /// Unique identifier for the customer. TYPESTRING.SKIP=true
   id Int @id @default(autoincrement())
 
-  /// Reference to the authenticated user associated with the customer. SKIP=true
+  /// Reference to the authenticated user associated with the customer. TYPESTRING.SKIP=true
   authUserId String
 
   /// Name of the customer.
@@ -845,25 +847,25 @@ model Customer {
   /// Subscription plan the customer is enrolled in.
   plan SubscriptionPlan?
 
-  /// Unique Stripe customer ID for billing. SKIP=true
+  /// Unique Stripe customer ID for billing. TYPESTRING.SKIP=true
   stripeCustomerId String? @unique
 
-  /// Unique Stripe subscription ID. SKIP=true
+  /// Unique Stripe subscription ID. TYPESTRING.SKIP=true
   stripeSubscriptionId String? @unique
 
-  /// Stripe price ID associated with the customer's subscription. SKIP=true
+  /// Stripe price ID associated with the customer's subscription. TYPESTRING.SKIP=true
   stripePriceId String?
 
   /// End date of the current billing period in Stripe.
   stripeCurrentPeriodEnd DateTime?
 
-  /// Timestamp when the customer was created. SKIP=true
+  /// Timestamp when the customer was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the customer was last updated. SKIP=true
+  /// Timestamp when the customer was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of users associated with the customer. INCLUDE=['id','name','email']
+  /// List of users associated with the customer. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['customer']
   users User[]
 
   @@index([authUserId])
@@ -871,7 +873,7 @@ model Customer {
 
 // Represents a financial asset available for trading.
 model Asset {
-  /// Unique identifier for the asset. SKIP=true
+  /// Unique identifier for the asset. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// Ticker symbol of the asset, must be unique.
@@ -883,178 +885,178 @@ model Asset {
   /// Type of the asset, defined by AssetType enum.
   type AssetType
 
-  /// URL to the asset's logo image. SKIP=true
+  /// URL to the asset's logo image. TYPESTRING.SKIP=true
   logoUrl String?
 
-  /// Description of the asset. SKIP=true
+  /// Description of the asset. TYPESTRING.SKIP=true
   description String?
 
-  /// Central Index Key for the asset. SKIP=true
+  /// Central Index Key for the asset. TYPESTRING.SKIP=true
   cik String?
 
-  /// Stock exchange where the asset is listed. SKIP=true
+  /// Stock exchange where the asset is listed. TYPESTRING.SKIP=true
   exchange String?
 
-  /// Currency in which the asset is traded. SKIP=true
+  /// Currency in which the asset is traded. TYPESTRING.SKIP=true
   currency String?
 
-  /// Country where the asset is based. SKIP=true
+  /// Country where the asset is based. TYPESTRING.SKIP=true
   country String?
 
-  /// Sector classification of the asset. SKIP=true
+  /// Sector classification of the asset. TYPESTRING.SKIP=true
   sector String?
 
-  /// Industry classification of the asset. SKIP=true
+  /// Industry classification of the asset. TYPESTRING.SKIP=true
   industry String?
 
-  /// Physical address associated with the asset. SKIP=true
+  /// Physical address associated with the asset. TYPESTRING.SKIP=true
   address String?
 
-  /// Official website of the asset. SKIP=true
+  /// Official website of the asset. TYPESTRING.SKIP=true
   officialSite String?
 
-  /// Fiscal year-end date of the asset. SKIP=true
+  /// Fiscal year-end date of the asset. TYPESTRING.SKIP=true
   fiscalYearEnd String?
 
-  /// Date of the latest financial quarter. SKIP=true
+  /// Date of the latest financial quarter. TYPESTRING.SKIP=true
   latestQuarter String?
 
-  /// Market capitalization of the asset. SKIP=true
+  /// Market capitalization of the asset. TYPESTRING.SKIP=true
   marketCapitalization String?
 
-  /// Earnings Before Interest, Taxes, Depreciation, and Amortization. SKIP=true
+  /// Earnings Before Interest, Taxes, Depreciation, and Amortization. TYPESTRING.SKIP=true
   ebitda String?
 
-  /// Price-to-Earnings ratio. SKIP=true
+  /// Price-to-Earnings ratio. TYPESTRING.SKIP=true
   peRatio String?
 
-  /// Price/Earnings to Growth ratio. SKIP=true
+  /// Price/Earnings to Growth ratio. TYPESTRING.SKIP=true
   pegRatio String?
 
-  /// Book value per share. SKIP=true
+  /// Book value per share. TYPESTRING.SKIP=true
   bookValue String?
 
-  /// Dividend per share. SKIP=true
+  /// Dividend per share. TYPESTRING.SKIP=true
   dividendPerShare String?
 
-  /// Dividend yield percentage. SKIP=true
+  /// Dividend yield percentage. TYPESTRING.SKIP=true
   dividendYield String?
 
-  /// Earnings per share. SKIP=true
+  /// Earnings per share. TYPESTRING.SKIP=true
   eps String?
 
-  /// Revenue per share over the trailing twelve months. SKIP=true
+  /// Revenue per share over the trailing twelve months. TYPESTRING.SKIP=true
   revenuePerShareTTM String?
 
-  /// Profit margin percentage. SKIP=true
+  /// Profit margin percentage. TYPESTRING.SKIP=true
   profitMargin String?
 
-  /// Operating margin over the trailing twelve months. SKIP=true
+  /// Operating margin over the trailing twelve months. TYPESTRING.SKIP=true
   operatingMarginTTM String?
 
-  /// Return on assets over the trailing twelve months. SKIP=true
+  /// Return on assets over the trailing twelve months. TYPESTRING.SKIP=true
   returnOnAssetsTTM String?
 
-  /// Return on equity over the trailing twelve months. SKIP=true
+  /// Return on equity over the trailing twelve months. TYPESTRING.SKIP=true
   returnOnEquityTTM String?
 
-  /// Total revenue over the trailing twelve months. SKIP=true
+  /// Total revenue over the trailing twelve months. TYPESTRING.SKIP=true
   revenueTTM String?
 
-  /// Gross profit over the trailing twelve months. SKIP=true
+  /// Gross profit over the trailing twelve months. TYPESTRING.SKIP=true
   grossProfitTTM String?
 
-  /// Diluted earnings per share over the trailing twelve months. SKIP=true
+  /// Diluted earnings per share over the trailing twelve months. TYPESTRING.SKIP=true
   dilutedEPSTTM String?
 
-  /// Year-over-year growth in quarterly earnings. SKIP=true
+  /// Year-over-year growth in quarterly earnings. TYPESTRING.SKIP=true
   quarterlyEarningsGrowthYOY String?
 
-  /// Year-over-year growth in quarterly revenue. SKIP=true
+  /// Year-over-year growth in quarterly revenue. TYPESTRING.SKIP=true
   quarterlyRevenueGrowthYOY String?
 
-  /// Analyst target price for the asset. SKIP=true
+  /// Analyst target price for the asset. TYPESTRING.SKIP=true
   analystTargetPrice String?
 
-  /// Percentage of analysts rating the asset as Strong Buy. SKIP=true
+  /// Percentage of analysts rating the asset as Strong Buy. TYPESTRING.SKIP=true
   analystRatingStrongBuy String?
 
-  /// Percentage of analysts rating the asset as Buy. SKIP=true
+  /// Percentage of analysts rating the asset as Buy. TYPESTRING.SKIP=true
   analystRatingBuy String?
 
-  /// Percentage of analysts rating the asset as Hold. SKIP=true
+  /// Percentage of analysts rating the asset as Hold. TYPESTRING.SKIP=true
   analystRatingHold String?
 
-  /// Percentage of analysts rating the asset as Sell. SKIP=true
+  /// Percentage of analysts rating the asset as Sell. TYPESTRING.SKIP=true
   analystRatingSell String?
 
-  /// Percentage of analysts rating the asset as Strong Sell. SKIP=true
+  /// Percentage of analysts rating the asset as Strong Sell. TYPESTRING.SKIP=true
   analystRatingStrongSell String?
 
-  /// Trailing Price-to-Earnings ratio. SKIP=true
+  /// Trailing Price-to-Earnings ratio. TYPESTRING.SKIP=true
   trailingPE String?
 
-  /// Forward Price-to-Earnings ratio. SKIP=true
+  /// Forward Price-to-Earnings ratio. TYPESTRING.SKIP=true
   forwardPE String?
 
-  /// Price-to-Sales ratio over the trailing twelve months. SKIP=true
+  /// Price-to-Sales ratio over the trailing twelve months. TYPESTRING.SKIP=true
   priceToSalesRatioTTM String?
 
-  /// Price-to-Book ratio. SKIP=true
+  /// Price-to-Book ratio. TYPESTRING.SKIP=true
   priceToBookRatio String?
 
-  /// Enterprise Value to Revenue ratio. SKIP=true
+  /// Enterprise Value to Revenue ratio. TYPESTRING.SKIP=true
   evToRevenue String?
 
-  /// Enterprise Value to EBITDA ratio. SKIP=true
+  /// Enterprise Value to EBITDA ratio. TYPESTRING.SKIP=true
   evToEbitda String?
 
-  /// Beta coefficient measuring volatility. SKIP=true
+  /// Beta coefficient measuring volatility. TYPESTRING.SKIP=true
   beta String?
 
-  /// 52-week high price of the asset. SKIP=true
+  /// 52-week high price of the asset. TYPESTRING.SKIP=true
   week52High String?
 
-  /// 52-week low price of the asset. SKIP=true
+  /// 52-week low price of the asset. TYPESTRING.SKIP=true
   week52Low String?
 
-  /// 50-day moving average price. SKIP=true
+  /// 50-day moving average price. TYPESTRING.SKIP=true
   day50MovingAverage String?
 
-  /// 200-day moving average price. SKIP=true
+  /// 200-day moving average price. TYPESTRING.SKIP=true
   day200MovingAverage String?
 
-  /// Total number of shares outstanding. SKIP=true
+  /// Total number of shares outstanding. TYPESTRING.SKIP=true
   sharesOutstanding String?
 
-  /// Date when the next dividend is paid. SKIP=true
+  /// Date when the next dividend is paid. TYPESTRING.SKIP=true
   dividendDate String?
 
-  /// Date when the asset goes ex-dividend. SKIP=true
+  /// Date when the asset goes ex-dividend. TYPESTRING.SKIP=true
   exDividendDate String?
 
-  /// Last ask price of the asset. SKIP=true
+  /// Last ask price of the asset. TYPESTRING.SKIP=true
   askPrice String?
 
-  /// Last bid price of the asset. SKIP=true
+  /// Last bid price of the asset. TYPESTRING.SKIP=true
   bidPrice String?
 
-  /// Timestamp when the asset was created in the database. SKIP=true
+  /// Timestamp when the asset was created in the database. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the asset was last updated in the database. SKIP=true
+  /// Timestamp when the asset was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of trades involving this asset. SKIP=true
+  /// List of trades involving this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['orders', 'positions', 'asset', 'alpacaAccount']
   trades Trade[]
 
-  /// List of orders involving this asset. SKIP=true
+  /// List of orders involving this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['trades', 'positions', 'asset', 'action', 'alpacaAccount']
   orders Order[]
 
-  /// List of positions involving this asset. SKIP=true
+  /// List of positions involving this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset', 'alpacaAccount']
   positions Position[]
 
-  /// List of news article sentiments related to this asset. SKIP=true
+  /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset']
   newsMentions NewsArticleAssetSentiment[]
 
   @@map(name: "assets")
@@ -1062,13 +1064,13 @@ model Asset {
 
 // Represents a trade executed through an Alpaca account.
 model Trade {
-  /// Unique identifier for the trade. SKIP=true
+  /// Unique identifier for the trade. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the Alpaca account used for the trade. SKIP=true
+  /// Reference to the Alpaca account used for the trade. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 
-  /// Reference to the asset being traded. SKIP=true
+  /// Reference to the asset being traded. TYPESTRING.SKIP=true
   assetId String @db.Uuid
 
   /// Quantity of the asset being traded.
@@ -1089,7 +1091,7 @@ model Trade {
   /// Strategy used to execute the trade.
   strategy TradeStrategy @default(TECHNICAL_ANALYSIS)
 
-  /// Analysis supporting the trade decision as markdown text. SKIP=true
+  /// Analysis supporting the trade decision as markdown text. TYPESTRING.SKIP=true
   analysis String
 
   /// summary of the trade decision (this should be a short description of the trade).
@@ -1098,25 +1100,25 @@ model Trade {
   /// Confidence level in the trade decision.
   confidence Float
 
-  /// Timestamp when the trade was executed. SKIP=true
+  /// Timestamp when the trade was executed. TYPESTRING.SKIP=true
   timestamp DateTime @default(now()) @map(name: "timestamp")
 
-  /// Timestamp when the trade record was created. SKIP=true
+  /// Timestamp when the trade record was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the trade record was last updated. SKIP=true
+  /// Timestamp when the trade record was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   /// Current status of the trade.
   status TradeStatus @default(PENDING)
 
-  /// Relation to the AlpacaAccount model. SKIP=true
+  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Relation to the Asset model. INCLUDE=['symbol','name','type']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// List of actions associated with this trade.
+  /// List of actions associated with this trade. GQL.EXCLUDE=['id','type','order'] TYPESTRING.SKIP=true GQL.EXCLUDE=['trade', 'order']
   actions Action[]
 
   @@map(name: "trades")
@@ -1124,13 +1126,13 @@ model Trade {
 
 // Represents an action performed as part of a trade.
 model Action {
-  /// Unique identifier for the action. SKIP=true
+  /// Unique identifier for the action. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// Sequence number of the action within the trade.
   sequence Int
 
-  /// Reference to the trade this action is part of. SKIP=true
+  /// Reference to the trade this action is part of. TYPESTRING.SKIP=true
   tradeId String @db.Uuid
 
   /// Type of trade action, defined by ActionType enum.
@@ -1145,25 +1147,27 @@ model Action {
   /// Fees associated with the action.
   fee Float?
 
-  /// The trade this action is part of. SKIP=true
+  /// The trade this action is part of. TYPESTRING.SKIP=true GQL.EXCLUDE=['actions', 'orders', 'alpacaAccount', 'asset']
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
-  /// The order associated with this action.
+  /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount']
   order Order? @relation
+
+  @@map(name: "actions")
 }
 
 // Represents an order placed through an Alpaca account.
 model Order {
-  /// Unique identifier for the order. SKIP=true
+  /// Unique identifier for the order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Client-supplied unique identifier for the order (from Alpaca). SKIP=true
+  /// Client-supplied unique identifier for the order (from Alpaca). TYPESTRING.SKIP=true
   clientOrderId String? @unique
 
-  /// Reference to the Alpaca account used for the order. SKIP=true
+  /// Reference to the Alpaca account used for the order. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 
-  /// Reference to the asset being ordered. SKIP=true
+  /// Reference to the asset being ordered. TYPESTRING.SKIP=true
   assetId String @db.Uuid
 
   /// Quantity of the asset to be ordered.
@@ -1208,10 +1212,10 @@ model Order {
   /// Current status of the order.
   status OrderStatus @default(NEW)
 
-  /// Timestamp when the order was created. SKIP=true
+  /// Timestamp when the order was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the order was last updated. SKIP=true
+  /// Timestamp when the order was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   /// Timestamp when the order was submitted.
@@ -1223,16 +1227,16 @@ model Order {
   /// Average price at which the order was filled.
   filledAvgPrice Float?
 
-  /// Reference to the action associated with the order. SKIP=true
+  /// Reference to the action associated with the order. TYPESTRING.SKIP=true
   actionId String @unique @db.Uuid
 
-  /// The Alpaca account this order is associated with. SKIP=true
+  /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true  GQL.EXCLUDE=['trades', 'orders', 'positions', 'user']
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// The action this order is associated with. SKIP=true
+  /// The action this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade', 'order']
   action Action @relation(fields: [actionId], references: [id], onDelete: Cascade)
 
-  /// The asset this order is for. INCLUDE=['symbol','name','type']
+  /// The asset this order is for. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trade', 'order', 'positions', 'newsMentions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Fee associated with the order.
@@ -1255,7 +1259,7 @@ model Order {
 
 // Represents a stop loss order for a bracket order.
 model StopLoss {
-  /// Unique identifier for the stop loss order. SKIP=true
+  /// Unique identifier for the stop loss order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// Must be a positive number. For SELL orders: stopPrice ≤ current market price. For BUY orders: stopPrice ≥ current market price.
@@ -1264,22 +1268,24 @@ model StopLoss {
   /// Must be a positive number and required if parent Order's type is STOP_LIMIT.
   limitPrice Float?
 
-  /// Timestamp when the stop loss order was created. SKIP=true
+  /// Timestamp when the stop loss order was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the stop loss order was last updated. SKIP=true
+  /// Timestamp when the stop loss order was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   /// Reference to the order associated with this stop loss.
   orderId String @unique @db.Uuid
 
-  /// An order that is associated with this stop loss.
+  /// An order that is associated with this stop loss. GQL.SKIP=true
   Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map(name: "stop_losses")
 }
 
 // Represents a take profit order for a bracket order.
 model TakeProfit {
-  /// Unique identifier for the take profit order. SKIP=true
+  /// Unique identifier for the take profit order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// Must be a positive number and ≥ base_price + 0.01.
@@ -1288,25 +1294,27 @@ model TakeProfit {
   /// Typically not used in standard take profit orders. If used, must comply with Alpaca's specific requirements.
   stopPrice Float?
 
-  /// Timestamp when the take profit order was created. SKIP=true
+  /// Timestamp when the take profit order was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the take profit order was last updated. SKIP=true
+  /// Timestamp when the take profit order was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   /// Reference to the order associated with this take profit.
   orderId String @unique @db.Uuid
 
-  /// An order that is associated with this take profit.
+  /// An order that is associated with this take profit. GQL.SKIP=true
   Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map(name: "take_profits")
 }
 
 // Represents an alert generated by the system for the user.
 model Alert {
-  /// Unique identifier for the alert. SKIP=true
+  /// Unique identifier for the alert. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the Alpaca account associated with the alert. SKIP=true
+  /// Reference to the Alpaca account associated with the alert. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 
   /// Message content of the alert.
@@ -1318,13 +1326,13 @@ model Alert {
   /// Indicates whether the alert has been read by the user.
   isRead Boolean @default(false)
 
-  /// Timestamp when the alert was created. SKIP=true
+  /// Timestamp when the alert was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the alert was last updated. SKIP=true
+  /// Timestamp when the alert was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// Relation to the AlpacaAccount model. SKIP=true
+  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   @@map(name: "alerts")
@@ -1332,7 +1340,7 @@ model Alert {
 
 // Represents a news article related to financial markets.
 model NewsArticle {
-  /// Unique identifier for the news article. SKIP=true
+  /// Unique identifier for the news article. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// Title of the news article.
@@ -1374,13 +1382,13 @@ model NewsArticle {
   /// URL to the logo image of the news source.
   logo String?
 
-  /// Timestamp when the news article was added to the database. SKIP=true
+  /// Timestamp when the news article was added to the database. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the news article was last updated in the database. SKIP=true
+  /// Timestamp when the news article was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of asset sentiments related to this news article. SKIP=true
+  /// List of asset sentiments related to this news article. TYPESTRING.SKIP=true GQL.EXCLUDE=['news']
   assets NewsArticleAssetSentiment[]
 
   @@map(name: "news")
@@ -1388,22 +1396,22 @@ model NewsArticle {
 
 // Represents the sentiment of a news article towards a specific asset.
 model NewsArticleAssetSentiment {
-  /// Unique identifier for the sentiment record. SKIP=true
+  /// Unique identifier for the sentiment record. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the associated asset. SKIP=true
+  /// Reference to the associated asset. TYPESTRING.SKIP=true
   assetId String @db.Uuid
 
-  /// Reference to the associated news article. SKIP=true
+  /// Reference to the associated news article. TYPESTRING.SKIP=true
   newsArticleId String @db.Uuid
 
   /// URL of the news article, must be unique.
   url String @unique
 
-  /// Relation to the NewsArticle model. SKIP=true
+  /// Relation to the NewsArticle model. TYPESTRING.SKIP=true GQL.EXCLUDE=['assets']
   news NewsArticle @relation(fields: [newsArticleId], references: [id])
 
-  /// Relation to the Asset model. INCLUDE=['symbol','name','type']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions', 'trades', 'orders', 'positions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Relevancy score indicating how relevant the news is to the asset.
@@ -1418,7 +1426,7 @@ model NewsArticleAssetSentiment {
 
 // Represents an economic event that may impact the markets.
 model EconomicEvent {
-  /// Unique identifier for the economic event. SKIP=true
+  /// Unique identifier for the economic event. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
   /// Title or name of the economic event.
@@ -1433,10 +1441,10 @@ model EconomicEvent {
   /// Importance level of the event, defined by EventImportance enum.
   importance EventImportance
 
-  /// Timestamp when the economic event was created in the database. SKIP=true
+  /// Timestamp when the economic event was created in the database. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the economic event was last updated in the database. SKIP=true
+  /// Timestamp when the economic event was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
   @@map(name: "economic_events")

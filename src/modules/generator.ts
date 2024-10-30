@@ -3,145 +3,13 @@ import fs from 'fs';
 import pluralize from 'pluralize';
 import { FieldDefinition, InputTypePaths } from './types';
 import { capitalizeFirstLetter, lowerCaseFirstLetter } from './utils';
-import { getInputTypeDefinition, isScalarType } from './parser';
+import { getInputTypeDefinition } from './parser';
+import { selectionSets } from '../generated/selectionSets';
+
+type ModelName = keyof typeof selectionSets;
 
 type OperationType = 'create' | 'createMany' | 'update' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
 
-
-/**
- * Constructs a GraphQL selection set for a given model.
- * @param modelName - Name of the model.
- * @param modelsPath - Path to the models directory.
- * @param visited - Set of models in the current recursion path to prevent circular references.
- * @param indent - Current indentation for formatting.
- * @param currentDepth - Current recursion depth.
- * @param maxDepth - Maximum recursion depth.
- * @returns GraphQL selection set as a string.
- */
-function constructSelectionSet(
-  modelName: string,
-  modelsPath: string,
-  visited: Set<string> = new Set(),
-  indent: string = '  ',
-  currentDepth: number = 0,
-  maxDepth: number = 10
-): string {
-  // Trim inputs to remove unintended whitespace or line breaks
-  modelName = modelName.trim();
-  modelsPath = modelsPath.trim();
-
-  // Check if we've reached the maximum depth
-  if (currentDepth >= maxDepth) {
-    return `${indent}id\n`; // Return basic id to avoid excessive recursion
-  }
-
-  // Check if the model is already in the current recursion path to prevent circular references
-  if (visited.has(modelName)) {
-    return `${indent}id\n`; // Return basic id to avoid circular references
-  }
-
-  // Add the current model to the visited set to track the recursion path
-  visited.add(modelName);
-
-  // Use path.join to construct the file path
-  const modelPath = path.join(modelsPath, `${modelName}.ts`);
-
-  if (!fs.existsSync(modelPath)) {
-    console.warn(`Warning: Model file does not exist: ${modelPath}`);
-    // Remove the model from visited before returning
-    visited.delete(modelName);
-    return '';
-  }
-
-  const fields = getInputTypeDefinition(modelPath);
-
-  if (fields.length === 0) {
-    console.warn(`Warning: No fields found in model file: ${modelPath}`);
-    // Remove the model from visited before returning
-    visited.delete(modelName);
-    return '';
-  }
-
-  let selectionSet = '';
-
-  fields.forEach((field) => {
-    const fieldName: string = field.name; // The name of the field in the model
-
-    // Extract the type name, handling nested types and lists
-    let typeName: string | undefined;
-    let isList = false;
-
-    // Function to recursively unwrap types (e.g., NonNull, List)
-    function unwrapType(type: any): { name?: string; isList: boolean } {
-      if (type.kind === 'NON_NULL') {
-        return unwrapType(type.ofType);
-      } else if (type.kind === 'LIST') {
-        const inner = unwrapType(type.ofType);
-        return { name: inner.name, isList: true };
-      } else {
-        return { name: type.name, isList: false };
-      }
-    }
-
-    const unwrapped = unwrapType(field.type);
-    typeName = unwrapped.name;
-    isList = unwrapped.isList;
-
-    if (!typeName) {
-      console.warn(`Warning: Unable to determine type for field "${fieldName}" in model "${modelName}".`);
-      return;
-    }
-
-    // Determine if the type is scalar
-    const isScalar = isScalarType(typeName);
-
-    if (fieldName === '_count') {
-      return; // Skip _count fields
-    }
-
-    if (isScalar) {
-      // For scalar fields, simply add the field name
-      selectionSet += `${indent}${fieldName}\n`;
-    } else {
-      const nestedInputTypeName = capitalizeFirstLetter(typeName);
-
-      if (visited.has(nestedInputTypeName)) {
-        // Skip the field entirely to avoid circular references
-        // Alternatively, include only 'id' if preferred
-        // selectionSet += `${indent}${fieldName} {\n${indent}  id\n${indent}}\n`;
-        return; // Skip adding this field
-      }
-
-      if (currentDepth + 1 >= maxDepth) {
-        // If approaching max depth, limit to 'id'
-        selectionSet += `${indent}${fieldName} {\n${indent}  id\n${indent}}\n`;
-        return;
-      }
-
-      // Recursively construct the selection set for the nested model
-      const nestedSelection = constructSelectionSet(
-        nestedInputTypeName,
-        modelsPath,
-        visited, // Pass the same visited set by reference
-        indent + '  ',
-        currentDepth + 1,
-        maxDepth
-      );
-
-      if (nestedSelection.trim() === '') {
-        // If the nested selection is empty, skip adding this field
-        return;
-      }
-
-      selectionSet += `${indent}${fieldName} {\n${nestedSelection}${indent}}\n`;
-    }
-  });
-
-  // After processing all fields, remove the current model from the visited set
-  visited.delete(modelName);
-
-  return selectionSet;
-}
 
 /**
  * Constructs a variables object for GraphQL operations.
@@ -548,6 +416,19 @@ const handleUpdateOperation = (
   }
 };
 
+/**
+ * Generates the JSON object string for the 'where' field in a GraphQL query.
+ * This function traverses the field definitions and constructs the appropriate
+ * 'where' conditions based on scalar and relational fields.
+ *
+ * @param field - The current field definition being processed.
+ * @param accessor - The accessor string to retrieve the value for the field.
+ * @param inputsPath - The path to the input type definitions.
+ * @param modelsPath - The path to the model definitions.
+ * @param depth - The current depth of recursion.
+ * @param maxDepth - The maximum allowed depth of recursion to prevent infinite loops.
+ * @returns A string representing the 'where' condition for the field.
+ */
 const handleWhereOperation = (
   field: FieldDefinition,
   accessor: string,
@@ -561,73 +442,77 @@ const handleWhereOperation = (
     return '';
   }
 
-  if (field.type.isScalar && field.type.isFilterObject && isUniqueField(field.name) || (field.type.isFilterObject && isUniqueField(field.name))) {
-    return `${indent}      ${field.name}: ${accessor} !== undefined ? {\n${indent}          equals: ${accessor} \n ${indent}        } : undefined,\n`;
-  } else if (field.type.isScalar && isUniqueField(field.name)) {
-    return `${indent}      ${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+  if (field.type.isScalar) {
+    // Handle scalar fields by generating equality conditions
+    return `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
+      `${indent}  equals: ${accessor}\n` +
+      `${indent}} : undefined,\n`;
   } else {
+    // Handle relational fields
     if (depth + 1 >= maxDepth) {
       return '';
     }
 
-    const nestedInputTypeName = capitalizeFirstLetter(field.type.name);
-    const nestedInputTypePath = path.join(inputsPath || '', `${nestedInputTypeName}.ts`);
+    const nestedFilterTypeName = capitalizeFirstLetter(field.type.name) + 'Filter';
+    const nestedFilterTypePath = path.join(inputsPath || '', `${nestedFilterTypeName}.ts`);
 
-    if (!fs.existsSync(nestedInputTypePath)) {
-      console.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
+    if (!fs.existsSync(nestedFilterTypePath)) {
+      console.warn(`Nested filter type file does not exist: ${nestedFilterTypePath}`);
       return '';
     }
 
-    const nestedItems = getInputTypeDefinition(nestedInputTypePath);
+    const nestedFilterFields = getInputTypeDefinition(nestedFilterTypePath);
 
-    // Try to find 'where' field
-    const whereField = nestedItems.find((item) => item.name === 'where');
-    if (!whereField) {
-      console.warn(`No 'where' field found in ${nestedInputTypePath}`);
+    if (nestedFilterFields.length === 0) {
+      console.warn(`No fields found in nested filter type: ${nestedFilterTypePath}`);
       return '';
     }
 
-    const operationField = whereField;
-    const operationFieldName = 'where';
-    const operationInputTypeName = operationField.type.name;
-    const operationInputTypePath = path.join(inputsPath || '', `${operationInputTypeName}.ts`);
-    const operationInputItems = getInputTypeDefinition(operationInputTypePath);
+    let condition = '';
 
-    const openingLine = field.type.isList
-      ? `${operationFieldName}: ${accessor}.map((item: any) => ({\n`
-      : `${operationFieldName}: {\n`;
-
-    const closingLine = field.type.isList ? `${indent}  }))\n` : `${indent}  }\n`;
-
-    if (depth + 2 >= maxDepth) {
-      return '';
+    if (field.type.isList) {
+      // If the field is a list, use some or every conditions
+      condition += `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
+        `${indent}  some: {\n` +
+        nestedFilterFields
+          .map((nestedField) => {
+            const nestedAccessor = `${accessor}.${nestedField.name}`;
+            return handleWhereOperation(
+              nestedField,
+              nestedAccessor,
+              inputsPath,
+              modelsPath,
+              depth + 2,
+              maxDepth
+            );
+          })
+          .join('') +
+        `${indent}  }\n` +
+        `${indent}} : undefined,\n`;
+    } else {
+      // If the field is a single relation, apply the nested filter directly
+      condition += `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
+        nestedFilterFields
+          .map((nestedField) => {
+            const nestedAccessor = `${accessor}.${nestedField.name}`;
+            return handleWhereOperation(
+              nestedField,
+              nestedAccessor,
+              inputsPath,
+              modelsPath,
+              depth + 2,
+              maxDepth
+            );
+          })
+          .join('') +
+        `${indent}} : undefined,\n`;
     }
 
-    let code =
-      `${indent}${field.name}: ${accessor} ? {\n` +
-      `${indent}  ${openingLine}` +
-      operationInputItems
-        .map((whereField) => {
-          if (isUniqueField(whereField.name)) {
-            const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && whereField.type.isFilterObject && isUniqueField(whereField.name) || (whereField.type.isFilterObject && isUniqueField(whereField.name))) {
-              return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
-            } else {
-              if (depth + 1 >= maxDepth) {
-                return '';
-              }
-              return `${handleWhereOperation(whereField, nestedAccessor, inputsPath, modelsPath, depth + 1, maxDepth)}`;
-            }
-          }
-        })
-        .join('') +
-      `${indent}    },\n`
-
-    code += `${closingLine}` + `${indent}}\n`;
-
-    return code;
+    return condition;
   }
 };
+
+
 /**
  * Checks if a field name is reserved and should be skipped.
  * @param name - The field name to check.
@@ -671,7 +556,7 @@ export const generateModelFunctions = (
   inputsPath: string,
   functionsOutputPath: string
 ): string | null => {
-  const capitalModelName = capitalizeFirstLetter(modelName);
+  const capitalModelName = capitalizeFirstLetter(modelName) as ModelName;
   const pluralModelName = pluralize(capitalModelName); // Accurate pluralization
 
   const inputTypes: InputTypePaths = {
@@ -694,7 +579,6 @@ export const generateModelFunctions = (
     where: path.join(inputsPath, inputTypes.where),
   };
 
-  const selectionSet = constructSelectionSet(capitalModelName, modelsPath, new Set());
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
@@ -704,33 +588,34 @@ import { removeUndefinedProps } from './utils';
   `;
 
   const operations = `
-${imports}
-/**
- * CRUD operations for the ${capitalModelName} model.
- */
-
-export const ${modelName} = {
-
+  ${imports}
   /**
-   * Create a new ${capitalModelName} record.
-   * @param props - Properties for the new record.
-   * @returns The created ${capitalModelName} or null.
+   * CRUD operations for the ${capitalModelName} model.
    */
 
-  async create(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+  export const ${modelName} = {
 
-  const client = createApolloClient();
+    /**
+     * Create a new ${capitalModelName} record.
+     * @param props - Properties for the new record.
+     * @returns The created ${capitalModelName} or null.
+     */
 
-  const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
-      mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
-        createOne${capitalModelName}(data: $data) {
-${selectionSet}        }
-      }
-   \`;
+    async create(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
 
-    const variables = {
-      data: {
-        ${constructVariablesObject(
+    const client = createApolloClient();
+
+    const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
+        mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
+          createOne${capitalModelName}(data: $data) {
+            ${selectionSets[capitalModelName]}        
+          }
+        }
+     \`;
+
+      const variables = {
+        data: {
+          ${constructVariablesObject(
     'props',
     inputTypePaths.create,
     capitalModelName,
@@ -738,12 +623,12 @@ ${selectionSet}        }
     modelsPath,
     'create'
   )}
-      },
-    };
+        },
+      };
 
-    const filteredVariables = removeUndefinedProps(variables);
+      const filteredVariables = removeUndefinedProps(variables);
 
-    try {
+      try {
       const response = await client.mutate({ mutation: CREATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       if (response && response.data && response.data.createOne${capitalModelName}) {
@@ -813,7 +698,8 @@ ${constructVariablesObject(
       const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
         updateOne${capitalModelName}(data: $data, where: $where) {
-${selectionSet}      }
+          ${selectionSets[capitalModelName]}
+        }
       }\`;
 
     const variables = {
@@ -921,7 +807,8 @@ ${constructVariablesObject(
       const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
-${selectionSet}      }
+          ${selectionSets[capitalModelName]}
+        }
       }\`;
 
     const variables = {
@@ -958,7 +845,8 @@ ${selectionSet}      }
       const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
-${selectionSet}        }
+          ${selectionSets[capitalModelName]}
+        }
       }\`;
 
     const variables = {
@@ -999,7 +887,8 @@ ${selectionSet}        }
       const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
         ${lowerCaseFirstLetter(pluralModelName)} {
-${selectionSet}      }
+          ${selectionSets[capitalModelName]}
+        }
       }\`;
 
     try {
@@ -1028,7 +917,8 @@ ${selectionSet}      }
       const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
-${selectionSet}      }
+          ${selectionSets[capitalModelName]}
+        }
       }\`;
 
     const variables = {
