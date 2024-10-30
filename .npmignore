@@ -11,6 +11,7 @@ dist/server.d.ts.map
 dist/server.js.map
 dist/middleware/
 dist/esm
+dist/generated/selectionSets
 
 # Include node_modules from specific packages in the dist folder
 !/dist/node_modules/@prisma/client/
