@@ -15,7 +15,8 @@
   "files": [
     "package.json",
     "README.md",
-    "generated/",
+    "generated/typegraphql-prisma",
+    "generated/typeStrings",
     "server/",
     "*.d.ts",
     "*.js",
