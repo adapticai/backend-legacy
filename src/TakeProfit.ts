@@ -17,7 +17,7 @@ import { removeUndefinedProps } from './utils';
   createdAt
   updatedAt
   orderId
-}
+
   `;
 
   export const TakeProfit = {

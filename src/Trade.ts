@@ -259,7 +259,7 @@ id
       takeProfitId
     }
   }
-}
+
   `;
 
   export const Trade = {

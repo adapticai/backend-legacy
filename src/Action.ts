@@ -166,7 +166,7 @@ id
     stopLossId
     takeProfitId
   }
-}
+
   `;
 
   export const Action = {

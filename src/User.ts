@@ -331,7 +331,7 @@ id
   }
   openaiAPIKey
   openaiModel
-}
+
   `;
 
   export const User = {

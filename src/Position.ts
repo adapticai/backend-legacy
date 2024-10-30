@@ -190,7 +190,7 @@ id
   changeToday
   assetMarginable
   alpacaAccountId
-}
+
   `;
 
   export const Position = {

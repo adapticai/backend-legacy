@@ -18,7 +18,7 @@ import { removeUndefinedProps } from './utils';
   importance
   createdAt
   updatedAt
-}
+
   `;
 
   export const EconomicEvent = {

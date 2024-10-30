@@ -15,7 +15,7 @@ import { removeUndefinedProps } from './utils';
   identifier
   token
   expires
-}
+
   `;
 
   export const VerificationToken = {

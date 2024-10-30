@@ -18,7 +18,7 @@ import { removeUndefinedProps } from './utils';
   isRead
   createdAt
   updatedAt
-}
+
   `;
 
   export const Alert = {

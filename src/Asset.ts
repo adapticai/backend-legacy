@@ -226,7 +226,7 @@ id
     sentimentScore
     sentimentLabel
   }
-}
+
   `;
 
   export const Asset = {

@@ -397,7 +397,7 @@ id
     createdAt
     updatedAt
   }
-}
+
   `;
 
   export const AlpacaAccount = {

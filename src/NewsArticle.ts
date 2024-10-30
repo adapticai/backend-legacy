@@ -96,7 +96,7 @@ import { removeUndefinedProps } from './utils';
     sentimentScore
     sentimentLabel
   }
-}
+
   `;
 
   export const NewsArticle = {

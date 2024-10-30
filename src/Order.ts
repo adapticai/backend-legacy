@@ -181,7 +181,7 @@ id
   optionType
   stopLossId
   takeProfitId
-}
+
   `;
 
   export const Order = {

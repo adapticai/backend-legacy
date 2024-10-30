@@ -183,7 +183,7 @@ id
   }
   createdAt
   updatedAt
-}
+
   `;
 
   export const Authenticator = {

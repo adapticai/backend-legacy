@@ -74,7 +74,7 @@ id
   }
   createdAt
   updatedAt
-}
+
   `;
 
   export const Session = {

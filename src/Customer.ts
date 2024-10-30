@@ -183,7 +183,7 @@ id
     openaiAPIKey
     openaiModel
   }
-}
+
   `;
 
   export const Customer = {
