@@ -10,7 +10,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    {
+    
   id
   type
   APIKey

@@ -169,7 +169,7 @@ const main = async () => {
       const fileName = `${model.name}.ts`;
       const filePath = path.join(OUTPUT_DIR, fileName);
 
-      const fileContent = `export const ${model.name} = \`{\n${selectionSet}\n}\`;\n`;
+      const fileContent = `export const ${model.name} = \`\n${selectionSet}\n}\`;\n`;
       await fs.writeFile(filePath, fileContent, 'utf-8');
     }
 
