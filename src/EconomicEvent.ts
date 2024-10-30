@@ -126,27 +126,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title
-  } : undefined,
-  description: props.description !== undefined ? {
-    equals: props.description
-  } : undefined,
-  date: props.date !== undefined ? {
-    equals: props.date
-  } : undefined,
-  importance: props.importance !== undefined ? {
-    equals: props.importance
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -207,27 +193,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  title: prop.title !== undefined ? {
-    equals: prop.title
-  } : undefined,
-  description: prop.description !== undefined ? {
-    equals: prop.description
-  } : undefined,
-  date: prop.date !== undefined ? {
-    equals: prop.date
-  } : undefined,
-  importance: prop.importance !== undefined ? {
-    equals: prop.importance
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  title: prop.title !== undefined ? prop.title : undefined,
+  description: prop.description !== undefined ? prop.description : undefined,
+  date: prop.date !== undefined ? prop.date : undefined,
+  importance: prop.importance !== undefined ? prop.importance : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -329,27 +301,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title
-  } : undefined,
-  description: props.description !== undefined ? {
-    equals: props.description
-  } : undefined,
-  date: props.date !== undefined ? {
-    equals: props.date
-  } : undefined,
-  importance: props.importance !== undefined ? {
-    equals: props.importance
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -415,27 +373,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title
-  } : undefined,
-  description: props.description !== undefined ? {
-    equals: props.description
-  } : undefined,
-  date: props.date !== undefined ? {
-    equals: props.date
-  } : undefined,
-  importance: props.importance !== undefined ? {
-    equals: props.importance
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

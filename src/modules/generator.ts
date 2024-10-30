@@ -444,9 +444,7 @@ const handleWhereOperation = (
 
   if (field.type.isScalar) {
     // Handle scalar fields by generating equality conditions
-    return `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
-      `${indent}  equals: ${accessor}\n` +
-      `${indent}} : undefined,\n`;
+    return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
   } else {
     // Handle relational fields
     if (depth + 1 >= maxDepth) {

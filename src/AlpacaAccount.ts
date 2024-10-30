@@ -1014,42 +1014,18 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  APIKey: props.APIKey !== undefined ? {
-    equals: props.APIKey
-  } : undefined,
-  APISecret: props.APISecret !== undefined ? {
-    equals: props.APISecret
-  } : undefined,
-  configuration: props.configuration !== undefined ? {
-    equals: props.configuration
-  } : undefined,
-  minOrderSize: props.minOrderSize !== undefined ? {
-    equals: props.minOrderSize
-  } : undefined,
-  maxOrderSize: props.maxOrderSize !== undefined ? {
-    equals: props.maxOrderSize
-  } : undefined,
-  minPercentageChange: props.minPercentageChange !== undefined ? {
-    equals: props.minPercentageChange
-  } : undefined,
-  volumeThreshold: props.volumeThreshold !== undefined ? {
-    equals: props.volumeThreshold
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
+  APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
+  configuration: props.configuration !== undefined ? props.configuration : undefined,
+  minOrderSize: props.minOrderSize !== undefined ? props.minOrderSize : undefined,
+  maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -2797,42 +2773,18 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type
-  } : undefined,
-  APIKey: prop.APIKey !== undefined ? {
-    equals: prop.APIKey
-  } : undefined,
-  APISecret: prop.APISecret !== undefined ? {
-    equals: prop.APISecret
-  } : undefined,
-  configuration: prop.configuration !== undefined ? {
-    equals: prop.configuration
-  } : undefined,
-  minOrderSize: prop.minOrderSize !== undefined ? {
-    equals: prop.minOrderSize
-  } : undefined,
-  maxOrderSize: prop.maxOrderSize !== undefined ? {
-    equals: prop.maxOrderSize
-  } : undefined,
-  minPercentageChange: prop.minPercentageChange !== undefined ? {
-    equals: prop.minPercentageChange
-  } : undefined,
-  volumeThreshold: prop.volumeThreshold !== undefined ? {
-    equals: prop.volumeThreshold
-  } : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  type: prop.type !== undefined ? prop.type : undefined,
+  APIKey: prop.APIKey !== undefined ? prop.APIKey : undefined,
+  APISecret: prop.APISecret !== undefined ? prop.APISecret : undefined,
+  configuration: prop.configuration !== undefined ? prop.configuration : undefined,
+  minOrderSize: prop.minOrderSize !== undefined ? prop.minOrderSize : undefined,
+  maxOrderSize: prop.maxOrderSize !== undefined ? prop.maxOrderSize : undefined,
+  minPercentageChange: prop.minPercentageChange !== undefined ? prop.minPercentageChange : undefined,
+  volumeThreshold: prop.volumeThreshold !== undefined ? prop.volumeThreshold : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -4621,42 +4573,18 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  APIKey: props.APIKey !== undefined ? {
-    equals: props.APIKey
-  } : undefined,
-  APISecret: props.APISecret !== undefined ? {
-    equals: props.APISecret
-  } : undefined,
-  configuration: props.configuration !== undefined ? {
-    equals: props.configuration
-  } : undefined,
-  minOrderSize: props.minOrderSize !== undefined ? {
-    equals: props.minOrderSize
-  } : undefined,
-  maxOrderSize: props.maxOrderSize !== undefined ? {
-    equals: props.maxOrderSize
-  } : undefined,
-  minPercentageChange: props.minPercentageChange !== undefined ? {
-    equals: props.minPercentageChange
-  } : undefined,
-  volumeThreshold: props.volumeThreshold !== undefined ? {
-    equals: props.volumeThreshold
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
+  APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
+  configuration: props.configuration !== undefined ? props.configuration : undefined,
+  minOrderSize: props.minOrderSize !== undefined ? props.minOrderSize : undefined,
+  maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -4722,42 +4650,18 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  APIKey: props.APIKey !== undefined ? {
-    equals: props.APIKey
-  } : undefined,
-  APISecret: props.APISecret !== undefined ? {
-    equals: props.APISecret
-  } : undefined,
-  configuration: props.configuration !== undefined ? {
-    equals: props.configuration
-  } : undefined,
-  minOrderSize: props.minOrderSize !== undefined ? {
-    equals: props.minOrderSize
-  } : undefined,
-  maxOrderSize: props.maxOrderSize !== undefined ? {
-    equals: props.maxOrderSize
-  } : undefined,
-  minPercentageChange: props.minPercentageChange !== undefined ? {
-    equals: props.minPercentageChange
-  } : undefined,
-  volumeThreshold: props.volumeThreshold !== undefined ? {
-    equals: props.volumeThreshold
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
+  APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
+  configuration: props.configuration !== undefined ? props.configuration : undefined,
+  minOrderSize: props.minOrderSize !== undefined ? props.minOrderSize : undefined,
+  maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

@@ -663,48 +663,20 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  email: props.email !== undefined ? {
-    equals: props.email
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name
-  } : undefined,
-  emailVerified: props.emailVerified !== undefined ? {
-    equals: props.emailVerified
-  } : undefined,
-  image: props.image !== undefined ? {
-    equals: props.image
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  role: props.role !== undefined ? {
-    equals: props.role
-  } : undefined,
-  bio: props.bio !== undefined ? {
-    equals: props.bio
-  } : undefined,
-  jobTitle: props.jobTitle !== undefined ? {
-    equals: props.jobTitle
-  } : undefined,
-  currentAccount: props.currentAccount !== undefined ? {
-    equals: props.currentAccount
-  } : undefined,
-  plan: props.plan !== undefined ? {
-    equals: props.plan
-  } : undefined,
-  openaiAPIKey: props.openaiAPIKey !== undefined ? {
-    equals: props.openaiAPIKey
-  } : undefined,
-  openaiModel: props.openaiModel !== undefined ? {
-    equals: props.openaiModel
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
+  image: props.image !== undefined ? props.image : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  role: props.role !== undefined ? props.role : undefined,
+  bio: props.bio !== undefined ? props.bio : undefined,
+  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
+  currentAccount: props.currentAccount !== undefined ? props.currentAccount : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
+  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1339,48 +1311,20 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  email: prop.email !== undefined ? {
-    equals: prop.email
-  } : undefined,
-  name: prop.name !== undefined ? {
-    equals: prop.name
-  } : undefined,
-  emailVerified: prop.emailVerified !== undefined ? {
-    equals: prop.emailVerified
-  } : undefined,
-  image: prop.image !== undefined ? {
-    equals: prop.image
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
-  role: prop.role !== undefined ? {
-    equals: prop.role
-  } : undefined,
-  bio: prop.bio !== undefined ? {
-    equals: prop.bio
-  } : undefined,
-  jobTitle: prop.jobTitle !== undefined ? {
-    equals: prop.jobTitle
-  } : undefined,
-  currentAccount: prop.currentAccount !== undefined ? {
-    equals: prop.currentAccount
-  } : undefined,
-  plan: prop.plan !== undefined ? {
-    equals: prop.plan
-  } : undefined,
-  openaiAPIKey: prop.openaiAPIKey !== undefined ? {
-    equals: prop.openaiAPIKey
-  } : undefined,
-  openaiModel: prop.openaiModel !== undefined ? {
-    equals: prop.openaiModel
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  email: prop.email !== undefined ? prop.email : undefined,
+  name: prop.name !== undefined ? prop.name : undefined,
+  emailVerified: prop.emailVerified !== undefined ? prop.emailVerified : undefined,
+  image: prop.image !== undefined ? prop.image : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
+  role: prop.role !== undefined ? prop.role : undefined,
+  bio: prop.bio !== undefined ? prop.bio : undefined,
+  jobTitle: prop.jobTitle !== undefined ? prop.jobTitle : undefined,
+  currentAccount: prop.currentAccount !== undefined ? prop.currentAccount : undefined,
+  plan: prop.plan !== undefined ? prop.plan : undefined,
+  openaiAPIKey: prop.openaiAPIKey !== undefined ? prop.openaiAPIKey : undefined,
+  openaiModel: prop.openaiModel !== undefined ? prop.openaiModel : undefined,
 
       },
       data: {
@@ -2056,48 +2000,20 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  email: props.email !== undefined ? {
-    equals: props.email
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name
-  } : undefined,
-  emailVerified: props.emailVerified !== undefined ? {
-    equals: props.emailVerified
-  } : undefined,
-  image: props.image !== undefined ? {
-    equals: props.image
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  role: props.role !== undefined ? {
-    equals: props.role
-  } : undefined,
-  bio: props.bio !== undefined ? {
-    equals: props.bio
-  } : undefined,
-  jobTitle: props.jobTitle !== undefined ? {
-    equals: props.jobTitle
-  } : undefined,
-  currentAccount: props.currentAccount !== undefined ? {
-    equals: props.currentAccount
-  } : undefined,
-  plan: props.plan !== undefined ? {
-    equals: props.plan
-  } : undefined,
-  openaiAPIKey: props.openaiAPIKey !== undefined ? {
-    equals: props.openaiAPIKey
-  } : undefined,
-  openaiModel: props.openaiModel !== undefined ? {
-    equals: props.openaiModel
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
+  image: props.image !== undefined ? props.image : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  role: props.role !== undefined ? props.role : undefined,
+  bio: props.bio !== undefined ? props.bio : undefined,
+  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
+  currentAccount: props.currentAccount !== undefined ? props.currentAccount : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
+  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2163,48 +2079,20 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name
-  } : undefined,
-  email: props.email !== undefined ? {
-    equals: props.email
-  } : undefined,
-  emailVerified: props.emailVerified !== undefined ? {
-    equals: props.emailVerified
-  } : undefined,
-  image: props.image !== undefined ? {
-    equals: props.image
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  role: props.role !== undefined ? {
-    equals: props.role
-  } : undefined,
-  bio: props.bio !== undefined ? {
-    equals: props.bio
-  } : undefined,
-  jobTitle: props.jobTitle !== undefined ? {
-    equals: props.jobTitle
-  } : undefined,
-  currentAccount: props.currentAccount !== undefined ? {
-    equals: props.currentAccount
-  } : undefined,
-  plan: props.plan !== undefined ? {
-    equals: props.plan
-  } : undefined,
-  openaiAPIKey: props.openaiAPIKey !== undefined ? {
-    equals: props.openaiAPIKey
-  } : undefined,
-  openaiModel: props.openaiModel !== undefined ? {
-    equals: props.openaiModel
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
+  image: props.image !== undefined ? props.image : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  role: props.role !== undefined ? props.role : undefined,
+  bio: props.bio !== undefined ? props.bio : undefined,
+  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
+  currentAccount: props.currentAccount !== undefined ? props.currentAccount : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
+  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
       },
     };
 

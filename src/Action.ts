@@ -558,24 +558,12 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  sequence: props.sequence !== undefined ? {
-    equals: props.sequence
-  } : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  note: props.note !== undefined ? {
-    equals: props.note
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  sequence: props.sequence !== undefined ? props.sequence : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  note: props.note !== undefined ? props.note : undefined,
+  status: props.status !== undefined ? props.status : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1653,24 +1641,12 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  sequence: prop.sequence !== undefined ? {
-    equals: prop.sequence
-  } : undefined,
-  tradeId: prop.tradeId !== undefined ? {
-    equals: prop.tradeId
-  } : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type
-  } : undefined,
-  note: prop.note !== undefined ? {
-    equals: prop.note
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  sequence: prop.sequence !== undefined ? prop.sequence : undefined,
+  tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
+  type: prop.type !== undefined ? prop.type : undefined,
+  note: prop.note !== undefined ? prop.note : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
 
       },
       data: {
@@ -2789,24 +2765,12 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  sequence: props.sequence !== undefined ? {
-    equals: props.sequence
-  } : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  note: props.note !== undefined ? {
-    equals: props.note
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  sequence: props.sequence !== undefined ? props.sequence : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  note: props.note !== undefined ? props.note : undefined,
+  status: props.status !== undefined ? props.status : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2872,24 +2836,12 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  sequence: props.sequence !== undefined ? {
-    equals: props.sequence
-  } : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  note: props.note !== undefined ? {
-    equals: props.note
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  sequence: props.sequence !== undefined ? props.sequence : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  note: props.note !== undefined ? props.note : undefined,
+  status: props.status !== undefined ? props.status : undefined,
       },
     };
 

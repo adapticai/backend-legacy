@@ -599,51 +599,21 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  averageEntryPrice: props.averageEntryPrice !== undefined ? {
-    equals: props.averageEntryPrice
-  } : undefined,
-  qty: props.qty !== undefined ? {
-    equals: props.qty
-  } : undefined,
-  qtyAvailable: props.qtyAvailable !== undefined ? {
-    equals: props.qtyAvailable
-  } : undefined,
-  marketValue: props.marketValue !== undefined ? {
-    equals: props.marketValue
-  } : undefined,
-  costBasis: props.costBasis !== undefined ? {
-    equals: props.costBasis
-  } : undefined,
-  unrealizedPL: props.unrealizedPL !== undefined ? {
-    equals: props.unrealizedPL
-  } : undefined,
-  unrealizedPLPC: props.unrealizedPLPC !== undefined ? {
-    equals: props.unrealizedPLPC
-  } : undefined,
-  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? {
-    equals: props.unrealisedIntradayPL
-  } : undefined,
-  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? {
-    equals: props.unrealisedIntradayPLPC
-  } : undefined,
-  currentPrice: props.currentPrice !== undefined ? {
-    equals: props.currentPrice
-  } : undefined,
-  lastTradePrice: props.lastTradePrice !== undefined ? {
-    equals: props.lastTradePrice
-  } : undefined,
-  changeToday: props.changeToday !== undefined ? {
-    equals: props.changeToday
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
+  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
+  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
+  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
+  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
+  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
+  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
+  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
+  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
+  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1649,51 +1619,21 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  assetId: prop.assetId !== undefined ? {
-    equals: prop.assetId
-  } : undefined,
-  averageEntryPrice: prop.averageEntryPrice !== undefined ? {
-    equals: prop.averageEntryPrice
-  } : undefined,
-  qty: prop.qty !== undefined ? {
-    equals: prop.qty
-  } : undefined,
-  qtyAvailable: prop.qtyAvailable !== undefined ? {
-    equals: prop.qtyAvailable
-  } : undefined,
-  marketValue: prop.marketValue !== undefined ? {
-    equals: prop.marketValue
-  } : undefined,
-  costBasis: prop.costBasis !== undefined ? {
-    equals: prop.costBasis
-  } : undefined,
-  unrealizedPL: prop.unrealizedPL !== undefined ? {
-    equals: prop.unrealizedPL
-  } : undefined,
-  unrealizedPLPC: prop.unrealizedPLPC !== undefined ? {
-    equals: prop.unrealizedPLPC
-  } : undefined,
-  unrealisedIntradayPL: prop.unrealisedIntradayPL !== undefined ? {
-    equals: prop.unrealisedIntradayPL
-  } : undefined,
-  unrealisedIntradayPLPC: prop.unrealisedIntradayPLPC !== undefined ? {
-    equals: prop.unrealisedIntradayPLPC
-  } : undefined,
-  currentPrice: prop.currentPrice !== undefined ? {
-    equals: prop.currentPrice
-  } : undefined,
-  lastTradePrice: prop.lastTradePrice !== undefined ? {
-    equals: prop.lastTradePrice
-  } : undefined,
-  changeToday: prop.changeToday !== undefined ? {
-    equals: prop.changeToday
-  } : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
-    equals: prop.alpacaAccountId
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  averageEntryPrice: prop.averageEntryPrice !== undefined ? prop.averageEntryPrice : undefined,
+  qty: prop.qty !== undefined ? prop.qty : undefined,
+  qtyAvailable: prop.qtyAvailable !== undefined ? prop.qtyAvailable : undefined,
+  marketValue: prop.marketValue !== undefined ? prop.marketValue : undefined,
+  costBasis: prop.costBasis !== undefined ? prop.costBasis : undefined,
+  unrealizedPL: prop.unrealizedPL !== undefined ? prop.unrealizedPL : undefined,
+  unrealizedPLPC: prop.unrealizedPLPC !== undefined ? prop.unrealizedPLPC : undefined,
+  unrealisedIntradayPL: prop.unrealisedIntradayPL !== undefined ? prop.unrealisedIntradayPL : undefined,
+  unrealisedIntradayPLPC: prop.unrealisedIntradayPLPC !== undefined ? prop.unrealisedIntradayPLPC : undefined,
+  currentPrice: prop.currentPrice !== undefined ? prop.currentPrice : undefined,
+  lastTradePrice: prop.lastTradePrice !== undefined ? prop.lastTradePrice : undefined,
+  changeToday: prop.changeToday !== undefined ? prop.changeToday : undefined,
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
 
       },
       data: {
@@ -2740,51 +2680,21 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  averageEntryPrice: props.averageEntryPrice !== undefined ? {
-    equals: props.averageEntryPrice
-  } : undefined,
-  qty: props.qty !== undefined ? {
-    equals: props.qty
-  } : undefined,
-  qtyAvailable: props.qtyAvailable !== undefined ? {
-    equals: props.qtyAvailable
-  } : undefined,
-  marketValue: props.marketValue !== undefined ? {
-    equals: props.marketValue
-  } : undefined,
-  costBasis: props.costBasis !== undefined ? {
-    equals: props.costBasis
-  } : undefined,
-  unrealizedPL: props.unrealizedPL !== undefined ? {
-    equals: props.unrealizedPL
-  } : undefined,
-  unrealizedPLPC: props.unrealizedPLPC !== undefined ? {
-    equals: props.unrealizedPLPC
-  } : undefined,
-  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? {
-    equals: props.unrealisedIntradayPL
-  } : undefined,
-  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? {
-    equals: props.unrealisedIntradayPLPC
-  } : undefined,
-  currentPrice: props.currentPrice !== undefined ? {
-    equals: props.currentPrice
-  } : undefined,
-  lastTradePrice: props.lastTradePrice !== undefined ? {
-    equals: props.lastTradePrice
-  } : undefined,
-  changeToday: props.changeToday !== undefined ? {
-    equals: props.changeToday
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
+  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
+  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
+  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
+  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
+  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
+  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
+  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
+  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
+  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2850,51 +2760,21 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  averageEntryPrice: props.averageEntryPrice !== undefined ? {
-    equals: props.averageEntryPrice
-  } : undefined,
-  qty: props.qty !== undefined ? {
-    equals: props.qty
-  } : undefined,
-  qtyAvailable: props.qtyAvailable !== undefined ? {
-    equals: props.qtyAvailable
-  } : undefined,
-  marketValue: props.marketValue !== undefined ? {
-    equals: props.marketValue
-  } : undefined,
-  costBasis: props.costBasis !== undefined ? {
-    equals: props.costBasis
-  } : undefined,
-  unrealizedPL: props.unrealizedPL !== undefined ? {
-    equals: props.unrealizedPL
-  } : undefined,
-  unrealizedPLPC: props.unrealizedPLPC !== undefined ? {
-    equals: props.unrealizedPLPC
-  } : undefined,
-  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? {
-    equals: props.unrealisedIntradayPL
-  } : undefined,
-  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? {
-    equals: props.unrealisedIntradayPLPC
-  } : undefined,
-  currentPrice: props.currentPrice !== undefined ? {
-    equals: props.currentPrice
-  } : undefined,
-  lastTradePrice: props.lastTradePrice !== undefined ? {
-    equals: props.lastTradePrice
-  } : undefined,
-  changeToday: props.changeToday !== undefined ? {
-    equals: props.changeToday
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
+  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
+  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
+  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
+  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
+  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
+  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
+  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
+  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
+  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
     };
 

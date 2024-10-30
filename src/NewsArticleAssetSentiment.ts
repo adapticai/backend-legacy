@@ -396,27 +396,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  url: props.url !== undefined ? {
-    equals: props.url
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId
-  } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore
-  } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore
-  } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  url: props.url !== undefined ? props.url : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
+  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
+  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
+  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1101,27 +1087,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  url: prop.url !== undefined ? {
-    equals: prop.url
-  } : undefined,
-  assetId: prop.assetId !== undefined ? {
-    equals: prop.assetId
-  } : undefined,
-  newsArticleId: prop.newsArticleId !== undefined ? {
-    equals: prop.newsArticleId
-  } : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? {
-    equals: prop.relevancyScore
-  } : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? {
-    equals: prop.sentimentScore
-  } : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? {
-    equals: prop.sentimentLabel
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  url: prop.url !== undefined ? prop.url : undefined,
+  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  newsArticleId: prop.newsArticleId !== undefined ? prop.newsArticleId : undefined,
+  relevancyScore: prop.relevancyScore !== undefined ? prop.relevancyScore : undefined,
+  sentimentScore: prop.sentimentScore !== undefined ? prop.sentimentScore : undefined,
+  sentimentLabel: prop.sentimentLabel !== undefined ? prop.sentimentLabel : undefined,
 
       },
       data: {
@@ -1847,27 +1819,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  url: props.url !== undefined ? {
-    equals: props.url
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId
-  } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore
-  } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore
-  } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  url: props.url !== undefined ? props.url : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
+  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
+  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
+  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -1933,27 +1891,13 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId
-  } : undefined,
-  url: props.url !== undefined ? {
-    equals: props.url
-  } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore
-  } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore
-  } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
+  url: props.url !== undefined ? props.url : undefined,
+  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
+  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
+  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
       },
     };
 

@@ -723,54 +723,22 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  qty: props.qty !== undefined ? {
-    equals: props.qty
-  } : undefined,
-  price: props.price !== undefined ? {
-    equals: props.price
-  } : undefined,
-  total: props.total !== undefined ? {
-    equals: props.total
-  } : undefined,
-  optionType: props.optionType !== undefined ? {
-    equals: props.optionType
-  } : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal
-  } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy
-  } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  price: props.price !== undefined ? props.price : undefined,
+  total: props.total !== undefined ? props.total : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  signal: props.signal !== undefined ? props.signal : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  analysis: props.analysis !== undefined ? props.analysis : undefined,
+  summary: props.summary !== undefined ? props.summary : undefined,
+  confidence: props.confidence !== undefined ? props.confidence : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  status: props.status !== undefined ? props.status : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1970,54 +1938,22 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
-    equals: prop.alpacaAccountId
-  } : undefined,
-  assetId: prop.assetId !== undefined ? {
-    equals: prop.assetId
-  } : undefined,
-  qty: prop.qty !== undefined ? {
-    equals: prop.qty
-  } : undefined,
-  price: prop.price !== undefined ? {
-    equals: prop.price
-  } : undefined,
-  total: prop.total !== undefined ? {
-    equals: prop.total
-  } : undefined,
-  optionType: prop.optionType !== undefined ? {
-    equals: prop.optionType
-  } : undefined,
-  signal: prop.signal !== undefined ? {
-    equals: prop.signal
-  } : undefined,
-  strategy: prop.strategy !== undefined ? {
-    equals: prop.strategy
-  } : undefined,
-  analysis: prop.analysis !== undefined ? {
-    equals: prop.analysis
-  } : undefined,
-  summary: prop.summary !== undefined ? {
-    equals: prop.summary
-  } : undefined,
-  confidence: prop.confidence !== undefined ? {
-    equals: prop.confidence
-  } : undefined,
-  timestamp: prop.timestamp !== undefined ? {
-    equals: prop.timestamp
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
+  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  qty: prop.qty !== undefined ? prop.qty : undefined,
+  price: prop.price !== undefined ? prop.price : undefined,
+  total: prop.total !== undefined ? prop.total : undefined,
+  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
+  signal: prop.signal !== undefined ? prop.signal : undefined,
+  strategy: prop.strategy !== undefined ? prop.strategy : undefined,
+  analysis: prop.analysis !== undefined ? prop.analysis : undefined,
+  summary: prop.summary !== undefined ? prop.summary : undefined,
+  confidence: prop.confidence !== undefined ? prop.confidence : undefined,
+  timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
 
       },
       data: {
@@ -3258,54 +3194,22 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  qty: props.qty !== undefined ? {
-    equals: props.qty
-  } : undefined,
-  price: props.price !== undefined ? {
-    equals: props.price
-  } : undefined,
-  total: props.total !== undefined ? {
-    equals: props.total
-  } : undefined,
-  optionType: props.optionType !== undefined ? {
-    equals: props.optionType
-  } : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal
-  } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy
-  } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  price: props.price !== undefined ? props.price : undefined,
+  total: props.total !== undefined ? props.total : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  signal: props.signal !== undefined ? props.signal : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  analysis: props.analysis !== undefined ? props.analysis : undefined,
+  summary: props.summary !== undefined ? props.summary : undefined,
+  confidence: props.confidence !== undefined ? props.confidence : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  status: props.status !== undefined ? props.status : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -3371,54 +3275,22 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  qty: props.qty !== undefined ? {
-    equals: props.qty
-  } : undefined,
-  price: props.price !== undefined ? {
-    equals: props.price
-  } : undefined,
-  total: props.total !== undefined ? {
-    equals: props.total
-  } : undefined,
-  optionType: props.optionType !== undefined ? {
-    equals: props.optionType
-  } : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal
-  } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy
-  } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  qty: props.qty !== undefined ? props.qty : undefined,
+  price: props.price !== undefined ? props.price : undefined,
+  total: props.total !== undefined ? props.total : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  signal: props.signal !== undefined ? props.signal : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  analysis: props.analysis !== undefined ? props.analysis : undefined,
+  summary: props.summary !== undefined ? props.summary : undefined,
+  confidence: props.confidence !== undefined ? props.confidence : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  status: props.status !== undefined ? props.status : undefined,
       },
     };
 

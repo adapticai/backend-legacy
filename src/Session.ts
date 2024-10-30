@@ -296,24 +296,12 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  sessionToken: props.sessionToken !== undefined ? {
-    equals: props.sessionToken
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  expires: props.expires !== undefined ? {
-    equals: props.expires
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? props.expires : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -696,24 +684,12 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  sessionToken: prop.sessionToken !== undefined ? {
-    equals: prop.sessionToken
-  } : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId
-  } : undefined,
-  expires: prop.expires !== undefined ? {
-    equals: prop.expires
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  sessionToken: prop.sessionToken !== undefined ? prop.sessionToken : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  expires: prop.expires !== undefined ? prop.expires : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -1137,24 +1113,12 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  sessionToken: props.sessionToken !== undefined ? {
-    equals: props.sessionToken
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  expires: props.expires !== undefined ? {
-    equals: props.expires
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? props.expires : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -1220,24 +1184,12 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  sessionToken: props.sessionToken !== undefined ? {
-    equals: props.sessionToken
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  expires: props.expires !== undefined ? {
-    equals: props.expires
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? props.expires : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

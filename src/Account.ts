@@ -413,45 +413,19 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  provider: props.provider !== undefined ? {
-    equals: props.provider
-  } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-    equals: props.providerAccountId
-  } : undefined,
-  refresh_token: props.refresh_token !== undefined ? {
-    equals: props.refresh_token
-  } : undefined,
-  access_token: props.access_token !== undefined ? {
-    equals: props.access_token
-  } : undefined,
-  token_type: props.token_type !== undefined ? {
-    equals: props.token_type
-  } : undefined,
-  scope: props.scope !== undefined ? {
-    equals: props.scope
-  } : undefined,
-  id_token: props.id_token !== undefined ? {
-    equals: props.id_token
-  } : undefined,
-  session_state: props.session_state !== undefined ? {
-    equals: props.session_state
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  provider: props.provider !== undefined ? props.provider : undefined,
+  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
+  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
+  access_token: props.access_token !== undefined ? props.access_token : undefined,
+  token_type: props.token_type !== undefined ? props.token_type : undefined,
+  scope: props.scope !== undefined ? props.scope : undefined,
+  id_token: props.id_token !== undefined ? props.id_token : undefined,
+  session_state: props.session_state !== undefined ? props.session_state : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -818,45 +792,19 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId
-  } : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type
-  } : undefined,
-  provider: prop.provider !== undefined ? {
-    equals: prop.provider
-  } : undefined,
-  providerAccountId: prop.providerAccountId !== undefined ? {
-    equals: prop.providerAccountId
-  } : undefined,
-  refresh_token: prop.refresh_token !== undefined ? {
-    equals: prop.refresh_token
-  } : undefined,
-  access_token: prop.access_token !== undefined ? {
-    equals: prop.access_token
-  } : undefined,
-  token_type: prop.token_type !== undefined ? {
-    equals: prop.token_type
-  } : undefined,
-  scope: prop.scope !== undefined ? {
-    equals: prop.scope
-  } : undefined,
-  id_token: prop.id_token !== undefined ? {
-    equals: prop.id_token
-  } : undefined,
-  session_state: prop.session_state !== undefined ? {
-    equals: prop.session_state
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  type: prop.type !== undefined ? prop.type : undefined,
+  provider: prop.provider !== undefined ? prop.provider : undefined,
+  providerAccountId: prop.providerAccountId !== undefined ? prop.providerAccountId : undefined,
+  refresh_token: prop.refresh_token !== undefined ? prop.refresh_token : undefined,
+  access_token: prop.access_token !== undefined ? prop.access_token : undefined,
+  token_type: prop.token_type !== undefined ? prop.token_type : undefined,
+  scope: prop.scope !== undefined ? prop.scope : undefined,
+  id_token: prop.id_token !== undefined ? prop.id_token : undefined,
+  session_state: prop.session_state !== undefined ? prop.session_state : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -1264,45 +1212,19 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  provider: props.provider !== undefined ? {
-    equals: props.provider
-  } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-    equals: props.providerAccountId
-  } : undefined,
-  refresh_token: props.refresh_token !== undefined ? {
-    equals: props.refresh_token
-  } : undefined,
-  access_token: props.access_token !== undefined ? {
-    equals: props.access_token
-  } : undefined,
-  token_type: props.token_type !== undefined ? {
-    equals: props.token_type
-  } : undefined,
-  scope: props.scope !== undefined ? {
-    equals: props.scope
-  } : undefined,
-  id_token: props.id_token !== undefined ? {
-    equals: props.id_token
-  } : undefined,
-  session_state: props.session_state !== undefined ? {
-    equals: props.session_state
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  provider: props.provider !== undefined ? props.provider : undefined,
+  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
+  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
+  access_token: props.access_token !== undefined ? props.access_token : undefined,
+  token_type: props.token_type !== undefined ? props.token_type : undefined,
+  scope: props.scope !== undefined ? props.scope : undefined,
+  id_token: props.id_token !== undefined ? props.id_token : undefined,
+  session_state: props.session_state !== undefined ? props.session_state : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -1368,45 +1290,19 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  provider: props.provider !== undefined ? {
-    equals: props.provider
-  } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-    equals: props.providerAccountId
-  } : undefined,
-  refresh_token: props.refresh_token !== undefined ? {
-    equals: props.refresh_token
-  } : undefined,
-  access_token: props.access_token !== undefined ? {
-    equals: props.access_token
-  } : undefined,
-  token_type: props.token_type !== undefined ? {
-    equals: props.token_type
-  } : undefined,
-  scope: props.scope !== undefined ? {
-    equals: props.scope
-  } : undefined,
-  id_token: props.id_token !== undefined ? {
-    equals: props.id_token
-  } : undefined,
-  session_state: props.session_state !== undefined ? {
-    equals: props.session_state
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  provider: props.provider !== undefined ? props.provider : undefined,
+  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
+  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
+  access_token: props.access_token !== undefined ? props.access_token : undefined,
+  token_type: props.token_type !== undefined ? props.token_type : undefined,
+  scope: props.scope !== undefined ? props.scope : undefined,
+  id_token: props.id_token !== undefined ? props.id_token : undefined,
+  session_state: props.session_state !== undefined ? props.session_state : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

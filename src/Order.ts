@@ -667,57 +667,23 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  clientOrderId: props.clientOrderId !== undefined ? {
-    equals: props.clientOrderId
-  } : undefined,
-  actionId: props.actionId !== undefined ? {
-    equals: props.actionId
-  } : undefined,
-  stopLossId: props.stopLossId !== undefined ? {
-    equals: props.stopLossId
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  side: props.side !== undefined ? {
-    equals: props.side
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  orderClass: props.orderClass !== undefined ? {
-    equals: props.orderClass
-  } : undefined,
-  timeInForce: props.timeInForce !== undefined ? {
-    equals: props.timeInForce
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  submittedAt: props.submittedAt !== undefined ? {
-    equals: props.submittedAt
-  } : undefined,
-  filledAt: props.filledAt !== undefined ? {
-    equals: props.filledAt
-  } : undefined,
-  expirationDate: props.expirationDate !== undefined ? {
-    equals: props.expirationDate
-  } : undefined,
-  optionType: props.optionType !== undefined ? {
-    equals: props.optionType
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  clientOrderId: props.clientOrderId !== undefined ? props.clientOrderId : undefined,
+  actionId: props.actionId !== undefined ? props.actionId : undefined,
+  stopLossId: props.stopLossId !== undefined ? props.stopLossId : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  side: props.side !== undefined ? props.side : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
+  timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
+  filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1835,57 +1801,23 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  clientOrderId: prop.clientOrderId !== undefined ? {
-    equals: prop.clientOrderId
-  } : undefined,
-  actionId: prop.actionId !== undefined ? {
-    equals: prop.actionId
-  } : undefined,
-  stopLossId: prop.stopLossId !== undefined ? {
-    equals: prop.stopLossId
-  } : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
-    equals: prop.alpacaAccountId
-  } : undefined,
-  assetId: prop.assetId !== undefined ? {
-    equals: prop.assetId
-  } : undefined,
-  side: prop.side !== undefined ? {
-    equals: prop.side
-  } : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type
-  } : undefined,
-  orderClass: prop.orderClass !== undefined ? {
-    equals: prop.orderClass
-  } : undefined,
-  timeInForce: prop.timeInForce !== undefined ? {
-    equals: prop.timeInForce
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
-  submittedAt: prop.submittedAt !== undefined ? {
-    equals: prop.submittedAt
-  } : undefined,
-  filledAt: prop.filledAt !== undefined ? {
-    equals: prop.filledAt
-  } : undefined,
-  expirationDate: prop.expirationDate !== undefined ? {
-    equals: prop.expirationDate
-  } : undefined,
-  optionType: prop.optionType !== undefined ? {
-    equals: prop.optionType
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  clientOrderId: prop.clientOrderId !== undefined ? prop.clientOrderId : undefined,
+  actionId: prop.actionId !== undefined ? prop.actionId : undefined,
+  stopLossId: prop.stopLossId !== undefined ? prop.stopLossId : undefined,
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
+  assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  side: prop.side !== undefined ? prop.side : undefined,
+  type: prop.type !== undefined ? prop.type : undefined,
+  orderClass: prop.orderClass !== undefined ? prop.orderClass : undefined,
+  timeInForce: prop.timeInForce !== undefined ? prop.timeInForce : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
+  submittedAt: prop.submittedAt !== undefined ? prop.submittedAt : undefined,
+  filledAt: prop.filledAt !== undefined ? prop.filledAt : undefined,
+  expirationDate: prop.expirationDate !== undefined ? prop.expirationDate : undefined,
+  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
 
       },
       data: {
@@ -3044,57 +2976,23 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  clientOrderId: props.clientOrderId !== undefined ? {
-    equals: props.clientOrderId
-  } : undefined,
-  actionId: props.actionId !== undefined ? {
-    equals: props.actionId
-  } : undefined,
-  stopLossId: props.stopLossId !== undefined ? {
-    equals: props.stopLossId
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  side: props.side !== undefined ? {
-    equals: props.side
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  orderClass: props.orderClass !== undefined ? {
-    equals: props.orderClass
-  } : undefined,
-  timeInForce: props.timeInForce !== undefined ? {
-    equals: props.timeInForce
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  submittedAt: props.submittedAt !== undefined ? {
-    equals: props.submittedAt
-  } : undefined,
-  filledAt: props.filledAt !== undefined ? {
-    equals: props.filledAt
-  } : undefined,
-  expirationDate: props.expirationDate !== undefined ? {
-    equals: props.expirationDate
-  } : undefined,
-  optionType: props.optionType !== undefined ? {
-    equals: props.optionType
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  clientOrderId: props.clientOrderId !== undefined ? props.clientOrderId : undefined,
+  actionId: props.actionId !== undefined ? props.actionId : undefined,
+  stopLossId: props.stopLossId !== undefined ? props.stopLossId : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  side: props.side !== undefined ? props.side : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
+  timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
+  filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -3160,54 +3058,22 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  clientOrderId: props.clientOrderId !== undefined ? {
-    equals: props.clientOrderId
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId
-  } : undefined,
-  side: props.side !== undefined ? {
-    equals: props.side
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type
-  } : undefined,
-  orderClass: props.orderClass !== undefined ? {
-    equals: props.orderClass
-  } : undefined,
-  timeInForce: props.timeInForce !== undefined ? {
-    equals: props.timeInForce
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
-  submittedAt: props.submittedAt !== undefined ? {
-    equals: props.submittedAt
-  } : undefined,
-  filledAt: props.filledAt !== undefined ? {
-    equals: props.filledAt
-  } : undefined,
-  actionId: props.actionId !== undefined ? {
-    equals: props.actionId
-  } : undefined,
-  expirationDate: props.expirationDate !== undefined ? {
-    equals: props.expirationDate
-  } : undefined,
-  optionType: props.optionType !== undefined ? {
-    equals: props.optionType
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  clientOrderId: props.clientOrderId !== undefined ? props.clientOrderId : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
+  assetId: props.assetId !== undefined ? props.assetId : undefined,
+  side: props.side !== undefined ? props.side : undefined,
+  type: props.type !== undefined ? props.type : undefined,
+  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
+  timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
+  submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
+  filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  actionId: props.actionId !== undefined ? props.actionId : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
       },
     };
 

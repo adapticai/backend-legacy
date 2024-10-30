@@ -406,36 +406,16 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? {
-    equals: props.stripeCustomerId
-  } : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? {
-    equals: props.stripeSubscriptionId
-  } : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name
-  } : undefined,
-  plan: props.plan !== undefined ? {
-    equals: props.plan
-  } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId
-  } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
-    equals: props.stripeCurrentPeriodEnd
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
+  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
+  authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
+  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   authUserId: props.authUserId !== undefined ? {
@@ -796,36 +776,16 @@ id
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id
-  } : undefined,
-  stripeCustomerId: prop.stripeCustomerId !== undefined ? {
-    equals: prop.stripeCustomerId
-  } : undefined,
-  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? {
-    equals: prop.stripeSubscriptionId
-  } : undefined,
-  authUserId: prop.authUserId !== undefined ? {
-    equals: prop.authUserId
-  } : undefined,
-  name: prop.name !== undefined ? {
-    equals: prop.name
-  } : undefined,
-  plan: prop.plan !== undefined ? {
-    equals: prop.plan
-  } : undefined,
-  stripePriceId: prop.stripePriceId !== undefined ? {
-    equals: prop.stripePriceId
-  } : undefined,
-  stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? {
-    equals: prop.stripeCurrentPeriodEnd
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
+  stripeCustomerId: prop.stripeCustomerId !== undefined ? prop.stripeCustomerId : undefined,
+  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? prop.stripeSubscriptionId : undefined,
+  authUserId: prop.authUserId !== undefined ? prop.authUserId : undefined,
+  name: prop.name !== undefined ? prop.name : undefined,
+  plan: prop.plan !== undefined ? prop.plan : undefined,
+  stripePriceId: prop.stripePriceId !== undefined ? prop.stripePriceId : undefined,
+  stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? prop.stripeCurrentPeriodEnd : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -1227,36 +1187,16 @@ id
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? {
-    equals: props.stripeCustomerId
-  } : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? {
-    equals: props.stripeSubscriptionId
-  } : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name
-  } : undefined,
-  plan: props.plan !== undefined ? {
-    equals: props.plan
-  } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId
-  } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
-    equals: props.stripeCurrentPeriodEnd
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
+  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
+  authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
+  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -1322,36 +1262,16 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? {
-    equals: props.id
-  } : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name
-  } : undefined,
-  plan: props.plan !== undefined ? {
-    equals: props.plan
-  } : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? {
-    equals: props.stripeCustomerId
-  } : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? {
-    equals: props.stripeSubscriptionId
-  } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId
-  } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
-    equals: props.stripeCurrentPeriodEnd
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt
-  } : undefined,
+  id: props.id !== undefined ? props.id : undefined,
+  authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
+  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
+  stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
+  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 
