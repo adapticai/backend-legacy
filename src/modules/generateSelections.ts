@@ -3,9 +3,20 @@ import path from 'path';
 import { getDMMF } from '@prisma/internals';
 import { DMMF } from '@prisma/generator-helper';
 
-/**
- * Determines if a type is a scalar type in Prisma or an enum.
- */
+const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
+const OUTPUT_DIR = path.join(__dirname, '../../src/generated/selectionSets');
+const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
+const MAX_DEPTH = 4;
+
+interface MetaTags {
+  GQL?: {
+    SKIP?: boolean;
+    EXCLUDE?: string[];
+    INCLUDE?: string[];
+    MAX_DEPTH?: number;
+  };
+}
+
 const isScalarType = (typeName: string, enumNames: Set<string>): boolean => {
   const scalarTypes = new Set([
     'Int',
@@ -16,274 +27,166 @@ const isScalarType = (typeName: string, enumNames: Set<string>): boolean => {
     'Json',
     'Bytes',
     'BigInt',
-    // Add other scalar types if any
+    'Decimal',
   ]);
   return scalarTypes.has(typeName) || enumNames.has(typeName);
 };
 
-// Configuration Constants
-const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
-const OUTPUT_DIR = path.join(__dirname, '../../src/generated/selectionSets');
-const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
-const MAX_DEPTH = 5; // Set maximum recursion depth
-
-/**
- * Represents metadata extracted from field documentation.
- */
-interface MetaTags {
-  GQL?: {
-    SKIP?: boolean;
-    EXCLUDE?: string[];
-  };
-  [key: string]: any;
-}
-
-/**
- * Parses meta tags from field documentation.
- * Specifically looks for GQL.SKIP and GQL.EXCLUDE.
- */
 const parseMetaTags = (documentation?: string): MetaTags => {
-  const meta: MetaTags = {};
+  const meta: MetaTags = { GQL: {} };
   if (!documentation) return meta;
 
-  const metaTagRegex = /GQL\.(SKIP|EXCLUDE)=((?:\[[^\]]+\])|(?:[^ \n]+))/g;
-  let match: RegExpExecArray | null;
+  const patterns = {
+    SKIP: /GQL\.SKIP=(\w+)/,
+    EXCLUDE: /GQL\.EXCLUDE=\[(.*?)\]/,
+    INCLUDE: /GQL\.INCLUDE=\[(.*?)\]/,
+    MAX_DEPTH: /GQL\.MAX_DEPTH=(\d+)/,
+  };
 
-  while ((match = metaTagRegex.exec(documentation)) !== null) {
-    const key = match[1]; // SKIP or EXCLUDE
-    let value: any = match[2];
+  // Parse SKIP
+  const skipMatch = documentation.match(patterns.SKIP);
+  if (skipMatch) {
+    meta.GQL!.SKIP = skipMatch[1].toLowerCase() === 'true';
+  }
 
-    if (key === 'SKIP') {
-      value = value.toLowerCase() === 'true';
-      meta.GQL = meta.GQL || {};
-      meta.GQL.SKIP = value;
-    } else if (key === 'EXCLUDE') {
-      // Expecting an array format: ['field1','field2']
-      if (value.startsWith('[') && value.endsWith(']')) {
-        // Remove brackets and split by comma
-        value = value
-          .slice(1, -1)
-          .split(',')
-          .map((s: string) => s.trim().replace(/['"]/g, ''));
-        meta.GQL = meta.GQL || {};
-        meta.GQL.EXCLUDE = value;
-      }
-    }
+  // Parse EXCLUDE
+  const excludeMatch = documentation.match(patterns.EXCLUDE);
+  if (excludeMatch) {
+    meta.GQL!.EXCLUDE = excludeMatch[1]
+      .split(',')
+      .map(field => field.trim().replace(/['"]/g, ''))
+      .filter(field => field.length > 0);
+  }
+
+  // Parse INCLUDE
+  const includeMatch = documentation.match(patterns.INCLUDE);
+  if (includeMatch) {
+    meta.GQL!.INCLUDE = includeMatch[1]
+      .split(',')
+      .map(field => field.trim().replace(/['"]/g, ''))
+      .filter(field => field.length > 0);
+  }
+
+  // Parse MAX_DEPTH
+  const maxDepthMatch = documentation.match(patterns.MAX_DEPTH);
+  if (maxDepthMatch) {
+    meta.GQL!.MAX_DEPTH = parseInt(maxDepthMatch[1], 10);
   }
 
   return meta;
 };
 
-/**
- * Capitalizes the first letter of a string.
- */
-const capitalizeFirstLetter = (str: string): string =>
-  str.charAt(0).toUpperCase() + str.slice(1);
-
-/**
- * Generates the GraphQL selection set for a given model.
- *
- * @param model - The current Prisma model being processed.
- * @param dmmf - The DMMF document representing the Prisma schema.
- * @param currentDepth - The current recursion depth.
- * @param maxDepth - The maximum allowed recursion depth.
- * @param enumNames - A Set containing all enum type names.
- * @param ancestors - An array of ancestor model names to prevent direct circular relations.
- * @returns A string representing the GraphQL selection set.
- */
 const generateSelectionSet = (
   model: DMMF.Model,
   dmmf: DMMF.Document,
   currentDepth: number,
   maxDepth: number,
   enumNames: Set<string>,
-  ancestors: string[] = [],
-  indentLevel: number = 1
+  ancestors: Set<string> = new Set(),
+  cache: Map<string, string> = new Map(),
+  parentExcludes: string[] = []
 ): string => {
-  const indent = (level: number) => '  '.repeat(level);
+  // Check cache first
+  const cacheKey = `${model.name}-${currentDepth}-${Array.from(ancestors).join('-')}-${parentExcludes.join(',')}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey)!;
+  }
 
-
+  // Check depth
   if (currentDepth > maxDepth) {
-    return `${indent(indentLevel + 1)}id`;
+    return 'id';
   }
 
+  // Prevent circular references
+  if (ancestors.has(model.name)) {
+    return 'id';
+  }
 
-  const selectionFields: string[] = [];
+  const newAncestors = new Set(ancestors).add(model.name);
+  const fields: string[] = [];
+  const indent = '  '.repeat(currentDepth);
 
-  for (const field of model.fields) {
-    const { GQL } = parseMetaTags(field.documentation);
+  // Filter fields based on parent's EXCLUDE directive
+  const availableFields = model.fields.filter(field => !parentExcludes.includes(field.name));
 
-    // Handle GQL.SKIP
-    if (GQL?.SKIP) {
-      console.log(`Skipping field: ${model.name}.${field.name}`);
+  for (const field of availableFields) {
+    const meta = parseMetaTags(field.documentation);
+
+    // Skip if explicitly marked
+    if (meta.GQL?.SKIP) continue;
+
+    // Handle included/excluded fields
+    if (meta.GQL?.INCLUDE && !meta.GQL.INCLUDE.includes(field.name)) continue;
+    if (meta.GQL?.EXCLUDE?.includes(field.name)) continue;
+
+    // Handle scalar types
+    if (isScalarType(field.type, enumNames)) {
+      fields.push(`${indent}${field.name}`);
       continue;
     }
 
-    const fieldName = field.name;
-    const fieldType = field.type;
-    const isList = field.isList;
+    // Handle relations
+    const relatedModel = dmmf.datamodel.models.find(m => m.name === field.type);
+    if (!relatedModel) continue;
 
-    if (isScalarType(fieldType, enumNames)) {
-      selectionFields.push(fieldName);
-      console.log(`Including scalar/enum field: ${model.name}.${field.name}`);
-      continue;
-    } else {
-      // It's a relation field
-      const relatedModel = dmmf.datamodel.models.find((m) => m.name === fieldType);
-      if (!relatedModel) {
-        console.warn(`Related model "${fieldType}" for field "${fieldName}" not found.`);
-        continue;
-      }
+    // Pass down any EXCLUDE fields from the current field's meta
+    const fieldExcludes = meta.GQL?.EXCLUDE || [];
+    const fieldMaxDepth = meta.GQL?.MAX_DEPTH ?? maxDepth;
 
-      // Check for direct circular relation
-      if (ancestors[ancestors.length - 1] === relatedModel.name) {
-        console.log(`Skipping relation field to direct ancestor: ${model.name}.${field.name}`);
-        continue;
-      }
+    const nestedSelection = generateSelectionSet(
+      relatedModel,
+      dmmf,
+      currentDepth + 1,
+      fieldMaxDepth,
+      enumNames,
+      newAncestors,
+      cache,
+      fieldExcludes // Pass excluded fields to nested selection
+    );
 
-      let nestedSelection = '';
-
-      if (GQL?.EXCLUDE && GQL.EXCLUDE.length > 0) {
-        // Filter the fields to include based on GQL.EXCLUDE
-        const includedFields = relatedModel.fields.filter((f) => !GQL.EXCLUDE!.includes(f.name));
-
-        if (includedFields.length > 0) {
-          nestedSelection = includedFields
-            .map((f) => {
-              const { GQL: nestedGQL } = parseMetaTags(f.documentation);
-
-              if (nestedGQL?.SKIP) {
-                console.log(`Skipping nested field: ${relatedModel.name}.${f.name}`);
-                return null;
-              }
-
-              if (isScalarType(f.type, enumNames)) {
-                return indent(indentLevel + 1) + f.name;
-              } else {
-                // Further nested relations
-                if (nestedGQL?.EXCLUDE && nestedGQL.EXCLUDE.length > 0) {
-                  const nestedRelatedModel = dmmf.datamodel.models.find((m) => m.name === f.type);
-                  if (nestedRelatedModel) {
-                    return `${indent(indentLevel + 1)}${f.name} { ${generateSelectionSet(nestedRelatedModel, dmmf, currentDepth + 1, maxDepth, enumNames, [...ancestors, model.name], indentLevel + 1)} }`;
-                  }
-                }
-                // Default to 'id' for deeper relations
-                return `${indent(indentLevel + 1)}${f.name} { id }`;
-              }
-            })
-            .filter((f): f is string => f !== null)
-            .join('\n  ');
-        }
-      } else {
-        // No EXCLUDE specified, include all scalar fields and nested relations
-        nestedSelection = relatedModel.fields
-          .map((f) => {
-            const { GQL: nestedGQL } = parseMetaTags(f.documentation);
-
-            if (nestedGQL?.SKIP) {
-              console.log(`Skipping nested field: ${relatedModel.name}.${f.name}`);
-              return null;
-            }
-
-            if (isScalarType(f.type, enumNames)) {
-              return indent(indentLevel + 1) + f.name;
-            } else {
-              // For nested relations without EXCLUDE, include 'id'
-              return `${indent(indentLevel + 1)}${f.name} { id }`;
-            }
-          })
-          .filter((f): f is string => f !== null)
-          .join('\n  ');
-      }
-
-      if (nestedSelection) {
-        const formattedSelection = nestedSelection
-          .split('\n')
-          .map(line => `  ${line}`)
-          .join('\n');
-
-        if (isList) {
-          selectionFields.push(`${indent(indentLevel + 1)}${fieldName} {\n${formattedSelection}\n${indent(indentLevel + 1)}}`);
-        } else {
-          selectionFields.push(`${indent(indentLevel + 1)}${fieldName} {\n${formattedSelection}\n${indent(indentLevel + 1)}}`);
-        }
-        console.log(`Including relation field: ${model.name}.${field.name}`);
-      } else {
-        // If no fields to include, default to 'id'
-        selectionFields.push(`${indent(indentLevel + 1)}${fieldName} { id }`);
-        console.log(`Including relation field with default 'id': ${model.name}.${field.name}`);
-      }
+    if (nestedSelection.trim()) {
+      fields.push(`${indent}${field.name} {\n${nestedSelection}\n${indent}}`);
     }
   }
 
-  return selectionFields.length > 0 ? selectionFields.join('\n  ') : 'id';
+  const result = fields.join('\n');
+  cache.set(cacheKey, result);
+  return result;
 };
 
-/**
- * Generates GraphQL selection sets for all models based on GQL annotations.
- */
 const main = async () => {
   try {
-    // Ensure output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-    // Clean up output directory (optional)
-    const files = await fs.readdir(OUTPUT_DIR);
-    for (const file of files) {
-      if (file !== 'index.ts') {
-        await fs.unlink(path.join(OUTPUT_DIR, file));
-      }
-    }
-
-    // Read Prisma schema
     const schema = await fs.readFile(SCHEMA_PATH, 'utf-8');
+    const dmmf = await getDMMF({ datamodel: schema });
+    const enumNames = new Set(dmmf.datamodel.enums.map(e => e.name));
+    const cache = new Map<string, string>();
 
-    // Parse schema to DMMF
-    const dmmf: DMMF.Document = await getDMMF({ datamodel: schema });
-
-    // Extract all enum names
-    const enumNames = new Set<string>(dmmf.datamodel.enums.map(enumDef => enumDef.name));
-
-    // Generate selection sets for each model
-    const exportStatements: string[] = [];
-
+    // Generate selection sets
     for (const model of dmmf.datamodel.models) {
-      const selectionSet = generateSelectionSet(model, dmmf, 1, MAX_DEPTH, enumNames, []);
-
-      const selectionSetString = `{\n  ${selectionSet}\n}`;
-
+      const selectionSet = generateSelectionSet(model, dmmf, 1, MAX_DEPTH, enumNames, new Set(), cache);
       const fileName = `${model.name}.ts`;
       const filePath = path.join(OUTPUT_DIR, fileName);
-      const constName = `${model.name}`;
 
-      // Escape backticks and dollar signs
-      const escapedSelectionSet = selectionSetString
-        .replace(/\\/g, '\\\\')
-        .replace(/`/g, '\\`')
-        .replace(/\$\{/g, '\\${');
-
-      const fileContent = `export const ${constName} = \`\n${escapedSelectionSet}\`;\n`;
+      const fileContent = `export const ${model.name} = \`{\n${selectionSet}\n}\`;\n`;
       await fs.writeFile(filePath, fileContent, 'utf-8');
-      console.log(`Generated ${fileName}`);
-
-      // Prepare export statement
-      const exportName = `${model.name}`;
-      exportStatements.push(`  ${exportName},`);
     }
 
-    // Generate index.ts with explicit type annotation to prevent TS7056 error
-    const indexImports = dmmf.datamodel.models
-      .map((model) => `import { ${model.name} } from './${model.name}';`)
+    // Generate index file
+    const imports = dmmf.datamodel.models
+      .map(model => `import { ${model.name} } from './${model.name}';`)
       .join('\n');
 
-    // Use Record<string, string> as the type annotation
-    const indexExports = `export const selectionSets: Record<string, string> = {\n${exportStatements.join('\n')}\n};\n\nexport default selectionSets;\n`;
+    const exports = `export const selectionSets: Record<string, string> = {
+${dmmf.datamodel.models.map(model => `  ${model.name},`).join('\n')}
+};\n\nexport default selectionSets;\n`;
 
-    const indexContent = `${indexImports}\n\n${indexExports}`;
-    await fs.writeFile(INDEX_FILE, indexContent, 'utf-8');
-    console.log('Generated index.ts');
+    await fs.writeFile(INDEX_FILE, `${imports}\n\n${exports}`, 'utf-8');
+
   } catch (error) {
     console.error('Error generating selection sets:', error);
+    process.exit(1);
   }
 };
 

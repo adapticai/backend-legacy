@@ -9,6 +9,18 @@ import { removeUndefinedProps } from './utils';
    * CRUD operations for the EconomicEvent model.
    */
 
+  const selectionSet = `
+    {
+  id
+  title
+  description
+  date
+  importance
+  createdAt
+  updatedAt
+}
+  `;
+
   export const EconomicEvent = {
 
     /**
@@ -24,16 +36,7 @@ import { removeUndefinedProps } from './utils';
     const CREATE_ONE_ECONOMICEVENT = gql`
         mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
           createOneEconomicEvent(data: $data) {
-            
-{
-  id
-  title
-  description
-  date
-  importance
-  createdAt
-  updatedAt
-}        
+            ${selectionSet}
           }
         }
      `;
@@ -117,16 +120,7 @@ import { removeUndefinedProps } from './utils';
       const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
         updateOneEconomicEvent(data: $data, where: $where) {
-          
-{
-  id
-  title
-  description
-  date
-  importance
-  createdAt
-  updatedAt
-}
+          ${selectionSet}
         }
       }`;
 
@@ -291,16 +285,7 @@ import { removeUndefinedProps } from './utils';
       const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
-          
-{
-  id
-  title
-  description
-  date
-  importance
-  createdAt
-  updatedAt
-}
+          ${selectionSet}
         }
       }`;
 
@@ -338,16 +323,7 @@ import { removeUndefinedProps } from './utils';
       const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         getEconomicEvent(where: $where) {
-          
-{
-  id
-  title
-  description
-  date
-  importance
-  createdAt
-  updatedAt
-}
+          ${selectionSet}
         }
       }`;
 
@@ -403,16 +379,7 @@ import { removeUndefinedProps } from './utils';
       const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
         economicEvents {
-          
-{
-  id
-  title
-  description
-  date
-  importance
-  createdAt
-  updatedAt
-}
+          ${selectionSet}
         }
       }`;
 
@@ -442,16 +409,7 @@ import { removeUndefinedProps } from './utils';
       const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {
         economicEvents(where: $where) {
-          
-{
-  id
-  title
-  description
-  date
-  importance
-  createdAt
-  updatedAt
-}
+          ${selectionSet}
         }
       }`;
 

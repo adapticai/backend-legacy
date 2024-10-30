@@ -30,7 +30,7 @@ const constructVariablesObject = (
   modelsPath: string | null = null,
   operationType: OperationType = 'none',
   depth: number = 0,
-  maxDepth: number = 5
+  maxDepth: number = 4
 ): string => {
   let fields: FieldDefinition[] = [];
   let inputPath: string | null = null;
@@ -593,6 +593,10 @@ import { removeUndefinedProps } from './utils';
    * CRUD operations for the ${capitalModelName} model.
    */
 
+  const selectionSet = \`
+    ${selectionSets[capitalModelName]}
+  \`;
+
   export const ${modelName} = {
 
     /**
@@ -608,7 +612,7 @@ import { removeUndefinedProps } from './utils';
     const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
         mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
           createOne${capitalModelName}(data: $data) {
-            ${selectionSets[capitalModelName]}        
+            \${selectionSet}
           }
         }
      \`;
@@ -698,7 +702,7 @@ ${constructVariablesObject(
       const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
         updateOne${capitalModelName}(data: $data, where: $where) {
-          ${selectionSets[capitalModelName]}
+          \${selectionSet}
         }
       }\`;
 
@@ -807,7 +811,7 @@ ${constructVariablesObject(
       const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
-          ${selectionSets[capitalModelName]}
+          \${selectionSet}
         }
       }\`;
 
@@ -845,7 +849,7 @@ ${constructVariablesObject(
       const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
-          ${selectionSets[capitalModelName]}
+          \${selectionSet}
         }
       }\`;
 
@@ -887,7 +891,7 @@ ${constructVariablesObject(
       const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
         ${lowerCaseFirstLetter(pluralModelName)} {
-          ${selectionSets[capitalModelName]}
+          \${selectionSet}
         }
       }\`;
 
@@ -917,7 +921,7 @@ ${constructVariablesObject(
       const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
-          ${selectionSets[capitalModelName]}
+          \${selectionSet}
         }
       }\`;
 

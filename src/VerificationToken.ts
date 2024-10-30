@@ -9,6 +9,15 @@ import { removeUndefinedProps } from './utils';
    * CRUD operations for the VerificationToken model.
    */
 
+  const selectionSet = `
+    {
+  id
+  identifier
+  token
+  expires
+}
+  `;
+
   export const VerificationToken = {
 
     /**
@@ -24,13 +33,7 @@ import { removeUndefinedProps } from './utils';
     const CREATE_ONE_VERIFICATIONTOKEN = gql`
         mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
           createOneVerificationToken(data: $data) {
-            
-{
-  id
-  identifier
-  token
-  expires
-}        
+            ${selectionSet}
           }
         }
      `;
@@ -112,13 +115,7 @@ import { removeUndefinedProps } from './utils';
       const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
         updateOneVerificationToken(data: $data, where: $where) {
-          
-{
-  id
-  identifier
-  token
-  expires
-}
+          ${selectionSet}
         }
       }`;
 
@@ -247,13 +244,7 @@ import { removeUndefinedProps } from './utils';
       const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
-          
-{
-  id
-  identifier
-  token
-  expires
-}
+          ${selectionSet}
         }
       }`;
 
@@ -291,13 +282,7 @@ import { removeUndefinedProps } from './utils';
       const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
-          
-{
-  id
-  identifier
-  token
-  expires
-}
+          ${selectionSet}
         }
       }`;
 
@@ -344,13 +329,7 @@ import { removeUndefinedProps } from './utils';
       const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
-          
-{
-  id
-  identifier
-  token
-  expires
-}
+          ${selectionSet}
         }
       }`;
 
@@ -380,13 +359,7 @@ import { removeUndefinedProps } from './utils';
       const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
-          
-{
-  id
-  identifier
-  token
-  expires
-}
+          ${selectionSet}
         }
       }`;
 

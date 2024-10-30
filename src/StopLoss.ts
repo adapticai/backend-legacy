@@ -9,6 +9,17 @@ import { removeUndefinedProps } from './utils';
    * CRUD operations for the StopLoss model.
    */
 
+  const selectionSet = `
+    {
+  id
+  stopPrice
+  limitPrice
+  createdAt
+  updatedAt
+  orderId
+}
+  `;
+
   export const StopLoss = {
 
     /**
@@ -24,15 +35,7 @@ import { removeUndefinedProps } from './utils';
     const CREATE_ONE_STOPLOSS = gql`
         mutation createOneStopLoss($data: StopLossCreateInput!) {
           createOneStopLoss(data: $data) {
-            
-{
-  id
-  stopPrice
-  limitPrice
-  createdAt
-  updatedAt
-  orderId
-}        
+            ${selectionSet}
           }
         }
      `;
@@ -110,104 +113,6 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
-      user: props.Order.alpacaAccount.user ? 
-        typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
-    ? { connect: {
-            id: props.Order.alpacaAccount.user.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? props.Order.alpacaAccount.user.id : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            name: props.Order.alpacaAccount.user.name !== undefined ? {
-                equals: props.Order.alpacaAccount.user.name 
-               } : undefined,
-          },
-          create: {
-            name: props.Order.alpacaAccount.user.name !== undefined ? props.Order.alpacaAccount.user.name : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            emailVerified: props.Order.alpacaAccount.user.emailVerified !== undefined ? props.Order.alpacaAccount.user.emailVerified : undefined,
-            image: props.Order.alpacaAccount.user.image !== undefined ? props.Order.alpacaAccount.user.image : undefined,
-            role: props.Order.alpacaAccount.user.role !== undefined ? props.Order.alpacaAccount.user.role : undefined,
-            bio: props.Order.alpacaAccount.user.bio !== undefined ? props.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: props.Order.alpacaAccount.user.jobTitle !== undefined ? props.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: props.Order.alpacaAccount.user.currentAccount !== undefined ? props.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: props.Order.alpacaAccount.user.plan !== undefined ? props.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: props.Order.alpacaAccount.user.openaiAPIKey !== undefined ? props.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: props.Order.alpacaAccount.user.openaiModel !== undefined ? props.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: props.Order.alpacaAccount.trades ? 
-        Array.isArray(props.Order.alpacaAccount.trades) && props.Order.alpacaAccount.trades.length > 0 &&  props.Order.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.alpacaAccount.positions ? 
-        Array.isArray(props.Order.alpacaAccount.positions) && props.Order.alpacaAccount.positions.length > 0 &&  props.Order.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: props.Order.alpacaAccount.alerts ? 
-        Array.isArray(props.Order.alpacaAccount.alerts) && props.Order.alpacaAccount.alerts.length > 0 &&  props.Order.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.alerts.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -227,31 +132,6 @@ import { removeUndefinedProps } from './utils';
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
-      trade: props.Order.action.trade ? 
-        typeof props.Order.action.trade === 'object' && Object.keys(props.Order.action.trade).length === 1 && Object.keys(props.Order.action.trade)[0] === 'id'
-    ? { connect: {
-            id: props.Order.action.trade.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.Order.action.trade.id !== undefined ? props.Order.action.trade.id : undefined,
-          },
-          create: {
-            qty: props.Order.action.trade.qty !== undefined ? props.Order.action.trade.qty : undefined,
-            price: props.Order.action.trade.price !== undefined ? props.Order.action.trade.price : undefined,
-            total: props.Order.action.trade.total !== undefined ? props.Order.action.trade.total : undefined,
-            optionType: props.Order.action.trade.optionType !== undefined ? props.Order.action.trade.optionType : undefined,
-            signal: props.Order.action.trade.signal !== undefined ? props.Order.action.trade.signal : undefined,
-            strategy: props.Order.action.trade.strategy !== undefined ? props.Order.action.trade.strategy : undefined,
-            analysis: props.Order.action.trade.analysis !== undefined ? props.Order.action.trade.analysis : undefined,
-            summary: props.Order.action.trade.summary !== undefined ? props.Order.action.trade.summary : undefined,
-            confidence: props.Order.action.trade.confidence !== undefined ? props.Order.action.trade.confidence : undefined,
-            timestamp: props.Order.action.trade.timestamp !== undefined ? props.Order.action.trade.timestamp : undefined,
-            status: props.Order.action.trade.status !== undefined ? props.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
       }
     } : undefined,
@@ -323,77 +203,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: props.Order.asset.exDividendDate !== undefined ? props.Order.asset.exDividendDate : undefined,
           askPrice: props.Order.asset.askPrice !== undefined ? props.Order.asset.askPrice : undefined,
           bidPrice: props.Order.asset.bidPrice !== undefined ? props.Order.asset.bidPrice : undefined,
-      trades: props.Order.asset.trades ? 
-        Array.isArray(props.Order.asset.trades) && props.Order.asset.trades.length > 0 &&  props.Order.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.asset.positions ? 
-        Array.isArray(props.Order.asset.positions) && props.Order.asset.positions.length > 0 &&  props.Order.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: props.Order.asset.newsMentions ? 
-        Array.isArray(props.Order.asset.newsMentions) && props.Order.asset.newsMentions.length > 0 &&  props.Order.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.newsMentions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -472,15 +281,7 @@ import { removeUndefinedProps } from './utils';
       const UPDATE_ONE_STOPLOSS = gql`
       mutation updateOneStopLoss($data: StopLossUpdateInput!, $where: StopLossWhereUniqueInput!) {
         updateOneStopLoss(data: $data, where: $where) {
-          
-{
-  id
-  stopPrice
-  limitPrice
-  createdAt
-  updatedAt
-  orderId
-}
+          ${selectionSet}
         }
       }`;
 
@@ -654,222 +455,6 @@ import { removeUndefinedProps } from './utils';
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? {
               set: props.Order.alpacaAccount.volumeThreshold  
              } : undefined,
-      user: props.Order.alpacaAccount.user ? {
-        upsert: {
-          where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? {
-                equals: props.Order.alpacaAccount.user.id 
-               } : undefined,
-            name: props.Order.alpacaAccount.user.name !== undefined ? {
-                equals: props.Order.alpacaAccount.user.name 
-               } : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? {
-                equals: props.Order.alpacaAccount.user.email 
-               } : undefined,
-          },
-          update: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? {
-                set: props.Order.alpacaAccount.user.id  
-               } : undefined,
-            name: props.Order.alpacaAccount.user.name !== undefined ? {
-                set: props.Order.alpacaAccount.user.name  
-               } : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? {
-                set: props.Order.alpacaAccount.user.email  
-               } : undefined,
-            emailVerified: props.Order.alpacaAccount.user.emailVerified !== undefined ? {
-                set: props.Order.alpacaAccount.user.emailVerified  
-               } : undefined,
-            image: props.Order.alpacaAccount.user.image !== undefined ? {
-                set: props.Order.alpacaAccount.user.image  
-               } : undefined,
-            role: props.Order.alpacaAccount.user.role !== undefined ? {
-                set: props.Order.alpacaAccount.user.role  
-               } : undefined,
-            bio: props.Order.alpacaAccount.user.bio !== undefined ? {
-                set: props.Order.alpacaAccount.user.bio  
-               } : undefined,
-            jobTitle: props.Order.alpacaAccount.user.jobTitle !== undefined ? {
-                set: props.Order.alpacaAccount.user.jobTitle  
-               } : undefined,
-            currentAccount: props.Order.alpacaAccount.user.currentAccount !== undefined ? {
-                set: props.Order.alpacaAccount.user.currentAccount  
-               } : undefined,
-            plan: props.Order.alpacaAccount.user.plan !== undefined ? {
-                set: props.Order.alpacaAccount.user.plan  
-               } : undefined,
-            openaiAPIKey: props.Order.alpacaAccount.user.openaiAPIKey !== undefined ? {
-                set: props.Order.alpacaAccount.user.openaiAPIKey  
-               } : undefined,
-            openaiModel: props.Order.alpacaAccount.user.openaiModel !== undefined ? {
-                set: props.Order.alpacaAccount.user.openaiModel  
-               } : undefined,
-          },
-          create: {
-            name: props.Order.alpacaAccount.user.name !== undefined ? props.Order.alpacaAccount.user.name : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            emailVerified: props.Order.alpacaAccount.user.emailVerified !== undefined ? props.Order.alpacaAccount.user.emailVerified : undefined,
-            image: props.Order.alpacaAccount.user.image !== undefined ? props.Order.alpacaAccount.user.image : undefined,
-            role: props.Order.alpacaAccount.user.role !== undefined ? props.Order.alpacaAccount.user.role : undefined,
-            bio: props.Order.alpacaAccount.user.bio !== undefined ? props.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: props.Order.alpacaAccount.user.jobTitle !== undefined ? props.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: props.Order.alpacaAccount.user.currentAccount !== undefined ? props.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: props.Order.alpacaAccount.user.plan !== undefined ? props.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: props.Order.alpacaAccount.user.openaiAPIKey !== undefined ? props.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: props.Order.alpacaAccount.user.openaiModel !== undefined ? props.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: props.Order.alpacaAccount.trades ? {
-        upsert: props.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.alpacaAccount.positions ? {
-        upsert: props.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
-            marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
-            costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
-            currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
-            changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: props.Order.alpacaAccount.alerts ? {
-        upsert: props.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            message: item.message !== undefined ? {
-                set: item.message  
-               } : undefined,
-            type: item.type !== undefined ? {
-                set: item.type  
-               } : undefined,
-            isRead: item.isRead !== undefined ? {
-                set: item.isRead  
-               } : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           type: props.Order.alpacaAccount.type !== undefined ? props.Order.alpacaAccount.type : undefined,
@@ -881,104 +466,6 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
-      user: props.Order.alpacaAccount.user ? 
-        typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
-    ? { connect: {
-            id: props.Order.alpacaAccount.user.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? props.Order.alpacaAccount.user.id : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            name: props.Order.alpacaAccount.user.name !== undefined ? {
-                equals: props.Order.alpacaAccount.user.name 
-               } : undefined,
-          },
-          create: {
-            name: props.Order.alpacaAccount.user.name !== undefined ? props.Order.alpacaAccount.user.name : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            emailVerified: props.Order.alpacaAccount.user.emailVerified !== undefined ? props.Order.alpacaAccount.user.emailVerified : undefined,
-            image: props.Order.alpacaAccount.user.image !== undefined ? props.Order.alpacaAccount.user.image : undefined,
-            role: props.Order.alpacaAccount.user.role !== undefined ? props.Order.alpacaAccount.user.role : undefined,
-            bio: props.Order.alpacaAccount.user.bio !== undefined ? props.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: props.Order.alpacaAccount.user.jobTitle !== undefined ? props.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: props.Order.alpacaAccount.user.currentAccount !== undefined ? props.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: props.Order.alpacaAccount.user.plan !== undefined ? props.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: props.Order.alpacaAccount.user.openaiAPIKey !== undefined ? props.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: props.Order.alpacaAccount.user.openaiModel !== undefined ? props.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: props.Order.alpacaAccount.trades ? 
-        Array.isArray(props.Order.alpacaAccount.trades) && props.Order.alpacaAccount.trades.length > 0 &&  props.Order.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.alpacaAccount.positions ? 
-        Array.isArray(props.Order.alpacaAccount.positions) && props.Order.alpacaAccount.positions.length > 0 &&  props.Order.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: props.Order.alpacaAccount.alerts ? 
-        Array.isArray(props.Order.alpacaAccount.alerts) && props.Order.alpacaAccount.alerts.length > 0 &&  props.Order.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.alerts.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -1008,66 +495,6 @@ import { removeUndefinedProps } from './utils';
           fee: props.Order.action.fee !== undefined ? {
               set: props.Order.action.fee  
              } : undefined,
-      trade: props.Order.action.trade ? {
-        upsert: {
-          where: {
-            id: props.Order.action.trade.id !== undefined ? {
-                equals: props.Order.action.trade.id 
-               } : undefined,
-          },
-          update: {
-            id: props.Order.action.trade.id !== undefined ? {
-                set: props.Order.action.trade.id  
-               } : undefined,
-            qty: props.Order.action.trade.qty !== undefined ? {
-                set: props.Order.action.trade.qty  
-               } : undefined,
-            price: props.Order.action.trade.price !== undefined ? {
-                set: props.Order.action.trade.price  
-               } : undefined,
-            total: props.Order.action.trade.total !== undefined ? {
-                set: props.Order.action.trade.total  
-               } : undefined,
-            optionType: props.Order.action.trade.optionType !== undefined ? {
-                set: props.Order.action.trade.optionType  
-               } : undefined,
-            signal: props.Order.action.trade.signal !== undefined ? {
-                set: props.Order.action.trade.signal  
-               } : undefined,
-            strategy: props.Order.action.trade.strategy !== undefined ? {
-                set: props.Order.action.trade.strategy  
-               } : undefined,
-            analysis: props.Order.action.trade.analysis !== undefined ? {
-                set: props.Order.action.trade.analysis  
-               } : undefined,
-            summary: props.Order.action.trade.summary !== undefined ? {
-                set: props.Order.action.trade.summary  
-               } : undefined,
-            confidence: props.Order.action.trade.confidence !== undefined ? {
-                set: props.Order.action.trade.confidence  
-               } : undefined,
-            timestamp: props.Order.action.trade.timestamp !== undefined ? {
-                set: props.Order.action.trade.timestamp  
-               } : undefined,
-            status: props.Order.action.trade.status !== undefined ? {
-                set: props.Order.action.trade.status  
-               } : undefined,
-          },
-          create: {
-            qty: props.Order.action.trade.qty !== undefined ? props.Order.action.trade.qty : undefined,
-            price: props.Order.action.trade.price !== undefined ? props.Order.action.trade.price : undefined,
-            total: props.Order.action.trade.total !== undefined ? props.Order.action.trade.total : undefined,
-            optionType: props.Order.action.trade.optionType !== undefined ? props.Order.action.trade.optionType : undefined,
-            signal: props.Order.action.trade.signal !== undefined ? props.Order.action.trade.signal : undefined,
-            strategy: props.Order.action.trade.strategy !== undefined ? props.Order.action.trade.strategy : undefined,
-            analysis: props.Order.action.trade.analysis !== undefined ? props.Order.action.trade.analysis : undefined,
-            summary: props.Order.action.trade.summary !== undefined ? props.Order.action.trade.summary : undefined,
-            confidence: props.Order.action.trade.confidence !== undefined ? props.Order.action.trade.confidence : undefined,
-            timestamp: props.Order.action.trade.timestamp !== undefined ? props.Order.action.trade.timestamp : undefined,
-            status: props.Order.action.trade.status !== undefined ? props.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
@@ -1075,31 +502,6 @@ import { removeUndefinedProps } from './utils';
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
-      trade: props.Order.action.trade ? 
-        typeof props.Order.action.trade === 'object' && Object.keys(props.Order.action.trade).length === 1 && Object.keys(props.Order.action.trade)[0] === 'id'
-    ? { connect: {
-            id: props.Order.action.trade.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.Order.action.trade.id !== undefined ? props.Order.action.trade.id : undefined,
-          },
-          create: {
-            qty: props.Order.action.trade.qty !== undefined ? props.Order.action.trade.qty : undefined,
-            price: props.Order.action.trade.price !== undefined ? props.Order.action.trade.price : undefined,
-            total: props.Order.action.trade.total !== undefined ? props.Order.action.trade.total : undefined,
-            optionType: props.Order.action.trade.optionType !== undefined ? props.Order.action.trade.optionType : undefined,
-            signal: props.Order.action.trade.signal !== undefined ? props.Order.action.trade.signal : undefined,
-            strategy: props.Order.action.trade.strategy !== undefined ? props.Order.action.trade.strategy : undefined,
-            analysis: props.Order.action.trade.analysis !== undefined ? props.Order.action.trade.analysis : undefined,
-            summary: props.Order.action.trade.summary !== undefined ? props.Order.action.trade.summary : undefined,
-            confidence: props.Order.action.trade.confidence !== undefined ? props.Order.action.trade.confidence : undefined,
-            timestamp: props.Order.action.trade.timestamp !== undefined ? props.Order.action.trade.timestamp : undefined,
-            status: props.Order.action.trade.status !== undefined ? props.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
       }
     } : undefined,
@@ -1285,161 +687,6 @@ import { removeUndefinedProps } from './utils';
           bidPrice: props.Order.asset.bidPrice !== undefined ? {
               set: props.Order.asset.bidPrice  
              } : undefined,
-      trades: props.Order.asset.trades ? {
-        upsert: props.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.asset.positions ? {
-        upsert: props.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
-            marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
-            costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
-            currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
-            changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: props.Order.asset.newsMentions ? {
-        upsert: props.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            url: item.url !== undefined ? {
-                set: item.url  
-               } : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? {
-                set: item.relevancyScore  
-               } : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? {
-                set: item.sentimentScore  
-               } : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? {
-                set: item.sentimentLabel  
-               } : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           symbol: props.Order.asset.symbol !== undefined ? props.Order.asset.symbol : undefined,
@@ -1497,77 +744,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: props.Order.asset.exDividendDate !== undefined ? props.Order.asset.exDividendDate : undefined,
           askPrice: props.Order.asset.askPrice !== undefined ? props.Order.asset.askPrice : undefined,
           bidPrice: props.Order.asset.bidPrice !== undefined ? props.Order.asset.bidPrice : undefined,
-      trades: props.Order.asset.trades ? 
-        Array.isArray(props.Order.asset.trades) && props.Order.asset.trades.length > 0 &&  props.Order.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.asset.positions ? 
-        Array.isArray(props.Order.asset.positions) && props.Order.asset.positions.length > 0 &&  props.Order.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: props.Order.asset.newsMentions ? 
-        Array.isArray(props.Order.asset.newsMentions) && props.Order.asset.newsMentions.length > 0 &&  props.Order.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.newsMentions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -1631,104 +807,6 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
-      user: props.Order.alpacaAccount.user ? 
-        typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
-    ? { connect: {
-            id: props.Order.alpacaAccount.user.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? props.Order.alpacaAccount.user.id : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            name: props.Order.alpacaAccount.user.name !== undefined ? {
-                equals: props.Order.alpacaAccount.user.name 
-               } : undefined,
-          },
-          create: {
-            name: props.Order.alpacaAccount.user.name !== undefined ? props.Order.alpacaAccount.user.name : undefined,
-            email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
-            emailVerified: props.Order.alpacaAccount.user.emailVerified !== undefined ? props.Order.alpacaAccount.user.emailVerified : undefined,
-            image: props.Order.alpacaAccount.user.image !== undefined ? props.Order.alpacaAccount.user.image : undefined,
-            role: props.Order.alpacaAccount.user.role !== undefined ? props.Order.alpacaAccount.user.role : undefined,
-            bio: props.Order.alpacaAccount.user.bio !== undefined ? props.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: props.Order.alpacaAccount.user.jobTitle !== undefined ? props.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: props.Order.alpacaAccount.user.currentAccount !== undefined ? props.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: props.Order.alpacaAccount.user.plan !== undefined ? props.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: props.Order.alpacaAccount.user.openaiAPIKey !== undefined ? props.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: props.Order.alpacaAccount.user.openaiModel !== undefined ? props.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: props.Order.alpacaAccount.trades ? 
-        Array.isArray(props.Order.alpacaAccount.trades) && props.Order.alpacaAccount.trades.length > 0 &&  props.Order.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.alpacaAccount.positions ? 
-        Array.isArray(props.Order.alpacaAccount.positions) && props.Order.alpacaAccount.positions.length > 0 &&  props.Order.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: props.Order.alpacaAccount.alerts ? 
-        Array.isArray(props.Order.alpacaAccount.alerts) && props.Order.alpacaAccount.alerts.length > 0 &&  props.Order.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.alpacaAccount.alerts.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -1748,31 +826,6 @@ import { removeUndefinedProps } from './utils';
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
-      trade: props.Order.action.trade ? 
-        typeof props.Order.action.trade === 'object' && Object.keys(props.Order.action.trade).length === 1 && Object.keys(props.Order.action.trade)[0] === 'id'
-    ? { connect: {
-            id: props.Order.action.trade.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.Order.action.trade.id !== undefined ? props.Order.action.trade.id : undefined,
-          },
-          create: {
-            qty: props.Order.action.trade.qty !== undefined ? props.Order.action.trade.qty : undefined,
-            price: props.Order.action.trade.price !== undefined ? props.Order.action.trade.price : undefined,
-            total: props.Order.action.trade.total !== undefined ? props.Order.action.trade.total : undefined,
-            optionType: props.Order.action.trade.optionType !== undefined ? props.Order.action.trade.optionType : undefined,
-            signal: props.Order.action.trade.signal !== undefined ? props.Order.action.trade.signal : undefined,
-            strategy: props.Order.action.trade.strategy !== undefined ? props.Order.action.trade.strategy : undefined,
-            analysis: props.Order.action.trade.analysis !== undefined ? props.Order.action.trade.analysis : undefined,
-            summary: props.Order.action.trade.summary !== undefined ? props.Order.action.trade.summary : undefined,
-            confidence: props.Order.action.trade.confidence !== undefined ? props.Order.action.trade.confidence : undefined,
-            timestamp: props.Order.action.trade.timestamp !== undefined ? props.Order.action.trade.timestamp : undefined,
-            status: props.Order.action.trade.status !== undefined ? props.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
       }
     } : undefined,
@@ -1844,77 +897,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: props.Order.asset.exDividendDate !== undefined ? props.Order.asset.exDividendDate : undefined,
           askPrice: props.Order.asset.askPrice !== undefined ? props.Order.asset.askPrice : undefined,
           bidPrice: props.Order.asset.bidPrice !== undefined ? props.Order.asset.bidPrice : undefined,
-      trades: props.Order.asset.trades ? 
-        Array.isArray(props.Order.asset.trades) && props.Order.asset.trades.length > 0 &&  props.Order.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: props.Order.asset.positions ? 
-        Array.isArray(props.Order.asset.positions) && props.Order.asset.positions.length > 0 &&  props.Order.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: props.Order.asset.newsMentions ? 
-        Array.isArray(props.Order.asset.newsMentions) && props.Order.asset.newsMentions.length > 0 &&  props.Order.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.Order.asset.newsMentions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -2127,222 +1109,6 @@ import { removeUndefinedProps } from './utils';
           volumeThreshold: prop.Order.alpacaAccount.volumeThreshold !== undefined ? {
               set: prop.Order.alpacaAccount.volumeThreshold  
              } : undefined,
-      user: prop.Order.alpacaAccount.user ? {
-        upsert: {
-          where: {
-            id: prop.Order.alpacaAccount.user.id !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.id 
-               } : undefined,
-            name: prop.Order.alpacaAccount.user.name !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.name 
-               } : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.email 
-               } : undefined,
-          },
-          update: {
-            id: prop.Order.alpacaAccount.user.id !== undefined ? {
-                set: prop.Order.alpacaAccount.user.id  
-               } : undefined,
-            name: prop.Order.alpacaAccount.user.name !== undefined ? {
-                set: prop.Order.alpacaAccount.user.name  
-               } : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? {
-                set: prop.Order.alpacaAccount.user.email  
-               } : undefined,
-            emailVerified: prop.Order.alpacaAccount.user.emailVerified !== undefined ? {
-                set: prop.Order.alpacaAccount.user.emailVerified  
-               } : undefined,
-            image: prop.Order.alpacaAccount.user.image !== undefined ? {
-                set: prop.Order.alpacaAccount.user.image  
-               } : undefined,
-            role: prop.Order.alpacaAccount.user.role !== undefined ? {
-                set: prop.Order.alpacaAccount.user.role  
-               } : undefined,
-            bio: prop.Order.alpacaAccount.user.bio !== undefined ? {
-                set: prop.Order.alpacaAccount.user.bio  
-               } : undefined,
-            jobTitle: prop.Order.alpacaAccount.user.jobTitle !== undefined ? {
-                set: prop.Order.alpacaAccount.user.jobTitle  
-               } : undefined,
-            currentAccount: prop.Order.alpacaAccount.user.currentAccount !== undefined ? {
-                set: prop.Order.alpacaAccount.user.currentAccount  
-               } : undefined,
-            plan: prop.Order.alpacaAccount.user.plan !== undefined ? {
-                set: prop.Order.alpacaAccount.user.plan  
-               } : undefined,
-            openaiAPIKey: prop.Order.alpacaAccount.user.openaiAPIKey !== undefined ? {
-                set: prop.Order.alpacaAccount.user.openaiAPIKey  
-               } : undefined,
-            openaiModel: prop.Order.alpacaAccount.user.openaiModel !== undefined ? {
-                set: prop.Order.alpacaAccount.user.openaiModel  
-               } : undefined,
-          },
-          create: {
-            name: prop.Order.alpacaAccount.user.name !== undefined ? prop.Order.alpacaAccount.user.name : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
-            emailVerified: prop.Order.alpacaAccount.user.emailVerified !== undefined ? prop.Order.alpacaAccount.user.emailVerified : undefined,
-            image: prop.Order.alpacaAccount.user.image !== undefined ? prop.Order.alpacaAccount.user.image : undefined,
-            role: prop.Order.alpacaAccount.user.role !== undefined ? prop.Order.alpacaAccount.user.role : undefined,
-            bio: prop.Order.alpacaAccount.user.bio !== undefined ? prop.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: prop.Order.alpacaAccount.user.jobTitle !== undefined ? prop.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: prop.Order.alpacaAccount.user.currentAccount !== undefined ? prop.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: prop.Order.alpacaAccount.user.plan !== undefined ? prop.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: prop.Order.alpacaAccount.user.openaiAPIKey !== undefined ? prop.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: prop.Order.alpacaAccount.user.openaiModel !== undefined ? prop.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: prop.Order.alpacaAccount.trades ? {
-        upsert: prop.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: prop.Order.alpacaAccount.positions ? {
-        upsert: prop.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
-            marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
-            costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
-            currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
-            changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: prop.Order.alpacaAccount.alerts ? {
-        upsert: prop.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            message: item.message !== undefined ? {
-                set: item.message  
-               } : undefined,
-            type: item.type !== undefined ? {
-                set: item.type  
-               } : undefined,
-            isRead: item.isRead !== undefined ? {
-                set: item.isRead  
-               } : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           type: prop.Order.alpacaAccount.type !== undefined ? prop.Order.alpacaAccount.type : undefined,
@@ -2354,104 +1120,6 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: prop.Order.alpacaAccount.maxOrderSize !== undefined ? prop.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: prop.Order.alpacaAccount.minPercentageChange !== undefined ? prop.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: prop.Order.alpacaAccount.volumeThreshold !== undefined ? prop.Order.alpacaAccount.volumeThreshold : undefined,
-      user: prop.Order.alpacaAccount.user ? 
-        typeof prop.Order.alpacaAccount.user === 'object' && Object.keys(prop.Order.alpacaAccount.user).length === 1 && Object.keys(prop.Order.alpacaAccount.user)[0] === 'id'
-    ? { connect: {
-            id: prop.Order.alpacaAccount.user.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: prop.Order.alpacaAccount.user.id !== undefined ? prop.Order.alpacaAccount.user.id : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
-            name: prop.Order.alpacaAccount.user.name !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.name 
-               } : undefined,
-          },
-          create: {
-            name: prop.Order.alpacaAccount.user.name !== undefined ? prop.Order.alpacaAccount.user.name : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
-            emailVerified: prop.Order.alpacaAccount.user.emailVerified !== undefined ? prop.Order.alpacaAccount.user.emailVerified : undefined,
-            image: prop.Order.alpacaAccount.user.image !== undefined ? prop.Order.alpacaAccount.user.image : undefined,
-            role: prop.Order.alpacaAccount.user.role !== undefined ? prop.Order.alpacaAccount.user.role : undefined,
-            bio: prop.Order.alpacaAccount.user.bio !== undefined ? prop.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: prop.Order.alpacaAccount.user.jobTitle !== undefined ? prop.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: prop.Order.alpacaAccount.user.currentAccount !== undefined ? prop.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: prop.Order.alpacaAccount.user.plan !== undefined ? prop.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: prop.Order.alpacaAccount.user.openaiAPIKey !== undefined ? prop.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: prop.Order.alpacaAccount.user.openaiModel !== undefined ? prop.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: prop.Order.alpacaAccount.trades ? 
-        Array.isArray(prop.Order.alpacaAccount.trades) && prop.Order.alpacaAccount.trades.length > 0 &&  prop.Order.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.alpacaAccount.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: prop.Order.alpacaAccount.positions ? 
-        Array.isArray(prop.Order.alpacaAccount.positions) && prop.Order.alpacaAccount.positions.length > 0 &&  prop.Order.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.alpacaAccount.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: prop.Order.alpacaAccount.alerts ? 
-        Array.isArray(prop.Order.alpacaAccount.alerts) && prop.Order.alpacaAccount.alerts.length > 0 &&  prop.Order.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.alpacaAccount.alerts.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -2481,66 +1149,6 @@ import { removeUndefinedProps } from './utils';
           fee: prop.Order.action.fee !== undefined ? {
               set: prop.Order.action.fee  
              } : undefined,
-      trade: prop.Order.action.trade ? {
-        upsert: {
-          where: {
-            id: prop.Order.action.trade.id !== undefined ? {
-                equals: prop.Order.action.trade.id 
-               } : undefined,
-          },
-          update: {
-            id: prop.Order.action.trade.id !== undefined ? {
-                set: prop.Order.action.trade.id  
-               } : undefined,
-            qty: prop.Order.action.trade.qty !== undefined ? {
-                set: prop.Order.action.trade.qty  
-               } : undefined,
-            price: prop.Order.action.trade.price !== undefined ? {
-                set: prop.Order.action.trade.price  
-               } : undefined,
-            total: prop.Order.action.trade.total !== undefined ? {
-                set: prop.Order.action.trade.total  
-               } : undefined,
-            optionType: prop.Order.action.trade.optionType !== undefined ? {
-                set: prop.Order.action.trade.optionType  
-               } : undefined,
-            signal: prop.Order.action.trade.signal !== undefined ? {
-                set: prop.Order.action.trade.signal  
-               } : undefined,
-            strategy: prop.Order.action.trade.strategy !== undefined ? {
-                set: prop.Order.action.trade.strategy  
-               } : undefined,
-            analysis: prop.Order.action.trade.analysis !== undefined ? {
-                set: prop.Order.action.trade.analysis  
-               } : undefined,
-            summary: prop.Order.action.trade.summary !== undefined ? {
-                set: prop.Order.action.trade.summary  
-               } : undefined,
-            confidence: prop.Order.action.trade.confidence !== undefined ? {
-                set: prop.Order.action.trade.confidence  
-               } : undefined,
-            timestamp: prop.Order.action.trade.timestamp !== undefined ? {
-                set: prop.Order.action.trade.timestamp  
-               } : undefined,
-            status: prop.Order.action.trade.status !== undefined ? {
-                set: prop.Order.action.trade.status  
-               } : undefined,
-          },
-          create: {
-            qty: prop.Order.action.trade.qty !== undefined ? prop.Order.action.trade.qty : undefined,
-            price: prop.Order.action.trade.price !== undefined ? prop.Order.action.trade.price : undefined,
-            total: prop.Order.action.trade.total !== undefined ? prop.Order.action.trade.total : undefined,
-            optionType: prop.Order.action.trade.optionType !== undefined ? prop.Order.action.trade.optionType : undefined,
-            signal: prop.Order.action.trade.signal !== undefined ? prop.Order.action.trade.signal : undefined,
-            strategy: prop.Order.action.trade.strategy !== undefined ? prop.Order.action.trade.strategy : undefined,
-            analysis: prop.Order.action.trade.analysis !== undefined ? prop.Order.action.trade.analysis : undefined,
-            summary: prop.Order.action.trade.summary !== undefined ? prop.Order.action.trade.summary : undefined,
-            confidence: prop.Order.action.trade.confidence !== undefined ? prop.Order.action.trade.confidence : undefined,
-            timestamp: prop.Order.action.trade.timestamp !== undefined ? prop.Order.action.trade.timestamp : undefined,
-            status: prop.Order.action.trade.status !== undefined ? prop.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
         create: {
           sequence: prop.Order.action.sequence !== undefined ? prop.Order.action.sequence : undefined,
@@ -2548,31 +1156,6 @@ import { removeUndefinedProps } from './utils';
           note: prop.Order.action.note !== undefined ? prop.Order.action.note : undefined,
           status: prop.Order.action.status !== undefined ? prop.Order.action.status : undefined,
           fee: prop.Order.action.fee !== undefined ? prop.Order.action.fee : undefined,
-      trade: prop.Order.action.trade ? 
-        typeof prop.Order.action.trade === 'object' && Object.keys(prop.Order.action.trade).length === 1 && Object.keys(prop.Order.action.trade)[0] === 'id'
-    ? { connect: {
-            id: prop.Order.action.trade.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: prop.Order.action.trade.id !== undefined ? prop.Order.action.trade.id : undefined,
-          },
-          create: {
-            qty: prop.Order.action.trade.qty !== undefined ? prop.Order.action.trade.qty : undefined,
-            price: prop.Order.action.trade.price !== undefined ? prop.Order.action.trade.price : undefined,
-            total: prop.Order.action.trade.total !== undefined ? prop.Order.action.trade.total : undefined,
-            optionType: prop.Order.action.trade.optionType !== undefined ? prop.Order.action.trade.optionType : undefined,
-            signal: prop.Order.action.trade.signal !== undefined ? prop.Order.action.trade.signal : undefined,
-            strategy: prop.Order.action.trade.strategy !== undefined ? prop.Order.action.trade.strategy : undefined,
-            analysis: prop.Order.action.trade.analysis !== undefined ? prop.Order.action.trade.analysis : undefined,
-            summary: prop.Order.action.trade.summary !== undefined ? prop.Order.action.trade.summary : undefined,
-            confidence: prop.Order.action.trade.confidence !== undefined ? prop.Order.action.trade.confidence : undefined,
-            timestamp: prop.Order.action.trade.timestamp !== undefined ? prop.Order.action.trade.timestamp : undefined,
-            status: prop.Order.action.trade.status !== undefined ? prop.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
       }
     } : undefined,
@@ -2758,161 +1341,6 @@ import { removeUndefinedProps } from './utils';
           bidPrice: prop.Order.asset.bidPrice !== undefined ? {
               set: prop.Order.asset.bidPrice  
              } : undefined,
-      trades: prop.Order.asset.trades ? {
-        upsert: prop.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: prop.Order.asset.positions ? {
-        upsert: prop.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
-            marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
-            costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
-            currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
-            changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: prop.Order.asset.newsMentions ? {
-        upsert: prop.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
-            url: item.url !== undefined ? {
-                set: item.url  
-               } : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? {
-                set: item.relevancyScore  
-               } : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? {
-                set: item.sentimentScore  
-               } : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? {
-                set: item.sentimentLabel  
-               } : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           symbol: prop.Order.asset.symbol !== undefined ? prop.Order.asset.symbol : undefined,
@@ -2970,77 +1398,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: prop.Order.asset.exDividendDate !== undefined ? prop.Order.asset.exDividendDate : undefined,
           askPrice: prop.Order.asset.askPrice !== undefined ? prop.Order.asset.askPrice : undefined,
           bidPrice: prop.Order.asset.bidPrice !== undefined ? prop.Order.asset.bidPrice : undefined,
-      trades: prop.Order.asset.trades ? 
-        Array.isArray(prop.Order.asset.trades) && prop.Order.asset.trades.length > 0 &&  prop.Order.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: prop.Order.asset.positions ? 
-        Array.isArray(prop.Order.asset.positions) && prop.Order.asset.positions.length > 0 &&  prop.Order.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.asset.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: prop.Order.asset.newsMentions ? 
-        Array.isArray(prop.Order.asset.newsMentions) && prop.Order.asset.newsMentions.length > 0 &&  prop.Order.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.asset.newsMentions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -3104,104 +1461,6 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: prop.Order.alpacaAccount.maxOrderSize !== undefined ? prop.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: prop.Order.alpacaAccount.minPercentageChange !== undefined ? prop.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: prop.Order.alpacaAccount.volumeThreshold !== undefined ? prop.Order.alpacaAccount.volumeThreshold : undefined,
-      user: prop.Order.alpacaAccount.user ? 
-        typeof prop.Order.alpacaAccount.user === 'object' && Object.keys(prop.Order.alpacaAccount.user).length === 1 && Object.keys(prop.Order.alpacaAccount.user)[0] === 'id'
-    ? { connect: {
-            id: prop.Order.alpacaAccount.user.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: prop.Order.alpacaAccount.user.id !== undefined ? prop.Order.alpacaAccount.user.id : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
-            name: prop.Order.alpacaAccount.user.name !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.name 
-               } : undefined,
-          },
-          create: {
-            name: prop.Order.alpacaAccount.user.name !== undefined ? prop.Order.alpacaAccount.user.name : undefined,
-            email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
-            emailVerified: prop.Order.alpacaAccount.user.emailVerified !== undefined ? prop.Order.alpacaAccount.user.emailVerified : undefined,
-            image: prop.Order.alpacaAccount.user.image !== undefined ? prop.Order.alpacaAccount.user.image : undefined,
-            role: prop.Order.alpacaAccount.user.role !== undefined ? prop.Order.alpacaAccount.user.role : undefined,
-            bio: prop.Order.alpacaAccount.user.bio !== undefined ? prop.Order.alpacaAccount.user.bio : undefined,
-            jobTitle: prop.Order.alpacaAccount.user.jobTitle !== undefined ? prop.Order.alpacaAccount.user.jobTitle : undefined,
-            currentAccount: prop.Order.alpacaAccount.user.currentAccount !== undefined ? prop.Order.alpacaAccount.user.currentAccount : undefined,
-            plan: prop.Order.alpacaAccount.user.plan !== undefined ? prop.Order.alpacaAccount.user.plan : undefined,
-            openaiAPIKey: prop.Order.alpacaAccount.user.openaiAPIKey !== undefined ? prop.Order.alpacaAccount.user.openaiAPIKey : undefined,
-            openaiModel: prop.Order.alpacaAccount.user.openaiModel !== undefined ? prop.Order.alpacaAccount.user.openaiModel : undefined,
-          },
-        }
-      } : undefined,
-      trades: prop.Order.alpacaAccount.trades ? 
-        Array.isArray(prop.Order.alpacaAccount.trades) && prop.Order.alpacaAccount.trades.length > 0 &&  prop.Order.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.alpacaAccount.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.alpacaAccount.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: prop.Order.alpacaAccount.positions ? 
-        Array.isArray(prop.Order.alpacaAccount.positions) && prop.Order.alpacaAccount.positions.length > 0 &&  prop.Order.alpacaAccount.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.alpacaAccount.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.alpacaAccount.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      alerts: prop.Order.alpacaAccount.alerts ? 
-        Array.isArray(prop.Order.alpacaAccount.alerts) && prop.Order.alpacaAccount.alerts.length > 0 &&  prop.Order.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.alpacaAccount.alerts.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.alpacaAccount.alerts.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            message: item.message !== undefined ? item.message : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            isRead: item.isRead !== undefined ? item.isRead : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -3221,31 +1480,6 @@ import { removeUndefinedProps } from './utils';
           note: prop.Order.action.note !== undefined ? prop.Order.action.note : undefined,
           status: prop.Order.action.status !== undefined ? prop.Order.action.status : undefined,
           fee: prop.Order.action.fee !== undefined ? prop.Order.action.fee : undefined,
-      trade: prop.Order.action.trade ? 
-        typeof prop.Order.action.trade === 'object' && Object.keys(prop.Order.action.trade).length === 1 && Object.keys(prop.Order.action.trade)[0] === 'id'
-    ? { connect: {
-            id: prop.Order.action.trade.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: prop.Order.action.trade.id !== undefined ? prop.Order.action.trade.id : undefined,
-          },
-          create: {
-            qty: prop.Order.action.trade.qty !== undefined ? prop.Order.action.trade.qty : undefined,
-            price: prop.Order.action.trade.price !== undefined ? prop.Order.action.trade.price : undefined,
-            total: prop.Order.action.trade.total !== undefined ? prop.Order.action.trade.total : undefined,
-            optionType: prop.Order.action.trade.optionType !== undefined ? prop.Order.action.trade.optionType : undefined,
-            signal: prop.Order.action.trade.signal !== undefined ? prop.Order.action.trade.signal : undefined,
-            strategy: prop.Order.action.trade.strategy !== undefined ? prop.Order.action.trade.strategy : undefined,
-            analysis: prop.Order.action.trade.analysis !== undefined ? prop.Order.action.trade.analysis : undefined,
-            summary: prop.Order.action.trade.summary !== undefined ? prop.Order.action.trade.summary : undefined,
-            confidence: prop.Order.action.trade.confidence !== undefined ? prop.Order.action.trade.confidence : undefined,
-            timestamp: prop.Order.action.trade.timestamp !== undefined ? prop.Order.action.trade.timestamp : undefined,
-            status: prop.Order.action.trade.status !== undefined ? prop.Order.action.trade.status : undefined,
-          },
-        }
-      } : undefined,
         },
       }
     } : undefined,
@@ -3317,77 +1551,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: prop.Order.asset.exDividendDate !== undefined ? prop.Order.asset.exDividendDate : undefined,
           askPrice: prop.Order.asset.askPrice !== undefined ? prop.Order.asset.askPrice : undefined,
           bidPrice: prop.Order.asset.bidPrice !== undefined ? prop.Order.asset.bidPrice : undefined,
-      trades: prop.Order.asset.trades ? 
-        Array.isArray(prop.Order.asset.trades) && prop.Order.asset.trades.length > 0 &&  prop.Order.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
-      positions: prop.Order.asset.positions ? 
-        Array.isArray(prop.Order.asset.positions) && prop.Order.asset.positions.length > 0 &&  prop.Order.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.asset.positions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.asset.positions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-          },
-          create: {
-            averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
-            qty: item.qty !== undefined ? item.qty : undefined,
-            qtyAvailable: item.qtyAvailable !== undefined ? item.qtyAvailable : undefined,
-            marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
-            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
-            unrealizedPL: item.unrealizedPL !== undefined ? item.unrealizedPL : undefined,
-            unrealizedPLPC: item.unrealizedPLPC !== undefined ? item.unrealizedPLPC : undefined,
-            unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? item.unrealisedIntradayPL : undefined,
-            unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? item.unrealisedIntradayPLPC : undefined,
-            currentPrice: item.currentPrice !== undefined ? item.currentPrice : undefined,
-            lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
-            changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
-            assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
-          },
-        }))
-      } : undefined,
-      newsMentions: prop.Order.asset.newsMentions ? 
-        Array.isArray(prop.Order.asset.newsMentions) && prop.Order.asset.newsMentions.length > 0 &&  prop.Order.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.Order.asset.newsMentions.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.Order.asset.newsMentions.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            url: item.url !== undefined ? item.url : undefined,
-          },
-          create: {
-            url: item.url !== undefined ? item.url : undefined,
-            relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
-            sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
-            sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
-          },
-        }))
-      } : undefined,
         },
       }
     } : undefined,
@@ -3427,15 +1590,7 @@ import { removeUndefinedProps } from './utils';
       const DELETE_ONE_STOPLOSS = gql`
       mutation deleteOneStopLoss($where: StopLossWhereUniqueInput!) {
         deleteOneStopLoss(where: $where) {
-          
-{
-  id
-  stopPrice
-  limitPrice
-  createdAt
-  updatedAt
-  orderId
-}
+          ${selectionSet}
         }
       }`;
 
@@ -3473,15 +1628,7 @@ import { removeUndefinedProps } from './utils';
       const GET_STOPLOSS = gql`
       query getStopLoss($where: StopLossWhereUniqueInput!) {
         getStopLoss(where: $where) {
-          
-{
-  id
-  stopPrice
-  limitPrice
-  createdAt
-  updatedAt
-  orderId
-}
+          ${selectionSet}
         }
       }`;
 
@@ -3528,15 +1675,7 @@ import { removeUndefinedProps } from './utils';
       const GET_ALL_STOPLOSS = gql`
       query getAllStopLoss {
         stopLosses {
-          
-{
-  id
-  stopPrice
-  limitPrice
-  createdAt
-  updatedAt
-  orderId
-}
+          ${selectionSet}
         }
       }`;
 
@@ -3566,15 +1705,7 @@ import { removeUndefinedProps } from './utils';
       const FIND_MANY_STOPLOSS = gql`
       query findManyStopLoss($where: StopLossWhereInput!) {
         stopLosses(where: $where) {
-          
-{
-  id
-  stopPrice
-  limitPrice
-  createdAt
-  updatedAt
-  orderId
-}
+          ${selectionSet}
         }
       }`;
 
