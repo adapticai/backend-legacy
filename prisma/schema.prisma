@@ -1150,7 +1150,7 @@ model Action {
   /// The trade this action is part of. TYPESTRING.SKIP=true GQL.EXCLUDE=['actions', 'orders', 'alpacaAccount', 'asset']
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
-  /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount']
+  /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","notional","side","type","orderClass","timeInForce","limitPrice","stopPrice","stopLoss","takeProfit","trailPrice","trailPercent","extendedHours","status","submittedAt","strikePrice","expirationDate","optionType"]
   order Order? @relation
 
   @@map(name: "actions")
@@ -1251,7 +1251,10 @@ model Order {
   /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
   optionType OptionType? @default(CALL)
 
-  stopLossId   String? @unique @db.Uuid
+  // Reference to the stop loss order associated with this order. TYPESTRING.SKIP=true
+  stopLossId String? @unique @db.Uuid
+
+  // Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
   takeProfitId String? @db.Uuid
 
   @@map(name: "orders")
