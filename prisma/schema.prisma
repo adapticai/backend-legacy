@@ -1118,7 +1118,7 @@ model Trade {
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// List of actions associated with this trade. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade']
+  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status","fee","order"] GQL.EXCLUDE=['trade']
   actions Action[]
 
   @@map(name: "trades")
