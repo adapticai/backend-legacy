@@ -649,7 +649,7 @@ model AlpacaAccount {
   /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). TYPESTRING.SKIP=true
   volumeThreshold Float @default(50000)
 
-  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true
+  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Foreign key referencing the User. TYPESTRING.SKIP=true
@@ -661,16 +661,16 @@ model AlpacaAccount {
   /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of trades executed through this Alpaca account. TYPESTRING.SKIP=true
+  /// List of trades executed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   trades Trade[]
 
-  /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true
+  /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   orders Order[]
 
-  /// List of positions held in this Alpaca account. TYPESTRING.INCLUDE=['id','qty','asset'] GQL.EXCLUDE=['id','qty','asset']
+  /// List of positions held in this Alpaca account. TYPESTRING.INCLUDE=['id','qty','asset'] GQL.EXCLUDE=['alpacaAccount']
   positions Position[]
 
-  /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true
+  /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   alerts Alert[]
 
   @@map(name: "alpaca_accounts")

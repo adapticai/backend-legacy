@@ -80,9 +80,6 @@ import { removeUndefinedProps } from './utils';
       updatedAt
     }
     plan
-    alpacaAccounts {
-id
-    }
     openaiAPIKey
     openaiModel
   }
@@ -106,9 +103,6 @@ id
     createdAt
     updatedAt
     status
-    alpacaAccount {
-id
-    }
     asset {
       id
       symbol
@@ -269,9 +263,6 @@ id
     filledAt
     filledAvgPrice
     actionId
-    alpacaAccount {
-id
-    }
     action {
       id
       sequence
@@ -373,8 +364,139 @@ id
     takeProfitId
   }
   positions {
+    id
     assetId
+    asset {
+      id
+      logoUrl
+      description
+      cik
+      exchange
+      currency
+      country
+      sector
+      industry
+      address
+      officialSite
+      fiscalYearEnd
+      latestQuarter
+      marketCapitalization
+      ebitda
+      peRatio
+      pegRatio
+      bookValue
+      dividendPerShare
+      dividendYield
+      eps
+      revenuePerShareTTM
+      profitMargin
+      operatingMarginTTM
+      returnOnAssetsTTM
+      returnOnEquityTTM
+      revenueTTM
+      grossProfitTTM
+      dilutedEPSTTM
+      quarterlyEarningsGrowthYOY
+      quarterlyRevenueGrowthYOY
+      analystTargetPrice
+      analystRatingStrongBuy
+      analystRatingBuy
+      analystRatingHold
+      analystRatingSell
+      analystRatingStrongSell
+      trailingPE
+      forwardPE
+      priceToSalesRatioTTM
+      priceToBookRatio
+      evToRevenue
+      evToEbitda
+      beta
+      week52High
+      week52Low
+      day50MovingAverage
+      day200MovingAverage
+      sharesOutstanding
+      dividendDate
+      exDividendDate
+      askPrice
+      bidPrice
+      createdAt
+      updatedAt
+      trades {
+        id
+        alpacaAccountId
+        assetId
+        qty
+        price
+        total
+        optionType
+        signal
+        strategy
+        analysis
+        summary
+        confidence
+        timestamp
+        createdAt
+        updatedAt
+        status
+        actions {
+id
+        }
+      }
+      orders {
+        id
+        clientOrderId
+        alpacaAccountId
+        assetId
+        qty
+        notional
+        side
+        type
+        orderClass
+        timeInForce
+        limitPrice
+        stopPrice
+        stopLoss {
+id
+        }
+        takeProfit {
+id
+        }
+        trailPrice
+        trailPercent
+        extendedHours
+        status
+        createdAt
+        updatedAt
+        submittedAt
+        filledAt
+        filledAvgPrice
+        actionId
+        fee
+        strikePrice
+        expirationDate
+        optionType
+        stopLossId
+        takeProfitId
+      }
+      positions {
+id
+      }
+      newsMentions {
+        id
+        assetId
+        newsArticleId
+        url
+        news {
+id
+        }
+        relevancyScore
+        sentimentScore
+        sentimentLabel
+      }
+    }
     averageEntryPrice
+    qty
     qtyAvailable
     marketValue
     costBasis

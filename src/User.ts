@@ -100,9 +100,6 @@ import { removeUndefinedProps } from './utils';
       createdAt
       updatedAt
       status
-      alpacaAccount {
-id
-      }
       asset {
         id
         symbol
@@ -218,9 +215,6 @@ id
       filledAt
       filledAvgPrice
       actionId
-      alpacaAccount {
-id
-      }
       action {
         id
         sequence
@@ -304,8 +298,79 @@ id
       takeProfitId
     }
     positions {
+      id
       assetId
+      asset {
+        id
+        logoUrl
+        description
+        cik
+        exchange
+        currency
+        country
+        sector
+        industry
+        address
+        officialSite
+        fiscalYearEnd
+        latestQuarter
+        marketCapitalization
+        ebitda
+        peRatio
+        pegRatio
+        bookValue
+        dividendPerShare
+        dividendYield
+        eps
+        revenuePerShareTTM
+        profitMargin
+        operatingMarginTTM
+        returnOnAssetsTTM
+        returnOnEquityTTM
+        revenueTTM
+        grossProfitTTM
+        dilutedEPSTTM
+        quarterlyEarningsGrowthYOY
+        quarterlyRevenueGrowthYOY
+        analystTargetPrice
+        analystRatingStrongBuy
+        analystRatingBuy
+        analystRatingHold
+        analystRatingSell
+        analystRatingStrongSell
+        trailingPE
+        forwardPE
+        priceToSalesRatioTTM
+        priceToBookRatio
+        evToRevenue
+        evToEbitda
+        beta
+        week52High
+        week52Low
+        day50MovingAverage
+        day200MovingAverage
+        sharesOutstanding
+        dividendDate
+        exDividendDate
+        askPrice
+        bidPrice
+        createdAt
+        updatedAt
+        trades {
+id
+        }
+        orders {
+id
+        }
+        positions {
+id
+        }
+        newsMentions {
+id
+        }
+      }
       averageEntryPrice
+      qty
       qtyAvailable
       marketValue
       costBasis

@@ -99,9 +99,6 @@ import { removeUndefinedProps } from './utils';
         createdAt
         updatedAt
         status
-        alpacaAccount {
-id
-        }
         asset {
 id
         }
@@ -138,9 +135,6 @@ id
         filledAt
         filledAvgPrice
         actionId
-        alpacaAccount {
-id
-        }
         action {
 id
         }
@@ -155,8 +149,13 @@ id
         takeProfitId
       }
       positions {
+        id
         assetId
+        asset {
+id
+        }
         averageEntryPrice
+        qty
         qtyAvailable
         marketValue
         costBasis
