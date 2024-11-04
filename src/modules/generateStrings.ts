@@ -7,7 +7,7 @@ import pluralize from 'pluralize';
 const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
 const OUTPUT_DIR = path.join(__dirname, '../../src/generated/typeStrings');
 const INDEX_FILE = path.join(OUTPUT_DIR, 'index.ts');
-const MAX_DEPTH = 5;
+const MAX_DEPTH = 6;
 
 const EXCLUDED_FIELDS = new Set([
   'id',
