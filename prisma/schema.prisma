@@ -1191,9 +1191,8 @@ model Order {
   /// Must be a positive number and required for LIMIT or STOP_LIMIT orders. For take_profit, must be ≥ base_price + 0.01.
   limitPrice Float?
 
-  /// Must be a positive number and required for STOP or STOP_LIMIT orders.
+  /// Must be a positive number and required for STOP or STOP_LIMIT orders. It must be ≤ basePrice - 0.01.
   stopPrice Float?
-
   /// Stop loss object required for bracket orders.
   stopLoss StopLoss? @relation
 
@@ -1265,7 +1264,7 @@ model StopLoss {
   /// Unique identifier for the stop loss order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Must be a positive number. For SELL orders: stopPrice ≤ current market price. For BUY orders: stopPrice ≥ current market price.
+  /// Must be a positive number. For SELL orders: stopPrice ≤ current market price (must be ≤ base_price - 0.01). For BUY orders: stopPrice ≥ current market price (must be ≥ base_price + 0.01).
   stopPrice Float?
 
   /// Must be a positive number and required if parent Order's type is STOP_LIMIT.
