@@ -52,9 +52,7 @@ import { removeUndefinedProps } from './utils';
       }
     : { connectOrCreate: {
       where: {
-        id: props.Order.id !== undefined ? {
-            equals: props.Order.id 
-           } : undefined,
+        id: props.Order.id !== undefined ? props.Order.id : undefined,
         clientOrderId: props.Order.clientOrderId !== undefined ? props.Order.clientOrderId : undefined,
         actionId: props.Order.actionId !== undefined ? props.Order.actionId : undefined,
         stopLossId: props.Order.stopLossId !== undefined ? props.Order.stopLossId : undefined,
@@ -96,9 +94,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.stopLoss.id !== undefined ? {
-              equals: props.Order.stopLoss.id 
-             } : undefined,
+          id: props.Order.stopLoss.id !== undefined ? props.Order.stopLoss.id : undefined,
           orderId: props.Order.stopLoss.orderId !== undefined ? props.Order.stopLoss.orderId : undefined,
         },
         create: {
@@ -115,9 +111,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.alpacaAccount.id !== undefined ? {
-              equals: props.Order.alpacaAccount.id 
-             } : undefined,
+          id: props.Order.alpacaAccount.id !== undefined ? props.Order.alpacaAccount.id : undefined,
           userId: props.Order.alpacaAccount.userId !== undefined ? {
               equals: props.Order.alpacaAccount.userId 
              } : undefined,
@@ -140,9 +134,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? {
-                equals: props.Order.alpacaAccount.user.id 
-               } : undefined,
+            id: props.Order.alpacaAccount.user.id !== undefined ? props.Order.alpacaAccount.user.id : undefined,
             email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
             name: props.Order.alpacaAccount.user.name !== undefined ? {
                 equals: props.Order.alpacaAccount.user.name 
@@ -171,9 +163,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -204,9 +194,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -239,9 +227,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -264,9 +250,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.action.id !== undefined ? {
-              equals: props.Order.action.id 
-             } : undefined,
+          id: props.Order.action.id !== undefined ? props.Order.action.id : undefined,
           tradeId: props.Order.action.tradeId !== undefined ? {
               equals: props.Order.action.tradeId 
              } : undefined,
@@ -285,9 +269,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: props.Order.action.trade.id !== undefined ? {
-                equals: props.Order.action.trade.id 
-               } : undefined,
+            id: props.Order.action.trade.id !== undefined ? props.Order.action.trade.id : undefined,
             alpacaAccountId: props.Order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.Order.action.trade.alpacaAccountId 
                } : undefined,
@@ -321,9 +303,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.asset.id !== undefined ? {
-              equals: props.Order.asset.id 
-             } : undefined,
+          id: props.Order.asset.id !== undefined ? props.Order.asset.id : undefined,
           symbol: props.Order.asset.symbol !== undefined ? props.Order.asset.symbol : undefined,
           name: props.Order.asset.name !== undefined ? props.Order.asset.name : undefined,
         },
@@ -391,9 +371,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -424,9 +402,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -459,9 +435,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -562,9 +536,7 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
   orderId: props.orderId !== undefined ? props.orderId : undefined,
   createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
   updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
@@ -811,9 +783,7 @@ import { removeUndefinedProps } from './utils';
       trades: props.Order.alpacaAccount.trades ? {
         upsert: props.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -877,9 +847,7 @@ import { removeUndefinedProps } from './utils';
       positions: props.Order.alpacaAccount.positions ? {
         upsert: props.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -951,9 +919,7 @@ import { removeUndefinedProps } from './utils';
       alerts: props.Order.alpacaAccount.alerts ? {
         upsert: props.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -998,9 +964,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? {
-                equals: props.Order.alpacaAccount.user.id 
-               } : undefined,
+            id: props.Order.alpacaAccount.user.id !== undefined ? props.Order.alpacaAccount.user.id : undefined,
             email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
             name: props.Order.alpacaAccount.user.name !== undefined ? {
                 equals: props.Order.alpacaAccount.user.name 
@@ -1029,9 +993,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1062,9 +1024,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -1097,9 +1057,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1224,9 +1182,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: props.Order.action.trade.id !== undefined ? {
-                equals: props.Order.action.trade.id 
-               } : undefined,
+            id: props.Order.action.trade.id !== undefined ? props.Order.action.trade.id : undefined,
             alpacaAccountId: props.Order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.Order.action.trade.alpacaAccountId 
                } : undefined,
@@ -1437,9 +1393,7 @@ import { removeUndefinedProps } from './utils';
       trades: props.Order.asset.trades ? {
         upsert: props.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1503,9 +1457,7 @@ import { removeUndefinedProps } from './utils';
       positions: props.Order.asset.positions ? {
         upsert: props.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -1577,9 +1529,7 @@ import { removeUndefinedProps } from './utils';
       newsMentions: props.Order.asset.newsMentions ? {
         upsert: props.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -1678,9 +1628,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1711,9 +1659,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -1746,9 +1692,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -1800,9 +1744,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.stopLoss.id !== undefined ? {
-              equals: props.Order.stopLoss.id 
-             } : undefined,
+          id: props.Order.stopLoss.id !== undefined ? props.Order.stopLoss.id : undefined,
           orderId: props.Order.stopLoss.orderId !== undefined ? props.Order.stopLoss.orderId : undefined,
         },
         create: {
@@ -1819,9 +1761,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.alpacaAccount.id !== undefined ? {
-              equals: props.Order.alpacaAccount.id 
-             } : undefined,
+          id: props.Order.alpacaAccount.id !== undefined ? props.Order.alpacaAccount.id : undefined,
           userId: props.Order.alpacaAccount.userId !== undefined ? {
               equals: props.Order.alpacaAccount.userId 
              } : undefined,
@@ -1844,9 +1784,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: props.Order.alpacaAccount.user.id !== undefined ? {
-                equals: props.Order.alpacaAccount.user.id 
-               } : undefined,
+            id: props.Order.alpacaAccount.user.id !== undefined ? props.Order.alpacaAccount.user.id : undefined,
             email: props.Order.alpacaAccount.user.email !== undefined ? props.Order.alpacaAccount.user.email : undefined,
             name: props.Order.alpacaAccount.user.name !== undefined ? {
                 equals: props.Order.alpacaAccount.user.name 
@@ -1875,9 +1813,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1908,9 +1844,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -1943,9 +1877,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1968,9 +1900,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.action.id !== undefined ? {
-              equals: props.Order.action.id 
-             } : undefined,
+          id: props.Order.action.id !== undefined ? props.Order.action.id : undefined,
           tradeId: props.Order.action.tradeId !== undefined ? {
               equals: props.Order.action.tradeId 
              } : undefined,
@@ -1989,9 +1919,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: props.Order.action.trade.id !== undefined ? {
-                equals: props.Order.action.trade.id 
-               } : undefined,
+            id: props.Order.action.trade.id !== undefined ? props.Order.action.trade.id : undefined,
             alpacaAccountId: props.Order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.Order.action.trade.alpacaAccountId 
                } : undefined,
@@ -2025,9 +1953,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: props.Order.asset.id !== undefined ? {
-              equals: props.Order.asset.id 
-             } : undefined,
+          id: props.Order.asset.id !== undefined ? props.Order.asset.id : undefined,
           symbol: props.Order.asset.symbol !== undefined ? props.Order.asset.symbol : undefined,
           name: props.Order.asset.name !== undefined ? props.Order.asset.name : undefined,
         },
@@ -2095,9 +2021,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -2128,9 +2052,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -2163,9 +2085,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: props.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -2225,9 +2145,7 @@ import { removeUndefinedProps } from './utils';
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id 
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
   orderId: prop.orderId !== undefined ? prop.orderId : undefined,
   createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
   updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
@@ -2475,9 +2393,7 @@ import { removeUndefinedProps } from './utils';
       trades: prop.Order.alpacaAccount.trades ? {
         upsert: prop.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -2541,9 +2457,7 @@ import { removeUndefinedProps } from './utils';
       positions: prop.Order.alpacaAccount.positions ? {
         upsert: prop.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -2615,9 +2529,7 @@ import { removeUndefinedProps } from './utils';
       alerts: prop.Order.alpacaAccount.alerts ? {
         upsert: prop.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -2662,9 +2574,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: prop.Order.alpacaAccount.user.id !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.id 
-               } : undefined,
+            id: prop.Order.alpacaAccount.user.id !== undefined ? prop.Order.alpacaAccount.user.id : undefined,
             email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
             name: prop.Order.alpacaAccount.user.name !== undefined ? {
                 equals: prop.Order.alpacaAccount.user.name 
@@ -2693,9 +2603,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -2726,9 +2634,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -2761,9 +2667,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -2888,9 +2792,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: prop.Order.action.trade.id !== undefined ? {
-                equals: prop.Order.action.trade.id 
-               } : undefined,
+            id: prop.Order.action.trade.id !== undefined ? prop.Order.action.trade.id : undefined,
             alpacaAccountId: prop.Order.action.trade.alpacaAccountId !== undefined ? {
                 equals: prop.Order.action.trade.alpacaAccountId 
                } : undefined,
@@ -3101,9 +3003,7 @@ import { removeUndefinedProps } from './utils';
       trades: prop.Order.asset.trades ? {
         upsert: prop.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -3167,9 +3067,7 @@ import { removeUndefinedProps } from './utils';
       positions: prop.Order.asset.positions ? {
         upsert: prop.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -3241,9 +3139,7 @@ import { removeUndefinedProps } from './utils';
       newsMentions: prop.Order.asset.newsMentions ? {
         upsert: prop.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -3342,9 +3238,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -3375,9 +3269,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -3410,9 +3302,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -3464,9 +3354,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: prop.Order.stopLoss.id !== undefined ? {
-              equals: prop.Order.stopLoss.id 
-             } : undefined,
+          id: prop.Order.stopLoss.id !== undefined ? prop.Order.stopLoss.id : undefined,
           orderId: prop.Order.stopLoss.orderId !== undefined ? prop.Order.stopLoss.orderId : undefined,
         },
         create: {
@@ -3483,9 +3371,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: prop.Order.alpacaAccount.id !== undefined ? {
-              equals: prop.Order.alpacaAccount.id 
-             } : undefined,
+          id: prop.Order.alpacaAccount.id !== undefined ? prop.Order.alpacaAccount.id : undefined,
           userId: prop.Order.alpacaAccount.userId !== undefined ? {
               equals: prop.Order.alpacaAccount.userId 
              } : undefined,
@@ -3508,9 +3394,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: prop.Order.alpacaAccount.user.id !== undefined ? {
-                equals: prop.Order.alpacaAccount.user.id 
-               } : undefined,
+            id: prop.Order.alpacaAccount.user.id !== undefined ? prop.Order.alpacaAccount.user.id : undefined,
             email: prop.Order.alpacaAccount.user.email !== undefined ? prop.Order.alpacaAccount.user.email : undefined,
             name: prop.Order.alpacaAccount.user.name !== undefined ? {
                 equals: prop.Order.alpacaAccount.user.name 
@@ -3539,9 +3423,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.alpacaAccount.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -3572,9 +3454,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.alpacaAccount.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -3607,9 +3487,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.alpacaAccount.alerts.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -3632,9 +3510,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: prop.Order.action.id !== undefined ? {
-              equals: prop.Order.action.id 
-             } : undefined,
+          id: prop.Order.action.id !== undefined ? prop.Order.action.id : undefined,
           tradeId: prop.Order.action.tradeId !== undefined ? {
               equals: prop.Order.action.tradeId 
              } : undefined,
@@ -3653,9 +3529,7 @@ import { removeUndefinedProps } from './utils';
           }
     : { connectOrCreate: {
           where: {
-            id: prop.Order.action.trade.id !== undefined ? {
-                equals: prop.Order.action.trade.id 
-               } : undefined,
+            id: prop.Order.action.trade.id !== undefined ? prop.Order.action.trade.id : undefined,
             alpacaAccountId: prop.Order.action.trade.alpacaAccountId !== undefined ? {
                 equals: prop.Order.action.trade.alpacaAccountId 
                } : undefined,
@@ -3689,9 +3563,7 @@ import { removeUndefinedProps } from './utils';
         }
     : { connectOrCreate: {
         where: {
-          id: prop.Order.asset.id !== undefined ? {
-              equals: prop.Order.asset.id 
-             } : undefined,
+          id: prop.Order.asset.id !== undefined ? prop.Order.asset.id : undefined,
           symbol: prop.Order.asset.symbol !== undefined ? prop.Order.asset.symbol : undefined,
           name: prop.Order.asset.name !== undefined ? prop.Order.asset.name : undefined,
         },
@@ -3759,9 +3631,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.asset.trades.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -3792,9 +3662,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.asset.positions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
                } : undefined,
@@ -3827,9 +3695,7 @@ import { removeUndefinedProps } from './utils';
  }
  : { connectOrCreate: prop.Order.asset.newsMentions.map((item: any) => ({
           where: {
-            id: item.id !== undefined ? {
-                equals: item.id 
-               } : undefined,
+            id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
@@ -3929,9 +3795,7 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
   orderId: props.orderId !== undefined ? props.orderId : undefined,
   createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
   updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,

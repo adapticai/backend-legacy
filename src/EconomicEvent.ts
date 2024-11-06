@@ -126,9 +126,7 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
@@ -197,9 +195,7 @@ import { removeUndefinedProps } from './utils';
 
     const variables = props.map(prop => ({
       where: {
-          id: prop.id !== undefined ? {
-    equals: prop.id 
-  } : undefined,
+          id: prop.id !== undefined ? prop.id : undefined,
   title: prop.title !== undefined ? {
     equals: prop.title 
   } : undefined,
@@ -309,9 +305,7 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-        id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
+        id: props.id !== undefined ? props.id : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
