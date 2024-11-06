@@ -1036,10 +1036,10 @@ model Asset {
   exDividendDate String?
 
   /// Last ask price of the asset. TYPESTRING.SKIP=true
-  askPrice String?
+  askPrice Float?
 
   /// Last bid price of the asset. TYPESTRING.SKIP=true
-  bidPrice String?
+  bidPrice Float?
 
   /// Timestamp when the asset was created in the database. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
@@ -1194,7 +1194,7 @@ model Order {
   /// Must be a positive number and required for STOP or STOP_LIMIT orders. It must be ≤ basePrice - 0.01.
   stopPrice Float?
   /// Stop loss object required for bracket orders.
-  stopLoss StopLoss? @relation
+  stopLoss  StopLoss? @relation
 
   /// Take profit object required for bracket orders.
   takeProfit TakeProfit? @relation
