@@ -684,7 +684,7 @@ model Position {
   /// Reference to the associated asset. TYPESTRING.SKIP=true
   assetId String @db.Uuid
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['symbol','name','type']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// The average price at which the asset was acquired.
@@ -876,10 +876,10 @@ model Asset {
   /// Unique identifier for the asset. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Ticker symbol of the asset, must be unique.
+  /// Ticker symbol of the asset
   symbol String @unique
 
-  /// Full name of the asset, must be unique.
+  /// Full name of the asset
   name String @unique
 
   /// Type of the asset, defined by AssetType enum.
