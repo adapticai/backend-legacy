@@ -200,7 +200,7 @@ const handleCreateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && isUniqueField(whereField.name) && whereField.type.isFilterObject || whereField.type.isFilterObject) {
+            if (whereField.type.isScalar && whereField.type.isFilterObject || whereField.name === 'id') {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
@@ -335,7 +335,7 @@ const handleUpdateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && whereField.type.isFilterObject && isUniqueField(whereField.name) || (whereField.type.isFilterObject && isUniqueField(whereField.name)) || whereField.type.isFilterObject) {
+            if (whereField.type.isScalar && whereField.type.isFilterObject || whereField.name === 'id') {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
@@ -444,7 +444,7 @@ const handleWhereOperation = (
 
   if (field.type.isScalar) {
     // Check if the scalar field requires an "equals" wrapper
-    if (field.type.isFilterObject && isUniqueField(field.name)) {
+    if (field.type.isFilterObject && isUniqueField(field.name) || field.name === 'id') {
       return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  equals: ${accessor} \n${indent}} : undefined,\n`;
     } else {
       // Handle regular scalar fields without "equals" wrapper
@@ -539,6 +539,11 @@ const isReservedField = (name: string): boolean => {
  * */
 
 const isUniqueField = (name: string): boolean => {
+  // if name includes "Id", return true
+  if (name.includes('Id')) {
+    return true;
+  }
+
   // return true if the field matches any of the unique fields
   const uniqueFields = ['id', 'email', 'username', 'slug', 'name', 'title', 'url', 'key', 'handle', 'symbol'];
   return uniqueFields.includes(name);
