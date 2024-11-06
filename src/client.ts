@@ -71,6 +71,8 @@ export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObjec
 
   return new ApolloClient({
     link: errorLink.concat(authLink.concat(httpLink)),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      resultCaching: false,
+    }),
   });
 }
