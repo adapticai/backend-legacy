@@ -1223,8 +1223,17 @@ model Order {
   /// Timestamp when the order was filled.
   filledAt DateTime?
 
+  /// Total quantity of the order that was filled.
+  filledQty Float?
+
   /// Average price at which the order was filled.
   filledAvgPrice Float?
+
+  /// Cancel requested at timestamp when the request to cancel an order was made.
+  cancelRequestedAt DateTime?
+
+  /// CanceledAt timestamp when the order was canceled.
+  canceledAt DateTime?
 
   /// Reference to the action associated with the order. TYPESTRING.SKIP=true
   actionId String? @unique @db.Uuid
@@ -1264,7 +1273,7 @@ model StopLoss {
   /// Unique identifier for the stop loss order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Must be a positive number. For SELL orders: stopPrice ≤ current market price (must be ≤ base_price - 0.01). For BUY orders: stopPrice ≥ current market price (must be ≥ base_price + 0.01).
+  /// Must be a positive number. Price must be at a threshold to limit losses when the asset’s market price moves unfavourably beyond a specified point. For SELL orders: stopPrice ≤ market price (must be ≤ base_price - 0.01). For BUY orders: stopPrice ≥ market price (must be ≥ base_price + 0.01).
   stopPrice Float?
 
   /// Must be a positive number and required if parent Order's type is STOP_LIMIT.
