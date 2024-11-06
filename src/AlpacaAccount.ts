@@ -7660,7 +7660,9 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   type: props.type !== undefined ? props.type : undefined,
   APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
   APISecret: props.APISecret !== undefined ? props.APISecret : undefined,

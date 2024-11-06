@@ -402,7 +402,9 @@ import { removeUndefinedProps } from './utils';
       where: {
         id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
   content: props.content !== undefined ? props.content : undefined,
   source: props.source !== undefined ? props.source : undefined,
   sourceDomain: props.sourceDomain !== undefined ? props.sourceDomain : undefined,
@@ -1245,7 +1247,9 @@ import { removeUndefinedProps } from './utils';
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
   url: prop.url !== undefined ? prop.url : undefined,
-  title: prop.title !== undefined ? prop.title : undefined,
+  title: prop.title !== undefined ? {
+    equals: prop.title 
+  } : undefined,
   content: prop.content !== undefined ? prop.content : undefined,
   source: prop.source !== undefined ? prop.source : undefined,
   sourceDomain: prop.sourceDomain !== undefined ? prop.sourceDomain : undefined,
@@ -2129,7 +2133,9 @@ import { removeUndefinedProps } from './utils';
       where: {
         id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
   content: props.content !== undefined ? props.content : undefined,
   source: props.source !== undefined ? props.source : undefined,
   sourceDomain: props.sourceDomain !== undefined ? props.sourceDomain : undefined,
@@ -2208,12 +2214,18 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
   content: props.content !== undefined ? props.content : undefined,
   source: props.source !== undefined ? props.source : undefined,
   sourceDomain: props.sourceDomain !== undefined ? props.sourceDomain : undefined,
-  url: props.url !== undefined ? props.url : undefined,
+  url: props.url !== undefined ? {
+    equals: props.url 
+  } : undefined,
   sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
   authors: props.authors !== undefined ? props.authors : undefined,
   summary: props.summary !== undefined ? props.summary : undefined,

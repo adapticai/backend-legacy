@@ -3134,10 +3134,14 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   assetId: props.assetId !== undefined ? props.assetId : undefined,
   newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
-  url: props.url !== undefined ? props.url : undefined,
+  url: props.url !== undefined ? {
+    equals: props.url 
+  } : undefined,
   relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
   sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
   sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,

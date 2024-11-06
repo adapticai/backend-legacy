@@ -2321,7 +2321,9 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   userId: props.userId !== undefined ? props.userId : undefined,
   credentialID: props.credentialID !== undefined ? props.credentialID : undefined,
   publicKey: props.publicKey !== undefined ? props.publicKey : undefined,

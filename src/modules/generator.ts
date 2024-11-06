@@ -200,7 +200,7 @@ const handleCreateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && isUniqueField(whereField.name) && whereField.type.isFilterObject) {
+            if (whereField.type.isScalar && isUniqueField(whereField.name) && whereField.type.isFilterObject || whereField.type.isFilterObject) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
@@ -335,7 +335,7 @@ const handleUpdateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && whereField.type.isFilterObject && isUniqueField(whereField.name) || (whereField.type.isFilterObject && isUniqueField(whereField.name))) {
+            if (whereField.type.isScalar && whereField.type.isFilterObject && isUniqueField(whereField.name) || (whereField.type.isFilterObject && isUniqueField(whereField.name)) || whereField.type.isFilterObject) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
@@ -443,8 +443,13 @@ const handleWhereOperation = (
   }
 
   if (field.type.isScalar) {
-    // Handle scalar fields by generating equality conditions
-    return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+    // Check if the scalar field requires an "equals" wrapper
+    if (field.type.isFilterObject && isUniqueField(field.name)) {
+      return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  equals: ${accessor} \n${indent}} : undefined,\n`;
+    } else {
+      // Handle regular scalar fields without "equals" wrapper
+      return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+    }
   } else {
     // Handle relational fields
     if (depth + 1 >= maxDepth) {
@@ -509,7 +514,6 @@ const handleWhereOperation = (
     return condition;
   }
 };
-
 
 /**
  * Checks if a field name is reserved and should be skipped.

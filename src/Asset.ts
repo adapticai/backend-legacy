@@ -6628,9 +6628,15 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  name: props.name !== undefined ? props.name : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
   type: props.type !== undefined ? props.type : undefined,
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
   description: props.description !== undefined ? props.description : undefined,

@@ -5225,7 +5225,9 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
   message: props.message !== undefined ? props.message : undefined,
   type: props.type !== undefined ? props.type : undefined,

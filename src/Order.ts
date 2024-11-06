@@ -7558,7 +7558,9 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   clientOrderId: props.clientOrderId !== undefined ? props.clientOrderId : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
   assetId: props.assetId !== undefined ? props.assetId : undefined,

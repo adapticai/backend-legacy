@@ -3519,7 +3519,9 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
   updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
   orderId: props.orderId !== undefined ? props.orderId : undefined,

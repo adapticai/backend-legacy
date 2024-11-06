@@ -127,7 +127,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
   description: props.description !== undefined ? props.description : undefined,
   date: props.date !== undefined ? props.date : undefined,
   importance: props.importance !== undefined ? props.importance : undefined,
@@ -194,7 +196,9 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  title: prop.title !== undefined ? prop.title : undefined,
+  title: prop.title !== undefined ? {
+    equals: prop.title 
+  } : undefined,
   description: prop.description !== undefined ? prop.description : undefined,
   date: prop.date !== undefined ? prop.date : undefined,
   importance: prop.importance !== undefined ? prop.importance : undefined,
@@ -302,7 +306,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
   description: props.description !== undefined ? props.description : undefined,
   date: props.date !== undefined ? props.date : undefined,
   importance: props.importance !== undefined ? props.importance : undefined,
@@ -373,8 +379,12 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? props.title : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
   description: props.description !== undefined ? props.description : undefined,
   date: props.date !== undefined ? props.date : undefined,
   importance: props.importance !== undefined ? props.importance : undefined,

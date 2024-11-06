@@ -6296,7 +6296,9 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   sequence: props.sequence !== undefined ? props.sequence : undefined,
   tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
   type: props.type !== undefined ? props.type : undefined,

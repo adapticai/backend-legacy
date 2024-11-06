@@ -7048,7 +7048,9 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
   assetId: props.assetId !== undefined ? props.assetId : undefined,
   averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
   qty: props.qty !== undefined ? props.qty : undefined,

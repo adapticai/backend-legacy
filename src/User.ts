@@ -1013,7 +1013,9 @@ id
       where: {
         id: props.id !== undefined ? props.id : undefined,
   email: props.email !== undefined ? props.email : undefined,
-  name: props.name !== undefined ? props.name : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
   emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
   image: props.image !== undefined ? props.image : undefined,
   createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
@@ -3071,7 +3073,9 @@ id
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
   email: prop.email !== undefined ? prop.email : undefined,
-  name: prop.name !== undefined ? prop.name : undefined,
+  name: prop.name !== undefined ? {
+    equals: prop.name 
+  } : undefined,
   emailVerified: prop.emailVerified !== undefined ? prop.emailVerified : undefined,
   image: prop.image !== undefined ? prop.image : undefined,
   createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
@@ -5170,7 +5174,9 @@ id
       where: {
         id: props.id !== undefined ? props.id : undefined,
   email: props.email !== undefined ? props.email : undefined,
-  name: props.name !== undefined ? props.name : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
   emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
   image: props.image !== undefined ? props.image : undefined,
   createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
@@ -5247,9 +5253,15 @@ id
 
     const variables = {
       where: {
-  id: props.id !== undefined ? props.id : undefined,
-  name: props.name !== undefined ? props.name : undefined,
-  email: props.email !== undefined ? props.email : undefined,
+  id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
+  email: props.email !== undefined ? {
+    equals: props.email 
+  } : undefined,
   emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
   image: props.image !== undefined ? props.image : undefined,
   createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
