@@ -2474,9 +2474,6 @@ id
         assetId: props.order.assetId !== undefined ? {
             equals: props.order.assetId 
            } : undefined,
-        actionId: props.order.actionId !== undefined ? {
-            equals: props.order.actionId 
-           } : undefined,
       },
       update: {
         id: props.order.id !== undefined ? {
@@ -5363,9 +5360,6 @@ id
            } : undefined,
         assetId: prop.order.assetId !== undefined ? {
             equals: prop.order.assetId 
-           } : undefined,
-        actionId: prop.order.actionId !== undefined ? {
-            equals: prop.order.actionId 
            } : undefined,
       },
       update: {

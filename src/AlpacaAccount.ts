@@ -2601,9 +2601,6 @@ id
             assetId: item.order.assetId !== undefined ? {
                 equals: item.order.assetId 
                } : undefined,
-            actionId: item.order.actionId !== undefined ? {
-                equals: item.order.actionId 
-               } : undefined,
           },
           update: {
             id: item.order.id !== undefined ? {
@@ -5975,9 +5972,6 @@ id
                } : undefined,
             assetId: item.order.assetId !== undefined ? {
                 equals: item.order.assetId 
-               } : undefined,
-            actionId: item.order.actionId !== undefined ? {
-                equals: item.order.actionId 
                } : undefined,
           },
           update: {

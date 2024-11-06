@@ -572,9 +572,6 @@ import { removeUndefinedProps } from './utils';
         assetId: props.Order.assetId !== undefined ? {
             equals: props.Order.assetId 
            } : undefined,
-        actionId: props.Order.actionId !== undefined ? {
-            equals: props.Order.actionId 
-           } : undefined,
       },
       update: {
         id: props.Order.id !== undefined ? {
@@ -2181,9 +2178,6 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
         assetId: prop.Order.assetId !== undefined ? {
             equals: prop.Order.assetId 
-           } : undefined,
-        actionId: prop.Order.actionId !== undefined ? {
-            equals: prop.Order.actionId 
            } : undefined,
       },
       update: {

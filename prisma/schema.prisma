@@ -1227,13 +1227,13 @@ model Order {
   filledAvgPrice Float?
 
   /// Reference to the action associated with the order. TYPESTRING.SKIP=true
-  actionId String @unique @db.Uuid
+  actionId String? @unique @db.Uuid
 
   /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true  GQL.EXCLUDE=['trades', 'orders', 'positions', 'user']
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// The action this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade', 'order']
-  action Action @relation(fields: [actionId], references: [id], onDelete: Cascade)
+  action Action? @relation(fields: [actionId], references: [id], onDelete: Cascade)
 
   /// The asset this order is for. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trade', 'order', 'positions', 'newsMentions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
