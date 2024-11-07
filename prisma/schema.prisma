@@ -731,6 +731,9 @@ model Position {
 
   /// Foreign key referencing the AlpacaAccount. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
+
+  /// Whether the position has been closed out or not. TYPESTRING.SKIP=true
+  closed Boolean @default(false)
 }
 
 // Represents an authenticator for multi-factor authentication.
