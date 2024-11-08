@@ -79,7 +79,10 @@ import { removeUndefinedProps } from './utils';
         status: props.Order.status !== undefined ? props.Order.status : undefined,
         submittedAt: props.Order.submittedAt !== undefined ? props.Order.submittedAt : undefined,
         filledAt: props.Order.filledAt !== undefined ? props.Order.filledAt : undefined,
+        filledQty: props.Order.filledQty !== undefined ? props.Order.filledQty : undefined,
         filledAvgPrice: props.Order.filledAvgPrice !== undefined ? props.Order.filledAvgPrice : undefined,
+        cancelRequestedAt: props.Order.cancelRequestedAt !== undefined ? props.Order.cancelRequestedAt : undefined,
+        canceledAt: props.Order.canceledAt !== undefined ? props.Order.canceledAt : undefined,
         fee: props.Order.fee !== undefined ? props.Order.fee : undefined,
         strikePrice: props.Order.strikePrice !== undefined ? props.Order.strikePrice : undefined,
         expirationDate: props.Order.expirationDate !== undefined ? props.Order.expirationDate : undefined,
@@ -216,6 +219,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -424,6 +428,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -622,8 +627,17 @@ import { removeUndefinedProps } from './utils';
         filledAt: props.Order.filledAt !== undefined ? {
             set: props.Order.filledAt  
            } : undefined,
+        filledQty: props.Order.filledQty !== undefined ? {
+            set: props.Order.filledQty  
+           } : undefined,
         filledAvgPrice: props.Order.filledAvgPrice !== undefined ? {
             set: props.Order.filledAvgPrice  
+           } : undefined,
+        cancelRequestedAt: props.Order.cancelRequestedAt !== undefined ? {
+            set: props.Order.cancelRequestedAt  
+           } : undefined,
+        canceledAt: props.Order.canceledAt !== undefined ? {
+            set: props.Order.canceledAt  
            } : undefined,
         fee: props.Order.fee !== undefined ? {
             set: props.Order.fee  
@@ -895,6 +909,9 @@ import { removeUndefinedProps } from './utils';
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -910,6 +927,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1043,6 +1061,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1505,6 +1524,9 @@ import { removeUndefinedProps } from './utils';
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -1520,6 +1542,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1678,6 +1701,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1726,7 +1750,10 @@ import { removeUndefinedProps } from './utils';
         status: props.Order.status !== undefined ? props.Order.status : undefined,
         submittedAt: props.Order.submittedAt !== undefined ? props.Order.submittedAt : undefined,
         filledAt: props.Order.filledAt !== undefined ? props.Order.filledAt : undefined,
+        filledQty: props.Order.filledQty !== undefined ? props.Order.filledQty : undefined,
         filledAvgPrice: props.Order.filledAvgPrice !== undefined ? props.Order.filledAvgPrice : undefined,
+        cancelRequestedAt: props.Order.cancelRequestedAt !== undefined ? props.Order.cancelRequestedAt : undefined,
+        canceledAt: props.Order.canceledAt !== undefined ? props.Order.canceledAt : undefined,
         fee: props.Order.fee !== undefined ? props.Order.fee : undefined,
         strikePrice: props.Order.strikePrice !== undefined ? props.Order.strikePrice : undefined,
         expirationDate: props.Order.expirationDate !== undefined ? props.Order.expirationDate : undefined,
@@ -1863,6 +1890,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2071,6 +2099,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2229,8 +2258,17 @@ import { removeUndefinedProps } from './utils';
         filledAt: prop.Order.filledAt !== undefined ? {
             set: prop.Order.filledAt  
            } : undefined,
+        filledQty: prop.Order.filledQty !== undefined ? {
+            set: prop.Order.filledQty  
+           } : undefined,
         filledAvgPrice: prop.Order.filledAvgPrice !== undefined ? {
             set: prop.Order.filledAvgPrice  
+           } : undefined,
+        cancelRequestedAt: prop.Order.cancelRequestedAt !== undefined ? {
+            set: prop.Order.cancelRequestedAt  
+           } : undefined,
+        canceledAt: prop.Order.canceledAt !== undefined ? {
+            set: prop.Order.canceledAt  
            } : undefined,
         fee: prop.Order.fee !== undefined ? {
             set: prop.Order.fee  
@@ -2502,6 +2540,9 @@ import { removeUndefinedProps } from './utils';
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -2517,6 +2558,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2650,6 +2692,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3112,6 +3155,9 @@ import { removeUndefinedProps } from './utils';
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -3127,6 +3173,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3285,6 +3332,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3333,7 +3381,10 @@ import { removeUndefinedProps } from './utils';
         status: prop.Order.status !== undefined ? prop.Order.status : undefined,
         submittedAt: prop.Order.submittedAt !== undefined ? prop.Order.submittedAt : undefined,
         filledAt: prop.Order.filledAt !== undefined ? prop.Order.filledAt : undefined,
+        filledQty: prop.Order.filledQty !== undefined ? prop.Order.filledQty : undefined,
         filledAvgPrice: prop.Order.filledAvgPrice !== undefined ? prop.Order.filledAvgPrice : undefined,
+        cancelRequestedAt: prop.Order.cancelRequestedAt !== undefined ? prop.Order.cancelRequestedAt : undefined,
+        canceledAt: prop.Order.canceledAt !== undefined ? prop.Order.canceledAt : undefined,
         fee: prop.Order.fee !== undefined ? prop.Order.fee : undefined,
         strikePrice: prop.Order.strikePrice !== undefined ? prop.Order.strikePrice : undefined,
         expirationDate: prop.Order.expirationDate !== undefined ? prop.Order.expirationDate : undefined,
@@ -3470,6 +3521,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3678,6 +3730,7 @@ import { removeUndefinedProps } from './utils';
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,

@@ -213,7 +213,10 @@ id
       updatedAt
       submittedAt
       filledAt
+      filledQty
       filledAvgPrice
+      cancelRequestedAt
+      canceledAt
       actionId
       action {
         id
@@ -302,6 +305,9 @@ id
       assetId
       asset {
         id
+        symbol
+        name
+        type
         logoUrl
         description
         cik
@@ -356,18 +362,6 @@ id
         bidPrice
         createdAt
         updatedAt
-        trades {
-id
-        }
-        orders {
-id
-        }
-        positions {
-id
-        }
-        newsMentions {
-id
-        }
       }
       averageEntryPrice
       qty
@@ -383,6 +377,7 @@ id
       changeToday
       assetMarginable
       alpacaAccountId
+      closed
     }
     alerts {
       id
@@ -715,7 +710,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -882,6 +880,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -1834,8 +1833,17 @@ id
           filledAt: item.filledAt !== undefined ? {
               set: item.filledAt  
              } : undefined,
+          filledQty: item.filledQty !== undefined ? {
+              set: item.filledQty  
+             } : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? {
               set: item.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+              set: item.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.canceledAt !== undefined ? {
+              set: item.canceledAt  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
@@ -2207,7 +2215,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -2397,6 +2408,9 @@ id
              } : undefined,
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
+             } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
              } : undefined,
       asset: item.asset ? {
         upsert: {
@@ -2655,6 +2669,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -2928,7 +2943,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -3095,6 +3113,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -3998,8 +4017,17 @@ id
           filledAt: item.filledAt !== undefined ? {
               set: item.filledAt  
              } : undefined,
+          filledQty: item.filledQty !== undefined ? {
+              set: item.filledQty  
+             } : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? {
               set: item.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+              set: item.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.canceledAt !== undefined ? {
+              set: item.canceledAt  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
@@ -4371,7 +4399,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -4561,6 +4592,9 @@ id
              } : undefined,
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
+             } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
              } : undefined,
       asset: item.asset ? {
         upsert: {
@@ -4819,6 +4853,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -5092,7 +5127,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -5259,6 +5297,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {

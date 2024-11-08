@@ -73,7 +73,10 @@ import { removeUndefinedProps } from './utils';
     updatedAt
     submittedAt
     filledAt
+    filledQty
     filledAvgPrice
+    cancelRequestedAt
+    canceledAt
     actionId
     asset {
       id
@@ -311,7 +314,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -351,6 +357,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -480,7 +487,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -520,6 +530,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -589,7 +600,10 @@ id
         status: props.order.status !== undefined ? props.order.status : undefined,
         submittedAt: props.order.submittedAt !== undefined ? props.order.submittedAt : undefined,
         filledAt: props.order.filledAt !== undefined ? props.order.filledAt : undefined,
+        filledQty: props.order.filledQty !== undefined ? props.order.filledQty : undefined,
         filledAvgPrice: props.order.filledAvgPrice !== undefined ? props.order.filledAvgPrice : undefined,
+        cancelRequestedAt: props.order.cancelRequestedAt !== undefined ? props.order.cancelRequestedAt : undefined,
+        canceledAt: props.order.canceledAt !== undefined ? props.order.canceledAt : undefined,
         fee: props.order.fee !== undefined ? props.order.fee : undefined,
         strikePrice: props.order.strikePrice !== undefined ? props.order.strikePrice : undefined,
         expirationDate: props.order.expirationDate !== undefined ? props.order.expirationDate : undefined,
@@ -743,6 +757,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -898,6 +913,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1261,8 +1277,17 @@ id
             filledAt: item.filledAt !== undefined ? {
                 set: item.filledAt  
                } : undefined,
+            filledQty: item.filledQty !== undefined ? {
+                set: item.filledQty  
+               } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
                 set: item.filledAvgPrice  
+               } : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+                set: item.cancelRequestedAt  
+               } : undefined,
+            canceledAt: item.canceledAt !== undefined ? {
+                set: item.canceledAt  
                } : undefined,
             fee: item.fee !== undefined ? {
                 set: item.fee  
@@ -1299,7 +1324,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -1363,6 +1391,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -1378,6 +1409,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1485,7 +1517,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -1525,6 +1560,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -1796,8 +1832,17 @@ id
             filledAt: item.filledAt !== undefined ? {
                 set: item.filledAt  
                } : undefined,
+            filledQty: item.filledQty !== undefined ? {
+                set: item.filledQty  
+               } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
                 set: item.filledAvgPrice  
+               } : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+                set: item.cancelRequestedAt  
+               } : undefined,
+            canceledAt: item.canceledAt !== undefined ? {
+                set: item.canceledAt  
                } : undefined,
             fee: item.fee !== undefined ? {
                 set: item.fee  
@@ -1834,7 +1879,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -1898,6 +1946,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -1913,6 +1964,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2045,7 +2097,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -2085,6 +2140,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2216,7 +2272,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -2256,6 +2315,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2385,7 +2445,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -2425,6 +2488,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2524,8 +2588,17 @@ id
         filledAt: props.order.filledAt !== undefined ? {
             set: props.order.filledAt  
            } : undefined,
+        filledQty: props.order.filledQty !== undefined ? {
+            set: props.order.filledQty  
+           } : undefined,
         filledAvgPrice: props.order.filledAvgPrice !== undefined ? {
             set: props.order.filledAvgPrice  
+           } : undefined,
+        cancelRequestedAt: props.order.cancelRequestedAt !== undefined ? {
+            set: props.order.cancelRequestedAt  
+           } : undefined,
+        canceledAt: props.order.canceledAt !== undefined ? {
+            set: props.order.canceledAt  
            } : undefined,
         fee: props.order.fee !== undefined ? {
             set: props.order.fee  
@@ -2824,6 +2897,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -2839,6 +2915,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -2972,6 +3049,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3298,6 +3376,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -3313,6 +3394,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3471,6 +3553,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3519,7 +3602,10 @@ id
         status: props.order.status !== undefined ? props.order.status : undefined,
         submittedAt: props.order.submittedAt !== undefined ? props.order.submittedAt : undefined,
         filledAt: props.order.filledAt !== undefined ? props.order.filledAt : undefined,
+        filledQty: props.order.filledQty !== undefined ? props.order.filledQty : undefined,
         filledAvgPrice: props.order.filledAvgPrice !== undefined ? props.order.filledAvgPrice : undefined,
+        cancelRequestedAt: props.order.cancelRequestedAt !== undefined ? props.order.cancelRequestedAt : undefined,
+        canceledAt: props.order.canceledAt !== undefined ? props.order.canceledAt : undefined,
         fee: props.order.fee !== undefined ? props.order.fee : undefined,
         strikePrice: props.order.strikePrice !== undefined ? props.order.strikePrice : undefined,
         expirationDate: props.order.expirationDate !== undefined ? props.order.expirationDate : undefined,
@@ -3673,6 +3759,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -3828,6 +3915,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -4148,8 +4236,17 @@ id
             filledAt: item.filledAt !== undefined ? {
                 set: item.filledAt  
                } : undefined,
+            filledQty: item.filledQty !== undefined ? {
+                set: item.filledQty  
+               } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
                 set: item.filledAvgPrice  
+               } : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+                set: item.cancelRequestedAt  
+               } : undefined,
+            canceledAt: item.canceledAt !== undefined ? {
+                set: item.canceledAt  
                } : undefined,
             fee: item.fee !== undefined ? {
                 set: item.fee  
@@ -4186,7 +4283,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -4250,6 +4350,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -4265,6 +4368,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -4372,7 +4476,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -4412,6 +4519,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -4683,8 +4791,17 @@ id
             filledAt: item.filledAt !== undefined ? {
                 set: item.filledAt  
                } : undefined,
+            filledQty: item.filledQty !== undefined ? {
+                set: item.filledQty  
+               } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
                 set: item.filledAvgPrice  
+               } : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+                set: item.cancelRequestedAt  
+               } : undefined,
+            canceledAt: item.canceledAt !== undefined ? {
+                set: item.canceledAt  
                } : undefined,
             fee: item.fee !== undefined ? {
                 set: item.fee  
@@ -4721,7 +4838,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -4785,6 +4905,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -4800,6 +4923,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -4932,7 +5056,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -4972,6 +5099,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -5103,7 +5231,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -5143,6 +5274,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -5272,7 +5404,10 @@ id
             status: item.status !== undefined ? item.status : undefined,
             submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
             filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+            filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+            cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+            canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -5312,6 +5447,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -5411,8 +5547,17 @@ id
         filledAt: prop.order.filledAt !== undefined ? {
             set: prop.order.filledAt  
            } : undefined,
+        filledQty: prop.order.filledQty !== undefined ? {
+            set: prop.order.filledQty  
+           } : undefined,
         filledAvgPrice: prop.order.filledAvgPrice !== undefined ? {
             set: prop.order.filledAvgPrice  
+           } : undefined,
+        cancelRequestedAt: prop.order.cancelRequestedAt !== undefined ? {
+            set: prop.order.cancelRequestedAt  
+           } : undefined,
+        canceledAt: prop.order.canceledAt !== undefined ? {
+            set: prop.order.canceledAt  
            } : undefined,
         fee: prop.order.fee !== undefined ? {
             set: prop.order.fee  
@@ -5711,6 +5856,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -5726,6 +5874,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -5859,6 +6008,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -6185,6 +6335,9 @@ id
             assetMarginable: item.assetMarginable !== undefined ? {
                 set: item.assetMarginable  
                } : undefined,
+            closed: item.closed !== undefined ? {
+                set: item.closed  
+               } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -6200,6 +6353,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -6358,6 +6512,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -6406,7 +6561,10 @@ id
         status: prop.order.status !== undefined ? prop.order.status : undefined,
         submittedAt: prop.order.submittedAt !== undefined ? prop.order.submittedAt : undefined,
         filledAt: prop.order.filledAt !== undefined ? prop.order.filledAt : undefined,
+        filledQty: prop.order.filledQty !== undefined ? prop.order.filledQty : undefined,
         filledAvgPrice: prop.order.filledAvgPrice !== undefined ? prop.order.filledAvgPrice : undefined,
+        cancelRequestedAt: prop.order.cancelRequestedAt !== undefined ? prop.order.cancelRequestedAt : undefined,
+        canceledAt: prop.order.canceledAt !== undefined ? prop.order.canceledAt : undefined,
         fee: prop.order.fee !== undefined ? prop.order.fee : undefined,
         strikePrice: prop.order.strikePrice !== undefined ? prop.order.strikePrice : undefined,
         expirationDate: prop.order.expirationDate !== undefined ? prop.order.expirationDate : undefined,
@@ -6560,6 +6718,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,
@@ -6715,6 +6874,7 @@ id
             lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
             changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
             assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+            closed: item.closed !== undefined ? item.closed : undefined,
           },
         }))
       } : undefined,

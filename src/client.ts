@@ -7,6 +7,7 @@ import {
 import { setContext } from "@apollo/client/link/context/context.cjs";
 import { getToken } from "./getToken";
 import { onError } from "@apollo/client/link/error/error.cjs";
+import fetch from 'cross-fetch';
 
 export type { NormalizedCacheObject, ApolloClient };
 
@@ -42,7 +43,7 @@ async function getAuthToken(req?: any): Promise<string | null> {
  * Function to create a new Apollo Client instance
  */
 export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObject> {
-  const httpLink = new HttpLink({ uri: httpUrl });
+  const httpLink = new HttpLink({ uri: httpUrl, fetch });
 
   const authLink = setContext(async (_, { headers }) => {
     const token = await getAuthToken(req);
@@ -71,9 +72,6 @@ export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObjec
 
   return new ApolloClient({
     link: errorLink.concat(authLink.concat(httpLink)),
-    cache: new InMemoryCache({
-      resultCaching: true,
-      resultCacheMaxSize: 10 * 1024 * 1024, // 10MB
-    }),
+    cache: new InMemoryCache(),
   });
 }

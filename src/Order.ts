@@ -47,7 +47,10 @@ import { removeUndefinedProps } from './utils';
   updatedAt
   submittedAt
   filledAt
+  filledQty
   filledAvgPrice
+  cancelRequestedAt
+  canceledAt
   actionId
   alpacaAccount {
     id
@@ -221,7 +224,10 @@ id
   status: props.status !== undefined ? props.status : undefined,
   submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
   filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  filledQty: props.filledQty !== undefined ? props.filledQty : undefined,
   filledAvgPrice: props.filledAvgPrice !== undefined ? props.filledAvgPrice : undefined,
+  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
+  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
   fee: props.fee !== undefined ? props.fee : undefined,
   strikePrice: props.strikePrice !== undefined ? props.strikePrice : undefined,
   expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
@@ -569,6 +575,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -993,6 +1000,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1136,7 +1144,10 @@ id
   status: prop.status !== undefined ? prop.status : undefined,
   submittedAt: prop.submittedAt !== undefined ? prop.submittedAt : undefined,
   filledAt: prop.filledAt !== undefined ? prop.filledAt : undefined,
+  filledQty: prop.filledQty !== undefined ? prop.filledQty : undefined,
   filledAvgPrice: prop.filledAvgPrice !== undefined ? prop.filledAvgPrice : undefined,
+  cancelRequestedAt: prop.cancelRequestedAt !== undefined ? prop.cancelRequestedAt : undefined,
+  canceledAt: prop.canceledAt !== undefined ? prop.canceledAt : undefined,
   actionId: prop.actionId !== undefined ? prop.actionId : undefined,
   fee: prop.fee !== undefined ? prop.fee : undefined,
   strikePrice: prop.strikePrice !== undefined ? prop.strikePrice : undefined,
@@ -1200,6 +1211,8 @@ id
   updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
   submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
   filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
+  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
   expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
   optionType: props.optionType !== undefined ? props.optionType : undefined,
       },
@@ -1258,8 +1271,17 @@ id
   filledAt: props.filledAt !== undefined ? {
             set: props.filledAt 
            } : undefined,
+  filledQty: props.filledQty !== undefined ? {
+            set: props.filledQty 
+           } : undefined,
   filledAvgPrice: props.filledAvgPrice !== undefined ? {
             set: props.filledAvgPrice 
+           } : undefined,
+  cancelRequestedAt: props.cancelRequestedAt !== undefined ? {
+            set: props.cancelRequestedAt 
+           } : undefined,
+  canceledAt: props.canceledAt !== undefined ? {
+            set: props.canceledAt 
            } : undefined,
   fee: props.fee !== undefined ? {
             set: props.fee 
@@ -2201,6 +2223,9 @@ id
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
+             } : undefined,
       asset: item.asset ? {
         upsert: {
           where: {
@@ -2458,6 +2483,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -2856,6 +2882,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -4020,6 +4047,9 @@ id
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
+             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -4090,6 +4120,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4427,6 +4458,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4571,6 +4603,8 @@ id
   updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
   submittedAt: prop.submittedAt !== undefined ? prop.submittedAt : undefined,
   filledAt: prop.filledAt !== undefined ? prop.filledAt : undefined,
+  cancelRequestedAt: prop.cancelRequestedAt !== undefined ? prop.cancelRequestedAt : undefined,
+  canceledAt: prop.canceledAt !== undefined ? prop.canceledAt : undefined,
   expirationDate: prop.expirationDate !== undefined ? prop.expirationDate : undefined,
   optionType: prop.optionType !== undefined ? prop.optionType : undefined,
 
@@ -4630,8 +4664,17 @@ id
   filledAt: prop.filledAt !== undefined ? {
             set: prop.filledAt 
            } : undefined,
+  filledQty: prop.filledQty !== undefined ? {
+            set: prop.filledQty 
+           } : undefined,
   filledAvgPrice: prop.filledAvgPrice !== undefined ? {
             set: prop.filledAvgPrice 
+           } : undefined,
+  cancelRequestedAt: prop.cancelRequestedAt !== undefined ? {
+            set: prop.cancelRequestedAt 
+           } : undefined,
+  canceledAt: prop.canceledAt !== undefined ? {
+            set: prop.canceledAt 
            } : undefined,
   fee: prop.fee !== undefined ? {
             set: prop.fee 
@@ -5573,6 +5616,9 @@ id
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
+             } : undefined,
       asset: item.asset ? {
         upsert: {
           where: {
@@ -5830,6 +5876,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -6228,6 +6275,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -7392,6 +7440,9 @@ id
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
+             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -7462,6 +7513,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -7799,6 +7851,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -7983,6 +8036,8 @@ id
   updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
   submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
   filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
+  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
   expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
   optionType: props.optionType !== undefined ? props.optionType : undefined,
 },
@@ -8071,6 +8126,8 @@ id
   updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
   submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
   filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
+  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
+  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
   expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
   optionType: props.optionType !== undefined ? props.optionType : undefined,
       },

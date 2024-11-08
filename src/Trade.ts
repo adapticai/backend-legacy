@@ -183,7 +183,10 @@ import { removeUndefinedProps } from './utils';
       updatedAt
       submittedAt
       filledAt
+      filledQty
       filledAvgPrice
+      cancelRequestedAt
+      canceledAt
       actionId
       asset {
         id
@@ -483,7 +486,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -650,6 +656,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -850,7 +857,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -972,6 +982,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1114,7 +1125,10 @@ id
           status: item.order.status !== undefined ? item.order.status : undefined,
           submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
           filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+          filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
           fee: item.order.fee !== undefined ? item.order.fee : undefined,
           strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
           expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
@@ -1851,8 +1865,17 @@ id
           filledAt: item.filledAt !== undefined ? {
               set: item.filledAt  
              } : undefined,
+          filledQty: item.filledQty !== undefined ? {
+              set: item.filledQty  
+             } : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? {
               set: item.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+              set: item.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.canceledAt !== undefined ? {
+              set: item.canceledAt  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
@@ -2224,7 +2247,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -2414,6 +2440,9 @@ id
              } : undefined,
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
+             } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
              } : undefined,
       asset: item.asset ? {
         upsert: {
@@ -2672,6 +2701,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -2951,7 +2981,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -3118,6 +3151,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -3460,8 +3494,17 @@ id
           filledAt: item.filledAt !== undefined ? {
               set: item.filledAt  
              } : undefined,
+          filledQty: item.filledQty !== undefined ? {
+              set: item.filledQty  
+             } : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? {
               set: item.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+              set: item.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.canceledAt !== undefined ? {
+              set: item.canceledAt  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
@@ -3646,7 +3689,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -3792,6 +3838,9 @@ id
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
+             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -3862,6 +3911,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4125,7 +4175,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -4247,6 +4300,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -4427,8 +4481,17 @@ id
           filledAt: item.order.filledAt !== undefined ? {
               set: item.order.filledAt  
              } : undefined,
+          filledQty: item.order.filledQty !== undefined ? {
+              set: item.order.filledQty  
+             } : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? {
               set: item.order.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? {
+              set: item.order.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? {
+              set: item.order.canceledAt  
              } : undefined,
           fee: item.order.fee !== undefined ? {
               set: item.order.fee  
@@ -4816,7 +4879,10 @@ id
           status: item.order.status !== undefined ? item.order.status : undefined,
           submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
           filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+          filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
           fee: item.order.fee !== undefined ? item.order.fee : undefined,
           strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
           expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
@@ -4999,7 +5065,10 @@ id
           status: item.order.status !== undefined ? item.order.status : undefined,
           submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
           filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+          filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
           fee: item.order.fee !== undefined ? item.order.fee : undefined,
           strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
           expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
@@ -5686,8 +5755,17 @@ id
           filledAt: item.filledAt !== undefined ? {
               set: item.filledAt  
              } : undefined,
+          filledQty: item.filledQty !== undefined ? {
+              set: item.filledQty  
+             } : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? {
               set: item.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+              set: item.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.canceledAt !== undefined ? {
+              set: item.canceledAt  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
@@ -6059,7 +6137,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -6249,6 +6330,9 @@ id
              } : undefined,
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
+             } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
              } : undefined,
       asset: item.asset ? {
         upsert: {
@@ -6507,6 +6591,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -6786,7 +6871,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -6953,6 +7041,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       asset: item.asset ? 
         typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
     ? { connect: {
@@ -7295,8 +7384,17 @@ id
           filledAt: item.filledAt !== undefined ? {
               set: item.filledAt  
              } : undefined,
+          filledQty: item.filledQty !== undefined ? {
+              set: item.filledQty  
+             } : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? {
               set: item.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
+              set: item.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.canceledAt !== undefined ? {
+              set: item.canceledAt  
              } : undefined,
           fee: item.fee !== undefined ? {
               set: item.fee  
@@ -7481,7 +7579,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -7627,6 +7728,9 @@ id
           assetMarginable: item.assetMarginable !== undefined ? {
               set: item.assetMarginable  
              } : undefined,
+          closed: item.closed !== undefined ? {
+              set: item.closed  
+             } : undefined,
       alpacaAccount: item.alpacaAccount ? {
         upsert: {
           where: {
@@ -7697,6 +7801,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -7960,7 +8065,10 @@ id
           status: item.status !== undefined ? item.status : undefined,
           submittedAt: item.submittedAt !== undefined ? item.submittedAt : undefined,
           filledAt: item.filledAt !== undefined ? item.filledAt : undefined,
+          filledQty: item.filledQty !== undefined ? item.filledQty : undefined,
           filledAvgPrice: item.filledAvgPrice !== undefined ? item.filledAvgPrice : undefined,
+          cancelRequestedAt: item.cancelRequestedAt !== undefined ? item.cancelRequestedAt : undefined,
+          canceledAt: item.canceledAt !== undefined ? item.canceledAt : undefined,
           fee: item.fee !== undefined ? item.fee : undefined,
           strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
           expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
@@ -8082,6 +8190,7 @@ id
           lastTradePrice: item.lastTradePrice !== undefined ? item.lastTradePrice : undefined,
           changeToday: item.changeToday !== undefined ? item.changeToday : undefined,
           assetMarginable: item.assetMarginable !== undefined ? item.assetMarginable : undefined,
+          closed: item.closed !== undefined ? item.closed : undefined,
       alpacaAccount: item.alpacaAccount ? 
         typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -8262,8 +8371,17 @@ id
           filledAt: item.order.filledAt !== undefined ? {
               set: item.order.filledAt  
              } : undefined,
+          filledQty: item.order.filledQty !== undefined ? {
+              set: item.order.filledQty  
+             } : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? {
               set: item.order.filledAvgPrice  
+             } : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? {
+              set: item.order.cancelRequestedAt  
+             } : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? {
+              set: item.order.canceledAt  
              } : undefined,
           fee: item.order.fee !== undefined ? {
               set: item.order.fee  
@@ -8651,7 +8769,10 @@ id
           status: item.order.status !== undefined ? item.order.status : undefined,
           submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
           filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+          filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
           fee: item.order.fee !== undefined ? item.order.fee : undefined,
           strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
           expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
@@ -8834,7 +8955,10 @@ id
           status: item.order.status !== undefined ? item.order.status : undefined,
           submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
           filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+          filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
           filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+          cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+          canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
           fee: item.order.fee !== undefined ? item.order.fee : undefined,
           strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
           expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
