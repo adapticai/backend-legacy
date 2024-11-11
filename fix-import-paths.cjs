@@ -28,26 +28,28 @@ const modelFiles = getFilesRecursively(modelsDir).map((file) =>
 
 // Function to fix import paths in a file
 function fixImportPaths(filePath) {
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(`Error reading file ${filePath}:`, err);
-      return;
-    }
-
-    let fixedData = data;
-    modelFiles.forEach((model) => {
-      const importPath = `../outputs/${model}`;
-      const newImportPath = `../../models/${model}`;
-      const regex = new RegExp(`from "${importPath}"`, 'g');
-      fixedData = fixedData.replace(regex, `from "${newImportPath}"`);
-    });
-
-    fs.writeFile(filePath, fixedData, 'utf8', (err) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.error(`Error writing file ${filePath}:`, err);
-      } else {
-        console.log(`Fixed import paths in ${filePath}`);
+        reject(err);
+        return;
       }
+
+      let fixedData = data;
+      modelFiles.forEach((model) => {
+        const importPath = `../outputs/${model}`;
+        const newImportPath = `../../models/${model}`;
+        const regex = new RegExp(`from "${importPath}"`, 'g');
+        fixedData = fixedData.replace(regex, `from "${newImportPath}"`);
+      });
+
+      fs.writeFile(filePath, fixedData, 'utf8', (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(path.basename(filePath));
+        }
+      });
     });
   });
 }
@@ -55,5 +57,11 @@ function fixImportPaths(filePath) {
 // Get all output files
 const outputFiles = getFilesRecursively(outputsDir);
 
-// Fix import paths in all output files
-outputFiles.forEach(fixImportPaths);
+// Fix import paths in all output files and collect results
+Promise.all(outputFiles.map(fixImportPaths))
+  .then(fixedFiles => {
+    console.log(`Fixed import paths in ${fixedFiles.length} files: ${fixedFiles.join(', ')}`);
+  })
+  .catch(error => {
+    console.error('Error fixing import paths:', error);
+  });
