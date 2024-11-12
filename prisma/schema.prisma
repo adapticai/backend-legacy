@@ -26,6 +26,17 @@ enum UserRole {
   USER
 }
 
+enum ScheduledOptionOrderStatus {
+  /// The scheduled option order is pending and has not yet been processed.
+  PENDING
+
+  /// The scheduled option order has been executed but not yet finalized.
+  EXECUTED
+
+  /// The scheduled option order has been fully completed.
+  CANCELED
+}
+
 // Represents the various types of strategies that can be used for trading.
 enum TradeStrategy {
   /// Analyzes historical price data to predict future movements.
@@ -1269,6 +1280,7 @@ model Order {
   takeProfitId String? @db.Uuid
 
   @@map(name: "orders")
+  ScheduledOptionOrder ScheduledOptionOrder[]
 }
 
 // Represents a stop loss order for a bracket order.
@@ -1462,4 +1474,19 @@ model EconomicEvent {
   updatedAt DateTime @default(now())
 
   @@map(name: "economic_events")
+}
+
+// Represents a scheduled option order for execution, for instances where the buyOptionOrder was created outside of market hours, and needs to be scheduled for execution at the next market open.
+model ScheduledOptionOrder {
+  /// Unique identifier for the scheduled option order. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the order to be scheduled. TYPESTRING.SKIP=true
+  orderId String @db.Uuid
+
+  /// Status of the scheduled option order.
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  /// Timestamp when the scheduled option order was created. TYPESTRING.SKIP=true
+  status ScheduledOptionOrderStatus @default(PENDING)
 }
