@@ -745,6 +745,12 @@ model Position {
 
   /// Whether the position has been closed out or not. TYPESTRING.SKIP=true
   closed Boolean @default(false)
+
+  /// Timestamp when the position was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the position was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @default(now())
 }
 
 // Represents an authenticator for multi-factor authentication.
