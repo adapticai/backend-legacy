@@ -1277,10 +1277,10 @@ model Order {
   stopLossId String? @unique @db.Uuid
 
   // Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
-  takeProfitId String? @db.Uuid
+  takeProfitId         String?                @db.Uuid
+  ScheduledOptionOrder ScheduledOptionOrder[]
 
   @@map(name: "orders")
-  ScheduledOptionOrder ScheduledOptionOrder[]
 }
 
 // Represents a stop loss order for a bracket order.
@@ -1486,6 +1486,9 @@ model ScheduledOptionOrder {
 
   /// Status of the scheduled option order.
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  /// Payload of the scheduled option order as a JSON object.
+  payload Json
 
   /// Timestamp when the scheduled option order was created. TYPESTRING.SKIP=true
   status ScheduledOptionOrderStatus @default(PENDING)
