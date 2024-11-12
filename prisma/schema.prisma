@@ -1273,12 +1273,11 @@ model Order {
   /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
   optionType OptionType? @default(CALL)
 
-  // Reference to the stop loss order associated with this order. TYPESTRING.SKIP=true
+  /// Reference to the stop loss order associated with this order. TYPESTRING.SKIP=true
   stopLossId String? @unique @db.Uuid
 
-  // Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
+  /// Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
   takeProfitId         String?                @db.Uuid
-  ScheduledOptionOrder ScheduledOptionOrder[]
 
   @@map(name: "orders")
 }
@@ -1480,12 +1479,6 @@ model EconomicEvent {
 model ScheduledOptionOrder {
   /// Unique identifier for the scheduled option order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
-
-  /// Reference to the order to be scheduled. TYPESTRING.SKIP=true
-  orderId String @db.Uuid
-
-  /// Status of the scheduled option order.
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   /// Payload of the scheduled option order as a JSON object.
   payload Json
