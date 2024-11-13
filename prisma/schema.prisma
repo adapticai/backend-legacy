@@ -1181,7 +1181,7 @@ model Order {
   /// Unique identifier for the order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Client-supplied unique identifier for the order (from Alpaca). TYPESTRING.SKIP=true
+  /// Client-supplied unique identifier for the order (from Alpaca). Only include this, if the corresponding action for this order is to either cancel or replace an order. 
   clientOrderId String? @unique
 
   /// Reference to the Alpaca account used for the order. TYPESTRING.SKIP=true
