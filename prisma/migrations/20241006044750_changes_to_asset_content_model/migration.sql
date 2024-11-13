@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "assets" ALTER COLUMN "dividendDate" SET DATA TYPE TEXT,
+ALTER COLUMN "exDividendDate" SET DATA TYPE TEXT,
+ALTER COLUMN "latestQuarter" SET DATA TYPE TEXT;

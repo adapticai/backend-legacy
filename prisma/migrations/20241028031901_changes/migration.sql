@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "AlpacaAccount" ADD COLUMN     "minPercentageChange" DOUBLE PRECISION NOT NULL DEFAULT 0.01,
+ADD COLUMN     "volumeThreshold" DOUBLE PRECISION NOT NULL DEFAULT 50000;

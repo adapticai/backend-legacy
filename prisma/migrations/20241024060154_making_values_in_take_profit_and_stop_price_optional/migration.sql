@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "StopLoss" ALTER COLUMN "stopPrice" DROP NOT NULL,
+ALTER COLUMN "limitPrice" DROP NOT NULL;
+
+-- AlterTable
+ALTER TABLE "TakeProfit" ALTER COLUMN "limitPrice" DROP NOT NULL,
+ALTER COLUMN "stopPrice" DROP NOT NULL;
