@@ -200,9 +200,9 @@ const handleCreateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && whereField.type.isFilterObject) {
+            if (isUniqueField(whereField.name) && whereField.type.isScalar && whereField.type.isFilterObject) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
-            } else if (whereField.type.isScalar) {
+            } else if (whereField.type.isScalar && isUniqueField(whereField.name)) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
               if (depth + 1 >= maxDepth) {
@@ -335,9 +335,9 @@ const handleUpdateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (whereField.type.isScalar && whereField.type.isFilterObject) {
+            if (isUniqueField(whereField.name) && whereField.type.isScalar && whereField.type.isFilterObject) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
-            } else if (whereField.type.isScalar) {
+            } else if (isUniqueField(whereField.name) && whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
               if (depth + 1 >= maxDepth) {
