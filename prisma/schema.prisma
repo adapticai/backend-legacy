@@ -14,6 +14,30 @@ datasource db {
 
 /// ### Enums
 
+// Represents the levels of overall market sentiment. Used in MarketSentiment
+enum MarketSentimentLevel {
+  /// Extremely negative outlook on the market.
+  VERY_BEARISH
+
+  /// Moderately negative outlook on the market.
+  SOMEWHAT_BEARISH
+
+  /// Negative outlook on the market.
+  BEARISH
+
+  /// Neutral outlook on the market.
+  NEUTRAL
+
+  /// Positive outlook on the market.
+  SOMEWHAT_BULLISH
+
+  /// Moderately positive outlook on the market.
+  BULLISH
+
+  /// Extremely positive outlook on the market.
+  VERY_BULLISH
+}
+
 // Defines the different roles a user can have within the platform, determining their permissions and access levels.
 enum UserRole {
   /// The primary owner with full control over the platform.
@@ -535,6 +559,29 @@ enum OpenaiModel {
 }
 
 /// ### Models
+
+// Represents the overall market sentiment at a given time.
+model MarketSentiment {
+  /// Unique identifier for the market sentiment record. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// The current level of market sentiment.
+  sentiment MarketSentimentLevel
+
+  /// A one-sentence description of the market sentiment, including specific references to stock market index values, recent changes, trends, and technical indicators, as well as quotes from major news sources.
+  description String
+
+  /// A detailed, multi-paragraph description of the market sentiment, including extensive analyses, references, quotes from major news sources, and links to articles.
+  longDescription String
+
+  /// Timestamp when the market sentiment record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the market sentiment record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @default(now())
+
+  @@map(name: "market_sentiments")
+}
 
 // Represents a user session for authentication purposes.
 model Session {

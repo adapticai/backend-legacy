@@ -11,10 +11,12 @@ import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
+import { MarketSentiment } from './MarketSentiment';
 import { NewsArticle } from './NewsArticle';
 import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
 import { Order } from './Order';
 import { Position } from './Position';
+import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
 import { StopLoss } from './StopLoss';
 import { TakeProfit } from './TakeProfit';
@@ -31,10 +33,12 @@ const adaptic = {
   authenticator: Authenticator,
   customer: Customer,
   economicEvent: EconomicEvent,
+  marketSentiment: MarketSentiment,
   newsArticle: NewsArticle,
   newsArticleAssetSentiment: NewsArticleAssetSentiment,
   order: Order,
   position: Position,
+  scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
   stopLoss: StopLoss,
   takeProfit: TakeProfit,

@@ -205,6 +205,8 @@ id
     assetMarginable
     alpacaAccountId
     closed
+    createdAt
+    updatedAt
   }
   newsMentions {
     id

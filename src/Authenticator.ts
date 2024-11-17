@@ -170,6 +170,8 @@ id
         assetMarginable
         alpacaAccountId
         closed
+        createdAt
+        updatedAt
       }
       alerts {
         id

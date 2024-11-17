@@ -88,6 +88,8 @@ import { removeUndefinedProps } from './utils';
   assetMarginable
   alpacaAccountId
   closed
+  createdAt
+  updatedAt
 
   `;
 
@@ -1048,6 +1050,8 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1094,6 +1098,12 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   closed: props.closed !== undefined ? {
             set: props.closed 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
            } : undefined,
   asset: props.asset ? {
     upsert: {
@@ -4248,6 +4258,8 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: prop.alpacaAccountId !== undefined ? {
     equals: prop.alpacaAccountId 
   } : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
+  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -4295,6 +4307,12 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   closed: prop.closed !== undefined ? {
             set: prop.closed 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
            } : undefined,
   asset: prop.asset ? {
     upsert: {
@@ -7489,6 +7507,8 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -7575,6 +7595,8 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
+  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 
