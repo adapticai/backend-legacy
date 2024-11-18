@@ -325,7 +325,7 @@ enum AlpacaAccountType {
   LIVE
 }
 
-// Enumerates the possible actions that can be performed on a trade.
+// Enumerates the possible actions that can be performed on an action under a trade.
 enum ActionType {
   /// Initiates a purchase of an asset.
   BUY
@@ -385,7 +385,7 @@ enum TradeStatus {
   COMPLETED
 }
 
-// Defines the types of orders that can be placed in the market.
+// Defines the types of orders that can be placed.
 enum OrderType {
   /// Executes immediately at the best available current market price.
   MARKET
