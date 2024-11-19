@@ -40,7 +40,6 @@
     "@types/pluralize": "^0.0.33",
     "@types/ws": "^8.5.11",
     "nodemon": "^3.1.7",
-    "prisma": "^5.17.0",
     "ts-node": "^10.9.2",
     "typegraphql-prisma": "^0.27.2",
     "typescript": "^5.6.2"
@@ -49,6 +48,8 @@
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.10.4",
     "@prisma/client": "^5.17.0",
+    "@prisma/extension-accelerate": "^1.2.1",
+    "@prisma/extension-pulse": "^1.2.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "cross-fetch": "^4.0.0",
@@ -59,6 +60,7 @@
     "graphql-ws": "^5.16.0",
     "jsonwebtoken": "^9.0.2",
     "pluralize": "^8.0.0",
+    "prisma": "^5.22.0",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
     "ws": "^8.18.0"

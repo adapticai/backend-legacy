@@ -12,7 +12,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
-import prisma  from './prismaClient';
+import { prisma } from './prismaClient';
 
 const startServer = async () => {
   const schema = await buildSchema({
