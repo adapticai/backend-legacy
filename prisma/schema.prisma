@@ -3,8 +3,11 @@ generator client {
 }
 
 generator typegraphql {
-  provider = "typegraphql-prisma"
-  output   = "../src/generated/typegraphql-prisma"
+  provider               = "typegraphql-prisma"
+  output                 = "../src/generated/typegraphql-prisma"
+  emitTranspiledCode     = false
+  contextPrismaKey       = "prisma"
+  prismaClientImportPath = "../src/prismaClient.ts"
 }
 
 datasource db {
@@ -451,6 +454,9 @@ enum OrderStatus {
 
   /// The order has expired, and no further updates will occur for the order.
   EXPIRED
+
+  /// The order is waiting to be triggered, usually for stop or stop-limit orders.
+  HELD
 
   /// The order was replaced by another order, or was updated due to a market event such as corporate action.
   REPLACED
@@ -1330,7 +1336,7 @@ model Order {
   stopLossId String? @unique @db.Uuid
 
   /// Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
-  takeProfitId         String?                @db.Uuid
+  takeProfitId String? @db.Uuid
 
   @@map(name: "orders")
 }
