@@ -2,7 +2,7 @@
   
 import { Action as ActionType } from './generated/typegraphql-prisma/models/Action';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -181,8 +181,6 @@ id
      */
 
     async create(props: ActionType): Promise<ActionType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_ACTION = gql`
         mutation createOneAction($data: ActionCreateInput!) {
@@ -975,8 +973,6 @@ id
    */
   async createMany(props: ActionType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_ACTION = gql`
       mutation createManyAction($data: [ActionCreateManyInput!]!) {
         createManyAction(data: $data) {
@@ -1017,8 +1013,6 @@ id
    * @returns The updated Action or null.
    */
   async update(props: ActionType): Promise<ActionType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_ACTION = gql`
       mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
@@ -3975,8 +3969,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: ActionType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_ACTION = gql`
       mutation updateManyAction($data: [ActionCreateManyInput!]!) {
@@ -6937,8 +6929,6 @@ id
    */
   async delete(props: ActionType): Promise<ActionType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_ACTION = gql`
       mutation deleteOneAction($where: ActionWhereUniqueInput!) {
         deleteOneAction(where: $where) {
@@ -6974,8 +6964,6 @@ id
    * @returns The retrieved Action or null.
    */
   async get(props: ActionType): Promise<ActionType | null> {
-
-    const client = createApolloClient();
 
       const GET_ACTION = gql`
       query getAction($where: ActionWhereUniqueInput!) {
@@ -7018,8 +7006,6 @@ id
    */
   async getAll(): Promise<ActionType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_ACTION = gql`
       query getAllAction {
         actions {
@@ -7047,8 +7033,6 @@ id
    * @returns An array of found Action records or null.
    */
   async findMany(props: ActionType): Promise<ActionType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_ACTION = gql`
       query findManyAction($where: ActionWhereInput!) {

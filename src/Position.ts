@@ -2,7 +2,7 @@
   
 import { Position as PositionType } from './generated/typegraphql-prisma/models/Position';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -102,8 +102,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: PositionType): Promise<PositionType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_POSITION = gql`
         mutation createOnePosition($data: PositionCreateInput!) {
@@ -967,8 +965,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: PositionType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_POSITION = gql`
       mutation createManyPosition($data: [PositionCreateManyInput!]!) {
         createManyPosition(data: $data) {
@@ -1019,8 +1015,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated Position or null.
    */
   async update(props: PositionType): Promise<PositionType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_POSITION = gql`
       mutation updateOnePosition($data: PositionUpdateInput!, $where: PositionWhereUniqueInput!) {
@@ -4227,8 +4221,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: PositionType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_POSITION = gql`
       mutation updateManyPosition($data: [PositionCreateManyInput!]!) {
@@ -7439,8 +7431,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: PositionType): Promise<PositionType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_POSITION = gql`
       mutation deleteOnePosition($where: PositionWhereUniqueInput!) {
         deleteOnePosition(where: $where) {
@@ -7476,8 +7466,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved Position or null.
    */
   async get(props: PositionType): Promise<PositionType | null> {
-
-    const client = createApolloClient();
 
       const GET_POSITION = gql`
       query getPosition($where: PositionWhereUniqueInput!) {
@@ -7533,8 +7521,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<PositionType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_POSITION = gql`
       query getAllPosition {
         positions {
@@ -7562,8 +7548,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found Position records or null.
    */
   async findMany(props: PositionType): Promise<PositionType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_POSITION = gql`
       query findManyPosition($where: PositionWhereInput!) {

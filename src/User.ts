@@ -2,7 +2,7 @@
   
 import { User as UserType } from './generated/typegraphql-prisma/models/User';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -405,8 +405,6 @@ id
      */
 
     async create(props: UserType): Promise<UserType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_USER = gql`
         mutation createOneUser($data: UserCreateInput!) {
@@ -1007,8 +1005,6 @@ id
    */
   async createMany(props: UserType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_USER = gql`
       mutation createManyUser($data: [UserCreateManyInput!]!) {
         createManyUser(data: $data) {
@@ -1055,8 +1051,6 @@ id
    * @returns The updated User or null.
    */
   async update(props: UserType): Promise<UserType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_USER = gql`
       mutation updateOneUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
@@ -3238,8 +3232,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: UserType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_USER = gql`
       mutation updateManyUser($data: [UserCreateManyInput!]!) {
@@ -5425,8 +5417,6 @@ id
    */
   async delete(props: UserType): Promise<UserType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_USER = gql`
       mutation deleteOneUser($where: UserWhereUniqueInput!) {
         deleteOneUser(where: $where) {
@@ -5462,8 +5452,6 @@ id
    * @returns The retrieved User or null.
    */
   async get(props: UserType): Promise<UserType | null> {
-
-    const client = createApolloClient();
 
       const GET_USER = gql`
       query getUser($where: UserWhereUniqueInput!) {
@@ -5514,8 +5502,6 @@ id
    */
   async getAll(): Promise<UserType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_USER = gql`
       query getAllUser {
         users {
@@ -5543,8 +5529,6 @@ id
    * @returns An array of found User records or null.
    */
   async findMany(props: UserType): Promise<UserType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_USER = gql`
       query findManyUser($where: UserWhereInput!) {

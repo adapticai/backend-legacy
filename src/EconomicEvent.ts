@@ -2,7 +2,7 @@
   
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -30,8 +30,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: EconomicEventType): Promise<EconomicEventType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_ECONOMICEVENT = gql`
         mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
@@ -74,8 +72,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_ECONOMICEVENT = gql`
       mutation createManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
         createManyEconomicEvent(data: $data) {
@@ -114,8 +110,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated EconomicEvent or null.
    */
   async update(props: EconomicEventType): Promise<EconomicEventType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
@@ -183,8 +177,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_ECONOMICEVENT = gql`
       mutation updateManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
@@ -256,8 +248,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: EconomicEventType): Promise<EconomicEventType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
@@ -293,8 +283,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved EconomicEvent or null.
    */
   async get(props: EconomicEventType): Promise<EconomicEventType | null> {
-
-    const client = createApolloClient();
 
       const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
@@ -338,8 +326,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<EconomicEventType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
         economicEvents {
@@ -367,8 +353,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found EconomicEvent records or null.
    */
   async findMany(props: EconomicEventType): Promise<EconomicEventType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {

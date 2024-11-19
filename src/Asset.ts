@@ -2,7 +2,7 @@
   
 import { Asset as AssetType } from './generated/typegraphql-prisma/models/Asset';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -247,8 +247,6 @@ id
      */
 
     async create(props: AssetType): Promise<AssetType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_ASSET = gql`
         mutation createOneAsset($data: AssetCreateInput!) {
@@ -1119,8 +1117,6 @@ id
    */
   async createMany(props: AssetType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_ASSET = gql`
       mutation createManyAsset($data: [AssetCreateManyInput!]!) {
         createManyAsset(data: $data) {
@@ -1210,8 +1206,6 @@ id
    * @returns The updated Asset or null.
    */
   async update(props: AssetType): Promise<AssetType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_ASSET = gql`
       mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
@@ -4241,8 +4235,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: AssetType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_ASSET = gql`
       mutation updateManyAsset($data: [AssetCreateManyInput!]!) {
@@ -7276,8 +7268,6 @@ id
    */
   async delete(props: AssetType): Promise<AssetType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_ASSET = gql`
       mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
         deleteOneAsset(where: $where) {
@@ -7313,8 +7303,6 @@ id
    * @returns The retrieved Asset or null.
    */
   async get(props: AssetType): Promise<AssetType | null> {
-
-    const client = createApolloClient();
 
       const GET_ASSET = gql`
       query getAsset($where: AssetWhereUniqueInput!) {
@@ -7405,8 +7393,6 @@ id
    */
   async getAll(): Promise<AssetType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_ASSET = gql`
       query getAllAsset {
         assets {
@@ -7434,8 +7420,6 @@ id
    * @returns An array of found Asset records or null.
    */
   async findMany(props: AssetType): Promise<AssetType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {

@@ -2,7 +2,7 @@
   
 import { ScheduledOptionOrder as ScheduledOptionOrderType } from './generated/typegraphql-prisma/models/ScheduledOptionOrder';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -26,8 +26,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: ScheduledOptionOrderType): Promise<ScheduledOptionOrderType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_SCHEDULEDOPTIONORDER = gql`
         mutation createOneScheduledOptionOrder($data: ScheduledOptionOrderCreateInput!) {
@@ -68,8 +66,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: ScheduledOptionOrderType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_SCHEDULEDOPTIONORDER = gql`
       mutation createManyScheduledOptionOrder($data: [ScheduledOptionOrderCreateManyInput!]!) {
         createManyScheduledOptionOrder(data: $data) {
@@ -106,8 +102,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated ScheduledOptionOrder or null.
    */
   async update(props: ScheduledOptionOrderType): Promise<ScheduledOptionOrderType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_SCHEDULEDOPTIONORDER = gql`
       mutation updateOneScheduledOptionOrder($data: ScheduledOptionOrderUpdateInput!, $where: ScheduledOptionOrderWhereUniqueInput!) {
@@ -156,8 +150,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: ScheduledOptionOrderType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_SCHEDULEDOPTIONORDER = gql`
       mutation updateManyScheduledOptionOrder($data: [ScheduledOptionOrderCreateManyInput!]!) {
@@ -210,8 +202,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: ScheduledOptionOrderType): Promise<ScheduledOptionOrderType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_SCHEDULEDOPTIONORDER = gql`
       mutation deleteOneScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!) {
         deleteOneScheduledOptionOrder(where: $where) {
@@ -248,8 +238,6 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: ScheduledOptionOrderType): Promise<ScheduledOptionOrderType | null> {
 
-    const client = createApolloClient();
-
       const GET_SCHEDULEDOPTIONORDER = gql`
       query getScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!) {
         getScheduledOptionOrder(where: $where) {
@@ -285,8 +273,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<ScheduledOptionOrderType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_SCHEDULEDOPTIONORDER = gql`
       query getAllScheduledOptionOrder {
         scheduledOptionOrders {
@@ -314,8 +300,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found ScheduledOptionOrder records or null.
    */
   async findMany(props: ScheduledOptionOrderType): Promise<ScheduledOptionOrderType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_SCHEDULEDOPTIONORDER = gql`
       query findManyScheduledOptionOrder($where: ScheduledOptionOrderWhereInput!) {

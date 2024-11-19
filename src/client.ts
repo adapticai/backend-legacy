@@ -75,3 +75,7 @@ export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObjec
     cache: new InMemoryCache(),
   });
 }
+
+// initialise apollo client
+
+export const client = createApolloClient();

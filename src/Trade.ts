@@ -2,7 +2,7 @@
   
 import { Trade as TradeType } from './generated/typegraphql-prisma/models/Trade';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -274,8 +274,6 @@ id
      */
 
     async create(props: TradeType): Promise<TradeType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_TRADE = gql`
         mutation createOneTrade($data: TradeCreateInput!) {
@@ -1299,8 +1297,6 @@ id
    */
   async createMany(props: TradeType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_TRADE = gql`
       mutation createManyTrade($data: [TradeCreateManyInput!]!) {
         createManyTrade(data: $data) {
@@ -1348,8 +1344,6 @@ id
    * @returns The updated Trade or null.
    */
   async update(props: TradeType): Promise<TradeType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_TRADE = gql`
       mutation updateOneTrade($data: TradeUpdateInput!, $where: TradeWhereUniqueInput!) {
@@ -5237,8 +5231,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: TradeType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_TRADE = gql`
       mutation updateManyTrade($data: [TradeCreateManyInput!]!) {
@@ -9130,8 +9122,6 @@ id
    */
   async delete(props: TradeType): Promise<TradeType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_TRADE = gql`
       mutation deleteOneTrade($where: TradeWhereUniqueInput!) {
         deleteOneTrade(where: $where) {
@@ -9167,8 +9157,6 @@ id
    * @returns The retrieved Trade or null.
    */
   async get(props: TradeType): Promise<TradeType | null> {
-
-    const client = createApolloClient();
 
       const GET_TRADE = gql`
       query getTrade($where: TradeWhereUniqueInput!) {
@@ -9223,8 +9211,6 @@ id
    */
   async getAll(): Promise<TradeType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_TRADE = gql`
       query getAllTrade {
         trades {
@@ -9252,8 +9238,6 @@ id
    * @returns An array of found Trade records or null.
    */
   async findMany(props: TradeType): Promise<TradeType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_TRADE = gql`
       query findManyTrade($where: TradeWhereInput!) {

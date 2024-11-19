@@ -2,7 +2,7 @@
   
 import { Authenticator as AuthenticatorType } from './generated/typegraphql-prisma/models/Authenticator';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -200,8 +200,6 @@ id
      */
 
     async create(props: AuthenticatorType): Promise<AuthenticatorType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_AUTHENTICATOR = gql`
         mutation createOneAuthenticator($data: AuthenticatorCreateInput!) {
@@ -512,8 +510,6 @@ id
    */
   async createMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_AUTHENTICATOR = gql`
       mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
         createManyAuthenticator(data: $data) {
@@ -552,8 +548,6 @@ id
    * @returns The updated Authenticator or null.
    */
   async update(props: AuthenticatorType): Promise<AuthenticatorType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_AUTHENTICATOR = gql`
       mutation updateOneAuthenticator($data: AuthenticatorUpdateInput!, $where: AuthenticatorWhereUniqueInput!) {
@@ -1543,8 +1537,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_AUTHENTICATOR = gql`
       mutation updateManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
@@ -2538,8 +2530,6 @@ id
    */
   async delete(props: AuthenticatorType): Promise<AuthenticatorType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_AUTHENTICATOR = gql`
       mutation deleteOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         deleteOneAuthenticator(where: $where) {
@@ -2575,8 +2565,6 @@ id
    * @returns The retrieved Authenticator or null.
    */
   async get(props: AuthenticatorType): Promise<AuthenticatorType | null> {
-
-    const client = createApolloClient();
 
       const GET_AUTHENTICATOR = gql`
       query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
@@ -2620,8 +2608,6 @@ id
    */
   async getAll(): Promise<AuthenticatorType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_AUTHENTICATOR = gql`
       query getAllAuthenticator {
         authenticators {
@@ -2649,8 +2635,6 @@ id
    * @returns An array of found Authenticator records or null.
    */
   async findMany(props: AuthenticatorType): Promise<AuthenticatorType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {

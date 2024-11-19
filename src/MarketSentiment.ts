@@ -2,7 +2,7 @@
   
 import { MarketSentiment as MarketSentimentType } from './generated/typegraphql-prisma/models/MarketSentiment';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -29,8 +29,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: MarketSentimentType): Promise<MarketSentimentType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_MARKETSENTIMENT = gql`
         mutation createOneMarketSentiment($data: MarketSentimentCreateInput!) {
@@ -72,8 +70,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: MarketSentimentType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_MARKETSENTIMENT = gql`
       mutation createManyMarketSentiment($data: [MarketSentimentCreateManyInput!]!) {
         createManyMarketSentiment(data: $data) {
@@ -111,8 +107,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated MarketSentiment or null.
    */
   async update(props: MarketSentimentType): Promise<MarketSentimentType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_MARKETSENTIMENT = gql`
       mutation updateOneMarketSentiment($data: MarketSentimentUpdateInput!, $where: MarketSentimentWhereUniqueInput!) {
@@ -174,8 +168,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: MarketSentimentType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_MARKETSENTIMENT = gql`
       mutation updateManyMarketSentiment($data: [MarketSentimentCreateManyInput!]!) {
@@ -241,8 +233,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: MarketSentimentType): Promise<MarketSentimentType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_MARKETSENTIMENT = gql`
       mutation deleteOneMarketSentiment($where: MarketSentimentWhereUniqueInput!) {
         deleteOneMarketSentiment(where: $where) {
@@ -278,8 +268,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved MarketSentiment or null.
    */
   async get(props: MarketSentimentType): Promise<MarketSentimentType | null> {
-
-    const client = createApolloClient();
 
       const GET_MARKETSENTIMENT = gql`
       query getMarketSentiment($where: MarketSentimentWhereUniqueInput!) {
@@ -320,8 +308,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<MarketSentimentType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_MARKETSENTIMENT = gql`
       query getAllMarketSentiment {
         marketSentiments {
@@ -349,8 +335,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found MarketSentiment records or null.
    */
   async findMany(props: MarketSentimentType): Promise<MarketSentimentType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_MARKETSENTIMENT = gql`
       query findManyMarketSentiment($where: MarketSentimentWhereInput!) {

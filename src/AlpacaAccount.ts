@@ -2,7 +2,7 @@
   
 import { AlpacaAccount as AlpacaAccountType } from './generated/typegraphql-prisma/models/AlpacaAccount';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -471,8 +471,6 @@ id
      */
 
     async create(props: AlpacaAccountType): Promise<AlpacaAccountType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_ALPACAACCOUNT = gql`
         mutation createOneAlpacaAccount($data: AlpacaAccountCreateInput!) {
@@ -1454,8 +1452,6 @@ id
    */
   async createMany(props: AlpacaAccountType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_ALPACAACCOUNT = gql`
       mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
         createManyAlpacaAccount(data: $data) {
@@ -1500,8 +1496,6 @@ id
    * @returns The updated AlpacaAccount or null.
    */
   async update(props: AlpacaAccountType): Promise<AlpacaAccountType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_ALPACAACCOUNT = gql`
       mutation updateOneAlpacaAccount($data: AlpacaAccountUpdateInput!, $where: AlpacaAccountWhereUniqueInput!) {
@@ -4953,8 +4947,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: AlpacaAccountType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_ALPACAACCOUNT = gql`
       mutation updateManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
@@ -8410,8 +8402,6 @@ id
    */
   async delete(props: AlpacaAccountType): Promise<AlpacaAccountType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_ALPACAACCOUNT = gql`
       mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
         deleteOneAlpacaAccount(where: $where) {
@@ -8447,8 +8437,6 @@ id
    * @returns The retrieved AlpacaAccount or null.
    */
   async get(props: AlpacaAccountType): Promise<AlpacaAccountType | null> {
-
-    const client = createApolloClient();
 
       const GET_ALPACAACCOUNT = gql`
       query getAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
@@ -8497,8 +8485,6 @@ id
    */
   async getAll(): Promise<AlpacaAccountType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_ALPACAACCOUNT = gql`
       query getAllAlpacaAccount {
         alpacaAccounts {
@@ -8526,8 +8512,6 @@ id
    * @returns An array of found AlpacaAccount records or null.
    */
   async findMany(props: AlpacaAccountType): Promise<AlpacaAccountType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_ALPACAACCOUNT = gql`
       query findManyAlpacaAccount($where: AlpacaAccountWhereInput!) {

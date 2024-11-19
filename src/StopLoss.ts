@@ -2,7 +2,7 @@
   
 import { StopLoss as StopLossType } from './generated/typegraphql-prisma/models/StopLoss';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -29,8 +29,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: StopLossType): Promise<StopLossType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_STOPLOSS = gql`
         mutation createOneStopLoss($data: StopLossCreateInput!) {
@@ -490,8 +488,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: StopLossType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_STOPLOSS = gql`
       mutation createManyStopLoss($data: [StopLossCreateManyInput!]!) {
         createManyStopLoss(data: $data) {
@@ -529,8 +525,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated StopLoss or null.
    */
   async update(props: StopLossType): Promise<StopLossType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_STOPLOSS = gql`
       mutation updateOneStopLoss($data: StopLossUpdateInput!, $where: StopLossWhereUniqueInput!) {
@@ -2159,8 +2153,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: StopLossType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_STOPLOSS = gql`
       mutation updateManyStopLoss($data: [StopLossCreateManyInput!]!) {
@@ -3793,8 +3785,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: StopLossType): Promise<StopLossType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_STOPLOSS = gql`
       mutation deleteOneStopLoss($where: StopLossWhereUniqueInput!) {
         deleteOneStopLoss(where: $where) {
@@ -3830,8 +3820,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved StopLoss or null.
    */
   async get(props: StopLossType): Promise<StopLossType | null> {
-
-    const client = createApolloClient();
 
       const GET_STOPLOSS = gql`
       query getStopLoss($where: StopLossWhereUniqueInput!) {
@@ -3870,8 +3858,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<StopLossType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_STOPLOSS = gql`
       query getAllStopLoss {
         stopLosses {
@@ -3899,8 +3885,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found StopLoss records or null.
    */
   async findMany(props: StopLossType): Promise<StopLossType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_STOPLOSS = gql`
       query findManyStopLoss($where: StopLossWhereInput!) {

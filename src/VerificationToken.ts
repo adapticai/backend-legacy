@@ -2,7 +2,7 @@
   
 import { VerificationToken as VerificationTokenType } from './generated/typegraphql-prisma/models/VerificationToken';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -27,8 +27,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: VerificationTokenType): Promise<VerificationTokenType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_VERIFICATIONTOKEN = gql`
         mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
@@ -70,8 +68,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_VERIFICATIONTOKEN = gql`
       mutation createManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
         createManyVerificationToken(data: $data) {
@@ -109,8 +105,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated VerificationToken or null.
    */
   async update(props: VerificationTokenType): Promise<VerificationTokenType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
@@ -164,8 +158,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_VERIFICATIONTOKEN = gql`
       mutation updateManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
@@ -223,8 +215,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: VerificationTokenType): Promise<VerificationTokenType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
@@ -260,8 +250,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved VerificationToken or null.
    */
   async get(props: VerificationTokenType): Promise<VerificationTokenType | null> {
-
-    const client = createApolloClient();
 
       const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
@@ -300,8 +288,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<VerificationTokenType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
@@ -329,8 +315,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found VerificationToken records or null.
    */
   async findMany(props: VerificationTokenType): Promise<VerificationTokenType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {

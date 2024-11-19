@@ -2,7 +2,7 @@
   
 import { NewsArticle as NewsArticleType } from './generated/typegraphql-prisma/models/NewsArticle';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -108,8 +108,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: NewsArticleType): Promise<NewsArticleType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_NEWSARTICLE = gql`
         mutation createOneNewsArticle($data: NewsArticleCreateInput!) {
@@ -370,8 +368,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_NEWSARTICLE = gql`
       mutation createManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
         createManyNewsArticle(data: $data) {
@@ -419,8 +415,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated NewsArticle or null.
    */
   async update(props: NewsArticleType): Promise<NewsArticleType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_NEWSARTICLE = gql`
       mutation updateOneNewsArticle($data: NewsArticleUpdateInput!, $where: NewsArticleWhereUniqueInput!) {
@@ -1357,8 +1351,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_NEWSARTICLE = gql`
       mutation updateManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
@@ -2299,8 +2291,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: NewsArticleType): Promise<NewsArticleType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_NEWSARTICLE = gql`
       mutation deleteOneNewsArticle($where: NewsArticleWhereUniqueInput!) {
         deleteOneNewsArticle(where: $where) {
@@ -2336,8 +2326,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved NewsArticle or null.
    */
   async get(props: NewsArticleType): Promise<NewsArticleType | null> {
-
-    const client = createApolloClient();
 
       const GET_NEWSARTICLE = gql`
       query getNewsArticle($where: NewsArticleWhereUniqueInput!) {
@@ -2390,8 +2378,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<NewsArticleType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_NEWSARTICLE = gql`
       query getAllNewsArticle {
         newsArticles {
@@ -2419,8 +2405,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found NewsArticle records or null.
    */
   async findMany(props: NewsArticleType): Promise<NewsArticleType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_NEWSARTICLE = gql`
       query findManyNewsArticle($where: NewsArticleWhereInput!) {

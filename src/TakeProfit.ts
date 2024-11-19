@@ -2,7 +2,7 @@
   
 import { TakeProfit as TakeProfitType } from './generated/typegraphql-prisma/models/TakeProfit';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -29,8 +29,6 @@ import { removeUndefinedProps } from './utils';
      */
 
     async create(props: TakeProfitType): Promise<TakeProfitType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_TAKEPROFIT = gql`
         mutation createOneTakeProfit($data: TakeProfitCreateInput!) {
@@ -490,8 +488,6 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: TakeProfitType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_TAKEPROFIT = gql`
       mutation createManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
         createManyTakeProfit(data: $data) {
@@ -529,8 +525,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated TakeProfit or null.
    */
   async update(props: TakeProfitType): Promise<TakeProfitType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_TAKEPROFIT = gql`
       mutation updateOneTakeProfit($data: TakeProfitUpdateInput!, $where: TakeProfitWhereUniqueInput!) {
@@ -2159,8 +2153,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The count of created records or null.
    */
   async updateMany(props: TakeProfitType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_TAKEPROFIT = gql`
       mutation updateManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
@@ -3793,8 +3785,6 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: TakeProfitType): Promise<TakeProfitType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_TAKEPROFIT = gql`
       mutation deleteOneTakeProfit($where: TakeProfitWhereUniqueInput!) {
         deleteOneTakeProfit(where: $where) {
@@ -3830,8 +3820,6 @@ import { removeUndefinedProps } from './utils';
    * @returns The retrieved TakeProfit or null.
    */
   async get(props: TakeProfitType): Promise<TakeProfitType | null> {
-
-    const client = createApolloClient();
 
       const GET_TAKEPROFIT = gql`
       query getTakeProfit($where: TakeProfitWhereUniqueInput!) {
@@ -3870,8 +3858,6 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(): Promise<TakeProfitType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_TAKEPROFIT = gql`
       query getAllTakeProfit {
         takeProfits {
@@ -3899,8 +3885,6 @@ import { removeUndefinedProps } from './utils';
    * @returns An array of found TakeProfit records or null.
    */
   async findMany(props: TakeProfitType): Promise<TakeProfitType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_TAKEPROFIT = gql`
       query findManyTakeProfit($where: TakeProfitWhereInput!) {

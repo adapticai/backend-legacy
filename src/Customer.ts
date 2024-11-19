@@ -2,7 +2,7 @@
   
 import { Customer as CustomerType } from './generated/typegraphql-prisma/models/Customer';
 import { ApolloError, gql } from '@apollo/client';
-import { createApolloClient } from './client';
+import { client } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -200,8 +200,6 @@ id
      */
 
     async create(props: CustomerType): Promise<CustomerType> {
-
-    const client = createApolloClient();
 
     const CREATE_ONE_CUSTOMER = gql`
         mutation createOneCustomer($data: CustomerCreateInput!) {
@@ -504,8 +502,6 @@ id
    */
   async createMany(props: CustomerType[]): Promise<{ count: number } | null> {
 
-    const client = createApolloClient();
-
       const CREATE_MANY_CUSTOMER = gql`
       mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
         createManyCustomer(data: $data) {
@@ -547,8 +543,6 @@ id
    * @returns The updated Customer or null.
    */
   async update(props: CustomerType): Promise<CustomerType> {
-
-    const client = createApolloClient();
 
       const UPDATE_ONE_CUSTOMER = gql`
       mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
@@ -1511,8 +1505,6 @@ id
    * @returns The count of created records or null.
    */
   async updateMany(props: CustomerType[]): Promise<{ count: number } | null> {
-
-    const client = createApolloClient();
 
       const UPDATE_MANY_CUSTOMER = gql`
       mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
@@ -2479,8 +2471,6 @@ id
    */
   async delete(props: CustomerType): Promise<CustomerType> {
 
-    const client = createApolloClient();
-
       const DELETE_ONE_CUSTOMER = gql`
       mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
         deleteOneCustomer(where: $where) {
@@ -2516,8 +2506,6 @@ id
    * @returns The retrieved Customer or null.
    */
   async get(props: CustomerType): Promise<CustomerType | null> {
-
-    const client = createApolloClient();
 
       const GET_CUSTOMER = gql`
       query getCustomer($where: CustomerWhereUniqueInput!) {
@@ -2568,8 +2556,6 @@ id
    */
   async getAll(): Promise<CustomerType[] | null> {
 
-    const client = createApolloClient();
-
       const GET_ALL_CUSTOMER = gql`
       query getAllCustomer {
         customers {
@@ -2597,8 +2583,6 @@ id
    * @returns An array of found Customer records or null.
    */
   async findMany(props: CustomerType): Promise<CustomerType[] | null> {
-
-    const client = createApolloClient();
 
       const FIND_MANY_CUSTOMER = gql`
       query findManyCustomer($where: CustomerWhereInput!) {
