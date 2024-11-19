@@ -1126,16 +1126,16 @@ model Asset {
   /// Timestamp when the asset was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of trades involving this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['orders', 'positions', 'asset', 'alpacaAccount']
+  /// List of trades involving this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   trades Trade[]
 
-  /// List of orders involving this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['trades', 'positions', 'asset', 'action', 'alpacaAccount']
+  /// List of orders involving this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   orders Order[]
 
-  /// List of positions involving this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset', 'alpacaAccount']
+  /// List of positions involving this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   positions Position[]
 
-  /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset']
+  /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   newsMentions NewsArticleAssetSentiment[]
 
   @@map(name: "assets")
