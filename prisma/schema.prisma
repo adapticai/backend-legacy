@@ -1226,7 +1226,7 @@ model Action {
   /// Fees associated with the action.
   fee Float?
 
-  /// The trade this action is part of. TYPESTRING.SKIP=true GQL.EXCLUDE=['actions', 'orders', 'alpacaAccount', 'asset']
+  /// The trade this action is part of. TYPESTRING.SKIP=true GQL.SKIP=true
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
   /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","notional","side","type","orderClass","timeInForce","limitPrice","stopPrice","stopLoss","takeProfit","trailPrice","trailPercent","extendedHours","status","submittedAt","strikePrice","expirationDate","optionType"]

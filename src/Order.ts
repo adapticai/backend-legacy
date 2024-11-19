@@ -144,39 +144,6 @@ import { removeUndefinedProps } from './utils';
     bidPrice
     createdAt
     updatedAt
-    trades {
-      id
-      alpacaAccountId
-      assetId
-      qty
-      price
-      total
-      optionType
-      signal
-      strategy
-      analysis
-      summary
-      confidence
-      timestamp
-      createdAt
-      updatedAt
-      status
-      actions {
-        id
-        sequence
-        tradeId
-        type
-        note
-        status
-        fee
-        order {
-id
-        }
-      }
-    }
-    orders {
-id
-    }
   }
   fee
   strikePrice

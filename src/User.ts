@@ -159,9 +159,6 @@ import { removeUndefinedProps } from './utils';
         bidPrice
         createdAt
         updatedAt
-        newsMentions {
-id
-        }
       }
       actions {
         id
@@ -286,12 +283,6 @@ id
         bidPrice
         createdAt
         updatedAt
-        trades {
-id
-        }
-        orders {
-id
-        }
       }
       fee
       strikePrice

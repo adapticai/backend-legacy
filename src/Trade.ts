@@ -110,33 +110,6 @@ import { removeUndefinedProps } from './utils';
     bidPrice
     createdAt
     updatedAt
-    newsMentions {
-      id
-      assetId
-      newsArticleId
-      url
-      news {
-        id
-        title
-        content
-        source
-        sourceDomain
-        url
-        sentiment
-        authors
-        summary
-        bannerImage
-        timePublished
-        category
-        topics
-        logo
-        createdAt
-        updatedAt
-      }
-      relevancyScore
-      sentimentScore
-      sentimentLabel
-    }
   }
   actions {
     id
@@ -247,12 +220,6 @@ import { removeUndefinedProps } from './utils';
         bidPrice
         createdAt
         updatedAt
-        trades {
-id
-        }
-        orders {
-id
-        }
       }
       fee
       strikePrice

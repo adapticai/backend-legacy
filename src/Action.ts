@@ -18,24 +18,6 @@ import { removeUndefinedProps } from './utils';
   note
   status
   fee
-  trade {
-    id
-    alpacaAccountId
-    assetId
-    qty
-    price
-    total
-    optionType
-    signal
-    strategy
-    analysis
-    summary
-    confidence
-    timestamp
-    createdAt
-    updatedAt
-    status
-  }
   order {
     id
     clientOrderId
@@ -137,30 +119,6 @@ import { removeUndefinedProps } from './utils';
       bidPrice
       createdAt
       updatedAt
-      trades {
-        id
-        alpacaAccountId
-        assetId
-        qty
-        price
-        total
-        optionType
-        signal
-        strategy
-        analysis
-        summary
-        confidence
-        timestamp
-        createdAt
-        updatedAt
-        status
-        actions {
-id
-        }
-      }
-      orders {
-id
-      }
     }
     fee
     strikePrice
