@@ -371,6 +371,9 @@ enum ActionStatus {
 
   /// The trade action has been fully completed.
   COMPLETED
+
+  /// The trade action have been canceled.
+  CANCELED
 }
 
 // Indicates the current status of a trade.
@@ -386,6 +389,9 @@ enum TradeStatus {
 
   /// The trade has been fully completed.
   COMPLETED
+
+  /// The trade has been canceled.
+  CANCELED
 }
 
 // Defines the types of orders that can be placed.
