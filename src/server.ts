@@ -127,3 +127,9 @@ process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
   // Application specific logging, throwing an error, or other logic here
 });
+
+process.on('SIGINT', async () => {
+  await prisma.$disconnect();
+  process.exit(0);
+});
+

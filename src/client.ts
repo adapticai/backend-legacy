@@ -8,17 +8,10 @@ import { setContext } from "@apollo/client/link/context/context.cjs";
 import { getToken } from "./getToken";
 import { onError } from "@apollo/client/link/error/error.cjs";
 import fetch from 'cross-fetch';
-import { Agent } from 'https';
-import { Agent as AgentHTTP } from 'http';
 
 export type { NormalizedCacheObject, ApolloClient };
 
 const httpUrl = process.env.BACKEND_HTTPS_URL || process.env.NODE_ENV === "production" ? "https://api.adaptic.ai/graphql" : "http://localhost:4000/graphql";
-
-const httpAgent = new AgentHTTP({ keepAlive: false });
-const httpsAgent = new Agent({ keepAlive: false });
-
-const agent = httpUrl.startsWith("https") ? httpsAgent : httpAgent;
 
 /**
  * Function to get the authentication token using the custom getToken implementation
@@ -50,14 +43,7 @@ async function getAuthToken(req?: any): Promise<string | null> {
  * Function to create a new Apollo Client instance
  */
 export function createApolloClient(req?: any): ApolloClient<NormalizedCacheObject> {
-
-  const httpLink = new HttpLink({
-    uri: httpUrl,
-    fetch,
-    fetchOptions: {
-      agent: agent,
-    },
-  });
+  const httpLink = new HttpLink({ uri: httpUrl, fetch });
 
   const authLink = setContext(async (_, { headers }) => {
     const token = await getAuthToken(req);
