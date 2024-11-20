@@ -1267,15 +1267,16 @@ model Order {
   /// Time in force for the order (day, gtc, opg, cls, ioc, fok).
   timeInForce TimeInForce @default(GTC)
 
-  /// Must be a positive number and required for LIMIT or STOP_LIMIT orders. For take_profit, must be ≥ base_price + 0.01.
+  /// Must be a positive number and required for LIMIT or STOP_LIMIT orders. It must be ≥ basePrice + 0.01, and should always be greater than stopPrice.
   limitPrice Float?
 
-  /// Must be a positive number and required for STOP or STOP_LIMIT orders. It must be ≤ basePrice - 0.01.
+  /// Must be a positive number and required for STOP or STOP_LIMIT orders. It must be ≤ basePrice - 0.01, and should always be less than limitPrice.
   stopPrice Float?
+
   /// Stop loss object required for bracket orders.
   stopLoss  StopLoss? @relation
 
-  /// Take profit object required for bracket orders.
+  /// Take profit object required for bracket orders. For take_profit, must be ≥ base_price + 0.01.
   takeProfit TakeProfit? @relation
 
   /// Must be a positive number and required for TRAILING_STOP orders.
@@ -1352,10 +1353,10 @@ model StopLoss {
   /// Unique identifier for the stop loss order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Must be a positive number. Price must be at a threshold to limit losses when the asset’s market price moves unfavourably beyond a specified point. For SELL orders: stopPrice ≤ market price (must be ≤ base_price - 0.01). For BUY orders: stopPrice ≥ market price (must be ≥ base_price + 0.01).
+  /// Must be a positive number. Price must be at a threshold to limit losses when the asset’s market price moves unfavourably beyond a specified point. It must be ≤ basePrice - 0.01, and should always be less than limitPrice.
   stopPrice Float?
 
-  /// Must be a positive number and required if parent Order's type is STOP_LIMIT.
+  /// Must be a positive number and required if parent Order's type is STOP_LIMIT. It must be ≥ basePrice + 0.01, and should always be greater than stopPrice.
   limitPrice Float?
 
   /// Timestamp when the stop loss order was created. TYPESTRING.SKIP=true
@@ -1378,10 +1379,10 @@ model TakeProfit {
   /// Unique identifier for the take profit order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Must be a positive number and ≥ base_price + 0.01.
+  /// Must be a positive number and ≥ base_price + 0.01, and is always greater than stopPrice. Price must be at a threshold to lock in profits when the asset’s market price moves favourably beyond a specified point.
   limitPrice Float?
 
-  /// Typically not used in standard take profit orders. If used, must comply with Alpaca's specific requirements.
+  /// Must be a positive number and required if parent Order's type is STOP_LIMIT. It must be ≤ basePrice - 0.01, and should always be less than limitPrice.
   stopPrice Float?
 
   /// Timestamp when the take profit order was created. TYPESTRING.SKIP=true
