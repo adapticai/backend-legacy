@@ -118,18 +118,13 @@ const generateTypeString = (
     const { meta: metaTags, description } = parseMetaTags(field.documentation);
 
     // Check if the field should be processed based on our criteria
-    const shouldProcess = shouldProcessField(field);
+    const shouldProcess = shouldProcessField(field, metaTags);
 
     // Skip if explicitly marked to skip and not marked for processing
     if (metaTags['TYPESTRING.SKIP'] === true && !shouldProcess) continue;
 
     // Get included fields if specified
     let includeFields = metaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
-
-    // If field should be processed, ignore includeFields restriction
-    if (shouldProcess) {
-      includeFields = undefined;
-    }
 
     const isOptional = field.isRequired ? '' : '?';
     const isArray = field.isList ? '[]' : '';
@@ -168,14 +163,15 @@ const generateTypeString = (
           let nestedType: string;
 
           // If includeFields is specified and field shouldn't be fully processed
-          if (includeFields && includeFields.length > 0 && !shouldProcess) {
+          if (includeFields && includeFields.length > 0) {
             nestedType = `{\n${includeFields
               .map((f) => {
                 const nestedField = relatedModel.fields.find((nf) => nf.name === f);
                 if (!nestedField) return '';
 
-                // For nested objects within included fields, check if they should be processed
-                if (shouldProcessField(nestedField)) {
+                const { meta: nestedMetaTags, description: nestedDescription } = parseMetaTags(nestedField.documentation);
+
+                if (shouldProcessField(nestedField, nestedMetaTags)) {
                   const nestedObjectModel = models.get(nestedField.type);
                   if (nestedObjectModel) {
                     const nestedResult = generateTypeString(
@@ -230,13 +226,22 @@ const generateTypeString = (
 };
 
 // Helper function to determine if a field should be processed
-const shouldProcessField = (field: DMMF.Field): boolean => {
-  // Process if it's an object type and not explicitly skipped
-  if (field.kind === 'object' && !field.documentation?.includes('TYPESTRING.SKIP')) {
+const shouldProcessField = (
+  field: DMMF.Field,
+  metaTags: { [key: string]: any }
+): boolean => {
+  if (metaTags['TYPESTRING.SKIP'] === true) {
+    return false;
+  }
+  if (metaTags['TYPESTRING.INCLUDE']) {
+    return false;
+  }
+  if (field.kind === 'object') {
     return true;
   }
   return false;
 };
+
 const main = async () => {
   try {
     await fs.mkdir(OUTPUT_DIR, { recursive: true });

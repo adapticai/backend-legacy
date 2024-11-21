@@ -1197,7 +1197,7 @@ model Trade {
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status","fee","order"] GQL.EXCLUDE=['trade']
+  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status"] GQL.EXCLUDE=['trade']
   actions Action[]
 
   @@map(name: "trades")
@@ -1240,7 +1240,7 @@ model Order {
   /// Unique identifier for the order. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Client-supplied unique identifier for the order (from Alpaca). Only include this, if the corresponding action for this order is to either cancel or replace an order.
+  /// Optional client-supplied unique identifier for the order. If not provided, Alpaca will auto-generate one. Required when canceling or replacing an existing order.
   clientOrderId String? @unique
 
   /// Reference to the Alpaca account used for the order. TYPESTRING.SKIP=true
@@ -1249,43 +1249,43 @@ model Order {
   /// Reference to the asset being ordered. TYPESTRING.SKIP=true
   assetId String @db.Uuid
 
-  /// Quantity of the asset to be ordered.
+  /// Quantity of the asset to be ordered. Required if 'notional' is not provided. For 'MARKET' orders with 'timeInForce' set to 'DAY', 'qty' can be fractional.
   qty Float?
 
-  /// Notional value of the order. Optional, used if qty is not provided. But importantly, either qty or notional must be provided.
+  /// Notional dollar amount to trade. Required if 'qty' is not provided. Only valid for 'MARKET' orders with 'timeInForce' set to 'DAY'.
   notional Float?
 
-  /// Side of the order (BUY or SELL).
+  /// Side of the order ('BUY' or 'SELL').
   side OrderSide @default(BUY)
 
-  /// Type of order (market, limit, stop, stop_limit, trailing_stop).
+  /// Type of order ('MARKET', 'LIMIT', 'STOP', 'STOP_LIMIT', 'TRAILING_STOP').
   type OrderType @default(MARKET)
 
-  /// Order class for advanced order types (simple, bracket, oco, oso).
+  /// Order class for advanced order types. Options are 'SIMPLE', 'BRACKET', 'OCO', 'OTO'. Default is 'SIMPLE'. For 'BRACKET' orders, 'takeProfit' and 'stopLoss' are required.
   orderClass OrderClass @default(SIMPLE)
 
-  /// Time in force for the order (day, gtc, opg, cls, ioc, fok).
+  /// Time in force for the order ('DAY', 'GTC', 'OPG', 'CLS', 'IOC', 'FOK').
   timeInForce TimeInForce @default(GTC)
 
-  /// Must be a positive number and required for LIMIT or STOP_LIMIT orders. It must be ≥ basePrice + 0.01, and should always be greater than stopPrice.
+  /// Limit price of the order. Required for 'LIMIT' and 'STOP_LIMIT' order types. Must be a positive number. For 'BUY' orders, 'limitPrice' represents the maximum price to pay; for 'SELL' orders, it represents the minimum price to accept.
   limitPrice Float?
 
-  /// Must be a positive number and required for STOP or STOP_LIMIT orders. It must be ≤ basePrice - 0.01, and should always be less than limitPrice.
+  /// Stop price of the order. Required for 'STOP' and 'STOP_LIMIT' order types. Must be a positive number. For 'BUY' 'STOP_LIMIT' orders, 'stopPrice' must be less than or equal to 'limitPrice'. For 'SELL' 'STOP_LIMIT' orders, 'stopPrice' must be greater than or equal to 'limitPrice'.
   stopPrice Float?
 
-  /// Stop loss object required for bracket orders.
+  /// Stop loss object. Required for 'BRACKET' and 'OTO' order classes when setting a stop-loss order. For 'BUY' bracket orders, 'stopLoss.stopPrice' must be less than 'takeProfit.limitPrice'.
   stopLoss  StopLoss? @relation
 
-  /// Take profit object required for bracket orders. For take_profit, must be ≥ base_price + 0.01.
+  /// Take profit object. Required for 'BRACKET' and 'OTO' order classes when setting a take-profit order. For 'BUY' bracket orders, 'takeProfit.limitPrice' must be greater than 'stopLoss.stopPrice'.
   takeProfit TakeProfit? @relation
 
-  /// Must be a positive number and required for TRAILING_STOP orders.
+  /// Trail price for 'TRAILING_STOP' orders. Must be a positive number. Either 'trailPrice' or 'trailPercent' is required when 'type' is 'TRAILING_STOP'.
   trailPrice Float?
 
-  /// Must be a positive number representing the percentage and required for TRAILING_STOP orders.
+  /// Trail percent for 'TRAILING_STOP' orders. Must be a positive number. Either 'trailPrice' or 'trailPercent' is required when 'type' is 'TRAILING_STOP'.
   trailPercent Float?
 
-  /// Whether the order is eligible for extended hours.
+  /// Whether the order is eligible for execution outside regular trading hours. Only valid for 'LIMIT' orders with 'timeInForce' set to 'DAY'. Defaults to false.
   extendedHours Boolean?
 
   /// Current status of the order.
@@ -1309,16 +1309,16 @@ model Order {
   /// Average price at which the order was filled.
   filledAvgPrice Float?
 
-  /// Cancel requested at timestamp when the request to cancel an order was made.
+  /// Timestamp when the request to cancel the order was made.
   cancelRequestedAt DateTime?
 
-  /// CanceledAt timestamp when the order was canceled.
+  /// Timestamp when the order was canceled.
   canceledAt DateTime?
 
   /// Reference to the action associated with the order. TYPESTRING.SKIP=true
   actionId String? @unique @db.Uuid
 
-  /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true  GQL.EXCLUDE=['trades', 'orders', 'positions', 'user']
+  /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trades', 'orders', 'positions', 'user']
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// The action this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade', 'order']
@@ -1330,13 +1330,13 @@ model Order {
   /// Fee associated with the order.
   fee Float?
 
-  /// Strike price for option orders.
+  /// Strike price for option orders. Required when 'asset.type' is 'OPTION'.
   strikePrice Float?
 
-  /// Expiration date for option orders.
+  /// Expiration date for option orders. Required when 'asset.type' is 'OPTION'.
   expirationDate DateTime?
 
-  /// If the asset.type is OPTION, then provide type of contract (CALL or PUT).
+  /// Type of option contract ('CALL' or 'PUT'). Required when 'asset.type' is 'OPTION'.
   optionType OptionType? @default(CALL)
 
   /// Reference to the stop loss order associated with this order. TYPESTRING.SKIP=true
@@ -1365,10 +1365,10 @@ model StopLoss {
   /// Timestamp when the stop loss order was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// Reference to the order associated with this stop loss.
+  /// Reference to the order associated with this stop loss. TYPESTRING.SKIP=true
   orderId String @unique @db.Uuid
 
-  /// An order that is associated with this stop loss. GQL.SKIP=true
+  /// An order that is associated with this stop loss. TYPESTRING.SKIP=true GQL.SKIP=true
   Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map(name: "stop_losses")
@@ -1391,10 +1391,10 @@ model TakeProfit {
   /// Timestamp when the take profit order was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// Reference to the order associated with this take profit.
+  /// Reference to the order associated with this take profit. TYPESTRING.SKIP=true
   orderId String @unique @db.Uuid
 
-  /// An order that is associated with this take profit. GQL.SKIP=true
+  /// An order that is associated with this take profit. TYPESTRING.SKIP=true GQL.SKIP=true
   Order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map(name: "take_profits")
