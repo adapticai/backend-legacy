@@ -796,10 +796,10 @@ model Position {
   /// Indicates if the asset is marginable.
   assetMarginable Boolean
 
-  /// Relation to the AlpacaAccount model, if applicable. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
+  /// Relation to the AlpacaAccount model, if applicable. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Foreign key referencing the AlpacaAccount. TYPESTRING.SKIP=true
+  /// Foreign key referencing the AlpacaAccount. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccountId String @db.Uuid
 
   /// Whether the position has been closed out or not. TYPESTRING.SKIP=true
