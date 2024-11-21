@@ -27,10 +27,11 @@ const SCALAR_TYPE_MAP: { [key: string]: string } = {
   Json: 'any',
 };
 
-const prismaFieldToTsType = (field: DMMF.Field): string => {
+const prismaFieldToTsType = (field: DMMF.Field, includedEnums: Set<string>): string => {
   if (field.kind === 'scalar') {
     return SCALAR_TYPE_MAP[field.type] || 'any';
   } else if (field.kind === 'enum') {
+    includedEnums.add(field.type);
     return field.type;
   } else if (field.kind === 'object') {
     return field.type;
@@ -135,13 +136,9 @@ const generateTypeString = (
       : '';
 
     if (field.kind === 'scalar') {
-      tsType = prismaFieldToTsType(field);
+      tsType = prismaFieldToTsType(field, includedEnums);
     } else if (field.kind === 'enum') {
-      tsType = field.type;
-      const enumObj = enums.get(field.type);
-      if (enumObj && !includedEnums.has(enumObj.name)) {
-        includedEnums.add(enumObj.name);
-      }
+      tsType = prismaFieldToTsType(field, includedEnums);
     } else if (field.kind === 'object') {
       if (ancestors.has(field.type)) {
         const singularTypeName = field.type;
@@ -188,7 +185,7 @@ const generateTypeString = (
                 }
 
                 const nfIsOptional = nestedField.isRequired ? '' : '?';
-                const nfType = prismaFieldToTsType(nestedField);
+                const nfType = prismaFieldToTsType(nestedField, includedEnums);
                 return `${indent(indentLevel + 2)}${nestedField.name}${nfIsOptional}: ${nfType};`;
               })
               .join('\n')}\n${indent(indentLevel + 1)}}`;
@@ -277,7 +274,7 @@ const main = async () => {
         0
       );
 
-      const typeDeclaration = `export type ${model.name} = ${typeBody};\n`;
+      const typeDeclaration = `export type ${model.name} = ${typeBody};\n\n`;
       const enumDeclarations = generateEnumDeclarations(
         Array.from(includedEnums).map((name) => enums.get(name)!),
         new Set()
