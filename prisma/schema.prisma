@@ -1191,10 +1191,10 @@ model Trade {
   /// Current status of the trade.
   status TradeStatus @default(PENDING)
 
-  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.EXCLUDE=['trades', 'orders', 'positions', 'user']
+  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status"] GQL.EXCLUDE=['trade']
@@ -1318,7 +1318,7 @@ model Order {
   /// Reference to the action associated with the order. TYPESTRING.SKIP=true
   actionId String? @unique @db.Uuid
 
-  /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trades', 'orders', 'positions', 'user']
+  /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// The action this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade', 'order']
