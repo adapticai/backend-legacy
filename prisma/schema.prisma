@@ -1297,22 +1297,22 @@ model Order {
   /// Timestamp when the order was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// Timestamp when the order was submitted.
+  /// Timestamp when the order was submitted. TYPESTRING.SKIP=true
   submittedAt DateTime?
 
-  /// Timestamp when the order was filled.
+  /// Timestamp when the order was filled. TYPESTRING.SKIP=true
   filledAt DateTime?
 
-  /// Total quantity of the order that was filled.
+  /// Total quantity of the order that was filled. TYPESTRING.SKIP=true
   filledQty Float?
 
-  /// Average price at which the order was filled.
+  /// Average price at which the order was filled. TYPESTRING.SKIP=true
   filledAvgPrice Float?
 
-  /// Timestamp when the request to cancel the order was made.
+  /// Timestamp when the request to cancel the order was made. TYPESTRING.SKIP=true
   cancelRequestedAt DateTime?
 
-  /// Timestamp when the order was canceled.
+  /// Timestamp when the order was canceled. TYPESTRING.SKIP=true
   canceledAt DateTime?
 
   /// Reference to the action associated with the order. TYPESTRING.SKIP=true
@@ -1327,13 +1327,13 @@ model Order {
   /// The asset this order is for. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trade', 'order', 'positions', 'newsMentions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// Fee associated with the order.
+  /// Fee associated with the order. TYPESTRING.SKIP=true
   fee Float?
 
-  /// Strike price for option orders. Required when 'asset.type' is 'OPTION'.
+  /// Strike price for option orders. Required when 'asset.type' is 'OPTION'. Must be a positive number.
   strikePrice Float?
 
-  /// Expiration date for option orders. Required when 'asset.type' is 'OPTION'.
+  /// Expiration date for option orders. Required when 'asset.type' is 'OPTION'. Must be a valid date in the future.
   expirationDate DateTime?
 
   /// Type of option contract ('CALL' or 'PUT'). Required when 'asset.type' is 'OPTION'.
