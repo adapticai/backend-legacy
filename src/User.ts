@@ -367,7 +367,6 @@ id
       lastTradePrice
       changeToday
       assetMarginable
-      alpacaAccountId
       closed
       createdAt
       updatedAt

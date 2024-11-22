@@ -27,30 +27,6 @@ import { removeUndefinedProps } from './utils';
   createdAt
   updatedAt
   status
-  alpacaAccount {
-    id
-    type
-    APIKey
-    APISecret
-    configuration
-    marketOpen
-    minOrderSize
-    maxOrderSize
-    minPercentageChange
-    volumeThreshold
-    userId
-    createdAt
-    updatedAt
-    alerts {
-      id
-      alpacaAccountId
-      message
-      type
-      isRead
-      createdAt
-      updatedAt
-    }
-  }
   asset {
     id
     symbol

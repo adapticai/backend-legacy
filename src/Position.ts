@@ -86,7 +86,6 @@ import { removeUndefinedProps } from './utils';
   lastTradePrice
   changeToday
   assetMarginable
-  alpacaAccountId
   closed
   createdAt
   updatedAt

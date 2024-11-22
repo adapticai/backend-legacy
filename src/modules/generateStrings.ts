@@ -78,21 +78,37 @@ const parseMetaTags = (documentation?: string): { meta: { [key: string]: any }; 
 
 const generateEnumDeclarations = (
   enums: DMMF.DatamodelEnum[],
-  includedEnums: Set<string>
+  declaredEnums: Set<string>
 ): string => {
   let enumDeclarations = '';
-  for (const enumObj of enums) {
-    if (includedEnums.has(enumObj.name)) continue;
 
+  for (const enumObj of enums) {
+    if (declaredEnums.has(enumObj.name)) continue;
+
+    // Add enum documentation if available
     const enumDescription = enumObj.documentation
       ? `// ${enumObj.documentation}\n`
       : '';
+
+    // Process each enum member
     const values = enumObj.values
-      .map((v) => `  ${v.name} = "${v.name}"`)
-      .join(',\n');
-    enumDeclarations += `${enumDescription}export enum ${enumObj.name} {\n${values}\n}\n\n`;
-    includedEnums.add(enumObj.name);
+      .map((v) => {
+        // Add inline annotation for the enum member if documentation exists
+        const valueDocumentation = 'documentation' in v && v.documentation
+          ? `  /// ${v.documentation}\n`
+          : '';
+        // Return the enum member without the `= "xxx"` syntax
+        return `${valueDocumentation}  ${v.name}`;
+      })
+      .join('\n\n');
+
+    // Combine enum documentation and members
+    enumDeclarations += `${enumDescription}enum ${enumObj.name} {\n${values}\n}\n\n`;
+
+    // Mark this enum as declared
+    declaredEnums.add(enumObj.name);
   }
+
   return enumDeclarations;
 };
 
@@ -159,7 +175,7 @@ const generateTypeString = (
         if (relatedModel) {
           let nestedType: string;
 
-          // If includeFields is specified and field shouldn't be fully processed
+          // If includeFields is specified, process only those fields
           if (includeFields && includeFields.length > 0) {
             nestedType = `{\n${includeFields
               .map((f) => {
@@ -188,6 +204,7 @@ const generateTypeString = (
                 const nfType = prismaFieldToTsType(nestedField, includedEnums);
                 return `${indent(indentLevel + 2)}${nestedField.name}${nfIsOptional}: ${nfType};`;
               })
+              .filter(line => line !== '') // Remove empty lines
               .join('\n')}\n${indent(indentLevel + 1)}}`;
           } else {
             // Fully resolve the nested type
@@ -253,10 +270,13 @@ const main = async () => {
     const schema = await fs.readFile(SCHEMA_PATH, 'utf-8');
     const dmmf = await getDMMF({ datamodel: schema });
 
-    const enums = new Map(dmmf.datamodel.enums.map((e) => [e.name, e]));
+    const enumsMap = new Map(dmmf.datamodel.enums.map((e) => [e.name, e]));
     const models = new Map(dmmf.datamodel.models.map((m) => [m.name, m]));
 
     const exportStatements: string[] = [];
+
+    // Global set to track declared enums across all models to prevent duplicates
+    const declaredEnums = new Set<string>();
 
     for (const [modelName, model] of models) {
       const includedEnums = new Set<string>();
@@ -267,7 +287,7 @@ const main = async () => {
       const typeBody = generateTypeString(
         model,
         models,
-        enums,
+        enumsMap,
         includedEnums,
         1,
         ancestors,
@@ -275,9 +295,11 @@ const main = async () => {
       );
 
       const typeDeclaration = `export type ${model.name} = ${typeBody};\n\n`;
+
+      // Generate enums for this model, ensuring no duplicates across models
       const enumDeclarations = generateEnumDeclarations(
-        Array.from(includedEnums).map((name) => enums.get(name)!),
-        new Set()
+        Array.from(includedEnums).map((name) => enumsMap.get(name)!),
+        declaredEnums
       );
 
       const typeString = instructionLine + typeDeclaration + enumDeclarations;
