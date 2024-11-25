@@ -81,12 +81,6 @@ enum TradeStrategy {
   /// Utilizes momentum to amplify returns on investments.
   MOMENTUM_STRATEGY
 
-  /// Exploits price differences between markets or related assets.
-  ARBITRAGE
-
-  /// Uses statistical methods to identify profitable trades.
-  STATISTICAL_ARBITRAGE
-
   /// Provides liquidity to the market by continuously buying and selling.
   MARKET_MAKING
 
@@ -95,9 +89,6 @@ enum TradeStrategy {
 
   /// Analyzes sentiment data to predict market movements.
   SENTIMENT_ANALYSIS
-
-  /// Supplies liquidity to earn profits from bid-ask spreads.
-  LIQUIDITY_PROVISION
 
   /// Profits from small price changes by executing numerous trades.
   SCALPING
@@ -113,18 +104,6 @@ enum TradeStrategy {
 
   /// Trades based on the flow and volume of orders in the market.
   ORDER_FLOW_TRADING
-
-  /// Pairs assets to capitalize on relative price movements between them.
-  PAIR_TRADING
-
-  /// Trades based on the rotation of funds between different market sectors.
-  SECTOR_ROTATION
-
-  /// Executes a large number of trades at high speed to capitalize on small price changes.
-  HIGH_FREQUENCY_TRADING
-
-  /// Utilizes machine vision techniques to analyze market data and execute trades.
-  MACHINE_VISION_ANALYSIS
 
   /// No specific strategy or approach to trading.
   NO_STRATEGY
