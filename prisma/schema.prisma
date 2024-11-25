@@ -1197,7 +1197,7 @@ model Trade {
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions']
   asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status"] GQL.EXCLUDE=['trade']
+  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
 
   @@map(name: "trades")
@@ -1229,7 +1229,7 @@ model Action {
   /// The trade this action is part of. TYPESTRING.SKIP=true GQL.SKIP=true
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
-  /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","notional","side","type","orderClass","timeInForce","limitPrice","stopPrice","stopLoss","takeProfit","trailPrice","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
+  /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
   order Order? @relation
 
   @@map(name: "actions")

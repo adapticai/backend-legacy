@@ -112,6 +112,18 @@ const generateEnumDeclarations = (
   return enumDeclarations;
 };
 
+/**
+ * Generates the TypeScript type string for a given Prisma model.
+ * @param model - The Prisma model to process.
+ * @param models - Map of all Prisma models.
+ * @param enums - Map of all Prisma enums.
+ * @param includedEnums - Set to track enums included in this type string.
+ * @param depth - Current recursion depth.
+ * @param ancestors - Set to track ancestor models to prevent infinite recursion.
+ * @param indentLevel - Current indentation level for formatting.
+ * @param specificIncludeFields - Optional list of fields to include for this specific call.
+ * @returns The TypeScript type string.
+ */
 const generateTypeString = (
   model: DMMF.Model,
   models: Map<string, DMMF.Model>,
@@ -119,7 +131,8 @@ const generateTypeString = (
   includedEnums: Set<string>,
   depth: number,
   ancestors: Set<string>,
-  indentLevel: number
+  indentLevel: number,
+  specificIncludeFields?: string[]
 ): string => {
   if (depth > MAX_DEPTH) {
     return 'any';
@@ -129,19 +142,24 @@ const generateTypeString = (
   const indent = (level: number) => '  '.repeat(level);
   const fieldsDeclarations: string[] = [];
 
-  for (const field of model.fields) {
+  // Determine which fields to process based on specificIncludeFields or all fields
+  const fieldsToProcess = specificIncludeFields
+    ? model.fields.filter(f => specificIncludeFields.includes(f.name))
+    : model.fields;
+
+  for (const field of fieldsToProcess) {
     if (shouldExcludeField(field.name)) continue;
 
     const { meta: metaTags, description } = parseMetaTags(field.documentation);
 
-    // Check if the field should be processed based on our criteria
+    // Determine if the field should be processed
     const shouldProcess = shouldProcessField(field, metaTags);
 
     // Skip if explicitly marked to skip and not marked for processing
     if (metaTags['TYPESTRING.SKIP'] === true && !shouldProcess) continue;
 
     // Get included fields if specified
-    let includeFields = metaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
+    const includeFields = metaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
 
     const isOptional = field.isRequired ? '' : '?';
     const isArray = field.isList ? '[]' : '';
@@ -156,6 +174,7 @@ const generateTypeString = (
     } else if (field.kind === 'enum') {
       tsType = prismaFieldToTsType(field, includedEnums);
     } else if (field.kind === 'object') {
+      // Prevent infinite recursion by checking ancestors
       if (ancestors.has(field.type)) {
         const singularTypeName = field.type;
         const pluralTypeName = pluralize(field.type);
@@ -175,8 +194,8 @@ const generateTypeString = (
         if (relatedModel) {
           let nestedType: string;
 
-          // If includeFields is specified, process only those fields
           if (includeFields && includeFields.length > 0) {
+            // If includeFields is specified on the field, process only those fields
             nestedType = `{\n${includeFields
               .map((f) => {
                 const nestedField = relatedModel.fields.find((nf) => nf.name === f);
@@ -184,25 +203,54 @@ const generateTypeString = (
 
                 const { meta: nestedMetaTags, description: nestedDescription } = parseMetaTags(nestedField.documentation);
 
-                if (shouldProcessField(nestedField, nestedMetaTags)) {
-                  const nestedObjectModel = models.get(nestedField.type);
-                  if (nestedObjectModel) {
-                    const nestedResult = generateTypeString(
-                      nestedObjectModel,
-                      models,
-                      enums,
-                      includedEnums,
-                      depth + 1,
-                      new Set(ancestors),
-                      indentLevel + 2
+                // Determine if the nested field should be processed
+                const nestedShouldProcess = shouldProcessField(nestedField, nestedMetaTags);
+
+                // Skip if explicitly marked to skip and not marked for processing
+                if (nestedMetaTags['TYPESTRING.SKIP'] === true && !nestedShouldProcess) return '';
+
+                const nestedIsOptional = nestedField.isRequired ? '' : '?';
+                const nestedIsArray = nestedField.isList ? '[]' : '';
+                let nestedTsType: string;
+
+                const nestedFieldDescription = nestedDescription
+                  ? `${indent(indentLevel + 2)}// ${nestedDescription}\n`
+                  : '';
+
+                if (nestedField.kind === 'scalar') {
+                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums);
+                } else if (nestedField.kind === 'enum') {
+                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums);
+                } else if (nestedField.kind === 'object') {
+                  if (ancestors.has(nestedField.type)) {
+                    console.log(
+                      `Skipping nested field "${nestedField.name}" in model "${relatedModel.name}" as it references the ancestor "${nestedField.type}".`
                     );
-                    return `${indent(indentLevel + 2)}${nestedField.name}${nestedField.isRequired ? '' : '?'}: ${nestedResult};`;
+                    return '';
+                  } else {
+                    const deeperRelatedModel = models.get(nestedField.type);
+                    if (deeperRelatedModel) {
+                      // When processing the nested object field, pass its own includeFields
+                      const deeperIncludeFields = nestedMetaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
+                      nestedTsType = generateTypeString(
+                        deeperRelatedModel,
+                        models,
+                        enums,
+                        includedEnums,
+                        depth + 1,
+                        new Set(ancestors),
+                        indentLevel + 3,
+                        deeperIncludeFields
+                      );
+                    } else {
+                      nestedTsType = 'any';
+                    }
                   }
+                } else {
+                  nestedTsType = 'any';
                 }
 
-                const nfIsOptional = nestedField.isRequired ? '' : '?';
-                const nfType = prismaFieldToTsType(nestedField, includedEnums);
-                return `${indent(indentLevel + 2)}${nestedField.name}${nfIsOptional}: ${nfType};`;
+                return `${nestedFieldDescription}${indent(indentLevel + 2)}${nestedField.name}${nestedIsOptional}: ${nestedTsType}${nestedIsArray};`;
               })
               .filter(line => line !== '') // Remove empty lines
               .join('\n')}\n${indent(indentLevel + 1)}}`;
@@ -247,8 +295,9 @@ const shouldProcessField = (
   if (metaTags['TYPESTRING.SKIP'] === true) {
     return false;
   }
+  // Allow processing if INCLUDE is present
   if (metaTags['TYPESTRING.INCLUDE']) {
-    return false;
+    return true;
   }
   if (field.kind === 'object') {
     return true;
@@ -256,10 +305,12 @@ const shouldProcessField = (
   return false;
 };
 
-const main = async () => {
+const generateTypeStrings = async () => {
   try {
+    // Ensure the output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
+    // Clear existing files except index.ts
     const files = await fs.readdir(OUTPUT_DIR);
     for (const file of files) {
       if (file !== 'index.ts') {
@@ -267,6 +318,7 @@ const main = async () => {
       }
     }
 
+    // Read and parse the Prisma schema
     const schema = await fs.readFile(SCHEMA_PATH, 'utf-8');
     const dmmf = await getDMMF({ datamodel: schema });
 
@@ -282,7 +334,8 @@ const main = async () => {
       const includedEnums = new Set<string>();
       const ancestors = new Set<string>();
 
-      const instructionLine = `Your response should adhere to the following type definition for the "${model.name}" type.\n\nImportantly, DO NOT include any annotations in your response (i.e., remove the ones we have provided for your reference below).\n\n`;
+      // Instruction line can be adjusted or removed based on your specific use case
+      const instructionLine = `// Your response should adhere to the following type definition for the "${model.name}" type.\n// Importantly, DO NOT include any annotations in your response (i.e., remove the ones we have provided for your reference below).\n\n`;
 
       const typeBody = generateTypeString(
         model,
@@ -321,6 +374,7 @@ const main = async () => {
       exportStatements.push(`  ${exportName}: ${constName},`);
     }
 
+    // Generate index.ts to export all type strings
     const indexContent =
       Array.from(models.keys())
         .map((modelName) => `import { ${modelName}TypeString } from './${modelName}';`)
@@ -336,4 +390,4 @@ const main = async () => {
   }
 };
 
-main();
+generateTypeStrings();
