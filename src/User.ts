@@ -1769,6 +1769,9 @@ id
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
              } : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? {
+              equals: item.takeProfitId 
+             } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -3950,6 +3953,9 @@ id
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
+             } : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? {
+              equals: item.takeProfitId 
              } : undefined,
         },
         update: {

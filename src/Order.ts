@@ -1345,6 +1345,9 @@ import { removeUndefinedProps } from './utils';
           email: props.alpacaAccount.user.email !== undefined ? {
               equals: props.alpacaAccount.user.email 
              } : undefined,
+          customerId: props.alpacaAccount.user.customerId !== undefined ? {
+              equals: props.alpacaAccount.user.customerId 
+             } : undefined,
         },
         update: {
           id: props.alpacaAccount.user.id !== undefined ? {
@@ -4735,6 +4738,9 @@ import { removeUndefinedProps } from './utils';
              } : undefined,
           email: prop.alpacaAccount.user.email !== undefined ? {
               equals: prop.alpacaAccount.user.email 
+             } : undefined,
+          customerId: prop.alpacaAccount.user.customerId !== undefined ? {
+              equals: prop.alpacaAccount.user.customerId 
              } : undefined,
         },
         update: {

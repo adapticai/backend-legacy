@@ -1072,6 +1072,9 @@ import { removeUndefinedProps } from './utils';
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
              } : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? {
+              equals: item.takeProfitId 
+             } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -2434,6 +2437,9 @@ import { removeUndefinedProps } from './utils';
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
+             } : undefined,
+          takeProfitId: item.takeProfitId !== undefined ? {
+              equals: item.takeProfitId 
              } : undefined,
         },
         update: {

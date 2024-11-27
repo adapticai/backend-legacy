@@ -598,6 +598,9 @@ id
         email: props.user.email !== undefined ? {
             equals: props.user.email 
            } : undefined,
+        customerId: props.user.customerId !== undefined ? {
+            equals: props.user.customerId 
+           } : undefined,
       },
       update: {
         id: props.user.id !== undefined ? {
@@ -892,6 +895,9 @@ id
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
@@ -1588,6 +1594,9 @@ id
         email: prop.user.email !== undefined ? {
             equals: prop.user.email 
            } : undefined,
+        customerId: prop.user.customerId !== undefined ? {
+            equals: prop.user.customerId 
+           } : undefined,
       },
       update: {
         id: prop.user.id !== undefined ? {
@@ -1882,6 +1891,9 @@ id
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {

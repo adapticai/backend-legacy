@@ -1112,6 +1112,9 @@ import { removeUndefinedProps } from './utils';
             email: props.trade.alpacaAccount.user.email !== undefined ? {
                 equals: props.trade.alpacaAccount.user.email 
                } : undefined,
+            customerId: props.trade.alpacaAccount.user.customerId !== undefined ? {
+                equals: props.trade.alpacaAccount.user.customerId 
+               } : undefined,
           },
           update: {
             id: props.trade.alpacaAccount.user.id !== undefined ? {
@@ -1178,6 +1181,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
@@ -1733,6 +1739,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
@@ -2490,6 +2499,15 @@ import { removeUndefinedProps } from './utils';
         assetId: props.order.assetId !== undefined ? {
             equals: props.order.assetId 
            } : undefined,
+        actionId: props.order.actionId !== undefined ? {
+            equals: props.order.actionId 
+           } : undefined,
+        stopLossId: props.order.stopLossId !== undefined ? {
+            equals: props.order.stopLossId 
+           } : undefined,
+        takeProfitId: props.order.takeProfitId !== undefined ? {
+            equals: props.order.takeProfitId 
+           } : undefined,
       },
       update: {
         id: props.order.id !== undefined ? {
@@ -2676,6 +2694,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             email: props.order.alpacaAccount.user.email !== undefined ? {
                 equals: props.order.alpacaAccount.user.email 
+               } : undefined,
+            customerId: props.order.alpacaAccount.user.customerId !== undefined ? {
+                equals: props.order.alpacaAccount.user.customerId 
                } : undefined,
           },
           update: {
@@ -4069,6 +4090,9 @@ import { removeUndefinedProps } from './utils';
             email: prop.trade.alpacaAccount.user.email !== undefined ? {
                 equals: prop.trade.alpacaAccount.user.email 
                } : undefined,
+            customerId: prop.trade.alpacaAccount.user.customerId !== undefined ? {
+                equals: prop.trade.alpacaAccount.user.customerId 
+               } : undefined,
           },
           update: {
             id: prop.trade.alpacaAccount.user.id !== undefined ? {
@@ -4135,6 +4159,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
@@ -4690,6 +4717,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
@@ -5447,6 +5477,15 @@ import { removeUndefinedProps } from './utils';
         assetId: prop.order.assetId !== undefined ? {
             equals: prop.order.assetId 
            } : undefined,
+        actionId: prop.order.actionId !== undefined ? {
+            equals: prop.order.actionId 
+           } : undefined,
+        stopLossId: prop.order.stopLossId !== undefined ? {
+            equals: prop.order.stopLossId 
+           } : undefined,
+        takeProfitId: prop.order.takeProfitId !== undefined ? {
+            equals: prop.order.takeProfitId 
+           } : undefined,
       },
       update: {
         id: prop.order.id !== undefined ? {
@@ -5633,6 +5672,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             email: prop.order.alpacaAccount.user.email !== undefined ? {
                 equals: prop.order.alpacaAccount.user.email 
+               } : undefined,
+            customerId: prop.order.alpacaAccount.user.customerId !== undefined ? {
+                equals: prop.order.alpacaAccount.user.customerId 
                } : undefined,
           },
           update: {

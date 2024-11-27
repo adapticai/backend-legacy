@@ -571,6 +571,15 @@ import { removeUndefinedProps } from './utils';
         assetId: props.Order.assetId !== undefined ? {
             equals: props.Order.assetId 
            } : undefined,
+        actionId: props.Order.actionId !== undefined ? {
+            equals: props.Order.actionId 
+           } : undefined,
+        stopLossId: props.Order.stopLossId !== undefined ? {
+            equals: props.Order.stopLossId 
+           } : undefined,
+        takeProfitId: props.Order.takeProfitId !== undefined ? {
+            equals: props.Order.takeProfitId 
+           } : undefined,
       },
       update: {
         id: props.Order.id !== undefined ? {
@@ -730,6 +739,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             email: props.Order.alpacaAccount.user.email !== undefined ? {
                 equals: props.Order.alpacaAccount.user.email 
+               } : undefined,
+            customerId: props.Order.alpacaAccount.user.customerId !== undefined ? {
+                equals: props.Order.alpacaAccount.user.customerId 
                } : undefined,
           },
           update: {
@@ -2200,6 +2212,15 @@ import { removeUndefinedProps } from './utils';
         assetId: prop.Order.assetId !== undefined ? {
             equals: prop.Order.assetId 
            } : undefined,
+        actionId: prop.Order.actionId !== undefined ? {
+            equals: prop.Order.actionId 
+           } : undefined,
+        stopLossId: prop.Order.stopLossId !== undefined ? {
+            equals: prop.Order.stopLossId 
+           } : undefined,
+        takeProfitId: prop.Order.takeProfitId !== undefined ? {
+            equals: prop.Order.takeProfitId 
+           } : undefined,
       },
       update: {
         id: prop.Order.id !== undefined ? {
@@ -2359,6 +2380,9 @@ import { removeUndefinedProps } from './utils';
                } : undefined,
             email: prop.Order.alpacaAccount.user.email !== undefined ? {
                 equals: prop.Order.alpacaAccount.user.email 
+               } : undefined,
+            customerId: prop.Order.alpacaAccount.user.customerId !== undefined ? {
+                equals: prop.Order.alpacaAccount.user.customerId 
                } : undefined,
           },
           update: {

@@ -605,6 +605,9 @@ id
         name: item.name !== undefined ? {
             equals: item.name 
            } : undefined,
+        customerId: item.customerId !== undefined ? {
+            equals: item.customerId 
+           } : undefined,
       },
       update: {
         id: item.id !== undefined ? {
@@ -872,6 +875,9 @@ id
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
@@ -1568,6 +1574,9 @@ id
         name: item.name !== undefined ? {
             equals: item.name 
            } : undefined,
+        customerId: item.customerId !== undefined ? {
+            equals: item.customerId 
+           } : undefined,
       },
       update: {
         id: item.id !== undefined ? {
@@ -1835,6 +1844,9 @@ id
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
+               } : undefined,
+            takeProfitId: item.takeProfitId !== undefined ? {
+                equals: item.takeProfitId 
                } : undefined,
           },
           update: {
