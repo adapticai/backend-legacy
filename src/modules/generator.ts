@@ -335,7 +335,7 @@ const handleUpdateOperation = (
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (isUniqueField(whereField.name) && whereField.type.isScalar && whereField.type.isFilterObject) {
+            if (isUniqueField(whereField.name) && (whereField.type.isScalar && whereField.type.isFilterObject || whereField.type.isFilterObject)) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (isUniqueField(whereField.name) && whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
