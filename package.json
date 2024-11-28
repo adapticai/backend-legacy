@@ -19,8 +19,8 @@
     "build:package": "npm run build && npm run prepare-package-folder",
     "start": "npm run migrate && node dist/server.js",
     "generate": "npx prisma generate",
-    "migrate:dev": "npx prisma migrate dev && npm run migrate",
-    "migrate": "npx prisma migrate deploy",
+    "migrate:dev": "PRISMA_MIGRATE_DISABLE_ADVISORY_LOCK=true npx prisma migrate dev && npm run migrate",
+    "migrate": "PRISMA_MIGRATE_DISABLE_ADVISORY_LOCK=true npx prisma migrate deploy",
     "update-backend-functions": "node update-backend-functions.mjs",
     "generate:functions": "ts-node src/modules/index.ts",
     "generate:strings": "ts-node src/modules/generateStrings.ts",
@@ -41,13 +41,11 @@
     "@types/ws": "^8.5.11",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
-    "typegraphql-prisma": "^0.27.2",
     "typescript": "^5.6.2"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.10.4",
-    "@prisma/client": "^5.22.0",
     "@prisma/extension-accelerate": "^1.2.1",
     "@prisma/extension-pulse": "^1.2.0",
     "@prisma/generator-helper": "^5.22.0",
@@ -62,9 +60,9 @@
     "graphql-ws": "^5.16.0",
     "jsonwebtoken": "^9.0.2",
     "pluralize": "^8.0.0",
-    "prisma": "^5.22.0",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
+    "typegraphql-prisma": "^0.28.0",
     "ws": "^8.18.0"
   },
   "optionalDependencies": {

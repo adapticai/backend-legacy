@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  engineType = "dataproxy"
 }
 
 generator typegraphql {
@@ -12,8 +11,8 @@ generator typegraphql {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -1255,7 +1254,7 @@ model Order {
   stopPrice Float?
 
   /// Stop loss object. Required for 'BRACKET' and 'OTO' order classes when setting a stop-loss order. For 'BUY' bracket orders, 'stopLoss.stopPrice' must be less than 'takeProfit.limitPrice'.
-  stopLoss  StopLoss? @relation
+  stopLoss StopLoss? @relation
 
   /// Take profit object. Required for 'BRACKET' and 'OTO' order classes when setting a take-profit order. For 'BUY' bracket orders, 'takeProfit.limitPrice' must be greater than 'stopLoss.stopPrice'.
   takeProfit TakeProfit? @relation
