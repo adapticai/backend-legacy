@@ -561,13 +561,9 @@ id
   name: props.name !== undefined ? {
     equals: props.name 
   } : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
   stripePriceId: props.stripePriceId !== undefined ? {
     equals: props.stripePriceId 
   } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   authUserId: props.authUserId !== undefined ? {
@@ -1529,13 +1525,9 @@ id
   name: prop.name !== undefined ? {
     equals: prop.name 
   } : undefined,
-  plan: prop.plan !== undefined ? prop.plan : undefined,
   stripePriceId: prop.stripePriceId !== undefined ? {
     equals: prop.stripePriceId 
   } : undefined,
-  stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? prop.stripeCurrentPeriodEnd : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -2536,13 +2528,9 @@ id
   name: props.name !== undefined ? {
     equals: props.name 
   } : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
   stripePriceId: props.stripePriceId !== undefined ? {
     equals: props.stripePriceId 
   } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2613,7 +2601,6 @@ id
   name: props.name !== undefined ? {
     equals: props.name 
   } : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? {
     equals: props.stripeCustomerId 
   } : undefined,
@@ -2623,9 +2610,6 @@ id
   stripePriceId: props.stripePriceId !== undefined ? {
     equals: props.stripePriceId 
   } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

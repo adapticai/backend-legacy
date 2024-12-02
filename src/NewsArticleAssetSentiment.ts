@@ -579,9 +579,6 @@ import { removeUndefinedProps } from './utils';
   newsArticleId: props.newsArticleId !== undefined ? {
     equals: props.newsArticleId 
   } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1944,9 +1941,6 @@ import { removeUndefinedProps } from './utils';
   newsArticleId: prop.newsArticleId !== undefined ? {
     equals: prop.newsArticleId 
   } : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? prop.relevancyScore : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? prop.sentimentScore : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? prop.sentimentLabel : undefined,
 
       },
       data: {
@@ -3348,9 +3342,6 @@ import { removeUndefinedProps } from './utils';
   newsArticleId: props.newsArticleId !== undefined ? {
     equals: props.newsArticleId 
   } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -3424,9 +3415,6 @@ import { removeUndefinedProps } from './utils';
   url: props.url !== undefined ? {
     equals: props.url 
   } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
       },
     };
 

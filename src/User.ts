@@ -1056,17 +1056,6 @@ id
   name: props.name !== undefined ? {
     equals: props.name 
   } : undefined,
-  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
-  image: props.image !== undefined ? props.image : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  role: props.role !== undefined ? props.role : undefined,
-  bio: props.bio !== undefined ? props.bio : undefined,
-  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
-  currentAccount: props.currentAccount !== undefined ? props.currentAccount : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
-  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
-  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -3240,17 +3229,6 @@ id
   name: prop.name !== undefined ? {
     equals: prop.name 
   } : undefined,
-  emailVerified: prop.emailVerified !== undefined ? prop.emailVerified : undefined,
-  image: prop.image !== undefined ? prop.image : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
-  role: prop.role !== undefined ? prop.role : undefined,
-  bio: prop.bio !== undefined ? prop.bio : undefined,
-  jobTitle: prop.jobTitle !== undefined ? prop.jobTitle : undefined,
-  currentAccount: prop.currentAccount !== undefined ? prop.currentAccount : undefined,
-  plan: prop.plan !== undefined ? prop.plan : undefined,
-  openaiAPIKey: prop.openaiAPIKey !== undefined ? prop.openaiAPIKey : undefined,
-  openaiModel: prop.openaiModel !== undefined ? prop.openaiModel : undefined,
 
       },
       data: {
@@ -5463,17 +5441,6 @@ id
   name: props.name !== undefined ? {
     equals: props.name 
   } : undefined,
-  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
-  image: props.image !== undefined ? props.image : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  role: props.role !== undefined ? props.role : undefined,
-  bio: props.bio !== undefined ? props.bio : undefined,
-  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
-  currentAccount: props.currentAccount !== undefined ? props.currentAccount : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
-  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
-  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -5544,17 +5511,6 @@ id
   email: props.email !== undefined ? {
     equals: props.email 
   } : undefined,
-  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
-  image: props.image !== undefined ? props.image : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  role: props.role !== undefined ? props.role : undefined,
-  bio: props.bio !== undefined ? props.bio : undefined,
-  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
-  currentAccount: props.currentAccount !== undefined ? props.currentAccount : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
-  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
-  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
       },
     };
 

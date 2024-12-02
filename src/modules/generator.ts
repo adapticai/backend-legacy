@@ -446,9 +446,11 @@ const handleWhereOperation = (
     // Check if the scalar field requires an "equals" wrapper
     if (field.type.isFilterObject && isUniqueField(field.name)) {
       return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  equals: ${accessor} \n${indent}} : undefined,\n`;
-    } else {
+    } else if (isUniqueField(field.name)) {
       // Handle regular scalar fields without "equals" wrapper
       return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+    } else {
+      return '';
     }
   } else {
     // Handle relational fields

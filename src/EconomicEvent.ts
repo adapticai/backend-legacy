@@ -124,11 +124,6 @@ import { removeUndefinedProps } from './utils';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  date: props.date !== undefined ? props.date : undefined,
-  importance: props.importance !== undefined ? props.importance : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -191,11 +186,6 @@ import { removeUndefinedProps } from './utils';
   title: prop.title !== undefined ? {
     equals: prop.title 
   } : undefined,
-  description: prop.description !== undefined ? prop.description : undefined,
-  date: prop.date !== undefined ? prop.date : undefined,
-  importance: prop.importance !== undefined ? prop.importance : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -297,11 +287,6 @@ import { removeUndefinedProps } from './utils';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  date: props.date !== undefined ? props.date : undefined,
-  importance: props.importance !== undefined ? props.importance : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -369,11 +354,6 @@ import { removeUndefinedProps } from './utils';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  date: props.date !== undefined ? props.date : undefined,
-  importance: props.importance !== undefined ? props.importance : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

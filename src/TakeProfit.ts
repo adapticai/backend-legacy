@@ -537,8 +537,6 @@ import { removeUndefinedProps } from './utils';
       where: {
         id: props.id !== undefined ? props.id : undefined,
   orderId: props.orderId !== undefined ? props.orderId : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -2177,8 +2175,6 @@ import { removeUndefinedProps } from './utils';
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
   orderId: prop.orderId !== undefined ? prop.orderId : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -3856,8 +3852,6 @@ import { removeUndefinedProps } from './utils';
       where: {
         id: props.id !== undefined ? props.id : undefined,
   orderId: props.orderId !== undefined ? props.orderId : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -3922,8 +3916,6 @@ import { removeUndefinedProps } from './utils';
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
   orderId: props.orderId !== undefined ? {
     equals: props.orderId 
   } : undefined,

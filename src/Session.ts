@@ -444,13 +444,9 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1440,13 +1436,9 @@ id
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  sessionToken: prop.sessionToken !== undefined ? prop.sessionToken : undefined,
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
-  expires: prop.expires !== undefined ? prop.expires : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -2475,13 +2467,9 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2546,13 +2534,9 @@ id
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

@@ -558,14 +558,9 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  credentialID: props.credentialID !== undefined ? props.credentialID : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  publicKey: props.publicKey !== undefined ? props.publicKey : undefined,
-  counter: props.counter !== undefined ? props.counter : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1553,14 +1548,9 @@ id
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  credentialID: prop.credentialID !== undefined ? prop.credentialID : undefined,
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
-  publicKey: prop.publicKey !== undefined ? prop.publicKey : undefined,
-  counter: prop.counter !== undefined ? prop.counter : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -2587,14 +2577,9 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  credentialID: props.credentialID !== undefined ? props.credentialID : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  publicKey: props.publicKey !== undefined ? props.publicKey : undefined,
-  counter: props.counter !== undefined ? props.counter : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2662,11 +2647,6 @@ id
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  credentialID: props.credentialID !== undefined ? props.credentialID : undefined,
-  publicKey: props.publicKey !== undefined ? props.publicKey : undefined,
-  counter: props.counter !== undefined ? props.counter : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

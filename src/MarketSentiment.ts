@@ -118,11 +118,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  longDescription: props.longDescription !== undefined ? props.longDescription : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -179,11 +174,6 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  sentiment: prop.sentiment !== undefined ? prop.sentiment : undefined,
-  description: prop.description !== undefined ? prop.description : undefined,
-  longDescription: prop.longDescription !== undefined ? prop.longDescription : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -279,11 +269,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  longDescription: props.longDescription !== undefined ? props.longDescription : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -348,11 +333,6 @@ import { removeUndefinedProps } from './utils';
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  longDescription: props.longDescription !== undefined ? props.longDescription : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

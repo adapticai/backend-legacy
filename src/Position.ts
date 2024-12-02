@@ -1028,23 +1028,9 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
-  qty: props.qty !== undefined ? props.qty : undefined,
-  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
-  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
-  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
-  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
-  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
-  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
-  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
-  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
-  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
-  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -4243,23 +4229,9 @@ import { removeUndefinedProps } from './utils';
   assetId: prop.assetId !== undefined ? {
     equals: prop.assetId 
   } : undefined,
-  averageEntryPrice: prop.averageEntryPrice !== undefined ? prop.averageEntryPrice : undefined,
-  qty: prop.qty !== undefined ? prop.qty : undefined,
-  qtyAvailable: prop.qtyAvailable !== undefined ? prop.qtyAvailable : undefined,
-  marketValue: prop.marketValue !== undefined ? prop.marketValue : undefined,
-  costBasis: prop.costBasis !== undefined ? prop.costBasis : undefined,
-  unrealizedPL: prop.unrealizedPL !== undefined ? prop.unrealizedPL : undefined,
-  unrealizedPLPC: prop.unrealizedPLPC !== undefined ? prop.unrealizedPLPC : undefined,
-  unrealisedIntradayPL: prop.unrealisedIntradayPL !== undefined ? prop.unrealisedIntradayPL : undefined,
-  unrealisedIntradayPLPC: prop.unrealisedIntradayPLPC !== undefined ? prop.unrealisedIntradayPLPC : undefined,
-  currentPrice: prop.currentPrice !== undefined ? prop.currentPrice : undefined,
-  lastTradePrice: prop.lastTradePrice !== undefined ? prop.lastTradePrice : undefined,
-  changeToday: prop.changeToday !== undefined ? prop.changeToday : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? {
     equals: prop.alpacaAccountId 
   } : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -7497,23 +7469,9 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
-  qty: props.qty !== undefined ? props.qty : undefined,
-  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
-  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
-  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
-  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
-  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
-  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
-  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
-  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
-  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
-  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -7581,23 +7539,9 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
-  qty: props.qty !== undefined ? props.qty : undefined,
-  qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
-  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
-  costBasis: props.costBasis !== undefined ? props.costBasis : undefined,
-  unrealizedPL: props.unrealizedPL !== undefined ? props.unrealizedPL : undefined,
-  unrealizedPLPC: props.unrealizedPLPC !== undefined ? props.unrealizedPLPC : undefined,
-  unrealisedIntradayPL: props.unrealisedIntradayPL !== undefined ? props.unrealisedIntradayPL : undefined,
-  unrealisedIntradayPLPC: props.unrealisedIntradayPLPC !== undefined ? props.unrealisedIntradayPLPC : undefined,
-  currentPrice: props.currentPrice !== undefined ? props.currentPrice : undefined,
-  lastTradePrice: props.lastTradePrice !== undefined ? props.lastTradePrice : undefined,
-  changeToday: props.changeToday !== undefined ? props.changeToday : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

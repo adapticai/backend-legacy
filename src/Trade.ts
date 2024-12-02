@@ -1304,19 +1304,6 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  qty: props.qty !== undefined ? props.qty : undefined,
-  price: props.price !== undefined ? props.price : undefined,
-  total: props.total !== undefined ? props.total : undefined,
-  optionType: props.optionType !== undefined ? props.optionType : undefined,
-  signal: props.signal !== undefined ? props.signal : undefined,
-  strategy: props.strategy !== undefined ? props.strategy : undefined,
-  analysis: props.analysis !== undefined ? props.analysis : undefined,
-  summary: props.summary !== undefined ? props.summary : undefined,
-  confidence: props.confidence !== undefined ? props.confidence : undefined,
-  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  status: props.status !== undefined ? props.status : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -5209,19 +5196,6 @@ import { removeUndefinedProps } from './utils';
   assetId: prop.assetId !== undefined ? {
     equals: prop.assetId 
   } : undefined,
-  qty: prop.qty !== undefined ? prop.qty : undefined,
-  price: prop.price !== undefined ? prop.price : undefined,
-  total: prop.total !== undefined ? prop.total : undefined,
-  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
-  signal: prop.signal !== undefined ? prop.signal : undefined,
-  strategy: prop.strategy !== undefined ? prop.strategy : undefined,
-  analysis: prop.analysis !== undefined ? prop.analysis : undefined,
-  summary: prop.summary !== undefined ? prop.summary : undefined,
-  confidence: prop.confidence !== undefined ? prop.confidence : undefined,
-  timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
-  status: prop.status !== undefined ? prop.status : undefined,
 
       },
       data: {
@@ -9153,19 +9127,6 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  qty: props.qty !== undefined ? props.qty : undefined,
-  price: props.price !== undefined ? props.price : undefined,
-  total: props.total !== undefined ? props.total : undefined,
-  optionType: props.optionType !== undefined ? props.optionType : undefined,
-  signal: props.signal !== undefined ? props.signal : undefined,
-  strategy: props.strategy !== undefined ? props.strategy : undefined,
-  analysis: props.analysis !== undefined ? props.analysis : undefined,
-  summary: props.summary !== undefined ? props.summary : undefined,
-  confidence: props.confidence !== undefined ? props.confidence : undefined,
-  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  status: props.status !== undefined ? props.status : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -9236,19 +9197,6 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  qty: props.qty !== undefined ? props.qty : undefined,
-  price: props.price !== undefined ? props.price : undefined,
-  total: props.total !== undefined ? props.total : undefined,
-  optionType: props.optionType !== undefined ? props.optionType : undefined,
-  signal: props.signal !== undefined ? props.signal : undefined,
-  strategy: props.strategy !== undefined ? props.strategy : undefined,
-  analysis: props.analysis !== undefined ? props.analysis : undefined,
-  summary: props.summary !== undefined ? props.summary : undefined,
-  confidence: props.confidence !== undefined ? props.confidence : undefined,
-  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  status: props.status !== undefined ? props.status : undefined,
       },
     };
 

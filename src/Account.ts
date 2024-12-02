@@ -565,19 +565,9 @@ id
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  provider: props.provider !== undefined ? props.provider : undefined,
   providerAccountId: props.providerAccountId !== undefined ? {
     equals: props.providerAccountId 
   } : undefined,
-  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
-  access_token: props.access_token !== undefined ? props.access_token : undefined,
-  token_type: props.token_type !== undefined ? props.token_type : undefined,
-  scope: props.scope !== undefined ? props.scope : undefined,
-  id_token: props.id_token !== undefined ? props.id_token : undefined,
-  session_state: props.session_state !== undefined ? props.session_state : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -1548,19 +1538,9 @@ id
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  provider: prop.provider !== undefined ? prop.provider : undefined,
   providerAccountId: prop.providerAccountId !== undefined ? {
     equals: prop.providerAccountId 
   } : undefined,
-  refresh_token: prop.refresh_token !== undefined ? prop.refresh_token : undefined,
-  access_token: prop.access_token !== undefined ? prop.access_token : undefined,
-  token_type: prop.token_type !== undefined ? prop.token_type : undefined,
-  scope: prop.scope !== undefined ? prop.scope : undefined,
-  id_token: prop.id_token !== undefined ? prop.id_token : undefined,
-  session_state: prop.session_state !== undefined ? prop.session_state : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -2570,19 +2550,9 @@ id
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  provider: props.provider !== undefined ? props.provider : undefined,
   providerAccountId: props.providerAccountId !== undefined ? {
     equals: props.providerAccountId 
   } : undefined,
-  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
-  access_token: props.access_token !== undefined ? props.access_token : undefined,
-  token_type: props.token_type !== undefined ? props.token_type : undefined,
-  scope: props.scope !== undefined ? props.scope : undefined,
-  id_token: props.id_token !== undefined ? props.id_token : undefined,
-  session_state: props.session_state !== undefined ? props.session_state : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -2650,19 +2620,9 @@ id
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  provider: props.provider !== undefined ? props.provider : undefined,
   providerAccountId: props.providerAccountId !== undefined ? {
     equals: props.providerAccountId 
   } : undefined,
-  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
-  access_token: props.access_token !== undefined ? props.access_token : undefined,
-  token_type: props.token_type !== undefined ? props.token_type : undefined,
-  scope: props.scope !== undefined ? props.scope : undefined,
-  id_token: props.id_token !== undefined ? props.id_token : undefined,
-  session_state: props.session_state !== undefined ? props.session_state : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

@@ -113,7 +113,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  status: props.status !== undefined ? props.status : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -161,7 +160,6 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  status: prop.status !== undefined ? prop.status : undefined,
 
       },
       data: {
@@ -248,7 +246,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  status: props.status !== undefined ? props.status : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -313,7 +310,6 @@ import { removeUndefinedProps } from './utils';
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  status: props.status !== undefined ? props.status : undefined,
       },
     };
 

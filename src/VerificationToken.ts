@@ -116,9 +116,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  token: props.token !== undefined ? props.token : undefined,
-  identifier: props.identifier !== undefined ? props.identifier : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -169,9 +166,6 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  token: prop.token !== undefined ? prop.token : undefined,
-  identifier: prop.identifier !== undefined ? prop.identifier : undefined,
-  expires: prop.expires !== undefined ? prop.expires : undefined,
 
       },
       data: {
@@ -261,9 +255,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  token: props.token !== undefined ? props.token : undefined,
-  identifier: props.identifier !== undefined ? props.identifier : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -328,9 +319,6 @@ import { removeUndefinedProps } from './utils';
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  identifier: props.identifier !== undefined ? props.identifier : undefined,
-  token: props.token !== undefined ? props.token : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
       },
     };
 

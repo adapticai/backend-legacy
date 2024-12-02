@@ -1139,19 +1139,6 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  side: props.side !== undefined ? props.side : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
-  timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
-  status: props.status !== undefined ? props.status : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
-  filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
-  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
-  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
-  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
-  optionType: props.optionType !== undefined ? props.optionType : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -4532,19 +4519,6 @@ import { removeUndefinedProps } from './utils';
   assetId: prop.assetId !== undefined ? {
     equals: prop.assetId 
   } : undefined,
-  side: prop.side !== undefined ? prop.side : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  orderClass: prop.orderClass !== undefined ? prop.orderClass : undefined,
-  timeInForce: prop.timeInForce !== undefined ? prop.timeInForce : undefined,
-  status: prop.status !== undefined ? prop.status : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
-  submittedAt: prop.submittedAt !== undefined ? prop.submittedAt : undefined,
-  filledAt: prop.filledAt !== undefined ? prop.filledAt : undefined,
-  cancelRequestedAt: prop.cancelRequestedAt !== undefined ? prop.cancelRequestedAt : undefined,
-  canceledAt: prop.canceledAt !== undefined ? prop.canceledAt : undefined,
-  expirationDate: prop.expirationDate !== undefined ? prop.expirationDate : undefined,
-  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
 
       },
       data: {
@@ -7964,19 +7938,6 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  side: props.side !== undefined ? props.side : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
-  timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
-  status: props.status !== undefined ? props.status : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
-  filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
-  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
-  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
-  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
-  optionType: props.optionType !== undefined ? props.optionType : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -8050,19 +8011,6 @@ import { removeUndefinedProps } from './utils';
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
   } : undefined,
-  side: props.side !== undefined ? props.side : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  orderClass: props.orderClass !== undefined ? props.orderClass : undefined,
-  timeInForce: props.timeInForce !== undefined ? props.timeInForce : undefined,
-  status: props.status !== undefined ? props.status : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
-  submittedAt: props.submittedAt !== undefined ? props.submittedAt : undefined,
-  filledAt: props.filledAt !== undefined ? props.filledAt : undefined,
-  cancelRequestedAt: props.cancelRequestedAt !== undefined ? props.cancelRequestedAt : undefined,
-  canceledAt: props.canceledAt !== undefined ? props.canceledAt : undefined,
-  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
-  optionType: props.optionType !== undefined ? props.optionType : undefined,
       },
     };
 
