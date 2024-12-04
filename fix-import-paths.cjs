@@ -4,9 +4,11 @@ const path = require('path');
 const generatedDir = path.join(__dirname, 'src', 'generated', 'typegraphql-prisma');
 const modelsDir = path.join(generatedDir, 'models');
 const outputsDir = path.join(generatedDir, 'resolvers', 'outputs');
+const distGeneratedDir = path.join(__dirname, 'generated', 'typegraphql-prisma');
 
-// Function to get all files in a directory recursively
+// Safely get files in a directory
 function getFilesRecursively(dir) {
+  if (!fs.existsSync(dir)) return [];
   let results = [];
   const list = fs.readdirSync(dir);
   list.forEach((file) => {
@@ -21,54 +23,51 @@ function getFilesRecursively(dir) {
   return results;
 }
 
-// Get all model files
-const modelFiles = getFilesRecursively(modelsDir).map((file) =>
-  path.basename(file, '.ts')
-);
-
-// Function to fix import paths in a file
-function fixImportPaths(filePath) {
+// Fix import paths in output files
+function fixImportPaths(filePath, modelFiles) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+      if (err) return reject(err);
 
       let fixedData = data;
       modelFiles.forEach((model) => {
-        const importPath = `../outputs/${model}`;
-        const newImportPath = `../../models/${model}`;
-        const regex = new RegExp(`from "${importPath}"`, 'g');
-        fixedData = fixedData.replace(regex, `from "${newImportPath}"`);
-
-        // Change all instances of findUniqueOrThrow to findUnique in any file under dist/generated/typegraphql-prisma/resolvers/
-        const findUniqueOrThrowPath = `findUniqueOrThrow`;
-        const findUniquePath = `findUnique`;
-        const findUniqueRegex = new RegExp(findUniqueOrThrowPath, 'g');
-        fixedData = fixedData.replace(findUniqueRegex, findUniquePath);
-
+        const regex = new RegExp(`from ['"]\\.\\.\\/outputs\\/${model}['"]`, 'g');
+        fixedData = fixedData.replace(regex, `from "../../models/${model}"`);
       });
 
       fs.writeFile(filePath, fixedData, 'utf8', (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(path.basename(filePath));
-        }
+        if (err) return reject(err);
+        resolve(filePath);
       });
     });
   });
 }
 
-// Get all output files
-const outputFiles = getFilesRecursively(outputsDir);
+// Replace findUniqueOrThrow with findUnique
+function replaceFindUnique(filePath) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) return reject(err);
 
-// Fix import paths in all output files and collect results
-Promise.all(outputFiles.map(fixImportPaths))
-  .then(fixedFiles => {
-    console.log(`Fixed import paths in ${fixedFiles.length} files: ${fixedFiles.join(', ')}`);
+      const fixedData = data.replace(/\bfindUniqueOrThrow\s*\(/g, 'findUnique(');
+      fs.writeFile(filePath, fixedData, 'utf8', (err) => {
+        if (err) return reject(err);
+        resolve(filePath);
+      });
+    });
+  });
+}
+
+const modelFiles = getFilesRecursively(modelsDir).map((file) => path.basename(file, '.ts'));
+const outputFiles = getFilesRecursively(outputsDir);
+const allFiles = getFilesRecursively(generatedDir).concat(getFilesRecursively(distGeneratedDir));
+
+// Fix imports and findUniqueOrThrow replacements
+Promise.allSettled(outputFiles.map((file) => fixImportPaths(file, modelFiles)))
+  .then(() => Promise.allSettled(allFiles.map(replaceFindUnique)))
+  .then(() => {
+    console.log('All operations completed successfully.');
   })
-  .catch(error => {
-    console.error('Error fixing import paths:', error);
+  .catch((err) => {
+    console.error('Error during file operations:', err);
   });

@@ -397,7 +397,7 @@ try {
   const allResolverFiles = resolverFiles.concat(resolverServerFiles);
 
   allResolverFiles.forEach((file) => {
-    if (file.endsWith('.mjs') || file.endsWith('.cjs')) {
+    if (file.endsWith('.mjs') || file.endsWith('.cjs') || file.endsWith('.js')) {
       let content;
       try {
         content = fs.readFileSync(file, 'utf8');
