@@ -385,5 +385,44 @@ try {
   process.exit(1);
 }
 
-// Step 8: Finalize Build
+// Step 8. change all findUniqueOrThrow to findUnique in any file under dist/generated/typegraphql-prisma/resolvers/
+
+try {
+
+  const resolversDir = path.join(distDir, '/generated/typegraphql-prisma/resolvers');
+  const resolversServerDir = path.join(distDir, 'server/generated/typegraphql-prisma/resolvers');
+  const resolverFiles = getFilesRecursively(resolversDir);
+  const resolverServerFiles = getFilesRecursively(resolversServerDir);
+
+  const allResolverFiles = resolverFiles.concat(resolverServerFiles);
+
+  allResolverFiles.forEach((file) => {
+    if (file.endsWith('.mjs') || file.endsWith('.cjs')) {
+      let content;
+      try {
+        content = fs.readFileSync(file, 'utf8');
+      } catch (err) {
+        console.error(`Error reading file ${file}:`, err);
+        return;
+      }
+
+      // Change all instances of findUniqueOrThrow to findUnique in any file under dist/generated/typegraphql-prisma/resolvers/
+      const findUniqueOrThrowPath = `findUniqueOrThrow`;
+      const findUniquePath = `findUnique`;
+      const findUniqueRegex = new RegExp(findUniqueOrThrowPath, 'g');
+      content = content.replace(findUniqueRegex, findUniquePath);
+
+      fs.writeFileSync(file, content, 'utf8');
+    }
+  }
+
+  );
+
+  console.log('Changed all instances of findUniqueOrThrow to findUnique in resolvers.');
+} catch (err) {
+  console.error('Error changing all instances of findUniqueOrThrow to findUnique in resolvers:', err);
+  process.exit(1);
+}
+
+// Step 9: Finalize Build
 console.log('Package preparation completed successfully.');
