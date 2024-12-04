@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "clean": "rm -rf dist && rm -rf src/generated",
-    "dev": "npm run migrate:dev && npm run fix-imports && nodemon --exec ts-node src/server.ts",
+    "dev": "npm run migrate:dev && nodemon --exec ts-node src/server.ts",
     "build": "npm run clean && npm run generate && npm run fix-imports && npm run generate:selections && npm run generate:functions && npm run generate:strings && tsc && npm run build:server",
     "build:server": "tsc --project tsconfig.server.json",
     "build:package": "npm run build && npm run prepare-package-folder",
