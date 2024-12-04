@@ -273,12 +273,14 @@ id
         id: props.contract.id !== undefined ? props.contract.id : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? props.contract.alpacaId : undefined,
         symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
-        assetId: props.contract.assetId !== undefined ? props.contract.assetId : undefined,
         name: props.contract.name !== undefined ? {
             equals: props.contract.name 
            } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
             equals: props.contract.underlyingAssetId 
+           } : undefined,
+        assetId: props.contract.assetId !== undefined ? {
+            equals: props.contract.assetId 
            } : undefined,
         orderId: props.contract.orderId !== undefined ? {
             equals: props.contract.orderId 
@@ -801,14 +803,12 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  contractId: props.contractId !== undefined ? props.contractId : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
-  } : undefined,
-  contractId: props.contractId !== undefined ? {
-    equals: props.contractId 
   } : undefined,
       },
       data: {
@@ -2772,14 +2772,12 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  contractId: props.contractId !== undefined ? props.contractId : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
-  } : undefined,
-  contractId: props.contractId !== undefined ? {
-    equals: props.contractId 
   } : undefined,
       },
       create: {
@@ -2802,12 +2800,14 @@ id
         id: props.contract.id !== undefined ? props.contract.id : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? props.contract.alpacaId : undefined,
         symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
-        assetId: props.contract.assetId !== undefined ? props.contract.assetId : undefined,
         name: props.contract.name !== undefined ? {
             equals: props.contract.name 
            } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
             equals: props.contract.underlyingAssetId 
+           } : undefined,
+        assetId: props.contract.assetId !== undefined ? {
+            equals: props.contract.assetId 
            } : undefined,
         orderId: props.contract.orderId !== undefined ? {
             equals: props.contract.orderId 
@@ -5202,14 +5202,12 @@ id
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
+  contractId: prop.contractId !== undefined ? prop.contractId : undefined,
   symbol: prop.symbol !== undefined ? {
     equals: prop.symbol 
   } : undefined,
   assetId: prop.assetId !== undefined ? {
     equals: prop.assetId 
-  } : undefined,
-  contractId: prop.contractId !== undefined ? {
-    equals: prop.contractId 
   } : undefined,
 
       },
@@ -7212,14 +7210,12 @@ id
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  contractId: props.contractId !== undefined ? props.contractId : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
   assetId: props.assetId !== undefined ? {
     equals: props.assetId 
-  } : undefined,
-  contractId: props.contractId !== undefined ? {
-    equals: props.contractId 
   } : undefined,
 },
 };

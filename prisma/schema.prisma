@@ -422,7 +422,6 @@ enum OptionType {
 
 // Specifies the style of an option contract (AMERICAN or EUROPEAN).
 enum OptionStyle {
-
   /// An option contract that can be exercised at any time before expiration.
   AMERICAN
 
@@ -432,7 +431,6 @@ enum OptionStyle {
 
 // Specifies the type of delivery for an option contract (CASH or EQUITY).
 enum DeliverableType {
-
   /// The option contract is settled in cash.
   CASH
 
@@ -1214,13 +1212,13 @@ model Contract {
   asset Asset @relation(fields: [assetId], references: [id])
 
   /// Foreign key to the Asset
-  assetId String @unique
+  assetId String @db.Uuid
 
   /// Optional relation to an order that created this contract
-  order Order? @relation
+  order   Order? @relation
 
   /// Foreign key to the Order
-  orderId String?
+  orderId String @db.Uuid
 
   /// Timestamps
   createdAt DateTime @default(now())
@@ -1228,7 +1226,6 @@ model Contract {
 
   @@map(name: "contracts")
 }
-
 
 // Represents a deliverable asset associated with an options contract.
 model Deliverable {
@@ -1242,7 +1239,7 @@ model Deliverable {
   symbol String
 
   /// Symbol of the deliverable's asset (if equity)
-  assetId String?
+  assetId String @db.Uuid
 
   /// Amount of the deliverable
   amount Int?
@@ -1263,7 +1260,7 @@ model Deliverable {
   contract Contract @relation(fields: [contractId], references: [id])
 
   /// Foreign key to the Contract
-  contractId String
+  contractId String  @db.Uuid @unique
 
   /// Timestamps
   createdAt DateTime @default(now())
@@ -1477,7 +1474,7 @@ model Order {
   takeProfitId String? @db.Uuid
 
   /// (Optional) reference to the option contract associated with this order. TYPESTRING.SKIP=true
-  contractId String? @db.Uuid @unique
+  contractId String? @unique @db.Uuid
 
   /// (Optional) The option contract associated with this order. TYPESTRING.SKIP=true GQL.SKIP=true
   contract Contract? @relation(fields: [contractId], references: [id], onDelete: Cascade)

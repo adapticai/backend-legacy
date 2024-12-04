@@ -505,12 +505,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -2278,12 +2280,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -3154,12 +3158,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -3805,12 +3811,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -5490,12 +5498,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -6366,12 +6376,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -8100,12 +8112,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 
@@ -8976,12 +8990,14 @@ import { removeUndefinedProps } from './utils';
             id: item.contract.id !== undefined ? item.contract.id : undefined,
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
             symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
-            assetId: item.contract.assetId !== undefined ? item.contract.assetId : undefined,
             name: item.contract.name !== undefined ? {
                 equals: item.contract.name 
                } : undefined,
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
+               } : undefined,
+            assetId: item.contract.assetId !== undefined ? {
+                equals: item.contract.assetId 
                } : undefined,
             orderId: item.contract.orderId !== undefined ? {
                 equals: item.contract.orderId 

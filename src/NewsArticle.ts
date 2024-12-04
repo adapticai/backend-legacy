@@ -347,12 +347,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -1004,12 +1006,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -1286,12 +1290,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -1523,12 +1529,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -1834,12 +1842,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -2393,12 +2403,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -2675,12 +2687,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -2912,12 +2926,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -3521,12 +3537,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -3803,12 +3821,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 
@@ -4040,12 +4060,14 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
             symbol: item.symbol !== undefined ? item.symbol : undefined,
-            assetId: item.assetId !== undefined ? item.assetId : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
+               } : undefined,
+            assetId: item.assetId !== undefined ? {
+                equals: item.assetId 
                } : undefined,
             orderId: item.orderId !== undefined ? {
                 equals: item.orderId 

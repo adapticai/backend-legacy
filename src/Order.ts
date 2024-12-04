@@ -1039,12 +1039,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -1080,14 +1082,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -1168,12 +1168,14 @@ import { removeUndefinedProps } from './utils';
         id: props.contract.id !== undefined ? props.contract.id : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? props.contract.alpacaId : undefined,
         symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
-        assetId: props.contract.assetId !== undefined ? props.contract.assetId : undefined,
         name: props.contract.name !== undefined ? {
             equals: props.contract.name 
            } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
             equals: props.contract.underlyingAssetId 
+           } : undefined,
+        assetId: props.contract.assetId !== undefined ? {
+            equals: props.contract.assetId 
            } : undefined,
         orderId: props.contract.orderId !== undefined ? {
             equals: props.contract.orderId 
@@ -1209,14 +1211,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: props.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         create: {
@@ -4641,12 +4641,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -4720,14 +4722,12 @@ import { removeUndefinedProps } from './utils';
         upsert: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           update: {
@@ -4939,14 +4939,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -5276,12 +5274,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -5317,14 +5317,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -5487,14 +5485,12 @@ import { removeUndefinedProps } from './utils';
       upsert: props.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         update: {
@@ -6254,14 +6250,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: props.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         create: {
@@ -7425,12 +7419,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -7466,14 +7462,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -7554,12 +7548,14 @@ import { removeUndefinedProps } from './utils';
         id: props.contract.id !== undefined ? props.contract.id : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? props.contract.alpacaId : undefined,
         symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
-        assetId: props.contract.assetId !== undefined ? props.contract.assetId : undefined,
         name: props.contract.name !== undefined ? {
             equals: props.contract.name 
            } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
             equals: props.contract.underlyingAssetId 
+           } : undefined,
+        assetId: props.contract.assetId !== undefined ? {
+            equals: props.contract.assetId 
            } : undefined,
         orderId: props.contract.orderId !== undefined ? {
             equals: props.contract.orderId 
@@ -7595,14 +7591,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: props.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         create: {
@@ -10907,12 +10901,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -10986,14 +10982,12 @@ import { removeUndefinedProps } from './utils';
         upsert: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           update: {
@@ -11205,14 +11199,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -11542,12 +11534,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -11583,14 +11577,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -11753,14 +11745,12 @@ import { removeUndefinedProps } from './utils';
       upsert: props.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         update: {
@@ -12520,14 +12510,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: props.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         create: {
@@ -15888,12 +15876,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -15967,14 +15957,12 @@ import { removeUndefinedProps } from './utils';
         upsert: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           update: {
@@ -16186,14 +16174,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -16523,12 +16509,14 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           alpacaId: item.alpacaId !== undefined ? item.alpacaId : undefined,
           symbol: item.symbol !== undefined ? item.symbol : undefined,
-          assetId: item.assetId !== undefined ? item.assetId : undefined,
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
           underlyingAssetId: item.underlyingAssetId !== undefined ? {
               equals: item.underlyingAssetId 
+             } : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId 
              } : undefined,
           orderId: item.orderId !== undefined ? {
               equals: item.orderId 
@@ -16564,14 +16552,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: item.deliverables.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            contractId: item.contractId !== undefined ? item.contractId : undefined,
             symbol: item.symbol !== undefined ? {
                 equals: item.symbol 
                } : undefined,
             assetId: item.assetId !== undefined ? {
                 equals: item.assetId 
-               } : undefined,
-            contractId: item.contractId !== undefined ? {
-                equals: item.contractId 
                } : undefined,
           },
           create: {
@@ -16734,14 +16720,12 @@ import { removeUndefinedProps } from './utils';
       upsert: prop.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         update: {
@@ -17501,14 +17485,12 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: prop.contract.deliverables.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          contractId: item.contractId !== undefined ? item.contractId : undefined,
           symbol: item.symbol !== undefined ? {
               equals: item.symbol 
              } : undefined,
           assetId: item.assetId !== undefined ? {
               equals: item.assetId 
-             } : undefined,
-          contractId: item.contractId !== undefined ? {
-              equals: item.contractId 
              } : undefined,
         },
         create: {
