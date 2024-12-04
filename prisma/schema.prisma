@@ -751,10 +751,10 @@ model Position {
   id String @id @default(uuid()) @db.Uuid
 
   /// Reference to the associated asset. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// The average price at which the asset was acquired.
   averageEntryPrice Float
@@ -1209,16 +1209,16 @@ model Contract {
   ppind Boolean?
 
   /// Relation to the Asset model
-  asset Asset @relation(fields: [assetId], references: [id])
+  asset Asset? @relation(fields: [assetId], references: [id])
 
   /// Foreign key to the Asset
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Optional relation to an order that created this contract
   order   Order? @relation
 
   /// Foreign key to the Order
-  orderId String @db.Uuid
+  orderId String? @db.Uuid
 
   /// Timestamps
   createdAt DateTime @default(now())
@@ -1239,7 +1239,7 @@ model Deliverable {
   symbol String
 
   /// Symbol of the deliverable's asset (if equity)
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Amount of the deliverable
   amount Int?
@@ -1278,7 +1278,7 @@ model Trade {
   alpacaAccountId String @db.Uuid
 
   /// Reference to the asset being traded. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Quantity of the asset being traded.
   qty Float
@@ -1323,7 +1323,7 @@ model Trade {
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
@@ -1375,7 +1375,7 @@ model Order {
   alpacaAccountId String @db.Uuid
 
   /// Reference to the asset being ordered. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Quantity of the asset to be ordered. Required if 'notional' is not provided. For 'MARKET' orders with 'timeInForce' set to 'DAY', 'qty' can be fractional.
   qty Float?
@@ -1453,7 +1453,7 @@ model Order {
   action Action? @relation(fields: [actionId], references: [id], onDelete: Cascade)
 
   /// The asset this order is for. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trade', 'order', 'positions', 'newsMentions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Fee associated with the order. TYPESTRING.SKIP=true
   fee Float?
@@ -1625,7 +1625,7 @@ model NewsArticleAssetSentiment {
   id String @id @default(uuid()) @db.Uuid
 
   /// Reference to the associated asset. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Reference to the associated news article. TYPESTRING.SKIP=true
   newsArticleId String @db.Uuid
@@ -1637,7 +1637,7 @@ model NewsArticleAssetSentiment {
   news NewsArticle @relation(fields: [newsArticleId], references: [id])
 
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions', 'trades', 'orders', 'positions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Relevancy score indicating how relevant the news is to the asset.
   relevancyScore String?
