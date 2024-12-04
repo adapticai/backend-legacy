@@ -41,6 +41,13 @@ function fixImportPaths(filePath) {
         const newImportPath = `../../models/${model}`;
         const regex = new RegExp(`from "${importPath}"`, 'g');
         fixedData = fixedData.replace(regex, `from "${newImportPath}"`);
+
+        // Change all instances of findUniqueOrThrow to findUnique in any file under dist/generated/typegraphql-prisma/resolvers/
+        const findUniqueOrThrowPath = `findUniqueOrThrow`;
+        const findUniquePath = `findUnique`;
+        const findUniqueRegex = new RegExp(findUniqueOrThrowPath, 'g');
+        fixedData = fixedData.replace(findUniqueRegex, findUniquePath);
+
       });
 
       fs.writeFile(filePath, fixedData, 'utf8', (err) => {
