@@ -158,6 +158,58 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
+   * Upsert a single MarketSentiment record.
+   * @param props - Properties to update.
+   * @returns The updated MarketSentiment or null.
+   */
+  async upsert(props: MarketSentimentType): Promise<MarketSentimentType> {
+
+      const UPSERT_ONE_MARKETSENTIMENT = gql`
+      mutation upsertOneMarketSentiment($where: MarketSentimentWhereUniqueInput!, $create: MarketSentimentCreateInput!, $update: MarketSentimentUpdateInput!) {
+        upsertOneMarketSentiment(where: $where, create: $create, update: $update) {
+          ${selectionSet}
+        }
+      }`;
+
+    const variables = {
+      where: {
+        id: props.id !== undefined ? props.id : undefined,
+      },
+      create: {
+    sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  longDescription: props.longDescription !== undefined ? props.longDescription : undefined,
+      },
+      update: {
+  sentiment: props.sentiment !== undefined ? {
+            set: props.sentiment 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
+           } : undefined,
+  longDescription: props.longDescription !== undefined ? {
+            set: props.longDescription 
+           } : undefined,
+      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_MARKETSENTIMENT, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOneMarketSentiment) {
+        return response.data.upsertOneMarketSentiment;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOneMarketSentiment:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple MarketSentiment records.
    * @param props - Array of MarketSentiment objects for the updated records.
    * @returns The count of created records or null.

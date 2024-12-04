@@ -150,6 +150,58 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
+   * Upsert a single VerificationToken record.
+   * @param props - Properties to update.
+   * @returns The updated VerificationToken or null.
+   */
+  async upsert(props: VerificationTokenType): Promise<VerificationTokenType> {
+
+      const UPSERT_ONE_VERIFICATIONTOKEN = gql`
+      mutation upsertOneVerificationToken($where: VerificationTokenWhereUniqueInput!, $create: VerificationTokenCreateInput!, $update: VerificationTokenUpdateInput!) {
+        upsertOneVerificationToken(where: $where, create: $create, update: $update) {
+          ${selectionSet}
+        }
+      }`;
+
+    const variables = {
+      where: {
+        id: props.id !== undefined ? props.id : undefined,
+      },
+      create: {
+    identifier: props.identifier !== undefined ? props.identifier : undefined,
+  token: props.token !== undefined ? props.token : undefined,
+  expires: props.expires !== undefined ? props.expires : undefined,
+      },
+      update: {
+  identifier: props.identifier !== undefined ? {
+            set: props.identifier 
+           } : undefined,
+  token: props.token !== undefined ? {
+            set: props.token 
+           } : undefined,
+  expires: props.expires !== undefined ? {
+            set: props.expires 
+           } : undefined,
+      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOneVerificationToken) {
+        return response.data.upsertOneVerificationToken;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOneVerificationToken:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple VerificationToken records.
    * @param props - Array of VerificationToken objects for the updated records.
    * @returns The count of created records or null.

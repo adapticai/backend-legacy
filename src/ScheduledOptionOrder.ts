@@ -144,6 +144,54 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
+   * Upsert a single ScheduledOptionOrder record.
+   * @param props - Properties to update.
+   * @returns The updated ScheduledOptionOrder or null.
+   */
+  async upsert(props: ScheduledOptionOrderType): Promise<ScheduledOptionOrderType> {
+
+      const UPSERT_ONE_SCHEDULEDOPTIONORDER = gql`
+      mutation upsertOneScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!, $create: ScheduledOptionOrderCreateInput!, $update: ScheduledOptionOrderUpdateInput!) {
+        upsertOneScheduledOptionOrder(where: $where, create: $create, update: $update) {
+          ${selectionSet}
+        }
+      }`;
+
+    const variables = {
+      where: {
+        id: props.id !== undefined ? props.id : undefined,
+      },
+      create: {
+    payload: props.payload !== undefined ? props.payload : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+      },
+      update: {
+  payload: props.payload !== undefined ? {
+            set: props.payload 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_SCHEDULEDOPTIONORDER, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOneScheduledOptionOrder) {
+        return response.data.upsertOneScheduledOptionOrder;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOneScheduledOptionOrder:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple ScheduledOptionOrder records.
    * @param props - Array of ScheduledOptionOrder objects for the updated records.
    * @returns The count of created records or null.

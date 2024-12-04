@@ -167,6 +167,65 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
+   * Upsert a single EconomicEvent record.
+   * @param props - Properties to update.
+   * @returns The updated EconomicEvent or null.
+   */
+  async upsert(props: EconomicEventType): Promise<EconomicEventType> {
+
+      const UPSERT_ONE_ECONOMICEVENT = gql`
+      mutation upsertOneEconomicEvent($where: EconomicEventWhereUniqueInput!, $create: EconomicEventCreateInput!, $update: EconomicEventUpdateInput!) {
+        upsertOneEconomicEvent(where: $where, create: $create, update: $update) {
+          ${selectionSet}
+        }
+      }`;
+
+    const variables = {
+      where: {
+        id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
+      },
+      create: {
+    title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+      },
+      update: {
+  title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
+           } : undefined,
+  date: props.date !== undefined ? {
+            set: props.date 
+           } : undefined,
+  importance: props.importance !== undefined ? {
+            set: props.importance 
+           } : undefined,
+      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_ECONOMICEVENT, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOneEconomicEvent) {
+        return response.data.upsertOneEconomicEvent;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOneEconomicEvent:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple EconomicEvent records.
    * @param props - Array of EconomicEvent objects for the updated records.
    * @returns The count of created records or null.

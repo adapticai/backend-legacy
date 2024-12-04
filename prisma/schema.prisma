@@ -420,6 +420,26 @@ enum OptionType {
   PUT
 }
 
+// Specifies the style of an option contract (AMERICAN or EUROPEAN).
+enum OptionStyle {
+
+  /// An option contract that can be exercised at any time before expiration.
+  AMERICAN
+
+  /// An option contract that can only be exercised at expiration.
+  EUROPEAN
+}
+
+// Specifies the type of delivery for an option contract (CASH or EQUITY).
+enum DeliverableType {
+
+  /// The option contract is settled in cash.
+  CASH
+
+  /// The option contract is settled with the underlying asset.
+  EQUITY
+}
+
 enum OrderStatus {
   /// The order has been staged in Adaptic to be sent to Alpaca. This is the initial status.
   STAGED
@@ -1119,7 +1139,137 @@ model Asset {
   /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   newsMentions NewsArticleAssetSentiment[]
 
+  /// List of contracts associated with this asset. TYPESTRING.SKIP=true GQL.SKIP=true
+  contracts Contract[]
+
   @@map(name: "assets")
+}
+
+// Represents an Option contract deliverable.
+model Contract {
+  /// Unique identifier for the contract. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Alpaca's unique contract identifier
+  alpacaId String @unique
+
+  /// Symbol of the contract
+  symbol String @unique
+
+  /// Name of the contract
+  name String
+
+  /// Status of the contract (active, inactive)
+  status String
+
+  /// Indicates if the contract is tradable
+  tradable Boolean
+
+  /// Expiration date of the contract
+  expirationDate DateTime
+
+  /// Root symbol of the contract
+  rootSymbol String
+
+  /// Underlying symbol of the contract
+  underlyingSymbol String
+
+  /// Unique identifier of the underlying asset
+  underlyingAssetId String
+
+  /// Type of the option (call or put)
+  type OptionType
+
+  /// Style of the option (american or european)
+  style OptionStyle
+
+  /// Strike price of the option
+  strikePrice Float
+
+  /// Multiplier of the option
+  multiplier Int
+
+  /// Size of the option
+  size Int
+
+  /// Open interest of the option
+  openInterest Int?
+
+  /// Date when the open interest was recorded
+  openInterestDate DateTime?
+
+  /// Close price of the option
+  closePrice Float?
+
+  /// Date when the close price was recorded
+  closePriceDate DateTime?
+
+  /// Deliverables associated with the contract
+  deliverables Deliverable[]
+
+  /// PPIND flag
+  ppind Boolean?
+
+  /// Relation to the Asset model
+  asset Asset @relation(fields: [assetId], references: [id])
+
+  /// Foreign key to the Asset
+  assetId String @unique
+
+  /// Optional relation to an order that created this contract
+  order Order? @relation
+
+  /// Foreign key to the Order
+  orderId String?
+
+  /// Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map(name: "contracts")
+}
+
+
+// Represents a deliverable asset associated with an options contract.
+model Deliverable {
+  /// Unique identifier for the deliverable. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Type of deliverable (cash or equity)
+  type DeliverableType
+
+  /// Symbol of the deliverable
+  symbol String
+
+  /// Symbol of the deliverable's asset (if equity)
+  assetId String?
+
+  /// Amount of the deliverable
+  amount Int?
+
+  /// Allocation percentage of the deliverable
+  allocationPercentage Float
+
+  /// Settlement type (e.g., T+1)
+  settlementType String
+
+  /// Settlement method (e.g., CCC)
+  settlementMethod String
+
+  /// Indicates if the settlement is delayed
+  delayedSettlement Boolean
+
+  /// Relation to the Contract model
+  contract Contract @relation(fields: [contractId], references: [id])
+
+  /// Foreign key to the Contract
+  contractId String
+
+  /// Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map(name: "deliverables")
 }
 
 // Represents a trade executed through an Alpaca account.
@@ -1325,6 +1475,12 @@ model Order {
 
   /// Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
   takeProfitId String? @db.Uuid
+
+  /// (Optional) reference to the option contract associated with this order. TYPESTRING.SKIP=true
+  contractId String? @db.Uuid @unique
+
+  /// (Optional) The option contract associated with this order. TYPESTRING.SKIP=true GQL.SKIP=true
+  contract Contract? @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@map(name: "orders")
 }

@@ -8,7 +8,7 @@ import { selectionSets } from '../generated/selectionSets';
 
 type ModelName = keyof typeof selectionSets;
 
-type OperationType = 'create' | 'createMany' | 'update' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
+type OperationType = 'create' | 'createMany' | 'update' | 'updateWithoutId' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
 
 
 /**
@@ -62,6 +62,14 @@ const constructVariablesObject = (
       return;
     }
 
+    // Skip meta fields during updateWithoutId operations
+    if (
+      operationType === 'updateWithoutId' &&
+      ['id', 'createdAt', 'updatedAt'].includes(field.name)
+    ) {
+      return;
+    }
+
     let accessor = `${propsAccessor}.${field.name}`;
 
     switch (operationType) {
@@ -79,6 +87,7 @@ const constructVariablesObject = (
       case 'update':
       case 'updateMany':
       case 'upsert':
+      case 'updateWithoutId':
         variablesObject += handleUpdateOperation(
           field,
           accessor,
@@ -742,6 +751,66 @@ ${constructVariablesObject(
       }
     } catch (error) {
       console.error('Error in updateOne${capitalModelName}:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Upsert a single ${capitalModelName} record.
+   * @param props - Properties to update.
+   * @returns The updated ${capitalModelName} or null.
+   */
+  async upsert(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+
+      const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
+      mutation upsertOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!, $create: ${capitalModelName}CreateInput!, $update: ${capitalModelName}UpdateInput!) {
+        upsertOne${capitalModelName}(where: $where, create: $create, update: $update) {
+          \${selectionSet}
+        }
+      }\`;
+
+    const variables = {
+      where: {
+      ${constructVariablesObject(
+    'props',
+    inputTypePaths.whereUnique,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'where'
+  )}      },
+      create: {
+  ${constructVariablesObject(
+    'props',
+    inputTypePaths.create,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'create'
+  )}      },
+      update: {
+${constructVariablesObject(
+    'props',
+    inputTypePaths.update,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'updateWithoutId'
+  )}      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOne${capitalModelName}) {
+        return response.data.upsertOne${capitalModelName};
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOne${capitalModelName}:', error);
       throw error;
     }
   },
