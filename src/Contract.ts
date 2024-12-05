@@ -287,9 +287,6 @@ id
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
            } : undefined,
-        assetId: item.assetId !== undefined ? {
-            equals: item.assetId 
-           } : undefined,
       },
       create: {
         type: item.type !== undefined ? item.type : undefined,
@@ -383,9 +380,6 @@ id
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -465,9 +459,6 @@ id
           contractId: item.contractId !== undefined ? item.contractId : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
-             } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
              } : undefined,
         },
         create: {
@@ -595,12 +586,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -638,9 +623,6 @@ id
  : { connectOrCreate: props.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
@@ -699,9 +681,6 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           url: item.url !== undefined ? item.url : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           newsArticleId: item.newsArticleId !== undefined ? {
               equals: item.newsArticleId 
              } : undefined,
@@ -763,9 +742,6 @@ id
         contractId: props.order.contractId !== undefined ? props.order.contractId : undefined,
         alpacaAccountId: props.order.alpacaAccountId !== undefined ? {
             equals: props.order.alpacaAccountId 
-           } : undefined,
-        assetId: props.order.assetId !== undefined ? {
-            equals: props.order.assetId 
            } : undefined,
       },
       create: {
@@ -892,9 +868,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -920,9 +893,6 @@ id
  : { connectOrCreate: props.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -998,9 +968,6 @@ id
             id: props.order.action.trade.id !== undefined ? props.order.action.trade.id : undefined,
             alpacaAccountId: props.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: props.order.action.trade.assetId !== undefined ? {
-                equals: props.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -1101,9 +1068,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -1129,9 +1093,6 @@ id
  : { connectOrCreate: props.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -1164,9 +1125,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -1195,12 +1153,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -1333,12 +1285,6 @@ id
   } : undefined,
   underlyingAssetId: props.underlyingAssetId !== undefined ? {
     equals: props.underlyingAssetId 
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId 
-  } : undefined,
-  orderId: props.orderId !== undefined ? {
-    equals: props.orderId 
   } : undefined,
       },
       data: {
@@ -2335,12 +2281,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -2737,9 +2677,6 @@ id
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -2819,9 +2756,6 @@ id
           contractId: item.contractId !== undefined ? item.contractId : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
-             } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
              } : undefined,
         },
         create: {
@@ -2949,12 +2883,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -2992,9 +2920,6 @@ id
  : { connectOrCreate: props.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
@@ -3053,9 +2978,6 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           url: item.url !== undefined ? item.url : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           newsArticleId: item.newsArticleId !== undefined ? {
               equals: item.newsArticleId 
              } : undefined,
@@ -3594,9 +3516,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -3622,9 +3541,6 @@ id
  : { connectOrCreate: props.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -3783,9 +3699,6 @@ id
             id: props.order.action.trade.id !== undefined ? props.order.action.trade.id : undefined,
             alpacaAccountId: props.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: props.order.action.trade.assetId !== undefined ? {
-                equals: props.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -4342,9 +4255,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -4370,9 +4280,6 @@ id
  : { connectOrCreate: props.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -4405,9 +4312,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -4436,12 +4340,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -4596,9 +4494,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -4624,9 +4519,6 @@ id
  : { connectOrCreate: props.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -4702,9 +4594,6 @@ id
             id: props.order.action.trade.id !== undefined ? props.order.action.trade.id : undefined,
             alpacaAccountId: props.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: props.order.action.trade.assetId !== undefined ? {
-                equals: props.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -4805,9 +4694,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -4833,9 +4719,6 @@ id
  : { connectOrCreate: props.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -4868,9 +4751,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -4899,12 +4779,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -4981,12 +4855,6 @@ id
   underlyingAssetId: props.underlyingAssetId !== undefined ? {
     equals: props.underlyingAssetId 
   } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId 
-  } : undefined,
-  orderId: props.orderId !== undefined ? {
-    equals: props.orderId 
-  } : undefined,
       },
       create: {
     alpacaId: props.alpacaId !== undefined ? props.alpacaId : undefined,
@@ -5021,9 +4889,6 @@ id
         contractId: item.contractId !== undefined ? item.contractId : undefined,
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
-           } : undefined,
-        assetId: item.assetId !== undefined ? {
-            equals: item.assetId 
            } : undefined,
       },
       create: {
@@ -5118,9 +4983,6 @@ id
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -5200,9 +5062,6 @@ id
           contractId: item.contractId !== undefined ? item.contractId : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
-             } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
              } : undefined,
         },
         create: {
@@ -5330,12 +5189,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -5373,9 +5226,6 @@ id
  : { connectOrCreate: props.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
@@ -5434,9 +5284,6 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           url: item.url !== undefined ? item.url : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           newsArticleId: item.newsArticleId !== undefined ? {
               equals: item.newsArticleId 
              } : undefined,
@@ -5498,9 +5345,6 @@ id
         contractId: props.order.contractId !== undefined ? props.order.contractId : undefined,
         alpacaAccountId: props.order.alpacaAccountId !== undefined ? {
             equals: props.order.alpacaAccountId 
-           } : undefined,
-        assetId: props.order.assetId !== undefined ? {
-            equals: props.order.assetId 
            } : undefined,
       },
       create: {
@@ -5627,9 +5471,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -5655,9 +5496,6 @@ id
  : { connectOrCreate: props.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -5733,9 +5571,6 @@ id
             id: props.order.action.trade.id !== undefined ? props.order.action.trade.id : undefined,
             alpacaAccountId: props.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: props.order.action.trade.assetId !== undefined ? {
-                equals: props.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -5836,9 +5671,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -5864,9 +5696,6 @@ id
  : { connectOrCreate: props.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -5899,9 +5728,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -5930,12 +5756,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -6954,12 +6774,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -7356,9 +7170,6 @@ id
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -7438,9 +7249,6 @@ id
           contractId: item.contractId !== undefined ? item.contractId : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
-             } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
              } : undefined,
         },
         create: {
@@ -7568,12 +7376,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -7611,9 +7413,6 @@ id
  : { connectOrCreate: props.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
@@ -7672,9 +7471,6 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           url: item.url !== undefined ? item.url : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           newsArticleId: item.newsArticleId !== undefined ? {
               equals: item.newsArticleId 
              } : undefined,
@@ -8213,9 +8009,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -8241,9 +8034,6 @@ id
  : { connectOrCreate: props.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -8402,9 +8192,6 @@ id
             id: props.order.action.trade.id !== undefined ? props.order.action.trade.id : undefined,
             alpacaAccountId: props.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: props.order.action.trade.assetId !== undefined ? {
-                equals: props.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -8961,9 +8748,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -8989,9 +8773,6 @@ id
  : { connectOrCreate: props.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -9024,9 +8805,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -9055,12 +8833,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -9215,9 +8987,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -9243,9 +9012,6 @@ id
  : { connectOrCreate: props.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -9321,9 +9087,6 @@ id
             id: props.order.action.trade.id !== undefined ? props.order.action.trade.id : undefined,
             alpacaAccountId: props.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: props.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: props.order.action.trade.assetId !== undefined ? {
-                equals: props.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -9424,9 +9187,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -9452,9 +9212,6 @@ id
  : { connectOrCreate: props.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -9487,9 +9244,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -9518,12 +9272,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -9599,12 +9347,6 @@ id
   } : undefined,
   underlyingAssetId: prop.underlyingAssetId !== undefined ? {
     equals: prop.underlyingAssetId 
-  } : undefined,
-  assetId: prop.assetId !== undefined ? {
-    equals: prop.assetId 
-  } : undefined,
-  orderId: prop.orderId !== undefined ? {
-    equals: prop.orderId 
   } : undefined,
 
       },
@@ -10602,12 +10344,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -11004,9 +10740,6 @@ id
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
         },
         create: {
           qty: item.qty !== undefined ? item.qty : undefined,
@@ -11086,9 +10819,6 @@ id
           contractId: item.contractId !== undefined ? item.contractId : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
-             } : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
              } : undefined,
         },
         create: {
@@ -11216,12 +10946,6 @@ id
             underlyingAssetId: item.contract.underlyingAssetId !== undefined ? {
                 equals: item.contract.underlyingAssetId 
                } : undefined,
-            assetId: item.contract.assetId !== undefined ? {
-                equals: item.contract.assetId 
-               } : undefined,
-            orderId: item.contract.orderId !== undefined ? {
-                equals: item.contract.orderId 
-               } : undefined,
           },
           create: {
             alpacaId: item.contract.alpacaId !== undefined ? item.contract.alpacaId : undefined,
@@ -11259,9 +10983,6 @@ id
  : { connectOrCreate: prop.asset.positions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
               equals: item.alpacaAccountId 
              } : undefined,
@@ -11320,9 +11041,6 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           url: item.url !== undefined ? item.url : undefined,
-          assetId: item.assetId !== undefined ? {
-              equals: item.assetId 
-             } : undefined,
           newsArticleId: item.newsArticleId !== undefined ? {
               equals: item.newsArticleId 
              } : undefined,
@@ -11861,9 +11579,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -11889,9 +11604,6 @@ id
  : { connectOrCreate: prop.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -12050,9 +11762,6 @@ id
             id: prop.order.action.trade.id !== undefined ? prop.order.action.trade.id : undefined,
             alpacaAccountId: prop.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: prop.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: prop.order.action.trade.assetId !== undefined ? {
-                equals: prop.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -12609,9 +12318,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -12637,9 +12343,6 @@ id
  : { connectOrCreate: prop.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -12672,9 +12375,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -12703,12 +12403,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -12863,9 +12557,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -12891,9 +12582,6 @@ id
  : { connectOrCreate: prop.order.alpacaAccount.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -12969,9 +12657,6 @@ id
             id: prop.order.action.trade.id !== undefined ? prop.order.action.trade.id : undefined,
             alpacaAccountId: prop.order.action.trade.alpacaAccountId !== undefined ? {
                 equals: prop.order.action.trade.alpacaAccountId 
-               } : undefined,
-            assetId: prop.order.action.trade.assetId !== undefined ? {
-                equals: prop.order.action.trade.assetId 
                } : undefined,
           },
           create: {
@@ -13072,9 +12757,6 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -13100,9 +12782,6 @@ id
  : { connectOrCreate: prop.order.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
@@ -13135,9 +12814,6 @@ id
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
                 equals: item.newsArticleId 
                } : undefined,
@@ -13166,12 +12842,6 @@ id
                } : undefined,
             underlyingAssetId: item.underlyingAssetId !== undefined ? {
                 equals: item.underlyingAssetId 
-               } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
-            orderId: item.orderId !== undefined ? {
-                equals: item.orderId 
                } : undefined,
           },
           create: {
@@ -13286,12 +12956,6 @@ id
   underlyingAssetId: props.underlyingAssetId !== undefined ? {
     equals: props.underlyingAssetId 
   } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId 
-  } : undefined,
-  orderId: props.orderId !== undefined ? {
-    equals: props.orderId 
-  } : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -13367,12 +13031,6 @@ id
   } : undefined,
   underlyingAssetId: props.underlyingAssetId !== undefined ? {
     equals: props.underlyingAssetId 
-  } : undefined,
-  assetId: props.assetId !== undefined ? {
-    equals: props.assetId 
-  } : undefined,
-  orderId: props.orderId !== undefined ? {
-    equals: props.orderId 
   } : undefined,
       },
     };
