@@ -269,6 +269,7 @@ const handleUpdateOperation = (
     return '';
   }
 
+  // Scalar or updatable fields:
   if (field.type.isScalar && field.type.isFieldUpdate || field.type.isFieldUpdate) {
     return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}          set: ${accessor} \n ${indent}        } : undefined,\n`;
   } else {
@@ -320,15 +321,31 @@ const handleUpdateOperation = (
     const createInputTypePath = path.join(inputsPath || '', `${createInputTypeName}.ts`);
     const createFields = getInputTypeDefinition(createInputTypePath);
 
-
-    if (updateFields.length === 0 || !updateFields || createFields.length === 0 || !createFields || !whereFields || whereFields.length === 0) {
+    if (
+      !updateFields || updateFields.length === 0 ||
+      !createFields || createFields.length === 0 ||
+      !whereFields || whereFields.length === 0
+    ) {
       console.warn(`No fields found in update input type: ${updateInputTypePath}`);
       return '';
     }
 
+    // Dynamic handling for cases where accessor is {id: ...} only or array of such objects:
+    const singleIdCondition = `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'`;
+    const arrayOfIdCondition = `Array.isArray(${accessor}) && ${accessor}.length > 0 && ${accessor}.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1)`;
+
     const openingLine = field.type.isList
-      ? `${operationFieldName}: ${accessor}.map((item: any) => ({\n`
-      : `${operationFieldName}: {\n`;
+      ? `${arrayOfIdCondition} ? {
+${indent}connect: ${accessor}.map((item: any) => ({
+${indent}  id: item.id
+${indent}}))
+} : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
+      : `${singleIdCondition}
+? {
+${indent}connect: {
+${indent}  id: ${accessor}.id
+${indent}}
+} : { ${operationFieldName}: {\n`;
 
     const closingLine = field.type.isList ? `${indent}  }))\n` : `${indent}  }\n`;
 
@@ -337,15 +354,15 @@ const handleUpdateOperation = (
     }
 
     let code =
-      `${indent}${field.name}: ${accessor} ? {\n` +
-      `${indent}  ${openingLine}` +
+      `${indent}${field.name}: ${accessor} ? \n` +
+      `${indent}${openingLine}` +
       `${indent}    where: {\n` +
       whereFields
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
             if (isUniqueField(whereField.name) && (whereField.type.isScalar && whereField.type.isFilterObject || whereField.type.isFilterObject)) {
-              return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
+              return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (isUniqueField(whereField.name) && whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
@@ -355,28 +372,27 @@ const handleUpdateOperation = (
               return `${handleUpdateOperation(whereField, nestedAccessor, inputsPath, modelsPath, depth + 1, maxDepth)}`;
             }
           }
+          return '';
         })
         .join('') +
-      `${indent}    },\n`
+      `${indent}    },\n`;
 
     if (operationFieldName === 'upsert' && updateFields && updateFields.length > 0) {
       if (depth + 2 >= maxDepth) {
         return '';
       }
       code +=
-        `${indent}    ${operationFieldName === 'upsert' ? 'update' : 'data'}: {\n` +
+        `${indent}    update: {\n` +
         updateFields
           .map((updateField) => {
             const nestedAccessor = field.type.isList ? `item.${updateField.name}` : `${accessor}.${updateField.name}`;
             if (updateField.type.isScalar) {
-              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}  \n ${indent}        } : undefined,\n`;
+              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (updateField.type.isFieldUpdate) {
-
-              // skip meta fields
               if (['id', 'createdAt', 'updatedAt'].includes(updateField.name)) {
                 return '';
               }
-              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}  \n ${indent}        } : undefined,\n`;
+              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (updateField.type.isNullable) {
               if (depth + 2 >= maxDepth) {
                 return '';
@@ -419,11 +435,12 @@ const handleUpdateOperation = (
         `${indent}    },\n`;
     }
 
-    code += `${closingLine}` + `${indent}} : undefined,\n`;
+    code += `${closingLine}${indent}} : undefined,\n`;
 
     return code;
   }
 };
+
 
 /**
  * Generates the JSON object string for the 'where' field in a GraphQL query.

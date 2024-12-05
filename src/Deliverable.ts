@@ -823,325 +823,339 @@ id
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
-  contract: props.contract ? {
-    upsert: {
+  contract: props.contract ? 
+  typeof props.contract === 'object' && Object.keys(props.contract).length === 1 && Object.keys(props.contract)[0] === 'id'
+? {
+  connect: {
+    id: props.contract.id
+  }
+} : { upsert: {
       where: {
         id: props.contract.id !== undefined ? {
-            equals: props.contract.id 
-           } : undefined,
+            equals: props.contract.id
+          } : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? {
-            equals: props.contract.alpacaId 
-           } : undefined,
+            equals: props.contract.alpacaId
+          } : undefined,
         symbol: props.contract.symbol !== undefined ? {
-            equals: props.contract.symbol 
-           } : undefined,
+            equals: props.contract.symbol
+          } : undefined,
         name: props.contract.name !== undefined ? {
-            equals: props.contract.name 
-           } : undefined,
+            equals: props.contract.name
+          } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
-            equals: props.contract.underlyingAssetId 
-           } : undefined,
+            equals: props.contract.underlyingAssetId
+          } : undefined,
         assetId: props.contract.assetId !== undefined ? {
-            equals: props.contract.assetId 
-           } : undefined,
+            equals: props.contract.assetId
+          } : undefined,
         orderId: props.contract.orderId !== undefined ? {
-            equals: props.contract.orderId 
-           } : undefined,
+            equals: props.contract.orderId
+          } : undefined,
       },
       update: {
         id: props.contract.id !== undefined ? {
-            set: props.contract.id  
-           } : undefined,
+            set: props.contract.id
+          } : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? {
-            set: props.contract.alpacaId  
-           } : undefined,
+            set: props.contract.alpacaId
+          } : undefined,
         symbol: props.contract.symbol !== undefined ? {
-            set: props.contract.symbol  
-           } : undefined,
+            set: props.contract.symbol
+          } : undefined,
         name: props.contract.name !== undefined ? {
-            set: props.contract.name  
-           } : undefined,
+            set: props.contract.name
+          } : undefined,
         status: props.contract.status !== undefined ? {
-            set: props.contract.status  
-           } : undefined,
+            set: props.contract.status
+          } : undefined,
         tradable: props.contract.tradable !== undefined ? {
-            set: props.contract.tradable  
-           } : undefined,
+            set: props.contract.tradable
+          } : undefined,
         expirationDate: props.contract.expirationDate !== undefined ? {
-            set: props.contract.expirationDate  
-           } : undefined,
+            set: props.contract.expirationDate
+          } : undefined,
         rootSymbol: props.contract.rootSymbol !== undefined ? {
-            set: props.contract.rootSymbol  
-           } : undefined,
+            set: props.contract.rootSymbol
+          } : undefined,
         underlyingSymbol: props.contract.underlyingSymbol !== undefined ? {
-            set: props.contract.underlyingSymbol  
-           } : undefined,
+            set: props.contract.underlyingSymbol
+          } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
-            set: props.contract.underlyingAssetId  
-           } : undefined,
+            set: props.contract.underlyingAssetId
+          } : undefined,
         type: props.contract.type !== undefined ? {
-            set: props.contract.type  
-           } : undefined,
+            set: props.contract.type
+          } : undefined,
         style: props.contract.style !== undefined ? {
-            set: props.contract.style  
-           } : undefined,
+            set: props.contract.style
+          } : undefined,
         strikePrice: props.contract.strikePrice !== undefined ? {
-            set: props.contract.strikePrice  
-           } : undefined,
+            set: props.contract.strikePrice
+          } : undefined,
         multiplier: props.contract.multiplier !== undefined ? {
-            set: props.contract.multiplier  
-           } : undefined,
+            set: props.contract.multiplier
+          } : undefined,
         size: props.contract.size !== undefined ? {
-            set: props.contract.size  
-           } : undefined,
+            set: props.contract.size
+          } : undefined,
         openInterest: props.contract.openInterest !== undefined ? {
-            set: props.contract.openInterest  
-           } : undefined,
+            set: props.contract.openInterest
+          } : undefined,
         openInterestDate: props.contract.openInterestDate !== undefined ? {
-            set: props.contract.openInterestDate  
-           } : undefined,
+            set: props.contract.openInterestDate
+          } : undefined,
         closePrice: props.contract.closePrice !== undefined ? {
-            set: props.contract.closePrice  
-           } : undefined,
+            set: props.contract.closePrice
+          } : undefined,
         closePriceDate: props.contract.closePriceDate !== undefined ? {
-            set: props.contract.closePriceDate  
-           } : undefined,
+            set: props.contract.closePriceDate
+          } : undefined,
         ppind: props.contract.ppind !== undefined ? {
-            set: props.contract.ppind  
-           } : undefined,
+            set: props.contract.ppind
+          } : undefined,
         orderId: props.contract.orderId !== undefined ? {
-            set: props.contract.orderId  
-           } : undefined,
-    asset: props.contract.asset ? {
-      upsert: {
+            set: props.contract.orderId
+          } : undefined,
+    asset: props.contract.asset ? 
+    typeof props.contract.asset === 'object' && Object.keys(props.contract.asset).length === 1 && Object.keys(props.contract.asset)[0] === 'id'
+? {
+    connect: {
+      id: props.contract.asset.id
+    }
+} : { upsert: {
         where: {
           id: props.contract.asset.id !== undefined ? {
-              equals: props.contract.asset.id 
-             } : undefined,
+              equals: props.contract.asset.id
+            } : undefined,
           symbol: props.contract.asset.symbol !== undefined ? {
-              equals: props.contract.asset.symbol 
-             } : undefined,
+              equals: props.contract.asset.symbol
+            } : undefined,
           name: props.contract.asset.name !== undefined ? {
-              equals: props.contract.asset.name 
-             } : undefined,
+              equals: props.contract.asset.name
+            } : undefined,
         },
         update: {
           id: props.contract.asset.id !== undefined ? {
-              set: props.contract.asset.id  
-             } : undefined,
+              set: props.contract.asset.id
+            } : undefined,
           symbol: props.contract.asset.symbol !== undefined ? {
-              set: props.contract.asset.symbol  
-             } : undefined,
+              set: props.contract.asset.symbol
+            } : undefined,
           name: props.contract.asset.name !== undefined ? {
-              set: props.contract.asset.name  
-             } : undefined,
+              set: props.contract.asset.name
+            } : undefined,
           type: props.contract.asset.type !== undefined ? {
-              set: props.contract.asset.type  
-             } : undefined,
+              set: props.contract.asset.type
+            } : undefined,
           logoUrl: props.contract.asset.logoUrl !== undefined ? {
-              set: props.contract.asset.logoUrl  
-             } : undefined,
+              set: props.contract.asset.logoUrl
+            } : undefined,
           description: props.contract.asset.description !== undefined ? {
-              set: props.contract.asset.description  
-             } : undefined,
+              set: props.contract.asset.description
+            } : undefined,
           cik: props.contract.asset.cik !== undefined ? {
-              set: props.contract.asset.cik  
-             } : undefined,
+              set: props.contract.asset.cik
+            } : undefined,
           exchange: props.contract.asset.exchange !== undefined ? {
-              set: props.contract.asset.exchange  
-             } : undefined,
+              set: props.contract.asset.exchange
+            } : undefined,
           currency: props.contract.asset.currency !== undefined ? {
-              set: props.contract.asset.currency  
-             } : undefined,
+              set: props.contract.asset.currency
+            } : undefined,
           country: props.contract.asset.country !== undefined ? {
-              set: props.contract.asset.country  
-             } : undefined,
+              set: props.contract.asset.country
+            } : undefined,
           sector: props.contract.asset.sector !== undefined ? {
-              set: props.contract.asset.sector  
-             } : undefined,
+              set: props.contract.asset.sector
+            } : undefined,
           industry: props.contract.asset.industry !== undefined ? {
-              set: props.contract.asset.industry  
-             } : undefined,
+              set: props.contract.asset.industry
+            } : undefined,
           address: props.contract.asset.address !== undefined ? {
-              set: props.contract.asset.address  
-             } : undefined,
+              set: props.contract.asset.address
+            } : undefined,
           officialSite: props.contract.asset.officialSite !== undefined ? {
-              set: props.contract.asset.officialSite  
-             } : undefined,
+              set: props.contract.asset.officialSite
+            } : undefined,
           fiscalYearEnd: props.contract.asset.fiscalYearEnd !== undefined ? {
-              set: props.contract.asset.fiscalYearEnd  
-             } : undefined,
+              set: props.contract.asset.fiscalYearEnd
+            } : undefined,
           latestQuarter: props.contract.asset.latestQuarter !== undefined ? {
-              set: props.contract.asset.latestQuarter  
-             } : undefined,
+              set: props.contract.asset.latestQuarter
+            } : undefined,
           marketCapitalization: props.contract.asset.marketCapitalization !== undefined ? {
-              set: props.contract.asset.marketCapitalization  
-             } : undefined,
+              set: props.contract.asset.marketCapitalization
+            } : undefined,
           ebitda: props.contract.asset.ebitda !== undefined ? {
-              set: props.contract.asset.ebitda  
-             } : undefined,
+              set: props.contract.asset.ebitda
+            } : undefined,
           peRatio: props.contract.asset.peRatio !== undefined ? {
-              set: props.contract.asset.peRatio  
-             } : undefined,
+              set: props.contract.asset.peRatio
+            } : undefined,
           pegRatio: props.contract.asset.pegRatio !== undefined ? {
-              set: props.contract.asset.pegRatio  
-             } : undefined,
+              set: props.contract.asset.pegRatio
+            } : undefined,
           bookValue: props.contract.asset.bookValue !== undefined ? {
-              set: props.contract.asset.bookValue  
-             } : undefined,
+              set: props.contract.asset.bookValue
+            } : undefined,
           dividendPerShare: props.contract.asset.dividendPerShare !== undefined ? {
-              set: props.contract.asset.dividendPerShare  
-             } : undefined,
+              set: props.contract.asset.dividendPerShare
+            } : undefined,
           dividendYield: props.contract.asset.dividendYield !== undefined ? {
-              set: props.contract.asset.dividendYield  
-             } : undefined,
+              set: props.contract.asset.dividendYield
+            } : undefined,
           eps: props.contract.asset.eps !== undefined ? {
-              set: props.contract.asset.eps  
-             } : undefined,
+              set: props.contract.asset.eps
+            } : undefined,
           revenuePerShareTTM: props.contract.asset.revenuePerShareTTM !== undefined ? {
-              set: props.contract.asset.revenuePerShareTTM  
-             } : undefined,
+              set: props.contract.asset.revenuePerShareTTM
+            } : undefined,
           profitMargin: props.contract.asset.profitMargin !== undefined ? {
-              set: props.contract.asset.profitMargin  
-             } : undefined,
+              set: props.contract.asset.profitMargin
+            } : undefined,
           operatingMarginTTM: props.contract.asset.operatingMarginTTM !== undefined ? {
-              set: props.contract.asset.operatingMarginTTM  
-             } : undefined,
+              set: props.contract.asset.operatingMarginTTM
+            } : undefined,
           returnOnAssetsTTM: props.contract.asset.returnOnAssetsTTM !== undefined ? {
-              set: props.contract.asset.returnOnAssetsTTM  
-             } : undefined,
+              set: props.contract.asset.returnOnAssetsTTM
+            } : undefined,
           returnOnEquityTTM: props.contract.asset.returnOnEquityTTM !== undefined ? {
-              set: props.contract.asset.returnOnEquityTTM  
-             } : undefined,
+              set: props.contract.asset.returnOnEquityTTM
+            } : undefined,
           revenueTTM: props.contract.asset.revenueTTM !== undefined ? {
-              set: props.contract.asset.revenueTTM  
-             } : undefined,
+              set: props.contract.asset.revenueTTM
+            } : undefined,
           grossProfitTTM: props.contract.asset.grossProfitTTM !== undefined ? {
-              set: props.contract.asset.grossProfitTTM  
-             } : undefined,
+              set: props.contract.asset.grossProfitTTM
+            } : undefined,
           dilutedEPSTTM: props.contract.asset.dilutedEPSTTM !== undefined ? {
-              set: props.contract.asset.dilutedEPSTTM  
-             } : undefined,
+              set: props.contract.asset.dilutedEPSTTM
+            } : undefined,
           quarterlyEarningsGrowthYOY: props.contract.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: props.contract.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
+              set: props.contract.asset.quarterlyEarningsGrowthYOY
+            } : undefined,
           quarterlyRevenueGrowthYOY: props.contract.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: props.contract.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
+              set: props.contract.asset.quarterlyRevenueGrowthYOY
+            } : undefined,
           analystTargetPrice: props.contract.asset.analystTargetPrice !== undefined ? {
-              set: props.contract.asset.analystTargetPrice  
-             } : undefined,
+              set: props.contract.asset.analystTargetPrice
+            } : undefined,
           analystRatingStrongBuy: props.contract.asset.analystRatingStrongBuy !== undefined ? {
-              set: props.contract.asset.analystRatingStrongBuy  
-             } : undefined,
+              set: props.contract.asset.analystRatingStrongBuy
+            } : undefined,
           analystRatingBuy: props.contract.asset.analystRatingBuy !== undefined ? {
-              set: props.contract.asset.analystRatingBuy  
-             } : undefined,
+              set: props.contract.asset.analystRatingBuy
+            } : undefined,
           analystRatingHold: props.contract.asset.analystRatingHold !== undefined ? {
-              set: props.contract.asset.analystRatingHold  
-             } : undefined,
+              set: props.contract.asset.analystRatingHold
+            } : undefined,
           analystRatingSell: props.contract.asset.analystRatingSell !== undefined ? {
-              set: props.contract.asset.analystRatingSell  
-             } : undefined,
+              set: props.contract.asset.analystRatingSell
+            } : undefined,
           analystRatingStrongSell: props.contract.asset.analystRatingStrongSell !== undefined ? {
-              set: props.contract.asset.analystRatingStrongSell  
-             } : undefined,
+              set: props.contract.asset.analystRatingStrongSell
+            } : undefined,
           trailingPE: props.contract.asset.trailingPE !== undefined ? {
-              set: props.contract.asset.trailingPE  
-             } : undefined,
+              set: props.contract.asset.trailingPE
+            } : undefined,
           forwardPE: props.contract.asset.forwardPE !== undefined ? {
-              set: props.contract.asset.forwardPE  
-             } : undefined,
+              set: props.contract.asset.forwardPE
+            } : undefined,
           priceToSalesRatioTTM: props.contract.asset.priceToSalesRatioTTM !== undefined ? {
-              set: props.contract.asset.priceToSalesRatioTTM  
-             } : undefined,
+              set: props.contract.asset.priceToSalesRatioTTM
+            } : undefined,
           priceToBookRatio: props.contract.asset.priceToBookRatio !== undefined ? {
-              set: props.contract.asset.priceToBookRatio  
-             } : undefined,
+              set: props.contract.asset.priceToBookRatio
+            } : undefined,
           evToRevenue: props.contract.asset.evToRevenue !== undefined ? {
-              set: props.contract.asset.evToRevenue  
-             } : undefined,
+              set: props.contract.asset.evToRevenue
+            } : undefined,
           evToEbitda: props.contract.asset.evToEbitda !== undefined ? {
-              set: props.contract.asset.evToEbitda  
-             } : undefined,
+              set: props.contract.asset.evToEbitda
+            } : undefined,
           beta: props.contract.asset.beta !== undefined ? {
-              set: props.contract.asset.beta  
-             } : undefined,
+              set: props.contract.asset.beta
+            } : undefined,
           week52High: props.contract.asset.week52High !== undefined ? {
-              set: props.contract.asset.week52High  
-             } : undefined,
+              set: props.contract.asset.week52High
+            } : undefined,
           week52Low: props.contract.asset.week52Low !== undefined ? {
-              set: props.contract.asset.week52Low  
-             } : undefined,
+              set: props.contract.asset.week52Low
+            } : undefined,
           day50MovingAverage: props.contract.asset.day50MovingAverage !== undefined ? {
-              set: props.contract.asset.day50MovingAverage  
-             } : undefined,
+              set: props.contract.asset.day50MovingAverage
+            } : undefined,
           day200MovingAverage: props.contract.asset.day200MovingAverage !== undefined ? {
-              set: props.contract.asset.day200MovingAverage  
-             } : undefined,
+              set: props.contract.asset.day200MovingAverage
+            } : undefined,
           sharesOutstanding: props.contract.asset.sharesOutstanding !== undefined ? {
-              set: props.contract.asset.sharesOutstanding  
-             } : undefined,
+              set: props.contract.asset.sharesOutstanding
+            } : undefined,
           dividendDate: props.contract.asset.dividendDate !== undefined ? {
-              set: props.contract.asset.dividendDate  
-             } : undefined,
+              set: props.contract.asset.dividendDate
+            } : undefined,
           exDividendDate: props.contract.asset.exDividendDate !== undefined ? {
-              set: props.contract.asset.exDividendDate  
-             } : undefined,
+              set: props.contract.asset.exDividendDate
+            } : undefined,
           askPrice: props.contract.asset.askPrice !== undefined ? {
-              set: props.contract.asset.askPrice  
-             } : undefined,
+              set: props.contract.asset.askPrice
+            } : undefined,
           bidPrice: props.contract.asset.bidPrice !== undefined ? {
-              set: props.contract.asset.bidPrice  
-             } : undefined,
-      trades: props.contract.asset.trades ? {
-        upsert: props.contract.asset.trades.map((item: any) => ({
+              set: props.contract.asset.bidPrice
+            } : undefined,
+      trades: props.contract.asset.trades ? 
+      Array.isArray(props.contract.asset.trades) && props.contract.asset.trades.length > 0 && props.contract.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.trades.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.trades.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
+                set: item.price
+              } : undefined,
             total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
+                set: item.total
+              } : undefined,
             optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
+                set: item.optionType
+              } : undefined,
             signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
+                set: item.signal
+              } : undefined,
             strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
+                set: item.strategy
+              } : undefined,
             analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
+                set: item.analysis
+              } : undefined,
             summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
+                set: item.summary
+              } : undefined,
             confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
+                set: item.confidence
+              } : undefined,
             timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
+                set: item.timestamp
+              } : undefined,
             status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
+                set: item.status
+              } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -1158,8 +1172,12 @@ id
           },
         }))
       } : undefined,
-      orders: props.contract.asset.orders ? {
-        upsert: props.contract.asset.orders.map((item: any) => ({
+      orders: props.contract.asset.orders ? 
+      Array.isArray(props.contract.asset.orders) && props.contract.asset.orders.length > 0 && props.contract.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.orders.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.orders.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
@@ -1167,94 +1185,94 @@ id
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             contractId: item.contractId !== undefined ? item.contractId : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             takeProfitId: item.takeProfitId !== undefined ? {
-                equals: item.takeProfitId 
-               } : undefined,
+                equals: item.takeProfitId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
+                set: item.clientOrderId
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             notional: item.notional !== undefined ? {
-                set: item.notional  
-               } : undefined,
+                set: item.notional
+              } : undefined,
             side: item.side !== undefined ? {
-                set: item.side  
-               } : undefined,
+                set: item.side
+              } : undefined,
             type: item.type !== undefined ? {
-                set: item.type  
-               } : undefined,
+                set: item.type
+              } : undefined,
             orderClass: item.orderClass !== undefined ? {
-                set: item.orderClass  
-               } : undefined,
+                set: item.orderClass
+              } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
-                set: item.timeInForce  
-               } : undefined,
+                set: item.timeInForce
+              } : undefined,
             limitPrice: item.limitPrice !== undefined ? {
-                set: item.limitPrice  
-               } : undefined,
+                set: item.limitPrice
+              } : undefined,
             stopPrice: item.stopPrice !== undefined ? {
-                set: item.stopPrice  
-               } : undefined,
+                set: item.stopPrice
+              } : undefined,
             trailPrice: item.trailPrice !== undefined ? {
-                set: item.trailPrice  
-               } : undefined,
+                set: item.trailPrice
+              } : undefined,
             trailPercent: item.trailPercent !== undefined ? {
-                set: item.trailPercent  
-               } : undefined,
+                set: item.trailPercent
+              } : undefined,
             extendedHours: item.extendedHours !== undefined ? {
-                set: item.extendedHours  
-               } : undefined,
+                set: item.extendedHours
+              } : undefined,
             status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
+                set: item.status
+              } : undefined,
             submittedAt: item.submittedAt !== undefined ? {
-                set: item.submittedAt  
-               } : undefined,
+                set: item.submittedAt
+              } : undefined,
             filledAt: item.filledAt !== undefined ? {
-                set: item.filledAt  
-               } : undefined,
+                set: item.filledAt
+              } : undefined,
             filledQty: item.filledQty !== undefined ? {
-                set: item.filledQty  
-               } : undefined,
+                set: item.filledQty
+              } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
-                set: item.filledAvgPrice  
-               } : undefined,
+                set: item.filledAvgPrice
+              } : undefined,
             cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
-                set: item.cancelRequestedAt  
-               } : undefined,
+                set: item.cancelRequestedAt
+              } : undefined,
             canceledAt: item.canceledAt !== undefined ? {
-                set: item.canceledAt  
-               } : undefined,
+                set: item.canceledAt
+              } : undefined,
             fee: item.fee !== undefined ? {
-                set: item.fee  
-               } : undefined,
+                set: item.fee
+              } : undefined,
             strikePrice: item.strikePrice !== undefined ? {
-                set: item.strikePrice  
-               } : undefined,
+                set: item.strikePrice
+              } : undefined,
             expirationDate: item.expirationDate !== undefined ? {
-                set: item.expirationDate  
-               } : undefined,
+                set: item.expirationDate
+              } : undefined,
             optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
+                set: item.optionType
+              } : undefined,
             stopLossId: item.stopLossId !== undefined ? {
-                set: item.stopLossId  
-               } : undefined,
+                set: item.stopLossId
+              } : undefined,
             takeProfitId: item.takeProfitId !== undefined ? {
-                set: item.takeProfitId  
-               } : undefined,
+                set: item.takeProfitId
+              } : undefined,
           },
           create: {
             clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
@@ -1285,63 +1303,67 @@ id
           },
         }))
       } : undefined,
-      positions: props.contract.asset.positions ? {
-        upsert: props.contract.asset.positions.map((item: any) => ({
+      positions: props.contract.asset.positions ? 
+      Array.isArray(props.contract.asset.positions) && props.contract.asset.positions.length > 0 && props.contract.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.positions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
+                set: item.averageEntryPrice
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
+                set: item.qtyAvailable
+              } : undefined,
             marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
+                set: item.marketValue
+              } : undefined,
             costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
+                set: item.costBasis
+              } : undefined,
             unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
+                set: item.unrealizedPL
+              } : undefined,
             unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
+                set: item.unrealizedPLPC
+              } : undefined,
             unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
+                set: item.unrealisedIntradayPL
+              } : undefined,
             unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
+                set: item.unrealisedIntradayPLPC
+              } : undefined,
             currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
+                set: item.currentPrice
+              } : undefined,
             lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
+                set: item.lastTradePrice
+              } : undefined,
             changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
+                set: item.changeToday
+              } : undefined,
             assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
+                set: item.assetMarginable
+              } : undefined,
             closed: item.closed !== undefined ? {
-                set: item.closed  
-               } : undefined,
+                set: item.closed
+              } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -1361,34 +1383,38 @@ id
           },
         }))
       } : undefined,
-      newsMentions: props.contract.asset.newsMentions ? {
-        upsert: props.contract.asset.newsMentions.map((item: any) => ({
+      newsMentions: props.contract.asset.newsMentions ? 
+      Array.isArray(props.contract.asset.newsMentions) && props.contract.asset.newsMentions.length > 0 && props.contract.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.newsMentions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.newsMentions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
-                equals: item.newsArticleId 
-               } : undefined,
+                equals: item.newsArticleId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             url: item.url !== undefined ? {
-                set: item.url  
-               } : undefined,
+                set: item.url
+              } : undefined,
             relevancyScore: item.relevancyScore !== undefined ? {
-                set: item.relevancyScore  
-               } : undefined,
+                set: item.relevancyScore
+              } : undefined,
             sentimentScore: item.sentimentScore !== undefined ? {
-                set: item.sentimentScore  
-               } : undefined,
+                set: item.sentimentScore
+              } : undefined,
             sentimentLabel: item.sentimentLabel !== undefined ? {
-                set: item.sentimentLabel  
-               } : undefined,
+                set: item.sentimentLabel
+              } : undefined,
           },
           create: {
             url: item.url !== undefined ? item.url : undefined,
@@ -1585,133 +1611,143 @@ id
         },
       }
     } : undefined,
-    order: props.contract.order ? {
-      upsert: {
+    order: props.contract.order ? 
+    typeof props.contract.order === 'object' && Object.keys(props.contract.order).length === 1 && Object.keys(props.contract.order)[0] === 'id'
+? {
+    connect: {
+      id: props.contract.order.id
+    }
+} : { upsert: {
         where: {
           id: props.contract.order.id !== undefined ? {
-              equals: props.contract.order.id 
-             } : undefined,
+              equals: props.contract.order.id
+            } : undefined,
           clientOrderId: props.contract.order.clientOrderId !== undefined ? {
-              equals: props.contract.order.clientOrderId 
-             } : undefined,
+              equals: props.contract.order.clientOrderId
+            } : undefined,
           alpacaAccountId: props.contract.order.alpacaAccountId !== undefined ? {
-              equals: props.contract.order.alpacaAccountId 
-             } : undefined,
+              equals: props.contract.order.alpacaAccountId
+            } : undefined,
           assetId: props.contract.order.assetId !== undefined ? {
-              equals: props.contract.order.assetId 
-             } : undefined,
+              equals: props.contract.order.assetId
+            } : undefined,
           actionId: props.contract.order.actionId !== undefined ? {
-              equals: props.contract.order.actionId 
-             } : undefined,
+              equals: props.contract.order.actionId
+            } : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? {
-              equals: props.contract.order.stopLossId 
-             } : undefined,
+              equals: props.contract.order.stopLossId
+            } : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? {
-              equals: props.contract.order.takeProfitId 
-             } : undefined,
+              equals: props.contract.order.takeProfitId
+            } : undefined,
           contractId: props.contract.order.contractId !== undefined ? {
-              equals: props.contract.order.contractId 
-             } : undefined,
+              equals: props.contract.order.contractId
+            } : undefined,
         },
         update: {
           id: props.contract.order.id !== undefined ? {
-              set: props.contract.order.id  
-             } : undefined,
+              set: props.contract.order.id
+            } : undefined,
           clientOrderId: props.contract.order.clientOrderId !== undefined ? {
-              set: props.contract.order.clientOrderId  
-             } : undefined,
+              set: props.contract.order.clientOrderId
+            } : undefined,
           qty: props.contract.order.qty !== undefined ? {
-              set: props.contract.order.qty  
-             } : undefined,
+              set: props.contract.order.qty
+            } : undefined,
           notional: props.contract.order.notional !== undefined ? {
-              set: props.contract.order.notional  
-             } : undefined,
+              set: props.contract.order.notional
+            } : undefined,
           side: props.contract.order.side !== undefined ? {
-              set: props.contract.order.side  
-             } : undefined,
+              set: props.contract.order.side
+            } : undefined,
           type: props.contract.order.type !== undefined ? {
-              set: props.contract.order.type  
-             } : undefined,
+              set: props.contract.order.type
+            } : undefined,
           orderClass: props.contract.order.orderClass !== undefined ? {
-              set: props.contract.order.orderClass  
-             } : undefined,
+              set: props.contract.order.orderClass
+            } : undefined,
           timeInForce: props.contract.order.timeInForce !== undefined ? {
-              set: props.contract.order.timeInForce  
-             } : undefined,
+              set: props.contract.order.timeInForce
+            } : undefined,
           limitPrice: props.contract.order.limitPrice !== undefined ? {
-              set: props.contract.order.limitPrice  
-             } : undefined,
+              set: props.contract.order.limitPrice
+            } : undefined,
           stopPrice: props.contract.order.stopPrice !== undefined ? {
-              set: props.contract.order.stopPrice  
-             } : undefined,
+              set: props.contract.order.stopPrice
+            } : undefined,
           trailPrice: props.contract.order.trailPrice !== undefined ? {
-              set: props.contract.order.trailPrice  
-             } : undefined,
+              set: props.contract.order.trailPrice
+            } : undefined,
           trailPercent: props.contract.order.trailPercent !== undefined ? {
-              set: props.contract.order.trailPercent  
-             } : undefined,
+              set: props.contract.order.trailPercent
+            } : undefined,
           extendedHours: props.contract.order.extendedHours !== undefined ? {
-              set: props.contract.order.extendedHours  
-             } : undefined,
+              set: props.contract.order.extendedHours
+            } : undefined,
           status: props.contract.order.status !== undefined ? {
-              set: props.contract.order.status  
-             } : undefined,
+              set: props.contract.order.status
+            } : undefined,
           submittedAt: props.contract.order.submittedAt !== undefined ? {
-              set: props.contract.order.submittedAt  
-             } : undefined,
+              set: props.contract.order.submittedAt
+            } : undefined,
           filledAt: props.contract.order.filledAt !== undefined ? {
-              set: props.contract.order.filledAt  
-             } : undefined,
+              set: props.contract.order.filledAt
+            } : undefined,
           filledQty: props.contract.order.filledQty !== undefined ? {
-              set: props.contract.order.filledQty  
-             } : undefined,
+              set: props.contract.order.filledQty
+            } : undefined,
           filledAvgPrice: props.contract.order.filledAvgPrice !== undefined ? {
-              set: props.contract.order.filledAvgPrice  
-             } : undefined,
+              set: props.contract.order.filledAvgPrice
+            } : undefined,
           cancelRequestedAt: props.contract.order.cancelRequestedAt !== undefined ? {
-              set: props.contract.order.cancelRequestedAt  
-             } : undefined,
+              set: props.contract.order.cancelRequestedAt
+            } : undefined,
           canceledAt: props.contract.order.canceledAt !== undefined ? {
-              set: props.contract.order.canceledAt  
-             } : undefined,
+              set: props.contract.order.canceledAt
+            } : undefined,
           fee: props.contract.order.fee !== undefined ? {
-              set: props.contract.order.fee  
-             } : undefined,
+              set: props.contract.order.fee
+            } : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? {
-              set: props.contract.order.strikePrice  
-             } : undefined,
+              set: props.contract.order.strikePrice
+            } : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? {
-              set: props.contract.order.expirationDate  
-             } : undefined,
+              set: props.contract.order.expirationDate
+            } : undefined,
           optionType: props.contract.order.optionType !== undefined ? {
-              set: props.contract.order.optionType  
-             } : undefined,
+              set: props.contract.order.optionType
+            } : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? {
-              set: props.contract.order.stopLossId  
-             } : undefined,
+              set: props.contract.order.stopLossId
+            } : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? {
-              set: props.contract.order.takeProfitId  
-             } : undefined,
-      stopLoss: props.contract.order.stopLoss ? {
-        upsert: {
+              set: props.contract.order.takeProfitId
+            } : undefined,
+      stopLoss: props.contract.order.stopLoss ? 
+      typeof props.contract.order.stopLoss === 'object' && Object.keys(props.contract.order.stopLoss).length === 1 && Object.keys(props.contract.order.stopLoss)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.stopLoss.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.stopLoss.id !== undefined ? {
-                equals: props.contract.order.stopLoss.id 
-               } : undefined,
+                equals: props.contract.order.stopLoss.id
+              } : undefined,
             orderId: props.contract.order.stopLoss.orderId !== undefined ? {
-                equals: props.contract.order.stopLoss.orderId 
-               } : undefined,
+                equals: props.contract.order.stopLoss.orderId
+              } : undefined,
           },
           update: {
             id: props.contract.order.stopLoss.id !== undefined ? {
-                set: props.contract.order.stopLoss.id  
-               } : undefined,
+                set: props.contract.order.stopLoss.id
+              } : undefined,
             stopPrice: props.contract.order.stopLoss.stopPrice !== undefined ? {
-                set: props.contract.order.stopLoss.stopPrice  
-               } : undefined,
+                set: props.contract.order.stopLoss.stopPrice
+              } : undefined,
             limitPrice: props.contract.order.stopLoss.limitPrice !== undefined ? {
-                set: props.contract.order.stopLoss.limitPrice  
-               } : undefined,
+                set: props.contract.order.stopLoss.limitPrice
+              } : undefined,
           },
           create: {
             stopPrice: props.contract.order.stopLoss.stopPrice !== undefined ? props.contract.order.stopLoss.stopPrice : undefined,
@@ -1719,26 +1755,31 @@ id
           },
         }
       } : undefined,
-      takeProfit: props.contract.order.takeProfit ? {
-        upsert: {
+      takeProfit: props.contract.order.takeProfit ? 
+      typeof props.contract.order.takeProfit === 'object' && Object.keys(props.contract.order.takeProfit).length === 1 && Object.keys(props.contract.order.takeProfit)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.takeProfit.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.takeProfit.id !== undefined ? {
-                equals: props.contract.order.takeProfit.id 
-               } : undefined,
+                equals: props.contract.order.takeProfit.id
+              } : undefined,
             orderId: props.contract.order.takeProfit.orderId !== undefined ? {
-                equals: props.contract.order.takeProfit.orderId 
-               } : undefined,
+                equals: props.contract.order.takeProfit.orderId
+              } : undefined,
           },
           update: {
             id: props.contract.order.takeProfit.id !== undefined ? {
-                set: props.contract.order.takeProfit.id  
-               } : undefined,
+                set: props.contract.order.takeProfit.id
+              } : undefined,
             limitPrice: props.contract.order.takeProfit.limitPrice !== undefined ? {
-                set: props.contract.order.takeProfit.limitPrice  
-               } : undefined,
+                set: props.contract.order.takeProfit.limitPrice
+              } : undefined,
             stopPrice: props.contract.order.takeProfit.stopPrice !== undefined ? {
-                set: props.contract.order.takeProfit.stopPrice  
-               } : undefined,
+                set: props.contract.order.takeProfit.stopPrice
+              } : undefined,
           },
           create: {
             limitPrice: props.contract.order.takeProfit.limitPrice !== undefined ? props.contract.order.takeProfit.limitPrice : undefined,
@@ -1746,47 +1787,52 @@ id
           },
         }
       } : undefined,
-      alpacaAccount: props.contract.order.alpacaAccount ? {
-        upsert: {
+      alpacaAccount: props.contract.order.alpacaAccount ? 
+      typeof props.contract.order.alpacaAccount === 'object' && Object.keys(props.contract.order.alpacaAccount).length === 1 && Object.keys(props.contract.order.alpacaAccount)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.alpacaAccount.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.alpacaAccount.id !== undefined ? {
-                equals: props.contract.order.alpacaAccount.id 
-               } : undefined,
+                equals: props.contract.order.alpacaAccount.id
+              } : undefined,
             userId: props.contract.order.alpacaAccount.userId !== undefined ? {
-                equals: props.contract.order.alpacaAccount.userId 
-               } : undefined,
+                equals: props.contract.order.alpacaAccount.userId
+              } : undefined,
           },
           update: {
             id: props.contract.order.alpacaAccount.id !== undefined ? {
-                set: props.contract.order.alpacaAccount.id  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.id
+              } : undefined,
             type: props.contract.order.alpacaAccount.type !== undefined ? {
-                set: props.contract.order.alpacaAccount.type  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.type
+              } : undefined,
             APIKey: props.contract.order.alpacaAccount.APIKey !== undefined ? {
-                set: props.contract.order.alpacaAccount.APIKey  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.APIKey
+              } : undefined,
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? {
-                set: props.contract.order.alpacaAccount.APISecret  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.APISecret
+              } : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? {
-                set: props.contract.order.alpacaAccount.configuration  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.configuration
+              } : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? {
-                set: props.contract.order.alpacaAccount.marketOpen  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.marketOpen
+              } : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? {
-                set: props.contract.order.alpacaAccount.minOrderSize  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.minOrderSize
+              } : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? {
-                set: props.contract.order.alpacaAccount.maxOrderSize  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.maxOrderSize
+              } : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? {
-                set: props.contract.order.alpacaAccount.minPercentageChange  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.minPercentageChange
+              } : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? {
-                set: props.contract.order.alpacaAccount.volumeThreshold  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.volumeThreshold
+              } : undefined,
           },
           create: {
             type: props.contract.order.alpacaAccount.type !== undefined ? props.contract.order.alpacaAccount.type : undefined,
@@ -1801,35 +1847,40 @@ id
           },
         }
       } : undefined,
-      action: props.contract.order.action ? {
-        upsert: {
+      action: props.contract.order.action ? 
+      typeof props.contract.order.action === 'object' && Object.keys(props.contract.order.action).length === 1 && Object.keys(props.contract.order.action)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.action.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.action.id !== undefined ? {
-                equals: props.contract.order.action.id 
-               } : undefined,
+                equals: props.contract.order.action.id
+              } : undefined,
             tradeId: props.contract.order.action.tradeId !== undefined ? {
-                equals: props.contract.order.action.tradeId 
-               } : undefined,
+                equals: props.contract.order.action.tradeId
+              } : undefined,
           },
           update: {
             id: props.contract.order.action.id !== undefined ? {
-                set: props.contract.order.action.id  
-               } : undefined,
+                set: props.contract.order.action.id
+              } : undefined,
             sequence: props.contract.order.action.sequence !== undefined ? {
-                set: props.contract.order.action.sequence  
-               } : undefined,
+                set: props.contract.order.action.sequence
+              } : undefined,
             type: props.contract.order.action.type !== undefined ? {
-                set: props.contract.order.action.type  
-               } : undefined,
+                set: props.contract.order.action.type
+              } : undefined,
             note: props.contract.order.action.note !== undefined ? {
-                set: props.contract.order.action.note  
-               } : undefined,
+                set: props.contract.order.action.note
+              } : undefined,
             status: props.contract.order.action.status !== undefined ? {
-                set: props.contract.order.action.status  
-               } : undefined,
+                set: props.contract.order.action.status
+              } : undefined,
             fee: props.contract.order.action.fee !== undefined ? {
-                set: props.contract.order.action.fee  
-               } : undefined,
+                set: props.contract.order.action.fee
+              } : undefined,
           },
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
@@ -1840,188 +1891,193 @@ id
           },
         }
       } : undefined,
-      asset: props.contract.order.asset ? {
-        upsert: {
+      asset: props.contract.order.asset ? 
+      typeof props.contract.order.asset === 'object' && Object.keys(props.contract.order.asset).length === 1 && Object.keys(props.contract.order.asset)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.asset.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.asset.id !== undefined ? {
-                equals: props.contract.order.asset.id 
-               } : undefined,
+                equals: props.contract.order.asset.id
+              } : undefined,
             symbol: props.contract.order.asset.symbol !== undefined ? {
-                equals: props.contract.order.asset.symbol 
-               } : undefined,
+                equals: props.contract.order.asset.symbol
+              } : undefined,
             name: props.contract.order.asset.name !== undefined ? {
-                equals: props.contract.order.asset.name 
-               } : undefined,
+                equals: props.contract.order.asset.name
+              } : undefined,
           },
           update: {
             id: props.contract.order.asset.id !== undefined ? {
-                set: props.contract.order.asset.id  
-               } : undefined,
+                set: props.contract.order.asset.id
+              } : undefined,
             symbol: props.contract.order.asset.symbol !== undefined ? {
-                set: props.contract.order.asset.symbol  
-               } : undefined,
+                set: props.contract.order.asset.symbol
+              } : undefined,
             name: props.contract.order.asset.name !== undefined ? {
-                set: props.contract.order.asset.name  
-               } : undefined,
+                set: props.contract.order.asset.name
+              } : undefined,
             type: props.contract.order.asset.type !== undefined ? {
-                set: props.contract.order.asset.type  
-               } : undefined,
+                set: props.contract.order.asset.type
+              } : undefined,
             logoUrl: props.contract.order.asset.logoUrl !== undefined ? {
-                set: props.contract.order.asset.logoUrl  
-               } : undefined,
+                set: props.contract.order.asset.logoUrl
+              } : undefined,
             description: props.contract.order.asset.description !== undefined ? {
-                set: props.contract.order.asset.description  
-               } : undefined,
+                set: props.contract.order.asset.description
+              } : undefined,
             cik: props.contract.order.asset.cik !== undefined ? {
-                set: props.contract.order.asset.cik  
-               } : undefined,
+                set: props.contract.order.asset.cik
+              } : undefined,
             exchange: props.contract.order.asset.exchange !== undefined ? {
-                set: props.contract.order.asset.exchange  
-               } : undefined,
+                set: props.contract.order.asset.exchange
+              } : undefined,
             currency: props.contract.order.asset.currency !== undefined ? {
-                set: props.contract.order.asset.currency  
-               } : undefined,
+                set: props.contract.order.asset.currency
+              } : undefined,
             country: props.contract.order.asset.country !== undefined ? {
-                set: props.contract.order.asset.country  
-               } : undefined,
+                set: props.contract.order.asset.country
+              } : undefined,
             sector: props.contract.order.asset.sector !== undefined ? {
-                set: props.contract.order.asset.sector  
-               } : undefined,
+                set: props.contract.order.asset.sector
+              } : undefined,
             industry: props.contract.order.asset.industry !== undefined ? {
-                set: props.contract.order.asset.industry  
-               } : undefined,
+                set: props.contract.order.asset.industry
+              } : undefined,
             address: props.contract.order.asset.address !== undefined ? {
-                set: props.contract.order.asset.address  
-               } : undefined,
+                set: props.contract.order.asset.address
+              } : undefined,
             officialSite: props.contract.order.asset.officialSite !== undefined ? {
-                set: props.contract.order.asset.officialSite  
-               } : undefined,
+                set: props.contract.order.asset.officialSite
+              } : undefined,
             fiscalYearEnd: props.contract.order.asset.fiscalYearEnd !== undefined ? {
-                set: props.contract.order.asset.fiscalYearEnd  
-               } : undefined,
+                set: props.contract.order.asset.fiscalYearEnd
+              } : undefined,
             latestQuarter: props.contract.order.asset.latestQuarter !== undefined ? {
-                set: props.contract.order.asset.latestQuarter  
-               } : undefined,
+                set: props.contract.order.asset.latestQuarter
+              } : undefined,
             marketCapitalization: props.contract.order.asset.marketCapitalization !== undefined ? {
-                set: props.contract.order.asset.marketCapitalization  
-               } : undefined,
+                set: props.contract.order.asset.marketCapitalization
+              } : undefined,
             ebitda: props.contract.order.asset.ebitda !== undefined ? {
-                set: props.contract.order.asset.ebitda  
-               } : undefined,
+                set: props.contract.order.asset.ebitda
+              } : undefined,
             peRatio: props.contract.order.asset.peRatio !== undefined ? {
-                set: props.contract.order.asset.peRatio  
-               } : undefined,
+                set: props.contract.order.asset.peRatio
+              } : undefined,
             pegRatio: props.contract.order.asset.pegRatio !== undefined ? {
-                set: props.contract.order.asset.pegRatio  
-               } : undefined,
+                set: props.contract.order.asset.pegRatio
+              } : undefined,
             bookValue: props.contract.order.asset.bookValue !== undefined ? {
-                set: props.contract.order.asset.bookValue  
-               } : undefined,
+                set: props.contract.order.asset.bookValue
+              } : undefined,
             dividendPerShare: props.contract.order.asset.dividendPerShare !== undefined ? {
-                set: props.contract.order.asset.dividendPerShare  
-               } : undefined,
+                set: props.contract.order.asset.dividendPerShare
+              } : undefined,
             dividendYield: props.contract.order.asset.dividendYield !== undefined ? {
-                set: props.contract.order.asset.dividendYield  
-               } : undefined,
+                set: props.contract.order.asset.dividendYield
+              } : undefined,
             eps: props.contract.order.asset.eps !== undefined ? {
-                set: props.contract.order.asset.eps  
-               } : undefined,
+                set: props.contract.order.asset.eps
+              } : undefined,
             revenuePerShareTTM: props.contract.order.asset.revenuePerShareTTM !== undefined ? {
-                set: props.contract.order.asset.revenuePerShareTTM  
-               } : undefined,
+                set: props.contract.order.asset.revenuePerShareTTM
+              } : undefined,
             profitMargin: props.contract.order.asset.profitMargin !== undefined ? {
-                set: props.contract.order.asset.profitMargin  
-               } : undefined,
+                set: props.contract.order.asset.profitMargin
+              } : undefined,
             operatingMarginTTM: props.contract.order.asset.operatingMarginTTM !== undefined ? {
-                set: props.contract.order.asset.operatingMarginTTM  
-               } : undefined,
+                set: props.contract.order.asset.operatingMarginTTM
+              } : undefined,
             returnOnAssetsTTM: props.contract.order.asset.returnOnAssetsTTM !== undefined ? {
-                set: props.contract.order.asset.returnOnAssetsTTM  
-               } : undefined,
+                set: props.contract.order.asset.returnOnAssetsTTM
+              } : undefined,
             returnOnEquityTTM: props.contract.order.asset.returnOnEquityTTM !== undefined ? {
-                set: props.contract.order.asset.returnOnEquityTTM  
-               } : undefined,
+                set: props.contract.order.asset.returnOnEquityTTM
+              } : undefined,
             revenueTTM: props.contract.order.asset.revenueTTM !== undefined ? {
-                set: props.contract.order.asset.revenueTTM  
-               } : undefined,
+                set: props.contract.order.asset.revenueTTM
+              } : undefined,
             grossProfitTTM: props.contract.order.asset.grossProfitTTM !== undefined ? {
-                set: props.contract.order.asset.grossProfitTTM  
-               } : undefined,
+                set: props.contract.order.asset.grossProfitTTM
+              } : undefined,
             dilutedEPSTTM: props.contract.order.asset.dilutedEPSTTM !== undefined ? {
-                set: props.contract.order.asset.dilutedEPSTTM  
-               } : undefined,
+                set: props.contract.order.asset.dilutedEPSTTM
+              } : undefined,
             quarterlyEarningsGrowthYOY: props.contract.order.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-                set: props.contract.order.asset.quarterlyEarningsGrowthYOY  
-               } : undefined,
+                set: props.contract.order.asset.quarterlyEarningsGrowthYOY
+              } : undefined,
             quarterlyRevenueGrowthYOY: props.contract.order.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-                set: props.contract.order.asset.quarterlyRevenueGrowthYOY  
-               } : undefined,
+                set: props.contract.order.asset.quarterlyRevenueGrowthYOY
+              } : undefined,
             analystTargetPrice: props.contract.order.asset.analystTargetPrice !== undefined ? {
-                set: props.contract.order.asset.analystTargetPrice  
-               } : undefined,
+                set: props.contract.order.asset.analystTargetPrice
+              } : undefined,
             analystRatingStrongBuy: props.contract.order.asset.analystRatingStrongBuy !== undefined ? {
-                set: props.contract.order.asset.analystRatingStrongBuy  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingStrongBuy
+              } : undefined,
             analystRatingBuy: props.contract.order.asset.analystRatingBuy !== undefined ? {
-                set: props.contract.order.asset.analystRatingBuy  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingBuy
+              } : undefined,
             analystRatingHold: props.contract.order.asset.analystRatingHold !== undefined ? {
-                set: props.contract.order.asset.analystRatingHold  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingHold
+              } : undefined,
             analystRatingSell: props.contract.order.asset.analystRatingSell !== undefined ? {
-                set: props.contract.order.asset.analystRatingSell  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingSell
+              } : undefined,
             analystRatingStrongSell: props.contract.order.asset.analystRatingStrongSell !== undefined ? {
-                set: props.contract.order.asset.analystRatingStrongSell  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingStrongSell
+              } : undefined,
             trailingPE: props.contract.order.asset.trailingPE !== undefined ? {
-                set: props.contract.order.asset.trailingPE  
-               } : undefined,
+                set: props.contract.order.asset.trailingPE
+              } : undefined,
             forwardPE: props.contract.order.asset.forwardPE !== undefined ? {
-                set: props.contract.order.asset.forwardPE  
-               } : undefined,
+                set: props.contract.order.asset.forwardPE
+              } : undefined,
             priceToSalesRatioTTM: props.contract.order.asset.priceToSalesRatioTTM !== undefined ? {
-                set: props.contract.order.asset.priceToSalesRatioTTM  
-               } : undefined,
+                set: props.contract.order.asset.priceToSalesRatioTTM
+              } : undefined,
             priceToBookRatio: props.contract.order.asset.priceToBookRatio !== undefined ? {
-                set: props.contract.order.asset.priceToBookRatio  
-               } : undefined,
+                set: props.contract.order.asset.priceToBookRatio
+              } : undefined,
             evToRevenue: props.contract.order.asset.evToRevenue !== undefined ? {
-                set: props.contract.order.asset.evToRevenue  
-               } : undefined,
+                set: props.contract.order.asset.evToRevenue
+              } : undefined,
             evToEbitda: props.contract.order.asset.evToEbitda !== undefined ? {
-                set: props.contract.order.asset.evToEbitda  
-               } : undefined,
+                set: props.contract.order.asset.evToEbitda
+              } : undefined,
             beta: props.contract.order.asset.beta !== undefined ? {
-                set: props.contract.order.asset.beta  
-               } : undefined,
+                set: props.contract.order.asset.beta
+              } : undefined,
             week52High: props.contract.order.asset.week52High !== undefined ? {
-                set: props.contract.order.asset.week52High  
-               } : undefined,
+                set: props.contract.order.asset.week52High
+              } : undefined,
             week52Low: props.contract.order.asset.week52Low !== undefined ? {
-                set: props.contract.order.asset.week52Low  
-               } : undefined,
+                set: props.contract.order.asset.week52Low
+              } : undefined,
             day50MovingAverage: props.contract.order.asset.day50MovingAverage !== undefined ? {
-                set: props.contract.order.asset.day50MovingAverage  
-               } : undefined,
+                set: props.contract.order.asset.day50MovingAverage
+              } : undefined,
             day200MovingAverage: props.contract.order.asset.day200MovingAverage !== undefined ? {
-                set: props.contract.order.asset.day200MovingAverage  
-               } : undefined,
+                set: props.contract.order.asset.day200MovingAverage
+              } : undefined,
             sharesOutstanding: props.contract.order.asset.sharesOutstanding !== undefined ? {
-                set: props.contract.order.asset.sharesOutstanding  
-               } : undefined,
+                set: props.contract.order.asset.sharesOutstanding
+              } : undefined,
             dividendDate: props.contract.order.asset.dividendDate !== undefined ? {
-                set: props.contract.order.asset.dividendDate  
-               } : undefined,
+                set: props.contract.order.asset.dividendDate
+              } : undefined,
             exDividendDate: props.contract.order.asset.exDividendDate !== undefined ? {
-                set: props.contract.order.asset.exDividendDate  
-               } : undefined,
+                set: props.contract.order.asset.exDividendDate
+              } : undefined,
             askPrice: props.contract.order.asset.askPrice !== undefined ? {
-                set: props.contract.order.asset.askPrice  
-               } : undefined,
+                set: props.contract.order.asset.askPrice
+              } : undefined,
             bidPrice: props.contract.order.asset.bidPrice !== undefined ? {
-                set: props.contract.order.asset.bidPrice  
-               } : undefined,
+                set: props.contract.order.asset.bidPrice
+              } : undefined,
           },
           create: {
             symbol: props.contract.order.asset.symbol !== undefined ? props.contract.order.asset.symbol : undefined,
@@ -3204,325 +3260,339 @@ id
   delayedSettlement: props.delayedSettlement !== undefined ? {
             set: props.delayedSettlement 
            } : undefined,
-  contract: props.contract ? {
-    upsert: {
+  contract: props.contract ? 
+  typeof props.contract === 'object' && Object.keys(props.contract).length === 1 && Object.keys(props.contract)[0] === 'id'
+? {
+  connect: {
+    id: props.contract.id
+  }
+} : { upsert: {
       where: {
         id: props.contract.id !== undefined ? {
-            equals: props.contract.id 
-           } : undefined,
+            equals: props.contract.id
+          } : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? {
-            equals: props.contract.alpacaId 
-           } : undefined,
+            equals: props.contract.alpacaId
+          } : undefined,
         symbol: props.contract.symbol !== undefined ? {
-            equals: props.contract.symbol 
-           } : undefined,
+            equals: props.contract.symbol
+          } : undefined,
         name: props.contract.name !== undefined ? {
-            equals: props.contract.name 
-           } : undefined,
+            equals: props.contract.name
+          } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
-            equals: props.contract.underlyingAssetId 
-           } : undefined,
+            equals: props.contract.underlyingAssetId
+          } : undefined,
         assetId: props.contract.assetId !== undefined ? {
-            equals: props.contract.assetId 
-           } : undefined,
+            equals: props.contract.assetId
+          } : undefined,
         orderId: props.contract.orderId !== undefined ? {
-            equals: props.contract.orderId 
-           } : undefined,
+            equals: props.contract.orderId
+          } : undefined,
       },
       update: {
         id: props.contract.id !== undefined ? {
-            set: props.contract.id  
-           } : undefined,
+            set: props.contract.id
+          } : undefined,
         alpacaId: props.contract.alpacaId !== undefined ? {
-            set: props.contract.alpacaId  
-           } : undefined,
+            set: props.contract.alpacaId
+          } : undefined,
         symbol: props.contract.symbol !== undefined ? {
-            set: props.contract.symbol  
-           } : undefined,
+            set: props.contract.symbol
+          } : undefined,
         name: props.contract.name !== undefined ? {
-            set: props.contract.name  
-           } : undefined,
+            set: props.contract.name
+          } : undefined,
         status: props.contract.status !== undefined ? {
-            set: props.contract.status  
-           } : undefined,
+            set: props.contract.status
+          } : undefined,
         tradable: props.contract.tradable !== undefined ? {
-            set: props.contract.tradable  
-           } : undefined,
+            set: props.contract.tradable
+          } : undefined,
         expirationDate: props.contract.expirationDate !== undefined ? {
-            set: props.contract.expirationDate  
-           } : undefined,
+            set: props.contract.expirationDate
+          } : undefined,
         rootSymbol: props.contract.rootSymbol !== undefined ? {
-            set: props.contract.rootSymbol  
-           } : undefined,
+            set: props.contract.rootSymbol
+          } : undefined,
         underlyingSymbol: props.contract.underlyingSymbol !== undefined ? {
-            set: props.contract.underlyingSymbol  
-           } : undefined,
+            set: props.contract.underlyingSymbol
+          } : undefined,
         underlyingAssetId: props.contract.underlyingAssetId !== undefined ? {
-            set: props.contract.underlyingAssetId  
-           } : undefined,
+            set: props.contract.underlyingAssetId
+          } : undefined,
         type: props.contract.type !== undefined ? {
-            set: props.contract.type  
-           } : undefined,
+            set: props.contract.type
+          } : undefined,
         style: props.contract.style !== undefined ? {
-            set: props.contract.style  
-           } : undefined,
+            set: props.contract.style
+          } : undefined,
         strikePrice: props.contract.strikePrice !== undefined ? {
-            set: props.contract.strikePrice  
-           } : undefined,
+            set: props.contract.strikePrice
+          } : undefined,
         multiplier: props.contract.multiplier !== undefined ? {
-            set: props.contract.multiplier  
-           } : undefined,
+            set: props.contract.multiplier
+          } : undefined,
         size: props.contract.size !== undefined ? {
-            set: props.contract.size  
-           } : undefined,
+            set: props.contract.size
+          } : undefined,
         openInterest: props.contract.openInterest !== undefined ? {
-            set: props.contract.openInterest  
-           } : undefined,
+            set: props.contract.openInterest
+          } : undefined,
         openInterestDate: props.contract.openInterestDate !== undefined ? {
-            set: props.contract.openInterestDate  
-           } : undefined,
+            set: props.contract.openInterestDate
+          } : undefined,
         closePrice: props.contract.closePrice !== undefined ? {
-            set: props.contract.closePrice  
-           } : undefined,
+            set: props.contract.closePrice
+          } : undefined,
         closePriceDate: props.contract.closePriceDate !== undefined ? {
-            set: props.contract.closePriceDate  
-           } : undefined,
+            set: props.contract.closePriceDate
+          } : undefined,
         ppind: props.contract.ppind !== undefined ? {
-            set: props.contract.ppind  
-           } : undefined,
+            set: props.contract.ppind
+          } : undefined,
         orderId: props.contract.orderId !== undefined ? {
-            set: props.contract.orderId  
-           } : undefined,
-    asset: props.contract.asset ? {
-      upsert: {
+            set: props.contract.orderId
+          } : undefined,
+    asset: props.contract.asset ? 
+    typeof props.contract.asset === 'object' && Object.keys(props.contract.asset).length === 1 && Object.keys(props.contract.asset)[0] === 'id'
+? {
+    connect: {
+      id: props.contract.asset.id
+    }
+} : { upsert: {
         where: {
           id: props.contract.asset.id !== undefined ? {
-              equals: props.contract.asset.id 
-             } : undefined,
+              equals: props.contract.asset.id
+            } : undefined,
           symbol: props.contract.asset.symbol !== undefined ? {
-              equals: props.contract.asset.symbol 
-             } : undefined,
+              equals: props.contract.asset.symbol
+            } : undefined,
           name: props.contract.asset.name !== undefined ? {
-              equals: props.contract.asset.name 
-             } : undefined,
+              equals: props.contract.asset.name
+            } : undefined,
         },
         update: {
           id: props.contract.asset.id !== undefined ? {
-              set: props.contract.asset.id  
-             } : undefined,
+              set: props.contract.asset.id
+            } : undefined,
           symbol: props.contract.asset.symbol !== undefined ? {
-              set: props.contract.asset.symbol  
-             } : undefined,
+              set: props.contract.asset.symbol
+            } : undefined,
           name: props.contract.asset.name !== undefined ? {
-              set: props.contract.asset.name  
-             } : undefined,
+              set: props.contract.asset.name
+            } : undefined,
           type: props.contract.asset.type !== undefined ? {
-              set: props.contract.asset.type  
-             } : undefined,
+              set: props.contract.asset.type
+            } : undefined,
           logoUrl: props.contract.asset.logoUrl !== undefined ? {
-              set: props.contract.asset.logoUrl  
-             } : undefined,
+              set: props.contract.asset.logoUrl
+            } : undefined,
           description: props.contract.asset.description !== undefined ? {
-              set: props.contract.asset.description  
-             } : undefined,
+              set: props.contract.asset.description
+            } : undefined,
           cik: props.contract.asset.cik !== undefined ? {
-              set: props.contract.asset.cik  
-             } : undefined,
+              set: props.contract.asset.cik
+            } : undefined,
           exchange: props.contract.asset.exchange !== undefined ? {
-              set: props.contract.asset.exchange  
-             } : undefined,
+              set: props.contract.asset.exchange
+            } : undefined,
           currency: props.contract.asset.currency !== undefined ? {
-              set: props.contract.asset.currency  
-             } : undefined,
+              set: props.contract.asset.currency
+            } : undefined,
           country: props.contract.asset.country !== undefined ? {
-              set: props.contract.asset.country  
-             } : undefined,
+              set: props.contract.asset.country
+            } : undefined,
           sector: props.contract.asset.sector !== undefined ? {
-              set: props.contract.asset.sector  
-             } : undefined,
+              set: props.contract.asset.sector
+            } : undefined,
           industry: props.contract.asset.industry !== undefined ? {
-              set: props.contract.asset.industry  
-             } : undefined,
+              set: props.contract.asset.industry
+            } : undefined,
           address: props.contract.asset.address !== undefined ? {
-              set: props.contract.asset.address  
-             } : undefined,
+              set: props.contract.asset.address
+            } : undefined,
           officialSite: props.contract.asset.officialSite !== undefined ? {
-              set: props.contract.asset.officialSite  
-             } : undefined,
+              set: props.contract.asset.officialSite
+            } : undefined,
           fiscalYearEnd: props.contract.asset.fiscalYearEnd !== undefined ? {
-              set: props.contract.asset.fiscalYearEnd  
-             } : undefined,
+              set: props.contract.asset.fiscalYearEnd
+            } : undefined,
           latestQuarter: props.contract.asset.latestQuarter !== undefined ? {
-              set: props.contract.asset.latestQuarter  
-             } : undefined,
+              set: props.contract.asset.latestQuarter
+            } : undefined,
           marketCapitalization: props.contract.asset.marketCapitalization !== undefined ? {
-              set: props.contract.asset.marketCapitalization  
-             } : undefined,
+              set: props.contract.asset.marketCapitalization
+            } : undefined,
           ebitda: props.contract.asset.ebitda !== undefined ? {
-              set: props.contract.asset.ebitda  
-             } : undefined,
+              set: props.contract.asset.ebitda
+            } : undefined,
           peRatio: props.contract.asset.peRatio !== undefined ? {
-              set: props.contract.asset.peRatio  
-             } : undefined,
+              set: props.contract.asset.peRatio
+            } : undefined,
           pegRatio: props.contract.asset.pegRatio !== undefined ? {
-              set: props.contract.asset.pegRatio  
-             } : undefined,
+              set: props.contract.asset.pegRatio
+            } : undefined,
           bookValue: props.contract.asset.bookValue !== undefined ? {
-              set: props.contract.asset.bookValue  
-             } : undefined,
+              set: props.contract.asset.bookValue
+            } : undefined,
           dividendPerShare: props.contract.asset.dividendPerShare !== undefined ? {
-              set: props.contract.asset.dividendPerShare  
-             } : undefined,
+              set: props.contract.asset.dividendPerShare
+            } : undefined,
           dividendYield: props.contract.asset.dividendYield !== undefined ? {
-              set: props.contract.asset.dividendYield  
-             } : undefined,
+              set: props.contract.asset.dividendYield
+            } : undefined,
           eps: props.contract.asset.eps !== undefined ? {
-              set: props.contract.asset.eps  
-             } : undefined,
+              set: props.contract.asset.eps
+            } : undefined,
           revenuePerShareTTM: props.contract.asset.revenuePerShareTTM !== undefined ? {
-              set: props.contract.asset.revenuePerShareTTM  
-             } : undefined,
+              set: props.contract.asset.revenuePerShareTTM
+            } : undefined,
           profitMargin: props.contract.asset.profitMargin !== undefined ? {
-              set: props.contract.asset.profitMargin  
-             } : undefined,
+              set: props.contract.asset.profitMargin
+            } : undefined,
           operatingMarginTTM: props.contract.asset.operatingMarginTTM !== undefined ? {
-              set: props.contract.asset.operatingMarginTTM  
-             } : undefined,
+              set: props.contract.asset.operatingMarginTTM
+            } : undefined,
           returnOnAssetsTTM: props.contract.asset.returnOnAssetsTTM !== undefined ? {
-              set: props.contract.asset.returnOnAssetsTTM  
-             } : undefined,
+              set: props.contract.asset.returnOnAssetsTTM
+            } : undefined,
           returnOnEquityTTM: props.contract.asset.returnOnEquityTTM !== undefined ? {
-              set: props.contract.asset.returnOnEquityTTM  
-             } : undefined,
+              set: props.contract.asset.returnOnEquityTTM
+            } : undefined,
           revenueTTM: props.contract.asset.revenueTTM !== undefined ? {
-              set: props.contract.asset.revenueTTM  
-             } : undefined,
+              set: props.contract.asset.revenueTTM
+            } : undefined,
           grossProfitTTM: props.contract.asset.grossProfitTTM !== undefined ? {
-              set: props.contract.asset.grossProfitTTM  
-             } : undefined,
+              set: props.contract.asset.grossProfitTTM
+            } : undefined,
           dilutedEPSTTM: props.contract.asset.dilutedEPSTTM !== undefined ? {
-              set: props.contract.asset.dilutedEPSTTM  
-             } : undefined,
+              set: props.contract.asset.dilutedEPSTTM
+            } : undefined,
           quarterlyEarningsGrowthYOY: props.contract.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: props.contract.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
+              set: props.contract.asset.quarterlyEarningsGrowthYOY
+            } : undefined,
           quarterlyRevenueGrowthYOY: props.contract.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: props.contract.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
+              set: props.contract.asset.quarterlyRevenueGrowthYOY
+            } : undefined,
           analystTargetPrice: props.contract.asset.analystTargetPrice !== undefined ? {
-              set: props.contract.asset.analystTargetPrice  
-             } : undefined,
+              set: props.contract.asset.analystTargetPrice
+            } : undefined,
           analystRatingStrongBuy: props.contract.asset.analystRatingStrongBuy !== undefined ? {
-              set: props.contract.asset.analystRatingStrongBuy  
-             } : undefined,
+              set: props.contract.asset.analystRatingStrongBuy
+            } : undefined,
           analystRatingBuy: props.contract.asset.analystRatingBuy !== undefined ? {
-              set: props.contract.asset.analystRatingBuy  
-             } : undefined,
+              set: props.contract.asset.analystRatingBuy
+            } : undefined,
           analystRatingHold: props.contract.asset.analystRatingHold !== undefined ? {
-              set: props.contract.asset.analystRatingHold  
-             } : undefined,
+              set: props.contract.asset.analystRatingHold
+            } : undefined,
           analystRatingSell: props.contract.asset.analystRatingSell !== undefined ? {
-              set: props.contract.asset.analystRatingSell  
-             } : undefined,
+              set: props.contract.asset.analystRatingSell
+            } : undefined,
           analystRatingStrongSell: props.contract.asset.analystRatingStrongSell !== undefined ? {
-              set: props.contract.asset.analystRatingStrongSell  
-             } : undefined,
+              set: props.contract.asset.analystRatingStrongSell
+            } : undefined,
           trailingPE: props.contract.asset.trailingPE !== undefined ? {
-              set: props.contract.asset.trailingPE  
-             } : undefined,
+              set: props.contract.asset.trailingPE
+            } : undefined,
           forwardPE: props.contract.asset.forwardPE !== undefined ? {
-              set: props.contract.asset.forwardPE  
-             } : undefined,
+              set: props.contract.asset.forwardPE
+            } : undefined,
           priceToSalesRatioTTM: props.contract.asset.priceToSalesRatioTTM !== undefined ? {
-              set: props.contract.asset.priceToSalesRatioTTM  
-             } : undefined,
+              set: props.contract.asset.priceToSalesRatioTTM
+            } : undefined,
           priceToBookRatio: props.contract.asset.priceToBookRatio !== undefined ? {
-              set: props.contract.asset.priceToBookRatio  
-             } : undefined,
+              set: props.contract.asset.priceToBookRatio
+            } : undefined,
           evToRevenue: props.contract.asset.evToRevenue !== undefined ? {
-              set: props.contract.asset.evToRevenue  
-             } : undefined,
+              set: props.contract.asset.evToRevenue
+            } : undefined,
           evToEbitda: props.contract.asset.evToEbitda !== undefined ? {
-              set: props.contract.asset.evToEbitda  
-             } : undefined,
+              set: props.contract.asset.evToEbitda
+            } : undefined,
           beta: props.contract.asset.beta !== undefined ? {
-              set: props.contract.asset.beta  
-             } : undefined,
+              set: props.contract.asset.beta
+            } : undefined,
           week52High: props.contract.asset.week52High !== undefined ? {
-              set: props.contract.asset.week52High  
-             } : undefined,
+              set: props.contract.asset.week52High
+            } : undefined,
           week52Low: props.contract.asset.week52Low !== undefined ? {
-              set: props.contract.asset.week52Low  
-             } : undefined,
+              set: props.contract.asset.week52Low
+            } : undefined,
           day50MovingAverage: props.contract.asset.day50MovingAverage !== undefined ? {
-              set: props.contract.asset.day50MovingAverage  
-             } : undefined,
+              set: props.contract.asset.day50MovingAverage
+            } : undefined,
           day200MovingAverage: props.contract.asset.day200MovingAverage !== undefined ? {
-              set: props.contract.asset.day200MovingAverage  
-             } : undefined,
+              set: props.contract.asset.day200MovingAverage
+            } : undefined,
           sharesOutstanding: props.contract.asset.sharesOutstanding !== undefined ? {
-              set: props.contract.asset.sharesOutstanding  
-             } : undefined,
+              set: props.contract.asset.sharesOutstanding
+            } : undefined,
           dividendDate: props.contract.asset.dividendDate !== undefined ? {
-              set: props.contract.asset.dividendDate  
-             } : undefined,
+              set: props.contract.asset.dividendDate
+            } : undefined,
           exDividendDate: props.contract.asset.exDividendDate !== undefined ? {
-              set: props.contract.asset.exDividendDate  
-             } : undefined,
+              set: props.contract.asset.exDividendDate
+            } : undefined,
           askPrice: props.contract.asset.askPrice !== undefined ? {
-              set: props.contract.asset.askPrice  
-             } : undefined,
+              set: props.contract.asset.askPrice
+            } : undefined,
           bidPrice: props.contract.asset.bidPrice !== undefined ? {
-              set: props.contract.asset.bidPrice  
-             } : undefined,
-      trades: props.contract.asset.trades ? {
-        upsert: props.contract.asset.trades.map((item: any) => ({
+              set: props.contract.asset.bidPrice
+            } : undefined,
+      trades: props.contract.asset.trades ? 
+      Array.isArray(props.contract.asset.trades) && props.contract.asset.trades.length > 0 && props.contract.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.trades.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.trades.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
+                set: item.price
+              } : undefined,
             total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
+                set: item.total
+              } : undefined,
             optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
+                set: item.optionType
+              } : undefined,
             signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
+                set: item.signal
+              } : undefined,
             strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
+                set: item.strategy
+              } : undefined,
             analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
+                set: item.analysis
+              } : undefined,
             summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
+                set: item.summary
+              } : undefined,
             confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
+                set: item.confidence
+              } : undefined,
             timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
+                set: item.timestamp
+              } : undefined,
             status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
+                set: item.status
+              } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -3539,8 +3609,12 @@ id
           },
         }))
       } : undefined,
-      orders: props.contract.asset.orders ? {
-        upsert: props.contract.asset.orders.map((item: any) => ({
+      orders: props.contract.asset.orders ? 
+      Array.isArray(props.contract.asset.orders) && props.contract.asset.orders.length > 0 && props.contract.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.orders.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.orders.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
@@ -3548,94 +3622,94 @@ id
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             contractId: item.contractId !== undefined ? item.contractId : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             takeProfitId: item.takeProfitId !== undefined ? {
-                equals: item.takeProfitId 
-               } : undefined,
+                equals: item.takeProfitId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
+                set: item.clientOrderId
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             notional: item.notional !== undefined ? {
-                set: item.notional  
-               } : undefined,
+                set: item.notional
+              } : undefined,
             side: item.side !== undefined ? {
-                set: item.side  
-               } : undefined,
+                set: item.side
+              } : undefined,
             type: item.type !== undefined ? {
-                set: item.type  
-               } : undefined,
+                set: item.type
+              } : undefined,
             orderClass: item.orderClass !== undefined ? {
-                set: item.orderClass  
-               } : undefined,
+                set: item.orderClass
+              } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
-                set: item.timeInForce  
-               } : undefined,
+                set: item.timeInForce
+              } : undefined,
             limitPrice: item.limitPrice !== undefined ? {
-                set: item.limitPrice  
-               } : undefined,
+                set: item.limitPrice
+              } : undefined,
             stopPrice: item.stopPrice !== undefined ? {
-                set: item.stopPrice  
-               } : undefined,
+                set: item.stopPrice
+              } : undefined,
             trailPrice: item.trailPrice !== undefined ? {
-                set: item.trailPrice  
-               } : undefined,
+                set: item.trailPrice
+              } : undefined,
             trailPercent: item.trailPercent !== undefined ? {
-                set: item.trailPercent  
-               } : undefined,
+                set: item.trailPercent
+              } : undefined,
             extendedHours: item.extendedHours !== undefined ? {
-                set: item.extendedHours  
-               } : undefined,
+                set: item.extendedHours
+              } : undefined,
             status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
+                set: item.status
+              } : undefined,
             submittedAt: item.submittedAt !== undefined ? {
-                set: item.submittedAt  
-               } : undefined,
+                set: item.submittedAt
+              } : undefined,
             filledAt: item.filledAt !== undefined ? {
-                set: item.filledAt  
-               } : undefined,
+                set: item.filledAt
+              } : undefined,
             filledQty: item.filledQty !== undefined ? {
-                set: item.filledQty  
-               } : undefined,
+                set: item.filledQty
+              } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
-                set: item.filledAvgPrice  
-               } : undefined,
+                set: item.filledAvgPrice
+              } : undefined,
             cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
-                set: item.cancelRequestedAt  
-               } : undefined,
+                set: item.cancelRequestedAt
+              } : undefined,
             canceledAt: item.canceledAt !== undefined ? {
-                set: item.canceledAt  
-               } : undefined,
+                set: item.canceledAt
+              } : undefined,
             fee: item.fee !== undefined ? {
-                set: item.fee  
-               } : undefined,
+                set: item.fee
+              } : undefined,
             strikePrice: item.strikePrice !== undefined ? {
-                set: item.strikePrice  
-               } : undefined,
+                set: item.strikePrice
+              } : undefined,
             expirationDate: item.expirationDate !== undefined ? {
-                set: item.expirationDate  
-               } : undefined,
+                set: item.expirationDate
+              } : undefined,
             optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
+                set: item.optionType
+              } : undefined,
             stopLossId: item.stopLossId !== undefined ? {
-                set: item.stopLossId  
-               } : undefined,
+                set: item.stopLossId
+              } : undefined,
             takeProfitId: item.takeProfitId !== undefined ? {
-                set: item.takeProfitId  
-               } : undefined,
+                set: item.takeProfitId
+              } : undefined,
           },
           create: {
             clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
@@ -3666,63 +3740,67 @@ id
           },
         }))
       } : undefined,
-      positions: props.contract.asset.positions ? {
-        upsert: props.contract.asset.positions.map((item: any) => ({
+      positions: props.contract.asset.positions ? 
+      Array.isArray(props.contract.asset.positions) && props.contract.asset.positions.length > 0 && props.contract.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.positions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
+                set: item.averageEntryPrice
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
+                set: item.qtyAvailable
+              } : undefined,
             marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
+                set: item.marketValue
+              } : undefined,
             costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
+                set: item.costBasis
+              } : undefined,
             unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
+                set: item.unrealizedPL
+              } : undefined,
             unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
+                set: item.unrealizedPLPC
+              } : undefined,
             unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
+                set: item.unrealisedIntradayPL
+              } : undefined,
             unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
+                set: item.unrealisedIntradayPLPC
+              } : undefined,
             currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
+                set: item.currentPrice
+              } : undefined,
             lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
+                set: item.lastTradePrice
+              } : undefined,
             changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
+                set: item.changeToday
+              } : undefined,
             assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
+                set: item.assetMarginable
+              } : undefined,
             closed: item.closed !== undefined ? {
-                set: item.closed  
-               } : undefined,
+                set: item.closed
+              } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -3742,34 +3820,38 @@ id
           },
         }))
       } : undefined,
-      newsMentions: props.contract.asset.newsMentions ? {
-        upsert: props.contract.asset.newsMentions.map((item: any) => ({
+      newsMentions: props.contract.asset.newsMentions ? 
+      Array.isArray(props.contract.asset.newsMentions) && props.contract.asset.newsMentions.length > 0 && props.contract.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: props.contract.asset.newsMentions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.contract.asset.newsMentions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
-                equals: item.newsArticleId 
-               } : undefined,
+                equals: item.newsArticleId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             url: item.url !== undefined ? {
-                set: item.url  
-               } : undefined,
+                set: item.url
+              } : undefined,
             relevancyScore: item.relevancyScore !== undefined ? {
-                set: item.relevancyScore  
-               } : undefined,
+                set: item.relevancyScore
+              } : undefined,
             sentimentScore: item.sentimentScore !== undefined ? {
-                set: item.sentimentScore  
-               } : undefined,
+                set: item.sentimentScore
+              } : undefined,
             sentimentLabel: item.sentimentLabel !== undefined ? {
-                set: item.sentimentLabel  
-               } : undefined,
+                set: item.sentimentLabel
+              } : undefined,
           },
           create: {
             url: item.url !== undefined ? item.url : undefined,
@@ -3966,133 +4048,143 @@ id
         },
       }
     } : undefined,
-    order: props.contract.order ? {
-      upsert: {
+    order: props.contract.order ? 
+    typeof props.contract.order === 'object' && Object.keys(props.contract.order).length === 1 && Object.keys(props.contract.order)[0] === 'id'
+? {
+    connect: {
+      id: props.contract.order.id
+    }
+} : { upsert: {
         where: {
           id: props.contract.order.id !== undefined ? {
-              equals: props.contract.order.id 
-             } : undefined,
+              equals: props.contract.order.id
+            } : undefined,
           clientOrderId: props.contract.order.clientOrderId !== undefined ? {
-              equals: props.contract.order.clientOrderId 
-             } : undefined,
+              equals: props.contract.order.clientOrderId
+            } : undefined,
           alpacaAccountId: props.contract.order.alpacaAccountId !== undefined ? {
-              equals: props.contract.order.alpacaAccountId 
-             } : undefined,
+              equals: props.contract.order.alpacaAccountId
+            } : undefined,
           assetId: props.contract.order.assetId !== undefined ? {
-              equals: props.contract.order.assetId 
-             } : undefined,
+              equals: props.contract.order.assetId
+            } : undefined,
           actionId: props.contract.order.actionId !== undefined ? {
-              equals: props.contract.order.actionId 
-             } : undefined,
+              equals: props.contract.order.actionId
+            } : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? {
-              equals: props.contract.order.stopLossId 
-             } : undefined,
+              equals: props.contract.order.stopLossId
+            } : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? {
-              equals: props.contract.order.takeProfitId 
-             } : undefined,
+              equals: props.contract.order.takeProfitId
+            } : undefined,
           contractId: props.contract.order.contractId !== undefined ? {
-              equals: props.contract.order.contractId 
-             } : undefined,
+              equals: props.contract.order.contractId
+            } : undefined,
         },
         update: {
           id: props.contract.order.id !== undefined ? {
-              set: props.contract.order.id  
-             } : undefined,
+              set: props.contract.order.id
+            } : undefined,
           clientOrderId: props.contract.order.clientOrderId !== undefined ? {
-              set: props.contract.order.clientOrderId  
-             } : undefined,
+              set: props.contract.order.clientOrderId
+            } : undefined,
           qty: props.contract.order.qty !== undefined ? {
-              set: props.contract.order.qty  
-             } : undefined,
+              set: props.contract.order.qty
+            } : undefined,
           notional: props.contract.order.notional !== undefined ? {
-              set: props.contract.order.notional  
-             } : undefined,
+              set: props.contract.order.notional
+            } : undefined,
           side: props.contract.order.side !== undefined ? {
-              set: props.contract.order.side  
-             } : undefined,
+              set: props.contract.order.side
+            } : undefined,
           type: props.contract.order.type !== undefined ? {
-              set: props.contract.order.type  
-             } : undefined,
+              set: props.contract.order.type
+            } : undefined,
           orderClass: props.contract.order.orderClass !== undefined ? {
-              set: props.contract.order.orderClass  
-             } : undefined,
+              set: props.contract.order.orderClass
+            } : undefined,
           timeInForce: props.contract.order.timeInForce !== undefined ? {
-              set: props.contract.order.timeInForce  
-             } : undefined,
+              set: props.contract.order.timeInForce
+            } : undefined,
           limitPrice: props.contract.order.limitPrice !== undefined ? {
-              set: props.contract.order.limitPrice  
-             } : undefined,
+              set: props.contract.order.limitPrice
+            } : undefined,
           stopPrice: props.contract.order.stopPrice !== undefined ? {
-              set: props.contract.order.stopPrice  
-             } : undefined,
+              set: props.contract.order.stopPrice
+            } : undefined,
           trailPrice: props.contract.order.trailPrice !== undefined ? {
-              set: props.contract.order.trailPrice  
-             } : undefined,
+              set: props.contract.order.trailPrice
+            } : undefined,
           trailPercent: props.contract.order.trailPercent !== undefined ? {
-              set: props.contract.order.trailPercent  
-             } : undefined,
+              set: props.contract.order.trailPercent
+            } : undefined,
           extendedHours: props.contract.order.extendedHours !== undefined ? {
-              set: props.contract.order.extendedHours  
-             } : undefined,
+              set: props.contract.order.extendedHours
+            } : undefined,
           status: props.contract.order.status !== undefined ? {
-              set: props.contract.order.status  
-             } : undefined,
+              set: props.contract.order.status
+            } : undefined,
           submittedAt: props.contract.order.submittedAt !== undefined ? {
-              set: props.contract.order.submittedAt  
-             } : undefined,
+              set: props.contract.order.submittedAt
+            } : undefined,
           filledAt: props.contract.order.filledAt !== undefined ? {
-              set: props.contract.order.filledAt  
-             } : undefined,
+              set: props.contract.order.filledAt
+            } : undefined,
           filledQty: props.contract.order.filledQty !== undefined ? {
-              set: props.contract.order.filledQty  
-             } : undefined,
+              set: props.contract.order.filledQty
+            } : undefined,
           filledAvgPrice: props.contract.order.filledAvgPrice !== undefined ? {
-              set: props.contract.order.filledAvgPrice  
-             } : undefined,
+              set: props.contract.order.filledAvgPrice
+            } : undefined,
           cancelRequestedAt: props.contract.order.cancelRequestedAt !== undefined ? {
-              set: props.contract.order.cancelRequestedAt  
-             } : undefined,
+              set: props.contract.order.cancelRequestedAt
+            } : undefined,
           canceledAt: props.contract.order.canceledAt !== undefined ? {
-              set: props.contract.order.canceledAt  
-             } : undefined,
+              set: props.contract.order.canceledAt
+            } : undefined,
           fee: props.contract.order.fee !== undefined ? {
-              set: props.contract.order.fee  
-             } : undefined,
+              set: props.contract.order.fee
+            } : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? {
-              set: props.contract.order.strikePrice  
-             } : undefined,
+              set: props.contract.order.strikePrice
+            } : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? {
-              set: props.contract.order.expirationDate  
-             } : undefined,
+              set: props.contract.order.expirationDate
+            } : undefined,
           optionType: props.contract.order.optionType !== undefined ? {
-              set: props.contract.order.optionType  
-             } : undefined,
+              set: props.contract.order.optionType
+            } : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? {
-              set: props.contract.order.stopLossId  
-             } : undefined,
+              set: props.contract.order.stopLossId
+            } : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? {
-              set: props.contract.order.takeProfitId  
-             } : undefined,
-      stopLoss: props.contract.order.stopLoss ? {
-        upsert: {
+              set: props.contract.order.takeProfitId
+            } : undefined,
+      stopLoss: props.contract.order.stopLoss ? 
+      typeof props.contract.order.stopLoss === 'object' && Object.keys(props.contract.order.stopLoss).length === 1 && Object.keys(props.contract.order.stopLoss)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.stopLoss.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.stopLoss.id !== undefined ? {
-                equals: props.contract.order.stopLoss.id 
-               } : undefined,
+                equals: props.contract.order.stopLoss.id
+              } : undefined,
             orderId: props.contract.order.stopLoss.orderId !== undefined ? {
-                equals: props.contract.order.stopLoss.orderId 
-               } : undefined,
+                equals: props.contract.order.stopLoss.orderId
+              } : undefined,
           },
           update: {
             id: props.contract.order.stopLoss.id !== undefined ? {
-                set: props.contract.order.stopLoss.id  
-               } : undefined,
+                set: props.contract.order.stopLoss.id
+              } : undefined,
             stopPrice: props.contract.order.stopLoss.stopPrice !== undefined ? {
-                set: props.contract.order.stopLoss.stopPrice  
-               } : undefined,
+                set: props.contract.order.stopLoss.stopPrice
+              } : undefined,
             limitPrice: props.contract.order.stopLoss.limitPrice !== undefined ? {
-                set: props.contract.order.stopLoss.limitPrice  
-               } : undefined,
+                set: props.contract.order.stopLoss.limitPrice
+              } : undefined,
           },
           create: {
             stopPrice: props.contract.order.stopLoss.stopPrice !== undefined ? props.contract.order.stopLoss.stopPrice : undefined,
@@ -4100,26 +4192,31 @@ id
           },
         }
       } : undefined,
-      takeProfit: props.contract.order.takeProfit ? {
-        upsert: {
+      takeProfit: props.contract.order.takeProfit ? 
+      typeof props.contract.order.takeProfit === 'object' && Object.keys(props.contract.order.takeProfit).length === 1 && Object.keys(props.contract.order.takeProfit)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.takeProfit.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.takeProfit.id !== undefined ? {
-                equals: props.contract.order.takeProfit.id 
-               } : undefined,
+                equals: props.contract.order.takeProfit.id
+              } : undefined,
             orderId: props.contract.order.takeProfit.orderId !== undefined ? {
-                equals: props.contract.order.takeProfit.orderId 
-               } : undefined,
+                equals: props.contract.order.takeProfit.orderId
+              } : undefined,
           },
           update: {
             id: props.contract.order.takeProfit.id !== undefined ? {
-                set: props.contract.order.takeProfit.id  
-               } : undefined,
+                set: props.contract.order.takeProfit.id
+              } : undefined,
             limitPrice: props.contract.order.takeProfit.limitPrice !== undefined ? {
-                set: props.contract.order.takeProfit.limitPrice  
-               } : undefined,
+                set: props.contract.order.takeProfit.limitPrice
+              } : undefined,
             stopPrice: props.contract.order.takeProfit.stopPrice !== undefined ? {
-                set: props.contract.order.takeProfit.stopPrice  
-               } : undefined,
+                set: props.contract.order.takeProfit.stopPrice
+              } : undefined,
           },
           create: {
             limitPrice: props.contract.order.takeProfit.limitPrice !== undefined ? props.contract.order.takeProfit.limitPrice : undefined,
@@ -4127,47 +4224,52 @@ id
           },
         }
       } : undefined,
-      alpacaAccount: props.contract.order.alpacaAccount ? {
-        upsert: {
+      alpacaAccount: props.contract.order.alpacaAccount ? 
+      typeof props.contract.order.alpacaAccount === 'object' && Object.keys(props.contract.order.alpacaAccount).length === 1 && Object.keys(props.contract.order.alpacaAccount)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.alpacaAccount.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.alpacaAccount.id !== undefined ? {
-                equals: props.contract.order.alpacaAccount.id 
-               } : undefined,
+                equals: props.contract.order.alpacaAccount.id
+              } : undefined,
             userId: props.contract.order.alpacaAccount.userId !== undefined ? {
-                equals: props.contract.order.alpacaAccount.userId 
-               } : undefined,
+                equals: props.contract.order.alpacaAccount.userId
+              } : undefined,
           },
           update: {
             id: props.contract.order.alpacaAccount.id !== undefined ? {
-                set: props.contract.order.alpacaAccount.id  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.id
+              } : undefined,
             type: props.contract.order.alpacaAccount.type !== undefined ? {
-                set: props.contract.order.alpacaAccount.type  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.type
+              } : undefined,
             APIKey: props.contract.order.alpacaAccount.APIKey !== undefined ? {
-                set: props.contract.order.alpacaAccount.APIKey  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.APIKey
+              } : undefined,
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? {
-                set: props.contract.order.alpacaAccount.APISecret  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.APISecret
+              } : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? {
-                set: props.contract.order.alpacaAccount.configuration  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.configuration
+              } : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? {
-                set: props.contract.order.alpacaAccount.marketOpen  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.marketOpen
+              } : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? {
-                set: props.contract.order.alpacaAccount.minOrderSize  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.minOrderSize
+              } : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? {
-                set: props.contract.order.alpacaAccount.maxOrderSize  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.maxOrderSize
+              } : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? {
-                set: props.contract.order.alpacaAccount.minPercentageChange  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.minPercentageChange
+              } : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? {
-                set: props.contract.order.alpacaAccount.volumeThreshold  
-               } : undefined,
+                set: props.contract.order.alpacaAccount.volumeThreshold
+              } : undefined,
           },
           create: {
             type: props.contract.order.alpacaAccount.type !== undefined ? props.contract.order.alpacaAccount.type : undefined,
@@ -4182,35 +4284,40 @@ id
           },
         }
       } : undefined,
-      action: props.contract.order.action ? {
-        upsert: {
+      action: props.contract.order.action ? 
+      typeof props.contract.order.action === 'object' && Object.keys(props.contract.order.action).length === 1 && Object.keys(props.contract.order.action)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.action.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.action.id !== undefined ? {
-                equals: props.contract.order.action.id 
-               } : undefined,
+                equals: props.contract.order.action.id
+              } : undefined,
             tradeId: props.contract.order.action.tradeId !== undefined ? {
-                equals: props.contract.order.action.tradeId 
-               } : undefined,
+                equals: props.contract.order.action.tradeId
+              } : undefined,
           },
           update: {
             id: props.contract.order.action.id !== undefined ? {
-                set: props.contract.order.action.id  
-               } : undefined,
+                set: props.contract.order.action.id
+              } : undefined,
             sequence: props.contract.order.action.sequence !== undefined ? {
-                set: props.contract.order.action.sequence  
-               } : undefined,
+                set: props.contract.order.action.sequence
+              } : undefined,
             type: props.contract.order.action.type !== undefined ? {
-                set: props.contract.order.action.type  
-               } : undefined,
+                set: props.contract.order.action.type
+              } : undefined,
             note: props.contract.order.action.note !== undefined ? {
-                set: props.contract.order.action.note  
-               } : undefined,
+                set: props.contract.order.action.note
+              } : undefined,
             status: props.contract.order.action.status !== undefined ? {
-                set: props.contract.order.action.status  
-               } : undefined,
+                set: props.contract.order.action.status
+              } : undefined,
             fee: props.contract.order.action.fee !== undefined ? {
-                set: props.contract.order.action.fee  
-               } : undefined,
+                set: props.contract.order.action.fee
+              } : undefined,
           },
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
@@ -4221,188 +4328,193 @@ id
           },
         }
       } : undefined,
-      asset: props.contract.order.asset ? {
-        upsert: {
+      asset: props.contract.order.asset ? 
+      typeof props.contract.order.asset === 'object' && Object.keys(props.contract.order.asset).length === 1 && Object.keys(props.contract.order.asset)[0] === 'id'
+? {
+      connect: {
+        id: props.contract.order.asset.id
+      }
+} : { upsert: {
           where: {
             id: props.contract.order.asset.id !== undefined ? {
-                equals: props.contract.order.asset.id 
-               } : undefined,
+                equals: props.contract.order.asset.id
+              } : undefined,
             symbol: props.contract.order.asset.symbol !== undefined ? {
-                equals: props.contract.order.asset.symbol 
-               } : undefined,
+                equals: props.contract.order.asset.symbol
+              } : undefined,
             name: props.contract.order.asset.name !== undefined ? {
-                equals: props.contract.order.asset.name 
-               } : undefined,
+                equals: props.contract.order.asset.name
+              } : undefined,
           },
           update: {
             id: props.contract.order.asset.id !== undefined ? {
-                set: props.contract.order.asset.id  
-               } : undefined,
+                set: props.contract.order.asset.id
+              } : undefined,
             symbol: props.contract.order.asset.symbol !== undefined ? {
-                set: props.contract.order.asset.symbol  
-               } : undefined,
+                set: props.contract.order.asset.symbol
+              } : undefined,
             name: props.contract.order.asset.name !== undefined ? {
-                set: props.contract.order.asset.name  
-               } : undefined,
+                set: props.contract.order.asset.name
+              } : undefined,
             type: props.contract.order.asset.type !== undefined ? {
-                set: props.contract.order.asset.type  
-               } : undefined,
+                set: props.contract.order.asset.type
+              } : undefined,
             logoUrl: props.contract.order.asset.logoUrl !== undefined ? {
-                set: props.contract.order.asset.logoUrl  
-               } : undefined,
+                set: props.contract.order.asset.logoUrl
+              } : undefined,
             description: props.contract.order.asset.description !== undefined ? {
-                set: props.contract.order.asset.description  
-               } : undefined,
+                set: props.contract.order.asset.description
+              } : undefined,
             cik: props.contract.order.asset.cik !== undefined ? {
-                set: props.contract.order.asset.cik  
-               } : undefined,
+                set: props.contract.order.asset.cik
+              } : undefined,
             exchange: props.contract.order.asset.exchange !== undefined ? {
-                set: props.contract.order.asset.exchange  
-               } : undefined,
+                set: props.contract.order.asset.exchange
+              } : undefined,
             currency: props.contract.order.asset.currency !== undefined ? {
-                set: props.contract.order.asset.currency  
-               } : undefined,
+                set: props.contract.order.asset.currency
+              } : undefined,
             country: props.contract.order.asset.country !== undefined ? {
-                set: props.contract.order.asset.country  
-               } : undefined,
+                set: props.contract.order.asset.country
+              } : undefined,
             sector: props.contract.order.asset.sector !== undefined ? {
-                set: props.contract.order.asset.sector  
-               } : undefined,
+                set: props.contract.order.asset.sector
+              } : undefined,
             industry: props.contract.order.asset.industry !== undefined ? {
-                set: props.contract.order.asset.industry  
-               } : undefined,
+                set: props.contract.order.asset.industry
+              } : undefined,
             address: props.contract.order.asset.address !== undefined ? {
-                set: props.contract.order.asset.address  
-               } : undefined,
+                set: props.contract.order.asset.address
+              } : undefined,
             officialSite: props.contract.order.asset.officialSite !== undefined ? {
-                set: props.contract.order.asset.officialSite  
-               } : undefined,
+                set: props.contract.order.asset.officialSite
+              } : undefined,
             fiscalYearEnd: props.contract.order.asset.fiscalYearEnd !== undefined ? {
-                set: props.contract.order.asset.fiscalYearEnd  
-               } : undefined,
+                set: props.contract.order.asset.fiscalYearEnd
+              } : undefined,
             latestQuarter: props.contract.order.asset.latestQuarter !== undefined ? {
-                set: props.contract.order.asset.latestQuarter  
-               } : undefined,
+                set: props.contract.order.asset.latestQuarter
+              } : undefined,
             marketCapitalization: props.contract.order.asset.marketCapitalization !== undefined ? {
-                set: props.contract.order.asset.marketCapitalization  
-               } : undefined,
+                set: props.contract.order.asset.marketCapitalization
+              } : undefined,
             ebitda: props.contract.order.asset.ebitda !== undefined ? {
-                set: props.contract.order.asset.ebitda  
-               } : undefined,
+                set: props.contract.order.asset.ebitda
+              } : undefined,
             peRatio: props.contract.order.asset.peRatio !== undefined ? {
-                set: props.contract.order.asset.peRatio  
-               } : undefined,
+                set: props.contract.order.asset.peRatio
+              } : undefined,
             pegRatio: props.contract.order.asset.pegRatio !== undefined ? {
-                set: props.contract.order.asset.pegRatio  
-               } : undefined,
+                set: props.contract.order.asset.pegRatio
+              } : undefined,
             bookValue: props.contract.order.asset.bookValue !== undefined ? {
-                set: props.contract.order.asset.bookValue  
-               } : undefined,
+                set: props.contract.order.asset.bookValue
+              } : undefined,
             dividendPerShare: props.contract.order.asset.dividendPerShare !== undefined ? {
-                set: props.contract.order.asset.dividendPerShare  
-               } : undefined,
+                set: props.contract.order.asset.dividendPerShare
+              } : undefined,
             dividendYield: props.contract.order.asset.dividendYield !== undefined ? {
-                set: props.contract.order.asset.dividendYield  
-               } : undefined,
+                set: props.contract.order.asset.dividendYield
+              } : undefined,
             eps: props.contract.order.asset.eps !== undefined ? {
-                set: props.contract.order.asset.eps  
-               } : undefined,
+                set: props.contract.order.asset.eps
+              } : undefined,
             revenuePerShareTTM: props.contract.order.asset.revenuePerShareTTM !== undefined ? {
-                set: props.contract.order.asset.revenuePerShareTTM  
-               } : undefined,
+                set: props.contract.order.asset.revenuePerShareTTM
+              } : undefined,
             profitMargin: props.contract.order.asset.profitMargin !== undefined ? {
-                set: props.contract.order.asset.profitMargin  
-               } : undefined,
+                set: props.contract.order.asset.profitMargin
+              } : undefined,
             operatingMarginTTM: props.contract.order.asset.operatingMarginTTM !== undefined ? {
-                set: props.contract.order.asset.operatingMarginTTM  
-               } : undefined,
+                set: props.contract.order.asset.operatingMarginTTM
+              } : undefined,
             returnOnAssetsTTM: props.contract.order.asset.returnOnAssetsTTM !== undefined ? {
-                set: props.contract.order.asset.returnOnAssetsTTM  
-               } : undefined,
+                set: props.contract.order.asset.returnOnAssetsTTM
+              } : undefined,
             returnOnEquityTTM: props.contract.order.asset.returnOnEquityTTM !== undefined ? {
-                set: props.contract.order.asset.returnOnEquityTTM  
-               } : undefined,
+                set: props.contract.order.asset.returnOnEquityTTM
+              } : undefined,
             revenueTTM: props.contract.order.asset.revenueTTM !== undefined ? {
-                set: props.contract.order.asset.revenueTTM  
-               } : undefined,
+                set: props.contract.order.asset.revenueTTM
+              } : undefined,
             grossProfitTTM: props.contract.order.asset.grossProfitTTM !== undefined ? {
-                set: props.contract.order.asset.grossProfitTTM  
-               } : undefined,
+                set: props.contract.order.asset.grossProfitTTM
+              } : undefined,
             dilutedEPSTTM: props.contract.order.asset.dilutedEPSTTM !== undefined ? {
-                set: props.contract.order.asset.dilutedEPSTTM  
-               } : undefined,
+                set: props.contract.order.asset.dilutedEPSTTM
+              } : undefined,
             quarterlyEarningsGrowthYOY: props.contract.order.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-                set: props.contract.order.asset.quarterlyEarningsGrowthYOY  
-               } : undefined,
+                set: props.contract.order.asset.quarterlyEarningsGrowthYOY
+              } : undefined,
             quarterlyRevenueGrowthYOY: props.contract.order.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-                set: props.contract.order.asset.quarterlyRevenueGrowthYOY  
-               } : undefined,
+                set: props.contract.order.asset.quarterlyRevenueGrowthYOY
+              } : undefined,
             analystTargetPrice: props.contract.order.asset.analystTargetPrice !== undefined ? {
-                set: props.contract.order.asset.analystTargetPrice  
-               } : undefined,
+                set: props.contract.order.asset.analystTargetPrice
+              } : undefined,
             analystRatingStrongBuy: props.contract.order.asset.analystRatingStrongBuy !== undefined ? {
-                set: props.contract.order.asset.analystRatingStrongBuy  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingStrongBuy
+              } : undefined,
             analystRatingBuy: props.contract.order.asset.analystRatingBuy !== undefined ? {
-                set: props.contract.order.asset.analystRatingBuy  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingBuy
+              } : undefined,
             analystRatingHold: props.contract.order.asset.analystRatingHold !== undefined ? {
-                set: props.contract.order.asset.analystRatingHold  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingHold
+              } : undefined,
             analystRatingSell: props.contract.order.asset.analystRatingSell !== undefined ? {
-                set: props.contract.order.asset.analystRatingSell  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingSell
+              } : undefined,
             analystRatingStrongSell: props.contract.order.asset.analystRatingStrongSell !== undefined ? {
-                set: props.contract.order.asset.analystRatingStrongSell  
-               } : undefined,
+                set: props.contract.order.asset.analystRatingStrongSell
+              } : undefined,
             trailingPE: props.contract.order.asset.trailingPE !== undefined ? {
-                set: props.contract.order.asset.trailingPE  
-               } : undefined,
+                set: props.contract.order.asset.trailingPE
+              } : undefined,
             forwardPE: props.contract.order.asset.forwardPE !== undefined ? {
-                set: props.contract.order.asset.forwardPE  
-               } : undefined,
+                set: props.contract.order.asset.forwardPE
+              } : undefined,
             priceToSalesRatioTTM: props.contract.order.asset.priceToSalesRatioTTM !== undefined ? {
-                set: props.contract.order.asset.priceToSalesRatioTTM  
-               } : undefined,
+                set: props.contract.order.asset.priceToSalesRatioTTM
+              } : undefined,
             priceToBookRatio: props.contract.order.asset.priceToBookRatio !== undefined ? {
-                set: props.contract.order.asset.priceToBookRatio  
-               } : undefined,
+                set: props.contract.order.asset.priceToBookRatio
+              } : undefined,
             evToRevenue: props.contract.order.asset.evToRevenue !== undefined ? {
-                set: props.contract.order.asset.evToRevenue  
-               } : undefined,
+                set: props.contract.order.asset.evToRevenue
+              } : undefined,
             evToEbitda: props.contract.order.asset.evToEbitda !== undefined ? {
-                set: props.contract.order.asset.evToEbitda  
-               } : undefined,
+                set: props.contract.order.asset.evToEbitda
+              } : undefined,
             beta: props.contract.order.asset.beta !== undefined ? {
-                set: props.contract.order.asset.beta  
-               } : undefined,
+                set: props.contract.order.asset.beta
+              } : undefined,
             week52High: props.contract.order.asset.week52High !== undefined ? {
-                set: props.contract.order.asset.week52High  
-               } : undefined,
+                set: props.contract.order.asset.week52High
+              } : undefined,
             week52Low: props.contract.order.asset.week52Low !== undefined ? {
-                set: props.contract.order.asset.week52Low  
-               } : undefined,
+                set: props.contract.order.asset.week52Low
+              } : undefined,
             day50MovingAverage: props.contract.order.asset.day50MovingAverage !== undefined ? {
-                set: props.contract.order.asset.day50MovingAverage  
-               } : undefined,
+                set: props.contract.order.asset.day50MovingAverage
+              } : undefined,
             day200MovingAverage: props.contract.order.asset.day200MovingAverage !== undefined ? {
-                set: props.contract.order.asset.day200MovingAverage  
-               } : undefined,
+                set: props.contract.order.asset.day200MovingAverage
+              } : undefined,
             sharesOutstanding: props.contract.order.asset.sharesOutstanding !== undefined ? {
-                set: props.contract.order.asset.sharesOutstanding  
-               } : undefined,
+                set: props.contract.order.asset.sharesOutstanding
+              } : undefined,
             dividendDate: props.contract.order.asset.dividendDate !== undefined ? {
-                set: props.contract.order.asset.dividendDate  
-               } : undefined,
+                set: props.contract.order.asset.dividendDate
+              } : undefined,
             exDividendDate: props.contract.order.asset.exDividendDate !== undefined ? {
-                set: props.contract.order.asset.exDividendDate  
-               } : undefined,
+                set: props.contract.order.asset.exDividendDate
+              } : undefined,
             askPrice: props.contract.order.asset.askPrice !== undefined ? {
-                set: props.contract.order.asset.askPrice  
-               } : undefined,
+                set: props.contract.order.asset.askPrice
+              } : undefined,
             bidPrice: props.contract.order.asset.bidPrice !== undefined ? {
-                set: props.contract.order.asset.bidPrice  
-               } : undefined,
+                set: props.contract.order.asset.bidPrice
+              } : undefined,
           },
           create: {
             symbol: props.contract.order.asset.symbol !== undefined ? props.contract.order.asset.symbol : undefined,
@@ -5146,325 +5258,339 @@ id
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,
-  contract: prop.contract ? {
-    upsert: {
+  contract: prop.contract ? 
+  typeof prop.contract === 'object' && Object.keys(prop.contract).length === 1 && Object.keys(prop.contract)[0] === 'id'
+? {
+  connect: {
+    id: prop.contract.id
+  }
+} : { upsert: {
       where: {
         id: prop.contract.id !== undefined ? {
-            equals: prop.contract.id 
-           } : undefined,
+            equals: prop.contract.id
+          } : undefined,
         alpacaId: prop.contract.alpacaId !== undefined ? {
-            equals: prop.contract.alpacaId 
-           } : undefined,
+            equals: prop.contract.alpacaId
+          } : undefined,
         symbol: prop.contract.symbol !== undefined ? {
-            equals: prop.contract.symbol 
-           } : undefined,
+            equals: prop.contract.symbol
+          } : undefined,
         name: prop.contract.name !== undefined ? {
-            equals: prop.contract.name 
-           } : undefined,
+            equals: prop.contract.name
+          } : undefined,
         underlyingAssetId: prop.contract.underlyingAssetId !== undefined ? {
-            equals: prop.contract.underlyingAssetId 
-           } : undefined,
+            equals: prop.contract.underlyingAssetId
+          } : undefined,
         assetId: prop.contract.assetId !== undefined ? {
-            equals: prop.contract.assetId 
-           } : undefined,
+            equals: prop.contract.assetId
+          } : undefined,
         orderId: prop.contract.orderId !== undefined ? {
-            equals: prop.contract.orderId 
-           } : undefined,
+            equals: prop.contract.orderId
+          } : undefined,
       },
       update: {
         id: prop.contract.id !== undefined ? {
-            set: prop.contract.id  
-           } : undefined,
+            set: prop.contract.id
+          } : undefined,
         alpacaId: prop.contract.alpacaId !== undefined ? {
-            set: prop.contract.alpacaId  
-           } : undefined,
+            set: prop.contract.alpacaId
+          } : undefined,
         symbol: prop.contract.symbol !== undefined ? {
-            set: prop.contract.symbol  
-           } : undefined,
+            set: prop.contract.symbol
+          } : undefined,
         name: prop.contract.name !== undefined ? {
-            set: prop.contract.name  
-           } : undefined,
+            set: prop.contract.name
+          } : undefined,
         status: prop.contract.status !== undefined ? {
-            set: prop.contract.status  
-           } : undefined,
+            set: prop.contract.status
+          } : undefined,
         tradable: prop.contract.tradable !== undefined ? {
-            set: prop.contract.tradable  
-           } : undefined,
+            set: prop.contract.tradable
+          } : undefined,
         expirationDate: prop.contract.expirationDate !== undefined ? {
-            set: prop.contract.expirationDate  
-           } : undefined,
+            set: prop.contract.expirationDate
+          } : undefined,
         rootSymbol: prop.contract.rootSymbol !== undefined ? {
-            set: prop.contract.rootSymbol  
-           } : undefined,
+            set: prop.contract.rootSymbol
+          } : undefined,
         underlyingSymbol: prop.contract.underlyingSymbol !== undefined ? {
-            set: prop.contract.underlyingSymbol  
-           } : undefined,
+            set: prop.contract.underlyingSymbol
+          } : undefined,
         underlyingAssetId: prop.contract.underlyingAssetId !== undefined ? {
-            set: prop.contract.underlyingAssetId  
-           } : undefined,
+            set: prop.contract.underlyingAssetId
+          } : undefined,
         type: prop.contract.type !== undefined ? {
-            set: prop.contract.type  
-           } : undefined,
+            set: prop.contract.type
+          } : undefined,
         style: prop.contract.style !== undefined ? {
-            set: prop.contract.style  
-           } : undefined,
+            set: prop.contract.style
+          } : undefined,
         strikePrice: prop.contract.strikePrice !== undefined ? {
-            set: prop.contract.strikePrice  
-           } : undefined,
+            set: prop.contract.strikePrice
+          } : undefined,
         multiplier: prop.contract.multiplier !== undefined ? {
-            set: prop.contract.multiplier  
-           } : undefined,
+            set: prop.contract.multiplier
+          } : undefined,
         size: prop.contract.size !== undefined ? {
-            set: prop.contract.size  
-           } : undefined,
+            set: prop.contract.size
+          } : undefined,
         openInterest: prop.contract.openInterest !== undefined ? {
-            set: prop.contract.openInterest  
-           } : undefined,
+            set: prop.contract.openInterest
+          } : undefined,
         openInterestDate: prop.contract.openInterestDate !== undefined ? {
-            set: prop.contract.openInterestDate  
-           } : undefined,
+            set: prop.contract.openInterestDate
+          } : undefined,
         closePrice: prop.contract.closePrice !== undefined ? {
-            set: prop.contract.closePrice  
-           } : undefined,
+            set: prop.contract.closePrice
+          } : undefined,
         closePriceDate: prop.contract.closePriceDate !== undefined ? {
-            set: prop.contract.closePriceDate  
-           } : undefined,
+            set: prop.contract.closePriceDate
+          } : undefined,
         ppind: prop.contract.ppind !== undefined ? {
-            set: prop.contract.ppind  
-           } : undefined,
+            set: prop.contract.ppind
+          } : undefined,
         orderId: prop.contract.orderId !== undefined ? {
-            set: prop.contract.orderId  
-           } : undefined,
-    asset: prop.contract.asset ? {
-      upsert: {
+            set: prop.contract.orderId
+          } : undefined,
+    asset: prop.contract.asset ? 
+    typeof prop.contract.asset === 'object' && Object.keys(prop.contract.asset).length === 1 && Object.keys(prop.contract.asset)[0] === 'id'
+? {
+    connect: {
+      id: prop.contract.asset.id
+    }
+} : { upsert: {
         where: {
           id: prop.contract.asset.id !== undefined ? {
-              equals: prop.contract.asset.id 
-             } : undefined,
+              equals: prop.contract.asset.id
+            } : undefined,
           symbol: prop.contract.asset.symbol !== undefined ? {
-              equals: prop.contract.asset.symbol 
-             } : undefined,
+              equals: prop.contract.asset.symbol
+            } : undefined,
           name: prop.contract.asset.name !== undefined ? {
-              equals: prop.contract.asset.name 
-             } : undefined,
+              equals: prop.contract.asset.name
+            } : undefined,
         },
         update: {
           id: prop.contract.asset.id !== undefined ? {
-              set: prop.contract.asset.id  
-             } : undefined,
+              set: prop.contract.asset.id
+            } : undefined,
           symbol: prop.contract.asset.symbol !== undefined ? {
-              set: prop.contract.asset.symbol  
-             } : undefined,
+              set: prop.contract.asset.symbol
+            } : undefined,
           name: prop.contract.asset.name !== undefined ? {
-              set: prop.contract.asset.name  
-             } : undefined,
+              set: prop.contract.asset.name
+            } : undefined,
           type: prop.contract.asset.type !== undefined ? {
-              set: prop.contract.asset.type  
-             } : undefined,
+              set: prop.contract.asset.type
+            } : undefined,
           logoUrl: prop.contract.asset.logoUrl !== undefined ? {
-              set: prop.contract.asset.logoUrl  
-             } : undefined,
+              set: prop.contract.asset.logoUrl
+            } : undefined,
           description: prop.contract.asset.description !== undefined ? {
-              set: prop.contract.asset.description  
-             } : undefined,
+              set: prop.contract.asset.description
+            } : undefined,
           cik: prop.contract.asset.cik !== undefined ? {
-              set: prop.contract.asset.cik  
-             } : undefined,
+              set: prop.contract.asset.cik
+            } : undefined,
           exchange: prop.contract.asset.exchange !== undefined ? {
-              set: prop.contract.asset.exchange  
-             } : undefined,
+              set: prop.contract.asset.exchange
+            } : undefined,
           currency: prop.contract.asset.currency !== undefined ? {
-              set: prop.contract.asset.currency  
-             } : undefined,
+              set: prop.contract.asset.currency
+            } : undefined,
           country: prop.contract.asset.country !== undefined ? {
-              set: prop.contract.asset.country  
-             } : undefined,
+              set: prop.contract.asset.country
+            } : undefined,
           sector: prop.contract.asset.sector !== undefined ? {
-              set: prop.contract.asset.sector  
-             } : undefined,
+              set: prop.contract.asset.sector
+            } : undefined,
           industry: prop.contract.asset.industry !== undefined ? {
-              set: prop.contract.asset.industry  
-             } : undefined,
+              set: prop.contract.asset.industry
+            } : undefined,
           address: prop.contract.asset.address !== undefined ? {
-              set: prop.contract.asset.address  
-             } : undefined,
+              set: prop.contract.asset.address
+            } : undefined,
           officialSite: prop.contract.asset.officialSite !== undefined ? {
-              set: prop.contract.asset.officialSite  
-             } : undefined,
+              set: prop.contract.asset.officialSite
+            } : undefined,
           fiscalYearEnd: prop.contract.asset.fiscalYearEnd !== undefined ? {
-              set: prop.contract.asset.fiscalYearEnd  
-             } : undefined,
+              set: prop.contract.asset.fiscalYearEnd
+            } : undefined,
           latestQuarter: prop.contract.asset.latestQuarter !== undefined ? {
-              set: prop.contract.asset.latestQuarter  
-             } : undefined,
+              set: prop.contract.asset.latestQuarter
+            } : undefined,
           marketCapitalization: prop.contract.asset.marketCapitalization !== undefined ? {
-              set: prop.contract.asset.marketCapitalization  
-             } : undefined,
+              set: prop.contract.asset.marketCapitalization
+            } : undefined,
           ebitda: prop.contract.asset.ebitda !== undefined ? {
-              set: prop.contract.asset.ebitda  
-             } : undefined,
+              set: prop.contract.asset.ebitda
+            } : undefined,
           peRatio: prop.contract.asset.peRatio !== undefined ? {
-              set: prop.contract.asset.peRatio  
-             } : undefined,
+              set: prop.contract.asset.peRatio
+            } : undefined,
           pegRatio: prop.contract.asset.pegRatio !== undefined ? {
-              set: prop.contract.asset.pegRatio  
-             } : undefined,
+              set: prop.contract.asset.pegRatio
+            } : undefined,
           bookValue: prop.contract.asset.bookValue !== undefined ? {
-              set: prop.contract.asset.bookValue  
-             } : undefined,
+              set: prop.contract.asset.bookValue
+            } : undefined,
           dividendPerShare: prop.contract.asset.dividendPerShare !== undefined ? {
-              set: prop.contract.asset.dividendPerShare  
-             } : undefined,
+              set: prop.contract.asset.dividendPerShare
+            } : undefined,
           dividendYield: prop.contract.asset.dividendYield !== undefined ? {
-              set: prop.contract.asset.dividendYield  
-             } : undefined,
+              set: prop.contract.asset.dividendYield
+            } : undefined,
           eps: prop.contract.asset.eps !== undefined ? {
-              set: prop.contract.asset.eps  
-             } : undefined,
+              set: prop.contract.asset.eps
+            } : undefined,
           revenuePerShareTTM: prop.contract.asset.revenuePerShareTTM !== undefined ? {
-              set: prop.contract.asset.revenuePerShareTTM  
-             } : undefined,
+              set: prop.contract.asset.revenuePerShareTTM
+            } : undefined,
           profitMargin: prop.contract.asset.profitMargin !== undefined ? {
-              set: prop.contract.asset.profitMargin  
-             } : undefined,
+              set: prop.contract.asset.profitMargin
+            } : undefined,
           operatingMarginTTM: prop.contract.asset.operatingMarginTTM !== undefined ? {
-              set: prop.contract.asset.operatingMarginTTM  
-             } : undefined,
+              set: prop.contract.asset.operatingMarginTTM
+            } : undefined,
           returnOnAssetsTTM: prop.contract.asset.returnOnAssetsTTM !== undefined ? {
-              set: prop.contract.asset.returnOnAssetsTTM  
-             } : undefined,
+              set: prop.contract.asset.returnOnAssetsTTM
+            } : undefined,
           returnOnEquityTTM: prop.contract.asset.returnOnEquityTTM !== undefined ? {
-              set: prop.contract.asset.returnOnEquityTTM  
-             } : undefined,
+              set: prop.contract.asset.returnOnEquityTTM
+            } : undefined,
           revenueTTM: prop.contract.asset.revenueTTM !== undefined ? {
-              set: prop.contract.asset.revenueTTM  
-             } : undefined,
+              set: prop.contract.asset.revenueTTM
+            } : undefined,
           grossProfitTTM: prop.contract.asset.grossProfitTTM !== undefined ? {
-              set: prop.contract.asset.grossProfitTTM  
-             } : undefined,
+              set: prop.contract.asset.grossProfitTTM
+            } : undefined,
           dilutedEPSTTM: prop.contract.asset.dilutedEPSTTM !== undefined ? {
-              set: prop.contract.asset.dilutedEPSTTM  
-             } : undefined,
+              set: prop.contract.asset.dilutedEPSTTM
+            } : undefined,
           quarterlyEarningsGrowthYOY: prop.contract.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-              set: prop.contract.asset.quarterlyEarningsGrowthYOY  
-             } : undefined,
+              set: prop.contract.asset.quarterlyEarningsGrowthYOY
+            } : undefined,
           quarterlyRevenueGrowthYOY: prop.contract.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-              set: prop.contract.asset.quarterlyRevenueGrowthYOY  
-             } : undefined,
+              set: prop.contract.asset.quarterlyRevenueGrowthYOY
+            } : undefined,
           analystTargetPrice: prop.contract.asset.analystTargetPrice !== undefined ? {
-              set: prop.contract.asset.analystTargetPrice  
-             } : undefined,
+              set: prop.contract.asset.analystTargetPrice
+            } : undefined,
           analystRatingStrongBuy: prop.contract.asset.analystRatingStrongBuy !== undefined ? {
-              set: prop.contract.asset.analystRatingStrongBuy  
-             } : undefined,
+              set: prop.contract.asset.analystRatingStrongBuy
+            } : undefined,
           analystRatingBuy: prop.contract.asset.analystRatingBuy !== undefined ? {
-              set: prop.contract.asset.analystRatingBuy  
-             } : undefined,
+              set: prop.contract.asset.analystRatingBuy
+            } : undefined,
           analystRatingHold: prop.contract.asset.analystRatingHold !== undefined ? {
-              set: prop.contract.asset.analystRatingHold  
-             } : undefined,
+              set: prop.contract.asset.analystRatingHold
+            } : undefined,
           analystRatingSell: prop.contract.asset.analystRatingSell !== undefined ? {
-              set: prop.contract.asset.analystRatingSell  
-             } : undefined,
+              set: prop.contract.asset.analystRatingSell
+            } : undefined,
           analystRatingStrongSell: prop.contract.asset.analystRatingStrongSell !== undefined ? {
-              set: prop.contract.asset.analystRatingStrongSell  
-             } : undefined,
+              set: prop.contract.asset.analystRatingStrongSell
+            } : undefined,
           trailingPE: prop.contract.asset.trailingPE !== undefined ? {
-              set: prop.contract.asset.trailingPE  
-             } : undefined,
+              set: prop.contract.asset.trailingPE
+            } : undefined,
           forwardPE: prop.contract.asset.forwardPE !== undefined ? {
-              set: prop.contract.asset.forwardPE  
-             } : undefined,
+              set: prop.contract.asset.forwardPE
+            } : undefined,
           priceToSalesRatioTTM: prop.contract.asset.priceToSalesRatioTTM !== undefined ? {
-              set: prop.contract.asset.priceToSalesRatioTTM  
-             } : undefined,
+              set: prop.contract.asset.priceToSalesRatioTTM
+            } : undefined,
           priceToBookRatio: prop.contract.asset.priceToBookRatio !== undefined ? {
-              set: prop.contract.asset.priceToBookRatio  
-             } : undefined,
+              set: prop.contract.asset.priceToBookRatio
+            } : undefined,
           evToRevenue: prop.contract.asset.evToRevenue !== undefined ? {
-              set: prop.contract.asset.evToRevenue  
-             } : undefined,
+              set: prop.contract.asset.evToRevenue
+            } : undefined,
           evToEbitda: prop.contract.asset.evToEbitda !== undefined ? {
-              set: prop.contract.asset.evToEbitda  
-             } : undefined,
+              set: prop.contract.asset.evToEbitda
+            } : undefined,
           beta: prop.contract.asset.beta !== undefined ? {
-              set: prop.contract.asset.beta  
-             } : undefined,
+              set: prop.contract.asset.beta
+            } : undefined,
           week52High: prop.contract.asset.week52High !== undefined ? {
-              set: prop.contract.asset.week52High  
-             } : undefined,
+              set: prop.contract.asset.week52High
+            } : undefined,
           week52Low: prop.contract.asset.week52Low !== undefined ? {
-              set: prop.contract.asset.week52Low  
-             } : undefined,
+              set: prop.contract.asset.week52Low
+            } : undefined,
           day50MovingAverage: prop.contract.asset.day50MovingAverage !== undefined ? {
-              set: prop.contract.asset.day50MovingAverage  
-             } : undefined,
+              set: prop.contract.asset.day50MovingAverage
+            } : undefined,
           day200MovingAverage: prop.contract.asset.day200MovingAverage !== undefined ? {
-              set: prop.contract.asset.day200MovingAverage  
-             } : undefined,
+              set: prop.contract.asset.day200MovingAverage
+            } : undefined,
           sharesOutstanding: prop.contract.asset.sharesOutstanding !== undefined ? {
-              set: prop.contract.asset.sharesOutstanding  
-             } : undefined,
+              set: prop.contract.asset.sharesOutstanding
+            } : undefined,
           dividendDate: prop.contract.asset.dividendDate !== undefined ? {
-              set: prop.contract.asset.dividendDate  
-             } : undefined,
+              set: prop.contract.asset.dividendDate
+            } : undefined,
           exDividendDate: prop.contract.asset.exDividendDate !== undefined ? {
-              set: prop.contract.asset.exDividendDate  
-             } : undefined,
+              set: prop.contract.asset.exDividendDate
+            } : undefined,
           askPrice: prop.contract.asset.askPrice !== undefined ? {
-              set: prop.contract.asset.askPrice  
-             } : undefined,
+              set: prop.contract.asset.askPrice
+            } : undefined,
           bidPrice: prop.contract.asset.bidPrice !== undefined ? {
-              set: prop.contract.asset.bidPrice  
-             } : undefined,
-      trades: prop.contract.asset.trades ? {
-        upsert: prop.contract.asset.trades.map((item: any) => ({
+              set: prop.contract.asset.bidPrice
+            } : undefined,
+      trades: prop.contract.asset.trades ? 
+      Array.isArray(prop.contract.asset.trades) && prop.contract.asset.trades.length > 0 && prop.contract.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: prop.contract.asset.trades.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.contract.asset.trades.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             price: item.price !== undefined ? {
-                set: item.price  
-               } : undefined,
+                set: item.price
+              } : undefined,
             total: item.total !== undefined ? {
-                set: item.total  
-               } : undefined,
+                set: item.total
+              } : undefined,
             optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
+                set: item.optionType
+              } : undefined,
             signal: item.signal !== undefined ? {
-                set: item.signal  
-               } : undefined,
+                set: item.signal
+              } : undefined,
             strategy: item.strategy !== undefined ? {
-                set: item.strategy  
-               } : undefined,
+                set: item.strategy
+              } : undefined,
             analysis: item.analysis !== undefined ? {
-                set: item.analysis  
-               } : undefined,
+                set: item.analysis
+              } : undefined,
             summary: item.summary !== undefined ? {
-                set: item.summary  
-               } : undefined,
+                set: item.summary
+              } : undefined,
             confidence: item.confidence !== undefined ? {
-                set: item.confidence  
-               } : undefined,
+                set: item.confidence
+              } : undefined,
             timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp  
-               } : undefined,
+                set: item.timestamp
+              } : undefined,
             status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
+                set: item.status
+              } : undefined,
           },
           create: {
             qty: item.qty !== undefined ? item.qty : undefined,
@@ -5481,8 +5607,12 @@ id
           },
         }))
       } : undefined,
-      orders: prop.contract.asset.orders ? {
-        upsert: prop.contract.asset.orders.map((item: any) => ({
+      orders: prop.contract.asset.orders ? 
+      Array.isArray(prop.contract.asset.orders) && prop.contract.asset.orders.length > 0 && prop.contract.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: prop.contract.asset.orders.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.contract.asset.orders.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
@@ -5490,94 +5620,94 @@ id
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             contractId: item.contractId !== undefined ? item.contractId : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             takeProfitId: item.takeProfitId !== undefined ? {
-                equals: item.takeProfitId 
-               } : undefined,
+                equals: item.takeProfitId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             clientOrderId: item.clientOrderId !== undefined ? {
-                set: item.clientOrderId  
-               } : undefined,
+                set: item.clientOrderId
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             notional: item.notional !== undefined ? {
-                set: item.notional  
-               } : undefined,
+                set: item.notional
+              } : undefined,
             side: item.side !== undefined ? {
-                set: item.side  
-               } : undefined,
+                set: item.side
+              } : undefined,
             type: item.type !== undefined ? {
-                set: item.type  
-               } : undefined,
+                set: item.type
+              } : undefined,
             orderClass: item.orderClass !== undefined ? {
-                set: item.orderClass  
-               } : undefined,
+                set: item.orderClass
+              } : undefined,
             timeInForce: item.timeInForce !== undefined ? {
-                set: item.timeInForce  
-               } : undefined,
+                set: item.timeInForce
+              } : undefined,
             limitPrice: item.limitPrice !== undefined ? {
-                set: item.limitPrice  
-               } : undefined,
+                set: item.limitPrice
+              } : undefined,
             stopPrice: item.stopPrice !== undefined ? {
-                set: item.stopPrice  
-               } : undefined,
+                set: item.stopPrice
+              } : undefined,
             trailPrice: item.trailPrice !== undefined ? {
-                set: item.trailPrice  
-               } : undefined,
+                set: item.trailPrice
+              } : undefined,
             trailPercent: item.trailPercent !== undefined ? {
-                set: item.trailPercent  
-               } : undefined,
+                set: item.trailPercent
+              } : undefined,
             extendedHours: item.extendedHours !== undefined ? {
-                set: item.extendedHours  
-               } : undefined,
+                set: item.extendedHours
+              } : undefined,
             status: item.status !== undefined ? {
-                set: item.status  
-               } : undefined,
+                set: item.status
+              } : undefined,
             submittedAt: item.submittedAt !== undefined ? {
-                set: item.submittedAt  
-               } : undefined,
+                set: item.submittedAt
+              } : undefined,
             filledAt: item.filledAt !== undefined ? {
-                set: item.filledAt  
-               } : undefined,
+                set: item.filledAt
+              } : undefined,
             filledQty: item.filledQty !== undefined ? {
-                set: item.filledQty  
-               } : undefined,
+                set: item.filledQty
+              } : undefined,
             filledAvgPrice: item.filledAvgPrice !== undefined ? {
-                set: item.filledAvgPrice  
-               } : undefined,
+                set: item.filledAvgPrice
+              } : undefined,
             cancelRequestedAt: item.cancelRequestedAt !== undefined ? {
-                set: item.cancelRequestedAt  
-               } : undefined,
+                set: item.cancelRequestedAt
+              } : undefined,
             canceledAt: item.canceledAt !== undefined ? {
-                set: item.canceledAt  
-               } : undefined,
+                set: item.canceledAt
+              } : undefined,
             fee: item.fee !== undefined ? {
-                set: item.fee  
-               } : undefined,
+                set: item.fee
+              } : undefined,
             strikePrice: item.strikePrice !== undefined ? {
-                set: item.strikePrice  
-               } : undefined,
+                set: item.strikePrice
+              } : undefined,
             expirationDate: item.expirationDate !== undefined ? {
-                set: item.expirationDate  
-               } : undefined,
+                set: item.expirationDate
+              } : undefined,
             optionType: item.optionType !== undefined ? {
-                set: item.optionType  
-               } : undefined,
+                set: item.optionType
+              } : undefined,
             stopLossId: item.stopLossId !== undefined ? {
-                set: item.stopLossId  
-               } : undefined,
+                set: item.stopLossId
+              } : undefined,
             takeProfitId: item.takeProfitId !== undefined ? {
-                set: item.takeProfitId  
-               } : undefined,
+                set: item.takeProfitId
+              } : undefined,
           },
           create: {
             clientOrderId: item.clientOrderId !== undefined ? item.clientOrderId : undefined,
@@ -5608,63 +5738,67 @@ id
           },
         }))
       } : undefined,
-      positions: prop.contract.asset.positions ? {
-        upsert: prop.contract.asset.positions.map((item: any) => ({
+      positions: prop.contract.asset.positions ? 
+      Array.isArray(prop.contract.asset.positions) && prop.contract.asset.positions.length > 0 && prop.contract.asset.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: prop.contract.asset.positions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.contract.asset.positions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
+                equals: item.alpacaAccountId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             averageEntryPrice: item.averageEntryPrice !== undefined ? {
-                set: item.averageEntryPrice  
-               } : undefined,
+                set: item.averageEntryPrice
+              } : undefined,
             qty: item.qty !== undefined ? {
-                set: item.qty  
-               } : undefined,
+                set: item.qty
+              } : undefined,
             qtyAvailable: item.qtyAvailable !== undefined ? {
-                set: item.qtyAvailable  
-               } : undefined,
+                set: item.qtyAvailable
+              } : undefined,
             marketValue: item.marketValue !== undefined ? {
-                set: item.marketValue  
-               } : undefined,
+                set: item.marketValue
+              } : undefined,
             costBasis: item.costBasis !== undefined ? {
-                set: item.costBasis  
-               } : undefined,
+                set: item.costBasis
+              } : undefined,
             unrealizedPL: item.unrealizedPL !== undefined ? {
-                set: item.unrealizedPL  
-               } : undefined,
+                set: item.unrealizedPL
+              } : undefined,
             unrealizedPLPC: item.unrealizedPLPC !== undefined ? {
-                set: item.unrealizedPLPC  
-               } : undefined,
+                set: item.unrealizedPLPC
+              } : undefined,
             unrealisedIntradayPL: item.unrealisedIntradayPL !== undefined ? {
-                set: item.unrealisedIntradayPL  
-               } : undefined,
+                set: item.unrealisedIntradayPL
+              } : undefined,
             unrealisedIntradayPLPC: item.unrealisedIntradayPLPC !== undefined ? {
-                set: item.unrealisedIntradayPLPC  
-               } : undefined,
+                set: item.unrealisedIntradayPLPC
+              } : undefined,
             currentPrice: item.currentPrice !== undefined ? {
-                set: item.currentPrice  
-               } : undefined,
+                set: item.currentPrice
+              } : undefined,
             lastTradePrice: item.lastTradePrice !== undefined ? {
-                set: item.lastTradePrice  
-               } : undefined,
+                set: item.lastTradePrice
+              } : undefined,
             changeToday: item.changeToday !== undefined ? {
-                set: item.changeToday  
-               } : undefined,
+                set: item.changeToday
+              } : undefined,
             assetMarginable: item.assetMarginable !== undefined ? {
-                set: item.assetMarginable  
-               } : undefined,
+                set: item.assetMarginable
+              } : undefined,
             closed: item.closed !== undefined ? {
-                set: item.closed  
-               } : undefined,
+                set: item.closed
+              } : undefined,
           },
           create: {
             averageEntryPrice: item.averageEntryPrice !== undefined ? item.averageEntryPrice : undefined,
@@ -5684,34 +5818,38 @@ id
           },
         }))
       } : undefined,
-      newsMentions: prop.contract.asset.newsMentions ? {
-        upsert: prop.contract.asset.newsMentions.map((item: any) => ({
+      newsMentions: prop.contract.asset.newsMentions ? 
+      Array.isArray(prop.contract.asset.newsMentions) && prop.contract.asset.newsMentions.length > 0 && prop.contract.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: prop.contract.asset.newsMentions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.contract.asset.newsMentions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             url: item.url !== undefined ? item.url : undefined,
             assetId: item.assetId !== undefined ? {
-                equals: item.assetId 
-               } : undefined,
+                equals: item.assetId
+              } : undefined,
             newsArticleId: item.newsArticleId !== undefined ? {
-                equals: item.newsArticleId 
-               } : undefined,
+                equals: item.newsArticleId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
-                set: item.id  
-               } : undefined,
+                set: item.id
+              } : undefined,
             url: item.url !== undefined ? {
-                set: item.url  
-               } : undefined,
+                set: item.url
+              } : undefined,
             relevancyScore: item.relevancyScore !== undefined ? {
-                set: item.relevancyScore  
-               } : undefined,
+                set: item.relevancyScore
+              } : undefined,
             sentimentScore: item.sentimentScore !== undefined ? {
-                set: item.sentimentScore  
-               } : undefined,
+                set: item.sentimentScore
+              } : undefined,
             sentimentLabel: item.sentimentLabel !== undefined ? {
-                set: item.sentimentLabel  
-               } : undefined,
+                set: item.sentimentLabel
+              } : undefined,
           },
           create: {
             url: item.url !== undefined ? item.url : undefined,
@@ -5908,133 +6046,143 @@ id
         },
       }
     } : undefined,
-    order: prop.contract.order ? {
-      upsert: {
+    order: prop.contract.order ? 
+    typeof prop.contract.order === 'object' && Object.keys(prop.contract.order).length === 1 && Object.keys(prop.contract.order)[0] === 'id'
+? {
+    connect: {
+      id: prop.contract.order.id
+    }
+} : { upsert: {
         where: {
           id: prop.contract.order.id !== undefined ? {
-              equals: prop.contract.order.id 
-             } : undefined,
+              equals: prop.contract.order.id
+            } : undefined,
           clientOrderId: prop.contract.order.clientOrderId !== undefined ? {
-              equals: prop.contract.order.clientOrderId 
-             } : undefined,
+              equals: prop.contract.order.clientOrderId
+            } : undefined,
           alpacaAccountId: prop.contract.order.alpacaAccountId !== undefined ? {
-              equals: prop.contract.order.alpacaAccountId 
-             } : undefined,
+              equals: prop.contract.order.alpacaAccountId
+            } : undefined,
           assetId: prop.contract.order.assetId !== undefined ? {
-              equals: prop.contract.order.assetId 
-             } : undefined,
+              equals: prop.contract.order.assetId
+            } : undefined,
           actionId: prop.contract.order.actionId !== undefined ? {
-              equals: prop.contract.order.actionId 
-             } : undefined,
+              equals: prop.contract.order.actionId
+            } : undefined,
           stopLossId: prop.contract.order.stopLossId !== undefined ? {
-              equals: prop.contract.order.stopLossId 
-             } : undefined,
+              equals: prop.contract.order.stopLossId
+            } : undefined,
           takeProfitId: prop.contract.order.takeProfitId !== undefined ? {
-              equals: prop.contract.order.takeProfitId 
-             } : undefined,
+              equals: prop.contract.order.takeProfitId
+            } : undefined,
           contractId: prop.contract.order.contractId !== undefined ? {
-              equals: prop.contract.order.contractId 
-             } : undefined,
+              equals: prop.contract.order.contractId
+            } : undefined,
         },
         update: {
           id: prop.contract.order.id !== undefined ? {
-              set: prop.contract.order.id  
-             } : undefined,
+              set: prop.contract.order.id
+            } : undefined,
           clientOrderId: prop.contract.order.clientOrderId !== undefined ? {
-              set: prop.contract.order.clientOrderId  
-             } : undefined,
+              set: prop.contract.order.clientOrderId
+            } : undefined,
           qty: prop.contract.order.qty !== undefined ? {
-              set: prop.contract.order.qty  
-             } : undefined,
+              set: prop.contract.order.qty
+            } : undefined,
           notional: prop.contract.order.notional !== undefined ? {
-              set: prop.contract.order.notional  
-             } : undefined,
+              set: prop.contract.order.notional
+            } : undefined,
           side: prop.contract.order.side !== undefined ? {
-              set: prop.contract.order.side  
-             } : undefined,
+              set: prop.contract.order.side
+            } : undefined,
           type: prop.contract.order.type !== undefined ? {
-              set: prop.contract.order.type  
-             } : undefined,
+              set: prop.contract.order.type
+            } : undefined,
           orderClass: prop.contract.order.orderClass !== undefined ? {
-              set: prop.contract.order.orderClass  
-             } : undefined,
+              set: prop.contract.order.orderClass
+            } : undefined,
           timeInForce: prop.contract.order.timeInForce !== undefined ? {
-              set: prop.contract.order.timeInForce  
-             } : undefined,
+              set: prop.contract.order.timeInForce
+            } : undefined,
           limitPrice: prop.contract.order.limitPrice !== undefined ? {
-              set: prop.contract.order.limitPrice  
-             } : undefined,
+              set: prop.contract.order.limitPrice
+            } : undefined,
           stopPrice: prop.contract.order.stopPrice !== undefined ? {
-              set: prop.contract.order.stopPrice  
-             } : undefined,
+              set: prop.contract.order.stopPrice
+            } : undefined,
           trailPrice: prop.contract.order.trailPrice !== undefined ? {
-              set: prop.contract.order.trailPrice  
-             } : undefined,
+              set: prop.contract.order.trailPrice
+            } : undefined,
           trailPercent: prop.contract.order.trailPercent !== undefined ? {
-              set: prop.contract.order.trailPercent  
-             } : undefined,
+              set: prop.contract.order.trailPercent
+            } : undefined,
           extendedHours: prop.contract.order.extendedHours !== undefined ? {
-              set: prop.contract.order.extendedHours  
-             } : undefined,
+              set: prop.contract.order.extendedHours
+            } : undefined,
           status: prop.contract.order.status !== undefined ? {
-              set: prop.contract.order.status  
-             } : undefined,
+              set: prop.contract.order.status
+            } : undefined,
           submittedAt: prop.contract.order.submittedAt !== undefined ? {
-              set: prop.contract.order.submittedAt  
-             } : undefined,
+              set: prop.contract.order.submittedAt
+            } : undefined,
           filledAt: prop.contract.order.filledAt !== undefined ? {
-              set: prop.contract.order.filledAt  
-             } : undefined,
+              set: prop.contract.order.filledAt
+            } : undefined,
           filledQty: prop.contract.order.filledQty !== undefined ? {
-              set: prop.contract.order.filledQty  
-             } : undefined,
+              set: prop.contract.order.filledQty
+            } : undefined,
           filledAvgPrice: prop.contract.order.filledAvgPrice !== undefined ? {
-              set: prop.contract.order.filledAvgPrice  
-             } : undefined,
+              set: prop.contract.order.filledAvgPrice
+            } : undefined,
           cancelRequestedAt: prop.contract.order.cancelRequestedAt !== undefined ? {
-              set: prop.contract.order.cancelRequestedAt  
-             } : undefined,
+              set: prop.contract.order.cancelRequestedAt
+            } : undefined,
           canceledAt: prop.contract.order.canceledAt !== undefined ? {
-              set: prop.contract.order.canceledAt  
-             } : undefined,
+              set: prop.contract.order.canceledAt
+            } : undefined,
           fee: prop.contract.order.fee !== undefined ? {
-              set: prop.contract.order.fee  
-             } : undefined,
+              set: prop.contract.order.fee
+            } : undefined,
           strikePrice: prop.contract.order.strikePrice !== undefined ? {
-              set: prop.contract.order.strikePrice  
-             } : undefined,
+              set: prop.contract.order.strikePrice
+            } : undefined,
           expirationDate: prop.contract.order.expirationDate !== undefined ? {
-              set: prop.contract.order.expirationDate  
-             } : undefined,
+              set: prop.contract.order.expirationDate
+            } : undefined,
           optionType: prop.contract.order.optionType !== undefined ? {
-              set: prop.contract.order.optionType  
-             } : undefined,
+              set: prop.contract.order.optionType
+            } : undefined,
           stopLossId: prop.contract.order.stopLossId !== undefined ? {
-              set: prop.contract.order.stopLossId  
-             } : undefined,
+              set: prop.contract.order.stopLossId
+            } : undefined,
           takeProfitId: prop.contract.order.takeProfitId !== undefined ? {
-              set: prop.contract.order.takeProfitId  
-             } : undefined,
-      stopLoss: prop.contract.order.stopLoss ? {
-        upsert: {
+              set: prop.contract.order.takeProfitId
+            } : undefined,
+      stopLoss: prop.contract.order.stopLoss ? 
+      typeof prop.contract.order.stopLoss === 'object' && Object.keys(prop.contract.order.stopLoss).length === 1 && Object.keys(prop.contract.order.stopLoss)[0] === 'id'
+? {
+      connect: {
+        id: prop.contract.order.stopLoss.id
+      }
+} : { upsert: {
           where: {
             id: prop.contract.order.stopLoss.id !== undefined ? {
-                equals: prop.contract.order.stopLoss.id 
-               } : undefined,
+                equals: prop.contract.order.stopLoss.id
+              } : undefined,
             orderId: prop.contract.order.stopLoss.orderId !== undefined ? {
-                equals: prop.contract.order.stopLoss.orderId 
-               } : undefined,
+                equals: prop.contract.order.stopLoss.orderId
+              } : undefined,
           },
           update: {
             id: prop.contract.order.stopLoss.id !== undefined ? {
-                set: prop.contract.order.stopLoss.id  
-               } : undefined,
+                set: prop.contract.order.stopLoss.id
+              } : undefined,
             stopPrice: prop.contract.order.stopLoss.stopPrice !== undefined ? {
-                set: prop.contract.order.stopLoss.stopPrice  
-               } : undefined,
+                set: prop.contract.order.stopLoss.stopPrice
+              } : undefined,
             limitPrice: prop.contract.order.stopLoss.limitPrice !== undefined ? {
-                set: prop.contract.order.stopLoss.limitPrice  
-               } : undefined,
+                set: prop.contract.order.stopLoss.limitPrice
+              } : undefined,
           },
           create: {
             stopPrice: prop.contract.order.stopLoss.stopPrice !== undefined ? prop.contract.order.stopLoss.stopPrice : undefined,
@@ -6042,26 +6190,31 @@ id
           },
         }
       } : undefined,
-      takeProfit: prop.contract.order.takeProfit ? {
-        upsert: {
+      takeProfit: prop.contract.order.takeProfit ? 
+      typeof prop.contract.order.takeProfit === 'object' && Object.keys(prop.contract.order.takeProfit).length === 1 && Object.keys(prop.contract.order.takeProfit)[0] === 'id'
+? {
+      connect: {
+        id: prop.contract.order.takeProfit.id
+      }
+} : { upsert: {
           where: {
             id: prop.contract.order.takeProfit.id !== undefined ? {
-                equals: prop.contract.order.takeProfit.id 
-               } : undefined,
+                equals: prop.contract.order.takeProfit.id
+              } : undefined,
             orderId: prop.contract.order.takeProfit.orderId !== undefined ? {
-                equals: prop.contract.order.takeProfit.orderId 
-               } : undefined,
+                equals: prop.contract.order.takeProfit.orderId
+              } : undefined,
           },
           update: {
             id: prop.contract.order.takeProfit.id !== undefined ? {
-                set: prop.contract.order.takeProfit.id  
-               } : undefined,
+                set: prop.contract.order.takeProfit.id
+              } : undefined,
             limitPrice: prop.contract.order.takeProfit.limitPrice !== undefined ? {
-                set: prop.contract.order.takeProfit.limitPrice  
-               } : undefined,
+                set: prop.contract.order.takeProfit.limitPrice
+              } : undefined,
             stopPrice: prop.contract.order.takeProfit.stopPrice !== undefined ? {
-                set: prop.contract.order.takeProfit.stopPrice  
-               } : undefined,
+                set: prop.contract.order.takeProfit.stopPrice
+              } : undefined,
           },
           create: {
             limitPrice: prop.contract.order.takeProfit.limitPrice !== undefined ? prop.contract.order.takeProfit.limitPrice : undefined,
@@ -6069,47 +6222,52 @@ id
           },
         }
       } : undefined,
-      alpacaAccount: prop.contract.order.alpacaAccount ? {
-        upsert: {
+      alpacaAccount: prop.contract.order.alpacaAccount ? 
+      typeof prop.contract.order.alpacaAccount === 'object' && Object.keys(prop.contract.order.alpacaAccount).length === 1 && Object.keys(prop.contract.order.alpacaAccount)[0] === 'id'
+? {
+      connect: {
+        id: prop.contract.order.alpacaAccount.id
+      }
+} : { upsert: {
           where: {
             id: prop.contract.order.alpacaAccount.id !== undefined ? {
-                equals: prop.contract.order.alpacaAccount.id 
-               } : undefined,
+                equals: prop.contract.order.alpacaAccount.id
+              } : undefined,
             userId: prop.contract.order.alpacaAccount.userId !== undefined ? {
-                equals: prop.contract.order.alpacaAccount.userId 
-               } : undefined,
+                equals: prop.contract.order.alpacaAccount.userId
+              } : undefined,
           },
           update: {
             id: prop.contract.order.alpacaAccount.id !== undefined ? {
-                set: prop.contract.order.alpacaAccount.id  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.id
+              } : undefined,
             type: prop.contract.order.alpacaAccount.type !== undefined ? {
-                set: prop.contract.order.alpacaAccount.type  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.type
+              } : undefined,
             APIKey: prop.contract.order.alpacaAccount.APIKey !== undefined ? {
-                set: prop.contract.order.alpacaAccount.APIKey  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.APIKey
+              } : undefined,
             APISecret: prop.contract.order.alpacaAccount.APISecret !== undefined ? {
-                set: prop.contract.order.alpacaAccount.APISecret  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.APISecret
+              } : undefined,
             configuration: prop.contract.order.alpacaAccount.configuration !== undefined ? {
-                set: prop.contract.order.alpacaAccount.configuration  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.configuration
+              } : undefined,
             marketOpen: prop.contract.order.alpacaAccount.marketOpen !== undefined ? {
-                set: prop.contract.order.alpacaAccount.marketOpen  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.marketOpen
+              } : undefined,
             minOrderSize: prop.contract.order.alpacaAccount.minOrderSize !== undefined ? {
-                set: prop.contract.order.alpacaAccount.minOrderSize  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.minOrderSize
+              } : undefined,
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? {
-                set: prop.contract.order.alpacaAccount.maxOrderSize  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.maxOrderSize
+              } : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? {
-                set: prop.contract.order.alpacaAccount.minPercentageChange  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.minPercentageChange
+              } : undefined,
             volumeThreshold: prop.contract.order.alpacaAccount.volumeThreshold !== undefined ? {
-                set: prop.contract.order.alpacaAccount.volumeThreshold  
-               } : undefined,
+                set: prop.contract.order.alpacaAccount.volumeThreshold
+              } : undefined,
           },
           create: {
             type: prop.contract.order.alpacaAccount.type !== undefined ? prop.contract.order.alpacaAccount.type : undefined,
@@ -6124,35 +6282,40 @@ id
           },
         }
       } : undefined,
-      action: prop.contract.order.action ? {
-        upsert: {
+      action: prop.contract.order.action ? 
+      typeof prop.contract.order.action === 'object' && Object.keys(prop.contract.order.action).length === 1 && Object.keys(prop.contract.order.action)[0] === 'id'
+? {
+      connect: {
+        id: prop.contract.order.action.id
+      }
+} : { upsert: {
           where: {
             id: prop.contract.order.action.id !== undefined ? {
-                equals: prop.contract.order.action.id 
-               } : undefined,
+                equals: prop.contract.order.action.id
+              } : undefined,
             tradeId: prop.contract.order.action.tradeId !== undefined ? {
-                equals: prop.contract.order.action.tradeId 
-               } : undefined,
+                equals: prop.contract.order.action.tradeId
+              } : undefined,
           },
           update: {
             id: prop.contract.order.action.id !== undefined ? {
-                set: prop.contract.order.action.id  
-               } : undefined,
+                set: prop.contract.order.action.id
+              } : undefined,
             sequence: prop.contract.order.action.sequence !== undefined ? {
-                set: prop.contract.order.action.sequence  
-               } : undefined,
+                set: prop.contract.order.action.sequence
+              } : undefined,
             type: prop.contract.order.action.type !== undefined ? {
-                set: prop.contract.order.action.type  
-               } : undefined,
+                set: prop.contract.order.action.type
+              } : undefined,
             note: prop.contract.order.action.note !== undefined ? {
-                set: prop.contract.order.action.note  
-               } : undefined,
+                set: prop.contract.order.action.note
+              } : undefined,
             status: prop.contract.order.action.status !== undefined ? {
-                set: prop.contract.order.action.status  
-               } : undefined,
+                set: prop.contract.order.action.status
+              } : undefined,
             fee: prop.contract.order.action.fee !== undefined ? {
-                set: prop.contract.order.action.fee  
-               } : undefined,
+                set: prop.contract.order.action.fee
+              } : undefined,
           },
           create: {
             sequence: prop.contract.order.action.sequence !== undefined ? prop.contract.order.action.sequence : undefined,
@@ -6163,188 +6326,193 @@ id
           },
         }
       } : undefined,
-      asset: prop.contract.order.asset ? {
-        upsert: {
+      asset: prop.contract.order.asset ? 
+      typeof prop.contract.order.asset === 'object' && Object.keys(prop.contract.order.asset).length === 1 && Object.keys(prop.contract.order.asset)[0] === 'id'
+? {
+      connect: {
+        id: prop.contract.order.asset.id
+      }
+} : { upsert: {
           where: {
             id: prop.contract.order.asset.id !== undefined ? {
-                equals: prop.contract.order.asset.id 
-               } : undefined,
+                equals: prop.contract.order.asset.id
+              } : undefined,
             symbol: prop.contract.order.asset.symbol !== undefined ? {
-                equals: prop.contract.order.asset.symbol 
-               } : undefined,
+                equals: prop.contract.order.asset.symbol
+              } : undefined,
             name: prop.contract.order.asset.name !== undefined ? {
-                equals: prop.contract.order.asset.name 
-               } : undefined,
+                equals: prop.contract.order.asset.name
+              } : undefined,
           },
           update: {
             id: prop.contract.order.asset.id !== undefined ? {
-                set: prop.contract.order.asset.id  
-               } : undefined,
+                set: prop.contract.order.asset.id
+              } : undefined,
             symbol: prop.contract.order.asset.symbol !== undefined ? {
-                set: prop.contract.order.asset.symbol  
-               } : undefined,
+                set: prop.contract.order.asset.symbol
+              } : undefined,
             name: prop.contract.order.asset.name !== undefined ? {
-                set: prop.contract.order.asset.name  
-               } : undefined,
+                set: prop.contract.order.asset.name
+              } : undefined,
             type: prop.contract.order.asset.type !== undefined ? {
-                set: prop.contract.order.asset.type  
-               } : undefined,
+                set: prop.contract.order.asset.type
+              } : undefined,
             logoUrl: prop.contract.order.asset.logoUrl !== undefined ? {
-                set: prop.contract.order.asset.logoUrl  
-               } : undefined,
+                set: prop.contract.order.asset.logoUrl
+              } : undefined,
             description: prop.contract.order.asset.description !== undefined ? {
-                set: prop.contract.order.asset.description  
-               } : undefined,
+                set: prop.contract.order.asset.description
+              } : undefined,
             cik: prop.contract.order.asset.cik !== undefined ? {
-                set: prop.contract.order.asset.cik  
-               } : undefined,
+                set: prop.contract.order.asset.cik
+              } : undefined,
             exchange: prop.contract.order.asset.exchange !== undefined ? {
-                set: prop.contract.order.asset.exchange  
-               } : undefined,
+                set: prop.contract.order.asset.exchange
+              } : undefined,
             currency: prop.contract.order.asset.currency !== undefined ? {
-                set: prop.contract.order.asset.currency  
-               } : undefined,
+                set: prop.contract.order.asset.currency
+              } : undefined,
             country: prop.contract.order.asset.country !== undefined ? {
-                set: prop.contract.order.asset.country  
-               } : undefined,
+                set: prop.contract.order.asset.country
+              } : undefined,
             sector: prop.contract.order.asset.sector !== undefined ? {
-                set: prop.contract.order.asset.sector  
-               } : undefined,
+                set: prop.contract.order.asset.sector
+              } : undefined,
             industry: prop.contract.order.asset.industry !== undefined ? {
-                set: prop.contract.order.asset.industry  
-               } : undefined,
+                set: prop.contract.order.asset.industry
+              } : undefined,
             address: prop.contract.order.asset.address !== undefined ? {
-                set: prop.contract.order.asset.address  
-               } : undefined,
+                set: prop.contract.order.asset.address
+              } : undefined,
             officialSite: prop.contract.order.asset.officialSite !== undefined ? {
-                set: prop.contract.order.asset.officialSite  
-               } : undefined,
+                set: prop.contract.order.asset.officialSite
+              } : undefined,
             fiscalYearEnd: prop.contract.order.asset.fiscalYearEnd !== undefined ? {
-                set: prop.contract.order.asset.fiscalYearEnd  
-               } : undefined,
+                set: prop.contract.order.asset.fiscalYearEnd
+              } : undefined,
             latestQuarter: prop.contract.order.asset.latestQuarter !== undefined ? {
-                set: prop.contract.order.asset.latestQuarter  
-               } : undefined,
+                set: prop.contract.order.asset.latestQuarter
+              } : undefined,
             marketCapitalization: prop.contract.order.asset.marketCapitalization !== undefined ? {
-                set: prop.contract.order.asset.marketCapitalization  
-               } : undefined,
+                set: prop.contract.order.asset.marketCapitalization
+              } : undefined,
             ebitda: prop.contract.order.asset.ebitda !== undefined ? {
-                set: prop.contract.order.asset.ebitda  
-               } : undefined,
+                set: prop.contract.order.asset.ebitda
+              } : undefined,
             peRatio: prop.contract.order.asset.peRatio !== undefined ? {
-                set: prop.contract.order.asset.peRatio  
-               } : undefined,
+                set: prop.contract.order.asset.peRatio
+              } : undefined,
             pegRatio: prop.contract.order.asset.pegRatio !== undefined ? {
-                set: prop.contract.order.asset.pegRatio  
-               } : undefined,
+                set: prop.contract.order.asset.pegRatio
+              } : undefined,
             bookValue: prop.contract.order.asset.bookValue !== undefined ? {
-                set: prop.contract.order.asset.bookValue  
-               } : undefined,
+                set: prop.contract.order.asset.bookValue
+              } : undefined,
             dividendPerShare: prop.contract.order.asset.dividendPerShare !== undefined ? {
-                set: prop.contract.order.asset.dividendPerShare  
-               } : undefined,
+                set: prop.contract.order.asset.dividendPerShare
+              } : undefined,
             dividendYield: prop.contract.order.asset.dividendYield !== undefined ? {
-                set: prop.contract.order.asset.dividendYield  
-               } : undefined,
+                set: prop.contract.order.asset.dividendYield
+              } : undefined,
             eps: prop.contract.order.asset.eps !== undefined ? {
-                set: prop.contract.order.asset.eps  
-               } : undefined,
+                set: prop.contract.order.asset.eps
+              } : undefined,
             revenuePerShareTTM: prop.contract.order.asset.revenuePerShareTTM !== undefined ? {
-                set: prop.contract.order.asset.revenuePerShareTTM  
-               } : undefined,
+                set: prop.contract.order.asset.revenuePerShareTTM
+              } : undefined,
             profitMargin: prop.contract.order.asset.profitMargin !== undefined ? {
-                set: prop.contract.order.asset.profitMargin  
-               } : undefined,
+                set: prop.contract.order.asset.profitMargin
+              } : undefined,
             operatingMarginTTM: prop.contract.order.asset.operatingMarginTTM !== undefined ? {
-                set: prop.contract.order.asset.operatingMarginTTM  
-               } : undefined,
+                set: prop.contract.order.asset.operatingMarginTTM
+              } : undefined,
             returnOnAssetsTTM: prop.contract.order.asset.returnOnAssetsTTM !== undefined ? {
-                set: prop.contract.order.asset.returnOnAssetsTTM  
-               } : undefined,
+                set: prop.contract.order.asset.returnOnAssetsTTM
+              } : undefined,
             returnOnEquityTTM: prop.contract.order.asset.returnOnEquityTTM !== undefined ? {
-                set: prop.contract.order.asset.returnOnEquityTTM  
-               } : undefined,
+                set: prop.contract.order.asset.returnOnEquityTTM
+              } : undefined,
             revenueTTM: prop.contract.order.asset.revenueTTM !== undefined ? {
-                set: prop.contract.order.asset.revenueTTM  
-               } : undefined,
+                set: prop.contract.order.asset.revenueTTM
+              } : undefined,
             grossProfitTTM: prop.contract.order.asset.grossProfitTTM !== undefined ? {
-                set: prop.contract.order.asset.grossProfitTTM  
-               } : undefined,
+                set: prop.contract.order.asset.grossProfitTTM
+              } : undefined,
             dilutedEPSTTM: prop.contract.order.asset.dilutedEPSTTM !== undefined ? {
-                set: prop.contract.order.asset.dilutedEPSTTM  
-               } : undefined,
+                set: prop.contract.order.asset.dilutedEPSTTM
+              } : undefined,
             quarterlyEarningsGrowthYOY: prop.contract.order.asset.quarterlyEarningsGrowthYOY !== undefined ? {
-                set: prop.contract.order.asset.quarterlyEarningsGrowthYOY  
-               } : undefined,
+                set: prop.contract.order.asset.quarterlyEarningsGrowthYOY
+              } : undefined,
             quarterlyRevenueGrowthYOY: prop.contract.order.asset.quarterlyRevenueGrowthYOY !== undefined ? {
-                set: prop.contract.order.asset.quarterlyRevenueGrowthYOY  
-               } : undefined,
+                set: prop.contract.order.asset.quarterlyRevenueGrowthYOY
+              } : undefined,
             analystTargetPrice: prop.contract.order.asset.analystTargetPrice !== undefined ? {
-                set: prop.contract.order.asset.analystTargetPrice  
-               } : undefined,
+                set: prop.contract.order.asset.analystTargetPrice
+              } : undefined,
             analystRatingStrongBuy: prop.contract.order.asset.analystRatingStrongBuy !== undefined ? {
-                set: prop.contract.order.asset.analystRatingStrongBuy  
-               } : undefined,
+                set: prop.contract.order.asset.analystRatingStrongBuy
+              } : undefined,
             analystRatingBuy: prop.contract.order.asset.analystRatingBuy !== undefined ? {
-                set: prop.contract.order.asset.analystRatingBuy  
-               } : undefined,
+                set: prop.contract.order.asset.analystRatingBuy
+              } : undefined,
             analystRatingHold: prop.contract.order.asset.analystRatingHold !== undefined ? {
-                set: prop.contract.order.asset.analystRatingHold  
-               } : undefined,
+                set: prop.contract.order.asset.analystRatingHold
+              } : undefined,
             analystRatingSell: prop.contract.order.asset.analystRatingSell !== undefined ? {
-                set: prop.contract.order.asset.analystRatingSell  
-               } : undefined,
+                set: prop.contract.order.asset.analystRatingSell
+              } : undefined,
             analystRatingStrongSell: prop.contract.order.asset.analystRatingStrongSell !== undefined ? {
-                set: prop.contract.order.asset.analystRatingStrongSell  
-               } : undefined,
+                set: prop.contract.order.asset.analystRatingStrongSell
+              } : undefined,
             trailingPE: prop.contract.order.asset.trailingPE !== undefined ? {
-                set: prop.contract.order.asset.trailingPE  
-               } : undefined,
+                set: prop.contract.order.asset.trailingPE
+              } : undefined,
             forwardPE: prop.contract.order.asset.forwardPE !== undefined ? {
-                set: prop.contract.order.asset.forwardPE  
-               } : undefined,
+                set: prop.contract.order.asset.forwardPE
+              } : undefined,
             priceToSalesRatioTTM: prop.contract.order.asset.priceToSalesRatioTTM !== undefined ? {
-                set: prop.contract.order.asset.priceToSalesRatioTTM  
-               } : undefined,
+                set: prop.contract.order.asset.priceToSalesRatioTTM
+              } : undefined,
             priceToBookRatio: prop.contract.order.asset.priceToBookRatio !== undefined ? {
-                set: prop.contract.order.asset.priceToBookRatio  
-               } : undefined,
+                set: prop.contract.order.asset.priceToBookRatio
+              } : undefined,
             evToRevenue: prop.contract.order.asset.evToRevenue !== undefined ? {
-                set: prop.contract.order.asset.evToRevenue  
-               } : undefined,
+                set: prop.contract.order.asset.evToRevenue
+              } : undefined,
             evToEbitda: prop.contract.order.asset.evToEbitda !== undefined ? {
-                set: prop.contract.order.asset.evToEbitda  
-               } : undefined,
+                set: prop.contract.order.asset.evToEbitda
+              } : undefined,
             beta: prop.contract.order.asset.beta !== undefined ? {
-                set: prop.contract.order.asset.beta  
-               } : undefined,
+                set: prop.contract.order.asset.beta
+              } : undefined,
             week52High: prop.contract.order.asset.week52High !== undefined ? {
-                set: prop.contract.order.asset.week52High  
-               } : undefined,
+                set: prop.contract.order.asset.week52High
+              } : undefined,
             week52Low: prop.contract.order.asset.week52Low !== undefined ? {
-                set: prop.contract.order.asset.week52Low  
-               } : undefined,
+                set: prop.contract.order.asset.week52Low
+              } : undefined,
             day50MovingAverage: prop.contract.order.asset.day50MovingAverage !== undefined ? {
-                set: prop.contract.order.asset.day50MovingAverage  
-               } : undefined,
+                set: prop.contract.order.asset.day50MovingAverage
+              } : undefined,
             day200MovingAverage: prop.contract.order.asset.day200MovingAverage !== undefined ? {
-                set: prop.contract.order.asset.day200MovingAverage  
-               } : undefined,
+                set: prop.contract.order.asset.day200MovingAverage
+              } : undefined,
             sharesOutstanding: prop.contract.order.asset.sharesOutstanding !== undefined ? {
-                set: prop.contract.order.asset.sharesOutstanding  
-               } : undefined,
+                set: prop.contract.order.asset.sharesOutstanding
+              } : undefined,
             dividendDate: prop.contract.order.asset.dividendDate !== undefined ? {
-                set: prop.contract.order.asset.dividendDate  
-               } : undefined,
+                set: prop.contract.order.asset.dividendDate
+              } : undefined,
             exDividendDate: prop.contract.order.asset.exDividendDate !== undefined ? {
-                set: prop.contract.order.asset.exDividendDate  
-               } : undefined,
+                set: prop.contract.order.asset.exDividendDate
+              } : undefined,
             askPrice: prop.contract.order.asset.askPrice !== undefined ? {
-                set: prop.contract.order.asset.askPrice  
-               } : undefined,
+                set: prop.contract.order.asset.askPrice
+              } : undefined,
             bidPrice: prop.contract.order.asset.bidPrice !== undefined ? {
-                set: prop.contract.order.asset.bidPrice  
-               } : undefined,
+                set: prop.contract.order.asset.bidPrice
+              } : undefined,
           },
           create: {
             symbol: prop.contract.order.asset.symbol !== undefined ? prop.contract.order.asset.symbol : undefined,
