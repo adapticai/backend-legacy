@@ -1215,7 +1215,7 @@ model Contract {
   assetId String? @db.Uuid
 
   /// Optional relation to an order that created this contract
-  order   Order? @relation
+  order Order? @relation
 
   /// Foreign key to the Order
   orderId String? @db.Uuid
@@ -1260,7 +1260,7 @@ model Deliverable {
   contract Contract @relation(fields: [contractId], references: [id])
 
   /// Foreign key to the Contract
-  contractId String  @db.Uuid @unique
+  contractId String @db.Uuid
 
   /// Timestamps
   createdAt DateTime @default(now())
