@@ -1209,7 +1209,7 @@ model Contract {
   ppind Boolean?
 
   /// Relation to the Asset model
-  asset Asset? @relation(fields: [assetId], references: [id])
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Foreign key to the Asset
   assetId String? @db.Uuid
@@ -1257,7 +1257,7 @@ model Deliverable {
   delayedSettlement Boolean
 
   /// Relation to the Contract model
-  contract Contract @relation(fields: [contractId], references: [id])
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   /// Foreign key to the Contract
   contractId String @db.Uuid

@@ -283,9 +283,11 @@ id
  : { connectOrCreate: props.deliverables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        contractId: item.contractId !== undefined ? item.contractId : undefined,
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
            } : undefined,
       },
       create: {
@@ -1361,12 +1363,14 @@ id
     upsert: props.deliverables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        contractId: item.contractId !== undefined ? item.contractId : undefined,
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
            } : undefined,
         assetId: item.assetId !== undefined ? {
             equals: item.assetId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
            } : undefined,
       },
       update: {
@@ -4886,9 +4890,11 @@ id
  : { connectOrCreate: props.deliverables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        contractId: item.contractId !== undefined ? item.contractId : undefined,
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
            } : undefined,
       },
       create: {
@@ -5854,12 +5860,14 @@ id
     upsert: props.deliverables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        contractId: item.contractId !== undefined ? item.contractId : undefined,
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
            } : undefined,
         assetId: item.assetId !== undefined ? {
             equals: item.assetId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
            } : undefined,
       },
       update: {
@@ -9424,12 +9432,14 @@ id
     upsert: prop.deliverables.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
-        contractId: item.contractId !== undefined ? item.contractId : undefined,
         symbol: item.symbol !== undefined ? {
             equals: item.symbol 
            } : undefined,
         assetId: item.assetId !== undefined ? {
             equals: item.assetId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
            } : undefined,
       },
       update: {
