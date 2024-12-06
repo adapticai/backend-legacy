@@ -6,8 +6,8 @@ import {
   HttpLink,
   NormalizedCacheObject,
 } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
-import { onError } from "@apollo/client/link/error";
+import { setContext } from "@apollo/client/link/context/context.cjs";
+import { onError } from "@apollo/client/link/error/error.cjs";
 import fetch from "cross-fetch";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
