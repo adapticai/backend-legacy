@@ -1,8 +1,8 @@
 
   
 import { StopLoss as StopLossType } from './generated/typegraphql-prisma/models/StopLoss';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -25,10 +25,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new StopLoss record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created StopLoss or null.
      */
 
-    async create(props: StopLossType): Promise<StopLossType> {
+    async create(props: StopLossType, globalClient?: ApolloClient<any>): Promise<StopLossType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_STOPLOSS = gql`
         mutation createOneStopLoss($data: StopLossCreateInput!) {
@@ -647,11 +650,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple StopLoss records.
    * @param props - Array of StopLoss objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: StopLossType[]): Promise<{ count: number } | null> {
+  async createMany(props: StopLossType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_STOPLOSS = gql`
       mutation createManyStopLoss($data: [StopLossCreateManyInput!]!) {
         createManyStopLoss(data: $data) {
           count
@@ -685,11 +691,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single StopLoss record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated StopLoss or null.
    */
-  async update(props: StopLossType): Promise<StopLossType> {
+  async update(props: StopLossType, globalClient?: ApolloClient<any>): Promise<StopLossType> {
 
-      const UPDATE_ONE_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_STOPLOSS = gql`
       mutation updateOneStopLoss($data: StopLossUpdateInput!, $where: StopLossWhereUniqueInput!) {
         updateOneStopLoss(data: $data, where: $where) {
           ${selectionSet}
@@ -3210,11 +3219,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single StopLoss record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated StopLoss or null.
    */
-  async upsert(props: StopLossType): Promise<StopLossType> {
+  async upsert(props: StopLossType, globalClient?: ApolloClient<any>): Promise<StopLossType> {
 
-      const UPSERT_ONE_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_STOPLOSS = gql`
       mutation upsertOneStopLoss($where: StopLossWhereUniqueInput!, $create: StopLossCreateInput!, $update: StopLossUpdateInput!) {
         upsertOneStopLoss(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -6312,11 +6324,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple StopLoss records.
    * @param props - Array of StopLoss objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: StopLossType[]): Promise<{ count: number } | null> {
+  async updateMany(props: StopLossType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_STOPLOSS = gql`
       mutation updateManyStopLoss($data: [StopLossCreateManyInput!]!) {
         updateManyStopLoss(data: $data) {
           count
@@ -8840,11 +8855,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single StopLoss record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted StopLoss or null.
    */
-  async delete(props: StopLossType): Promise<StopLossType> {
+  async delete(props: StopLossType, globalClient?: ApolloClient<any>): Promise<StopLossType> {
 
-      const DELETE_ONE_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_STOPLOSS = gql`
       mutation deleteOneStopLoss($where: StopLossWhereUniqueInput!) {
         deleteOneStopLoss(where: $where) {
           ${selectionSet}
@@ -8876,11 +8894,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single StopLoss record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved StopLoss or null.
    */
-  async get(props: StopLossType): Promise<StopLossType | null> {
+  async get(props: StopLossType, globalClient?: ApolloClient<any>): Promise<StopLossType | null> {
 
-      const GET_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const GET_STOPLOSS = gql`
       query getStopLoss($where: StopLossWhereUniqueInput!) {
         getStopLoss(where: $where) {
           ${selectionSet}
@@ -8911,11 +8932,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all StopLosses records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of StopLoss records or null.
    */
-  async getAll(): Promise<StopLossType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<StopLossType[] | null> {
 
-      const GET_ALL_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_STOPLOSS = gql`
       query getAllStopLoss {
         stopLosses {
           ${selectionSet}
@@ -8939,11 +8963,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple StopLoss records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found StopLoss records or null.
    */
-  async findMany(props: StopLossType): Promise<StopLossType[] | null> {
+  async findMany(props: StopLossType, globalClient?: ApolloClient<any>): Promise<StopLossType[] | null> {
 
-      const FIND_MANY_STOPLOSS = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_STOPLOSS = gql`
       query findManyStopLoss($where: StopLossWhereInput!) {
         stopLosses(where: $where) {
           ${selectionSet}

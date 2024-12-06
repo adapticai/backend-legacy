@@ -1,8 +1,8 @@
 
   
 import { Asset as AssetType } from './generated/typegraphql-prisma/models/Asset';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -77,10 +77,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new Asset record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Asset or null.
      */
 
-    async create(props: AssetType): Promise<AssetType> {
+    async create(props: AssetType, globalClient?: ApolloClient<any>): Promise<AssetType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_ASSET = gql`
         mutation createOneAsset($data: AssetCreateInput!) {
@@ -1325,11 +1328,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple Asset records.
    * @param props - Array of Asset objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AssetType[]): Promise<{ count: number } | null> {
+  async createMany(props: AssetType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_ASSET = gql`
       mutation createManyAsset($data: [AssetCreateManyInput!]!) {
         createManyAsset(data: $data) {
           count
@@ -1415,11 +1421,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single Asset record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Asset or null.
    */
-  async update(props: AssetType): Promise<AssetType> {
+  async update(props: AssetType, globalClient?: ApolloClient<any>): Promise<AssetType> {
 
-      const UPDATE_ONE_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_ASSET = gql`
       mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
         updateOneAsset(data: $data, where: $where) {
           ${selectionSet}
@@ -6271,11 +6280,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single Asset record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Asset or null.
    */
-  async upsert(props: AssetType): Promise<AssetType> {
+  async upsert(props: AssetType, globalClient?: ApolloClient<any>): Promise<AssetType> {
 
-      const UPSERT_ONE_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_ASSET = gql`
       mutation upsertOneAsset($where: AssetWhereUniqueInput!, $create: AssetCreateInput!, $update: AssetUpdateInput!) {
         upsertOneAsset(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -12330,11 +12342,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple Asset records.
    * @param props - Array of Asset objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AssetType[]): Promise<{ count: number } | null> {
+  async updateMany(props: AssetType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_ASSET = gql`
       mutation updateManyAsset($data: [AssetCreateManyInput!]!) {
         updateManyAsset(data: $data) {
           count
@@ -17189,11 +17204,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single Asset record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Asset or null.
    */
-  async delete(props: AssetType): Promise<AssetType> {
+  async delete(props: AssetType, globalClient?: ApolloClient<any>): Promise<AssetType> {
 
-      const DELETE_ONE_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_ASSET = gql`
       mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
         deleteOneAsset(where: $where) {
           ${selectionSet}
@@ -17225,11 +17243,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single Asset record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Asset or null.
    */
-  async get(props: AssetType): Promise<AssetType | null> {
+  async get(props: AssetType, globalClient?: ApolloClient<any>): Promise<AssetType | null> {
 
-      const GET_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ASSET = gql`
       query getAsset($where: AssetWhereUniqueInput!) {
         getAsset(where: $where) {
           ${selectionSet}
@@ -17261,11 +17282,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all Assets records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Asset records or null.
    */
-  async getAll(): Promise<AssetType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<AssetType[] | null> {
 
-      const GET_ALL_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_ASSET = gql`
       query getAllAsset {
         assets {
           ${selectionSet}
@@ -17289,11 +17313,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple Asset records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Asset records or null.
    */
-  async findMany(props: AssetType): Promise<AssetType[] | null> {
+  async findMany(props: AssetType, globalClient?: ApolloClient<any>): Promise<AssetType[] | null> {
 
-      const FIND_MANY_ASSET = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {
         assets(where: $where) {
           ${selectionSet}

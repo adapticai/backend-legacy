@@ -1,8 +1,8 @@
 
   
 import { Authenticator as AuthenticatorType } from './generated/typegraphql-prisma/models/Authenticator';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -196,10 +196,13 @@ id
     /**
      * Create a new Authenticator record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Authenticator or null.
      */
 
-    async create(props: AuthenticatorType): Promise<AuthenticatorType> {
+    async create(props: AuthenticatorType, globalClient?: ApolloClient<any>): Promise<AuthenticatorType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_AUTHENTICATOR = gql`
         mutation createOneAuthenticator($data: AuthenticatorCreateInput!) {
@@ -498,11 +501,14 @@ id
   /**
    * Create multiple Authenticator records.
    * @param props - Array of Authenticator objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
+  async createMany(props: AuthenticatorType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_AUTHENTICATOR = gql`
       mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
         createManyAuthenticator(data: $data) {
           count
@@ -537,11 +543,14 @@ id
   /**
    * Update a single Authenticator record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Authenticator or null.
    */
-  async update(props: AuthenticatorType): Promise<AuthenticatorType> {
+  async update(props: AuthenticatorType, globalClient?: ApolloClient<any>): Promise<AuthenticatorType> {
 
-      const UPDATE_ONE_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_AUTHENTICATOR = gql`
       mutation updateOneAuthenticator($data: AuthenticatorUpdateInput!, $where: AuthenticatorWhereUniqueInput!) {
         updateOneAuthenticator(data: $data, where: $where) {
           ${selectionSet}
@@ -1550,11 +1559,14 @@ id
   /**
    * Upsert a single Authenticator record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Authenticator or null.
    */
-  async upsert(props: AuthenticatorType): Promise<AuthenticatorType> {
+  async upsert(props: AuthenticatorType, globalClient?: ApolloClient<any>): Promise<AuthenticatorType> {
 
-      const UPSERT_ONE_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_AUTHENTICATOR = gql`
       mutation upsertOneAuthenticator($where: AuthenticatorWhereUniqueInput!, $create: AuthenticatorCreateInput!, $update: AuthenticatorUpdateInput!) {
         upsertOneAuthenticator(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -2820,11 +2832,14 @@ id
   /**
    * Update multiple Authenticator records.
    * @param props - Array of Authenticator objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AuthenticatorType[]): Promise<{ count: number } | null> {
+  async updateMany(props: AuthenticatorType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_AUTHENTICATOR = gql`
       mutation updateManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
         updateManyAuthenticator(data: $data) {
           count
@@ -3836,11 +3851,14 @@ id
   /**
    * Delete a single Authenticator record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Authenticator or null.
    */
-  async delete(props: AuthenticatorType): Promise<AuthenticatorType> {
+  async delete(props: AuthenticatorType, globalClient?: ApolloClient<any>): Promise<AuthenticatorType> {
 
-      const DELETE_ONE_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_AUTHENTICATOR = gql`
       mutation deleteOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         deleteOneAuthenticator(where: $where) {
           ${selectionSet}
@@ -3872,11 +3890,14 @@ id
   /**
    * Retrieve a single Authenticator record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Authenticator or null.
    */
-  async get(props: AuthenticatorType): Promise<AuthenticatorType | null> {
+  async get(props: AuthenticatorType, globalClient?: ApolloClient<any>): Promise<AuthenticatorType | null> {
 
-      const GET_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const GET_AUTHENTICATOR = gql`
       query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         getAuthenticator(where: $where) {
           ${selectionSet}
@@ -3909,11 +3930,14 @@ id
 
   /**
    * Retrieve all Authenticators records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Authenticator records or null.
    */
-  async getAll(): Promise<AuthenticatorType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<AuthenticatorType[] | null> {
 
-      const GET_ALL_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_AUTHENTICATOR = gql`
       query getAllAuthenticator {
         authenticators {
           ${selectionSet}
@@ -3937,11 +3961,14 @@ id
   /**
    * Find multiple Authenticator records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Authenticator records or null.
    */
-  async findMany(props: AuthenticatorType): Promise<AuthenticatorType[] | null> {
+  async findMany(props: AuthenticatorType, globalClient?: ApolloClient<any>): Promise<AuthenticatorType[] | null> {
 
-      const FIND_MANY_AUTHENTICATOR = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {
         authenticators(where: $where) {
           ${selectionSet}

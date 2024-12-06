@@ -1,8 +1,8 @@
 
   
 import { Account as AccountType } from './generated/typegraphql-prisma/models/Account';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -196,10 +196,13 @@ id
     /**
      * Create a new Account record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Account or null.
      */
 
-    async create(props: AccountType): Promise<AccountType> {
+    async create(props: AccountType, globalClient?: ApolloClient<any>): Promise<AccountType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_ACCOUNT = gql`
         mutation createOneAccount($data: AccountCreateInput!) {
@@ -495,11 +498,14 @@ id
   /**
    * Create multiple Account records.
    * @param props - Array of Account objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AccountType[]): Promise<{ count: number } | null> {
+  async createMany(props: AccountType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_ACCOUNT = gql`
       mutation createManyAccount($data: [AccountCreateManyInput!]!) {
         createManyAccount(data: $data) {
           count
@@ -541,11 +547,14 @@ id
   /**
    * Update a single Account record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Account or null.
    */
-  async update(props: AccountType): Promise<AccountType> {
+  async update(props: AccountType, globalClient?: ApolloClient<any>): Promise<AccountType> {
 
-      const UPDATE_ONE_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_ACCOUNT = gql`
       mutation updateOneAccount($data: AccountUpdateInput!, $where: AccountWhereUniqueInput!) {
         updateOneAccount(data: $data, where: $where) {
           ${selectionSet}
@@ -1537,11 +1546,14 @@ id
   /**
    * Upsert a single Account record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Account or null.
    */
-  async upsert(props: AccountType): Promise<AccountType> {
+  async upsert(props: AccountType, globalClient?: ApolloClient<any>): Promise<AccountType> {
 
-      const UPSERT_ONE_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_ACCOUNT = gql`
       mutation upsertOneAccount($where: AccountWhereUniqueInput!, $create: AccountCreateInput!, $update: AccountUpdateInput!) {
         upsertOneAccount(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -2787,11 +2799,14 @@ id
   /**
    * Update multiple Account records.
    * @param props - Array of Account objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AccountType[]): Promise<{ count: number } | null> {
+  async updateMany(props: AccountType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_ACCOUNT = gql`
       mutation updateManyAccount($data: [AccountCreateManyInput!]!) {
         updateManyAccount(data: $data) {
           count
@@ -3786,11 +3801,14 @@ id
   /**
    * Delete a single Account record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Account or null.
    */
-  async delete(props: AccountType): Promise<AccountType> {
+  async delete(props: AccountType, globalClient?: ApolloClient<any>): Promise<AccountType> {
 
-      const DELETE_ONE_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_ACCOUNT = gql`
       mutation deleteOneAccount($where: AccountWhereUniqueInput!) {
         deleteOneAccount(where: $where) {
           ${selectionSet}
@@ -3822,11 +3840,14 @@ id
   /**
    * Retrieve a single Account record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Account or null.
    */
-  async get(props: AccountType): Promise<AccountType | null> {
+  async get(props: AccountType, globalClient?: ApolloClient<any>): Promise<AccountType | null> {
 
-      const GET_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ACCOUNT = gql`
       query getAccount($where: AccountWhereUniqueInput!) {
         getAccount(where: $where) {
           ${selectionSet}
@@ -3862,11 +3883,14 @@ id
 
   /**
    * Retrieve all Accounts records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Account records or null.
    */
-  async getAll(): Promise<AccountType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<AccountType[] | null> {
 
-      const GET_ALL_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_ACCOUNT = gql`
       query getAllAccount {
         accounts {
           ${selectionSet}
@@ -3890,11 +3914,14 @@ id
   /**
    * Find multiple Account records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Account records or null.
    */
-  async findMany(props: AccountType): Promise<AccountType[] | null> {
+  async findMany(props: AccountType, globalClient?: ApolloClient<any>): Promise<AccountType[] | null> {
 
-      const FIND_MANY_ACCOUNT = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_ACCOUNT = gql`
       query findManyAccount($where: AccountWhereInput!) {
         accounts(where: $where) {
           ${selectionSet}

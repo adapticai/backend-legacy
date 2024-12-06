@@ -1,8 +1,8 @@
 
   
 import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -26,10 +26,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new Alert record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Alert or null.
      */
 
-    async create(props: AlertType): Promise<AlertType> {
+    async create(props: AlertType, globalClient?: ApolloClient<any>): Promise<AlertType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_ALERT = gql`
         mutation createOneAlert($data: AlertCreateInput!) {
@@ -661,11 +664,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple Alert records.
    * @param props - Array of Alert objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AlertType[]): Promise<{ count: number } | null> {
+  async createMany(props: AlertType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_ALERT = gql`
       mutation createManyAlert($data: [AlertCreateManyInput!]!) {
         createManyAlert(data: $data) {
           count
@@ -700,11 +706,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single Alert record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Alert or null.
    */
-  async update(props: AlertType): Promise<AlertType> {
+  async update(props: AlertType, globalClient?: ApolloClient<any>): Promise<AlertType> {
 
-      const UPDATE_ONE_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_ALERT = gql`
       mutation updateOneAlert($data: AlertUpdateInput!, $where: AlertWhereUniqueInput!) {
         updateOneAlert(data: $data, where: $where) {
           ${selectionSet}
@@ -3370,11 +3379,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single Alert record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Alert or null.
    */
-  async upsert(props: AlertType): Promise<AlertType> {
+  async upsert(props: AlertType, globalClient?: ApolloClient<any>): Promise<AlertType> {
 
-      const UPSERT_ONE_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_ALERT = gql`
       mutation upsertOneAlert($where: AlertWhereUniqueInput!, $create: AlertCreateInput!, $update: AlertUpdateInput!) {
         upsertOneAlert(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -6630,11 +6642,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple Alert records.
    * @param props - Array of Alert objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AlertType[]): Promise<{ count: number } | null> {
+  async updateMany(props: AlertType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_ALERT = gql`
       mutation updateManyAlert($data: [AlertCreateManyInput!]!) {
         updateManyAlert(data: $data) {
           count
@@ -9303,11 +9318,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single Alert record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Alert or null.
    */
-  async delete(props: AlertType): Promise<AlertType> {
+  async delete(props: AlertType, globalClient?: ApolloClient<any>): Promise<AlertType> {
 
-      const DELETE_ONE_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_ALERT = gql`
       mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
         deleteOneAlert(where: $where) {
           ${selectionSet}
@@ -9339,11 +9357,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single Alert record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Alert or null.
    */
-  async get(props: AlertType): Promise<AlertType | null> {
+  async get(props: AlertType, globalClient?: ApolloClient<any>): Promise<AlertType | null> {
 
-      const GET_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALERT = gql`
       query getAlert($where: AlertWhereUniqueInput!) {
         getAlert(where: $where) {
           ${selectionSet}
@@ -9376,11 +9397,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all Alerts records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Alert records or null.
    */
-  async getAll(): Promise<AlertType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<AlertType[] | null> {
 
-      const GET_ALL_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_ALERT = gql`
       query getAllAlert {
         alerts {
           ${selectionSet}
@@ -9404,11 +9428,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple Alert records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Alert records or null.
    */
-  async findMany(props: AlertType): Promise<AlertType[] | null> {
+  async findMany(props: AlertType, globalClient?: ApolloClient<any>): Promise<AlertType[] | null> {
 
-      const FIND_MANY_ALERT = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {
         alerts(where: $where) {
           ${selectionSet}

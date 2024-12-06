@@ -1,8 +1,8 @@
 
   
 import { Session as SessionType } from './generated/typegraphql-prisma/models/Session';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -82,10 +82,13 @@ id
     /**
      * Create a new Session record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Session or null.
      */
 
-    async create(props: SessionType): Promise<SessionType> {
+    async create(props: SessionType, globalClient?: ApolloClient<any>): Promise<SessionType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_SESSION = gql`
         mutation createOneSession($data: SessionCreateInput!) {
@@ -384,11 +387,14 @@ id
   /**
    * Create multiple Session records.
    * @param props - Array of Session objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: SessionType[]): Promise<{ count: number } | null> {
+  async createMany(props: SessionType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_SESSION = gql`
       mutation createManySession($data: [SessionCreateManyInput!]!) {
         createManySession(data: $data) {
           count
@@ -422,11 +428,14 @@ id
   /**
    * Update a single Session record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Session or null.
    */
-  async update(props: SessionType): Promise<SessionType> {
+  async update(props: SessionType, globalClient?: ApolloClient<any>): Promise<SessionType> {
 
-      const UPDATE_ONE_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_SESSION = gql`
       mutation updateOneSession($data: SessionUpdateInput!, $where: SessionWhereUniqueInput!) {
         updateOneSession(data: $data, where: $where) {
           ${selectionSet}
@@ -1437,11 +1446,14 @@ id
   /**
    * Upsert a single Session record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Session or null.
    */
-  async upsert(props: SessionType): Promise<SessionType> {
+  async upsert(props: SessionType, globalClient?: ApolloClient<any>): Promise<SessionType> {
 
-      const UPSERT_ONE_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_SESSION = gql`
       mutation upsertOneSession($where: SessionWhereUniqueInput!, $create: SessionCreateInput!, $update: SessionUpdateInput!) {
         upsertOneSession(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -2709,11 +2721,14 @@ id
   /**
    * Update multiple Session records.
    * @param props - Array of Session objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: SessionType[]): Promise<{ count: number } | null> {
+  async updateMany(props: SessionType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_SESSION = gql`
       mutation updateManySession($data: [SessionCreateManyInput!]!) {
         updateManySession(data: $data) {
           count
@@ -3727,11 +3742,14 @@ id
   /**
    * Delete a single Session record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Session or null.
    */
-  async delete(props: SessionType): Promise<SessionType> {
+  async delete(props: SessionType, globalClient?: ApolloClient<any>): Promise<SessionType> {
 
-      const DELETE_ONE_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_SESSION = gql`
       mutation deleteOneSession($where: SessionWhereUniqueInput!) {
         deleteOneSession(where: $where) {
           ${selectionSet}
@@ -3763,11 +3781,14 @@ id
   /**
    * Retrieve a single Session record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Session or null.
    */
-  async get(props: SessionType): Promise<SessionType | null> {
+  async get(props: SessionType, globalClient?: ApolloClient<any>): Promise<SessionType | null> {
 
-      const GET_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const GET_SESSION = gql`
       query getSession($where: SessionWhereUniqueInput!) {
         getSession(where: $where) {
           ${selectionSet}
@@ -3800,11 +3821,14 @@ id
 
   /**
    * Retrieve all Sessions records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Session records or null.
    */
-  async getAll(): Promise<SessionType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<SessionType[] | null> {
 
-      const GET_ALL_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_SESSION = gql`
       query getAllSession {
         sessions {
           ${selectionSet}
@@ -3828,11 +3852,14 @@ id
   /**
    * Find multiple Session records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Session records or null.
    */
-  async findMany(props: SessionType): Promise<SessionType[] | null> {
+  async findMany(props: SessionType, globalClient?: ApolloClient<any>): Promise<SessionType[] | null> {
 
-      const FIND_MANY_SESSION = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_SESSION = gql`
       query findManySession($where: SessionWhereInput!) {
         sessions(where: $where) {
           ${selectionSet}

@@ -617,8 +617,8 @@ export const generateModelFunctions = (
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -637,10 +637,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new ${capitalModelName} record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created ${capitalModelName} or null.
      */
 
-    async create(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+    async create(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
         mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
@@ -682,11 +685,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple ${capitalModelName} records.
    * @param props - Array of ${capitalModelName} objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
+  async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
         createMany${capitalModelName}(data: $data) {
           count
@@ -724,11 +730,14 @@ ${constructVariablesObject(
   /**
    * Update a single ${capitalModelName} record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
-  async update(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+  async update(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
 
-      const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
         updateOne${capitalModelName}(data: $data, where: $where) {
           \${selectionSet}
@@ -775,11 +784,14 @@ ${constructVariablesObject(
   /**
    * Upsert a single ${capitalModelName} record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
-  async upsert(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+  async upsert(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
 
-      const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation upsertOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!, $create: ${capitalModelName}CreateInput!, $update: ${capitalModelName}UpdateInput!) {
         upsertOne${capitalModelName}(where: $where, create: $create, update: $update) {
           \${selectionSet}
@@ -835,11 +847,14 @@ ${constructVariablesObject(
   /**
    * Update multiple ${capitalModelName} records.
    * @param props - Array of ${capitalModelName} objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
+  async updateMany(props: ${capitalModelName}Type[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation updateMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
         updateMany${capitalModelName}(data: $data) {
           count
@@ -889,11 +904,14 @@ ${constructVariablesObject(
   /**
    * Delete a single ${capitalModelName} record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
-  async delete(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+  async delete(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
 
-      const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
           \${selectionSet}
@@ -925,11 +943,14 @@ ${constructVariablesObject(
   /**
    * Retrieve a single ${capitalModelName} record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type): Promise<${capitalModelName}Type | null> {
+  async get(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type | null> {
 
-      const GET_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
           \${selectionSet}
@@ -965,11 +986,14 @@ ${constructVariablesObject(
 
   /**
    * Retrieve all ${pluralModelName} records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of ${capitalModelName} records or null.
    */
-  async getAll(): Promise<${capitalModelName}Type[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type[] | null> {
 
-      const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
         ${lowerCaseFirstLetter(pluralModelName)} {
           \${selectionSet}
@@ -993,11 +1017,14 @@ ${constructVariablesObject(
   /**
    * Find multiple ${capitalModelName} records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type): Promise<${capitalModelName}Type[] | null> {
+  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type[] | null> {
 
-      const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
           \${selectionSet}

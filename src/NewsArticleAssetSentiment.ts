@@ -1,8 +1,8 @@
 
   
 import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -104,10 +104,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new NewsArticleAssetSentiment record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created NewsArticleAssetSentiment or null.
      */
 
-    async create(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+    async create(props: NewsArticleAssetSentimentType, globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
         mutation createOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentCreateInput!) {
@@ -667,11 +670,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple NewsArticleAssetSentiment records.
    * @param props - Array of NewsArticleAssetSentiment objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
+  async createMany(props: NewsArticleAssetSentimentType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       mutation createManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
         createManyNewsArticleAssetSentiment(data: $data) {
           count
@@ -708,11 +714,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single NewsArticleAssetSentiment record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated NewsArticleAssetSentiment or null.
    */
-  async update(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+  async update(props: NewsArticleAssetSentimentType, globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType> {
 
-      const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation updateOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentUpdateInput!, $where: NewsArticleAssetSentimentWhereUniqueInput!) {
         updateOneNewsArticleAssetSentiment(data: $data, where: $where) {
           ${selectionSet}
@@ -2822,11 +2831,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single NewsArticleAssetSentiment record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated NewsArticleAssetSentiment or null.
    */
-  async upsert(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+  async upsert(props: NewsArticleAssetSentimentType, globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType> {
 
-      const UPSERT_ONE_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation upsertOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!, $create: NewsArticleAssetSentimentCreateInput!, $update: NewsArticleAssetSentimentUpdateInput!) {
         upsertOneNewsArticleAssetSentiment(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -5460,11 +5472,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple NewsArticleAssetSentiment records.
    * @param props - Array of NewsArticleAssetSentiment objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: NewsArticleAssetSentimentType[]): Promise<{ count: number } | null> {
+  async updateMany(props: NewsArticleAssetSentimentType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       mutation updateManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
         updateManyNewsArticleAssetSentiment(data: $data) {
           count
@@ -7577,11 +7592,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single NewsArticleAssetSentiment record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted NewsArticleAssetSentiment or null.
    */
-  async delete(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType> {
+  async delete(props: NewsArticleAssetSentimentType, globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType> {
 
-      const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         deleteOneNewsArticleAssetSentiment(where: $where) {
           ${selectionSet}
@@ -7613,11 +7631,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single NewsArticleAssetSentiment record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
-  async get(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType | null> {
+  async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType | null> {
 
-      const GET_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_NEWSARTICLEASSETSENTIMENT = gql`
       query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         getNewsArticleAssetSentiment(where: $where) {
           ${selectionSet}
@@ -7651,11 +7672,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all NewsArticleAssetSentiments records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of NewsArticleAssetSentiment records or null.
    */
-  async getAll(): Promise<NewsArticleAssetSentimentType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType[] | null> {
 
-      const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
       query getAllNewsArticleAssetSentiment {
         newsArticleAssetSentiments {
           ${selectionSet}
@@ -7679,11 +7703,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple NewsArticleAssetSentiment records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType): Promise<NewsArticleAssetSentimentType[] | null> {
+  async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClient<any>): Promise<NewsArticleAssetSentimentType[] | null> {
 
-      const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
       query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
         newsArticleAssetSentiments(where: $where) {
           ${selectionSet}

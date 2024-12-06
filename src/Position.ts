@@ -1,8 +1,8 @@
 
   
 import { Position as PositionType } from './generated/typegraphql-prisma/models/Position';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -97,10 +97,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new Position record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Position or null.
      */
 
-    async create(props: PositionType): Promise<PositionType> {
+    async create(props: PositionType, globalClient?: ApolloClient<any>): Promise<PositionType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_POSITION = gql`
         mutation createOnePosition($data: PositionCreateInput!) {
@@ -1147,11 +1150,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple Position records.
    * @param props - Array of Position objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: PositionType[]): Promise<{ count: number } | null> {
+  async createMany(props: PositionType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_POSITION = gql`
       mutation createManyPosition($data: [PositionCreateManyInput!]!) {
         createManyPosition(data: $data) {
           count
@@ -1198,11 +1204,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single Position record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Position or null.
    */
-  async update(props: PositionType): Promise<PositionType> {
+  async update(props: PositionType, globalClient?: ApolloClient<any>): Promise<PositionType> {
 
-      const UPDATE_ONE_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_POSITION = gql`
       mutation updateOnePosition($data: PositionUpdateInput!, $where: PositionWhereUniqueInput!) {
         updateOnePosition(data: $data, where: $where) {
           ${selectionSet}
@@ -5413,11 +5422,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single Position record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Position or null.
    */
-  async upsert(props: PositionType): Promise<PositionType> {
+  async upsert(props: PositionType, globalClient?: ApolloClient<any>): Promise<PositionType> {
 
-      const UPSERT_ONE_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_POSITION = gql`
       mutation upsertOnePosition($where: PositionWhereUniqueInput!, $create: PositionCreateInput!, $update: PositionUpdateInput!) {
         upsertOnePosition(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -10633,11 +10645,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple Position records.
    * @param props - Array of Position objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: PositionType[]): Promise<{ count: number } | null> {
+  async updateMany(props: PositionType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_POSITION = gql`
       mutation updateManyPosition($data: [PositionCreateManyInput!]!) {
         updateManyPosition(data: $data) {
           count
@@ -14851,11 +14866,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single Position record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Position or null.
    */
-  async delete(props: PositionType): Promise<PositionType> {
+  async delete(props: PositionType, globalClient?: ApolloClient<any>): Promise<PositionType> {
 
-      const DELETE_ONE_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_POSITION = gql`
       mutation deleteOnePosition($where: PositionWhereUniqueInput!) {
         deleteOnePosition(where: $where) {
           ${selectionSet}
@@ -14887,11 +14905,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single Position record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Position or null.
    */
-  async get(props: PositionType): Promise<PositionType | null> {
+  async get(props: PositionType, globalClient?: ApolloClient<any>): Promise<PositionType | null> {
 
-      const GET_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const GET_POSITION = gql`
       query getPosition($where: PositionWhereUniqueInput!) {
         getPosition(where: $where) {
           ${selectionSet}
@@ -14924,11 +14945,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all Positions records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Position records or null.
    */
-  async getAll(): Promise<PositionType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<PositionType[] | null> {
 
-      const GET_ALL_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_POSITION = gql`
       query getAllPosition {
         positions {
           ${selectionSet}
@@ -14952,11 +14976,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple Position records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Position records or null.
    */
-  async findMany(props: PositionType): Promise<PositionType[] | null> {
+  async findMany(props: PositionType, globalClient?: ApolloClient<any>): Promise<PositionType[] | null> {
 
-      const FIND_MANY_POSITION = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_POSITION = gql`
       query findManyPosition($where: PositionWhereInput!) {
         positions(where: $where) {
           ${selectionSet}

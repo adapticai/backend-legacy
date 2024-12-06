@@ -1,8 +1,8 @@
 
   
 import { Deliverable as DeliverableType } from './generated/typegraphql-prisma/models/Deliverable';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -239,10 +239,13 @@ id
     /**
      * Create a new Deliverable record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Deliverable or null.
      */
 
-    async create(props: DeliverableType): Promise<DeliverableType> {
+    async create(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_DELIVERABLE = gql`
         mutation createOneDeliverable($data: DeliverableCreateInput!) {
@@ -724,11 +727,14 @@ id
   /**
    * Create multiple Deliverable records.
    * @param props - Array of Deliverable objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: DeliverableType[]): Promise<{ count: number } | null> {
+  async createMany(props: DeliverableType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_DELIVERABLE = gql`
       mutation createManyDeliverable($data: [DeliverableCreateManyInput!]!) {
         createManyDeliverable(data: $data) {
           count
@@ -768,11 +774,14 @@ id
   /**
    * Update a single Deliverable record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Deliverable or null.
    */
-  async update(props: DeliverableType): Promise<DeliverableType> {
+  async update(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
 
-      const UPDATE_ONE_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_DELIVERABLE = gql`
       mutation updateOneDeliverable($data: DeliverableUpdateInput!, $where: DeliverableWhereUniqueInput!) {
         updateOneDeliverable(data: $data, where: $where) {
           ${selectionSet}
@@ -2765,11 +2774,14 @@ id
   /**
    * Upsert a single Deliverable record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Deliverable or null.
    */
-  async upsert(props: DeliverableType): Promise<DeliverableType> {
+  async upsert(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
 
-      const UPSERT_ONE_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_DELIVERABLE = gql`
       mutation upsertOneDeliverable($where: DeliverableWhereUniqueInput!, $create: DeliverableCreateInput!, $update: DeliverableUpdateInput!) {
         upsertOneDeliverable(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -5202,11 +5214,14 @@ id
   /**
    * Update multiple Deliverable records.
    * @param props - Array of Deliverable objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: DeliverableType[]): Promise<{ count: number } | null> {
+  async updateMany(props: DeliverableType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_DELIVERABLE = gql`
       mutation updateManyDeliverable($data: [DeliverableCreateManyInput!]!) {
         updateManyDeliverable(data: $data) {
           count
@@ -7202,11 +7217,14 @@ id
   /**
    * Delete a single Deliverable record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Deliverable or null.
    */
-  async delete(props: DeliverableType): Promise<DeliverableType> {
+  async delete(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
 
-      const DELETE_ONE_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_DELIVERABLE = gql`
       mutation deleteOneDeliverable($where: DeliverableWhereUniqueInput!) {
         deleteOneDeliverable(where: $where) {
           ${selectionSet}
@@ -7238,11 +7256,14 @@ id
   /**
    * Retrieve a single Deliverable record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Deliverable or null.
    */
-  async get(props: DeliverableType): Promise<DeliverableType | null> {
+  async get(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType | null> {
 
-      const GET_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const GET_DELIVERABLE = gql`
       query getDeliverable($where: DeliverableWhereUniqueInput!) {
         getDeliverable(where: $where) {
           ${selectionSet}
@@ -7278,11 +7299,14 @@ id
 
   /**
    * Retrieve all Deliverables records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Deliverable records or null.
    */
-  async getAll(): Promise<DeliverableType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<DeliverableType[] | null> {
 
-      const GET_ALL_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_DELIVERABLE = gql`
       query getAllDeliverable {
         deliverables {
           ${selectionSet}
@@ -7306,11 +7330,14 @@ id
   /**
    * Find multiple Deliverable records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Deliverable records or null.
    */
-  async findMany(props: DeliverableType): Promise<DeliverableType[] | null> {
+  async findMany(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType[] | null> {
 
-      const FIND_MANY_DELIVERABLE = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_DELIVERABLE = gql`
       query findManyDeliverable($where: DeliverableWhereInput!) {
         deliverables(where: $where) {
           ${selectionSet}

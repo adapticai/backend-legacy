@@ -1,8 +1,8 @@
 
   
 import { User as UserType } from './generated/typegraphql-prisma/models/User';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -392,10 +392,13 @@ id
     /**
      * Create a new User record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created User or null.
      */
 
-    async create(props: UserType): Promise<UserType> {
+    async create(props: UserType, globalClient?: ApolloClient<any>): Promise<UserType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_USER = gql`
         mutation createOneUser($data: UserCreateInput!) {
@@ -1026,11 +1029,14 @@ id
   /**
    * Create multiple User records.
    * @param props - Array of User objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: UserType[]): Promise<{ count: number } | null> {
+  async createMany(props: UserType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_USER = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_USER = gql`
       mutation createManyUser($data: [UserCreateManyInput!]!) {
         createManyUser(data: $data) {
           count
@@ -1073,11 +1079,14 @@ id
   /**
    * Update a single User record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated User or null.
    */
-  async update(props: UserType): Promise<UserType> {
+  async update(props: UserType, globalClient?: ApolloClient<any>): Promise<UserType> {
 
-      const UPDATE_ONE_USER = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_USER = gql`
       mutation updateOneUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
         updateOneUser(data: $data, where: $where) {
           ${selectionSet}
@@ -3513,11 +3522,14 @@ id
   /**
    * Upsert a single User record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated User or null.
    */
-  async upsert(props: UserType): Promise<UserType> {
+  async upsert(props: UserType, globalClient?: ApolloClient<any>): Promise<UserType> {
 
-      const UPSERT_ONE_USER = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_USER = gql`
       mutation upsertOneUser($where: UserWhereUniqueInput!, $create: UserCreateInput!, $update: UserUpdateInput!) {
         upsertOneUser(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -6542,11 +6554,14 @@ id
   /**
    * Update multiple User records.
    * @param props - Array of User objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: UserType[]): Promise<{ count: number } | null> {
+  async updateMany(props: UserType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_USER = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_USER = gql`
       mutation updateManyUser($data: [UserCreateManyInput!]!) {
         updateManyUser(data: $data) {
           count
@@ -8985,11 +9000,14 @@ id
   /**
    * Delete a single User record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted User or null.
    */
-  async delete(props: UserType): Promise<UserType> {
+  async delete(props: UserType, globalClient?: ApolloClient<any>): Promise<UserType> {
 
-      const DELETE_ONE_USER = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_USER = gql`
       mutation deleteOneUser($where: UserWhereUniqueInput!) {
         deleteOneUser(where: $where) {
           ${selectionSet}
@@ -9021,11 +9039,14 @@ id
   /**
    * Retrieve a single User record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved User or null.
    */
-  async get(props: UserType): Promise<UserType | null> {
+  async get(props: UserType, globalClient?: ApolloClient<any>): Promise<UserType | null> {
 
-      const GET_USER = gql`
+    const client = globalClient || importedClient;
+
+    const GET_USER = gql`
       query getUser($where: UserWhereUniqueInput!) {
         getUser(where: $where) {
           ${selectionSet}
@@ -9059,11 +9080,14 @@ id
 
   /**
    * Retrieve all Users records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of User records or null.
    */
-  async getAll(): Promise<UserType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<UserType[] | null> {
 
-      const GET_ALL_USER = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_USER = gql`
       query getAllUser {
         users {
           ${selectionSet}
@@ -9087,11 +9111,14 @@ id
   /**
    * Find multiple User records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found User records or null.
    */
-  async findMany(props: UserType): Promise<UserType[] | null> {
+  async findMany(props: UserType, globalClient?: ApolloClient<any>): Promise<UserType[] | null> {
 
-      const FIND_MANY_USER = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_USER = gql`
       query findManyUser($where: UserWhereInput!) {
         users(where: $where) {
           ${selectionSet}

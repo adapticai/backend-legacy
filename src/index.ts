@@ -2,6 +2,8 @@
 export type * as types from './generated/typegraphql-prisma/models/index.d.ts';
 export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 export * from './generated/typeStrings/index';
+// export getApolloClient from './client';
+export * from './client';
 
 import { Account } from './Account';
 import { Action } from './Action';

@@ -1,8 +1,8 @@
 
   
 import { NewsArticle as NewsArticleType } from './generated/typegraphql-prisma/models/NewsArticle';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -104,10 +104,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new NewsArticle record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created NewsArticle or null.
      */
 
-    async create(props: NewsArticleType): Promise<NewsArticleType> {
+    async create(props: NewsArticleType, globalClient?: ApolloClient<any>): Promise<NewsArticleType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_NEWSARTICLE = gql`
         mutation createOneNewsArticle($data: NewsArticleCreateInput!) {
@@ -395,11 +398,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple NewsArticle records.
    * @param props - Array of NewsArticle objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
+  async createMany(props: NewsArticleType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_NEWSARTICLE = gql`
       mutation createManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
         createManyNewsArticle(data: $data) {
           count
@@ -443,11 +449,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single NewsArticle record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated NewsArticle or null.
    */
-  async update(props: NewsArticleType): Promise<NewsArticleType> {
+  async update(props: NewsArticleType, globalClient?: ApolloClient<any>): Promise<NewsArticleType> {
 
-      const UPDATE_ONE_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_NEWSARTICLE = gql`
       mutation updateOneNewsArticle($data: NewsArticleUpdateInput!, $where: NewsArticleWhereUniqueInput!) {
         updateOneNewsArticle(data: $data, where: $where) {
           ${selectionSet}
@@ -1571,11 +1580,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single NewsArticle record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated NewsArticle or null.
    */
-  async upsert(props: NewsArticleType): Promise<NewsArticleType> {
+  async upsert(props: NewsArticleType, globalClient?: ApolloClient<any>): Promise<NewsArticleType> {
 
-      const UPSERT_ONE_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_NEWSARTICLE = gql`
       mutation upsertOneNewsArticle($where: NewsArticleWhereUniqueInput!, $create: NewsArticleCreateInput!, $update: NewsArticleUpdateInput!) {
         upsertOneNewsArticle(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -2945,11 +2957,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple NewsArticle records.
    * @param props - Array of NewsArticle objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: NewsArticleType[]): Promise<{ count: number } | null> {
+  async updateMany(props: NewsArticleType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_NEWSARTICLE = gql`
       mutation updateManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
         updateManyNewsArticle(data: $data) {
           count
@@ -4076,11 +4091,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single NewsArticle record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted NewsArticle or null.
    */
-  async delete(props: NewsArticleType): Promise<NewsArticleType> {
+  async delete(props: NewsArticleType, globalClient?: ApolloClient<any>): Promise<NewsArticleType> {
 
-      const DELETE_ONE_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_NEWSARTICLE = gql`
       mutation deleteOneNewsArticle($where: NewsArticleWhereUniqueInput!) {
         deleteOneNewsArticle(where: $where) {
           ${selectionSet}
@@ -4112,11 +4130,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single NewsArticle record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved NewsArticle or null.
    */
-  async get(props: NewsArticleType): Promise<NewsArticleType | null> {
+  async get(props: NewsArticleType, globalClient?: ApolloClient<any>): Promise<NewsArticleType | null> {
 
-      const GET_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const GET_NEWSARTICLE = gql`
       query getNewsArticle($where: NewsArticleWhereUniqueInput!) {
         getNewsArticle(where: $where) {
           ${selectionSet}
@@ -4150,11 +4171,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all NewsArticles records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of NewsArticle records or null.
    */
-  async getAll(): Promise<NewsArticleType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<NewsArticleType[] | null> {
 
-      const GET_ALL_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_NEWSARTICLE = gql`
       query getAllNewsArticle {
         newsArticles {
           ${selectionSet}
@@ -4178,11 +4202,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple NewsArticle records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found NewsArticle records or null.
    */
-  async findMany(props: NewsArticleType): Promise<NewsArticleType[] | null> {
+  async findMany(props: NewsArticleType, globalClient?: ApolloClient<any>): Promise<NewsArticleType[] | null> {
 
-      const FIND_MANY_NEWSARTICLE = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_NEWSARTICLE = gql`
       query findManyNewsArticle($where: NewsArticleWhereInput!) {
         newsArticles(where: $where) {
           ${selectionSet}

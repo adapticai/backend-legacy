@@ -1,8 +1,8 @@
 
   
 import { TakeProfit as TakeProfitType } from './generated/typegraphql-prisma/models/TakeProfit';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -25,10 +25,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new TakeProfit record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created TakeProfit or null.
      */
 
-    async create(props: TakeProfitType): Promise<TakeProfitType> {
+    async create(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_TAKEPROFIT = gql`
         mutation createOneTakeProfit($data: TakeProfitCreateInput!) {
@@ -647,11 +650,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple TakeProfit records.
    * @param props - Array of TakeProfit objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: TakeProfitType[]): Promise<{ count: number } | null> {
+  async createMany(props: TakeProfitType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_TAKEPROFIT = gql`
       mutation createManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
         createManyTakeProfit(data: $data) {
           count
@@ -685,11 +691,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single TakeProfit record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated TakeProfit or null.
    */
-  async update(props: TakeProfitType): Promise<TakeProfitType> {
+  async update(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
 
-      const UPDATE_ONE_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_TAKEPROFIT = gql`
       mutation updateOneTakeProfit($data: TakeProfitUpdateInput!, $where: TakeProfitWhereUniqueInput!) {
         updateOneTakeProfit(data: $data, where: $where) {
           ${selectionSet}
@@ -3210,11 +3219,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single TakeProfit record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated TakeProfit or null.
    */
-  async upsert(props: TakeProfitType): Promise<TakeProfitType> {
+  async upsert(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
 
-      const UPSERT_ONE_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_TAKEPROFIT = gql`
       mutation upsertOneTakeProfit($where: TakeProfitWhereUniqueInput!, $create: TakeProfitCreateInput!, $update: TakeProfitUpdateInput!) {
         upsertOneTakeProfit(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -6312,11 +6324,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple TakeProfit records.
    * @param props - Array of TakeProfit objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: TakeProfitType[]): Promise<{ count: number } | null> {
+  async updateMany(props: TakeProfitType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_TAKEPROFIT = gql`
       mutation updateManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
         updateManyTakeProfit(data: $data) {
           count
@@ -8840,11 +8855,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single TakeProfit record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted TakeProfit or null.
    */
-  async delete(props: TakeProfitType): Promise<TakeProfitType> {
+  async delete(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
 
-      const DELETE_ONE_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_TAKEPROFIT = gql`
       mutation deleteOneTakeProfit($where: TakeProfitWhereUniqueInput!) {
         deleteOneTakeProfit(where: $where) {
           ${selectionSet}
@@ -8876,11 +8894,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single TakeProfit record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved TakeProfit or null.
    */
-  async get(props: TakeProfitType): Promise<TakeProfitType | null> {
+  async get(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType | null> {
 
-      const GET_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_TAKEPROFIT = gql`
       query getTakeProfit($where: TakeProfitWhereUniqueInput!) {
         getTakeProfit(where: $where) {
           ${selectionSet}
@@ -8911,11 +8932,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all TakeProfits records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of TakeProfit records or null.
    */
-  async getAll(): Promise<TakeProfitType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<TakeProfitType[] | null> {
 
-      const GET_ALL_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_TAKEPROFIT = gql`
       query getAllTakeProfit {
         takeProfits {
           ${selectionSet}
@@ -8939,11 +8963,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple TakeProfit records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found TakeProfit records or null.
    */
-  async findMany(props: TakeProfitType): Promise<TakeProfitType[] | null> {
+  async findMany(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType[] | null> {
 
-      const FIND_MANY_TAKEPROFIT = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_TAKEPROFIT = gql`
       query findManyTakeProfit($where: TakeProfitWhereInput!) {
         takeProfits(where: $where) {
           ${selectionSet}

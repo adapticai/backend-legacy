@@ -1,8 +1,8 @@
 
   
 import { Contract as ContractType } from './generated/typegraphql-prisma/models/Contract';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -239,10 +239,13 @@ id
     /**
      * Create a new Contract record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Contract or null.
      */
 
-    async create(props: ContractType): Promise<ContractType> {
+    async create(props: ContractType, globalClient?: ApolloClient<any>): Promise<ContractType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_CONTRACT = gql`
         mutation createOneContract($data: ContractCreateInput!) {
@@ -1210,11 +1213,14 @@ id
   /**
    * Create multiple Contract records.
    * @param props - Array of Contract objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ContractType[]): Promise<{ count: number } | null> {
+  async createMany(props: ContractType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_CONTRACT = gql`
       mutation createManyContract($data: [ContractCreateManyInput!]!) {
         createManyContract(data: $data) {
           count
@@ -1266,11 +1272,14 @@ id
   /**
    * Update a single Contract record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Contract or null.
    */
-  async update(props: ContractType): Promise<ContractType> {
+  async update(props: ContractType, globalClient?: ApolloClient<any>): Promise<ContractType> {
 
-      const UPDATE_ONE_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_CONTRACT = gql`
       mutation updateOneContract($data: ContractUpdateInput!, $where: ContractWhereUniqueInput!) {
         updateOneContract(data: $data, where: $where) {
           ${selectionSet}
@@ -4974,11 +4983,14 @@ id
   /**
    * Upsert a single Contract record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Contract or null.
    */
-  async upsert(props: ContractType): Promise<ContractType> {
+  async upsert(props: ContractType, globalClient?: ApolloClient<any>): Promise<ContractType> {
 
-      const UPSERT_ONE_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_CONTRACT = gql`
       mutation upsertOneContract($where: ContractWhereUniqueInput!, $create: ContractCreateInput!, $update: ContractUpdateInput!) {
         upsertOneContract(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -9608,11 +9620,14 @@ id
   /**
    * Update multiple Contract records.
    * @param props - Array of Contract objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ContractType[]): Promise<{ count: number } | null> {
+  async updateMany(props: ContractType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_CONTRACT = gql`
       mutation updateManyContract($data: [ContractCreateManyInput!]!) {
         updateManyContract(data: $data) {
           count
@@ -13319,11 +13334,14 @@ id
   /**
    * Delete a single Contract record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Contract or null.
    */
-  async delete(props: ContractType): Promise<ContractType> {
+  async delete(props: ContractType, globalClient?: ApolloClient<any>): Promise<ContractType> {
 
-      const DELETE_ONE_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_CONTRACT = gql`
       mutation deleteOneContract($where: ContractWhereUniqueInput!) {
         deleteOneContract(where: $where) {
           ${selectionSet}
@@ -13355,11 +13373,14 @@ id
   /**
    * Retrieve a single Contract record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Contract or null.
    */
-  async get(props: ContractType): Promise<ContractType | null> {
+  async get(props: ContractType, globalClient?: ApolloClient<any>): Promise<ContractType | null> {
 
-      const GET_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_CONTRACT = gql`
       query getContract($where: ContractWhereUniqueInput!) {
         getContract(where: $where) {
           ${selectionSet}
@@ -13397,11 +13418,14 @@ id
 
   /**
    * Retrieve all Contracts records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Contract records or null.
    */
-  async getAll(): Promise<ContractType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<ContractType[] | null> {
 
-      const GET_ALL_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_CONTRACT = gql`
       query getAllContract {
         contracts {
           ${selectionSet}
@@ -13425,11 +13449,14 @@ id
   /**
    * Find multiple Contract records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Contract records or null.
    */
-  async findMany(props: ContractType): Promise<ContractType[] | null> {
+  async findMany(props: ContractType, globalClient?: ApolloClient<any>): Promise<ContractType[] | null> {
 
-      const FIND_MANY_CONTRACT = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_CONTRACT = gql`
       query findManyContract($where: ContractWhereInput!) {
         contracts(where: $where) {
           ${selectionSet}

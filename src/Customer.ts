@@ -1,8 +1,8 @@
 
   
 import { Customer as CustomerType } from './generated/typegraphql-prisma/models/Customer';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -196,10 +196,13 @@ id
     /**
      * Create a new Customer record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Customer or null.
      */
 
-    async create(props: CustomerType): Promise<CustomerType> {
+    async create(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_CUSTOMER = gql`
         mutation createOneCustomer($data: CustomerCreateInput!) {
@@ -490,11 +493,14 @@ id
   /**
    * Create multiple Customer records.
    * @param props - Array of Customer objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: CustomerType[]): Promise<{ count: number } | null> {
+  async createMany(props: CustomerType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_CUSTOMER = gql`
       mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
         createManyCustomer(data: $data) {
           count
@@ -532,11 +538,14 @@ id
   /**
    * Update a single Customer record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Customer or null.
    */
-  async update(props: CustomerType): Promise<CustomerType> {
+  async update(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
 
-      const UPDATE_ONE_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_CUSTOMER = gql`
       mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
         updateOneCustomer(data: $data, where: $where) {
           ${selectionSet}
@@ -1517,11 +1526,14 @@ id
   /**
    * Upsert a single Customer record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Customer or null.
    */
-  async upsert(props: CustomerType): Promise<CustomerType> {
+  async upsert(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
 
-      const UPSERT_ONE_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_CUSTOMER = gql`
       mutation upsertOneCustomer($where: CustomerWhereUniqueInput!, $create: CustomerCreateInput!, $update: CustomerUpdateInput!) {
         upsertOneCustomer(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -2754,11 +2766,14 @@ id
   /**
    * Update multiple Customer records.
    * @param props - Array of Customer objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: CustomerType[]): Promise<{ count: number } | null> {
+  async updateMany(props: CustomerType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_CUSTOMER = gql`
       mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
         updateManyCustomer(data: $data) {
           count
@@ -3742,11 +3757,14 @@ id
   /**
    * Delete a single Customer record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Customer or null.
    */
-  async delete(props: CustomerType): Promise<CustomerType> {
+  async delete(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
 
-      const DELETE_ONE_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_CUSTOMER = gql`
       mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
         deleteOneCustomer(where: $where) {
           ${selectionSet}
@@ -3778,11 +3796,14 @@ id
   /**
    * Retrieve a single Customer record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Customer or null.
    */
-  async get(props: CustomerType): Promise<CustomerType | null> {
+  async get(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType | null> {
 
-      const GET_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const GET_CUSTOMER = gql`
       query getCustomer($where: CustomerWhereUniqueInput!) {
         getCustomer(where: $where) {
           ${selectionSet}
@@ -3823,11 +3844,14 @@ id
 
   /**
    * Retrieve all Customers records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Customer records or null.
    */
-  async getAll(): Promise<CustomerType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<CustomerType[] | null> {
 
-      const GET_ALL_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_CUSTOMER = gql`
       query getAllCustomer {
         customers {
           ${selectionSet}
@@ -3851,11 +3875,14 @@ id
   /**
    * Find multiple Customer records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Customer records or null.
    */
-  async findMany(props: CustomerType): Promise<CustomerType[] | null> {
+  async findMany(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType[] | null> {
 
-      const FIND_MANY_CUSTOMER = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_CUSTOMER = gql`
       query findManyCustomer($where: CustomerWhereInput!) {
         customers(where: $where) {
           ${selectionSet}

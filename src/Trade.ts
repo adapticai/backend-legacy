@@ -1,8 +1,8 @@
 
   
 import { Trade as TradeType } from './generated/typegraphql-prisma/models/Trade';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -214,10 +214,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new Trade record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Trade or null.
      */
 
-    async create(props: TradeType): Promise<TradeType> {
+    async create(props: TradeType, globalClient?: ApolloClient<any>): Promise<TradeType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_TRADE = gql`
         mutation createOneTrade($data: TradeCreateInput!) {
@@ -1464,11 +1467,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple Trade records.
    * @param props - Array of Trade objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: TradeType[]): Promise<{ count: number } | null> {
+  async createMany(props: TradeType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_TRADE = gql`
       mutation createManyTrade($data: [TradeCreateManyInput!]!) {
         createManyTrade(data: $data) {
           count
@@ -1512,11 +1518,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single Trade record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Trade or null.
    */
-  async update(props: TradeType): Promise<TradeType> {
+  async update(props: TradeType, globalClient?: ApolloClient<any>): Promise<TradeType> {
 
-      const UPDATE_ONE_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_TRADE = gql`
       mutation updateOneTrade($data: TradeUpdateInput!, $where: TradeWhereUniqueInput!) {
         updateOneTrade(data: $data, where: $where) {
           ${selectionSet}
@@ -6643,11 +6652,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single Trade record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Trade or null.
    */
-  async upsert(props: TradeType): Promise<TradeType> {
+  async upsert(props: TradeType, globalClient?: ApolloClient<any>): Promise<TradeType> {
 
-      const UPSERT_ONE_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_TRADE = gql`
       mutation upsertOneTrade($where: TradeWhereUniqueInput!, $create: TradeCreateInput!, $update: TradeUpdateInput!) {
         upsertOneTrade(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -12979,11 +12991,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple Trade records.
    * @param props - Array of Trade objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: TradeType[]): Promise<{ count: number } | null> {
+  async updateMany(props: TradeType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_TRADE = gql`
       mutation updateManyTrade($data: [TradeCreateManyInput!]!) {
         updateManyTrade(data: $data) {
           count
@@ -18113,11 +18128,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single Trade record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Trade or null.
    */
-  async delete(props: TradeType): Promise<TradeType> {
+  async delete(props: TradeType, globalClient?: ApolloClient<any>): Promise<TradeType> {
 
-      const DELETE_ONE_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_TRADE = gql`
       mutation deleteOneTrade($where: TradeWhereUniqueInput!) {
         deleteOneTrade(where: $where) {
           ${selectionSet}
@@ -18149,11 +18167,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single Trade record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Trade or null.
    */
-  async get(props: TradeType): Promise<TradeType | null> {
+  async get(props: TradeType, globalClient?: ApolloClient<any>): Promise<TradeType | null> {
 
-      const GET_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const GET_TRADE = gql`
       query getTrade($where: TradeWhereUniqueInput!) {
         getTrade(where: $where) {
           ${selectionSet}
@@ -18186,11 +18207,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all Trades records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Trade records or null.
    */
-  async getAll(): Promise<TradeType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<TradeType[] | null> {
 
-      const GET_ALL_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_TRADE = gql`
       query getAllTrade {
         trades {
           ${selectionSet}
@@ -18214,11 +18238,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple Trade records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Trade records or null.
    */
-  async findMany(props: TradeType): Promise<TradeType[] | null> {
+  async findMany(props: TradeType, globalClient?: ApolloClient<any>): Promise<TradeType[] | null> {
 
-      const FIND_MANY_TRADE = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_TRADE = gql`
       query findManyTrade($where: TradeWhereInput!) {
         trades(where: $where) {
           ${selectionSet}

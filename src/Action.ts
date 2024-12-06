@@ -1,8 +1,8 @@
 
   
 import { Action as ActionType } from './generated/typegraphql-prisma/models/Action';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -136,10 +136,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new Action record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Action or null.
      */
 
-    async create(props: ActionType): Promise<ActionType> {
+    async create(props: ActionType, globalClient?: ApolloClient<any>): Promise<ActionType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_ACTION = gql`
         mutation createOneAction($data: ActionCreateInput!) {
@@ -1120,11 +1123,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple Action records.
    * @param props - Array of Action objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ActionType[]): Promise<{ count: number } | null> {
+  async createMany(props: ActionType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_ACTION = gql`
       mutation createManyAction($data: [ActionCreateManyInput!]!) {
         createManyAction(data: $data) {
           count
@@ -1161,11 +1167,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single Action record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Action or null.
    */
-  async update(props: ActionType): Promise<ActionType> {
+  async update(props: ActionType, globalClient?: ApolloClient<any>): Promise<ActionType> {
 
-      const UPDATE_ONE_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_ACTION = gql`
       mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
         updateOneAction(data: $data, where: $where) {
           ${selectionSet}
@@ -5238,11 +5247,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single Action record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Action or null.
    */
-  async upsert(props: ActionType): Promise<ActionType> {
+  async upsert(props: ActionType, globalClient?: ApolloClient<any>): Promise<ActionType> {
 
-      const UPSERT_ONE_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_ACTION = gql`
       mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
         upsertOneAction(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -10260,11 +10272,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple Action records.
    * @param props - Array of Action objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ActionType[]): Promise<{ count: number } | null> {
+  async updateMany(props: ActionType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_ACTION = gql`
       mutation updateManyAction($data: [ActionCreateManyInput!]!) {
         updateManyAction(data: $data) {
           count
@@ -14340,11 +14355,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single Action record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Action or null.
    */
-  async delete(props: ActionType): Promise<ActionType> {
+  async delete(props: ActionType, globalClient?: ApolloClient<any>): Promise<ActionType> {
 
-      const DELETE_ONE_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_ACTION = gql`
       mutation deleteOneAction($where: ActionWhereUniqueInput!) {
         deleteOneAction(where: $where) {
           ${selectionSet}
@@ -14376,11 +14394,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single Action record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Action or null.
    */
-  async get(props: ActionType): Promise<ActionType | null> {
+  async get(props: ActionType, globalClient?: ApolloClient<any>): Promise<ActionType | null> {
 
-      const GET_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ACTION = gql`
       query getAction($where: ActionWhereUniqueInput!) {
         getAction(where: $where) {
           ${selectionSet}
@@ -14413,11 +14434,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all Actions records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Action records or null.
    */
-  async getAll(): Promise<ActionType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<ActionType[] | null> {
 
-      const GET_ALL_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_ACTION = gql`
       query getAllAction {
         actions {
           ${selectionSet}
@@ -14441,11 +14465,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple Action records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Action records or null.
    */
-  async findMany(props: ActionType): Promise<ActionType[] | null> {
+  async findMany(props: ActionType, globalClient?: ApolloClient<any>): Promise<ActionType[] | null> {
 
-      const FIND_MANY_ACTION = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_ACTION = gql`
       query findManyAction($where: ActionWhereInput!) {
         actions(where: $where) {
           ${selectionSet}

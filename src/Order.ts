@@ -1,8 +1,8 @@
 
   
 import { Order as OrderType } from './generated/typegraphql-prisma/models/Order';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -136,10 +136,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new Order record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created Order or null.
      */
 
-    async create(props: OrderType): Promise<OrderType> {
+    async create(props: OrderType, globalClient?: ApolloClient<any>): Promise<OrderType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_ORDER = gql`
         mutation createOneOrder($data: OrderCreateInput!) {
@@ -1420,11 +1423,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple Order records.
    * @param props - Array of Order objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: OrderType[]): Promise<{ count: number } | null> {
+  async createMany(props: OrderType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_ORDER = gql`
       mutation createManyOrder($data: [OrderCreateManyInput!]!) {
         createManyOrder(data: $data) {
           count
@@ -1484,11 +1490,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single Order record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Order or null.
    */
-  async update(props: OrderType): Promise<OrderType> {
+  async update(props: OrderType, globalClient?: ApolloClient<any>): Promise<OrderType> {
 
-      const UPDATE_ONE_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_ORDER = gql`
       mutation updateOneOrder($data: OrderUpdateInput!, $where: OrderWhereUniqueInput!) {
         updateOneOrder(data: $data, where: $where) {
           ${selectionSet}
@@ -6564,11 +6573,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Upsert a single Order record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated Order or null.
    */
-  async upsert(props: OrderType): Promise<OrderType> {
+  async upsert(props: OrderType, globalClient?: ApolloClient<any>): Promise<OrderType> {
 
-      const UPSERT_ONE_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_ORDER = gql`
       mutation upsertOneOrder($where: OrderWhereUniqueInput!, $create: OrderCreateInput!, $update: OrderUpdateInput!) {
         upsertOneOrder(where: $where, create: $create, update: $update) {
           ${selectionSet}
@@ -12883,11 +12895,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update multiple Order records.
    * @param props - Array of Order objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: OrderType[]): Promise<{ count: number } | null> {
+  async updateMany(props: OrderType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_ORDER = gql`
       mutation updateManyOrder($data: [OrderCreateManyInput!]!) {
         updateManyOrder(data: $data) {
           count
@@ -17966,11 +17981,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single Order record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted Order or null.
    */
-  async delete(props: OrderType): Promise<OrderType> {
+  async delete(props: OrderType, globalClient?: ApolloClient<any>): Promise<OrderType> {
 
-      const DELETE_ONE_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_ORDER = gql`
       mutation deleteOneOrder($where: OrderWhereUniqueInput!) {
         deleteOneOrder(where: $where) {
           ${selectionSet}
@@ -18002,11 +18020,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single Order record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved Order or null.
    */
-  async get(props: OrderType): Promise<OrderType | null> {
+  async get(props: OrderType, globalClient?: ApolloClient<any>): Promise<OrderType | null> {
 
-      const GET_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ORDER = gql`
       query getOrder($where: OrderWhereUniqueInput!) {
         getOrder(where: $where) {
           ${selectionSet}
@@ -18043,11 +18064,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all Orders records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of Order records or null.
    */
-  async getAll(): Promise<OrderType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<OrderType[] | null> {
 
-      const GET_ALL_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_ORDER = gql`
       query getAllOrder {
         orders {
           ${selectionSet}
@@ -18071,11 +18095,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple Order records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found Order records or null.
    */
-  async findMany(props: OrderType): Promise<OrderType[] | null> {
+  async findMany(props: OrderType, globalClient?: ApolloClient<any>): Promise<OrderType[] | null> {
 
-      const FIND_MANY_ORDER = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_ORDER = gql`
       query findManyOrder($where: OrderWhereInput!) {
         orders(where: $where) {
           ${selectionSet}
