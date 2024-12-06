@@ -1,5 +1,3 @@
-// client.ts
-
 import {
   ApolloClient,
   InMemoryCache,
