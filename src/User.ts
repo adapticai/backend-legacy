@@ -76,6 +76,7 @@ import { removeUndefinedProps } from './utils';
     APISecret
     configuration
     marketOpen
+    realTime
     minOrderSize
     maxOrderSize
     minPercentageChange
@@ -171,6 +172,13 @@ import { removeUndefinedProps } from './utils';
         order {
 id
         }
+        dependsOn {
+id
+        }
+        dependsOnId
+        dependedOnBy {
+id
+        }
       }
     }
     orders {
@@ -223,6 +231,13 @@ id
         note
         status
         fee
+        dependsOn {
+id
+        }
+        dependsOnId
+        dependedOnBy {
+id
+        }
       }
       asset {
         id
@@ -541,6 +556,7 @@ id
         APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+        realTime: item.realTime !== undefined ? item.realTime : undefined,
         minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
         maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -1362,6 +1378,9 @@ id
         marketOpen: item.marketOpen !== undefined ? {
             set: item.marketOpen
           } : undefined,
+        realTime: item.realTime !== undefined ? {
+            set: item.realTime
+          } : undefined,
         minOrderSize: item.minOrderSize !== undefined ? {
             set: item.minOrderSize
           } : undefined,
@@ -1684,6 +1703,9 @@ id
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -2001,6 +2023,9 @@ id
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -3035,6 +3060,7 @@ id
         APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+        realTime: item.realTime !== undefined ? item.realTime : undefined,
         minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
         maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -3676,6 +3702,7 @@ id
         APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+        realTime: item.realTime !== undefined ? item.realTime : undefined,
         minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
         maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -4394,6 +4421,9 @@ id
         marketOpen: item.marketOpen !== undefined ? {
             set: item.marketOpen
           } : undefined,
+        realTime: item.realTime !== undefined ? {
+            set: item.realTime
+          } : undefined,
         minOrderSize: item.minOrderSize !== undefined ? {
             set: item.minOrderSize
           } : undefined,
@@ -4716,6 +4746,9 @@ id
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -5033,6 +5066,9 @@ id
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -6067,6 +6103,7 @@ id
         APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+        realTime: item.realTime !== undefined ? item.realTime : undefined,
         minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
         maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -6838,6 +6875,9 @@ id
         marketOpen: item.marketOpen !== undefined ? {
             set: item.marketOpen
           } : undefined,
+        realTime: item.realTime !== undefined ? {
+            set: item.realTime
+          } : undefined,
         minOrderSize: item.minOrderSize !== undefined ? {
             set: item.minOrderSize
           } : undefined,
@@ -7160,6 +7200,9 @@ id
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -7477,6 +7520,9 @@ id
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -8511,6 +8557,7 @@ id
         APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
         configuration: item.configuration !== undefined ? item.configuration : undefined,
         marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+        realTime: item.realTime !== undefined ? item.realTime : undefined,
         minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
         maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,

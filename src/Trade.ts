@@ -205,6 +205,13 @@ import { removeUndefinedProps } from './utils';
       takeProfitId
       contractId
     }
+    dependsOn {
+id
+    }
+    dependsOnId
+    dependedOnBy {
+id
+    }
   }
 
   `;
@@ -262,6 +269,7 @@ import { removeUndefinedProps } from './utils';
         APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+        realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
         minOrderSize: props.alpacaAccount.minOrderSize !== undefined ? props.alpacaAccount.minOrderSize : undefined,
         maxOrderSize: props.alpacaAccount.maxOrderSize !== undefined ? props.alpacaAccount.maxOrderSize : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
@@ -900,6 +908,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1021,6 +1030,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1318,6 +1328,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -1440,6 +1451,242 @@ import { removeUndefinedProps } from './utils';
       } : undefined,
         },
       }
+    } : undefined,
+    dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+          id: item.dependsOn.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dependedOnBy.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
     } : undefined,
       },
     }))
@@ -1616,6 +1863,9 @@ import { removeUndefinedProps } from './utils';
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
             set: props.alpacaAccount.marketOpen
           } : undefined,
+        realTime: props.alpacaAccount.realTime !== undefined ? {
+            set: props.alpacaAccount.realTime
+          } : undefined,
         minOrderSize: props.alpacaAccount.minOrderSize !== undefined ? {
             set: props.alpacaAccount.minOrderSize
           } : undefined,
@@ -2168,6 +2418,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -3202,6 +3455,7 @@ import { removeUndefinedProps } from './utils';
         APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+        realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
         minOrderSize: props.alpacaAccount.minOrderSize !== undefined ? props.alpacaAccount.minOrderSize : undefined,
         maxOrderSize: props.alpacaAccount.maxOrderSize !== undefined ? props.alpacaAccount.maxOrderSize : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
@@ -4062,6 +4316,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -4081,6 +4338,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4101,6 +4359,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -4331,6 +4592,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4500,6 +4762,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -4519,6 +4784,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4561,6 +4827,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5262,6 +5529,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5383,6 +5651,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5575,6 +5844,9 @@ import { removeUndefinedProps } from './utils';
         id: item.id !== undefined ? item.id : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
+          } : undefined,
+        dependsOnId: item.dependsOnId !== undefined ? {
+            equals: item.dependsOnId
           } : undefined,
       },
       update: {
@@ -5806,6 +6078,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? {
                 set: item.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? {
+                set: item.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -5825,6 +6100,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -6278,6 +6554,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -6400,6 +6677,806 @@ import { removeUndefinedProps } from './utils';
       } : undefined,
         },
       }
+    } : undefined,
+    dependsOn: item.dependsOn ? 
+    typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+    connect: {
+      id: item.dependsOn.id
+    }
+} : { upsert: {
+        where: {
+          id: item.dependsOn.id !== undefined ? {
+              equals: item.dependsOn.id
+            } : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+              equals: item.dependsOn.dependsOnId
+            } : undefined,
+        },
+        update: {
+          id: item.dependsOn.id !== undefined ? {
+              set: item.dependsOn.id
+            } : undefined,
+          sequence: item.dependsOn.sequence !== undefined ? {
+              set: item.dependsOn.sequence
+            } : undefined,
+          type: item.dependsOn.type !== undefined ? {
+              set: item.dependsOn.type
+            } : undefined,
+          note: item.dependsOn.note !== undefined ? {
+              set: item.dependsOn.note
+            } : undefined,
+          status: item.dependsOn.status !== undefined ? {
+              set: item.dependsOn.status
+            } : undefined,
+          fee: item.dependsOn.fee !== undefined ? {
+              set: item.dependsOn.fee
+            } : undefined,
+      trade: item.dependsOn.trade ? 
+      typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.trade.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? {
+                equals: item.dependsOn.trade.id
+              } : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId
+              } : undefined,
+            assetId: item.dependsOn.trade.assetId !== undefined ? {
+                equals: item.dependsOn.trade.assetId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.trade.id !== undefined ? {
+                set: item.dependsOn.trade.id
+              } : undefined,
+            qty: item.dependsOn.trade.qty !== undefined ? {
+                set: item.dependsOn.trade.qty
+              } : undefined,
+            price: item.dependsOn.trade.price !== undefined ? {
+                set: item.dependsOn.trade.price
+              } : undefined,
+            total: item.dependsOn.trade.total !== undefined ? {
+                set: item.dependsOn.trade.total
+              } : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? {
+                set: item.dependsOn.trade.optionType
+              } : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? {
+                set: item.dependsOn.trade.signal
+              } : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? {
+                set: item.dependsOn.trade.strategy
+              } : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? {
+                set: item.dependsOn.trade.analysis
+              } : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? {
+                set: item.dependsOn.trade.summary
+              } : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? {
+                set: item.dependsOn.trade.confidence
+              } : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? {
+                set: item.dependsOn.trade.timestamp
+              } : undefined,
+            status: item.dependsOn.trade.status !== undefined ? {
+                set: item.dependsOn.trade.status
+              } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+      typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.order.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? {
+                equals: item.dependsOn.order.id
+              } : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? {
+                equals: item.dependsOn.order.clientOrderId
+              } : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId
+              } : undefined,
+            assetId: item.dependsOn.order.assetId !== undefined ? {
+                equals: item.dependsOn.order.assetId
+              } : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? {
+                equals: item.dependsOn.order.actionId
+              } : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? {
+                equals: item.dependsOn.order.stopLossId
+              } : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? {
+                equals: item.dependsOn.order.takeProfitId
+              } : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? {
+                equals: item.dependsOn.order.contractId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.order.id !== undefined ? {
+                set: item.dependsOn.order.id
+              } : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? {
+                set: item.dependsOn.order.clientOrderId
+              } : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? {
+                set: item.dependsOn.order.qty
+              } : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? {
+                set: item.dependsOn.order.notional
+              } : undefined,
+            side: item.dependsOn.order.side !== undefined ? {
+                set: item.dependsOn.order.side
+              } : undefined,
+            type: item.dependsOn.order.type !== undefined ? {
+                set: item.dependsOn.order.type
+              } : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? {
+                set: item.dependsOn.order.orderClass
+              } : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? {
+                set: item.dependsOn.order.timeInForce
+              } : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? {
+                set: item.dependsOn.order.limitPrice
+              } : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? {
+                set: item.dependsOn.order.stopPrice
+              } : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? {
+                set: item.dependsOn.order.trailPrice
+              } : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? {
+                set: item.dependsOn.order.trailPercent
+              } : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? {
+                set: item.dependsOn.order.extendedHours
+              } : undefined,
+            status: item.dependsOn.order.status !== undefined ? {
+                set: item.dependsOn.order.status
+              } : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? {
+                set: item.dependsOn.order.submittedAt
+              } : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? {
+                set: item.dependsOn.order.filledAt
+              } : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? {
+                set: item.dependsOn.order.filledQty
+              } : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? {
+                set: item.dependsOn.order.filledAvgPrice
+              } : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? {
+                set: item.dependsOn.order.cancelRequestedAt
+              } : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? {
+                set: item.dependsOn.order.canceledAt
+              } : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? {
+                set: item.dependsOn.order.fee
+              } : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? {
+                set: item.dependsOn.order.strikePrice
+              } : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? {
+                set: item.dependsOn.order.expirationDate
+              } : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? {
+                set: item.dependsOn.order.optionType
+              } : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? {
+                set: item.dependsOn.order.stopLossId
+              } : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? {
+                set: item.dependsOn.order.takeProfitId
+              } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+      typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.dependsOn.id !== undefined ? {
+                set: item.dependsOn.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? {
+                set: item.dependsOn.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? {
+                set: item.dependsOn.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? {
+                set: item.dependsOn.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+    Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    connect: item.dependedOnBy.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          sequence: item.sequence !== undefined ? {
+              set: item.sequence
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          note: item.note !== undefined ? {
+              set: item.note
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee
+            } : undefined,
+      trade: item.trade ? 
+      typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+? {
+      connect: {
+        id: item.trade.id
+      }
+} : { upsert: {
+          where: {
+            id: item.trade.id !== undefined ? {
+                equals: item.trade.id
+              } : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId
+              } : undefined,
+            assetId: item.trade.assetId !== undefined ? {
+                equals: item.trade.assetId
+              } : undefined,
+          },
+          update: {
+            id: item.trade.id !== undefined ? {
+                set: item.trade.id
+              } : undefined,
+            qty: item.trade.qty !== undefined ? {
+                set: item.trade.qty
+              } : undefined,
+            price: item.trade.price !== undefined ? {
+                set: item.trade.price
+              } : undefined,
+            total: item.trade.total !== undefined ? {
+                set: item.trade.total
+              } : undefined,
+            optionType: item.trade.optionType !== undefined ? {
+                set: item.trade.optionType
+              } : undefined,
+            signal: item.trade.signal !== undefined ? {
+                set: item.trade.signal
+              } : undefined,
+            strategy: item.trade.strategy !== undefined ? {
+                set: item.trade.strategy
+              } : undefined,
+            analysis: item.trade.analysis !== undefined ? {
+                set: item.trade.analysis
+              } : undefined,
+            summary: item.trade.summary !== undefined ? {
+                set: item.trade.summary
+              } : undefined,
+            confidence: item.trade.confidence !== undefined ? {
+                set: item.trade.confidence
+              } : undefined,
+            timestamp: item.trade.timestamp !== undefined ? {
+                set: item.trade.timestamp
+              } : undefined,
+            status: item.trade.status !== undefined ? {
+                set: item.trade.status
+              } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+      typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+? {
+      connect: {
+        id: item.order.id
+      }
+} : { upsert: {
+          where: {
+            id: item.order.id !== undefined ? {
+                equals: item.order.id
+              } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                equals: item.order.clientOrderId
+              } : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId
+              } : undefined,
+            assetId: item.order.assetId !== undefined ? {
+                equals: item.order.assetId
+              } : undefined,
+            actionId: item.order.actionId !== undefined ? {
+                equals: item.order.actionId
+              } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                equals: item.order.stopLossId
+              } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                equals: item.order.takeProfitId
+              } : undefined,
+            contractId: item.order.contractId !== undefined ? {
+                equals: item.order.contractId
+              } : undefined,
+          },
+          update: {
+            id: item.order.id !== undefined ? {
+                set: item.order.id
+              } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                set: item.order.clientOrderId
+              } : undefined,
+            qty: item.order.qty !== undefined ? {
+                set: item.order.qty
+              } : undefined,
+            notional: item.order.notional !== undefined ? {
+                set: item.order.notional
+              } : undefined,
+            side: item.order.side !== undefined ? {
+                set: item.order.side
+              } : undefined,
+            type: item.order.type !== undefined ? {
+                set: item.order.type
+              } : undefined,
+            orderClass: item.order.orderClass !== undefined ? {
+                set: item.order.orderClass
+              } : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? {
+                set: item.order.timeInForce
+              } : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? {
+                set: item.order.limitPrice
+              } : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? {
+                set: item.order.stopPrice
+              } : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? {
+                set: item.order.trailPrice
+              } : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? {
+                set: item.order.trailPercent
+              } : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? {
+                set: item.order.extendedHours
+              } : undefined,
+            status: item.order.status !== undefined ? {
+                set: item.order.status
+              } : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? {
+                set: item.order.submittedAt
+              } : undefined,
+            filledAt: item.order.filledAt !== undefined ? {
+                set: item.order.filledAt
+              } : undefined,
+            filledQty: item.order.filledQty !== undefined ? {
+                set: item.order.filledQty
+              } : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? {
+                set: item.order.filledAvgPrice
+              } : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? {
+                set: item.order.cancelRequestedAt
+              } : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? {
+                set: item.order.canceledAt
+              } : undefined,
+            fee: item.order.fee !== undefined ? {
+                set: item.order.fee
+              } : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? {
+                set: item.order.strikePrice
+              } : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? {
+                set: item.order.expirationDate
+              } : undefined,
+            optionType: item.order.optionType !== undefined ? {
+                set: item.order.optionType
+              } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                set: item.order.stopLossId
+              } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                set: item.order.takeProfitId
+              } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
     } : undefined,
       },
       create: {
@@ -6504,6 +7581,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -6627,6 +7705,242 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+          id: item.dependsOn.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dependedOnBy.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }))
   } : undefined,
@@ -6704,6 +8018,7 @@ import { removeUndefinedProps } from './utils';
         APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+        realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
         minOrderSize: props.alpacaAccount.minOrderSize !== undefined ? props.alpacaAccount.minOrderSize : undefined,
         maxOrderSize: props.alpacaAccount.maxOrderSize !== undefined ? props.alpacaAccount.maxOrderSize : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
@@ -7342,6 +8657,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -7463,6 +8779,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -7760,6 +9077,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -7883,6 +9201,242 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+          id: item.dependsOn.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dependedOnBy.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }))
   } : undefined,
@@ -7954,6 +9508,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
             set: props.alpacaAccount.marketOpen
+          } : undefined,
+        realTime: props.alpacaAccount.realTime !== undefined ? {
+            set: props.alpacaAccount.realTime
           } : undefined,
         minOrderSize: props.alpacaAccount.minOrderSize !== undefined ? {
             set: props.alpacaAccount.minOrderSize
@@ -8507,6 +10064,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -9541,6 +11101,7 @@ import { removeUndefinedProps } from './utils';
         APISecret: props.alpacaAccount.APISecret !== undefined ? props.alpacaAccount.APISecret : undefined,
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
+        realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
         minOrderSize: props.alpacaAccount.minOrderSize !== undefined ? props.alpacaAccount.minOrderSize : undefined,
         maxOrderSize: props.alpacaAccount.maxOrderSize !== undefined ? props.alpacaAccount.maxOrderSize : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
@@ -10401,6 +11962,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -10420,6 +11984,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -10440,6 +12005,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -10670,6 +12238,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -10839,6 +12408,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -10858,6 +12430,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -10900,6 +12473,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -11601,6 +13175,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -11722,6 +13297,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -11914,6 +13490,9 @@ import { removeUndefinedProps } from './utils';
         id: item.id !== undefined ? item.id : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
+          } : undefined,
+        dependsOnId: item.dependsOnId !== undefined ? {
+            equals: item.dependsOnId
           } : undefined,
       },
       update: {
@@ -12145,6 +13724,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? {
                 set: item.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? {
+                set: item.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -12164,6 +13746,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -12617,6 +14200,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -12740,6 +14324,806 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    dependsOn: item.dependsOn ? 
+    typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+    connect: {
+      id: item.dependsOn.id
+    }
+} : { upsert: {
+        where: {
+          id: item.dependsOn.id !== undefined ? {
+              equals: item.dependsOn.id
+            } : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+              equals: item.dependsOn.dependsOnId
+            } : undefined,
+        },
+        update: {
+          id: item.dependsOn.id !== undefined ? {
+              set: item.dependsOn.id
+            } : undefined,
+          sequence: item.dependsOn.sequence !== undefined ? {
+              set: item.dependsOn.sequence
+            } : undefined,
+          type: item.dependsOn.type !== undefined ? {
+              set: item.dependsOn.type
+            } : undefined,
+          note: item.dependsOn.note !== undefined ? {
+              set: item.dependsOn.note
+            } : undefined,
+          status: item.dependsOn.status !== undefined ? {
+              set: item.dependsOn.status
+            } : undefined,
+          fee: item.dependsOn.fee !== undefined ? {
+              set: item.dependsOn.fee
+            } : undefined,
+      trade: item.dependsOn.trade ? 
+      typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.trade.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? {
+                equals: item.dependsOn.trade.id
+              } : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId
+              } : undefined,
+            assetId: item.dependsOn.trade.assetId !== undefined ? {
+                equals: item.dependsOn.trade.assetId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.trade.id !== undefined ? {
+                set: item.dependsOn.trade.id
+              } : undefined,
+            qty: item.dependsOn.trade.qty !== undefined ? {
+                set: item.dependsOn.trade.qty
+              } : undefined,
+            price: item.dependsOn.trade.price !== undefined ? {
+                set: item.dependsOn.trade.price
+              } : undefined,
+            total: item.dependsOn.trade.total !== undefined ? {
+                set: item.dependsOn.trade.total
+              } : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? {
+                set: item.dependsOn.trade.optionType
+              } : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? {
+                set: item.dependsOn.trade.signal
+              } : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? {
+                set: item.dependsOn.trade.strategy
+              } : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? {
+                set: item.dependsOn.trade.analysis
+              } : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? {
+                set: item.dependsOn.trade.summary
+              } : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? {
+                set: item.dependsOn.trade.confidence
+              } : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? {
+                set: item.dependsOn.trade.timestamp
+              } : undefined,
+            status: item.dependsOn.trade.status !== undefined ? {
+                set: item.dependsOn.trade.status
+              } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+      typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.order.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? {
+                equals: item.dependsOn.order.id
+              } : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? {
+                equals: item.dependsOn.order.clientOrderId
+              } : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId
+              } : undefined,
+            assetId: item.dependsOn.order.assetId !== undefined ? {
+                equals: item.dependsOn.order.assetId
+              } : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? {
+                equals: item.dependsOn.order.actionId
+              } : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? {
+                equals: item.dependsOn.order.stopLossId
+              } : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? {
+                equals: item.dependsOn.order.takeProfitId
+              } : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? {
+                equals: item.dependsOn.order.contractId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.order.id !== undefined ? {
+                set: item.dependsOn.order.id
+              } : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? {
+                set: item.dependsOn.order.clientOrderId
+              } : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? {
+                set: item.dependsOn.order.qty
+              } : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? {
+                set: item.dependsOn.order.notional
+              } : undefined,
+            side: item.dependsOn.order.side !== undefined ? {
+                set: item.dependsOn.order.side
+              } : undefined,
+            type: item.dependsOn.order.type !== undefined ? {
+                set: item.dependsOn.order.type
+              } : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? {
+                set: item.dependsOn.order.orderClass
+              } : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? {
+                set: item.dependsOn.order.timeInForce
+              } : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? {
+                set: item.dependsOn.order.limitPrice
+              } : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? {
+                set: item.dependsOn.order.stopPrice
+              } : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? {
+                set: item.dependsOn.order.trailPrice
+              } : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? {
+                set: item.dependsOn.order.trailPercent
+              } : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? {
+                set: item.dependsOn.order.extendedHours
+              } : undefined,
+            status: item.dependsOn.order.status !== undefined ? {
+                set: item.dependsOn.order.status
+              } : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? {
+                set: item.dependsOn.order.submittedAt
+              } : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? {
+                set: item.dependsOn.order.filledAt
+              } : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? {
+                set: item.dependsOn.order.filledQty
+              } : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? {
+                set: item.dependsOn.order.filledAvgPrice
+              } : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? {
+                set: item.dependsOn.order.cancelRequestedAt
+              } : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? {
+                set: item.dependsOn.order.canceledAt
+              } : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? {
+                set: item.dependsOn.order.fee
+              } : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? {
+                set: item.dependsOn.order.strikePrice
+              } : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? {
+                set: item.dependsOn.order.expirationDate
+              } : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? {
+                set: item.dependsOn.order.optionType
+              } : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? {
+                set: item.dependsOn.order.stopLossId
+              } : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? {
+                set: item.dependsOn.order.takeProfitId
+              } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+      typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.dependsOn.id !== undefined ? {
+                set: item.dependsOn.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? {
+                set: item.dependsOn.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? {
+                set: item.dependsOn.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? {
+                set: item.dependsOn.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+    Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    connect: item.dependedOnBy.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          sequence: item.sequence !== undefined ? {
+              set: item.sequence
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          note: item.note !== undefined ? {
+              set: item.note
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee
+            } : undefined,
+      trade: item.trade ? 
+      typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+? {
+      connect: {
+        id: item.trade.id
+      }
+} : { upsert: {
+          where: {
+            id: item.trade.id !== undefined ? {
+                equals: item.trade.id
+              } : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId
+              } : undefined,
+            assetId: item.trade.assetId !== undefined ? {
+                equals: item.trade.assetId
+              } : undefined,
+          },
+          update: {
+            id: item.trade.id !== undefined ? {
+                set: item.trade.id
+              } : undefined,
+            qty: item.trade.qty !== undefined ? {
+                set: item.trade.qty
+              } : undefined,
+            price: item.trade.price !== undefined ? {
+                set: item.trade.price
+              } : undefined,
+            total: item.trade.total !== undefined ? {
+                set: item.trade.total
+              } : undefined,
+            optionType: item.trade.optionType !== undefined ? {
+                set: item.trade.optionType
+              } : undefined,
+            signal: item.trade.signal !== undefined ? {
+                set: item.trade.signal
+              } : undefined,
+            strategy: item.trade.strategy !== undefined ? {
+                set: item.trade.strategy
+              } : undefined,
+            analysis: item.trade.analysis !== undefined ? {
+                set: item.trade.analysis
+              } : undefined,
+            summary: item.trade.summary !== undefined ? {
+                set: item.trade.summary
+              } : undefined,
+            confidence: item.trade.confidence !== undefined ? {
+                set: item.trade.confidence
+              } : undefined,
+            timestamp: item.trade.timestamp !== undefined ? {
+                set: item.trade.timestamp
+              } : undefined,
+            status: item.trade.status !== undefined ? {
+                set: item.trade.status
+              } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+      typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+? {
+      connect: {
+        id: item.order.id
+      }
+} : { upsert: {
+          where: {
+            id: item.order.id !== undefined ? {
+                equals: item.order.id
+              } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                equals: item.order.clientOrderId
+              } : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId
+              } : undefined,
+            assetId: item.order.assetId !== undefined ? {
+                equals: item.order.assetId
+              } : undefined,
+            actionId: item.order.actionId !== undefined ? {
+                equals: item.order.actionId
+              } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                equals: item.order.stopLossId
+              } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                equals: item.order.takeProfitId
+              } : undefined,
+            contractId: item.order.contractId !== undefined ? {
+                equals: item.order.contractId
+              } : undefined,
+          },
+          update: {
+            id: item.order.id !== undefined ? {
+                set: item.order.id
+              } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                set: item.order.clientOrderId
+              } : undefined,
+            qty: item.order.qty !== undefined ? {
+                set: item.order.qty
+              } : undefined,
+            notional: item.order.notional !== undefined ? {
+                set: item.order.notional
+              } : undefined,
+            side: item.order.side !== undefined ? {
+                set: item.order.side
+              } : undefined,
+            type: item.order.type !== undefined ? {
+                set: item.order.type
+              } : undefined,
+            orderClass: item.order.orderClass !== undefined ? {
+                set: item.order.orderClass
+              } : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? {
+                set: item.order.timeInForce
+              } : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? {
+                set: item.order.limitPrice
+              } : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? {
+                set: item.order.stopPrice
+              } : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? {
+                set: item.order.trailPrice
+              } : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? {
+                set: item.order.trailPercent
+              } : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? {
+                set: item.order.extendedHours
+              } : undefined,
+            status: item.order.status !== undefined ? {
+                set: item.order.status
+              } : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? {
+                set: item.order.submittedAt
+              } : undefined,
+            filledAt: item.order.filledAt !== undefined ? {
+                set: item.order.filledAt
+              } : undefined,
+            filledQty: item.order.filledQty !== undefined ? {
+                set: item.order.filledQty
+              } : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? {
+                set: item.order.filledAvgPrice
+              } : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? {
+                set: item.order.cancelRequestedAt
+              } : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? {
+                set: item.order.canceledAt
+              } : undefined,
+            fee: item.order.fee !== undefined ? {
+                set: item.order.fee
+              } : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? {
+                set: item.order.strikePrice
+              } : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? {
+                set: item.order.expirationDate
+              } : undefined,
+            optionType: item.order.optionType !== undefined ? {
+                set: item.order.optionType
+              } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                set: item.order.stopLossId
+              } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                set: item.order.takeProfitId
+              } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -12843,6 +15227,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -12965,6 +15350,242 @@ import { removeUndefinedProps } from './utils';
       } : undefined,
         },
       }
+    } : undefined,
+    dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+          id: item.dependsOn.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dependedOnBy.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
     } : undefined,
       },
     }))
@@ -13089,6 +15710,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         marketOpen: prop.alpacaAccount.marketOpen !== undefined ? {
             set: prop.alpacaAccount.marketOpen
+          } : undefined,
+        realTime: prop.alpacaAccount.realTime !== undefined ? {
+            set: prop.alpacaAccount.realTime
           } : undefined,
         minOrderSize: prop.alpacaAccount.minOrderSize !== undefined ? {
             set: prop.alpacaAccount.minOrderSize
@@ -13642,6 +16266,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -14676,6 +17303,7 @@ import { removeUndefinedProps } from './utils';
         APISecret: prop.alpacaAccount.APISecret !== undefined ? prop.alpacaAccount.APISecret : undefined,
         configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
         marketOpen: prop.alpacaAccount.marketOpen !== undefined ? prop.alpacaAccount.marketOpen : undefined,
+        realTime: prop.alpacaAccount.realTime !== undefined ? prop.alpacaAccount.realTime : undefined,
         minOrderSize: prop.alpacaAccount.minOrderSize !== undefined ? prop.alpacaAccount.minOrderSize : undefined,
         maxOrderSize: prop.alpacaAccount.maxOrderSize !== undefined ? prop.alpacaAccount.maxOrderSize : undefined,
         minPercentageChange: prop.alpacaAccount.minPercentageChange !== undefined ? prop.alpacaAccount.minPercentageChange : undefined,
@@ -15536,6 +18164,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -15555,6 +18186,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -15575,6 +18207,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -15805,6 +18440,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -15974,6 +18610,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -15993,6 +18632,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -16035,6 +18675,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -16736,6 +19377,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -16857,6 +19499,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -17049,6 +19692,9 @@ import { removeUndefinedProps } from './utils';
         id: item.id !== undefined ? item.id : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
+          } : undefined,
+        dependsOnId: item.dependsOnId !== undefined ? {
+            equals: item.dependsOnId
           } : undefined,
       },
       update: {
@@ -17280,6 +19926,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? {
                 set: item.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? {
+                set: item.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -17299,6 +19948,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -17752,6 +20402,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -17875,6 +20526,806 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    dependsOn: item.dependsOn ? 
+    typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+    connect: {
+      id: item.dependsOn.id
+    }
+} : { upsert: {
+        where: {
+          id: item.dependsOn.id !== undefined ? {
+              equals: item.dependsOn.id
+            } : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+              equals: item.dependsOn.dependsOnId
+            } : undefined,
+        },
+        update: {
+          id: item.dependsOn.id !== undefined ? {
+              set: item.dependsOn.id
+            } : undefined,
+          sequence: item.dependsOn.sequence !== undefined ? {
+              set: item.dependsOn.sequence
+            } : undefined,
+          type: item.dependsOn.type !== undefined ? {
+              set: item.dependsOn.type
+            } : undefined,
+          note: item.dependsOn.note !== undefined ? {
+              set: item.dependsOn.note
+            } : undefined,
+          status: item.dependsOn.status !== undefined ? {
+              set: item.dependsOn.status
+            } : undefined,
+          fee: item.dependsOn.fee !== undefined ? {
+              set: item.dependsOn.fee
+            } : undefined,
+      trade: item.dependsOn.trade ? 
+      typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.trade.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? {
+                equals: item.dependsOn.trade.id
+              } : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId
+              } : undefined,
+            assetId: item.dependsOn.trade.assetId !== undefined ? {
+                equals: item.dependsOn.trade.assetId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.trade.id !== undefined ? {
+                set: item.dependsOn.trade.id
+              } : undefined,
+            qty: item.dependsOn.trade.qty !== undefined ? {
+                set: item.dependsOn.trade.qty
+              } : undefined,
+            price: item.dependsOn.trade.price !== undefined ? {
+                set: item.dependsOn.trade.price
+              } : undefined,
+            total: item.dependsOn.trade.total !== undefined ? {
+                set: item.dependsOn.trade.total
+              } : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? {
+                set: item.dependsOn.trade.optionType
+              } : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? {
+                set: item.dependsOn.trade.signal
+              } : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? {
+                set: item.dependsOn.trade.strategy
+              } : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? {
+                set: item.dependsOn.trade.analysis
+              } : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? {
+                set: item.dependsOn.trade.summary
+              } : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? {
+                set: item.dependsOn.trade.confidence
+              } : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? {
+                set: item.dependsOn.trade.timestamp
+              } : undefined,
+            status: item.dependsOn.trade.status !== undefined ? {
+                set: item.dependsOn.trade.status
+              } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+      typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.order.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? {
+                equals: item.dependsOn.order.id
+              } : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? {
+                equals: item.dependsOn.order.clientOrderId
+              } : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId
+              } : undefined,
+            assetId: item.dependsOn.order.assetId !== undefined ? {
+                equals: item.dependsOn.order.assetId
+              } : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? {
+                equals: item.dependsOn.order.actionId
+              } : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? {
+                equals: item.dependsOn.order.stopLossId
+              } : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? {
+                equals: item.dependsOn.order.takeProfitId
+              } : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? {
+                equals: item.dependsOn.order.contractId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.order.id !== undefined ? {
+                set: item.dependsOn.order.id
+              } : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? {
+                set: item.dependsOn.order.clientOrderId
+              } : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? {
+                set: item.dependsOn.order.qty
+              } : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? {
+                set: item.dependsOn.order.notional
+              } : undefined,
+            side: item.dependsOn.order.side !== undefined ? {
+                set: item.dependsOn.order.side
+              } : undefined,
+            type: item.dependsOn.order.type !== undefined ? {
+                set: item.dependsOn.order.type
+              } : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? {
+                set: item.dependsOn.order.orderClass
+              } : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? {
+                set: item.dependsOn.order.timeInForce
+              } : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? {
+                set: item.dependsOn.order.limitPrice
+              } : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? {
+                set: item.dependsOn.order.stopPrice
+              } : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? {
+                set: item.dependsOn.order.trailPrice
+              } : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? {
+                set: item.dependsOn.order.trailPercent
+              } : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? {
+                set: item.dependsOn.order.extendedHours
+              } : undefined,
+            status: item.dependsOn.order.status !== undefined ? {
+                set: item.dependsOn.order.status
+              } : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? {
+                set: item.dependsOn.order.submittedAt
+              } : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? {
+                set: item.dependsOn.order.filledAt
+              } : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? {
+                set: item.dependsOn.order.filledQty
+              } : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? {
+                set: item.dependsOn.order.filledAvgPrice
+              } : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? {
+                set: item.dependsOn.order.cancelRequestedAt
+              } : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? {
+                set: item.dependsOn.order.canceledAt
+              } : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? {
+                set: item.dependsOn.order.fee
+              } : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? {
+                set: item.dependsOn.order.strikePrice
+              } : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? {
+                set: item.dependsOn.order.expirationDate
+              } : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? {
+                set: item.dependsOn.order.optionType
+              } : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? {
+                set: item.dependsOn.order.stopLossId
+              } : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? {
+                set: item.dependsOn.order.takeProfitId
+              } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+      typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.dependsOn.id !== undefined ? {
+                set: item.dependsOn.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? {
+                set: item.dependsOn.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? {
+                set: item.dependsOn.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? {
+                set: item.dependsOn.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+    Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    connect: item.dependedOnBy.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          sequence: item.sequence !== undefined ? {
+              set: item.sequence
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          note: item.note !== undefined ? {
+              set: item.note
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          fee: item.fee !== undefined ? {
+              set: item.fee
+            } : undefined,
+      trade: item.trade ? 
+      typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+? {
+      connect: {
+        id: item.trade.id
+      }
+} : { upsert: {
+          where: {
+            id: item.trade.id !== undefined ? {
+                equals: item.trade.id
+              } : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId
+              } : undefined,
+            assetId: item.trade.assetId !== undefined ? {
+                equals: item.trade.assetId
+              } : undefined,
+          },
+          update: {
+            id: item.trade.id !== undefined ? {
+                set: item.trade.id
+              } : undefined,
+            qty: item.trade.qty !== undefined ? {
+                set: item.trade.qty
+              } : undefined,
+            price: item.trade.price !== undefined ? {
+                set: item.trade.price
+              } : undefined,
+            total: item.trade.total !== undefined ? {
+                set: item.trade.total
+              } : undefined,
+            optionType: item.trade.optionType !== undefined ? {
+                set: item.trade.optionType
+              } : undefined,
+            signal: item.trade.signal !== undefined ? {
+                set: item.trade.signal
+              } : undefined,
+            strategy: item.trade.strategy !== undefined ? {
+                set: item.trade.strategy
+              } : undefined,
+            analysis: item.trade.analysis !== undefined ? {
+                set: item.trade.analysis
+              } : undefined,
+            summary: item.trade.summary !== undefined ? {
+                set: item.trade.summary
+              } : undefined,
+            confidence: item.trade.confidence !== undefined ? {
+                set: item.trade.confidence
+              } : undefined,
+            timestamp: item.trade.timestamp !== undefined ? {
+                set: item.trade.timestamp
+              } : undefined,
+            status: item.trade.status !== undefined ? {
+                set: item.trade.status
+              } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+      typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+? {
+      connect: {
+        id: item.order.id
+      }
+} : { upsert: {
+          where: {
+            id: item.order.id !== undefined ? {
+                equals: item.order.id
+              } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                equals: item.order.clientOrderId
+              } : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId
+              } : undefined,
+            assetId: item.order.assetId !== undefined ? {
+                equals: item.order.assetId
+              } : undefined,
+            actionId: item.order.actionId !== undefined ? {
+                equals: item.order.actionId
+              } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                equals: item.order.stopLossId
+              } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                equals: item.order.takeProfitId
+              } : undefined,
+            contractId: item.order.contractId !== undefined ? {
+                equals: item.order.contractId
+              } : undefined,
+          },
+          update: {
+            id: item.order.id !== undefined ? {
+                set: item.order.id
+              } : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? {
+                set: item.order.clientOrderId
+              } : undefined,
+            qty: item.order.qty !== undefined ? {
+                set: item.order.qty
+              } : undefined,
+            notional: item.order.notional !== undefined ? {
+                set: item.order.notional
+              } : undefined,
+            side: item.order.side !== undefined ? {
+                set: item.order.side
+              } : undefined,
+            type: item.order.type !== undefined ? {
+                set: item.order.type
+              } : undefined,
+            orderClass: item.order.orderClass !== undefined ? {
+                set: item.order.orderClass
+              } : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? {
+                set: item.order.timeInForce
+              } : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? {
+                set: item.order.limitPrice
+              } : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? {
+                set: item.order.stopPrice
+              } : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? {
+                set: item.order.trailPrice
+              } : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? {
+                set: item.order.trailPercent
+              } : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? {
+                set: item.order.extendedHours
+              } : undefined,
+            status: item.order.status !== undefined ? {
+                set: item.order.status
+              } : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? {
+                set: item.order.submittedAt
+              } : undefined,
+            filledAt: item.order.filledAt !== undefined ? {
+                set: item.order.filledAt
+              } : undefined,
+            filledQty: item.order.filledQty !== undefined ? {
+                set: item.order.filledQty
+              } : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? {
+                set: item.order.filledAvgPrice
+              } : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? {
+                set: item.order.cancelRequestedAt
+              } : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? {
+                set: item.order.canceledAt
+              } : undefined,
+            fee: item.order.fee !== undefined ? {
+                set: item.order.fee
+              } : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? {
+                set: item.order.strikePrice
+              } : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? {
+                set: item.order.expirationDate
+              } : undefined,
+            optionType: item.order.optionType !== undefined ? {
+                set: item.order.optionType
+              } : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? {
+                set: item.order.stopLossId
+              } : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? {
+                set: item.order.takeProfitId
+              } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -17978,6 +21429,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -18100,6 +21552,242 @@ import { removeUndefinedProps } from './utils';
       } : undefined,
         },
       }
+    } : undefined,
+    dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+          id: item.dependsOn.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+          tradeId: item.dependsOn.tradeId !== undefined ? {
+              equals: item.dependsOn.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+          type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+          note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+          status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+          fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+      trade: item.dependsOn.trade ? 
+        typeof item.dependsOn.trade === 'object' && Object.keys(item.dependsOn.trade).length === 1 && Object.keys(item.dependsOn.trade)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.trade.id !== undefined ? item.dependsOn.trade.id : undefined,
+            alpacaAccountId: item.dependsOn.trade.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.dependsOn.trade.qty !== undefined ? item.dependsOn.trade.qty : undefined,
+            price: item.dependsOn.trade.price !== undefined ? item.dependsOn.trade.price : undefined,
+            total: item.dependsOn.trade.total !== undefined ? item.dependsOn.trade.total : undefined,
+            optionType: item.dependsOn.trade.optionType !== undefined ? item.dependsOn.trade.optionType : undefined,
+            signal: item.dependsOn.trade.signal !== undefined ? item.dependsOn.trade.signal : undefined,
+            strategy: item.dependsOn.trade.strategy !== undefined ? item.dependsOn.trade.strategy : undefined,
+            analysis: item.dependsOn.trade.analysis !== undefined ? item.dependsOn.trade.analysis : undefined,
+            summary: item.dependsOn.trade.summary !== undefined ? item.dependsOn.trade.summary : undefined,
+            confidence: item.dependsOn.trade.confidence !== undefined ? item.dependsOn.trade.confidence : undefined,
+            timestamp: item.dependsOn.trade.timestamp !== undefined ? item.dependsOn.trade.timestamp : undefined,
+            status: item.dependsOn.trade.status !== undefined ? item.dependsOn.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.dependsOn.order ? 
+        typeof item.dependsOn.order === 'object' && Object.keys(item.dependsOn.order).length === 1 && Object.keys(item.dependsOn.order)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.order.id !== undefined ? item.dependsOn.order.id : undefined,
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            actionId: item.dependsOn.order.actionId !== undefined ? item.dependsOn.order.actionId : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            contractId: item.dependsOn.order.contractId !== undefined ? item.dependsOn.order.contractId : undefined,
+            alpacaAccountId: item.dependsOn.order.alpacaAccountId !== undefined ? {
+                equals: item.dependsOn.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.dependsOn.order.clientOrderId !== undefined ? item.dependsOn.order.clientOrderId : undefined,
+            qty: item.dependsOn.order.qty !== undefined ? item.dependsOn.order.qty : undefined,
+            notional: item.dependsOn.order.notional !== undefined ? item.dependsOn.order.notional : undefined,
+            side: item.dependsOn.order.side !== undefined ? item.dependsOn.order.side : undefined,
+            type: item.dependsOn.order.type !== undefined ? item.dependsOn.order.type : undefined,
+            orderClass: item.dependsOn.order.orderClass !== undefined ? item.dependsOn.order.orderClass : undefined,
+            timeInForce: item.dependsOn.order.timeInForce !== undefined ? item.dependsOn.order.timeInForce : undefined,
+            limitPrice: item.dependsOn.order.limitPrice !== undefined ? item.dependsOn.order.limitPrice : undefined,
+            stopPrice: item.dependsOn.order.stopPrice !== undefined ? item.dependsOn.order.stopPrice : undefined,
+            trailPrice: item.dependsOn.order.trailPrice !== undefined ? item.dependsOn.order.trailPrice : undefined,
+            trailPercent: item.dependsOn.order.trailPercent !== undefined ? item.dependsOn.order.trailPercent : undefined,
+            extendedHours: item.dependsOn.order.extendedHours !== undefined ? item.dependsOn.order.extendedHours : undefined,
+            status: item.dependsOn.order.status !== undefined ? item.dependsOn.order.status : undefined,
+            submittedAt: item.dependsOn.order.submittedAt !== undefined ? item.dependsOn.order.submittedAt : undefined,
+            filledAt: item.dependsOn.order.filledAt !== undefined ? item.dependsOn.order.filledAt : undefined,
+            filledQty: item.dependsOn.order.filledQty !== undefined ? item.dependsOn.order.filledQty : undefined,
+            filledAvgPrice: item.dependsOn.order.filledAvgPrice !== undefined ? item.dependsOn.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.dependsOn.order.cancelRequestedAt !== undefined ? item.dependsOn.order.cancelRequestedAt : undefined,
+            canceledAt: item.dependsOn.order.canceledAt !== undefined ? item.dependsOn.order.canceledAt : undefined,
+            fee: item.dependsOn.order.fee !== undefined ? item.dependsOn.order.fee : undefined,
+            strikePrice: item.dependsOn.order.strikePrice !== undefined ? item.dependsOn.order.strikePrice : undefined,
+            expirationDate: item.dependsOn.order.expirationDate !== undefined ? item.dependsOn.order.expirationDate : undefined,
+            optionType: item.dependsOn.order.optionType !== undefined ? item.dependsOn.order.optionType : undefined,
+            stopLossId: item.dependsOn.order.stopLossId !== undefined ? item.dependsOn.order.stopLossId : undefined,
+            takeProfitId: item.dependsOn.order.takeProfitId !== undefined ? item.dependsOn.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependsOn: item.dependsOn.dependsOn ? 
+        typeof item.dependsOn.dependsOn === 'object' && Object.keys(item.dependsOn.dependsOn).length === 1 && Object.keys(item.dependsOn.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.dependsOn.id !== undefined ? item.dependsOn.dependsOn.id : undefined,
+            tradeId: item.dependsOn.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.dependsOn.sequence !== undefined ? item.dependsOn.dependsOn.sequence : undefined,
+            type: item.dependsOn.dependsOn.type !== undefined ? item.dependsOn.dependsOn.type : undefined,
+            note: item.dependsOn.dependsOn.note !== undefined ? item.dependsOn.dependsOn.note : undefined,
+            status: item.dependsOn.dependsOn.status !== undefined ? item.dependsOn.dependsOn.status : undefined,
+            fee: item.dependsOn.dependsOn.fee !== undefined ? item.dependsOn.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+    dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dependedOnBy.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId 
+             } : undefined,
+        },
+        create: {
+          sequence: item.sequence !== undefined ? item.sequence : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          note: item.note !== undefined ? item.note : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          fee: item.fee !== undefined ? item.fee : undefined,
+      trade: item.trade ? 
+        typeof item.trade === 'object' && Object.keys(item.trade).length === 1 && Object.keys(item.trade)[0] === 'id'
+    ? { connect: {
+            id: item.trade.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.trade.id !== undefined ? item.trade.id : undefined,
+            alpacaAccountId: item.trade.alpacaAccountId !== undefined ? {
+                equals: item.trade.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            qty: item.trade.qty !== undefined ? item.trade.qty : undefined,
+            price: item.trade.price !== undefined ? item.trade.price : undefined,
+            total: item.trade.total !== undefined ? item.trade.total : undefined,
+            optionType: item.trade.optionType !== undefined ? item.trade.optionType : undefined,
+            signal: item.trade.signal !== undefined ? item.trade.signal : undefined,
+            strategy: item.trade.strategy !== undefined ? item.trade.strategy : undefined,
+            analysis: item.trade.analysis !== undefined ? item.trade.analysis : undefined,
+            summary: item.trade.summary !== undefined ? item.trade.summary : undefined,
+            confidence: item.trade.confidence !== undefined ? item.trade.confidence : undefined,
+            timestamp: item.trade.timestamp !== undefined ? item.trade.timestamp : undefined,
+            status: item.trade.status !== undefined ? item.trade.status : undefined,
+          },
+        }
+      } : undefined,
+      order: item.order ? 
+        typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+    ? { connect: {
+            id: item.order.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.order.id !== undefined ? item.order.id : undefined,
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            actionId: item.order.actionId !== undefined ? item.order.actionId : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            contractId: item.order.contractId !== undefined ? item.order.contractId : undefined,
+            alpacaAccountId: item.order.alpacaAccountId !== undefined ? {
+                equals: item.order.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            clientOrderId: item.order.clientOrderId !== undefined ? item.order.clientOrderId : undefined,
+            qty: item.order.qty !== undefined ? item.order.qty : undefined,
+            notional: item.order.notional !== undefined ? item.order.notional : undefined,
+            side: item.order.side !== undefined ? item.order.side : undefined,
+            type: item.order.type !== undefined ? item.order.type : undefined,
+            orderClass: item.order.orderClass !== undefined ? item.order.orderClass : undefined,
+            timeInForce: item.order.timeInForce !== undefined ? item.order.timeInForce : undefined,
+            limitPrice: item.order.limitPrice !== undefined ? item.order.limitPrice : undefined,
+            stopPrice: item.order.stopPrice !== undefined ? item.order.stopPrice : undefined,
+            trailPrice: item.order.trailPrice !== undefined ? item.order.trailPrice : undefined,
+            trailPercent: item.order.trailPercent !== undefined ? item.order.trailPercent : undefined,
+            extendedHours: item.order.extendedHours !== undefined ? item.order.extendedHours : undefined,
+            status: item.order.status !== undefined ? item.order.status : undefined,
+            submittedAt: item.order.submittedAt !== undefined ? item.order.submittedAt : undefined,
+            filledAt: item.order.filledAt !== undefined ? item.order.filledAt : undefined,
+            filledQty: item.order.filledQty !== undefined ? item.order.filledQty : undefined,
+            filledAvgPrice: item.order.filledAvgPrice !== undefined ? item.order.filledAvgPrice : undefined,
+            cancelRequestedAt: item.order.cancelRequestedAt !== undefined ? item.order.cancelRequestedAt : undefined,
+            canceledAt: item.order.canceledAt !== undefined ? item.order.canceledAt : undefined,
+            fee: item.order.fee !== undefined ? item.order.fee : undefined,
+            strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
+            expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
+            stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
+            takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
     } : undefined,
       },
     }))

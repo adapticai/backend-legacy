@@ -75,6 +75,7 @@ import { removeUndefinedProps } from './utils';
       APISecret
       configuration
       marketOpen
+      realTime
       minOrderSize
       maxOrderSize
       minPercentageChange
@@ -335,6 +336,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -805,6 +807,9 @@ id
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen
             } : undefined,
+          realTime: item.realTime !== undefined ? {
+              set: item.realTime
+            } : undefined,
           minOrderSize: item.minOrderSize !== undefined ? {
               set: item.minOrderSize
             } : undefined,
@@ -1136,6 +1141,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -1369,6 +1375,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -1677,6 +1684,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -2045,6 +2053,9 @@ id
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen
             } : undefined,
+          realTime: item.realTime !== undefined ? {
+              set: item.realTime
+            } : undefined,
           minOrderSize: item.minOrderSize !== undefined ? {
               set: item.minOrderSize
             } : undefined,
@@ -2376,6 +2387,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -2609,6 +2621,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -3034,6 +3047,9 @@ id
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen
             } : undefined,
+          realTime: item.realTime !== undefined ? {
+              set: item.realTime
+            } : undefined,
           minOrderSize: item.minOrderSize !== undefined ? {
               set: item.minOrderSize
             } : undefined,
@@ -3365,6 +3381,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
@@ -3598,6 +3615,7 @@ id
           APISecret: item.APISecret !== undefined ? item.APISecret : undefined,
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+          realTime: item.realTime !== undefined ? item.realTime : undefined,
           minOrderSize: item.minOrderSize !== undefined ? item.minOrderSize : undefined,
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,

@@ -17,6 +17,7 @@ import { removeUndefinedProps } from './utils';
   APISecret
   configuration
   marketOpen
+  realTime
   minOrderSize
   maxOrderSize
   minPercentageChange
@@ -214,6 +215,13 @@ id
         takeProfitId
         contractId
       }
+      dependsOn {
+id
+      }
+      dependsOnId
+      dependedOnBy {
+id
+      }
     }
   }
   orders {
@@ -266,6 +274,13 @@ id
       note
       status
       fee
+      dependsOn {
+id
+      }
+      dependsOnId
+      dependedOnBy {
+id
+      }
     }
     asset {
       id
@@ -455,6 +470,7 @@ id
   APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
   configuration: props.configuration !== undefined ? props.configuration : undefined,
   marketOpen: props.marketOpen !== undefined ? props.marketOpen : undefined,
+  realTime: props.realTime !== undefined ? props.realTime : undefined,
   minOrderSize: props.minOrderSize !== undefined ? props.minOrderSize : undefined,
   maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
@@ -891,6 +907,50 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1020,6 +1080,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -1666,6 +1770,7 @@ id
   APISecret: prop.APISecret !== undefined ? prop.APISecret : undefined,
   configuration: prop.configuration !== undefined ? prop.configuration : undefined,
   marketOpen: prop.marketOpen !== undefined ? prop.marketOpen : undefined,
+  realTime: prop.realTime !== undefined ? prop.realTime : undefined,
   minOrderSize: prop.minOrderSize !== undefined ? prop.minOrderSize : undefined,
   maxOrderSize: prop.maxOrderSize !== undefined ? prop.maxOrderSize : undefined,
   minPercentageChange: prop.minPercentageChange !== undefined ? prop.minPercentageChange : undefined,
@@ -1732,6 +1837,9 @@ id
            } : undefined,
   marketOpen: props.marketOpen !== undefined ? {
             set: props.marketOpen 
+           } : undefined,
+  realTime: props.realTime !== undefined ? {
+            set: props.realTime 
            } : undefined,
   minOrderSize: props.minOrderSize !== undefined ? {
             set: props.minOrderSize 
@@ -2928,6 +3036,9 @@ id
           tradeId: item.tradeId !== undefined ? {
               equals: item.tradeId
             } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -3090,6 +3201,97 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.id !== undefined ? {
+                set: item.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.type !== undefined ? {
+                set: item.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.note !== undefined ? {
+                set: item.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.status !== undefined ? {
+                set: item.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -3142,6 +3344,50 @@ id
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -3436,6 +3682,50 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -3621,6 +3911,9 @@ id
           tradeId: item.action.tradeId !== undefined ? {
               equals: item.action.tradeId
             } : undefined,
+          dependsOnId: item.action.dependsOnId !== undefined ? {
+              equals: item.action.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.action.id !== undefined ? {
@@ -3712,6 +4005,97 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.action.dependsOn ? 
+      typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.action.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? {
+                equals: item.action.dependsOn.id
+              } : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOn.dependsOnId !== undefined ? {
+                equals: item.action.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.action.dependsOn.id !== undefined ? {
+                set: item.action.dependsOn.id
+              } : undefined,
+            sequence: item.action.dependsOn.sequence !== undefined ? {
+                set: item.action.dependsOn.sequence
+              } : undefined,
+            type: item.action.dependsOn.type !== undefined ? {
+                set: item.action.dependsOn.type
+              } : undefined,
+            note: item.action.dependsOn.note !== undefined ? {
+                set: item.action.dependsOn.note
+              } : undefined,
+            status: item.action.dependsOn.status !== undefined ? {
+                set: item.action.dependsOn.status
+              } : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? {
+                set: item.action.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+      Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 && item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.action.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -3746,6 +4130,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -5052,6 +5480,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -6502,6 +6974,7 @@ id
   APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
   configuration: props.configuration !== undefined ? props.configuration : undefined,
   marketOpen: props.marketOpen !== undefined ? props.marketOpen : undefined,
+  realTime: props.realTime !== undefined ? props.realTime : undefined,
   minOrderSize: props.minOrderSize !== undefined ? props.minOrderSize : undefined,
   maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
@@ -6938,6 +7411,50 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -7067,6 +7584,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -7685,6 +8246,9 @@ id
            } : undefined,
   marketOpen: props.marketOpen !== undefined ? {
             set: props.marketOpen 
+           } : undefined,
+  realTime: props.realTime !== undefined ? {
+            set: props.realTime 
            } : undefined,
   minOrderSize: props.minOrderSize !== undefined ? {
             set: props.minOrderSize 
@@ -8875,6 +9439,9 @@ id
           tradeId: item.tradeId !== undefined ? {
               equals: item.tradeId
             } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -9037,6 +9604,97 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.id !== undefined ? {
+                set: item.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.type !== undefined ? {
+                set: item.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.note !== undefined ? {
+                set: item.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.status !== undefined ? {
+                set: item.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -9089,6 +9747,50 @@ id
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -9383,6 +10085,50 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -9568,6 +10314,9 @@ id
           tradeId: item.action.tradeId !== undefined ? {
               equals: item.action.tradeId
             } : undefined,
+          dependsOnId: item.action.dependsOnId !== undefined ? {
+              equals: item.action.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.action.id !== undefined ? {
@@ -9659,6 +10408,97 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.action.dependsOn ? 
+      typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.action.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? {
+                equals: item.action.dependsOn.id
+              } : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOn.dependsOnId !== undefined ? {
+                equals: item.action.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.action.dependsOn.id !== undefined ? {
+                set: item.action.dependsOn.id
+              } : undefined,
+            sequence: item.action.dependsOn.sequence !== undefined ? {
+                set: item.action.dependsOn.sequence
+              } : undefined,
+            type: item.action.dependsOn.type !== undefined ? {
+                set: item.action.dependsOn.type
+              } : undefined,
+            note: item.action.dependsOn.note !== undefined ? {
+                set: item.action.dependsOn.note
+              } : undefined,
+            status: item.action.dependsOn.status !== undefined ? {
+                set: item.action.dependsOn.status
+              } : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? {
+                set: item.action.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+      Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 && item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.action.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -9693,6 +10533,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -10999,6 +11883,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -12463,6 +13391,9 @@ id
   marketOpen: prop.marketOpen !== undefined ? {
             set: prop.marketOpen 
            } : undefined,
+  realTime: prop.realTime !== undefined ? {
+            set: prop.realTime 
+           } : undefined,
   minOrderSize: prop.minOrderSize !== undefined ? {
             set: prop.minOrderSize 
            } : undefined,
@@ -13658,6 +14589,9 @@ id
           tradeId: item.tradeId !== undefined ? {
               equals: item.tradeId
             } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -13820,6 +14754,97 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.id !== undefined ? {
+                set: item.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.type !== undefined ? {
+                set: item.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.note !== undefined ? {
+                set: item.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.status !== undefined ? {
+                set: item.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -13872,6 +14897,50 @@ id
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -14166,6 +15235,50 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -14351,6 +15464,9 @@ id
           tradeId: item.action.tradeId !== undefined ? {
               equals: item.action.tradeId
             } : undefined,
+          dependsOnId: item.action.dependsOnId !== undefined ? {
+              equals: item.action.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.action.id !== undefined ? {
@@ -14442,6 +15558,97 @@ id
           },
         }
       } : undefined,
+      dependsOn: item.action.dependsOn ? 
+      typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.action.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? {
+                equals: item.action.dependsOn.id
+              } : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOn.dependsOnId !== undefined ? {
+                equals: item.action.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.action.dependsOn.id !== undefined ? {
+                set: item.action.dependsOn.id
+              } : undefined,
+            sequence: item.action.dependsOn.sequence !== undefined ? {
+                set: item.action.dependsOn.sequence
+              } : undefined,
+            type: item.action.dependsOn.type !== undefined ? {
+                set: item.action.dependsOn.type
+              } : undefined,
+            note: item.action.dependsOn.note !== undefined ? {
+                set: item.action.dependsOn.note
+              } : undefined,
+            status: item.action.dependsOn.status !== undefined ? {
+                set: item.action.dependsOn.status
+              } : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? {
+                set: item.action.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+      Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 && item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.action.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -14476,6 +15683,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -15782,6 +17033,50 @@ id
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }

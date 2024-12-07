@@ -155,6 +155,13 @@ id
         note
         status
         fee
+        dependsOn {
+id
+        }
+        dependsOnId
+        dependedOnBy {
+id
+        }
       }
       asset {
         id
@@ -598,6 +605,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -1830,6 +1838,9 @@ id
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? {
                 set: props.contract.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? {
+                set: props.contract.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: props.contract.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -1849,6 +1860,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -1869,6 +1881,9 @@ id
               } : undefined,
             tradeId: props.contract.order.action.tradeId !== undefined ? {
                 equals: props.contract.order.action.tradeId
+              } : undefined,
+            dependsOnId: props.contract.order.action.dependsOnId !== undefined ? {
+                equals: props.contract.order.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -2227,6 +2242,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -2646,6 +2662,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -3140,6 +3157,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -4270,6 +4288,9 @@ id
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? {
                 set: props.contract.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? {
+                set: props.contract.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: props.contract.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -4289,6 +4310,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -4309,6 +4331,9 @@ id
               } : undefined,
             tradeId: props.contract.order.action.tradeId !== undefined ? {
                 equals: props.contract.order.action.tradeId
+              } : undefined,
+            dependsOnId: props.contract.order.action.dependsOnId !== undefined ? {
+                equals: props.contract.order.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -4667,6 +4692,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -5086,6 +5112,7 @@ id
             APISecret: props.contract.order.alpacaAccount.APISecret !== undefined ? props.contract.order.alpacaAccount.APISecret : undefined,
             configuration: props.contract.order.alpacaAccount.configuration !== undefined ? props.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: props.contract.order.alpacaAccount.marketOpen !== undefined ? props.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: props.contract.order.alpacaAccount.realTime !== undefined ? props.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: props.contract.order.alpacaAccount.minOrderSize !== undefined ? props.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -6271,6 +6298,9 @@ id
             marketOpen: prop.contract.order.alpacaAccount.marketOpen !== undefined ? {
                 set: prop.contract.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: prop.contract.order.alpacaAccount.realTime !== undefined ? {
+                set: prop.contract.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: prop.contract.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: prop.contract.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -6290,6 +6320,7 @@ id
             APISecret: prop.contract.order.alpacaAccount.APISecret !== undefined ? prop.contract.order.alpacaAccount.APISecret : undefined,
             configuration: prop.contract.order.alpacaAccount.configuration !== undefined ? prop.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: prop.contract.order.alpacaAccount.marketOpen !== undefined ? prop.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: prop.contract.order.alpacaAccount.realTime !== undefined ? prop.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: prop.contract.order.alpacaAccount.minOrderSize !== undefined ? prop.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? prop.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? prop.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -6310,6 +6341,9 @@ id
               } : undefined,
             tradeId: prop.contract.order.action.tradeId !== undefined ? {
                 equals: prop.contract.order.action.tradeId
+              } : undefined,
+            dependsOnId: prop.contract.order.action.dependsOnId !== undefined ? {
+                equals: prop.contract.order.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -6668,6 +6702,7 @@ id
             APISecret: prop.contract.order.alpacaAccount.APISecret !== undefined ? prop.contract.order.alpacaAccount.APISecret : undefined,
             configuration: prop.contract.order.alpacaAccount.configuration !== undefined ? prop.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: prop.contract.order.alpacaAccount.marketOpen !== undefined ? prop.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: prop.contract.order.alpacaAccount.realTime !== undefined ? prop.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: prop.contract.order.alpacaAccount.minOrderSize !== undefined ? prop.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? prop.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? prop.contract.order.alpacaAccount.minPercentageChange : undefined,
@@ -7087,6 +7122,7 @@ id
             APISecret: prop.contract.order.alpacaAccount.APISecret !== undefined ? prop.contract.order.alpacaAccount.APISecret : undefined,
             configuration: prop.contract.order.alpacaAccount.configuration !== undefined ? prop.contract.order.alpacaAccount.configuration : undefined,
             marketOpen: prop.contract.order.alpacaAccount.marketOpen !== undefined ? prop.contract.order.alpacaAccount.marketOpen : undefined,
+            realTime: prop.contract.order.alpacaAccount.realTime !== undefined ? prop.contract.order.alpacaAccount.realTime : undefined,
             minOrderSize: prop.contract.order.alpacaAccount.minOrderSize !== undefined ? prop.contract.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? prop.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? prop.contract.order.alpacaAccount.minPercentageChange : undefined,

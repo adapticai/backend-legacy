@@ -194,6 +194,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -392,6 +393,50 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -494,6 +539,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -655,6 +701,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -850,6 +940,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1199,6 +1290,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -1702,6 +1794,9 @@ import { removeUndefinedProps } from './utils';
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
             } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
+            } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
             } : undefined,
@@ -2039,6 +2134,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -2182,6 +2278,9 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           tradeId: item.tradeId !== undefined ? {
               equals: item.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
             } : undefined,
         },
         update: {
@@ -2345,6 +2444,97 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.id !== undefined ? {
+                set: item.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.type !== undefined ? {
+                set: item.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.note !== undefined ? {
+                set: item.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.status !== undefined ? {
+                set: item.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -2398,6 +2588,50 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -2433,6 +2667,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -2630,6 +2865,50 @@ import { removeUndefinedProps } from './utils';
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -2835,6 +3114,9 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
+            } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
             } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
@@ -3110,6 +3392,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -3239,6 +3522,9 @@ import { removeUndefinedProps } from './utils';
           tradeId: item.action.tradeId !== undefined ? {
               equals: item.action.tradeId
             } : undefined,
+          dependsOnId: item.action.dependsOnId !== undefined ? {
+              equals: item.action.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.action.id !== undefined ? {
@@ -3330,6 +3616,97 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.action.dependsOn ? 
+      typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.action.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? {
+                equals: item.action.dependsOn.id
+              } : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOn.dependsOnId !== undefined ? {
+                equals: item.action.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.action.dependsOn.id !== undefined ? {
+                set: item.action.dependsOn.id
+              } : undefined,
+            sequence: item.action.dependsOn.sequence !== undefined ? {
+                set: item.action.dependsOn.sequence
+              } : undefined,
+            type: item.action.dependsOn.type !== undefined ? {
+                set: item.action.dependsOn.type
+              } : undefined,
+            note: item.action.dependsOn.note !== undefined ? {
+                set: item.action.dependsOn.note
+              } : undefined,
+            status: item.action.dependsOn.status !== undefined ? {
+                set: item.action.dependsOn.status
+              } : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? {
+                set: item.action.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+      Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 && item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.action.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -3364,6 +3741,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -3972,6 +4393,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4133,6 +4555,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -4375,6 +4841,9 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
+            } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
             } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
@@ -4701,6 +5170,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4866,6 +5336,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5506,6 +5977,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? {
                 set: item.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? {
+                set: item.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -5525,6 +5999,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -5545,6 +6020,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.order.action.tradeId !== undefined ? {
                 equals: item.order.action.tradeId
+              } : undefined,
+            dependsOnId: item.order.action.dependsOnId !== undefined ? {
+                equals: item.order.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -5903,6 +6381,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -6152,6 +6631,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -6400,6 +6880,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -6598,6 +7079,50 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -6700,6 +7225,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -6861,6 +7387,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -7056,6 +7626,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -7405,6 +7976,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -7764,6 +8336,9 @@ import { removeUndefinedProps } from './utils';
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
             } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
+            } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
             } : undefined,
@@ -8101,6 +8676,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -8244,6 +8820,9 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           tradeId: item.tradeId !== undefined ? {
               equals: item.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
             } : undefined,
         },
         update: {
@@ -8407,6 +8986,97 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.id !== undefined ? {
+                set: item.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.type !== undefined ? {
+                set: item.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.note !== undefined ? {
+                set: item.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.status !== undefined ? {
+                set: item.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -8460,6 +9130,50 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -8495,6 +9209,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -8692,6 +9407,50 @@ import { removeUndefinedProps } from './utils';
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -8897,6 +9656,9 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
+            } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
             } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
@@ -9172,6 +9934,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -9301,6 +10064,9 @@ import { removeUndefinedProps } from './utils';
           tradeId: item.action.tradeId !== undefined ? {
               equals: item.action.tradeId
             } : undefined,
+          dependsOnId: item.action.dependsOnId !== undefined ? {
+              equals: item.action.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.action.id !== undefined ? {
@@ -9392,6 +10158,97 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.action.dependsOn ? 
+      typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.action.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? {
+                equals: item.action.dependsOn.id
+              } : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOn.dependsOnId !== undefined ? {
+                equals: item.action.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.action.dependsOn.id !== undefined ? {
+                set: item.action.dependsOn.id
+              } : undefined,
+            sequence: item.action.dependsOn.sequence !== undefined ? {
+                set: item.action.dependsOn.sequence
+              } : undefined,
+            type: item.action.dependsOn.type !== undefined ? {
+                set: item.action.dependsOn.type
+              } : undefined,
+            note: item.action.dependsOn.note !== undefined ? {
+                set: item.action.dependsOn.note
+              } : undefined,
+            status: item.action.dependsOn.status !== undefined ? {
+                set: item.action.dependsOn.status
+              } : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? {
+                set: item.action.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+      Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 && item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.action.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -9426,6 +10283,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -10034,6 +10935,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -10195,6 +11097,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -10437,6 +11383,9 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
+            } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
             } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
@@ -10763,6 +11712,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -10928,6 +11878,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -11568,6 +12519,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? {
                 set: item.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? {
+                set: item.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -11587,6 +12541,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -11607,6 +12562,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.order.action.tradeId !== undefined ? {
                 equals: item.order.action.tradeId
+              } : undefined,
+            dependsOnId: item.order.action.dependsOnId !== undefined ? {
+                equals: item.order.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -11965,6 +12923,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -12214,6 +13173,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -12624,6 +13584,9 @@ import { removeUndefinedProps } from './utils';
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
             } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
+            } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
             } : undefined,
@@ -12961,6 +13924,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -13104,6 +14068,9 @@ import { removeUndefinedProps } from './utils';
           id: item.id !== undefined ? item.id : undefined,
           tradeId: item.tradeId !== undefined ? {
               equals: item.tradeId
+            } : undefined,
+          dependsOnId: item.dependsOnId !== undefined ? {
+              equals: item.dependsOnId
             } : undefined,
         },
         update: {
@@ -13267,6 +14234,97 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+      typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.dependsOn.id !== undefined ? {
+                equals: item.dependsOn.id
+              } : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOn.dependsOnId !== undefined ? {
+                equals: item.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.dependsOn.id !== undefined ? {
+                set: item.dependsOn.id
+              } : undefined,
+            sequence: item.dependsOn.sequence !== undefined ? {
+                set: item.dependsOn.sequence
+              } : undefined,
+            type: item.dependsOn.type !== undefined ? {
+                set: item.dependsOn.type
+              } : undefined,
+            note: item.dependsOn.note !== undefined ? {
+                set: item.dependsOn.note
+              } : undefined,
+            status: item.dependsOn.status !== undefined ? {
+                set: item.dependsOn.status
+              } : undefined,
+            fee: item.dependsOn.fee !== undefined ? {
+                set: item.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+      Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 && item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -13320,6 +14378,50 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -13355,6 +14457,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -13552,6 +14655,50 @@ import { removeUndefinedProps } from './utils';
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.dependsOn ? 
+        typeof item.dependsOn === 'object' && Object.keys(item.dependsOn).length === 1 && Object.keys(item.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.dependsOn.id !== undefined ? item.dependsOn.id : undefined,
+            tradeId: item.dependsOn.tradeId !== undefined ? {
+                equals: item.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.dependsOn.sequence !== undefined ? item.dependsOn.sequence : undefined,
+            type: item.dependsOn.type !== undefined ? item.dependsOn.type : undefined,
+            note: item.dependsOn.note !== undefined ? item.dependsOn.note : undefined,
+            status: item.dependsOn.status !== undefined ? item.dependsOn.status : undefined,
+            fee: item.dependsOn.fee !== undefined ? item.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.dependedOnBy ? 
+        Array.isArray(item.dependedOnBy) && item.dependedOnBy.length > 0 &&  item.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -13757,6 +14904,9 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
+            } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
             } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
@@ -14032,6 +15182,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -14161,6 +15312,9 @@ import { removeUndefinedProps } from './utils';
           tradeId: item.action.tradeId !== undefined ? {
               equals: item.action.tradeId
             } : undefined,
+          dependsOnId: item.action.dependsOnId !== undefined ? {
+              equals: item.action.dependsOnId
+            } : undefined,
         },
         update: {
           id: item.action.id !== undefined ? {
@@ -14252,6 +15406,97 @@ import { removeUndefinedProps } from './utils';
           },
         }
       } : undefined,
+      dependsOn: item.action.dependsOn ? 
+      typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+? {
+      connect: {
+        id: item.action.dependsOn.id
+      }
+} : { upsert: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? {
+                equals: item.action.dependsOn.id
+              } : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOn.dependsOnId !== undefined ? {
+                equals: item.action.dependsOn.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.action.dependsOn.id !== undefined ? {
+                set: item.action.dependsOn.id
+              } : undefined,
+            sequence: item.action.dependsOn.sequence !== undefined ? {
+                set: item.action.dependsOn.sequence
+              } : undefined,
+            type: item.action.dependsOn.type !== undefined ? {
+                set: item.action.dependsOn.type
+              } : undefined,
+            note: item.action.dependsOn.note !== undefined ? {
+                set: item.action.dependsOn.note
+              } : undefined,
+            status: item.action.dependsOn.status !== undefined ? {
+                set: item.action.dependsOn.status
+              } : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? {
+                set: item.action.dependsOn.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+      Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 && item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect: item.action.dependedOnBy.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            sequence: item.sequence !== undefined ? {
+                set: item.sequence
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            note: item.note !== undefined ? {
+                set: item.note
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            fee: item.fee !== undefined ? {
+                set: item.fee
+              } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -14286,6 +15531,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -14894,6 +16183,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -15055,6 +16345,50 @@ import { removeUndefinedProps } from './utils';
             status: item.action.trade.status !== undefined ? item.action.trade.status : undefined,
           },
         }
+      } : undefined,
+      dependsOn: item.action.dependsOn ? 
+        typeof item.action.dependsOn === 'object' && Object.keys(item.action.dependsOn).length === 1 && Object.keys(item.action.dependsOn)[0] === 'id'
+    ? { connect: {
+            id: item.action.dependsOn.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.action.dependsOn.id !== undefined ? item.action.dependsOn.id : undefined,
+            tradeId: item.action.dependsOn.tradeId !== undefined ? {
+                equals: item.action.dependsOn.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.action.dependsOn.sequence !== undefined ? item.action.dependsOn.sequence : undefined,
+            type: item.action.dependsOn.type !== undefined ? item.action.dependsOn.type : undefined,
+            note: item.action.dependsOn.note !== undefined ? item.action.dependsOn.note : undefined,
+            status: item.action.dependsOn.status !== undefined ? item.action.dependsOn.status : undefined,
+            fee: item.action.dependsOn.fee !== undefined ? item.action.dependsOn.fee : undefined,
+          },
+        }
+      } : undefined,
+      dependedOnBy: item.action.dependedOnBy ? 
+        Array.isArray(item.action.dependedOnBy) && item.action.dependedOnBy.length > 0 &&  item.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.action.dependedOnBy.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.action.dependedOnBy.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradeId: item.tradeId !== undefined ? {
+                equals: item.tradeId 
+               } : undefined,
+          },
+          create: {
+            sequence: item.sequence !== undefined ? item.sequence : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            note: item.note !== undefined ? item.note : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            fee: item.fee !== undefined ? item.fee : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -15297,6 +16631,9 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
               set: item.alpacaAccount.marketOpen
+            } : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? {
+              set: item.alpacaAccount.realTime
             } : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
               set: item.alpacaAccount.minOrderSize
@@ -15623,6 +16960,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -15788,6 +17126,7 @@ import { removeUndefinedProps } from './utils';
           APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
           configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
           marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+          realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
           minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
           maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -16428,6 +17767,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? {
                 set: item.order.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? {
+                set: item.order.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.order.alpacaAccount.minOrderSize
               } : undefined,
@@ -16447,6 +17789,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -16467,6 +17810,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.order.action.tradeId !== undefined ? {
                 equals: item.order.action.tradeId
+              } : undefined,
+            dependsOnId: item.order.action.dependsOnId !== undefined ? {
+                equals: item.order.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -16825,6 +18171,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,
@@ -17074,6 +18421,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.order.alpacaAccount.APISecret !== undefined ? item.order.alpacaAccount.APISecret : undefined,
             configuration: item.order.alpacaAccount.configuration !== undefined ? item.order.alpacaAccount.configuration : undefined,
             marketOpen: item.order.alpacaAccount.marketOpen !== undefined ? item.order.alpacaAccount.marketOpen : undefined,
+            realTime: item.order.alpacaAccount.realTime !== undefined ? item.order.alpacaAccount.realTime : undefined,
             minOrderSize: item.order.alpacaAccount.minOrderSize !== undefined ? item.order.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.order.alpacaAccount.maxOrderSize !== undefined ? item.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.order.alpacaAccount.minPercentageChange !== undefined ? item.order.alpacaAccount.minPercentageChange : undefined,

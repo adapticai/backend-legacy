@@ -269,6 +269,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -397,6 +398,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -518,6 +520,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1104,6 +1107,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -1123,6 +1129,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1140,6 +1147,9 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
               } : undefined,
           },
           update: {
@@ -1203,6 +1213,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1434,6 +1445,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -1453,6 +1467,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1473,6 +1488,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -1703,6 +1721,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1872,6 +1891,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -1891,6 +1913,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -1933,6 +1956,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -2431,6 +2455,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -2559,6 +2584,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -2680,6 +2706,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -3001,6 +3028,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -3129,6 +3157,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -3250,6 +3279,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -3745,6 +3775,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -3764,6 +3797,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -3781,6 +3815,9 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
               } : undefined,
           },
           update: {
@@ -3844,6 +3881,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4075,6 +4113,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -4094,6 +4135,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4114,6 +4156,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -4344,6 +4389,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4513,6 +4559,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -4532,6 +4581,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -4574,6 +4624,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5072,6 +5123,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5200,6 +5252,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5321,6 +5374,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5863,6 +5917,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -5882,6 +5939,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -5899,6 +5957,9 @@ import { removeUndefinedProps } from './utils';
             id: item.id !== undefined ? item.id : undefined,
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
+              } : undefined,
+            dependsOnId: item.dependsOnId !== undefined ? {
+                equals: item.dependsOnId
               } : undefined,
           },
           update: {
@@ -5962,6 +6023,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -6193,6 +6255,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -6212,6 +6277,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -6232,6 +6298,9 @@ import { removeUndefinedProps } from './utils';
               } : undefined,
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
+              } : undefined,
+            dependsOnId: item.action.dependsOnId !== undefined ? {
+                equals: item.action.dependsOnId
               } : undefined,
           },
           update: {
@@ -6462,6 +6531,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -6631,6 +6701,9 @@ import { removeUndefinedProps } from './utils';
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? {
                 set: item.alpacaAccount.marketOpen
               } : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.realTime
+              } : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? {
                 set: item.alpacaAccount.minOrderSize
               } : undefined,
@@ -6650,6 +6723,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -6692,6 +6766,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -7190,6 +7265,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -7318,6 +7394,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
@@ -7439,6 +7516,7 @@ import { removeUndefinedProps } from './utils';
             APISecret: item.alpacaAccount.APISecret !== undefined ? item.alpacaAccount.APISecret : undefined,
             configuration: item.alpacaAccount.configuration !== undefined ? item.alpacaAccount.configuration : undefined,
             marketOpen: item.alpacaAccount.marketOpen !== undefined ? item.alpacaAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.realTime !== undefined ? item.alpacaAccount.realTime : undefined,
             minOrderSize: item.alpacaAccount.minOrderSize !== undefined ? item.alpacaAccount.minOrderSize : undefined,
             maxOrderSize: item.alpacaAccount.maxOrderSize !== undefined ? item.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: item.alpacaAccount.minPercentageChange !== undefined ? item.alpacaAccount.minPercentageChange : undefined,
