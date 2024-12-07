@@ -14,7 +14,7 @@ generator typegraphql {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  // directUrl = env("DIRECT_DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
 }
 
 /// ### Enums
@@ -420,6 +420,24 @@ enum OptionType {
   PUT
 }
 
+// Specifies the style of an option contract (AMERICAN or EUROPEAN).
+enum OptionStyle {
+  /// An option contract that can be exercised at any time before expiration.
+  AMERICAN
+
+  /// An option contract that can only be exercised at expiration.
+  EUROPEAN
+}
+
+// Specifies the type of delivery for an option contract (CASH or EQUITY).
+enum DeliverableType {
+  /// The option contract is settled in cash.
+  CASH
+
+  /// The option contract is settled with the underlying asset.
+  EQUITY
+}
+
 enum OrderStatus {
   /// The order has been staged in Adaptic to be sent to Alpaca. This is the initial status.
   STAGED
@@ -685,8 +703,11 @@ model AlpacaAccount {
   /// JSON configuration settings for the Alpaca account.
   configuration Json?
 
-  /// Indicates whether the market is currently open for trading.
+  /// Opt-in for preparing orders for the next trading day. TYPESTRING.SKIP=true
   marketOpen Boolean @default(false)
+
+  /// Opt-in for connecting to real-time monitoring and trading. TYPESTRING.SKIP=true
+  realTime Boolean @default(false)
 
   /// Minimum order size for the account. TYPESTRING.SKIP=true
   minOrderSize Float @default(500)
@@ -733,10 +754,10 @@ model Position {
   id String @id @default(uuid()) @db.Uuid
 
   /// Reference to the associated asset. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// The average price at which the asset was acquired.
   averageEntryPrice Float
@@ -1119,7 +1140,136 @@ model Asset {
   /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   newsMentions NewsArticleAssetSentiment[]
 
+  /// List of contracts associated with this asset. TYPESTRING.SKIP=true GQL.SKIP=true
+  contracts Contract[]
+
   @@map(name: "assets")
+}
+
+// Represents an Option contract deliverable.
+model Contract {
+  /// Unique identifier for the contract. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Alpaca's unique contract identifier
+  alpacaId String @unique
+
+  /// Symbol of the contract
+  symbol String @unique
+
+  /// Name of the contract
+  name String
+
+  /// Status of the contract (active, inactive)
+  status String
+
+  /// Indicates if the contract is tradable
+  tradable Boolean
+
+  /// Expiration date of the contract
+  expirationDate DateTime
+
+  /// Root symbol of the contract
+  rootSymbol String
+
+  /// Underlying symbol of the contract
+  underlyingSymbol String
+
+  /// Unique identifier of the underlying asset
+  underlyingAssetId String
+
+  /// Type of the option (call or put)
+  type OptionType
+
+  /// Style of the option (american or european)
+  style OptionStyle
+
+  /// Strike price of the option
+  strikePrice Float
+
+  /// Multiplier of the option
+  multiplier Int
+
+  /// Size of the option
+  size Int
+
+  /// Open interest of the option
+  openInterest Int?
+
+  /// Date when the open interest was recorded
+  openInterestDate DateTime?
+
+  /// Close price of the option
+  closePrice Float?
+
+  /// Date when the close price was recorded
+  closePriceDate DateTime?
+
+  /// Deliverables associated with the contract
+  deliverables Deliverable[]
+
+  /// PPIND flag
+  ppind Boolean?
+
+  /// Relation to the Asset model
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  /// Foreign key to the Asset
+  assetId String? @db.Uuid
+
+  /// Optional relation to an order that created this contract
+  order Order? @relation
+
+  /// Foreign key to the Order
+  orderId String? @db.Uuid
+
+  /// Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map(name: "contracts")
+}
+
+// Represents a deliverable asset associated with an options contract.
+model Deliverable {
+  /// Unique identifier for the deliverable. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Type of deliverable (cash or equity)
+  type DeliverableType
+
+  /// Symbol of the deliverable
+  symbol String
+
+  /// Symbol of the deliverable's asset (if equity)
+  assetId String? @db.Uuid
+
+  /// Amount of the deliverable
+  amount Int?
+
+  /// Allocation percentage of the deliverable
+  allocationPercentage Float
+
+  /// Settlement type (e.g., T+1)
+  settlementType String
+
+  /// Settlement method (e.g., CCC)
+  settlementMethod String
+
+  /// Indicates if the settlement is delayed
+  delayedSettlement Boolean
+
+  /// Relation to the Contract model
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  /// Foreign key to the Contract
+  contractId String @db.Uuid
+
+  /// Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map(name: "deliverables")
 }
 
 // Represents a trade executed through an Alpaca account.
@@ -1131,7 +1281,7 @@ model Trade {
   alpacaAccountId String @db.Uuid
 
   /// Reference to the asset being traded. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Quantity of the asset being traded.
   qty Float
@@ -1176,7 +1326,7 @@ model Trade {
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
@@ -1213,6 +1363,14 @@ model Action {
   /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
   order Order? @relation
 
+  /// Dependent on the following action in the sequence.
+  dependsOn Action? @relation("DependentOn", fields: [dependsOnId], references: [id])
+
+  /// Foreign key referencing the dependent action. TYPESTRING.SKIP=true
+  dependsOnId String? @db.Uuid
+
+  dependedOnBy Action[] @relation("DependentOn")
+
   @@map(name: "actions")
 }
 
@@ -1228,7 +1386,7 @@ model Order {
   alpacaAccountId String @db.Uuid
 
   /// Reference to the asset being ordered. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Quantity of the asset to be ordered. Required if 'notional' is not provided. For 'MARKET' orders with 'timeInForce' set to 'DAY', 'qty' can be fractional.
   qty Float?
@@ -1306,7 +1464,7 @@ model Order {
   action Action? @relation(fields: [actionId], references: [id], onDelete: Cascade)
 
   /// The asset this order is for. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trade', 'order', 'positions', 'newsMentions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Fee associated with the order. TYPESTRING.SKIP=true
   fee Float?
@@ -1325,6 +1483,12 @@ model Order {
 
   /// Reference to the take profit order associated with this order. TYPESTRING.SKIP=true
   takeProfitId String? @db.Uuid
+
+  /// (Optional) reference to the option contract associated with this order. TYPESTRING.SKIP=true
+  contractId String? @unique @db.Uuid
+
+  /// (Optional) The option contract associated with this order. TYPESTRING.SKIP=true GQL.SKIP=true
+  contract Contract? @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   @@map(name: "orders")
 }
@@ -1472,7 +1636,7 @@ model NewsArticleAssetSentiment {
   id String @id @default(uuid()) @db.Uuid
 
   /// Reference to the associated asset. TYPESTRING.SKIP=true
-  assetId String @db.Uuid
+  assetId String? @db.Uuid
 
   /// Reference to the associated news article. TYPESTRING.SKIP=true
   newsArticleId String @db.Uuid
@@ -1484,7 +1648,7 @@ model NewsArticleAssetSentiment {
   news NewsArticle @relation(fields: [newsArticleId], references: [id])
 
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions', 'trades', 'orders', 'positions']
-  asset Asset @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Relevancy score indicating how relevant the news is to the asset.
   relevancyScore String?

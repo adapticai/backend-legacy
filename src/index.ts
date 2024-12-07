@@ -9,7 +9,9 @@ import { Alert } from './Alert';
 import { AlpacaAccount } from './AlpacaAccount';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
+import { Contract } from './Contract';
 import { Customer } from './Customer';
+import { Deliverable } from './Deliverable';
 import { EconomicEvent } from './EconomicEvent';
 import { MarketSentiment } from './MarketSentiment';
 import { NewsArticle } from './NewsArticle';
@@ -31,7 +33,9 @@ const adaptic = {
   alpacaAccount: AlpacaAccount,
   asset: Asset,
   authenticator: Authenticator,
+  contract: Contract,
   customer: Customer,
+  deliverable: Deliverable,
   economicEvent: EconomicEvent,
   marketSentiment: MarketSentiment,
   newsArticle: NewsArticle,

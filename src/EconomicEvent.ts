@@ -1,8 +1,8 @@
 
   
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -26,10 +26,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new EconomicEvent record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created EconomicEvent or null.
      */
 
-    async create(props: EconomicEventType): Promise<EconomicEventType> {
+    async create(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_ECONOMICEVENT = gql`
         mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
@@ -68,11 +71,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple EconomicEvent records.
    * @param props - Array of EconomicEvent objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
+  async createMany(props: EconomicEventType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_ECONOMICEVENT = gql`
       mutation createManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
         createManyEconomicEvent(data: $data) {
           count
@@ -107,11 +113,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single EconomicEvent record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated EconomicEvent or null.
    */
-  async update(props: EconomicEventType): Promise<EconomicEventType> {
+  async update(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
 
-      const UPDATE_ONE_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
         updateOneEconomicEvent(data: $data, where: $where) {
           ${selectionSet}
@@ -124,11 +133,6 @@ import { removeUndefinedProps } from './utils';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  date: props.date !== undefined ? props.date : undefined,
-  importance: props.importance !== undefined ? props.importance : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -172,13 +176,78 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
+   * Upsert a single EconomicEvent record.
+   * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
+   * @returns The updated EconomicEvent or null.
+   */
+  async upsert(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
+
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_ECONOMICEVENT = gql`
+      mutation upsertOneEconomicEvent($where: EconomicEventWhereUniqueInput!, $create: EconomicEventCreateInput!, $update: EconomicEventUpdateInput!) {
+        upsertOneEconomicEvent(where: $where, create: $create, update: $update) {
+          ${selectionSet}
+        }
+      }`;
+
+    const variables = {
+      where: {
+        id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
+      },
+      create: {
+    title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+      },
+      update: {
+  title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
+           } : undefined,
+  date: props.date !== undefined ? {
+            set: props.date 
+           } : undefined,
+  importance: props.importance !== undefined ? {
+            set: props.importance 
+           } : undefined,
+      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_ECONOMICEVENT, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOneEconomicEvent) {
+        return response.data.upsertOneEconomicEvent;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOneEconomicEvent:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple EconomicEvent records.
    * @param props - Array of EconomicEvent objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: EconomicEventType[]): Promise<{ count: number } | null> {
+  async updateMany(props: EconomicEventType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_ECONOMICEVENT = gql`
       mutation updateManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
         updateManyEconomicEvent(data: $data) {
           count
@@ -191,11 +260,6 @@ import { removeUndefinedProps } from './utils';
   title: prop.title !== undefined ? {
     equals: prop.title 
   } : undefined,
-  description: prop.description !== undefined ? prop.description : undefined,
-  date: prop.date !== undefined ? prop.date : undefined,
-  importance: prop.importance !== undefined ? prop.importance : undefined,
-  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
-  updatedAt: prop.updatedAt !== undefined ? prop.updatedAt : undefined,
 
       },
       data: {
@@ -244,11 +308,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single EconomicEvent record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted EconomicEvent or null.
    */
-  async delete(props: EconomicEventType): Promise<EconomicEventType> {
+  async delete(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
 
-      const DELETE_ONE_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
           ${selectionSet}
@@ -280,11 +347,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single EconomicEvent record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved EconomicEvent or null.
    */
-  async get(props: EconomicEventType): Promise<EconomicEventType | null> {
+  async get(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType | null> {
 
-      const GET_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         getEconomicEvent(where: $where) {
           ${selectionSet}
@@ -297,11 +367,6 @@ import { removeUndefinedProps } from './utils';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  date: props.date !== undefined ? props.date : undefined,
-  importance: props.importance !== undefined ? props.importance : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -322,11 +387,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all EconomicEvents records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of EconomicEvent records or null.
    */
-  async getAll(): Promise<EconomicEventType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<EconomicEventType[] | null> {
 
-      const GET_ALL_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
         economicEvents {
           ${selectionSet}
@@ -350,11 +418,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple EconomicEvent records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found EconomicEvent records or null.
    */
-  async findMany(props: EconomicEventType): Promise<EconomicEventType[] | null> {
+  async findMany(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType[] | null> {
 
-      const FIND_MANY_ECONOMICEVENT = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {
         economicEvents(where: $where) {
           ${selectionSet}
@@ -369,11 +440,6 @@ import { removeUndefinedProps } from './utils';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  date: props.date !== undefined ? props.date : undefined,
-  importance: props.importance !== undefined ? props.importance : undefined,
-  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
-  updatedAt: props.updatedAt !== undefined ? props.updatedAt : undefined,
       },
     };
 

@@ -13,12 +13,12 @@
   ],
   "scripts": {
     "clean": "rm -rf dist && rm -rf src/generated",
-    "dev": "npm run migrate:dev && npm run fix-imports && nodemon --exec ts-node src/server.ts",
+    "dev": "npm run migrate:dev && nodemon --exec ts-node src/server.ts",
     "build": "npm run clean && npm run generate && npm run fix-imports && npm run generate:selections && npm run generate:functions && npm run generate:strings && tsc && npm run build:server",
     "build:server": "tsc --project tsconfig.server.json",
     "build:package": "npm run build && npm run prepare-package-folder",
     "start": "npm run migrate && node dist/server.js",
-    "generate": "npx prisma generate",
+    "generate": "SKIP_PRISMA_VERSION_CHECK=true npx prisma generate",
     "migrate:dev": "npx prisma migrate dev && npm run migrate",
     "migrate": "npx prisma migrate deploy",
     "update-backend-functions": "node update-backend-functions.mjs",
@@ -46,11 +46,11 @@
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.10.4",
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^6.0.0",
     "@prisma/extension-accelerate": "^1.2.1",
     "@prisma/extension-pulse": "^1.2.0",
-    "@prisma/generator-helper": "^5.18.0",
-    "@prisma/internals": "^5.18.0",
+    "@prisma/generator-helper": "^6.0.0",
+    "@prisma/internals": "^6.0.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "cross-fetch": "^4.0.0",
@@ -61,7 +61,7 @@
     "graphql-ws": "^5.16.0",
     "jsonwebtoken": "^9.0.2",
     "pluralize": "^8.0.0",
-    "prisma": "^5.22.0",
+    "prisma": "^6.0.0",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
     "typegraphql-prisma": "^0.28.0",
@@ -69,6 +69,10 @@
   },
   "optionalDependencies": {
     "@aws-sdk/client-lambda": "^3.624.0"
+  },
+  "overrides": {
+    "@prisma/client": "^6.0.0",
+    "prisma": "^6.0.0"
   },
   "engines": {
     "node": ">=20.0.0"

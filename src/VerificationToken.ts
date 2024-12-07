@@ -1,8 +1,8 @@
 
   
 import { VerificationToken as VerificationTokenType } from './generated/typegraphql-prisma/models/VerificationToken';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -23,10 +23,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new VerificationToken record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created VerificationToken or null.
      */
 
-    async create(props: VerificationTokenType): Promise<VerificationTokenType> {
+    async create(props: VerificationTokenType, globalClient?: ApolloClient<any>): Promise<VerificationTokenType> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_VERIFICATIONTOKEN = gql`
         mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
@@ -64,11 +67,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple VerificationToken records.
    * @param props - Array of VerificationToken objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
+  async createMany(props: VerificationTokenType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_VERIFICATIONTOKEN = gql`
       mutation createManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
         createManyVerificationToken(data: $data) {
           count
@@ -102,11 +108,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Update a single VerificationToken record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated VerificationToken or null.
    */
-  async update(props: VerificationTokenType): Promise<VerificationTokenType> {
+  async update(props: VerificationTokenType, globalClient?: ApolloClient<any>): Promise<VerificationTokenType> {
 
-      const UPDATE_ONE_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
         updateOneVerificationToken(data: $data, where: $where) {
           ${selectionSet}
@@ -116,9 +125,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  token: props.token !== undefined ? props.token : undefined,
-  identifier: props.identifier !== undefined ? props.identifier : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
       },
       data: {
   id: props.id !== undefined ? {
@@ -153,13 +159,71 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
+   * Upsert a single VerificationToken record.
+   * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
+   * @returns The updated VerificationToken or null.
+   */
+  async upsert(props: VerificationTokenType, globalClient?: ApolloClient<any>): Promise<VerificationTokenType> {
+
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_VERIFICATIONTOKEN = gql`
+      mutation upsertOneVerificationToken($where: VerificationTokenWhereUniqueInput!, $create: VerificationTokenCreateInput!, $update: VerificationTokenUpdateInput!) {
+        upsertOneVerificationToken(where: $where, create: $create, update: $update) {
+          ${selectionSet}
+        }
+      }`;
+
+    const variables = {
+      where: {
+        id: props.id !== undefined ? props.id : undefined,
+      },
+      create: {
+    identifier: props.identifier !== undefined ? props.identifier : undefined,
+  token: props.token !== undefined ? props.token : undefined,
+  expires: props.expires !== undefined ? props.expires : undefined,
+      },
+      update: {
+  identifier: props.identifier !== undefined ? {
+            set: props.identifier 
+           } : undefined,
+  token: props.token !== undefined ? {
+            set: props.token 
+           } : undefined,
+  expires: props.expires !== undefined ? {
+            set: props.expires 
+           } : undefined,
+      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_VERIFICATIONTOKEN, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOneVerificationToken) {
+        return response.data.upsertOneVerificationToken;
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOneVerificationToken:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple VerificationToken records.
    * @param props - Array of VerificationToken objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: VerificationTokenType[]): Promise<{ count: number } | null> {
+  async updateMany(props: VerificationTokenType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_VERIFICATIONTOKEN = gql`
       mutation updateManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
         updateManyVerificationToken(data: $data) {
           count
@@ -169,9 +233,6 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  token: prop.token !== undefined ? prop.token : undefined,
-  identifier: prop.identifier !== undefined ? prop.identifier : undefined,
-  expires: prop.expires !== undefined ? prop.expires : undefined,
 
       },
       data: {
@@ -211,11 +272,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Delete a single VerificationToken record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted VerificationToken or null.
    */
-  async delete(props: VerificationTokenType): Promise<VerificationTokenType> {
+  async delete(props: VerificationTokenType, globalClient?: ApolloClient<any>): Promise<VerificationTokenType> {
 
-      const DELETE_ONE_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
           ${selectionSet}
@@ -247,11 +311,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Retrieve a single VerificationToken record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved VerificationToken or null.
    */
-  async get(props: VerificationTokenType): Promise<VerificationTokenType | null> {
+  async get(props: VerificationTokenType, globalClient?: ApolloClient<any>): Promise<VerificationTokenType | null> {
 
-      const GET_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         getVerificationToken(where: $where) {
           ${selectionSet}
@@ -261,9 +328,6 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  token: props.token !== undefined ? props.token : undefined,
-  identifier: props.identifier !== undefined ? props.identifier : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
@@ -284,11 +348,14 @@ import { removeUndefinedProps } from './utils';
 
   /**
    * Retrieve all VerificationTokens records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of VerificationToken records or null.
    */
-  async getAll(): Promise<VerificationTokenType[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<VerificationTokenType[] | null> {
 
-      const GET_ALL_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
         verificationTokens {
           ${selectionSet}
@@ -312,11 +379,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Find multiple VerificationToken records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found VerificationToken records or null.
    */
-  async findMany(props: VerificationTokenType): Promise<VerificationTokenType[] | null> {
+  async findMany(props: VerificationTokenType, globalClient?: ApolloClient<any>): Promise<VerificationTokenType[] | null> {
 
-      const FIND_MANY_VERIFICATIONTOKEN = gql`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {
         verificationTokens(where: $where) {
           ${selectionSet}
@@ -328,9 +398,6 @@ import { removeUndefinedProps } from './utils';
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  identifier: props.identifier !== undefined ? props.identifier : undefined,
-  token: props.token !== undefined ? props.token : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
       },
     };
 

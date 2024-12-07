@@ -8,7 +8,7 @@ import { selectionSets } from '../generated/selectionSets';
 
 type ModelName = keyof typeof selectionSets;
 
-type OperationType = 'create' | 'createMany' | 'update' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
+type OperationType = 'create' | 'createMany' | 'update' | 'updateWithoutId' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
 
 
 /**
@@ -62,6 +62,14 @@ const constructVariablesObject = (
       return;
     }
 
+    // Skip meta fields during updateWithoutId operations
+    if (
+      operationType === 'updateWithoutId' &&
+      ['id', 'createdAt', 'updatedAt'].includes(field.name)
+    ) {
+      return;
+    }
+
     let accessor = `${propsAccessor}.${field.name}`;
 
     switch (operationType) {
@@ -79,6 +87,7 @@ const constructVariablesObject = (
       case 'update':
       case 'updateMany':
       case 'upsert':
+      case 'updateWithoutId':
         variablesObject += handleUpdateOperation(
           field,
           accessor,
@@ -260,6 +269,7 @@ const handleUpdateOperation = (
     return '';
   }
 
+  // Scalar or updatable fields:
   if (field.type.isScalar && field.type.isFieldUpdate || field.type.isFieldUpdate) {
     return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}          set: ${accessor} \n ${indent}        } : undefined,\n`;
   } else {
@@ -311,15 +321,31 @@ const handleUpdateOperation = (
     const createInputTypePath = path.join(inputsPath || '', `${createInputTypeName}.ts`);
     const createFields = getInputTypeDefinition(createInputTypePath);
 
-
-    if (updateFields.length === 0 || !updateFields || createFields.length === 0 || !createFields || !whereFields || whereFields.length === 0) {
+    if (
+      !updateFields || updateFields.length === 0 ||
+      !createFields || createFields.length === 0 ||
+      !whereFields || whereFields.length === 0
+    ) {
       console.warn(`No fields found in update input type: ${updateInputTypePath}`);
       return '';
     }
 
+    // Dynamic handling for cases where accessor is {id: ...} only or array of such objects:
+    const singleIdCondition = `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'`;
+    const arrayOfIdCondition = `Array.isArray(${accessor}) && ${accessor}.length > 0 && ${accessor}.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1)`;
+
     const openingLine = field.type.isList
-      ? `${operationFieldName}: ${accessor}.map((item: any) => ({\n`
-      : `${operationFieldName}: {\n`;
+      ? `${arrayOfIdCondition} ? {
+${indent}connect: ${accessor}.map((item: any) => ({
+${indent}  id: item.id
+${indent}}))
+} : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
+      : `${singleIdCondition}
+? {
+${indent}connect: {
+${indent}  id: ${accessor}.id
+${indent}}
+} : { ${operationFieldName}: {\n`;
 
     const closingLine = field.type.isList ? `${indent}  }))\n` : `${indent}  }\n`;
 
@@ -328,15 +354,15 @@ const handleUpdateOperation = (
     }
 
     let code =
-      `${indent}${field.name}: ${accessor} ? {\n` +
-      `${indent}  ${openingLine}` +
+      `${indent}${field.name}: ${accessor} ? \n` +
+      `${indent}${openingLine}` +
       `${indent}    where: {\n` +
       whereFields
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
             const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
             if (isUniqueField(whereField.name) && (whereField.type.isScalar && whereField.type.isFilterObject || whereField.type.isFilterObject)) {
-              return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
+              return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (isUniqueField(whereField.name) && whereField.type.isScalar) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
@@ -346,28 +372,27 @@ const handleUpdateOperation = (
               return `${handleUpdateOperation(whereField, nestedAccessor, inputsPath, modelsPath, depth + 1, maxDepth)}`;
             }
           }
+          return '';
         })
         .join('') +
-      `${indent}    },\n`
+      `${indent}    },\n`;
 
     if (operationFieldName === 'upsert' && updateFields && updateFields.length > 0) {
       if (depth + 2 >= maxDepth) {
         return '';
       }
       code +=
-        `${indent}    ${operationFieldName === 'upsert' ? 'update' : 'data'}: {\n` +
+        `${indent}    update: {\n` +
         updateFields
           .map((updateField) => {
             const nestedAccessor = field.type.isList ? `item.${updateField.name}` : `${accessor}.${updateField.name}`;
             if (updateField.type.isScalar) {
-              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}  \n ${indent}        } : undefined,\n`;
+              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (updateField.type.isFieldUpdate) {
-
-              // skip meta fields
               if (['id', 'createdAt', 'updatedAt'].includes(updateField.name)) {
                 return '';
               }
-              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}  \n ${indent}        } : undefined,\n`;
+              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (updateField.type.isNullable) {
               if (depth + 2 >= maxDepth) {
                 return '';
@@ -410,11 +435,12 @@ const handleUpdateOperation = (
         `${indent}    },\n`;
     }
 
-    code += `${closingLine}` + `${indent}} : undefined,\n`;
+    code += `${closingLine}${indent}} : undefined,\n`;
 
     return code;
   }
 };
+
 
 /**
  * Generates the JSON object string for the 'where' field in a GraphQL query.
@@ -446,9 +472,11 @@ const handleWhereOperation = (
     // Check if the scalar field requires an "equals" wrapper
     if (field.type.isFilterObject && isUniqueField(field.name)) {
       return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  equals: ${accessor} \n${indent}} : undefined,\n`;
-    } else {
+    } else if (isUniqueField(field.name)) {
       // Handle regular scalar fields without "equals" wrapper
       return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+    } else {
+      return '';
     }
   } else {
     // Handle relational fields
@@ -545,7 +573,7 @@ const isUniqueField = (name: string): boolean => {
   }
 
   // return true if the field matches any of the unique fields
-  const uniqueFields = ['id', 'email', 'username', 'slug', 'name', 'title', 'url', 'key', 'handle', 'symbol'];
+  const uniqueFields = ['id', 'email', 'username', 'slug', 'name', 'title', 'url', 'key', 'handle', 'symbol', 'clientOrderId'];
   return uniqueFields.includes(name);
 };
 
@@ -589,8 +617,8 @@ export const generateModelFunctions = (
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
-import { ApolloError, gql } from '@apollo/client';
-import { client } from './client';
+import { ApolloClient, ApolloError, gql } from '@apollo/client';
+import { client as importedClient } from './client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -609,10 +637,13 @@ import { removeUndefinedProps } from './utils';
     /**
      * Create a new ${capitalModelName} record.
      * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
      * @returns The created ${capitalModelName} or null.
      */
 
-    async create(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+    async create(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+
+    const client = globalClient || importedClient;
 
     const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
         mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
@@ -654,11 +685,14 @@ import { removeUndefinedProps } from './utils';
   /**
    * Create multiple ${capitalModelName} records.
    * @param props - Array of ${capitalModelName} objects for the new records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
+  async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
         createMany${capitalModelName}(data: $data) {
           count
@@ -696,11 +730,14 @@ ${constructVariablesObject(
   /**
    * Update a single ${capitalModelName} record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
-  async update(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+  async update(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
 
-      const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
         updateOne${capitalModelName}(data: $data, where: $where) {
           \${selectionSet}
@@ -745,13 +782,79 @@ ${constructVariablesObject(
   },
 
   /**
+   * Upsert a single ${capitalModelName} record.
+   * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
+   * @returns The updated ${capitalModelName} or null.
+   */
+  async upsert(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+
+    const client = globalClient || importedClient;
+
+    const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
+      mutation upsertOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!, $create: ${capitalModelName}CreateInput!, $update: ${capitalModelName}UpdateInput!) {
+        upsertOne${capitalModelName}(where: $where, create: $create, update: $update) {
+          \${selectionSet}
+        }
+      }\`;
+
+    const variables = {
+      where: {
+      ${constructVariablesObject(
+    'props',
+    inputTypePaths.whereUnique,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'where'
+  )}      },
+      create: {
+  ${constructVariablesObject(
+    'props',
+    inputTypePaths.create,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'create'
+  )}      },
+      update: {
+${constructVariablesObject(
+    'props',
+    inputTypePaths.update,
+    capitalModelName,
+    inputsPath,
+    modelsPath,
+    'updateWithoutId'
+  )}      },
+    };
+
+    const filteredVariables = removeUndefinedProps(variables);
+
+    try {
+      const response = await client.mutate({ mutation: UPSERT_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
+      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+      if (response && response.data && response.data.upsertOne${capitalModelName}) {
+        return response.data.upsertOne${capitalModelName};
+      } else {
+        return null as any;
+      }
+    } catch (error) {
+      console.error('Error in upsertOne${capitalModelName}:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Update multiple ${capitalModelName} records.
    * @param props - Array of ${capitalModelName} objects for the updated records.
+   * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ${capitalModelName}Type[]): Promise<{ count: number } | null> {
+  async updateMany(props: ${capitalModelName}Type[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
 
-      const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation updateMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
         updateMany${capitalModelName}(data: $data) {
           count
@@ -801,11 +904,14 @@ ${constructVariablesObject(
   /**
    * Delete a single ${capitalModelName} record.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
-  async delete(props: ${capitalModelName}Type): Promise<${capitalModelName}Type> {
+  async delete(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
 
-      const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
           \${selectionSet}
@@ -837,11 +943,14 @@ ${constructVariablesObject(
   /**
    * Retrieve a single ${capitalModelName} record by ID.
    * @param props - Properties to update.
+   * @param globalClient - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type): Promise<${capitalModelName}Type | null> {
+  async get(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type | null> {
 
-      const GET_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         get${capitalModelName}(where: $where) {
           \${selectionSet}
@@ -877,11 +986,14 @@ ${constructVariablesObject(
 
   /**
    * Retrieve all ${pluralModelName} records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of ${capitalModelName} records or null.
    */
-  async getAll(): Promise<${capitalModelName}Type[] | null> {
+  async getAll(globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type[] | null> {
 
-      const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
         ${lowerCaseFirstLetter(pluralModelName)} {
           \${selectionSet}
@@ -905,11 +1017,14 @@ ${constructVariablesObject(
   /**
    * Find multiple ${capitalModelName} records based on conditions.
    * @param props - Conditions to find records.
+   * @param globalClient - Apollo Client instance.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type): Promise<${capitalModelName}Type[] | null> {
+  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type[] | null> {
 
-      const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
+    const client = globalClient || importedClient;
+
+    const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
         ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
           \${selectionSet}
