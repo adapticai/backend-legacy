@@ -27,15 +27,33 @@ const SCALAR_TYPE_MAP: { [key: string]: string } = {
   Json: 'any',
 };
 
-const prismaFieldToTsType = (field: DMMF.Field, includedEnums: Set<string>): string => {
-  if (field.kind === 'scalar') {
-    return SCALAR_TYPE_MAP[field.type] || 'any';
-  } else if (field.kind === 'enum') {
+function schemaEnumToDatamodelEnum(se: DMMF.SchemaEnum): DMMF.DatamodelEnum {
+  return {
+    name: se.name,
+    values: se.values.map((v) => ({ name: v, dbName: null })),
+  };
+}
+
+const prismaFieldToTsType = (
+  field: DMMF.Field,
+  includedEnums: Set<string>,
+  enumsMap: Map<string, DMMF.DatamodelEnum>
+): string => {
+  // If field is recognized as an enum or if enumsMap contains its type, treat it as enum
+  if (field.kind === 'enum' || enumsMap.has(field.type)) {
     includedEnums.add(field.type);
     return field.type;
-  } else if (field.kind === 'object') {
+  }
+
+  // Otherwise, handle scalars or objects
+  if (field.kind === 'scalar') {
+    return SCALAR_TYPE_MAP[field.type] || 'any';
+  }
+
+  if (field.kind === 'object') {
     return field.type;
   }
+
   return 'any';
 };
 
@@ -76,15 +94,10 @@ const parseMetaTags = (documentation?: string): { meta: { [key: string]: any }; 
   return { meta, description };
 };
 
-const generateEnumDeclarations = (
-  enums: DMMF.DatamodelEnum[],
-  declaredEnums: Set<string>
-): string => {
+const generateEnumDeclarations = (enums: DMMF.DatamodelEnum[]): string => {
   let enumDeclarations = '';
 
   for (const enumObj of enums) {
-    if (declaredEnums.has(enumObj.name)) continue;
-
     // Add enum documentation if available
     const enumDescription = enumObj.documentation
       ? `// ${enumObj.documentation}\n`
@@ -93,20 +106,15 @@ const generateEnumDeclarations = (
     // Process each enum member
     const values = enumObj.values
       .map((v) => {
-        // Add inline annotation for the enum member if documentation exists
         const valueDocumentation = 'documentation' in v && v.documentation
           ? `  /// ${v.documentation}\n`
           : '';
-        // Return the enum member without the `= "xxx"` syntax
         return `${valueDocumentation}  ${v.name}`;
       })
       .join('\n\n');
 
     // Combine enum documentation and members
     enumDeclarations += `${enumDescription}enum ${enumObj.name} {\n${values}\n}\n\n`;
-
-    // Mark this enum as declared
-    declaredEnums.add(enumObj.name);
   }
 
   return enumDeclarations;
@@ -142,7 +150,6 @@ const generateTypeString = (
   const indent = (level: number) => '  '.repeat(level);
   const fieldsDeclarations: string[] = [];
 
-  // Determine which fields to process based on specificIncludeFields or all fields
   const fieldsToProcess = specificIncludeFields
     ? model.fields.filter(f => specificIncludeFields.includes(f.name))
     : model.fields;
@@ -151,14 +158,10 @@ const generateTypeString = (
     if (shouldExcludeField(field.name)) continue;
 
     const { meta: metaTags, description } = parseMetaTags(field.documentation);
-
-    // Determine if the field should be processed
     const shouldProcess = shouldProcessField(field, metaTags);
 
-    // Skip if explicitly marked to skip and not marked for processing
     if (metaTags['TYPESTRING.SKIP'] === true && !shouldProcess) continue;
 
-    // Get included fields if specified
     const includeFields = metaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
 
     const isOptional = field.isRequired ? '' : '?';
@@ -170,11 +173,10 @@ const generateTypeString = (
       : '';
 
     if (field.kind === 'scalar') {
-      tsType = prismaFieldToTsType(field, includedEnums);
+      tsType = prismaFieldToTsType(field, includedEnums, enums);
     } else if (field.kind === 'enum') {
-      tsType = prismaFieldToTsType(field, includedEnums);
+      tsType = prismaFieldToTsType(field, includedEnums, enums);
     } else if (field.kind === 'object') {
-      // Prevent infinite recursion by checking ancestors
       if (ancestors.has(field.type)) {
         const singularTypeName = field.type;
         const pluralTypeName = pluralize(field.type);
@@ -195,18 +197,14 @@ const generateTypeString = (
           let nestedType: string;
 
           if (includeFields && includeFields.length > 0) {
-            // If includeFields is specified on the field, process only those fields
             nestedType = `{\n${includeFields
               .map((f) => {
                 const nestedField = relatedModel.fields.find((nf) => nf.name === f);
                 if (!nestedField) return '';
 
                 const { meta: nestedMetaTags, description: nestedDescription } = parseMetaTags(nestedField.documentation);
-
-                // Determine if the nested field should be processed
                 const nestedShouldProcess = shouldProcessField(nestedField, nestedMetaTags);
 
-                // Skip if explicitly marked to skip and not marked for processing
                 if (nestedMetaTags['TYPESTRING.SKIP'] === true && !nestedShouldProcess) return '';
 
                 const nestedIsOptional = nestedField.isRequired ? '' : '?';
@@ -218,9 +216,9 @@ const generateTypeString = (
                   : '';
 
                 if (nestedField.kind === 'scalar') {
-                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums);
+                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums, enums);
                 } else if (nestedField.kind === 'enum') {
-                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums);
+                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums, enums);
                 } else if (nestedField.kind === 'object') {
                   if (ancestors.has(nestedField.type)) {
                     console.log(
@@ -230,7 +228,6 @@ const generateTypeString = (
                   } else {
                     const deeperRelatedModel = models.get(nestedField.type);
                     if (deeperRelatedModel) {
-                      // When processing the nested object field, pass its own includeFields
                       const deeperIncludeFields = nestedMetaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
                       nestedTsType = generateTypeString(
                         deeperRelatedModel,
@@ -252,10 +249,9 @@ const generateTypeString = (
 
                 return `${nestedFieldDescription}${indent(indentLevel + 2)}${nestedField.name}${nestedIsOptional}: ${nestedTsType}${nestedIsArray};`;
               })
-              .filter(line => line !== '') // Remove empty lines
+              .filter(line => line !== '')
               .join('\n')}\n${indent(indentLevel + 1)}}`;
           } else {
-            // Fully resolve the nested type
             nestedType = generateTypeString(
               relatedModel,
               models,
@@ -287,7 +283,6 @@ const generateTypeString = (
   return `{\n${fieldsDeclarations.join('\n')}\n${indent(indentLevel)}}`;
 };
 
-// Helper function to determine if a field should be processed
 const shouldProcessField = (
   field: DMMF.Field,
   metaTags: { [key: string]: any }
@@ -295,7 +290,6 @@ const shouldProcessField = (
   if (metaTags['TYPESTRING.SKIP'] === true) {
     return false;
   }
-  // Allow processing if INCLUDE is present
   if (metaTags['TYPESTRING.INCLUDE']) {
     return true;
   }
@@ -307,10 +301,8 @@ const shouldProcessField = (
 
 const generateTypeStrings = async () => {
   try {
-    // Ensure the output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
-    // Clear existing files except index.ts
     const files = await fs.readdir(OUTPUT_DIR);
     for (const file of files) {
       if (file !== 'index.ts') {
@@ -318,23 +310,24 @@ const generateTypeStrings = async () => {
       }
     }
 
-    // Read and parse the Prisma schema
     const schema = await fs.readFile(SCHEMA_PATH, 'utf-8');
     const dmmf = await getDMMF({ datamodel: schema });
 
-    const enumsMap = new Map(dmmf.datamodel.enums.map((e) => [e.name, e]));
+    const allEnums = [
+      ...dmmf.datamodel.enums,
+      ...((dmmf.schema.enumTypes.prisma ?? []).map(schemaEnumToDatamodelEnum)),
+      ...((dmmf.schema.enumTypes.model ?? []).map(schemaEnumToDatamodelEnum))
+    ];
+
+    const enumsMap = new Map(allEnums.map((e) => [e.name, e]));
     const models = new Map(dmmf.datamodel.models.map((m) => [m.name, m]));
 
     const exportStatements: string[] = [];
-
-    // Global set to track declared enums across all models to prevent duplicates
-    const declaredEnums = new Set<string>();
 
     for (const [modelName, model] of models) {
       const includedEnums = new Set<string>();
       const ancestors = new Set<string>();
 
-      // Instruction line can be adjusted or removed based on your specific use case
       const instructionLine = `// Your response should adhere to the following type definition for the "${model.name}" type.\n// Importantly, DO NOT include any annotations in your response (i.e., remove the ones we have provided for your reference below).\n\n`;
 
       const typeBody = generateTypeString(
@@ -349,11 +342,9 @@ const generateTypeStrings = async () => {
 
       const typeDeclaration = `export type ${model.name} = ${typeBody};\n\n`;
 
-      // Generate enums for this model, ensuring no duplicates across models
-      const enumDeclarations = generateEnumDeclarations(
-        Array.from(includedEnums).map((name) => enumsMap.get(name)!),
-        declaredEnums
-      );
+      // Retrieve the enums for this model
+      const modelEnums = Array.from(includedEnums).map((name) => enumsMap.get(name) as DMMF.DatamodelEnum);
+      const enumDeclarations = generateEnumDeclarations(modelEnums);
 
       const typeString = instructionLine + typeDeclaration + enumDeclarations;
 
@@ -374,7 +365,6 @@ const generateTypeStrings = async () => {
       exportStatements.push(`  ${exportName}: ${constName},`);
     }
 
-    // Generate index.ts to export all type strings
     const indexContent =
       Array.from(models.keys())
         .map((modelName) => `import { ${modelName}TypeString } from './${modelName}';`)
