@@ -159,13 +159,8 @@ id
       note
       status
       fee
-      dependsOn {
-id
-      }
-      dependsOnId
-      dependedOnBy {
-id
-      }
+      dependsOn
+      dependedOnBy
     }
     asset {
       id
@@ -451,6 +446,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -580,6 +577,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -973,6 +972,8 @@ id
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? props.order.action.dependsOn : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? props.order.action.dependedOnBy : undefined,
       trade: props.order.action.trade ? 
         typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -1000,50 +1001,6 @@ id
             status: props.order.action.trade.status !== undefined ? props.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-        typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: props.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? props.order.action.dependsOn.id : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-        Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 &&  props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -1796,9 +1753,6 @@ id
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -1819,6 +1773,12 @@ id
             fee: item.fee !== undefined ? {
                 set: item.fee
               } : undefined,
+            dependsOn: item.dependsOn !== undefined ? {
+                set: item.dependsOn
+              } : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? {
+                set: item.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -1826,6 +1786,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -1888,6 +1850,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -2137,9 +2101,6 @@ id
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
               } : undefined,
-            dependsOnId: item.action.dependsOnId !== undefined ? {
-                equals: item.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.action.id !== undefined ? {
@@ -2160,6 +2121,12 @@ id
             fee: item.action.fee !== undefined ? {
                 set: item.action.fee
               } : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? {
+                set: item.action.dependsOn
+              } : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? {
+                set: item.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -2167,6 +2134,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -2396,6 +2365,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -2894,6 +2865,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -3023,6 +2996,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -3802,9 +3777,6 @@ id
           tradeId: props.order.action.tradeId !== undefined ? {
               equals: props.order.action.tradeId
             } : undefined,
-          dependsOnId: props.order.action.dependsOnId !== undefined ? {
-              equals: props.order.action.dependsOnId
-            } : undefined,
         },
         update: {
           id: props.order.action.id !== undefined ? {
@@ -3824,6 +3796,12 @@ id
             } : undefined,
           fee: props.order.action.fee !== undefined ? {
               set: props.order.action.fee
+            } : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? {
+              set: props.order.action.dependsOn
+            } : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? {
+              set: props.order.action.dependedOnBy
             } : undefined,
       trade: props.order.action.trade ? 
       typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
@@ -3896,97 +3874,6 @@ id
           },
         }
       } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-      typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-? {
-      connect: {
-        id: props.order.action.dependsOn.id
-      }
-} : { upsert: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? {
-                equals: props.order.action.dependsOn.id
-              } : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId
-              } : undefined,
-            dependsOnId: props.order.action.dependsOn.dependsOnId !== undefined ? {
-                equals: props.order.action.dependsOn.dependsOnId
-              } : undefined,
-          },
-          update: {
-            id: props.order.action.dependsOn.id !== undefined ? {
-                set: props.order.action.dependsOn.id
-              } : undefined,
-            sequence: props.order.action.dependsOn.sequence !== undefined ? {
-                set: props.order.action.dependsOn.sequence
-              } : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? {
-                set: props.order.action.dependsOn.type
-              } : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? {
-                set: props.order.action.dependsOn.note
-              } : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? {
-                set: props.order.action.dependsOn.status
-              } : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? {
-                set: props.order.action.dependsOn.fee
-              } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-      Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 && props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect: props.order.action.dependedOnBy.map((item: any) => ({
-        id: item.id
-      }))
-} : { upsert: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId
-              } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id
-              } : undefined,
-            sequence: item.sequence !== undefined ? {
-                set: item.sequence
-              } : undefined,
-            type: item.type !== undefined ? {
-                set: item.type
-              } : undefined,
-            note: item.note !== undefined ? {
-                set: item.note
-              } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status
-              } : undefined,
-            fee: item.fee !== undefined ? {
-                set: item.fee
-              } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
@@ -3994,6 +3881,8 @@ id
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? props.order.action.dependsOn : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? props.order.action.dependedOnBy : undefined,
       trade: props.order.action.trade ? 
         typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -4021,50 +3910,6 @@ id
             status: props.order.action.trade.status !== undefined ? props.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-        typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: props.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? props.order.action.dependsOn.id : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-        Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 &&  props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -4955,6 +4800,8 @@ id
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? props.order.action.dependsOn : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? props.order.action.dependedOnBy : undefined,
       trade: props.order.action.trade ? 
         typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -4982,50 +4829,6 @@ id
             status: props.order.action.trade.status !== undefined ? props.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-        typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: props.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? props.order.action.dependsOn.id : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-        Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 &&  props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -5463,6 +5266,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -5592,6 +5397,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -5985,6 +5792,8 @@ id
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? props.order.action.dependsOn : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? props.order.action.dependedOnBy : undefined,
       trade: props.order.action.trade ? 
         typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -6012,50 +5821,6 @@ id
             status: props.order.action.trade.status !== undefined ? props.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-        typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: props.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? props.order.action.dependsOn.id : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-        Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 &&  props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -6692,9 +6457,6 @@ id
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -6715,6 +6477,12 @@ id
             fee: item.fee !== undefined ? {
                 set: item.fee
               } : undefined,
+            dependsOn: item.dependsOn !== undefined ? {
+                set: item.dependsOn
+              } : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? {
+                set: item.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -6722,6 +6490,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -6784,6 +6554,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -7033,9 +6805,6 @@ id
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
               } : undefined,
-            dependsOnId: item.action.dependsOnId !== undefined ? {
-                equals: item.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.action.id !== undefined ? {
@@ -7056,6 +6825,12 @@ id
             fee: item.action.fee !== undefined ? {
                 set: item.action.fee
               } : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? {
+                set: item.action.dependsOn
+              } : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? {
+                set: item.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -7063,6 +6838,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -7292,6 +7069,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -7790,6 +7569,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -7919,6 +7700,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -8698,9 +8481,6 @@ id
           tradeId: props.order.action.tradeId !== undefined ? {
               equals: props.order.action.tradeId
             } : undefined,
-          dependsOnId: props.order.action.dependsOnId !== undefined ? {
-              equals: props.order.action.dependsOnId
-            } : undefined,
         },
         update: {
           id: props.order.action.id !== undefined ? {
@@ -8720,6 +8500,12 @@ id
             } : undefined,
           fee: props.order.action.fee !== undefined ? {
               set: props.order.action.fee
+            } : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? {
+              set: props.order.action.dependsOn
+            } : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? {
+              set: props.order.action.dependedOnBy
             } : undefined,
       trade: props.order.action.trade ? 
       typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
@@ -8792,97 +8578,6 @@ id
           },
         }
       } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-      typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-? {
-      connect: {
-        id: props.order.action.dependsOn.id
-      }
-} : { upsert: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? {
-                equals: props.order.action.dependsOn.id
-              } : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId
-              } : undefined,
-            dependsOnId: props.order.action.dependsOn.dependsOnId !== undefined ? {
-                equals: props.order.action.dependsOn.dependsOnId
-              } : undefined,
-          },
-          update: {
-            id: props.order.action.dependsOn.id !== undefined ? {
-                set: props.order.action.dependsOn.id
-              } : undefined,
-            sequence: props.order.action.dependsOn.sequence !== undefined ? {
-                set: props.order.action.dependsOn.sequence
-              } : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? {
-                set: props.order.action.dependsOn.type
-              } : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? {
-                set: props.order.action.dependsOn.note
-              } : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? {
-                set: props.order.action.dependsOn.status
-              } : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? {
-                set: props.order.action.dependsOn.fee
-              } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-      Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 && props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect: props.order.action.dependedOnBy.map((item: any) => ({
-        id: item.id
-      }))
-} : { upsert: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId
-              } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id
-              } : undefined,
-            sequence: item.sequence !== undefined ? {
-                set: item.sequence
-              } : undefined,
-            type: item.type !== undefined ? {
-                set: item.type
-              } : undefined,
-            note: item.note !== undefined ? {
-                set: item.note
-              } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status
-              } : undefined,
-            fee: item.fee !== undefined ? {
-                set: item.fee
-              } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
@@ -8890,6 +8585,8 @@ id
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? props.order.action.dependsOn : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? props.order.action.dependedOnBy : undefined,
       trade: props.order.action.trade ? 
         typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -8917,50 +8614,6 @@ id
             status: props.order.action.trade.status !== undefined ? props.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-        typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: props.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? props.order.action.dependsOn.id : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-        Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 &&  props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -9851,6 +9504,8 @@ id
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
+          dependsOn: props.order.action.dependsOn !== undefined ? props.order.action.dependsOn : undefined,
+          dependedOnBy: props.order.action.dependedOnBy !== undefined ? props.order.action.dependedOnBy : undefined,
       trade: props.order.action.trade ? 
         typeof props.order.action.trade === 'object' && Object.keys(props.order.action.trade).length === 1 && Object.keys(props.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -9878,50 +9533,6 @@ id
             status: props.order.action.trade.status !== undefined ? props.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: props.order.action.dependsOn ? 
-        typeof props.order.action.dependsOn === 'object' && Object.keys(props.order.action.dependsOn).length === 1 && Object.keys(props.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: props.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: props.order.action.dependsOn.id !== undefined ? props.order.action.dependsOn.id : undefined,
-            tradeId: props.order.action.dependsOn.tradeId !== undefined ? {
-                equals: props.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: props.order.action.dependsOn.sequence !== undefined ? props.order.action.dependsOn.sequence : undefined,
-            type: props.order.action.dependsOn.type !== undefined ? props.order.action.dependsOn.type : undefined,
-            note: props.order.action.dependsOn.note !== undefined ? props.order.action.dependsOn.note : undefined,
-            status: props.order.action.dependsOn.status !== undefined ? props.order.action.dependsOn.status : undefined,
-            fee: props.order.action.dependsOn.fee !== undefined ? props.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: props.order.action.dependedOnBy ? 
-        Array.isArray(props.order.action.dependedOnBy) && props.order.action.dependedOnBy.length > 0 &&  props.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: props.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -10615,9 +10226,6 @@ id
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -10638,6 +10246,12 @@ id
             fee: item.fee !== undefined ? {
                 set: item.fee
               } : undefined,
+            dependsOn: item.dependsOn !== undefined ? {
+                set: item.dependsOn
+              } : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? {
+                set: item.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -10645,6 +10259,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -10707,6 +10323,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -10956,9 +10574,6 @@ id
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
               } : undefined,
-            dependsOnId: item.action.dependsOnId !== undefined ? {
-                equals: item.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.action.id !== undefined ? {
@@ -10979,6 +10594,12 @@ id
             fee: item.action.fee !== undefined ? {
                 set: item.action.fee
               } : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? {
+                set: item.action.dependsOn
+              } : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? {
+                set: item.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -10986,6 +10607,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -11215,6 +10838,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -11713,6 +11338,8 @@ id
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -11842,6 +11469,8 @@ id
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -12621,9 +12250,6 @@ id
           tradeId: prop.order.action.tradeId !== undefined ? {
               equals: prop.order.action.tradeId
             } : undefined,
-          dependsOnId: prop.order.action.dependsOnId !== undefined ? {
-              equals: prop.order.action.dependsOnId
-            } : undefined,
         },
         update: {
           id: prop.order.action.id !== undefined ? {
@@ -12643,6 +12269,12 @@ id
             } : undefined,
           fee: prop.order.action.fee !== undefined ? {
               set: prop.order.action.fee
+            } : undefined,
+          dependsOn: prop.order.action.dependsOn !== undefined ? {
+              set: prop.order.action.dependsOn
+            } : undefined,
+          dependedOnBy: prop.order.action.dependedOnBy !== undefined ? {
+              set: prop.order.action.dependedOnBy
             } : undefined,
       trade: prop.order.action.trade ? 
       typeof prop.order.action.trade === 'object' && Object.keys(prop.order.action.trade).length === 1 && Object.keys(prop.order.action.trade)[0] === 'id'
@@ -12715,97 +12347,6 @@ id
           },
         }
       } : undefined,
-      dependsOn: prop.order.action.dependsOn ? 
-      typeof prop.order.action.dependsOn === 'object' && Object.keys(prop.order.action.dependsOn).length === 1 && Object.keys(prop.order.action.dependsOn)[0] === 'id'
-? {
-      connect: {
-        id: prop.order.action.dependsOn.id
-      }
-} : { upsert: {
-          where: {
-            id: prop.order.action.dependsOn.id !== undefined ? {
-                equals: prop.order.action.dependsOn.id
-              } : undefined,
-            tradeId: prop.order.action.dependsOn.tradeId !== undefined ? {
-                equals: prop.order.action.dependsOn.tradeId
-              } : undefined,
-            dependsOnId: prop.order.action.dependsOn.dependsOnId !== undefined ? {
-                equals: prop.order.action.dependsOn.dependsOnId
-              } : undefined,
-          },
-          update: {
-            id: prop.order.action.dependsOn.id !== undefined ? {
-                set: prop.order.action.dependsOn.id
-              } : undefined,
-            sequence: prop.order.action.dependsOn.sequence !== undefined ? {
-                set: prop.order.action.dependsOn.sequence
-              } : undefined,
-            type: prop.order.action.dependsOn.type !== undefined ? {
-                set: prop.order.action.dependsOn.type
-              } : undefined,
-            note: prop.order.action.dependsOn.note !== undefined ? {
-                set: prop.order.action.dependsOn.note
-              } : undefined,
-            status: prop.order.action.dependsOn.status !== undefined ? {
-                set: prop.order.action.dependsOn.status
-              } : undefined,
-            fee: prop.order.action.dependsOn.fee !== undefined ? {
-                set: prop.order.action.dependsOn.fee
-              } : undefined,
-          },
-          create: {
-            sequence: prop.order.action.dependsOn.sequence !== undefined ? prop.order.action.dependsOn.sequence : undefined,
-            type: prop.order.action.dependsOn.type !== undefined ? prop.order.action.dependsOn.type : undefined,
-            note: prop.order.action.dependsOn.note !== undefined ? prop.order.action.dependsOn.note : undefined,
-            status: prop.order.action.dependsOn.status !== undefined ? prop.order.action.dependsOn.status : undefined,
-            fee: prop.order.action.dependsOn.fee !== undefined ? prop.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: prop.order.action.dependedOnBy ? 
-      Array.isArray(prop.order.action.dependedOnBy) && prop.order.action.dependedOnBy.length > 0 && prop.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect: prop.order.action.dependedOnBy.map((item: any) => ({
-        id: item.id
-      }))
-} : { upsert: prop.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId
-              } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id
-              } : undefined,
-            sequence: item.sequence !== undefined ? {
-                set: item.sequence
-              } : undefined,
-            type: item.type !== undefined ? {
-                set: item.type
-              } : undefined,
-            note: item.note !== undefined ? {
-                set: item.note
-              } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status
-              } : undefined,
-            fee: item.fee !== undefined ? {
-                set: item.fee
-              } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
-      } : undefined,
         },
         create: {
           sequence: prop.order.action.sequence !== undefined ? prop.order.action.sequence : undefined,
@@ -12813,6 +12354,8 @@ id
           note: prop.order.action.note !== undefined ? prop.order.action.note : undefined,
           status: prop.order.action.status !== undefined ? prop.order.action.status : undefined,
           fee: prop.order.action.fee !== undefined ? prop.order.action.fee : undefined,
+          dependsOn: prop.order.action.dependsOn !== undefined ? prop.order.action.dependsOn : undefined,
+          dependedOnBy: prop.order.action.dependedOnBy !== undefined ? prop.order.action.dependedOnBy : undefined,
       trade: prop.order.action.trade ? 
         typeof prop.order.action.trade === 'object' && Object.keys(prop.order.action.trade).length === 1 && Object.keys(prop.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -12840,50 +12383,6 @@ id
             status: prop.order.action.trade.status !== undefined ? prop.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: prop.order.action.dependsOn ? 
-        typeof prop.order.action.dependsOn === 'object' && Object.keys(prop.order.action.dependsOn).length === 1 && Object.keys(prop.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: prop.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: prop.order.action.dependsOn.id !== undefined ? prop.order.action.dependsOn.id : undefined,
-            tradeId: prop.order.action.dependsOn.tradeId !== undefined ? {
-                equals: prop.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: prop.order.action.dependsOn.sequence !== undefined ? prop.order.action.dependsOn.sequence : undefined,
-            type: prop.order.action.dependsOn.type !== undefined ? prop.order.action.dependsOn.type : undefined,
-            note: prop.order.action.dependsOn.note !== undefined ? prop.order.action.dependsOn.note : undefined,
-            status: prop.order.action.dependsOn.status !== undefined ? prop.order.action.dependsOn.status : undefined,
-            fee: prop.order.action.dependsOn.fee !== undefined ? prop.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: prop.order.action.dependedOnBy ? 
-        Array.isArray(prop.order.action.dependedOnBy) && prop.order.action.dependedOnBy.length > 0 &&  prop.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }
@@ -13774,6 +13273,8 @@ id
           note: prop.order.action.note !== undefined ? prop.order.action.note : undefined,
           status: prop.order.action.status !== undefined ? prop.order.action.status : undefined,
           fee: prop.order.action.fee !== undefined ? prop.order.action.fee : undefined,
+          dependsOn: prop.order.action.dependsOn !== undefined ? prop.order.action.dependsOn : undefined,
+          dependedOnBy: prop.order.action.dependedOnBy !== undefined ? prop.order.action.dependedOnBy : undefined,
       trade: prop.order.action.trade ? 
         typeof prop.order.action.trade === 'object' && Object.keys(prop.order.action.trade).length === 1 && Object.keys(prop.order.action.trade)[0] === 'id'
     ? { connect: {
@@ -13801,50 +13302,6 @@ id
             status: prop.order.action.trade.status !== undefined ? prop.order.action.trade.status : undefined,
           },
         }
-      } : undefined,
-      dependsOn: prop.order.action.dependsOn ? 
-        typeof prop.order.action.dependsOn === 'object' && Object.keys(prop.order.action.dependsOn).length === 1 && Object.keys(prop.order.action.dependsOn)[0] === 'id'
-    ? { connect: {
-            id: prop.order.action.dependsOn.id
-            }
-          }
-    : { connectOrCreate: {
-          where: {
-            id: prop.order.action.dependsOn.id !== undefined ? prop.order.action.dependsOn.id : undefined,
-            tradeId: prop.order.action.dependsOn.tradeId !== undefined ? {
-                equals: prop.order.action.dependsOn.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: prop.order.action.dependsOn.sequence !== undefined ? prop.order.action.dependsOn.sequence : undefined,
-            type: prop.order.action.dependsOn.type !== undefined ? prop.order.action.dependsOn.type : undefined,
-            note: prop.order.action.dependsOn.note !== undefined ? prop.order.action.dependsOn.note : undefined,
-            status: prop.order.action.dependsOn.status !== undefined ? prop.order.action.dependsOn.status : undefined,
-            fee: prop.order.action.dependsOn.fee !== undefined ? prop.order.action.dependsOn.fee : undefined,
-          },
-        }
-      } : undefined,
-      dependedOnBy: prop.order.action.dependedOnBy ? 
-        Array.isArray(prop.order.action.dependedOnBy) && prop.order.action.dependedOnBy.length > 0 &&  prop.order.action.dependedOnBy.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.order.action.dependedOnBy.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: prop.order.action.dependedOnBy.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            tradeId: item.tradeId !== undefined ? {
-                equals: item.tradeId 
-               } : undefined,
-          },
-          create: {
-            sequence: item.sequence !== undefined ? item.sequence : undefined,
-            type: item.type !== undefined ? item.type : undefined,
-            note: item.note !== undefined ? item.note : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-            fee: item.fee !== undefined ? item.fee : undefined,
-          },
-        }))
       } : undefined,
         },
       }

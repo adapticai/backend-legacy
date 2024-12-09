@@ -155,13 +155,8 @@ id
         note
         status
         fee
-        dependsOn {
-id
-        }
-        dependsOnId
-        dependedOnBy {
-id
-        }
+        dependsOn
+        dependedOnBy
       }
       asset {
         id
@@ -632,6 +627,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -1882,9 +1879,6 @@ id
             tradeId: props.contract.order.action.tradeId !== undefined ? {
                 equals: props.contract.order.action.tradeId
               } : undefined,
-            dependsOnId: props.contract.order.action.dependsOnId !== undefined ? {
-                equals: props.contract.order.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: props.contract.order.action.id !== undefined ? {
@@ -1905,6 +1899,12 @@ id
             fee: props.contract.order.action.fee !== undefined ? {
                 set: props.contract.order.action.fee
               } : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? {
+                set: props.contract.order.action.dependsOn
+              } : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? {
+                set: props.contract.order.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
@@ -1912,6 +1912,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -2269,6 +2271,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -2689,6 +2693,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -3184,6 +3190,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -4332,9 +4340,6 @@ id
             tradeId: props.contract.order.action.tradeId !== undefined ? {
                 equals: props.contract.order.action.tradeId
               } : undefined,
-            dependsOnId: props.contract.order.action.dependsOnId !== undefined ? {
-                equals: props.contract.order.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: props.contract.order.action.id !== undefined ? {
@@ -4355,6 +4360,12 @@ id
             fee: props.contract.order.action.fee !== undefined ? {
                 set: props.contract.order.action.fee
               } : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? {
+                set: props.contract.order.action.dependsOn
+              } : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? {
+                set: props.contract.order.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
@@ -4362,6 +4373,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -4719,6 +4732,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -5139,6 +5154,8 @@ id
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
+            dependsOn: props.contract.order.action.dependsOn !== undefined ? props.contract.order.action.dependsOn : undefined,
+            dependedOnBy: props.contract.order.action.dependedOnBy !== undefined ? props.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -6342,9 +6359,6 @@ id
             tradeId: prop.contract.order.action.tradeId !== undefined ? {
                 equals: prop.contract.order.action.tradeId
               } : undefined,
-            dependsOnId: prop.contract.order.action.dependsOnId !== undefined ? {
-                equals: prop.contract.order.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: prop.contract.order.action.id !== undefined ? {
@@ -6365,6 +6379,12 @@ id
             fee: prop.contract.order.action.fee !== undefined ? {
                 set: prop.contract.order.action.fee
               } : undefined,
+            dependsOn: prop.contract.order.action.dependsOn !== undefined ? {
+                set: prop.contract.order.action.dependsOn
+              } : undefined,
+            dependedOnBy: prop.contract.order.action.dependedOnBy !== undefined ? {
+                set: prop.contract.order.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: prop.contract.order.action.sequence !== undefined ? prop.contract.order.action.sequence : undefined,
@@ -6372,6 +6392,8 @@ id
             note: prop.contract.order.action.note !== undefined ? prop.contract.order.action.note : undefined,
             status: prop.contract.order.action.status !== undefined ? prop.contract.order.action.status : undefined,
             fee: prop.contract.order.action.fee !== undefined ? prop.contract.order.action.fee : undefined,
+            dependsOn: prop.contract.order.action.dependsOn !== undefined ? prop.contract.order.action.dependsOn : undefined,
+            dependedOnBy: prop.contract.order.action.dependedOnBy !== undefined ? prop.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -6729,6 +6751,8 @@ id
             note: prop.contract.order.action.note !== undefined ? prop.contract.order.action.note : undefined,
             status: prop.contract.order.action.status !== undefined ? prop.contract.order.action.status : undefined,
             fee: prop.contract.order.action.fee !== undefined ? prop.contract.order.action.fee : undefined,
+            dependsOn: prop.contract.order.action.dependsOn !== undefined ? prop.contract.order.action.dependsOn : undefined,
+            dependedOnBy: prop.contract.order.action.dependedOnBy !== undefined ? prop.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -7149,6 +7173,8 @@ id
             note: prop.contract.order.action.note !== undefined ? prop.contract.order.action.note : undefined,
             status: prop.contract.order.action.status !== undefined ? prop.contract.order.action.status : undefined,
             fee: prop.contract.order.action.fee !== undefined ? prop.contract.order.action.fee : undefined,
+            dependsOn: prop.contract.order.action.dependsOn !== undefined ? prop.contract.order.action.dependsOn : undefined,
+            dependedOnBy: prop.contract.order.action.dependedOnBy !== undefined ? prop.contract.order.action.dependedOnBy : undefined,
           },
         }
       } : undefined,

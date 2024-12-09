@@ -1363,13 +1363,11 @@ model Action {
   /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
   order Order? @relation
 
-  /// Dependent on the following action in the sequence.
-  dependsOn Action? @relation("DependentOn", fields: [dependsOnId], references: [id])
+  /// A list of action sequence numbers, for any sibling actions that are part of the same trade, that this action depends on.
+  dependsOn String[]
 
-  /// Foreign key referencing the dependent action. TYPESTRING.SKIP=true
-  dependsOnId String? @db.Uuid
-
-  dependedOnBy Action[] @relation("DependentOn")
+  /// A list of action sequence numbers, for any sibling actions that depend on this action.
+  dependedOnBy String[]
 
   @@map(name: "actions")
 }

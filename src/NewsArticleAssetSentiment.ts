@@ -296,6 +296,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -425,6 +427,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -1148,9 +1152,6 @@ import { removeUndefinedProps } from './utils';
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -1171,6 +1172,12 @@ import { removeUndefinedProps } from './utils';
             fee: item.fee !== undefined ? {
                 set: item.fee
               } : undefined,
+            dependsOn: item.dependsOn !== undefined ? {
+                set: item.dependsOn
+              } : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? {
+                set: item.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -1178,6 +1185,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -1240,6 +1249,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -1489,9 +1500,6 @@ import { removeUndefinedProps } from './utils';
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
               } : undefined,
-            dependsOnId: item.action.dependsOnId !== undefined ? {
-                equals: item.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.action.id !== undefined ? {
@@ -1512,6 +1520,12 @@ import { removeUndefinedProps } from './utils';
             fee: item.action.fee !== undefined ? {
                 set: item.action.fee
               } : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? {
+                set: item.action.dependsOn
+              } : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? {
+                set: item.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -1519,6 +1533,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -1748,6 +1764,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -2482,6 +2500,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -2611,6 +2631,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -3055,6 +3077,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -3184,6 +3208,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -3816,9 +3842,6 @@ import { removeUndefinedProps } from './utils';
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -3839,6 +3862,12 @@ import { removeUndefinedProps } from './utils';
             fee: item.fee !== undefined ? {
                 set: item.fee
               } : undefined,
+            dependsOn: item.dependsOn !== undefined ? {
+                set: item.dependsOn
+              } : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? {
+                set: item.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -3846,6 +3875,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -3908,6 +3939,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -4157,9 +4190,6 @@ import { removeUndefinedProps } from './utils';
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
               } : undefined,
-            dependsOnId: item.action.dependsOnId !== undefined ? {
-                equals: item.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.action.id !== undefined ? {
@@ -4180,6 +4210,12 @@ import { removeUndefinedProps } from './utils';
             fee: item.action.fee !== undefined ? {
                 set: item.action.fee
               } : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? {
+                set: item.action.dependsOn
+              } : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? {
+                set: item.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -4187,6 +4223,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -4416,6 +4454,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -5150,6 +5190,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -5279,6 +5321,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -5958,9 +6002,6 @@ import { removeUndefinedProps } from './utils';
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
-            dependsOnId: item.dependsOnId !== undefined ? {
-                equals: item.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -5981,6 +6022,12 @@ import { removeUndefinedProps } from './utils';
             fee: item.fee !== undefined ? {
                 set: item.fee
               } : undefined,
+            dependsOn: item.dependsOn !== undefined ? {
+                set: item.dependsOn
+              } : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? {
+                set: item.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -5988,6 +6035,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -6050,6 +6099,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -6299,9 +6350,6 @@ import { removeUndefinedProps } from './utils';
             tradeId: item.action.tradeId !== undefined ? {
                 equals: item.action.tradeId
               } : undefined,
-            dependsOnId: item.action.dependsOnId !== undefined ? {
-                equals: item.action.dependsOnId
-              } : undefined,
           },
           update: {
             id: item.action.id !== undefined ? {
@@ -6322,6 +6370,12 @@ import { removeUndefinedProps } from './utils';
             fee: item.action.fee !== undefined ? {
                 set: item.action.fee
               } : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? {
+                set: item.action.dependsOn
+              } : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? {
+                set: item.action.dependedOnBy
+              } : undefined,
           },
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
@@ -6329,6 +6383,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -6558,6 +6614,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
@@ -7292,6 +7350,8 @@ import { removeUndefinedProps } from './utils';
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
+            dependsOn: item.dependsOn !== undefined ? item.dependsOn : undefined,
+            dependedOnBy: item.dependedOnBy !== undefined ? item.dependedOnBy : undefined,
           },
         }))
       } : undefined,
@@ -7421,6 +7481,8 @@ import { removeUndefinedProps } from './utils';
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
+            dependsOn: item.action.dependsOn !== undefined ? item.action.dependsOn : undefined,
+            dependedOnBy: item.action.dependedOnBy !== undefined ? item.action.dependedOnBy : undefined,
           },
         }
       } : undefined,
