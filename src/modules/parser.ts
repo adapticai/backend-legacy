@@ -13,6 +13,20 @@ export function isScalarType(typeName: string): boolean {
   return updatedScalars.has(typeName);
 }
 
+
+export function isSetObjectType(typeName: string): boolean {
+  // Use a regular expression to match the pattern
+  const regex = /^(\w+)(Create|Update|Upsert)(\w+)Input$/;
+  const match = typeName.match(regex);
+
+  if (!match) return false;
+
+  const [_, parentModelName, operation, fieldName] = match;
+  if (!parentModelName || !operation || !fieldName) return false;
+
+  else return true;
+}
+
 const SCALAR_TYPES = ['String', 'Int', 'Float', 'Boolean', 'DateTime', 'Json'];
 
 function parseSchema(schemaPath: string): Map<string, Set<string>> {
@@ -227,6 +241,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     let isFieldUpdate = false;
     let baseType: ts.TypeNode = typeNode;
     let isFilterObject = false;
+    let isSetObject = false;
 
     if (ts.isTypeReferenceNode(typeNode)) {
       const typeName = typeNode.typeName.getText(sourceFile);
@@ -239,6 +254,9 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       }
       if (typeName === 'Prisma.InputJsonValue') {
         isFieldUpdate = true;
+      }
+      if (isSetObjectType(typeName)) {
+        isSetObject = true;
       }
     }
 
@@ -302,7 +320,8 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isList,
       isNullable,
       isFieldUpdate,
-      isFilterObject
+      isFilterObject,
+      isSetObject
     };
 
     // Apply additional pattern detection for arrays and filters
@@ -346,6 +365,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       typeName.includes('Prisma.InputJsonValue') || typeName.includes('Input');
 
     let isFilterObject = false;
+    let isSetObject = false;
     if (typeName.includes('Filter')) {
       isFilterObject = true;
     }
@@ -359,6 +379,10 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     }
     if (typeName.includes('CreateNestedMany')) {
       isList = true;
+    }
+
+    if (isSetObjectType(typeName)) {
+      isSetObject = true;
     }
 
     // If it's not a scalar type but includes '[]'
@@ -381,6 +405,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isFieldUpdate,
       isFilterObject,
       ofType,
+      isSetObject
     };
 
     return fieldType;

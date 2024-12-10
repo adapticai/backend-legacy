@@ -130,23 +130,23 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
   id: props.id !== undefined ? {
-    set: props.id
-  } : undefined,
+            set: props.id 
+           } : undefined,
   sentiment: props.sentiment !== undefined ? {
-    set: props.sentiment
-  } : undefined,
+            set: props.sentiment 
+           } : undefined,
   description: props.description !== undefined ? {
-    set: props.description
-  } : undefined,
+            set: props.description 
+           } : undefined,
   longDescription: props.longDescription !== undefined ? {
-    set: props.longDescription
-  } : undefined,
+            set: props.longDescription 
+           } : undefined,
   createdAt: props.createdAt !== undefined ? {
-    set: props.createdAt
-  } : undefined,
+            set: props.createdAt 
+           } : undefined,
   updatedAt: props.updatedAt !== undefined ? {
-    set: props.updatedAt
-  } : undefined,
+            set: props.updatedAt 
+           } : undefined,
       },
     };
 
@@ -194,14 +194,14 @@ import { removeUndefinedProps } from './utils';
       },
       update: {
   sentiment: props.sentiment !== undefined ? {
-    set: props.sentiment
-  } : undefined,
+            set: props.sentiment 
+           } : undefined,
   description: props.description !== undefined ? {
-    set: props.description
-  } : undefined,
+            set: props.description 
+           } : undefined,
   longDescription: props.longDescription !== undefined ? {
-    set: props.longDescription
-  } : undefined,
+            set: props.longDescription 
+           } : undefined,
       },
     };
 
@@ -245,23 +245,23 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
           id: prop.id !== undefined ? {
-    set: prop.id
-  } : undefined,
+            set: prop.id 
+           } : undefined,
   sentiment: prop.sentiment !== undefined ? {
-    set: prop.sentiment
-  } : undefined,
+            set: prop.sentiment 
+           } : undefined,
   description: prop.description !== undefined ? {
-    set: prop.description
-  } : undefined,
+            set: prop.description 
+           } : undefined,
   longDescription: prop.longDescription !== undefined ? {
-    set: prop.longDescription
-  } : undefined,
+            set: prop.longDescription 
+           } : undefined,
   createdAt: prop.createdAt !== undefined ? {
-    set: prop.createdAt
-  } : undefined,
+            set: prop.createdAt 
+           } : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
-    set: prop.updatedAt
-  } : undefined,
+            set: prop.updatedAt 
+           } : undefined,
 
       },
       }));

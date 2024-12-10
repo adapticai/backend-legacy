@@ -6,6 +6,7 @@ export interface FieldType {
   isNullable: boolean;
   isFieldUpdate?: boolean;
   isFilterObject?: boolean;
+  isSetObject?: boolean;
   gqlExclude?: boolean;
   gqlSkip?: boolean;
   ofType?: FieldType | FieldType[];
