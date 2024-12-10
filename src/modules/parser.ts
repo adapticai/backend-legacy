@@ -13,9 +13,7 @@ export function isScalarType(typeName: string): boolean {
   return updatedScalars.has(typeName);
 }
 
-
 export function isSetObjectType(typeName: string): boolean {
-  // Use a regular expression to match the pattern
   const regex = /^(\w+)(Create|Update|Upsert)(\w+)Input$/;
   const match = typeName.match(regex);
 
@@ -24,7 +22,7 @@ export function isSetObjectType(typeName: string): boolean {
   const [_, parentModelName, operation, fieldName] = match;
   if (!parentModelName || !operation || !fieldName) return false;
 
-  else return true;
+  return true;
 }
 
 const SCALAR_TYPES = ['String', 'Int', 'Float', 'Boolean', 'DateTime', 'Json'];
@@ -40,11 +38,9 @@ function parseSchema(schemaPath: string): Map<string, Set<string>> {
     const scalarArrayFields = new Set<string>();
 
     lines.slice(1).forEach(line => {
-      // This regex might be missing some patterns - let's enhance it
       const match = line.match(/^\s*(\w+)\s+([\w\[\]]+)/);
       if (match) {
         const [, fieldName, fieldType] = match;
-        // For "dependsOn String[]" this should match
         if (fieldType.endsWith('[]') && SCALAR_TYPES.includes(fieldType.slice(0, -2))) {
           scalarArrayFields.add(fieldName);
         }
@@ -60,19 +56,16 @@ function parseSchema(schemaPath: string): Map<string, Set<string>> {
 }
 
 export function isScalarArrayType(typeName: string): boolean {
-  // Check for direct array notation
   if (typeName.endsWith('[]')) {
     const baseType = typeName.slice(0, -2);
     return isScalarType(baseType);
   }
 
-  // Check for Array<Type> notation
   if (typeName.startsWith('Array<') && typeName.endsWith('>')) {
     const baseType = typeName.slice(6, -1);
     return isScalarType(baseType);
   }
 
-  // Check for Prisma-specific list types
   if (typeName.includes('ListFilter') ||
     typeName.includes('NullableListFilter') ||
     typeName.includes('CreateNestedMany') ||
@@ -84,7 +77,6 @@ export function isScalarArrayType(typeName: string): boolean {
 }
 
 export function isInputObjectType(typeName: string): boolean {
-  // check if the type name ends with 'Input'
   return typeName.endsWith('Input');
 }
 
@@ -96,17 +88,14 @@ function generateInputTypeNames(modelMap: Map<string, Set<string>>): Set<string>
 
   modelMap.forEach((fields, modelName) => {
     fields.forEach(fieldName => {
-      // Generate names for CRUD input types
       crudOperations.forEach(operation => {
         inputTypeNames.add(`${modelName}${operation}${fieldName}Input`);
       });
 
-      // Generate names for where input types
       whereOperations.forEach(operation => {
         inputTypeNames.add(`${modelName}${operation}${fieldName}Input`);
       });
 
-      // Add specific input types that TypeGraphQL-Prisma generates
       inputTypeNames.add(`${modelName}${fieldName}ComparisonInput`);
       inputTypeNames.add(`${fieldName}NullableListFilter`);
       inputTypeNames.add(`${fieldName}ListFilter`);
@@ -176,7 +165,6 @@ export function updateGraphQLScalars(schemaPath: string): Set<string> {
 }
 
 const MAX_RECURSION_DEPTH = 10;
-
 const schemaPath = path.join(__dirname, '../../prisma/schema.prisma');
 const updatedScalars = updateGraphQLScalars(schemaPath);
 
@@ -191,6 +179,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
 
   const fields: FieldDefinition[] = [];
   const visitedNodes = new Set<ts.Node>();
+  const visitedTypeNames = new Set<string>(); // Avoid infinite loops in type references
 
   const visitor = (node: ts.Node, depth = 0) => {
     if (depth > MAX_RECURSION_DEPTH) {
@@ -204,19 +193,19 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     visitedNodes.add(node);
 
     if (ts.isPropertySignature(node) || ts.isPropertyDeclaration(node)) {
-      const field = extractField(node, sourceFile);
+      const field = extractField(node, sourceFile, depth);
       if (field) fields.push(field);
     }
 
     ts.forEachChild(node, (child) => visitor(child, depth + 1));
   };
 
-  function extractField(node: ts.PropertySignature | ts.PropertyDeclaration, sourceFile: ts.SourceFile): FieldDefinition | null {
-    const fieldName = node.name.getText(sourceFile);
+  function extractField(node: ts.PropertySignature | ts.PropertyDeclaration, sf: ts.SourceFile, depth: number): FieldDefinition | null {
+    const fieldName = node.name.getText(sf);
     const fieldTypeNode = node.type;
     if (!fieldTypeNode) return null;
 
-    const typeInfo = extractTypeInfo(fieldTypeNode, sourceFile) as FieldType;
+    const typeInfo = extractTypeInfo(fieldTypeNode, sf, depth) as FieldType;
     if (!typeInfo) return null;
 
     return {
@@ -227,11 +216,11 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
 
   function extractTypeInfo(
     typeNode: ts.TypeNode,
-    sourceFile: ts.SourceFile,
+    sf: ts.SourceFile,
     depth = 0
   ): FieldType | null {
     if (depth > MAX_RECURSION_DEPTH) {
-      console.warn(`Max recursion depth exceeded for node: ${typeNode.getText(sourceFile)}`);
+      console.warn(`Max recursion depth exceeded for node: ${typeNode.getText(sf)}`);
       return null;
     }
 
@@ -239,77 +228,56 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     let isList = false;
     let isScalar = false;
     let isFieldUpdate = false;
-    let baseType: ts.TypeNode = typeNode;
     let isFilterObject = false;
     let isSetObject = false;
-
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
-      if (typeName.includes('FieldUpdateOperationsInput')) {
-        isFieldUpdate = true;
-      }
-      if (typeName === 'BoolFieldUpdateOperationsInput') {
-        isScalar = true;
-        isFieldUpdate = true;
-      }
-      if (typeName === 'Prisma.InputJsonValue') {
-        isFieldUpdate = true;
-      }
-      if (isSetObjectType(typeName)) {
-        isSetObject = true;
-      }
-    }
+    let baseType: ts.TypeNode = typeNode;
 
     // Handle nullable types
     if (ts.isUnionTypeNode(typeNode)) {
-      const types = typeNode.types.filter(t => !isNullOrUndefined(t, sourceFile));
+      const types = typeNode.types.filter(t => !isNullOrUndefined(t, sf));
       isNullable = types.length !== typeNode.types.length;
       baseType = types.length === 1 ? types[0] : typeNode;
     }
 
     // Extract array information
-    const arrayInfo = extractArrayInfo(baseType, sourceFile);
+    const arrayInfo = extractArrayInfo(baseType, sf);
     isList = arrayInfo.isList;
     baseType = arrayInfo.baseType;
 
+    // Check for specific type conditions
     if (ts.isTypeReferenceNode(baseType)) {
-      const typeName = baseType.typeName.getText(sourceFile);
-      if (typeName.includes('dependsOn') || typeName.includes('dependedOnBy')) {
-        console.log('Parser Type Info:', {
-          typeName,
-          isScalar: isScalarType(typeName),
-          isList: isList
-        });
-      }
-    }
+      const typeName = baseType.typeName.getText(sf);
 
-    // If still a type reference after array extraction, handle it
-    if (ts.isTypeReferenceNode(baseType)) {
-      const typeName = baseType.typeName.getText(sourceFile);
-      // Check for scalar arrays first
+      if (typeName.includes('FieldUpdateOperationsInput') || typeName === 'BoolFieldUpdateOperationsInput' || typeName === 'Prisma.InputJsonValue') {
+        isFieldUpdate = true;
+      }
+      if (isSetObjectType(typeName)) {
+        isSetObject = true;
+      }
+
+      // If scalar arrays
       if (isScalarArrayType(typeName)) {
         isScalar = true;
         isList = true;
       }
+
       if (isInputObjectType(typeName)) {
         isScalar = false;
       }
 
-      // Process through handleTypeReference to get the complete type info
-      let fieldType = handleTypeReference(baseType, sourceFile, isList, isNullable, depth);
-      // Apply additional array detection after handleTypeReference if needed
-      fieldType = detectAdditionalListPatterns(fieldType, baseType, sourceFile);
+      let fieldType = handleTypeReference(baseType, sf, isList, isNullable, depth, visitedTypeNames);
+      fieldType = detectAdditionalListPatterns(fieldType, baseType, sf);
       return fieldType;
     }
 
     // Handle literal types
     if (ts.isLiteralTypeNode(baseType)) {
       const literalField = handleLiteralType(baseType, isList, isNullable);
-      return detectAdditionalListPatterns(literalField, baseType, sourceFile);
+      return detectAdditionalListPatterns(literalField, baseType, sf);
     }
 
-    // If we get here, we have a non-type reference, non-literal node
-    const typeText = baseType.getText(sourceFile);
+    // If we get here, likely a primitive type or unknown
+    const typeText = baseType.getText(sf);
     if (isScalarType(typeText)) {
       isScalar = true;
     }
@@ -324,53 +292,35 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isSetObject
     };
 
-    // Apply additional pattern detection for arrays and filters
-    field = detectAdditionalListPatterns(field, baseType, sourceFile, typeText);
+    field = detectAdditionalListPatterns(field, baseType, sf, typeText);
 
     return field;
   }
 
-  // Extract array information from TS types (e.g. string[], Array<string>)
-  function extractArrayInfo(typeNode: ts.TypeNode, sourceFile: ts.SourceFile): { isList: boolean; baseType: ts.TypeNode } {
-    let isList = false;
-    let baseType = typeNode;
-
-    while (ts.isArrayTypeNode(baseType) || (ts.isTypeReferenceNode(baseType) && baseType.typeName.getText(sourceFile) === 'Array')) {
-      isList = true;
-      if (ts.isArrayTypeNode(baseType)) {
-        baseType = baseType.elementType;
-      } else if (
-        ts.isTypeReferenceNode(baseType) &&
-        baseType.typeArguments &&
-        baseType.typeArguments.length > 0
-      ) {
-        baseType = baseType.typeArguments[0];
-      }
-    }
-
-    return { isList, baseType };
-  }
-
   function handleTypeReference(
     node: ts.TypeReferenceNode,
-    sourceFile: ts.SourceFile,
+    sf: ts.SourceFile,
     isList: boolean,
     isNullable: boolean,
-    depth: number
+    depth: number,
+    visitedTypeNames: Set<string>
   ): FieldType {
-    const typeName = node.typeName.getText(sourceFile);
-    const isScalar = isScalarType(typeName);
+    const typeName = node.typeName.getText(sf);
+    const consideredScalar = isScalarType(typeName);
     const isFieldUpdate = typeName.includes('FieldUpdateOperationsInput') ||
       typeName.includes('BoolFieldUpdateOperationsInput') ||
-      typeName.includes('Prisma.InputJsonValue') || typeName.includes('Input');
+      typeName.includes('Prisma.InputJsonValue');
 
     let isFilterObject = false;
     let isSetObject = false;
     if (typeName.includes('Filter')) {
       isFilterObject = true;
     }
+    if (isSetObjectType(typeName)) {
+      isSetObject = true;
+    }
 
-    // Check known patterns for lists
+    // Known patterns for arrays
     if (typeName.includes('NestedInput') && typeName.includes('Many')) {
       isList = true;
     }
@@ -380,26 +330,19 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     if (typeName.includes('CreateNestedMany')) {
       isList = true;
     }
-
-    if (isSetObjectType(typeName)) {
-      isSetObject = true;
-    }
-
-    // If it's not a scalar type but includes '[]'
-    if (!isScalarType(typeName) && typeName.includes('[]')) {
+    if (!consideredScalar && typeName.includes('[]')) {
       isList = true;
     }
 
     let ofType: FieldType[] | undefined;
     if (node.typeArguments && node.typeArguments.length > 0) {
-      // Handle generic types
-      const genericArgs = node.typeArguments.map(arg => extractTypeInfo(arg, sourceFile, depth + 1));
+      const genericArgs = node.typeArguments.map(arg => extractTypeInfo(arg, sf, depth + 1));
       ofType = genericArgs.filter((arg): arg is FieldType => arg !== null);
     }
 
     const fieldType: FieldType = {
       name: capitalizeFirstLetter(typeName),
-      isScalar,
+      isScalar: consideredScalar,
       isList,
       isNullable,
       isFieldUpdate,
@@ -408,7 +351,66 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isSetObject
     };
 
+    // If not scalar, filter, and ofType is empty, try to resolve interface/type alias fields
+    if (!consideredScalar && !isFilterObject) {
+      // Avoid infinite recursion on the same type name
+      const cleanTypeName = capitalizeFirstLetter(typeName);
+      if (!visitedTypeNames.has(cleanTypeName)) {
+        visitedTypeNames.add(cleanTypeName);
+        const nestedFields = extractObjectDefinitionFields(cleanTypeName, sf, depth + 1, visitedTypeNames);
+        if (nestedFields.length > 0) {
+          // Convert the nested fields into a field type's ofType array
+          fieldType.ofType = nestedFields.map(f => f.type);
+        }
+      }
+    }
+
     return fieldType;
+  }
+
+  function extractObjectDefinitionFields(
+    typeName: string,
+    sf: ts.SourceFile,
+    depth: number,
+    visitedTypeNames: Set<string>
+  ): FieldDefinition[] {
+    if (depth > MAX_RECURSION_DEPTH) return [];
+
+    // Try to find InterfaceDeclaration or TypeAliasDeclaration matching typeName
+    const foundNode = sf.statements.find(stmt =>
+      (ts.isInterfaceDeclaration(stmt) || ts.isTypeAliasDeclaration(stmt)) &&
+      stmt.name?.getText(sf) === typeName
+    );
+
+    if (!foundNode) return [];
+
+    let members: ts.NodeArray<ts.TypeElement> | ts.TypeNode | undefined;
+
+    if (ts.isInterfaceDeclaration(foundNode)) {
+      members = foundNode.members;
+    } else if (ts.isTypeAliasDeclaration(foundNode)) {
+      if (ts.isTypeLiteralNode(foundNode.type)) {
+        members = foundNode.type.members;
+      } else {
+        // If it's not a type literal, we cannot directly parse it.
+        return [];
+      }
+    }
+
+    if (!members) return [];
+    const resultFields: FieldDefinition[] = [];
+    if (Array.isArray(members)) {
+      for (const m of members) {
+        if (ts.isPropertySignature(m) && m.type) {
+          const fieldType = extractTypeInfo(m.type, sf, depth);
+          if (fieldType) {
+            resultFields.push({ name: m.name.getText(sf), type: fieldType });
+          }
+        }
+      }
+    }
+
+    return resultFields;
   }
 
   function handleLiteralType(node: ts.LiteralTypeNode, isList: boolean, isNullable: boolean): FieldType {
@@ -434,28 +436,21 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     };
   }
 
-  // Additional fallback checks to detect lists from patterns in the type name
   function detectAdditionalListPatterns(
     field: FieldType,
     typeNode: ts.TypeNode,
-    sourceFile: ts.SourceFile,
+    sf: ts.SourceFile,
     typeText?: string
   ): FieldType {
-    const typeName = ts.isTypeReferenceNode(typeNode) ? typeNode.typeName.getText(sourceFile) : (typeText ?? typeNode.getText(sourceFile));
+    const typeName = ts.isTypeReferenceNode(typeNode) ? typeNode.typeName.getText(sf) : (typeText ?? typeNode.getText(sf));
 
-    // If not already marked as list, check extra conditions
     if (!field.isList) {
-      // Arrays indicated by brackets in the type name
       if (typeName.includes('[]')) {
         field.isList = true;
       }
-
-      // If it's a known scalar and was an array in schema, just in case
       if (!field.isList && isScalarType(typeName) && typeName.endsWith('[]')) {
         field.isList = true;
       }
-
-      // Additional known patterns
       if (typeName.includes('NestedMany')) {
         field.isList = true;
       }
@@ -468,6 +463,27 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     }
 
     return field;
+  }
+
+  function extractArrayInfo(typeNode: ts.TypeNode, sf: ts.SourceFile): { isList: boolean; baseType: ts.TypeNode } {
+    let isList = false;
+    let baseType = typeNode;
+
+    while (ts.isArrayTypeNode(baseType) ||
+      (ts.isTypeReferenceNode(baseType) && baseType.typeName.getText(sf) === 'Array')) {
+      isList = true;
+      if (ts.isArrayTypeNode(baseType)) {
+        baseType = baseType.elementType;
+      } else if (
+        ts.isTypeReferenceNode(baseType) &&
+        baseType.typeArguments &&
+        baseType.typeArguments.length > 0
+      ) {
+        baseType = baseType.typeArguments[0];
+      }
+    }
+
+    return { isList, baseType };
   }
 
   try {

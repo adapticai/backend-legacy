@@ -131,7 +131,9 @@ const handleCreateOperation = (
     return '';
   }
 
-  if (field.type.isScalar) {
+  if (field.type.isScalar && field.type.isSetObject) {
+    return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  set: ${accessor} \n${indent}} : undefined,\n`;
+  } else if (field.type.isScalar) {
     return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
   } else {
     if (depth + 1 >= maxDepth) {
@@ -237,8 +239,8 @@ const handleCreateOperation = (
             }
             const nestedAccessor = field.type.isList ? `item.${createField.name}` : `${accessor}.${createField.name}`;
 
-            if (createField.type.isSetObject) {
-              return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
+            if (createField.type.isScalar && createField.type.isSetObject) {
+              return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (createField.type.isScalar) {
               return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
@@ -272,7 +274,7 @@ const handleUpdateOperation = (
   }
 
   // Scalar or updatable fields:
-  if (field.type.isScalar && field.type.isFieldUpdate || field.type.isFieldUpdate) {
+  if (field.type.isScalar && field.type.isFieldUpdate || field.type.isFieldUpdate || field.type.isScalar && field.type.isSetObject) {
     return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}          set: ${accessor} \n ${indent}        } : undefined,\n`;
   } else {
     if (depth + 1 >= maxDepth) {
@@ -388,10 +390,9 @@ ${indent}}
         updateFields
           .map((updateField) => {
             const nestedAccessor = field.type.isList ? `item.${updateField.name}` : `${accessor}.${updateField.name}`;
-
             if (updateField.type.isScalar) {
               return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
-            } else if (updateField.type.isFieldUpdate || updateField.type.isSetObject) {
+            } else if (updateField.type.isFieldUpdate || updateField.type.isScalar && updateField.type.isSetObject) {
               if (['id', 'createdAt', 'updatedAt'].includes(updateField.name)) {
                 return '';
               }
@@ -424,9 +425,8 @@ ${indent}}
               return ''; // Skip meta fields
             }
             const nestedAccessor = field.type.isList ? `item.${createField.name}` : `${accessor}.${createField.name}`;
-
-            if (createField.type.isSetObject) {
-              return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
+            if (createField.type.isScalar && createField.type.isSetObject) {
+              return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (createField.type.isScalar) {
               return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
