@@ -40,7 +40,9 @@ import { removeUndefinedProps } from './utils';
 
       const variables = {
         data: {
-            payload: props.payload !== undefined ? props.payload : undefined,
+            payload: props.payload !== undefined ? {
+    set: props.payload
+  } : undefined,
   status: props.status !== undefined ? props.status : undefined,
 
         },
@@ -81,7 +83,9 @@ import { removeUndefinedProps } from './utils';
 
     const variables = {
       data: props.map(prop => ({
-  payload: prop.payload !== undefined ? prop.payload : undefined,
+  payload: prop.payload !== undefined ? {
+    set: prop.payload
+  } : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
       })),
     };
@@ -125,14 +129,14 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
   id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
+    set: props.id
+  } : undefined,
   payload: props.payload !== undefined ? {
-            set: props.payload 
-           } : undefined,
+    set: props.payload
+  } : undefined,
   status: props.status !== undefined ? {
-            set: props.status 
-           } : undefined,
+    set: props.status
+  } : undefined,
       },
     };
 
@@ -174,16 +178,18 @@ import { removeUndefinedProps } from './utils';
         id: props.id !== undefined ? props.id : undefined,
       },
       create: {
-    payload: props.payload !== undefined ? props.payload : undefined,
+    payload: props.payload !== undefined ? {
+    set: props.payload
+  } : undefined,
   status: props.status !== undefined ? props.status : undefined,
       },
       update: {
   payload: props.payload !== undefined ? {
-            set: props.payload 
-           } : undefined,
+    set: props.payload
+  } : undefined,
   status: props.status !== undefined ? {
-            set: props.status 
-           } : undefined,
+    set: props.status
+  } : undefined,
       },
     };
 
@@ -227,14 +233,14 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
           id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
+    set: prop.id
+  } : undefined,
   payload: prop.payload !== undefined ? {
-            set: prop.payload 
-           } : undefined,
+    set: prop.payload
+  } : undefined,
   status: prop.status !== undefined ? {
-            set: prop.status 
-           } : undefined,
+    set: prop.status
+  } : undefined,
 
       },
       }));

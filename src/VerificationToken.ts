@@ -128,17 +128,17 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
   id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
+    set: props.id
+  } : undefined,
   identifier: props.identifier !== undefined ? {
-            set: props.identifier 
-           } : undefined,
+    set: props.identifier
+  } : undefined,
   token: props.token !== undefined ? {
-            set: props.token 
-           } : undefined,
+    set: props.token
+  } : undefined,
   expires: props.expires !== undefined ? {
-            set: props.expires 
-           } : undefined,
+    set: props.expires
+  } : undefined,
       },
     };
 
@@ -186,14 +186,14 @@ import { removeUndefinedProps } from './utils';
       },
       update: {
   identifier: props.identifier !== undefined ? {
-            set: props.identifier 
-           } : undefined,
+    set: props.identifier
+  } : undefined,
   token: props.token !== undefined ? {
-            set: props.token 
-           } : undefined,
+    set: props.token
+  } : undefined,
   expires: props.expires !== undefined ? {
-            set: props.expires 
-           } : undefined,
+    set: props.expires
+  } : undefined,
       },
     };
 
@@ -237,17 +237,17 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
           id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
+    set: prop.id
+  } : undefined,
   identifier: prop.identifier !== undefined ? {
-            set: prop.identifier 
-           } : undefined,
+    set: prop.identifier
+  } : undefined,
   token: prop.token !== undefined ? {
-            set: prop.token 
-           } : undefined,
+    set: prop.token
+  } : undefined,
   expires: prop.expires !== undefined ? {
-            set: prop.expires 
-           } : undefined,
+    set: prop.expires
+  } : undefined,
 
       },
       }));

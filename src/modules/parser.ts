@@ -7,7 +7,6 @@ import { URL } from 'url';
 import { capitalizeFirstLetter } from './utils';
 import path from 'path';
 
-
 export function isScalarType(typeName: string): boolean {
   if (typeName.startsWith('Enum')) return true;
   if (typeName.startsWith('"')) return true;
@@ -27,9 +26,11 @@ function parseSchema(schemaPath: string): Map<string, Set<string>> {
     const scalarArrayFields = new Set<string>();
 
     lines.slice(1).forEach(line => {
+      // This regex might be missing some patterns - let's enhance it
       const match = line.match(/^\s*(\w+)\s+([\w\[\]]+)/);
       if (match) {
         const [, fieldName, fieldType] = match;
+        // For "dependsOn String[]" this should match
         if (fieldType.endsWith('[]') && SCALAR_TYPES.includes(fieldType.slice(0, -2))) {
           scalarArrayFields.add(fieldName);
         }
@@ -42,6 +43,35 @@ function parseSchema(schemaPath: string): Map<string, Set<string>> {
   });
 
   return modelMap;
+}
+
+export function isScalarArrayType(typeName: string): boolean {
+  // Check for direct array notation
+  if (typeName.endsWith('[]')) {
+    const baseType = typeName.slice(0, -2);
+    return isScalarType(baseType);
+  }
+
+  // Check for Array<Type> notation
+  if (typeName.startsWith('Array<') && typeName.endsWith('>')) {
+    const baseType = typeName.slice(6, -1);
+    return isScalarType(baseType);
+  }
+
+  // Check for Prisma-specific list types
+  if (typeName.includes('ListFilter') ||
+    typeName.includes('NullableListFilter') ||
+    typeName.includes('CreateNestedMany') ||
+    typeName.includes('UpdateManyNested')) {
+    return true;
+  }
+
+  return false;
+}
+
+export function isInputObjectType(typeName: string): boolean {
+  // check if the type name ends with 'Input'
+  return typeName.endsWith('Input');
 }
 
 function generateInputTypeNames(modelMap: Map<string, Set<string>>): Set<string> {
@@ -122,7 +152,6 @@ export const GRAPHQL_SCALARS = new Set([
   'DateTimeListFilter',
 ]);
 
-
 export function updateGraphQLScalars(schemaPath: string): Set<string> {
   const modelMap = parseSchema(schemaPath);
   const generatedInputTypes = generateInputTypeNames(modelMap);
@@ -133,8 +162,6 @@ export function updateGraphQLScalars(schemaPath: string): Set<string> {
 }
 
 const MAX_RECURSION_DEPTH = 10;
-
-
 
 const schemaPath = path.join(__dirname, '../../prisma/schema.prisma');
 const updatedScalars = updateGraphQLScalars(schemaPath);
@@ -184,7 +211,6 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     };
   }
 
-  // 1. Implement recursive handling of nested arrays
   function extractTypeInfo(
     typeNode: ts.TypeNode,
     sourceFile: ts.SourceFile,
@@ -202,26 +228,15 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     let baseType: ts.TypeNode = typeNode;
     let isFilterObject = false;
 
-    // if field.type.name includes FieldUpdateOperationsInput, set isFieldUpdate to true
     if (ts.isTypeReferenceNode(typeNode)) {
       const typeName = typeNode.typeName.getText(sourceFile);
       if (typeName.includes('FieldUpdateOperationsInput')) {
         isFieldUpdate = true;
       }
-    }
-
-    // if field.type.name is 'BoolFieldUpdateOperationsInput', set isScalar to true, isFieldUpdate to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
       if (typeName === 'BoolFieldUpdateOperationsInput') {
         isScalar = true;
         isFieldUpdate = true;
       }
-    }
-
-    // if field.type.name is 'Prisma.InputJsonValue', set isFieldUpdate to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
       if (typeName === 'Prisma.InputJsonValue') {
         isFieldUpdate = true;
       }
@@ -234,76 +249,54 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       baseType = types.length === 1 ? types[0] : typeNode;
     }
 
-    // Handle array types
+    // Extract array information
     const arrayInfo = extractArrayInfo(baseType, sourceFile);
     isList = arrayInfo.isList;
     baseType = arrayInfo.baseType;
 
-    // Handle type references (e.g., custom types, generics)
     if (ts.isTypeReferenceNode(baseType)) {
-      return handleTypeReference(baseType, sourceFile, isList, isNullable, depth);
+      const typeName = baseType.typeName.getText(sourceFile);
+      if (typeName.includes('dependsOn') || typeName.includes('dependedOnBy')) {
+        console.log('Parser Type Info:', {
+          typeName,
+          isScalar: isScalarType(typeName),
+          isList: isList
+        });
+      }
+    }
+
+    // If still a type reference after array extraction, handle it
+    if (ts.isTypeReferenceNode(baseType)) {
+      const typeName = baseType.typeName.getText(sourceFile);
+      // Check for scalar arrays first
+      if (isScalarArrayType(typeName)) {
+        isScalar = true;
+        isList = true;
+      }
+      if (isInputObjectType(typeName)) {
+        isScalar = false;
+      }
+
+      // Process through handleTypeReference to get the complete type info
+      let fieldType = handleTypeReference(baseType, sourceFile, isList, isNullable, depth);
+      // Apply additional array detection after handleTypeReference if needed
+      fieldType = detectAdditionalListPatterns(fieldType, baseType, sourceFile);
+      return fieldType;
     }
 
     // Handle literal types
     if (ts.isLiteralTypeNode(baseType)) {
-      return handleLiteralType(baseType, isList, isNullable);
+      const literalField = handleLiteralType(baseType, isList, isNullable);
+      return detectAdditionalListPatterns(literalField, baseType, sourceFile);
     }
 
-
-    // if field.type.name includes 'NestedMany', set isList to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
-      if (typeName.includes('NestedInput') && typeName.includes('Many')) {
-        isList = true;
-      }
-    }
-    // if field.type.name includes 'NestedOne', set isList to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
-      if (typeName.includes('NestedOne')) {
-        isList = true;
-      }
-    }
-
-    // if field.type.name includes 'Filter', set isFilterObject to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
-      if (typeName.includes('Filter')) {
-        isFilterObject = true;
-      }
-    }
-
-    // if field.type.name includes 'ListRelationFilter', set isList to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
-      if (typeName.includes('ListRelationFilter')) {
-        isList = true;
-      }
-    }
-
-    // if field.type.name contains `CreateNestedManyWithout`, set isList of parent to true
-    if (ts.isTypeReferenceNode(typeNode)) {
-      const typeName = typeNode.typeName.getText(sourceFile);
-      if (typeName.includes('CreateNestedMany')) {
-        isList = true;
-      }
-    }
-
-    // if field.type.name contains `[]` and is not a scalar type, set isList to true
-    if (ts.isArrayTypeNode(typeNode)) {
-      const typeName = typeNode.elementType.getText(sourceFile);
-      if (!isScalarType(typeName) && typeName.includes('[]')) {
-        isList = true;
-      }
-    }
-
-    // Handle other types
+    // If we get here, we have a non-type reference, non-literal node
     const typeText = baseType.getText(sourceFile);
     if (isScalarType(typeText)) {
       isScalar = true;
     }
 
-    return {
+    let field: FieldType = {
       name: typeText,
       isScalar,
       isList,
@@ -311,9 +304,14 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isFieldUpdate,
       isFilterObject
     };
+
+    // Apply additional pattern detection for arrays and filters
+    field = detectAdditionalListPatterns(field, baseType, sourceFile, typeText);
+
+    return field;
   }
 
-  // Helper function to extract array information
+  // Extract array information from TS types (e.g. string[], Array<string>)
   function extractArrayInfo(typeNode: ts.TypeNode, sourceFile: ts.SourceFile): { isList: boolean; baseType: ts.TypeNode } {
     let isList = false;
     let baseType = typeNode;
@@ -322,7 +320,11 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isList = true;
       if (ts.isArrayTypeNode(baseType)) {
         baseType = baseType.elementType;
-      } else if (ts.isTypeReferenceNode(baseType) && baseType.typeArguments && baseType.typeArguments.length > 0) {
+      } else if (
+        ts.isTypeReferenceNode(baseType) &&
+        baseType.typeArguments &&
+        baseType.typeArguments.length > 0
+      ) {
         baseType = baseType.typeArguments[0];
       }
     }
@@ -330,7 +332,6 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     return { isList, baseType };
   }
 
-  // Helper function to handle type references
   function handleTypeReference(
     node: ts.TypeReferenceNode,
     sourceFile: ts.SourceFile,
@@ -340,59 +341,51 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
   ): FieldType {
     const typeName = node.typeName.getText(sourceFile);
     const isScalar = isScalarType(typeName);
-    const isFieldUpdate = typeName.includes('FieldUpdateOperationsInput') || typeName.includes('BoolFieldUpdateOperationsInput') || typeName.includes('Prisma.InputJsonValue');
-    let isFilterObject = false;
+    const isFieldUpdate = typeName.includes('FieldUpdateOperationsInput') ||
+      typeName.includes('BoolFieldUpdateOperationsInput') ||
+      typeName.includes('Prisma.InputJsonValue') || typeName.includes('Input');
 
-    // if field.type.name includes 'Enum' and 'Filter', set isFilterObject to true
+    let isFilterObject = false;
     if (typeName.includes('Filter')) {
       isFilterObject = true;
     }
 
-    // if field.type.name includes 'NestedMany', set isList to true
+    // Check known patterns for lists
     if (typeName.includes('NestedInput') && typeName.includes('Many')) {
       isList = true;
     }
-
-    // if field.type.name includes 'ListRelationFilter', set isList to true
     if (typeName.includes('ListRelationFilter')) {
       isList = true;
     }
-
-    // if field.type.name contains `CreateNestedManyWithout`, set isList of parent to true
     if (typeName.includes('CreateNestedMany')) {
       isList = true;
     }
 
-    // if field.type.name contains `[]` and is not a scalar type, set isList to true
+    // If it's not a scalar type but includes '[]'
     if (!isScalarType(typeName) && typeName.includes('[]')) {
       isList = true;
     }
 
+    let ofType: FieldType[] | undefined;
     if (node.typeArguments && node.typeArguments.length > 0) {
       // Handle generic types
       const genericArgs = node.typeArguments.map(arg => extractTypeInfo(arg, sourceFile, depth + 1));
-      return {
-        name: capitalizeFirstLetter(typeName),
-        isScalar: false,
-        isList,
-        isNullable,
-        isFieldUpdate,
-        isFilterObject,
-        ofType: genericArgs.filter((arg): arg is FieldType => arg !== null),
-      };
+      ofType = genericArgs.filter((arg): arg is FieldType => arg !== null);
     }
 
-    return {
-      name: typeName,
+    const fieldType: FieldType = {
+      name: capitalizeFirstLetter(typeName),
       isScalar,
       isList,
       isNullable,
       isFieldUpdate,
       isFilterObject,
+      ofType,
     };
+
+    return fieldType;
   }
 
-  // Helper function to handle literal types
   function handleLiteralType(node: ts.LiteralTypeNode, isList: boolean, isNullable: boolean): FieldType {
     const literal = node.literal;
     let literalType: string;
@@ -416,15 +409,51 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     };
   }
 
+  // Additional fallback checks to detect lists from patterns in the type name
+  function detectAdditionalListPatterns(
+    field: FieldType,
+    typeNode: ts.TypeNode,
+    sourceFile: ts.SourceFile,
+    typeText?: string
+  ): FieldType {
+    const typeName = ts.isTypeReferenceNode(typeNode) ? typeNode.typeName.getText(sourceFile) : (typeText ?? typeNode.getText(sourceFile));
+
+    // If not already marked as list, check extra conditions
+    if (!field.isList) {
+      // Arrays indicated by brackets in the type name
+      if (typeName.includes('[]')) {
+        field.isList = true;
+      }
+
+      // If it's a known scalar and was an array in schema, just in case
+      if (!field.isList && isScalarType(typeName) && typeName.endsWith('[]')) {
+        field.isList = true;
+      }
+
+      // Additional known patterns
+      if (typeName.includes('NestedMany')) {
+        field.isList = true;
+      }
+      if (typeName.includes('ListRelationFilter')) {
+        field.isList = true;
+      }
+      if (typeName.includes('CreateNestedMany')) {
+        field.isList = true;
+      }
+    }
+
+    return field;
+  }
+
   try {
     ts.forEachChild(sourceFile, (child) => visitor(child));
   } catch (e) {
     console.error('Error processing AST: ', e);
   }
+
   return fields;
 }
 
-// Helper function to check if a type is null or undefined
 function isNullOrUndefined(type: ts.TypeNode, sourceFile: ts.SourceFile): boolean {
   const typeText = type.getText(sourceFile);
   return typeText === 'null' || typeText === 'undefined';

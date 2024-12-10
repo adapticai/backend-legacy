@@ -136,26 +136,26 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
   id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
+    set: props.id
+  } : undefined,
   title: props.title !== undefined ? {
-            set: props.title 
-           } : undefined,
+    set: props.title
+  } : undefined,
   description: props.description !== undefined ? {
-            set: props.description 
-           } : undefined,
+    set: props.description
+  } : undefined,
   date: props.date !== undefined ? {
-            set: props.date 
-           } : undefined,
+    set: props.date
+  } : undefined,
   importance: props.importance !== undefined ? {
-            set: props.importance 
-           } : undefined,
+    set: props.importance
+  } : undefined,
   createdAt: props.createdAt !== undefined ? {
-            set: props.createdAt 
-           } : undefined,
+    set: props.createdAt
+  } : undefined,
   updatedAt: props.updatedAt !== undefined ? {
-            set: props.updatedAt 
-           } : undefined,
+    set: props.updatedAt
+  } : undefined,
       },
     };
 
@@ -207,17 +207,17 @@ import { removeUndefinedProps } from './utils';
       },
       update: {
   title: props.title !== undefined ? {
-            set: props.title 
-           } : undefined,
+    set: props.title
+  } : undefined,
   description: props.description !== undefined ? {
-            set: props.description 
-           } : undefined,
+    set: props.description
+  } : undefined,
   date: props.date !== undefined ? {
-            set: props.date 
-           } : undefined,
+    set: props.date
+  } : undefined,
   importance: props.importance !== undefined ? {
-            set: props.importance 
-           } : undefined,
+    set: props.importance
+  } : undefined,
       },
     };
 
@@ -264,26 +264,26 @@ import { removeUndefinedProps } from './utils';
       },
       data: {
           id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
+    set: prop.id
+  } : undefined,
   title: prop.title !== undefined ? {
-            set: prop.title 
-           } : undefined,
+    set: prop.title
+  } : undefined,
   description: prop.description !== undefined ? {
-            set: prop.description 
-           } : undefined,
+    set: prop.description
+  } : undefined,
   date: prop.date !== undefined ? {
-            set: prop.date 
-           } : undefined,
+    set: prop.date
+  } : undefined,
   importance: prop.importance !== undefined ? {
-            set: prop.importance 
-           } : undefined,
+    set: prop.importance
+  } : undefined,
   createdAt: prop.createdAt !== undefined ? {
-            set: prop.createdAt 
-           } : undefined,
+    set: prop.createdAt
+  } : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
-            set: prop.updatedAt 
-           } : undefined,
+    set: prop.updatedAt
+  } : undefined,
 
       },
       }));
