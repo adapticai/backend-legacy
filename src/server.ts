@@ -13,6 +13,43 @@ import { useServer } from 'graphql-ws/lib/use/ws';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import prisma from './prismaClient';
+import { exec } from 'child_process';
+import dotenv from 'dotenv';
+dotenv.config();
+
+let dbUnreachableCount = 0;
+let lastRestartAttempt = 0;
+async function restartDatabase() {
+  return new Promise<void>((resolve, reject) => {
+    console.log("Attempting to redeploy the Railway Postgres service in production...");
+
+    // Check for both types of tokens
+    const projectToken = process.env.RAILWAY_TOKEN;
+    const apiToken = process.env.RAILWAY_API_TOKEN;
+
+    if (!projectToken && !apiToken) {
+      return reject(new Error('Neither RAILWAY_TOKEN nor RAILWAY_API_TOKEN found in environment variables'));
+    }
+
+    // Simplified command based on Railway CLI documentation
+    const deployCommand = `RAILWAY_TOKEN=${projectToken || ''} RAILWAY_API_TOKEN=${apiToken || ''} railway redeploy --service Postgres -y`;
+
+    exec(deployCommand, {
+      env: process.env,
+      shell: '/bin/sh'
+    }, (error, stdout, stderr) => {
+      if (error) {
+        console.error('Failed to redeploy DB via Railway CLI:', error);
+        console.error('Command output:', stdout);
+        console.error('Command errors:', stderr);
+        return reject(error);
+      }
+
+      console.log('Railway deployment output:', stdout);
+      resolve();
+    });
+  });
+}
 
 const startServer = async () => {
   const schema = await buildSchema({
@@ -31,6 +68,49 @@ const startServer = async () => {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     formatError: (err) => {
       console.error('GraphQL Error:', JSON.stringify(err, null, 2));
+
+      // Check if this error is due to unreachable DB
+      const message = err.message || '';
+      if (message.includes("Can't reach database server")) {
+        dbUnreachableCount += 1;
+        console.log(`DB unreachable count: ${dbUnreachableCount}`);
+
+        // If we've hit 3 (for example) attempts
+        if (dbUnreachableCount >= 3) {
+          const now = Date.now();
+          // Optional: Check if we've tried restarting recently
+          if (now - lastRestartAttempt > 5 * 60 * 1000) {
+            lastRestartAttempt = now;
+            try {
+              restartDatabase();
+              // Reset the counter after attempting a restart
+              dbUnreachableCount = 0;
+            } catch (restartError) {
+              console.error('Error trying to restart DB:', restartError);
+              // If the restart fails, we can try again after a delay
+              const backoffTime = Math.min(30000, 1000 * Math.pow(2, dbUnreachableCount - 3)); // Exponential backoff with a max of 30 seconds
+              console.log(`Waiting for ${backoffTime / 1000} seconds before next restart attempt...`);
+              setTimeout(() => {
+                restartDatabase()
+                  .then(() => {
+                    dbUnreachableCount = 0; // Reset the counter after a successful restart
+                  })
+                  .catch((restartError) => {
+                    console.error('Error trying to restart DB:', restartError);
+                    // We do not reset the counter here if the restart fails,
+                    // so it can try again next time.
+                  });
+              }, backoffTime);
+            }
+          }
+        }
+      } else {
+        // If the error is not a DB unreachable error, we might want
+        // to reset the counter or leave it as is. Generally, if we see
+        // a successful query or a different error, we might reset:
+        dbUnreachableCount = 0;
+      }
+
       return {
         message: err.message,
         locations: err.locations,
@@ -53,7 +133,6 @@ const startServer = async () => {
         console.log('Authorization header:', req.headers.authorization);
 
         const token = req.headers.authorization?.split(' ')[1] || '';
-
         let user = null;
         if (token) {
           try {
@@ -89,7 +168,6 @@ const startServer = async () => {
     {
       schema,
       context: async (ctx, msg, args) => {
-        // Handle context for WebSocket connections, including JWT verification
         const token = (ctx.connectionParams as { authorization?: string })?.authorization?.split(' ')[1] || '';
         let user = null;
         if (token) {
@@ -120,16 +198,22 @@ startServer().catch((error) => {
 
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
-  // Application specific logging, throwing an error, or other logic here
 });
 
 process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
-  // Application specific logging, throwing an error, or other logic here
 });
 
 process.on('SIGINT', async () => {
   await prisma.$disconnect();
   process.exit(0);
 });
+
+
+// // run restartDatabase() function
+// restartDatabase().then(() => {
+//   console.log('Database restarted successfully');
+// }).catch((error) => {
+//   console.error('Error restarting database:', error);
+// });
 
