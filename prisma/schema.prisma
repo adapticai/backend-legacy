@@ -1348,6 +1348,9 @@ model Action {
   /// Type of trade action, defined by ActionType enum.
   type ActionType
 
+  /// Whether the action is the primary action for the trade.
+  primary Boolean @default(false)
+
   /// Additional notes or comments about the action.
   note String
 
