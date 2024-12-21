@@ -1467,13 +1467,13 @@ model Order {
   /// Fee associated with the order. TYPESTRING.SKIP=true
   fee Float?
 
-  /// Strike price for option orders. Required when 'asset.type' is 'OPTION'. Must be a positive number.
+  /// For option orders. Strike price for option orders. Required only when 'asset.type' is 'OPTION'. Must be a positive number.
   strikePrice Float?
 
-  /// Expiration date for option orders. Required when 'asset.type' is 'OPTION'. Must be a valid date in the future.
+  /// For option orders. Expiration date for option orders. Required only when 'asset.type' is 'OPTION'. Must be a valid date in the future.
   expirationDate DateTime?
 
-  /// Type of option contract ('CALL' or 'PUT'). Required when 'asset.type' is 'OPTION'.
+  /// For option orders. Type of option contract ('CALL' or 'PUT'). Required only when 'asset.type' is 'OPTION'.
   optionType OptionType? @default(CALL)
 
   /// Reference to the stop loss order associated with this order. TYPESTRING.SKIP=true
