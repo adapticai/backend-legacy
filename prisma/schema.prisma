@@ -1477,7 +1477,7 @@ model Order {
   expirationDate DateTime?
 
   /// For option orders. Type of option contract ('CALL' or 'PUT'). Required only when 'asset.type' is 'OPTION'.
-  optionType OptionType? @default(CALL)
+  optionType OptionType?
 
   /// Reference to the stop loss order associated with this order. TYPESTRING.SKIP=true
   stopLossId String? @unique @db.Uuid
