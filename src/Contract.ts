@@ -156,6 +156,7 @@ id
       sequence
       tradeId
       type
+      primary
       note
       status
       fee
@@ -443,6 +444,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -578,6 +580,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -981,6 +984,7 @@ id
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
           type: props.order.action.type !== undefined ? props.order.action.type : undefined,
+          primary: props.order.action.primary !== undefined ? props.order.action.primary : undefined,
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
@@ -1780,6 +1784,9 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -1799,6 +1806,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -1867,6 +1875,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -2136,6 +2145,9 @@ id
             type: item.action.type !== undefined ? {
                 set: item.action.type
               } : undefined,
+            primary: item.action.primary !== undefined ? {
+                set: item.action.primary
+              } : undefined,
             note: item.action.note !== undefined ? {
                 set: item.action.note
               } : undefined,
@@ -2155,6 +2167,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -2390,6 +2403,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -2902,6 +2916,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -3037,6 +3052,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -3840,6 +3856,9 @@ id
           type: props.order.action.type !== undefined ? {
               set: props.order.action.type
             } : undefined,
+          primary: props.order.action.primary !== undefined ? {
+              set: props.order.action.primary
+            } : undefined,
           note: props.order.action.note !== undefined ? {
               set: props.order.action.note
             } : undefined,
@@ -3930,6 +3949,7 @@ id
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
           type: props.order.action.type !== undefined ? props.order.action.type : undefined,
+          primary: props.order.action.primary !== undefined ? props.order.action.primary : undefined,
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
@@ -4853,6 +4873,7 @@ id
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
           type: props.order.action.type !== undefined ? props.order.action.type : undefined,
+          primary: props.order.action.primary !== undefined ? props.order.action.primary : undefined,
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
@@ -5323,6 +5344,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -5458,6 +5480,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -5861,6 +5884,7 @@ id
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
           type: props.order.action.type !== undefined ? props.order.action.type : undefined,
+          primary: props.order.action.primary !== undefined ? props.order.action.primary : undefined,
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
@@ -6544,6 +6568,9 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -6563,6 +6590,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -6631,6 +6659,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -6900,6 +6929,9 @@ id
             type: item.action.type !== undefined ? {
                 set: item.action.type
               } : undefined,
+            primary: item.action.primary !== undefined ? {
+                set: item.action.primary
+              } : undefined,
             note: item.action.note !== undefined ? {
                 set: item.action.note
               } : undefined,
@@ -6919,6 +6951,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -7154,6 +7187,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -7666,6 +7700,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -7801,6 +7836,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -8604,6 +8640,9 @@ id
           type: props.order.action.type !== undefined ? {
               set: props.order.action.type
             } : undefined,
+          primary: props.order.action.primary !== undefined ? {
+              set: props.order.action.primary
+            } : undefined,
           note: props.order.action.note !== undefined ? {
               set: props.order.action.note
             } : undefined,
@@ -8694,6 +8733,7 @@ id
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
           type: props.order.action.type !== undefined ? props.order.action.type : undefined,
+          primary: props.order.action.primary !== undefined ? props.order.action.primary : undefined,
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
@@ -9617,6 +9657,7 @@ id
         create: {
           sequence: props.order.action.sequence !== undefined ? props.order.action.sequence : undefined,
           type: props.order.action.type !== undefined ? props.order.action.type : undefined,
+          primary: props.order.action.primary !== undefined ? props.order.action.primary : undefined,
           note: props.order.action.note !== undefined ? props.order.action.note : undefined,
           status: props.order.action.status !== undefined ? props.order.action.status : undefined,
           fee: props.order.action.fee !== undefined ? props.order.action.fee : undefined,
@@ -10357,6 +10398,9 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -10376,6 +10420,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -10444,6 +10489,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -10713,6 +10759,9 @@ id
             type: item.action.type !== undefined ? {
                 set: item.action.type
               } : undefined,
+            primary: item.action.primary !== undefined ? {
+                set: item.action.primary
+              } : undefined,
             note: item.action.note !== undefined ? {
                 set: item.action.note
               } : undefined,
@@ -10732,6 +10781,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -10967,6 +11017,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -11479,6 +11530,7 @@ id
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -11614,6 +11666,7 @@ id
           create: {
             sequence: item.action.sequence !== undefined ? item.action.sequence : undefined,
             type: item.action.type !== undefined ? item.action.type : undefined,
+            primary: item.action.primary !== undefined ? item.action.primary : undefined,
             note: item.action.note !== undefined ? item.action.note : undefined,
             status: item.action.status !== undefined ? item.action.status : undefined,
             fee: item.action.fee !== undefined ? item.action.fee : undefined,
@@ -12417,6 +12470,9 @@ id
           type: prop.order.action.type !== undefined ? {
               set: prop.order.action.type
             } : undefined,
+          primary: prop.order.action.primary !== undefined ? {
+              set: prop.order.action.primary
+            } : undefined,
           note: prop.order.action.note !== undefined ? {
               set: prop.order.action.note
             } : undefined,
@@ -12507,6 +12563,7 @@ id
         create: {
           sequence: prop.order.action.sequence !== undefined ? prop.order.action.sequence : undefined,
           type: prop.order.action.type !== undefined ? prop.order.action.type : undefined,
+          primary: prop.order.action.primary !== undefined ? prop.order.action.primary : undefined,
           note: prop.order.action.note !== undefined ? prop.order.action.note : undefined,
           status: prop.order.action.status !== undefined ? prop.order.action.status : undefined,
           fee: prop.order.action.fee !== undefined ? prop.order.action.fee : undefined,
@@ -13430,6 +13487,7 @@ id
         create: {
           sequence: prop.order.action.sequence !== undefined ? prop.order.action.sequence : undefined,
           type: prop.order.action.type !== undefined ? prop.order.action.type : undefined,
+          primary: prop.order.action.primary !== undefined ? prop.order.action.primary : undefined,
           note: prop.order.action.note !== undefined ? prop.order.action.note : undefined,
           status: prop.order.action.status !== undefined ? prop.order.action.status : undefined,
           fee: prop.order.action.fee !== undefined ? prop.order.action.fee : undefined,

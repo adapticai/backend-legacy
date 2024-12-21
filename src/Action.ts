@@ -15,6 +15,7 @@ import { removeUndefinedProps } from './utils';
   sequence
   tradeId
   type
+  primary
   note
   status
   fee
@@ -158,6 +159,7 @@ import { removeUndefinedProps } from './utils';
         data: {
             sequence: props.sequence !== undefined ? props.sequence : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  primary: props.primary !== undefined ? props.primary : undefined,
   note: props.note !== undefined ? props.note : undefined,
   status: props.status !== undefined ? props.status : undefined,
   fee: props.fee !== undefined ? props.fee : undefined,
@@ -1152,6 +1154,7 @@ import { removeUndefinedProps } from './utils';
   sequence: prop.sequence !== undefined ? prop.sequence : undefined,
   tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
+  primary: prop.primary !== undefined ? prop.primary : undefined,
   note: prop.note !== undefined ? prop.note : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
   fee: prop.fee !== undefined ? prop.fee : undefined,
@@ -1213,6 +1216,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
+           } : undefined,
+  primary: props.primary !== undefined ? {
+            set: props.primary 
            } : undefined,
   note: props.note !== undefined ? {
             set: props.note 
@@ -5303,6 +5309,7 @@ import { removeUndefinedProps } from './utils';
       create: {
     sequence: props.sequence !== undefined ? props.sequence : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  primary: props.primary !== undefined ? props.primary : undefined,
   note: props.note !== undefined ? props.note : undefined,
   status: props.status !== undefined ? props.status : undefined,
   fee: props.fee !== undefined ? props.fee : undefined,
@@ -6262,6 +6269,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
+           } : undefined,
+  primary: props.primary !== undefined ? {
+            set: props.primary 
            } : undefined,
   note: props.note !== undefined ? {
             set: props.note 
@@ -10359,6 +10369,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   type: prop.type !== undefined ? {
             set: prop.type 
+           } : undefined,
+  primary: prop.primary !== undefined ? {
+            set: prop.primary 
            } : undefined,
   note: prop.note !== undefined ? {
             set: prop.note 

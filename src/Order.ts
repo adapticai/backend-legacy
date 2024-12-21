@@ -57,6 +57,7 @@ import { removeUndefinedProps } from './utils';
     sequence
     tradeId
     type
+    primary
     note
     status
     fee
@@ -481,6 +482,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -637,6 +639,7 @@ import { removeUndefinedProps } from './utils';
       create: {
         sequence: props.action.sequence !== undefined ? props.action.sequence : undefined,
         type: props.action.type !== undefined ? props.action.type : undefined,
+        primary: props.action.primary !== undefined ? props.action.primary : undefined,
         note: props.action.note !== undefined ? props.action.note : undefined,
         status: props.action.status !== undefined ? props.action.status : undefined,
         fee: props.action.fee !== undefined ? props.action.fee : undefined,
@@ -911,6 +914,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -2424,6 +2428,9 @@ import { removeUndefinedProps } from './utils';
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -2443,6 +2450,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -2555,6 +2563,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -3255,6 +3264,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -3419,6 +3429,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         type: props.action.type !== undefined ? {
             set: props.action.type
+          } : undefined,
+        primary: props.action.primary !== undefined ? {
+            set: props.action.primary
           } : undefined,
         note: props.action.note !== undefined ? {
             set: props.action.note
@@ -3919,6 +3932,7 @@ import { removeUndefinedProps } from './utils';
       create: {
         sequence: props.action.sequence !== undefined ? props.action.sequence : undefined,
         type: props.action.type !== undefined ? props.action.type : undefined,
+        primary: props.action.primary !== undefined ? props.action.primary : undefined,
         note: props.action.note !== undefined ? props.action.note : undefined,
         status: props.action.status !== undefined ? props.action.status : undefined,
         fee: props.action.fee !== undefined ? props.action.fee : undefined,
@@ -4382,6 +4396,9 @@ import { removeUndefinedProps } from './utils';
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -4401,6 +4418,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -4469,6 +4487,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -5326,6 +5345,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -7046,6 +7066,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -7202,6 +7223,7 @@ import { removeUndefinedProps } from './utils';
       create: {
         sequence: props.action.sequence !== undefined ? props.action.sequence : undefined,
         type: props.action.type !== undefined ? props.action.type : undefined,
+        primary: props.action.primary !== undefined ? props.action.primary : undefined,
         note: props.action.note !== undefined ? props.action.note : undefined,
         status: props.action.status !== undefined ? props.action.status : undefined,
         fee: props.action.fee !== undefined ? props.action.fee : undefined,
@@ -7476,6 +7498,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -8866,6 +8889,9 @@ import { removeUndefinedProps } from './utils';
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -8885,6 +8911,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -8997,6 +9024,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -9697,6 +9725,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -9861,6 +9890,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         type: props.action.type !== undefined ? {
             set: props.action.type
+          } : undefined,
+        primary: props.action.primary !== undefined ? {
+            set: props.action.primary
           } : undefined,
         note: props.action.note !== undefined ? {
             set: props.action.note
@@ -10361,6 +10393,7 @@ import { removeUndefinedProps } from './utils';
       create: {
         sequence: props.action.sequence !== undefined ? props.action.sequence : undefined,
         type: props.action.type !== undefined ? props.action.type : undefined,
+        primary: props.action.primary !== undefined ? props.action.primary : undefined,
         note: props.action.note !== undefined ? props.action.note : undefined,
         status: props.action.status !== undefined ? props.action.status : undefined,
         fee: props.action.fee !== undefined ? props.action.fee : undefined,
@@ -10824,6 +10857,9 @@ import { removeUndefinedProps } from './utils';
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -10843,6 +10879,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -10911,6 +10948,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -11768,6 +11806,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -14044,6 +14083,9 @@ import { removeUndefinedProps } from './utils';
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -14063,6 +14105,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -14175,6 +14218,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -14875,6 +14919,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -15039,6 +15084,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         type: prop.action.type !== undefined ? {
             set: prop.action.type
+          } : undefined,
+        primary: prop.action.primary !== undefined ? {
+            set: prop.action.primary
           } : undefined,
         note: prop.action.note !== undefined ? {
             set: prop.action.note
@@ -15539,6 +15587,7 @@ import { removeUndefinedProps } from './utils';
       create: {
         sequence: prop.action.sequence !== undefined ? prop.action.sequence : undefined,
         type: prop.action.type !== undefined ? prop.action.type : undefined,
+        primary: prop.action.primary !== undefined ? prop.action.primary : undefined,
         note: prop.action.note !== undefined ? prop.action.note : undefined,
         status: prop.action.status !== undefined ? prop.action.status : undefined,
         fee: prop.action.fee !== undefined ? prop.action.fee : undefined,
@@ -16002,6 +16051,9 @@ import { removeUndefinedProps } from './utils';
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            primary: item.primary !== undefined ? {
+                set: item.primary
+              } : undefined,
             note: item.note !== undefined ? {
                 set: item.note
               } : undefined,
@@ -16021,6 +16073,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -16089,6 +16142,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,
@@ -16946,6 +17000,7 @@ import { removeUndefinedProps } from './utils';
           create: {
             sequence: item.sequence !== undefined ? item.sequence : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            primary: item.primary !== undefined ? item.primary : undefined,
             note: item.note !== undefined ? item.note : undefined,
             status: item.status !== undefined ? item.status : undefined,
             fee: item.fee !== undefined ? item.fee : undefined,

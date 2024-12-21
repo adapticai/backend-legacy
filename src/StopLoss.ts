@@ -256,6 +256,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
           type: props.Order.action.type !== undefined ? props.Order.action.type : undefined,
+          primary: props.Order.action.primary !== undefined ? props.Order.action.primary : undefined,
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
@@ -1329,6 +1330,9 @@ import { removeUndefinedProps } from './utils';
           type: props.Order.action.type !== undefined ? {
               set: props.Order.action.type
             } : undefined,
+          primary: props.Order.action.primary !== undefined ? {
+              set: props.Order.action.primary
+            } : undefined,
           note: props.Order.action.note !== undefined ? {
               set: props.Order.action.note
             } : undefined,
@@ -1419,6 +1423,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
           type: props.Order.action.type !== undefined ? props.Order.action.type : undefined,
+          primary: props.Order.action.primary !== undefined ? props.Order.action.primary : undefined,
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
@@ -2849,6 +2854,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
           type: props.Order.action.type !== undefined ? props.Order.action.type : undefined,
+          primary: props.Order.action.primary !== undefined ? props.Order.action.primary : undefined,
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
@@ -3482,6 +3488,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
           type: props.Order.action.type !== undefined ? props.Order.action.type : undefined,
+          primary: props.Order.action.primary !== undefined ? props.Order.action.primary : undefined,
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
@@ -4464,6 +4471,9 @@ import { removeUndefinedProps } from './utils';
           type: props.Order.action.type !== undefined ? {
               set: props.Order.action.type
             } : undefined,
+          primary: props.Order.action.primary !== undefined ? {
+              set: props.Order.action.primary
+            } : undefined,
           note: props.Order.action.note !== undefined ? {
               set: props.Order.action.note
             } : undefined,
@@ -4554,6 +4564,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
           type: props.Order.action.type !== undefined ? props.Order.action.type : undefined,
+          primary: props.Order.action.primary !== undefined ? props.Order.action.primary : undefined,
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
@@ -5984,6 +5995,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: props.Order.action.sequence !== undefined ? props.Order.action.sequence : undefined,
           type: props.Order.action.type !== undefined ? props.Order.action.type : undefined,
+          primary: props.Order.action.primary !== undefined ? props.Order.action.primary : undefined,
           note: props.Order.action.note !== undefined ? props.Order.action.note : undefined,
           status: props.Order.action.status !== undefined ? props.Order.action.status : undefined,
           fee: props.Order.action.fee !== undefined ? props.Order.action.fee : undefined,
@@ -7016,6 +7028,9 @@ import { removeUndefinedProps } from './utils';
           type: prop.Order.action.type !== undefined ? {
               set: prop.Order.action.type
             } : undefined,
+          primary: prop.Order.action.primary !== undefined ? {
+              set: prop.Order.action.primary
+            } : undefined,
           note: prop.Order.action.note !== undefined ? {
               set: prop.Order.action.note
             } : undefined,
@@ -7106,6 +7121,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: prop.Order.action.sequence !== undefined ? prop.Order.action.sequence : undefined,
           type: prop.Order.action.type !== undefined ? prop.Order.action.type : undefined,
+          primary: prop.Order.action.primary !== undefined ? prop.Order.action.primary : undefined,
           note: prop.Order.action.note !== undefined ? prop.Order.action.note : undefined,
           status: prop.Order.action.status !== undefined ? prop.Order.action.status : undefined,
           fee: prop.Order.action.fee !== undefined ? prop.Order.action.fee : undefined,
@@ -8536,6 +8552,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           sequence: prop.Order.action.sequence !== undefined ? prop.Order.action.sequence : undefined,
           type: prop.Order.action.type !== undefined ? prop.Order.action.type : undefined,
+          primary: prop.Order.action.primary !== undefined ? prop.Order.action.primary : undefined,
           note: prop.Order.action.note !== undefined ? prop.Order.action.note : undefined,
           status: prop.Order.action.status !== undefined ? prop.Order.action.status : undefined,
           fee: prop.Order.action.fee !== undefined ? prop.Order.action.fee : undefined,

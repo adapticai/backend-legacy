@@ -152,6 +152,7 @@ id
         sequence
         tradeId
         type
+        primary
         note
         status
         fee
@@ -624,6 +625,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -1894,6 +1896,9 @@ id
             type: props.contract.order.action.type !== undefined ? {
                 set: props.contract.order.action.type
               } : undefined,
+            primary: props.contract.order.action.primary !== undefined ? {
+                set: props.contract.order.action.primary
+              } : undefined,
             note: props.contract.order.action.note !== undefined ? {
                 set: props.contract.order.action.note
               } : undefined,
@@ -1913,6 +1918,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -2276,6 +2282,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -2702,6 +2709,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -3203,6 +3211,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -4371,6 +4380,9 @@ id
             type: props.contract.order.action.type !== undefined ? {
                 set: props.contract.order.action.type
               } : undefined,
+            primary: props.contract.order.action.primary !== undefined ? {
+                set: props.contract.order.action.primary
+              } : undefined,
             note: props.contract.order.action.note !== undefined ? {
                 set: props.contract.order.action.note
               } : undefined,
@@ -4390,6 +4402,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -4753,6 +4766,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -5179,6 +5193,7 @@ id
           create: {
             sequence: props.contract.order.action.sequence !== undefined ? props.contract.order.action.sequence : undefined,
             type: props.contract.order.action.type !== undefined ? props.contract.order.action.type : undefined,
+            primary: props.contract.order.action.primary !== undefined ? props.contract.order.action.primary : undefined,
             note: props.contract.order.action.note !== undefined ? props.contract.order.action.note : undefined,
             status: props.contract.order.action.status !== undefined ? props.contract.order.action.status : undefined,
             fee: props.contract.order.action.fee !== undefined ? props.contract.order.action.fee : undefined,
@@ -6402,6 +6417,9 @@ id
             type: prop.contract.order.action.type !== undefined ? {
                 set: prop.contract.order.action.type
               } : undefined,
+            primary: prop.contract.order.action.primary !== undefined ? {
+                set: prop.contract.order.action.primary
+              } : undefined,
             note: prop.contract.order.action.note !== undefined ? {
                 set: prop.contract.order.action.note
               } : undefined,
@@ -6421,6 +6439,7 @@ id
           create: {
             sequence: prop.contract.order.action.sequence !== undefined ? prop.contract.order.action.sequence : undefined,
             type: prop.contract.order.action.type !== undefined ? prop.contract.order.action.type : undefined,
+            primary: prop.contract.order.action.primary !== undefined ? prop.contract.order.action.primary : undefined,
             note: prop.contract.order.action.note !== undefined ? prop.contract.order.action.note : undefined,
             status: prop.contract.order.action.status !== undefined ? prop.contract.order.action.status : undefined,
             fee: prop.contract.order.action.fee !== undefined ? prop.contract.order.action.fee : undefined,
@@ -6784,6 +6803,7 @@ id
           create: {
             sequence: prop.contract.order.action.sequence !== undefined ? prop.contract.order.action.sequence : undefined,
             type: prop.contract.order.action.type !== undefined ? prop.contract.order.action.type : undefined,
+            primary: prop.contract.order.action.primary !== undefined ? prop.contract.order.action.primary : undefined,
             note: prop.contract.order.action.note !== undefined ? prop.contract.order.action.note : undefined,
             status: prop.contract.order.action.status !== undefined ? prop.contract.order.action.status : undefined,
             fee: prop.contract.order.action.fee !== undefined ? prop.contract.order.action.fee : undefined,
@@ -7210,6 +7230,7 @@ id
           create: {
             sequence: prop.contract.order.action.sequence !== undefined ? prop.contract.order.action.sequence : undefined,
             type: prop.contract.order.action.type !== undefined ? prop.contract.order.action.type : undefined,
+            primary: prop.contract.order.action.primary !== undefined ? prop.contract.order.action.primary : undefined,
             note: prop.contract.order.action.note !== undefined ? prop.contract.order.action.note : undefined,
             status: prop.contract.order.action.status !== undefined ? prop.contract.order.action.status : undefined,
             fee: prop.contract.order.action.fee !== undefined ? prop.contract.order.action.fee : undefined,
