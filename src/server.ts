@@ -17,6 +17,13 @@ import { exec } from 'child_process';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import { Request } from 'express';
+
+interface AuthenticatedRequest extends Request {
+  // Add any additional properties that are specific to authenticated requests
+  user: any; // Replace 'any' with the actual type of the user object
+}
+
 let dbUnreachableCount = 0;
 let lastRestartAttempt = 0;
 async function restartDatabase() {
@@ -60,7 +67,7 @@ const startServer = async () => {
   const app = express();
   const httpServer = createServer(app);
 
-  app.use('/api', authMiddleware);
+  app.use('/api', (req, res, next) => authMiddleware(req as AuthenticatedRequest, res, next));
 
   const server = new ApolloServer({
     schema,
@@ -125,7 +132,8 @@ const startServer = async () => {
   await server.start();
 
   app.use(
-    cors(),
+    '/graphql',
+    cors<Request>(),
     bodyParser.json(),
     expressMiddleware(server, {
       context: async ({ req }) => {
@@ -216,4 +224,3 @@ process.on('SIGINT', async () => {
 // }).catch((error) => {
 //   console.error('Error restarting database:', error);
 // });
-
