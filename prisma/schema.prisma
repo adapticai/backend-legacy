@@ -736,7 +736,7 @@ model AlpacaAccount {
   /// List of trades executed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   trades Trade[]
 
-  /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
+  /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount', 'action']
   orders Order[]
 
   /// List of positions held in this Alpaca account. TYPESTRING.INCLUDE=['id','qty','asset'] GQL.EXCLUDE=['alpacaAccount']
@@ -1325,7 +1325,7 @@ model Trade {
   /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions', 'contracts']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order", "dependsOn", "dependedOnBy"] GQL.EXCLUDE=['trade']
