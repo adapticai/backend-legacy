@@ -1429,7 +1429,7 @@ model Order {
   extendedHours Boolean?
 
   /// Current status of the order.
-  status OrderStatus @default(NEW)
+  status OrderStatus @default(STAGED)
 
   /// Timestamp when the order was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
