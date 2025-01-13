@@ -1363,7 +1363,7 @@ model Action {
   /// The trade this action is part of. TYPESTRING.SKIP=true GQL.SKIP=true
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
-  /// The order associated with this action. GQL.EXCLUDE=['action', 'alpacaAccount'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
+  /// The order associated with this action. GQL.EXCLUDE=['alpacaAccount'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
   order Order? @relation
 
   /// A list of action sequence numbers, for any sibling actions that are part of the same trade, that this action depends on.
