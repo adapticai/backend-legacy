@@ -756,7 +756,7 @@ model Position {
   /// Reference to the associated asset. TYPESTRING.SKIP=true
   assetId String? @db.Uuid
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions', 'contracts']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// The average price at which the asset was acquired.
@@ -801,7 +801,7 @@ model Position {
   /// Relation to the AlpacaAccount model, if applicable. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
-  /// Foreign key referencing the AlpacaAccount. TYPESTRING.SKIP=true GQL.SKIP=true
+  /// Foreign key referencing the AlpacaAccount. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 
   /// Whether the position has been closed out or not. TYPESTRING.SKIP=true
