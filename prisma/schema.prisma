@@ -756,6 +756,9 @@ model Position {
   /// Reference to the associated asset. TYPESTRING.SKIP=true
   assetId String? @db.Uuid
 
+  /// The symbol of the asset.
+  symbol String?
+
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions', 'contracts']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
@@ -812,6 +815,10 @@ model Position {
 
   /// Timestamp when the position was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
+
+  /// Unique constraint for the symbol and Alpaca account ID.
+  @@unique([symbol, alpacaAccountId])
+  @@map(name: "positions")
 }
 
 // Represents an authenticator for multi-factor authentication.
