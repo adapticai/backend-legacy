@@ -721,7 +721,7 @@ model AlpacaAccount {
   /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). TYPESTRING.SKIP=true
   volumeThreshold Float @default(50000)
 
-  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts']
+  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts', 'customer', 'accounts', 'sessions', 'authenticators']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Foreign key referencing the User. TYPESTRING.SKIP=true
@@ -1363,7 +1363,7 @@ model Action {
   /// The trade this action is part of. TYPESTRING.SKIP=true GQL.SKIP=true
   trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
 
-  /// The order associated with this action. GQL.EXCLUDE=['alpacaAccount'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
+  /// The order associated with this action. GQL.EXCLUDE=['alpacaAccount', 'action'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
   order Order? @relation
 
   /// A list of action sequence numbers, for any sibling actions that are part of the same trade, that this action depends on.
