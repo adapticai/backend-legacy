@@ -334,9 +334,9 @@ const handleUpdateOperation = (
       return '';
     }
 
-    // Dynamic handling for cases where accessor is {id: ...} only or array of such objects:
-    const singleIdCondition = `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'`;
-    const arrayOfIdCondition = `Array.isArray(${accessor}) && ${accessor}.length > 0 && ${accessor}.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1)`;
+    // Dynamic handling for cases where accessor is {id: ...} or {symbol: ...} only or array of such objects:
+    const singleIdCondition = `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && (Object.keys(${accessor})[0] === 'id' || Object.keys(${accessor})[0] === 'symbol')`;
+    const arrayOfIdCondition = `Array.isArray(${accessor}) && ${accessor}.length > 0 && ${accessor}.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1)`;
 
     const openingLine = field.type.isList
       ? `${arrayOfIdCondition} ? {
