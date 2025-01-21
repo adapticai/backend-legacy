@@ -153,4 +153,4 @@ jobs:
         run: |
           git rm dist/package.json
           git commit -m "ci: remove dist/package.json after publish"
-          git push origin HEAD:main
+          git push origin HEAD:dev
