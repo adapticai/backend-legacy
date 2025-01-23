@@ -13,6 +13,7 @@ import { removeUndefinedProps } from './utils';
     
   id
   assetId
+  symbol
   asset {
     id
     symbol
@@ -86,6 +87,7 @@ import { removeUndefinedProps } from './utils';
   lastTradePrice
   changeToday
   assetMarginable
+  alpacaAccountId
   closed
   createdAt
   updatedAt
@@ -115,7 +117,8 @@ import { removeUndefinedProps } from './utils';
 
       const variables = {
         data: {
-            averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
+            symbol: props.symbol !== undefined ? props.symbol : undefined,
+  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
   qty: props.qty !== undefined ? props.qty : undefined,
   qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
   marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
@@ -1202,6 +1205,7 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       data: props.map(prop => ({
   assetId: prop.assetId !== undefined ? prop.assetId : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
   averageEntryPrice: prop.averageEntryPrice !== undefined ? prop.averageEntryPrice : undefined,
   qty: prop.qty !== undefined ? prop.qty : undefined,
   qtyAvailable: prop.qtyAvailable !== undefined ? prop.qtyAvailable : undefined,
@@ -1256,6 +1260,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
@@ -1263,6 +1270,9 @@ import { removeUndefinedProps } from './utils';
       data: {
   id: props.id !== undefined ? {
             set: props.id 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
            } : undefined,
   averageEntryPrice: props.averageEntryPrice !== undefined ? {
             set: props.averageEntryPrice 
@@ -1313,7 +1323,7 @@ import { removeUndefinedProps } from './utils';
             set: props.updatedAt 
            } : undefined,
   asset: props.asset ? 
-  typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
+  typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && (Object.keys(props.asset)[0] === 'id' || Object.keys(props.asset)[0] === 'symbol')
 ? {
   connect: {
     id: props.asset.id
@@ -1500,7 +1510,7 @@ import { removeUndefinedProps } from './utils';
             set: props.asset.bidPrice
           } : undefined,
     trades: props.asset.trades ? 
-    Array.isArray(props.asset.trades) && props.asset.trades.length > 0 && props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.trades) && props.asset.trades.length > 0 && props.asset.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.trades.map((item: any) => ({
       id: item.id
     }))
@@ -1552,7 +1562,7 @@ import { removeUndefinedProps } from './utils';
               set: item.status
             } : undefined,
       alpacaAccount: item.alpacaAccount ? 
-      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && (Object.keys(item.alpacaAccount)[0] === 'id' || Object.keys(item.alpacaAccount)[0] === 'symbol')
 ? {
       connect: {
         id: item.alpacaAccount.id
@@ -1616,7 +1626,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.actions.map((item: any) => ({
         id: item.id
       }))
@@ -1745,7 +1755,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     orders: props.asset.orders ? 
-    Array.isArray(props.asset.orders) && props.asset.orders.length > 0 && props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.orders) && props.asset.orders.length > 0 && props.asset.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.orders.map((item: any) => ({
       id: item.id
     }))
@@ -1846,7 +1856,7 @@ import { removeUndefinedProps } from './utils';
               set: item.takeProfitId
             } : undefined,
       stopLoss: item.stopLoss ? 
-      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && (Object.keys(item.stopLoss)[0] === 'id' || Object.keys(item.stopLoss)[0] === 'symbol')
 ? {
       connect: {
         id: item.stopLoss.id
@@ -1878,7 +1888,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       takeProfit: item.takeProfit ? 
-      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && (Object.keys(item.takeProfit)[0] === 'id' || Object.keys(item.takeProfit)[0] === 'symbol')
 ? {
       connect: {
         id: item.takeProfit.id
@@ -1910,7 +1920,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       alpacaAccount: item.alpacaAccount ? 
-      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && (Object.keys(item.alpacaAccount)[0] === 'id' || Object.keys(item.alpacaAccount)[0] === 'symbol')
 ? {
       connect: {
         id: item.alpacaAccount.id
@@ -1974,7 +1984,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       action: item.action ? 
-      typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+      typeof item.action === 'object' && Object.keys(item.action).length === 1 && (Object.keys(item.action)[0] === 'id' || Object.keys(item.action)[0] === 'symbol')
 ? {
       connect: {
         id: item.action.id
@@ -2034,7 +2044,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       contract: item.contract ? 
-      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
       connect: {
         id: item.contract.id
@@ -2315,7 +2325,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     newsMentions: props.asset.newsMentions ? 
-    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.newsMentions.map((item: any) => ({
       id: item.id
     }))
@@ -2347,7 +2357,7 @@ import { removeUndefinedProps } from './utils';
               set: item.sentimentLabel
             } : undefined,
       news: item.news ? 
-      typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+      typeof item.news === 'object' && Object.keys(item.news).length === 1 && (Object.keys(item.news)[0] === 'id' || Object.keys(item.news)[0] === 'symbol')
 ? {
       connect: {
         id: item.news.id
@@ -2474,7 +2484,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     contracts: props.asset.contracts ? 
-    Array.isArray(props.asset.contracts) && props.asset.contracts.length > 0 && props.asset.contracts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.contracts) && props.asset.contracts.length > 0 && props.asset.contracts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.contracts.map((item: any) => ({
       id: item.id
     }))
@@ -2561,7 +2571,7 @@ import { removeUndefinedProps } from './utils';
               set: item.orderId
             } : undefined,
       deliverables: item.deliverables ? 
-      Array.isArray(item.deliverables) && item.deliverables.length > 0 && item.deliverables.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.deliverables) && item.deliverables.length > 0 && item.deliverables.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.deliverables.map((item: any) => ({
         id: item.id
       }))
@@ -2620,7 +2630,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       order: item.order ? 
-      typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+      typeof item.order === 'object' && Object.keys(item.order).length === 1 && (Object.keys(item.order)[0] === 'id' || Object.keys(item.order)[0] === 'symbol')
 ? {
       connect: {
         id: item.order.id
@@ -3356,7 +3366,7 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
   alpacaAccount: props.alpacaAccount ? 
-  typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
+  typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
 ? {
   connect: {
     id: props.alpacaAccount.id
@@ -3405,7 +3415,7 @@ import { removeUndefinedProps } from './utils';
             set: props.alpacaAccount.volumeThreshold
           } : undefined,
     user: props.alpacaAccount.user ? 
-    typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
+    typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && (Object.keys(props.alpacaAccount.user)[0] === 'id' || Object.keys(props.alpacaAccount.user)[0] === 'symbol')
 ? {
     connect: {
       id: props.alpacaAccount.user.id
@@ -3463,7 +3473,7 @@ import { removeUndefinedProps } from './utils';
               set: props.alpacaAccount.user.openaiModel
             } : undefined,
       customer: props.alpacaAccount.user.customer ? 
-      typeof props.alpacaAccount.user.customer === 'object' && Object.keys(props.alpacaAccount.user.customer).length === 1 && Object.keys(props.alpacaAccount.user.customer)[0] === 'id'
+      typeof props.alpacaAccount.user.customer === 'object' && Object.keys(props.alpacaAccount.user.customer).length === 1 && (Object.keys(props.alpacaAccount.user.customer)[0] === 'id' || Object.keys(props.alpacaAccount.user.customer)[0] === 'symbol')
 ? {
       connect: {
         id: props.alpacaAccount.user.customer.id
@@ -3524,7 +3534,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.accounts.map((item: any) => ({
         id: item.id
       }))
@@ -3588,7 +3598,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.sessions.map((item: any) => ({
         id: item.id
       }))
@@ -3617,7 +3627,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.authenticators.map((item: any) => ({
         id: item.id
       }))
@@ -3767,7 +3777,7 @@ import { removeUndefinedProps } from './utils';
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-    Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 && props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 && props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.trades.map((item: any) => ({
       id: item.id
     }))
@@ -3819,7 +3829,7 @@ import { removeUndefinedProps } from './utils';
               set: item.status
             } : undefined,
       asset: item.asset ? 
-      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && (Object.keys(item.asset)[0] === 'id' || Object.keys(item.asset)[0] === 'symbol')
 ? {
       connect: {
         id: item.asset.id
@@ -4066,7 +4076,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.actions.map((item: any) => ({
         id: item.id
       }))
@@ -4239,7 +4249,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     orders: props.alpacaAccount.orders ? 
-    Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 && props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 && props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.orders.map((item: any) => ({
       id: item.id
     }))
@@ -4340,7 +4350,7 @@ import { removeUndefinedProps } from './utils';
               set: item.takeProfitId
             } : undefined,
       stopLoss: item.stopLoss ? 
-      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && (Object.keys(item.stopLoss)[0] === 'id' || Object.keys(item.stopLoss)[0] === 'symbol')
 ? {
       connect: {
         id: item.stopLoss.id
@@ -4372,7 +4382,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       takeProfit: item.takeProfit ? 
-      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && (Object.keys(item.takeProfit)[0] === 'id' || Object.keys(item.takeProfit)[0] === 'symbol')
 ? {
       connect: {
         id: item.takeProfit.id
@@ -4404,7 +4414,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       action: item.action ? 
-      typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+      typeof item.action === 'object' && Object.keys(item.action).length === 1 && (Object.keys(item.action)[0] === 'id' || Object.keys(item.action)[0] === 'symbol')
 ? {
       connect: {
         id: item.action.id
@@ -4464,7 +4474,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       asset: item.asset ? 
-      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && (Object.keys(item.asset)[0] === 'id' || Object.keys(item.asset)[0] === 'symbol')
 ? {
       connect: {
         id: item.asset.id
@@ -4711,7 +4721,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       contract: item.contract ? 
-      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
       connect: {
         id: item.contract.id
@@ -5036,7 +5046,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.alerts.map((item: any) => ({
       id: item.id
     }))
@@ -5622,12 +5632,16 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
       },
       create: {
-    averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
+    symbol: props.symbol !== undefined ? props.symbol : undefined,
+  averageEntryPrice: props.averageEntryPrice !== undefined ? props.averageEntryPrice : undefined,
   qty: props.qty !== undefined ? props.qty : undefined,
   qtyAvailable: props.qtyAvailable !== undefined ? props.qtyAvailable : undefined,
   marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
@@ -6676,6 +6690,9 @@ import { removeUndefinedProps } from './utils';
   } : undefined,
       },
       update: {
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
   averageEntryPrice: props.averageEntryPrice !== undefined ? {
             set: props.averageEntryPrice 
            } : undefined,
@@ -6719,7 +6736,7 @@ import { removeUndefinedProps } from './utils';
             set: props.closed 
            } : undefined,
   asset: props.asset ? 
-  typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
+  typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && (Object.keys(props.asset)[0] === 'id' || Object.keys(props.asset)[0] === 'symbol')
 ? {
   connect: {
     id: props.asset.id
@@ -6906,7 +6923,7 @@ import { removeUndefinedProps } from './utils';
             set: props.asset.bidPrice
           } : undefined,
     trades: props.asset.trades ? 
-    Array.isArray(props.asset.trades) && props.asset.trades.length > 0 && props.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.trades) && props.asset.trades.length > 0 && props.asset.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.trades.map((item: any) => ({
       id: item.id
     }))
@@ -6958,7 +6975,7 @@ import { removeUndefinedProps } from './utils';
               set: item.status
             } : undefined,
       alpacaAccount: item.alpacaAccount ? 
-      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && (Object.keys(item.alpacaAccount)[0] === 'id' || Object.keys(item.alpacaAccount)[0] === 'symbol')
 ? {
       connect: {
         id: item.alpacaAccount.id
@@ -7022,7 +7039,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.actions.map((item: any) => ({
         id: item.id
       }))
@@ -7151,7 +7168,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     orders: props.asset.orders ? 
-    Array.isArray(props.asset.orders) && props.asset.orders.length > 0 && props.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.orders) && props.asset.orders.length > 0 && props.asset.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.orders.map((item: any) => ({
       id: item.id
     }))
@@ -7252,7 +7269,7 @@ import { removeUndefinedProps } from './utils';
               set: item.takeProfitId
             } : undefined,
       stopLoss: item.stopLoss ? 
-      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && (Object.keys(item.stopLoss)[0] === 'id' || Object.keys(item.stopLoss)[0] === 'symbol')
 ? {
       connect: {
         id: item.stopLoss.id
@@ -7284,7 +7301,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       takeProfit: item.takeProfit ? 
-      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && (Object.keys(item.takeProfit)[0] === 'id' || Object.keys(item.takeProfit)[0] === 'symbol')
 ? {
       connect: {
         id: item.takeProfit.id
@@ -7316,7 +7333,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       alpacaAccount: item.alpacaAccount ? 
-      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && (Object.keys(item.alpacaAccount)[0] === 'id' || Object.keys(item.alpacaAccount)[0] === 'symbol')
 ? {
       connect: {
         id: item.alpacaAccount.id
@@ -7380,7 +7397,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       action: item.action ? 
-      typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+      typeof item.action === 'object' && Object.keys(item.action).length === 1 && (Object.keys(item.action)[0] === 'id' || Object.keys(item.action)[0] === 'symbol')
 ? {
       connect: {
         id: item.action.id
@@ -7440,7 +7457,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       contract: item.contract ? 
-      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
       connect: {
         id: item.contract.id
@@ -7721,7 +7738,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     newsMentions: props.asset.newsMentions ? 
-    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.newsMentions.map((item: any) => ({
       id: item.id
     }))
@@ -7753,7 +7770,7 @@ import { removeUndefinedProps } from './utils';
               set: item.sentimentLabel
             } : undefined,
       news: item.news ? 
-      typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+      typeof item.news === 'object' && Object.keys(item.news).length === 1 && (Object.keys(item.news)[0] === 'id' || Object.keys(item.news)[0] === 'symbol')
 ? {
       connect: {
         id: item.news.id
@@ -7880,7 +7897,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     contracts: props.asset.contracts ? 
-    Array.isArray(props.asset.contracts) && props.asset.contracts.length > 0 && props.asset.contracts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.asset.contracts) && props.asset.contracts.length > 0 && props.asset.contracts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.asset.contracts.map((item: any) => ({
       id: item.id
     }))
@@ -7967,7 +7984,7 @@ import { removeUndefinedProps } from './utils';
               set: item.orderId
             } : undefined,
       deliverables: item.deliverables ? 
-      Array.isArray(item.deliverables) && item.deliverables.length > 0 && item.deliverables.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.deliverables) && item.deliverables.length > 0 && item.deliverables.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.deliverables.map((item: any) => ({
         id: item.id
       }))
@@ -8026,7 +8043,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       order: item.order ? 
-      typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+      typeof item.order === 'object' && Object.keys(item.order).length === 1 && (Object.keys(item.order)[0] === 'id' || Object.keys(item.order)[0] === 'symbol')
 ? {
       connect: {
         id: item.order.id
@@ -8762,7 +8779,7 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
   alpacaAccount: props.alpacaAccount ? 
-  typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
+  typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
 ? {
   connect: {
     id: props.alpacaAccount.id
@@ -8811,7 +8828,7 @@ import { removeUndefinedProps } from './utils';
             set: props.alpacaAccount.volumeThreshold
           } : undefined,
     user: props.alpacaAccount.user ? 
-    typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
+    typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && (Object.keys(props.alpacaAccount.user)[0] === 'id' || Object.keys(props.alpacaAccount.user)[0] === 'symbol')
 ? {
     connect: {
       id: props.alpacaAccount.user.id
@@ -8869,7 +8886,7 @@ import { removeUndefinedProps } from './utils';
               set: props.alpacaAccount.user.openaiModel
             } : undefined,
       customer: props.alpacaAccount.user.customer ? 
-      typeof props.alpacaAccount.user.customer === 'object' && Object.keys(props.alpacaAccount.user.customer).length === 1 && Object.keys(props.alpacaAccount.user.customer)[0] === 'id'
+      typeof props.alpacaAccount.user.customer === 'object' && Object.keys(props.alpacaAccount.user.customer).length === 1 && (Object.keys(props.alpacaAccount.user.customer)[0] === 'id' || Object.keys(props.alpacaAccount.user.customer)[0] === 'symbol')
 ? {
       connect: {
         id: props.alpacaAccount.user.customer.id
@@ -8930,7 +8947,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.accounts.map((item: any) => ({
         id: item.id
       }))
@@ -8994,7 +9011,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.sessions.map((item: any) => ({
         id: item.id
       }))
@@ -9023,7 +9040,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.authenticators.map((item: any) => ({
         id: item.id
       }))
@@ -9173,7 +9190,7 @@ import { removeUndefinedProps } from './utils';
       }
     } : undefined,
     trades: props.alpacaAccount.trades ? 
-    Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 && props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.alpacaAccount.trades) && props.alpacaAccount.trades.length > 0 && props.alpacaAccount.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.trades.map((item: any) => ({
       id: item.id
     }))
@@ -9225,7 +9242,7 @@ import { removeUndefinedProps } from './utils';
               set: item.status
             } : undefined,
       asset: item.asset ? 
-      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && (Object.keys(item.asset)[0] === 'id' || Object.keys(item.asset)[0] === 'symbol')
 ? {
       connect: {
         id: item.asset.id
@@ -9472,7 +9489,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.actions.map((item: any) => ({
         id: item.id
       }))
@@ -9645,7 +9662,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     orders: props.alpacaAccount.orders ? 
-    Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 && props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.alpacaAccount.orders) && props.alpacaAccount.orders.length > 0 && props.alpacaAccount.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.orders.map((item: any) => ({
       id: item.id
     }))
@@ -9746,7 +9763,7 @@ import { removeUndefinedProps } from './utils';
               set: item.takeProfitId
             } : undefined,
       stopLoss: item.stopLoss ? 
-      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && (Object.keys(item.stopLoss)[0] === 'id' || Object.keys(item.stopLoss)[0] === 'symbol')
 ? {
       connect: {
         id: item.stopLoss.id
@@ -9778,7 +9795,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       takeProfit: item.takeProfit ? 
-      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && (Object.keys(item.takeProfit)[0] === 'id' || Object.keys(item.takeProfit)[0] === 'symbol')
 ? {
       connect: {
         id: item.takeProfit.id
@@ -9810,7 +9827,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       action: item.action ? 
-      typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+      typeof item.action === 'object' && Object.keys(item.action).length === 1 && (Object.keys(item.action)[0] === 'id' || Object.keys(item.action)[0] === 'symbol')
 ? {
       connect: {
         id: item.action.id
@@ -9870,7 +9887,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       asset: item.asset ? 
-      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && (Object.keys(item.asset)[0] === 'id' || Object.keys(item.asset)[0] === 'symbol')
 ? {
       connect: {
         id: item.asset.id
@@ -10117,7 +10134,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       contract: item.contract ? 
-      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
       connect: {
         id: item.contract.id
@@ -10442,7 +10459,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.alerts.map((item: any) => ({
       id: item.id
     }))
@@ -11028,6 +11045,9 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? {
     equals: prop.alpacaAccountId 
   } : undefined,
@@ -11036,6 +11056,9 @@ import { removeUndefinedProps } from './utils';
       data: {
           id: prop.id !== undefined ? {
             set: prop.id 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
            } : undefined,
   averageEntryPrice: prop.averageEntryPrice !== undefined ? {
             set: prop.averageEntryPrice 
@@ -11086,7 +11109,7 @@ import { removeUndefinedProps } from './utils';
             set: prop.updatedAt 
            } : undefined,
   asset: prop.asset ? 
-  typeof prop.asset === 'object' && Object.keys(prop.asset).length === 1 && Object.keys(prop.asset)[0] === 'id'
+  typeof prop.asset === 'object' && Object.keys(prop.asset).length === 1 && (Object.keys(prop.asset)[0] === 'id' || Object.keys(prop.asset)[0] === 'symbol')
 ? {
   connect: {
     id: prop.asset.id
@@ -11273,7 +11296,7 @@ import { removeUndefinedProps } from './utils';
             set: prop.asset.bidPrice
           } : undefined,
     trades: prop.asset.trades ? 
-    Array.isArray(prop.asset.trades) && prop.asset.trades.length > 0 && prop.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.asset.trades) && prop.asset.trades.length > 0 && prop.asset.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.asset.trades.map((item: any) => ({
       id: item.id
     }))
@@ -11325,7 +11348,7 @@ import { removeUndefinedProps } from './utils';
               set: item.status
             } : undefined,
       alpacaAccount: item.alpacaAccount ? 
-      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && (Object.keys(item.alpacaAccount)[0] === 'id' || Object.keys(item.alpacaAccount)[0] === 'symbol')
 ? {
       connect: {
         id: item.alpacaAccount.id
@@ -11389,7 +11412,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.actions.map((item: any) => ({
         id: item.id
       }))
@@ -11518,7 +11541,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     orders: prop.asset.orders ? 
-    Array.isArray(prop.asset.orders) && prop.asset.orders.length > 0 && prop.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.asset.orders) && prop.asset.orders.length > 0 && prop.asset.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.asset.orders.map((item: any) => ({
       id: item.id
     }))
@@ -11619,7 +11642,7 @@ import { removeUndefinedProps } from './utils';
               set: item.takeProfitId
             } : undefined,
       stopLoss: item.stopLoss ? 
-      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && (Object.keys(item.stopLoss)[0] === 'id' || Object.keys(item.stopLoss)[0] === 'symbol')
 ? {
       connect: {
         id: item.stopLoss.id
@@ -11651,7 +11674,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       takeProfit: item.takeProfit ? 
-      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && (Object.keys(item.takeProfit)[0] === 'id' || Object.keys(item.takeProfit)[0] === 'symbol')
 ? {
       connect: {
         id: item.takeProfit.id
@@ -11683,7 +11706,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       alpacaAccount: item.alpacaAccount ? 
-      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && Object.keys(item.alpacaAccount)[0] === 'id'
+      typeof item.alpacaAccount === 'object' && Object.keys(item.alpacaAccount).length === 1 && (Object.keys(item.alpacaAccount)[0] === 'id' || Object.keys(item.alpacaAccount)[0] === 'symbol')
 ? {
       connect: {
         id: item.alpacaAccount.id
@@ -11747,7 +11770,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       action: item.action ? 
-      typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+      typeof item.action === 'object' && Object.keys(item.action).length === 1 && (Object.keys(item.action)[0] === 'id' || Object.keys(item.action)[0] === 'symbol')
 ? {
       connect: {
         id: item.action.id
@@ -11807,7 +11830,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       contract: item.contract ? 
-      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
       connect: {
         id: item.contract.id
@@ -12088,7 +12111,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     newsMentions: prop.asset.newsMentions ? 
-    Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0 && prop.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0 && prop.asset.newsMentions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.asset.newsMentions.map((item: any) => ({
       id: item.id
     }))
@@ -12120,7 +12143,7 @@ import { removeUndefinedProps } from './utils';
               set: item.sentimentLabel
             } : undefined,
       news: item.news ? 
-      typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+      typeof item.news === 'object' && Object.keys(item.news).length === 1 && (Object.keys(item.news)[0] === 'id' || Object.keys(item.news)[0] === 'symbol')
 ? {
       connect: {
         id: item.news.id
@@ -12247,7 +12270,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     contracts: prop.asset.contracts ? 
-    Array.isArray(prop.asset.contracts) && prop.asset.contracts.length > 0 && prop.asset.contracts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.asset.contracts) && prop.asset.contracts.length > 0 && prop.asset.contracts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.asset.contracts.map((item: any) => ({
       id: item.id
     }))
@@ -12334,7 +12357,7 @@ import { removeUndefinedProps } from './utils';
               set: item.orderId
             } : undefined,
       deliverables: item.deliverables ? 
-      Array.isArray(item.deliverables) && item.deliverables.length > 0 && item.deliverables.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.deliverables) && item.deliverables.length > 0 && item.deliverables.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.deliverables.map((item: any) => ({
         id: item.id
       }))
@@ -12393,7 +12416,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       order: item.order ? 
-      typeof item.order === 'object' && Object.keys(item.order).length === 1 && Object.keys(item.order)[0] === 'id'
+      typeof item.order === 'object' && Object.keys(item.order).length === 1 && (Object.keys(item.order)[0] === 'id' || Object.keys(item.order)[0] === 'symbol')
 ? {
       connect: {
         id: item.order.id
@@ -13129,7 +13152,7 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
   alpacaAccount: prop.alpacaAccount ? 
-  typeof prop.alpacaAccount === 'object' && Object.keys(prop.alpacaAccount).length === 1 && Object.keys(prop.alpacaAccount)[0] === 'id'
+  typeof prop.alpacaAccount === 'object' && Object.keys(prop.alpacaAccount).length === 1 && (Object.keys(prop.alpacaAccount)[0] === 'id' || Object.keys(prop.alpacaAccount)[0] === 'symbol')
 ? {
   connect: {
     id: prop.alpacaAccount.id
@@ -13178,7 +13201,7 @@ import { removeUndefinedProps } from './utils';
             set: prop.alpacaAccount.volumeThreshold
           } : undefined,
     user: prop.alpacaAccount.user ? 
-    typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && Object.keys(prop.alpacaAccount.user)[0] === 'id'
+    typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && (Object.keys(prop.alpacaAccount.user)[0] === 'id' || Object.keys(prop.alpacaAccount.user)[0] === 'symbol')
 ? {
     connect: {
       id: prop.alpacaAccount.user.id
@@ -13236,7 +13259,7 @@ import { removeUndefinedProps } from './utils';
               set: prop.alpacaAccount.user.openaiModel
             } : undefined,
       customer: prop.alpacaAccount.user.customer ? 
-      typeof prop.alpacaAccount.user.customer === 'object' && Object.keys(prop.alpacaAccount.user.customer).length === 1 && Object.keys(prop.alpacaAccount.user.customer)[0] === 'id'
+      typeof prop.alpacaAccount.user.customer === 'object' && Object.keys(prop.alpacaAccount.user.customer).length === 1 && (Object.keys(prop.alpacaAccount.user.customer)[0] === 'id' || Object.keys(prop.alpacaAccount.user.customer)[0] === 'symbol')
 ? {
       connect: {
         id: prop.alpacaAccount.user.customer.id
@@ -13297,7 +13320,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-      Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 && prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 && prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: prop.alpacaAccount.user.accounts.map((item: any) => ({
         id: item.id
       }))
@@ -13361,7 +13384,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-      Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 && prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 && prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: prop.alpacaAccount.user.sessions.map((item: any) => ({
         id: item.id
       }))
@@ -13390,7 +13413,7 @@ import { removeUndefinedProps } from './utils';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-      Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 && prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 && prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: prop.alpacaAccount.user.authenticators.map((item: any) => ({
         id: item.id
       }))
@@ -13540,7 +13563,7 @@ import { removeUndefinedProps } from './utils';
       }
     } : undefined,
     trades: prop.alpacaAccount.trades ? 
-    Array.isArray(prop.alpacaAccount.trades) && prop.alpacaAccount.trades.length > 0 && prop.alpacaAccount.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.alpacaAccount.trades) && prop.alpacaAccount.trades.length > 0 && prop.alpacaAccount.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.alpacaAccount.trades.map((item: any) => ({
       id: item.id
     }))
@@ -13592,7 +13615,7 @@ import { removeUndefinedProps } from './utils';
               set: item.status
             } : undefined,
       asset: item.asset ? 
-      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && (Object.keys(item.asset)[0] === 'id' || Object.keys(item.asset)[0] === 'symbol')
 ? {
       connect: {
         id: item.asset.id
@@ -13839,7 +13862,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       actions: item.actions ? 
-      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      Array.isArray(item.actions) && item.actions.length > 0 && item.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.actions.map((item: any) => ({
         id: item.id
       }))
@@ -14012,7 +14035,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     orders: prop.alpacaAccount.orders ? 
-    Array.isArray(prop.alpacaAccount.orders) && prop.alpacaAccount.orders.length > 0 && prop.alpacaAccount.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.alpacaAccount.orders) && prop.alpacaAccount.orders.length > 0 && prop.alpacaAccount.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.alpacaAccount.orders.map((item: any) => ({
       id: item.id
     }))
@@ -14113,7 +14136,7 @@ import { removeUndefinedProps } from './utils';
               set: item.takeProfitId
             } : undefined,
       stopLoss: item.stopLoss ? 
-      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && Object.keys(item.stopLoss)[0] === 'id'
+      typeof item.stopLoss === 'object' && Object.keys(item.stopLoss).length === 1 && (Object.keys(item.stopLoss)[0] === 'id' || Object.keys(item.stopLoss)[0] === 'symbol')
 ? {
       connect: {
         id: item.stopLoss.id
@@ -14145,7 +14168,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       takeProfit: item.takeProfit ? 
-      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && Object.keys(item.takeProfit)[0] === 'id'
+      typeof item.takeProfit === 'object' && Object.keys(item.takeProfit).length === 1 && (Object.keys(item.takeProfit)[0] === 'id' || Object.keys(item.takeProfit)[0] === 'symbol')
 ? {
       connect: {
         id: item.takeProfit.id
@@ -14177,7 +14200,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       action: item.action ? 
-      typeof item.action === 'object' && Object.keys(item.action).length === 1 && Object.keys(item.action)[0] === 'id'
+      typeof item.action === 'object' && Object.keys(item.action).length === 1 && (Object.keys(item.action)[0] === 'id' || Object.keys(item.action)[0] === 'symbol')
 ? {
       connect: {
         id: item.action.id
@@ -14237,7 +14260,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       asset: item.asset ? 
-      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && Object.keys(item.asset)[0] === 'id'
+      typeof item.asset === 'object' && Object.keys(item.asset).length === 1 && (Object.keys(item.asset)[0] === 'id' || Object.keys(item.asset)[0] === 'symbol')
 ? {
       connect: {
         id: item.asset.id
@@ -14484,7 +14507,7 @@ import { removeUndefinedProps } from './utils';
         }
       } : undefined,
       contract: item.contract ? 
-      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
       connect: {
         id: item.contract.id
@@ -14809,7 +14832,7 @@ import { removeUndefinedProps } from './utils';
       }))
     } : undefined,
     alerts: prop.alpacaAccount.alerts ? 
-    Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 && prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+    Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 && prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.alpacaAccount.alerts.map((item: any) => ({
       id: item.id
     }))
@@ -15436,6 +15459,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
@@ -15508,6 +15534,9 @@ import { removeUndefinedProps } from './utils';
       where: {
   id: props.id !== undefined ? {
     equals: props.id 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
