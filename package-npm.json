@@ -1,5 +1,5 @@
 {
-  "name": "adaptic-backend",
+  "name": "adaptic-backend-dev",
   "version": "1.0.269",
   "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
   "type": "module",
@@ -44,5 +44,5 @@
     "node": ">=20.0.0"
   },
   "always-build-npm": false,
-  "danas-notes": "Set always-build-npm to true if you want to build the package with every push regardless of changes to code (e.g. just to push a new version with some config changes)"
+  "notes": "Set always-build-npm to true if you want to build the package with every push regardless of changes to code (e.g. just to push a new version with some config changes)"
 }

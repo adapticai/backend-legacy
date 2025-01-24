@@ -1,0 +1,156 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Clean node_modules
+        run: rm -rf node_modules
+
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      - name: Install dependencies in the root folder
+        run: npm install
+
+      - name: Build npm package
+        run: npm run build:package
+
+      # # Filter dist/ files based on .npmignore
+      # - name: Filter dist files with .npmignore
+      #   run: |
+      #     echo "Filtering dist/ files based on .npmignore..."
+      #     mkdir -p ./filtered_dist
+      #     rsync -av --exclude-from=.npmignore dist/ ./filtered_dist/
+      #     mv ./filtered_dist dist
+
+      - name: Install dependencies in dist folder
+        working-directory: dist
+        run: npm install
+
+      - name: Set up Git user
+        run: |
+          git config --global user.name "mehran9"
+          git config --global user.email "mgranfar@gmail.com"
+
+      - name: Get package name and version
+        id: package_info
+        working-directory: dist
+        run: |
+          PACKAGE_NAME=$(jq -r .name package.json)
+          PACKAGE_VERSION=$(jq -r .version package.json)
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
+
+      - name: Get current package content from npm
+        id: get_npm_package_content
+        run: |
+          npm view ${{ env.PACKAGE_NAME }} dist.tarball | xargs curl -sL | tar -tzf - > ../npm_package_files.txt
+
+      - name: List local dist files
+        id: list_dist_files
+        run: find . -type f | sed 's|^\./||' > ../local_dist_files.txt
+        working-directory: dist
+
+      - name: Compare dist content with published package
+        id: compare_dist
+        run: |
+          comm -3 <(sort local_dist_files.txt) <(sort npm_package_files.txt) > diff.txt
+          if [ -s diff.txt ]; then
+            echo "Differences found."
+            cat diff.txt
+            echo "::set-output name=diff_output::true"
+          else
+            echo "No differences found."
+            echo "::set-output name=diff_output::false"
+          fi
+
+      - name: Check always-build-npm flag
+        id: check_always_build
+        run: |
+          ALWAYS_BUILD=$(jq -r '."always-build-npm" // false' package-npm.json)
+          echo "::set-output name=always_build::$ALWAYS_BUILD"
+
+      - name: Determine if publish is necessary
+        id: should_publish
+        run: |
+          if [ "${{ steps.compare_dist.outputs.diff_output }}" == "false" ] && [ "${{ steps.check_always_build.outputs.always_build }}" != "true" ]; then
+            echo "No changes detected and always-build-npm is not true. Skipping publish."
+            echo "::set-output name=should_publish::false"
+          else
+            echo "Changes detected or always-build-npm is true. Proceeding with publish."
+            echo "::set-output name=should_publish::true"
+          fi
+
+      - name: Bump version if necessary
+        id: bump_version
+        if: steps.should_publish.outputs.should_publish == 'true'
+        run: |
+          echo "Checking current version..."
+
+          # Get the current version from package-npm.json
+          CURRENT_VERSION=$(jq -r .version package-npm.json)
+          echo "Current version is $CURRENT_VERSION"
+
+          # Move to the directory where npm version bump should occur
+          cd dist
+
+          # Bump the version using npm and strip the "v" prefix
+          NEW_VERSION=$(npm version patch --no-git-tag-version --allow-same-version | sed 's/^v//')
+          echo "New version is $NEW_VERSION"
+
+          # Move back to the root directory
+          cd ..
+
+          # Update the version in package-npm.json
+          jq --arg new_version "$NEW_VERSION" '.version=$new_version' package-npm.json > tmp.json && mv tmp.json package-npm.json
+          echo "Updated package-npm.json to version $NEW_VERSION"
+
+          # Update the version in dist/package.json
+          jq --arg new_version "$NEW_VERSION" '.version=$new_version' dist/package.json > tmp.json && mv tmp.json dist/package.json
+          echo "Updated dist/package.json to version $NEW_VERSION"
+
+          # Ensure both files are staged for commit
+          git add package-npm.json dist/package.json -f
+
+          # Check for changes and commit if there are any
+          if git diff-index --cached --quiet HEAD --; then
+            echo "No changes to commit"
+            exit 0
+          else
+            git commit -m "ci: bump version to $NEW_VERSION"
+          fi
+
+      - name: Publish package
+        if: steps.should_publish.outputs.should_publish == 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        working-directory: dist
+        run: |
+          # Ensure temporary files are removed
+          rm -f ../npm_package_files.txt ../local_dist_files.txt diff.txt
+          npm publish
+
+      - name: Remove dist/package.json after publish and push changes
+        if: steps.should_publish.outputs.should_publish == 'true'
+        run: |
+          git rm dist/package.json
+          git commit -m "ci: remove dist/package.json after publish"
+          git push origin HEAD:dev
