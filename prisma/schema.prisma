@@ -511,14 +511,14 @@ enum EventImportance {
 
 // Defines the subscription plans available to users.
 enum SubscriptionPlan {
-  /// A free plan with limited features.
+  /// A free trial plan with basic features, suitable for new users.
   FREE
 
-  /// A professional plan with enhanced features.
+  /// A professional plan with enhanced features, suitable for individual traders and investors.
   PRO
 
-  /// A business plan tailored for organizational needs.
-  BUSINESS
+  /// An institutional plan with advanced features, suitable for institutional funds, hedge funds, and family offices.
+  INSTITUTION
 }
 
 // OpenAI API language models available for text generation.
