@@ -44,5 +44,27 @@
     "node": ">=20.0.0"
   },
   "always-build-npm": false,
-  "notes": "Set always-build-npm to true if you want to build the package with every push regardless of changes to code (e.g. just to push a new version with some config changes)"
+  "notes": "Set always-build-npm to true if you want to build the package with every push regardless of changes to code (e.g. just to push a new version with some config changes)",
+  "exports": {
+    ".": {
+      "import": "./index.cjs",
+      "require": "./index.cjs",
+      "types": "./index.d.ts"
+    },
+    "./*": {
+      "import": "./*.cjs",
+      "require": "./*.cjs",
+      "types": "./*.d.ts"
+    },
+    "./server": {
+      "import": "./server/index.mjs",
+      "require": "./server/index.cjs",
+      "types": "./server/index.d.ts"
+    },
+    "./server/*": {
+      "import": "./server/*.mjs",
+      "require": "./server/*.cjs",
+      "types": "./server/*.d.ts"
+    }
+  }
 }
