@@ -1456,6 +1456,39 @@ model Order {
   /// For option orders. Expiration date for option orders. Required only when 'asset.type' is 'OPTION'. Must be a valid date in the future.
   expirationDate DateTime?
 
+  /// Timestamp when the order expired.
+  expiredAt DateTime?
+
+  /// Timestamp when the order failed.
+  failedAt DateTime?
+
+  /// Timestamp when the order was replaced by another order.
+  replacedAt DateTime?
+
+  /// ID of the Alpaca Order that replaced this order (if any).
+  replacedBy String?
+
+  /// ID of the Alpaca Order that this order replaced (if any).
+  replaces String?
+
+  /// The "position_intent" from Alpaca (e.g. "sell_to_close", "sell_to_open", "buy_to_close", etc.).
+  positionIntent String?
+
+  /// A JSON representation of any sub-legs associated with advanced orders (if Alpaca provides them).
+  legs Json?
+
+  /// High-water mark, used for trailing-stop logic.
+  hwm Float?
+
+  /// Subtag from Alpaca (if provided).
+  subtag String?
+
+  /// Source of the order, e.g. "access_key", "manual", etc.
+  source String?
+
+  /// Time at which this order will expire (different from option expirationDate).
+  expiresAt DateTime?
+
   /// For option orders. Type of option contract ('CALL' or 'PUT'). Required only when 'asset.type' is 'OPTION'.
   optionType OptionType?
 
