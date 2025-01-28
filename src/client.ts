@@ -28,7 +28,7 @@ function initializeApollo(): ApolloClient<NormalizedCacheObject> {
       headers: {
         ...headers,
         authorization: token ? `Bearer ${token}` : "",
-        connection: "close",
+        connection: "keep-alive",
       },
     };
   });
