@@ -688,6 +688,18 @@ model AlpacaAccount {
   /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). TYPESTRING.SKIP=true
   volumeThreshold Float @default(50000)
 
+  /// Opt-in for enabling the portfolio-level trailing stop service within Adaptic's Realtime Trade Engine. TYPESTRING.SKIP=true
+  enablePortfolioTrailingStop            Boolean       @default(false)
+
+  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  portfolioTrailPercent                  Float         @default(4.0)
+
+  /// The portfolio-level profit threshold percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  portfolioProfitThresholdPercent        Float         @default(2.0)
+
+  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  reducedPortfolioTrailPercent           Float         @default(0.5)
+
   /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts', 'customer', 'accounts', 'sessions', 'authenticators']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
