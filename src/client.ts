@@ -1,4 +1,6 @@
-// Import types from @apollo/client for type-checking only.
+// client.ts
+
+// Import types for type-checking only.
 import type {
   ApolloClient as ApolloClientType,
   InMemoryCache as InMemoryCacheType,
@@ -6,57 +8,38 @@ import type {
   NormalizedCacheObject,
 } from "@apollo/client";
 
-// Import runtime implementations.
-import {
-  ApolloClient as ApolloClientImported,
-  InMemoryCache as InMemoryCacheImported,
-  HttpLink as HttpLinkImported,
-  gql as gqlImported,
-  ApolloError as ApolloErrorImported,
-  split as splitImported,
-} from "@apollo/client";
-import { setContext as setContextImported } from "@apollo/client/link/context/context.cjs";
-import { onError as onErrorImported } from "@apollo/client/link/error/error.cjs";
+// We do NOT statically import runtime implementations because @apollo/client is CommonJS.
+// Instead, we’ll load them dynamically.
+let ApolloClient: typeof ApolloClientType<any>;
+let ApolloError: any;
+let gql: any;
+let InMemoryCache: any;
+let HttpLink: any;
+let setContext: any;
+let onError: any;
+let split: any;
 
-// Declare runtime variables that will eventually hold the proper implementations.
-let ApolloClient: typeof ApolloClientImported;
-let ApolloError: typeof ApolloErrorImported;
-let gql: typeof gqlImported;
-let InMemoryCache: typeof InMemoryCacheImported;
-let HttpLink: typeof HttpLinkImported;
-let setContext: typeof setContextImported;
-let onError: typeof onErrorImported;
-let split: typeof splitImported;
-
-// Conditional logic: on server use require(), on client use the static imports.
-if (typeof window === "undefined") {
-  // --- Server-side ---
-  // Use require() to load the modules at runtime.
+{
+  // Whether on the server or the client, load the module via require.
+  // (If you want to differentiate, you can—but in this case we use require() in both branches.)
   const pkg = require("@apollo/client");
-  ApolloClient = pkg.ApolloClient;
-  InMemoryCache = pkg.InMemoryCache;
-  HttpLink = pkg.HttpLink;
-  gql = pkg.gql;
-  ApolloError = pkg.ApolloError;
-  split = pkg.split;
+  // If the package was imported via ESM interop, it might be on the .default property.
+  const clientPkg = pkg && pkg.__esModule ? pkg.default : pkg;
+  ApolloClient = clientPkg.ApolloClient;
+  InMemoryCache = clientPkg.InMemoryCache;
+  HttpLink = clientPkg.HttpLink;
+  gql = clientPkg.gql;
+  ApolloError = clientPkg.ApolloError;
+  split = clientPkg.split;
 
   const contextPkg = require("@apollo/client/link/context/context.cjs");
   setContext = contextPkg.setContext;
 
   const errorPkg = require("@apollo/client/link/error/error.cjs");
   onError = errorPkg.onError;
-} else {
-  // --- Client-side ---
-  // Use the statically imported implementations.
-  ApolloClient = ApolloClientImported;
-  InMemoryCache = InMemoryCacheImported;
-  HttpLink = HttpLinkImported;
-  gql = gqlImported;
-  ApolloError = ApolloErrorImported;
-  setContext = setContextImported;
-  onError = onErrorImported;
-  split = splitImported;
 }
+
+// --- Apollo Client Setup ---
 
 // Use the type-only alias (ApolloClientType) for type annotations.
 let apolloClient: ApolloClientType<NormalizedCacheObject> | null = null;
@@ -75,8 +58,7 @@ function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
   const httpLinkInstance = new HttpLink({ uri: httpUrl, fetch });
 
   // Create the auth link.
-  const authLink = setContext((_, { headers }) => {
-    // Retrieve the token from environment variables or other secure storage.
+  const authLink = setContext((_: any, { headers }: any) => {
     const token = process.env.SERVER_AUTH_TOKEN || "";
     return {
       headers: {
@@ -88,9 +70,9 @@ function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
   });
 
   // Create the error handling link.
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
+  const errorLink = onError(({ graphQLErrors, networkError }: any) => {
     if (graphQLErrors) {
-      graphQLErrors.forEach(({ message, locations, path }) =>
+      graphQLErrors.forEach(({ message, locations, path }: any) =>
         console.error(
           `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
         )
