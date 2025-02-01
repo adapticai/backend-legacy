@@ -335,7 +335,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getVerificationToken ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No VerificationToken found') {
         return null;
       } else {
@@ -365,7 +365,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_VERIFICATIONTOKEN });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.verificationTokens ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No VerificationToken found') {
         return null;
       } else {
@@ -410,7 +410,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as VerificationTokenType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No VerificationToken found') {
         return null;
       } else {

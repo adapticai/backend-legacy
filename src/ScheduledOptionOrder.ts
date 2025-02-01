@@ -322,7 +322,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_SCHEDULEDOPTIONORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getScheduledOptionOrder ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No ScheduledOptionOrder found') {
         return null;
       } else {
@@ -352,7 +352,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_SCHEDULEDOPTIONORDER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.scheduledOptionOrders ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No ScheduledOptionOrder found') {
         return null;
       } else {
@@ -397,7 +397,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as ScheduledOptionOrderType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No ScheduledOptionOrder found') {
         return null;
       } else {

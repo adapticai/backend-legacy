@@ -221,9 +221,10 @@ try {
   process.exit(1);
 }
 
-// Step 3b: Process all other files in dist (exclude esm folder)
+// Step 3b: Process all other files in dist (exclude those under esm)
 try {
   const allFiles = getFilesRecursively(distDir);
+  // Exclude files that start with the esm folder path
   const cjsFiles = allFiles.filter((file) => {
     return !file.startsWith(esmDir) && file.endsWith('.js');
   });
@@ -237,60 +238,13 @@ try {
   process.exit(1);
 }
 
-// Step 4: Clean up client files
-//   • Delete client.ts in the dist/esm folder
-//   • Rename client-esm.mjs to client.mjs in dist/esm
-//   • Delete any client-esm.* from the root dist
-
-try {
-  const clientTsPath = path.join(esmDir, 'client.ts');
-  // Safeguard: ensure clientTsPath starts with distDir
-  if (
-    clientTsPath.startsWith(distDir) &&
-    fs.existsSync(clientTsPath)
-  ) {
-    fs.unlinkSync(clientTsPath);
-    console.log('Deleted client.ts from esm folder.', clientTsPath);
-  } else {
-    console.log('No client.ts found in esm folder.', clientTsPath);
-  }
-
-  // 2. Rename dist/esm/client-esm.mjs -> dist/esm/client.mjs
-  const clientEsmPath = path.join(esmDir, 'client-esm.mjs');
-  const newClientEsmPath = path.join(esmDir, 'client.mjs');
-  if (clientEsmPath.startsWith(distDir) && fs.existsSync(clientEsmPath)) {
-    fs.renameSync(clientEsmPath, newClientEsmPath);
-    console.log('Renamed client-esm.mjs to client.mjs in esm folder.');
-  } else {
-    console.log('No client-esm.mjs found in esm folder.');
-  }
-
-  // 3. In the dist root folder, delete any client-esm.cjs or client-esm.mjs
-  const clientEsmRootCjs = path.join(distDir, 'client-esm.cjs');
-  if (clientEsmRootCjs.startsWith(distDir) && fs.existsSync(clientEsmRootCjs)) {
-    fs.unlinkSync(clientEsmRootCjs);
-    console.log('Deleted client-esm.cjs from root folder.');
-  } else {
-    const clientEsmRootMjs = path.join(distDir, 'client-esm.mjs');
-    if (clientEsmRootMjs.startsWith(distDir) && fs.existsSync(clientEsmRootMjs)) {
-      fs.unlinkSync(clientEsmRootMjs);
-      console.log('Deleted client-esm.mjs from root folder.');
-    } else {
-      console.log('No client-esm file found in root folder.');
-    }
-  }
-} catch (err) {
-  console.error('Error cleaning up client files:', err);
-  process.exit(1);
-}
-
 // -----------------------------------------------------------------------------
-// Step 5: Update import paths in entry files
+// Step 4: Update import paths in entry files
 //   • For index.cjs in dist, update generated/typeStrings import to use .cjs
 //   • For esm/index.mjs, update generated/typeStrings import to use .mjs
 // -----------------------------------------------------------------------------
 
-// 5a: Update index.cjs (root)
+// 4a: Update index.cjs (root)
 try {
   const indexCjsPath = path.join(distDir, 'index.cjs');
   if (fs.existsSync(indexCjsPath)) {
@@ -306,7 +260,7 @@ try {
   process.exit(1);
 }
 
-// 5b: Update esm/index.mjs (ESM entry point)
+// 4b: Update esm/index.mjs (ESM entry point)
 try {
   const esmIndexPath = path.join(esmDir, 'index.mjs');
   if (fs.existsSync(esmIndexPath)) {
@@ -323,7 +277,7 @@ try {
 }
 
 // -----------------------------------------------------------------------------
-// Step 6: Update README.md with the Models and CRUD Resolvers section
+// Step 5: Update README.md with the Models and CRUD Resolvers section
 // -----------------------------------------------------------------------------
 try {
   let readmeContent = fs.readFileSync(readmePath, 'utf8');
@@ -370,12 +324,12 @@ try {
 }
 
 // -----------------------------------------------------------------------------
-// Step 7: Update internal import/require statements in built files
+// Step 6: Update internal import/require statements in built files
 //   • In .mjs files, ensure relative imports include a .mjs extension.
 //   • In .cjs files, update require() calls to include a .cjs extension.
 // -----------------------------------------------------------------------------
 
-// 7a: Update import statements in .mjs files
+// 6a: Update import statements in .mjs files
 try {
   const mjsFiles = getFilesRecursively(distDir).filter((file) => file.endsWith('.mjs'));
   mjsFiles.forEach((file) => {
@@ -403,7 +357,7 @@ try {
   process.exit(1);
 }
 
-// 7b: Update a specific import in client.mjs: change "./getToken" to "./getToken.mjs"
+// 6b: Update a specific import in client.mjs: change "./getToken" to "./getToken.mjs"
 try {
   const clientMjsFile = path.join(esmDir, 'client.mjs');
   let content = fs.readFileSync(clientMjsFile, 'utf8');
@@ -418,7 +372,7 @@ try {
   process.exit(1);
 }
 
-// 7c: Update require() calls in .cjs files to include a .cjs extension
+// 6c: Update require() calls in .cjs files to include a .cjs extension
 try {
   const cjsFiles = getFilesRecursively(distDir).filter((file) => file.endsWith('.cjs'));
   cjsFiles.forEach((file) => {
@@ -446,7 +400,7 @@ try {
   process.exit(1);
 }
 
-// 7d: Update a specific require() in client.cjs: change "./getToken" to "./getToken.cjs"
+// 6d: Update a specific require() in client.cjs: change "./getToken" to "./getToken.cjs"
 try {
   const clientCjsFile = path.join(distDir, 'client.cjs');
   let content = fs.readFileSync(clientCjsFile, 'utf8');
@@ -462,7 +416,7 @@ try {
 }
 
 // -----------------------------------------------------------------------------
-// Step 8: Replace all instances of "findUniqueOrThrow" with "findUnique" in resolvers
+// Step 7: Replace all instances of "findUniqueOrThrow" with "findUnique" in resolvers
 // -----------------------------------------------------------------------------
 try {
   const resolversDir = path.join(distDir, 'generated', 'typegraphql-prisma', 'resolvers');
@@ -488,6 +442,6 @@ try {
 }
 
 // -----------------------------------------------------------------------------
-// Step 9: Finalize Build
+// Step 8: Finalize Build
 // -----------------------------------------------------------------------------
 console.log('Package preparation completed successfully.');

@@ -9347,7 +9347,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_TAKEPROFIT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTakeProfit ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No TakeProfit found') {
         return null;
       } else {
@@ -9377,7 +9377,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_TAKEPROFIT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.takeProfits ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No TakeProfit found') {
         return null;
       } else {
@@ -9425,7 +9425,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as TakeProfitType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No TakeProfit found') {
         return null;
       } else {

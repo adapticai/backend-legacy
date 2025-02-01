@@ -4204,7 +4204,7 @@ id
       const response = await client.query({ query: GET_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getCustomer ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Customer found') {
         return null;
       } else {
@@ -4234,7 +4234,7 @@ id
       const response = await client.query({ query: GET_ALL_CUSTOMER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.customers ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Customer found') {
         return null;
       } else {
@@ -4294,7 +4294,7 @@ id
       } else {
        return [] as CustomerType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Customer found') {
         return null;
       } else {

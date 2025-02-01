@@ -374,7 +374,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ECONOMICEVENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getEconomicEvent ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No EconomicEvent found') {
         return null;
       } else {
@@ -404,7 +404,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_ECONOMICEVENT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.economicEvents ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No EconomicEvent found') {
         return null;
       } else {
@@ -452,7 +452,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as EconomicEventType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No EconomicEvent found') {
         return null;
       } else {

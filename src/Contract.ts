@@ -14629,7 +14629,7 @@ id
       const response = await client.query({ query: GET_CONTRACT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getContract ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Contract found') {
         return null;
       } else {
@@ -14659,7 +14659,7 @@ id
       const response = await client.query({ query: GET_ALL_CONTRACT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.contracts ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Contract found') {
         return null;
       } else {
@@ -14716,7 +14716,7 @@ id
       } else {
        return [] as ContractType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Contract found') {
         return null;
       } else {

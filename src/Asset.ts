@@ -19062,7 +19062,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAsset ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Asset found') {
         return null;
       } else {
@@ -19092,7 +19092,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_ASSET });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.assets ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Asset found') {
         return null;
       } else {
@@ -19143,7 +19143,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as AssetType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No Asset found') {
         return null;
       } else {

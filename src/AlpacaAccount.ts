@@ -18428,7 +18428,7 @@ id
       const response = await client.query({ query: GET_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAlpacaAccount ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
         return null;
       } else {
@@ -18458,7 +18458,7 @@ id
       const response = await client.query({ query: GET_ALL_ALPACAACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.alpacaAccounts ?? null;
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
         return null;
       } else {
@@ -18506,7 +18506,7 @@ id
       } else {
        return [] as AlpacaAccountType[];
       }
-    } catch (error: typeof ApolloError) {
+    } catch (error) {
       if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
         return null;
       } else {
