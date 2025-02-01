@@ -17,7 +17,7 @@ if (!fs.existsSync(FUNCTIONS_OUTPUT_PATH)) {
 // Delete all files within the output directory (excluding the server.ts and utils.ts files, and ignore directories)
 const files = fs.readdirSync(FUNCTIONS_OUTPUT_PATH);
 for (const file of files) {
-  if (file !== 'server.ts' && file !== 'utils.ts' && file !== 'client.ts' && file !== 'prismaClient.ts' && file !== 'getToken.ts') {
+  if (file !== 'server.ts' && file !== 'utils.ts' && file !== 'client.ts' && file !== 'client-esm.ts' && file !== 'prismaClient.ts' && file !== 'getToken.ts') {
     const filePath = path.join(FUNCTIONS_OUTPUT_PATH, file);
     const stat = fs.statSync(filePath as fs.PathLike);
     if (stat.isFile()) {

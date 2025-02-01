@@ -1,91 +1,66 @@
-// client.ts
+// src/client-cjs.ts
+// This file is written in TypeScript and intended to be compiled as a CommonJS module.
+// It uses synchronous require() to load runtime modules and handles both server and client environments.
 
-// Import types for type-checking only. These will be erased at compile time.
 import type {
   ApolloClient as ApolloClientType,
   InMemoryCache as InMemoryCacheType,
   HttpLink as HttpLinkType,
   NormalizedCacheObject,
 } from "@apollo/client";
+import type { DocumentNode } from "graphql";
+
+const isServer: boolean = typeof window === "undefined";
+
+// Define an interface for our runtime exports.
+interface ApolloRuntimeExports {
+  ApolloClient: typeof import("@apollo/client").ApolloClient;
+  InMemoryCache: typeof import("@apollo/client").InMemoryCache;
+  HttpLink: typeof import("@apollo/client").HttpLink;
+  gql: typeof import("@apollo/client").gql;
+  ApolloError: any;
+  split: typeof import("@apollo/client").split;
+  setContext: any;
+  onError: any;
+}
 
 /**
- * A helper that loads the @apollo/client package via require, handling both
- * pure CJS and potential ESM interop. We also do string concatenation to
- * hide the import path from bundlers (like Next.js) that might do static
- * analysis on it.
+ * Synchronously loads the Apollo Client package and its submodules using require.
+ * We use string concatenation to “hide” the literal path from bundler static analysis.
  */
-function loadApolloClientPackage() {
-  // Hide from static analysis:
-  // e.g. let cjs = require("@apollo/client");
-  const cjs = require("@apollo/" + "client");
-
-  // If it's an ESM interop wrapper, the real exports might be on `cjs.default`.
-  const maybeDefault = cjs.default || {};
+function loadApolloClientCjs(): ApolloRuntimeExports {
+  let pkg = require("@apollo/" + "client");
+  // No interop check is done here because we expect a pure CommonJS export.
+  const { ApolloClient, InMemoryCache, HttpLink, gql, ApolloError, split } = pkg;
+  const contextPkg = require("@apollo/client/link/context/" + "context.cjs");
+  const errorPkg = require("@apollo/client/link/error/" + "error.cjs");
   return {
-    // Fallback to either top-level export or cjs.default export:
-    ApolloClient: cjs.ApolloClient || maybeDefault.ApolloClient,
-    InMemoryCache: cjs.InMemoryCache || maybeDefault.InMemoryCache,
-    HttpLink: cjs.HttpLink || maybeDefault.HttpLink,
-    gql: cjs.gql || maybeDefault.gql,
-    ApolloError: cjs.ApolloError || maybeDefault.ApolloError,
-    split: cjs.split || maybeDefault.split,
+    ApolloClient,
+    InMemoryCache,
+    HttpLink,
+    gql,
+    ApolloError,
+    split,
+    setContext: contextPkg.setContext,
+    onError: errorPkg.onError,
   };
 }
 
-/**
- * Similarly, load setContext from @apollo/client/link/context/context.cjs,
- * again hiding the path from bundlers with string concatenation.
- */
-function loadSetContext() {
-  const contextCjs = require("@apollo/client/link/context/" + "context.cjs");
-  // If there's an ESM interop, it could be on contextCjs.default:
-  const maybeDefault = contextCjs.default || {};
-  // setContext might be on the top or on a default export:
-  return contextCjs.setContext || maybeDefault.setContext;
-}
+// Synchronously load and cache the runtime exports.
+const apolloExports: ApolloRuntimeExports = loadApolloClientCjs();
 
-/**
- * Similarly, load onError from @apollo/client/link/error/error.cjs
- */
-function loadOnError() {
-  const errorCjs = require("@apollo/client/link/error/" + "error.cjs");
-  const maybeDefault = errorCjs.default || {};
-  return errorCjs.onError || maybeDefault.onError;
-}
-
-// Dynamically load all the runtime exports from @apollo/client and its submodules.
-const {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  gql,
-  ApolloError,
-  split,
-} = loadApolloClientPackage();
-const setContext = loadSetContext();
-const onError = loadOnError();
-
-// --- Apollo Client Setup ---
-
-// Use the type-only alias for type annotations.
+// Singleton Apollo Client instance.
 let apolloClient: ApolloClientType<NormalizedCacheObject> | null = null;
 
-/**
- * Initializes a new Apollo Client instance.
- * @returns ApolloClient instance.
- */
 function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
+  const { ApolloClient, InMemoryCache, HttpLink, setContext, onError } = apolloExports;
   const isProduction = process.env.NODE_ENV === "production";
-  const httpUrl = isProduction
-    ? process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
-    : "http://localhost:4000/graphql";
-
-  // Create the HTTP link.
+  const httpUrl =
+    isProduction || process.env.BACKEND_HTTPS_URL
+      ? process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
+      : "http://localhost:4000/graphql";
   const httpLinkInstance = new HttpLink({ uri: httpUrl, fetch });
-
-  // Create the auth link.
   const authLink = setContext((_: any, { headers }: any) => {
-    // Retrieve the token from environment variables or other secure storage.
     const token = process.env.SERVER_AUTH_TOKEN || "";
     return {
       headers: {
@@ -95,22 +70,16 @@ function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
       },
     };
   });
-
-  // Create the error handling link.
   const errorLink = onError(({ graphQLErrors, networkError }: any) => {
     if (graphQLErrors) {
-      graphQLErrors.forEach(({ message, locations, path }: any) =>
-        console.error(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        )
-      );
+      graphQLErrors.forEach(({ message, locations, path }: any) => {
+        console.error(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+      });
     }
     if (networkError) {
       console.error(`[Network error]: ${networkError}`);
     }
   });
-
-  // Combine the links and initialize the Apollo Client.
   return new ApolloClient({
     link: errorLink.concat(authLink.concat(httpLinkInstance)),
     cache: new InMemoryCache(),
@@ -118,8 +87,7 @@ function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
 }
 
 /**
- * Retrieves the singleton Apollo Client instance.
- * @returns ApolloClient instance.
+ * Returns the singleton Apollo Client (synchronously).
  */
 export function getApolloClient(): ApolloClientType<NormalizedCacheObject> {
   if (!apolloClient) {
@@ -128,11 +96,10 @@ export function getApolloClient(): ApolloClientType<NormalizedCacheObject> {
   return apolloClient;
 }
 
-// Export the singleton instance for convenience.
 export const client = getApolloClient();
 
-// Re-export runtime implementations so they can be imported in other code.
-export {
+// Re-export the runtime implementations so they can be imported by other modules.
+export const {
   ApolloClient,
   ApolloError,
   gql,
@@ -141,7 +108,7 @@ export {
   setContext,
   onError,
   split,
-};
+} = apolloExports;
 
 // Also re-export the types for convenience.
 export type {
@@ -149,4 +116,5 @@ export type {
   InMemoryCacheType,
   HttpLinkType,
   NormalizedCacheObject,
+  DocumentNode,
 };
