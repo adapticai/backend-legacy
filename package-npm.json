@@ -4,7 +4,7 @@
   "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
   "type": "module",
   "types": "index.d.ts",
-  "main": "index.js",
+  "main": "index.cjs",
   "module": "esm/index.mjs",
   "scripts": {
     "build": "tsc --declaration --emitDeclarationOnly"
