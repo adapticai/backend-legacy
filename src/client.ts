@@ -1,6 +1,18 @@
-// ==========================
-// 1. Type Imports (for TypeScript)
-// ==========================
+// ====================================================
+// 1. For Server-side: Create a require() function for ESM.
+// ====================================================
+import { createRequire } from "module";
+
+// If we're in a CommonJS environment, use the global require;
+// otherwise (in an ES module) use createRequire(import.meta.url).
+const requireFromESM = (typeof require !== "undefined")
+  ? require
+  // @ts-ignore
+  : createRequire(import.meta.url);
+
+// ====================================================
+// 2. Type Imports (for TypeScript)
+// ====================================================
 import type {
   ApolloClient as ApolloClientType,
   InMemoryCache as InMemoryCacheType,
@@ -8,12 +20,13 @@ import type {
   NormalizedCacheObject,
 } from "@apollo/client";
 
-// ==========================
-// 2. Static (Client-side) Imports
-// Use default import and destructuring so that CommonJS modules export correctly in ESM.
-// ==========================
-import * as pkg from "@apollo/client";
+// ====================================================
+// 3. Client-side Static Imports
+// For the browser (client-side) we import from the standard ESM entry points.
+// ====================================================
 
+// Import the core module as a namespace to extract its members.
+import * as pkg from "@apollo/client";
 const {
   ApolloClient: ApolloClientImported,
   InMemoryCache: InMemoryCacheImported,
@@ -23,16 +36,14 @@ const {
   split: splitImported,
 } = pkg;
 
-import contextPkg from "@apollo/client/link/context/context.cjs";
-const { setContext: setContextImported } = contextPkg;
+// Import link utilities from their ESM paths.
+import { setContext as setContextImported } from "@apollo/client/link/context";
+import { onError as onErrorImported } from "@apollo/client/link/error";
 
-import errorPkg from "@apollo/client/link/error/error.cjs";
-const { onError: onErrorImported } = errorPkg;
-
-// ==========================
-// 3. Declare Runtime Variables
-// These variables will eventually be assigned the proper implementations based on the runtime.
-// ==========================
+// ====================================================
+// 4. Declare Runtime Variables
+// These variables will be assigned the proper implementations based on the runtime.
+// ====================================================
 let ApolloClient: typeof ApolloClientImported;
 let ApolloError: typeof ApolloErrorImported;
 let gql: typeof gqlImported;
@@ -42,17 +53,17 @@ let setContext: typeof setContextImported;
 let onError: typeof onErrorImported;
 let split: typeof splitImported;
 
-// ==========================
-// 4. Environment Detection & Conditional Assignment
-// We check if we are in a server environment (including AWS Lambda)
-// ==========================
+// ====================================================
+// 5. Environment Detection & Conditional Assignment
+// We check if we are in a server-like environment (including AWS Lambda).
+// ====================================================
 const isLambda = Boolean(process.env.AWS_EXECUTION_ENV);
 const isServer = typeof window === "undefined";
 
 if (isServer || isLambda) {
   // --- Server-side (or AWS Lambda) ---
-  // Use require() to load the modules synchronously at runtime.
-  const pkg = require("@apollo/client");
+  // Use the require() function (created by createRequire) to load modules synchronously.
+  const pkg = requireFromESM("@apollo/client");
   ApolloClient = pkg.ApolloClient;
   InMemoryCache = pkg.InMemoryCache;
   HttpLink = pkg.HttpLink;
@@ -60,10 +71,12 @@ if (isServer || isLambda) {
   ApolloError = pkg.ApolloError;
   split = pkg.split;
 
-  // Load additional submodules.
-  const contextPkg = require("@apollo/client/link/context/context.cjs");
+  // For the link utilities on the server, we can continue to load from the CommonJS files.
+  const contextPkg = requireFromESM("@apollo/client/link/context/context.cjs");
+  // (Note: if you prefer and if it’s supported in your version, you might also try the ESM path.)
   setContext = contextPkg.setContext;
-  const errorPkg = require("@apollo/client/link/error/error.cjs");
+
+  const errorPkg = requireFromESM("@apollo/client/link/error/error.cjs");
   onError = errorPkg.onError;
 } else {
   // --- Client-side ---
@@ -78,9 +91,9 @@ if (isServer || isLambda) {
   split = splitImported;
 }
 
-// ==========================
-// 5. Apollo Client Initialization & Singleton Pattern
-// ==========================
+// ====================================================
+// 6. Apollo Client Initialization & Singleton Pattern
+// ====================================================
 let apolloClient: ApolloClientType<NormalizedCacheObject> | null = null;
 
 /**
@@ -141,12 +154,11 @@ export function getApolloClient(): ApolloClientType<NormalizedCacheObject> {
   return apolloClient;
 }
 
-// ==========================
-// 6. Exports
-// ==========================
+// ====================================================
+// 7. Exports
+// ====================================================
 export const client = getApolloClient();
 
-// Re-export runtime implementations for convenience.
 export {
   ApolloClient,
   ApolloError,
@@ -158,7 +170,6 @@ export {
   split,
 };
 
-// Re-export types for convenience.
 export type {
   ApolloClientType,
   InMemoryCacheType,

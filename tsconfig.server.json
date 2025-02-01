@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "target": "ESNext",
+    "target": "ESNext"
   },
   "include": ["src/**/*.ts"],
   "exclude": [
