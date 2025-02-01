@@ -7966,7 +7966,7 @@ id
       const response = await client.query({ query: GET_DELIVERABLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getDeliverable ?? null;
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Deliverable found') {
         return null;
       } else {
@@ -7996,7 +7996,7 @@ id
       const response = await client.query({ query: GET_ALL_DELIVERABLE });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.deliverables ?? null;
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Deliverable found') {
         return null;
       } else {
@@ -8047,7 +8047,7 @@ id
       } else {
        return [] as DeliverableType[];
       }
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Deliverable found') {
         return null;
       } else {

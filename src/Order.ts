@@ -19458,7 +19458,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ORDER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getOrder ?? null;
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Order found') {
         return null;
       } else {
@@ -19488,7 +19488,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_ORDER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.orders ?? null;
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Order found') {
         return null;
       } else {
@@ -19539,7 +19539,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as OrderType[];
       }
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Order found') {
         return null;
       } else {

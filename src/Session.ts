@@ -4166,7 +4166,7 @@ id
       const response = await client.query({ query: GET_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getSession ?? null;
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Session found') {
         return null;
       } else {
@@ -4196,7 +4196,7 @@ id
       const response = await client.query({ query: GET_ALL_SESSION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.sessions ?? null;
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Session found') {
         return null;
       } else {
@@ -4244,7 +4244,7 @@ id
       } else {
        return [] as SessionType[];
       }
-    } catch (error) {
+    } catch (error: typeof ApolloError) {
       if (error instanceof ApolloError && error.message === 'No Session found') {
         return null;
       } else {
