@@ -1,4 +1,6 @@
-// Import types for type-checking only.
+// ==========================
+// 1. Type Imports (for TypeScript)
+// ==========================
 import type {
   ApolloClient as ApolloClientType,
   InMemoryCache as InMemoryCacheType,
@@ -6,19 +8,30 @@ import type {
   NormalizedCacheObject,
 } from "@apollo/client";
 
-// Statically import runtime implementations for the client (browser) environment.
-import {
-  ApolloClient as ApolloClientImported,
-  InMemoryCache as InMemoryCacheImported,
-  HttpLink as HttpLinkImported,
-  gql as gqlImported,
-  ApolloError as ApolloErrorImported,
-  split as splitImported,
-} from "@apollo/client";
-import { setContext as setContextImported } from "@apollo/client/link/context/context.cjs";
-import { onError as onErrorImported } from "@apollo/client/link/error/error.cjs";
+// ==========================
+// 2. Static (Client-side) Imports
+// Use default import and destructuring so that CommonJS modules export correctly in ESM.
+// ==========================
+import pkg from "@apollo/client";
+const {
+  ApolloClient: ApolloClientImported,
+  InMemoryCache: InMemoryCacheImported,
+  HttpLink: HttpLinkImported,
+  gql: gqlImported,
+  ApolloError: ApolloErrorImported,
+  split: splitImported,
+} = pkg;
 
-// Declare runtime variables that will eventually hold the proper implementations.
+import contextPkg from "@apollo/client/link/context/context.cjs";
+const { setContext: setContextImported } = contextPkg;
+
+import errorPkg from "@apollo/client/link/error/error.cjs";
+const { onError: onErrorImported } = errorPkg;
+
+// ==========================
+// 3. Declare Runtime Variables
+// These variables will eventually be assigned the proper implementations based on the runtime.
+// ==========================
 let ApolloClient: typeof ApolloClientImported;
 let ApolloError: typeof ApolloErrorImported;
 let gql: typeof gqlImported;
@@ -28,13 +41,16 @@ let setContext: typeof setContextImported;
 let onError: typeof onErrorImported;
 let split: typeof splitImported;
 
-// Detect if we are in a server-like environment (including AWS Lambda).
+// ==========================
+// 4. Environment Detection & Conditional Assignment
+// We check if we are in a server environment (including AWS Lambda)
+// ==========================
 const isLambda = Boolean(process.env.AWS_EXECUTION_ENV);
 const isServer = typeof window === "undefined";
 
-// Conditional logic: on server (or AWS Lambda) use require(), on client use the static imports.
 if (isServer || isLambda) {
-  // Server-side: Use require() to load the modules at runtime.
+  // --- Server-side (or AWS Lambda) ---
+  // Use require() to load the modules synchronously at runtime.
   const pkg = require("@apollo/client");
   ApolloClient = pkg.ApolloClient;
   InMemoryCache = pkg.InMemoryCache;
@@ -43,13 +59,14 @@ if (isServer || isLambda) {
   ApolloError = pkg.ApolloError;
   split = pkg.split;
 
-  // Require the additional packages for context and error links.
+  // Load additional submodules.
   const contextPkg = require("@apollo/client/link/context/context.cjs");
   setContext = contextPkg.setContext;
   const errorPkg = require("@apollo/client/link/error/error.cjs");
   onError = errorPkg.onError;
 } else {
-  // Client-side: Use the statically imported implementations.
+  // --- Client-side ---
+  // Use the statically imported implementations.
   ApolloClient = ApolloClientImported;
   InMemoryCache = InMemoryCacheImported;
   HttpLink = HttpLinkImported;
@@ -60,7 +77,9 @@ if (isServer || isLambda) {
   split = splitImported;
 }
 
-// Singleton instance for the Apollo Client.
+// ==========================
+// 5. Apollo Client Initialization & Singleton Pattern
+// ==========================
 let apolloClient: ApolloClientType<NormalizedCacheObject> | null = null;
 
 /**
@@ -121,10 +140,12 @@ export function getApolloClient(): ApolloClientType<NormalizedCacheObject> {
   return apolloClient;
 }
 
-// Export the singleton instance.
+// ==========================
+// 6. Exports
+// ==========================
 export const client = getApolloClient();
 
-// Re-export the runtime implementations so they can be imported elsewhere.
+// Re-export runtime implementations for convenience.
 export {
   ApolloClient,
   ApolloError,
@@ -136,7 +157,7 @@ export {
   split,
 };
 
-// Also re-export the types for convenience.
+// Re-export types for convenience.
 export type {
   ApolloClientType,
   InMemoryCacheType,
