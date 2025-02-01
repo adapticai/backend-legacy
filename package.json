@@ -59,7 +59,6 @@
     "graphql-scalars": "^1.24.0",
     "graphql-ws": "^5.16.0",
     "jsonwebtoken": "^9.0.2",
-    "module": "^1.2.5",
     "pluralize": "^8.0.0",
     "prisma": "^6.1.0",
     "reflect-metadata": "^0.2.2",
