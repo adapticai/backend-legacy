@@ -9347,7 +9347,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_STOPLOSS, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getStopLoss ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No StopLoss found') {
         return null;
       } else {
@@ -9377,7 +9377,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_STOPLOSS });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.stopLosses ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No StopLoss found') {
         return null;
       } else {
@@ -9425,7 +9425,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as StopLossType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No StopLoss found') {
         return null;
       } else {

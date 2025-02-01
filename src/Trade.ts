@@ -19757,7 +19757,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getTrade ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Trade found') {
         return null;
       } else {
@@ -19787,7 +19787,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_TRADE });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.trades ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Trade found') {
         return null;
       } else {
@@ -19835,7 +19835,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as TradeType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Trade found') {
         return null;
       } else {

@@ -978,7 +978,7 @@ ${constructVariablesObject(
       const response = await client.query({ query: GET_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.get${capitalModelName} ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
         return null;
       } else {
@@ -1008,7 +1008,7 @@ ${constructVariablesObject(
       const response = await client.query({ query: GET_ALL_${capitalModelName.toUpperCase()} });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
         return null;
       } else {
@@ -1057,7 +1057,7 @@ ${constructVariablesObject(
       } else {
        return [] as ${capitalModelName}Type[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
         return null;
       } else {

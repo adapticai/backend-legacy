@@ -12,7 +12,8 @@ import type {
 // 2. Static (Client-side) Imports
 // Use default import and destructuring so that CommonJS modules export correctly in ESM.
 // ==========================
-import pkg from "@apollo/client";
+import * as pkg from "@apollo/client";
+
 const {
   ApolloClient: ApolloClientImported,
   InMemoryCache: InMemoryCacheImported,

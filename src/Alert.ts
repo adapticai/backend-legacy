@@ -9890,7 +9890,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAlert ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Alert found') {
         return null;
       } else {
@@ -9920,7 +9920,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_ALERT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.alerts ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Alert found') {
         return null;
       } else {
@@ -9968,7 +9968,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as AlertType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Alert found') {
         return null;
       } else {

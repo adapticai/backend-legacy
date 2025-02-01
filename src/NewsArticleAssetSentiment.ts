@@ -8635,7 +8635,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getNewsArticleAssetSentiment ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
         return null;
       } else {
@@ -8665,7 +8665,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_NEWSARTICLEASSETSENTIMENT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.newsArticleAssetSentiments ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
         return null;
       } else {
@@ -8716,7 +8716,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as NewsArticleAssetSentimentType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No NewsArticleAssetSentiment found') {
         return null;
       } else {

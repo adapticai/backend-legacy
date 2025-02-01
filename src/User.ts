@@ -9587,7 +9587,7 @@ id
       const response = await client.query({ query: GET_USER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getUser ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No User found') {
         return null;
       } else {
@@ -9617,7 +9617,7 @@ id
       const response = await client.query({ query: GET_ALL_USER });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.users ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No User found') {
         return null;
       } else {
@@ -9668,7 +9668,7 @@ id
       } else {
        return [] as UserType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No User found') {
         return null;
       } else {

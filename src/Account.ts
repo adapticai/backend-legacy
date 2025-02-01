@@ -4243,7 +4243,7 @@ id
       const response = await client.query({ query: GET_ACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAccount ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Account found') {
         return null;
       } else {
@@ -4273,7 +4273,7 @@ id
       const response = await client.query({ query: GET_ALL_ACCOUNT });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.accounts ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Account found') {
         return null;
       } else {
@@ -4324,7 +4324,7 @@ id
       } else {
        return [] as AccountType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Account found') {
         return null;
       } else {

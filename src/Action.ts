@@ -15473,7 +15473,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.getAction ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Action found') {
         return null;
       } else {
@@ -15503,7 +15503,7 @@ import { removeUndefinedProps } from './utils';
       const response = await client.query({ query: GET_ALL_ACTION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
       return response.data?.actions ?? null;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Action found') {
         return null;
       } else {
@@ -15551,7 +15551,7 @@ import { removeUndefinedProps } from './utils';
       } else {
        return [] as ActionType[];
       }
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof ApolloError && error.message === 'No Action found') {
         return null;
       } else {
