@@ -513,6 +513,16 @@ try {
       regex: /const pkg = require\("@apollo\/client"\);/g,
       replacement: 'import * as pkg from "@apollo/client";',
       description: 'apollo-client.server mjs require-to-import'
+    },
+    {
+      regex: /const contextPkg = require\(['"]@apollo\/client\/link\/context\/context\.cjs['"]\);/g,
+      replacement: 'import * as contextPkg from "@apollo/client/link/context/context.cjs";',
+      description: 'apollo-client.server contextPkg require-to-import'
+    },
+    {
+      regex: /const errorPkg = require\(['"]@apollo\/client\/link\/error\/error\.cjs['"]\);/g,
+      replacement: 'import * as errorPkg from "@apollo/client/link/error/error.cjs";',
+      description: 'apollo-client.server errorPkg require-to-import'
     }
   ]);
 } catch (err) {
