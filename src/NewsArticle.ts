@@ -109,7 +109,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_NEWSARTICLE = gql`
         mutation createOneNewsArticle($data: NewsArticleCreateInput!) {
@@ -421,7 +421,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: NewsArticleType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_NEWSARTICLE = gql`
       mutation createManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
@@ -476,7 +476,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_NEWSARTICLE = gql`
       mutation updateOneNewsArticle($data: NewsArticleUpdateInput!, $where: NewsArticleWhereUniqueInput!) {
@@ -1694,7 +1694,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_NEWSARTICLE = gql`
       mutation upsertOneNewsArticle($where: NewsArticleWhereUniqueInput!, $create: NewsArticleCreateInput!, $update: NewsArticleUpdateInput!) {
@@ -3177,7 +3177,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: NewsArticleType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_NEWSARTICLE = gql`
       mutation updateManyNewsArticle($data: [NewsArticleCreateManyInput!]!) {
@@ -4398,7 +4398,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_NEWSARTICLE = gql`
       mutation deleteOneNewsArticle($where: NewsArticleWhereUniqueInput!) {
@@ -4437,7 +4437,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_NEWSARTICLE = gql`
       query getNewsArticle($where: NewsArticleWhereUniqueInput!) {
@@ -4478,7 +4478,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_NEWSARTICLE = gql`
       query getAllNewsArticle {
@@ -4509,7 +4509,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_NEWSARTICLE = gql`
       query findManyNewsArticle($where: NewsArticleWhereInput!) {

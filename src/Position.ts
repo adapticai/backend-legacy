@@ -104,7 +104,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: PositionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_POSITION = gql`
         mutation createOnePosition($data: PositionCreateInput!) {
@@ -1237,7 +1237,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: PositionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_POSITION = gql`
       mutation createManyPosition($data: [PositionCreateManyInput!]!) {
@@ -1292,7 +1292,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: PositionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_POSITION = gql`
       mutation updateOnePosition($data: PositionUpdateInput!, $where: PositionWhereUniqueInput!) {
@@ -5904,7 +5904,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: PositionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_POSITION = gql`
       mutation upsertOnePosition($where: PositionWhereUniqueInput!, $create: PositionCreateInput!, $update: PositionUpdateInput!) {
@@ -11602,7 +11602,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: PositionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_POSITION = gql`
       mutation updateManyPosition($data: [PositionCreateManyInput!]!) {
@@ -16217,7 +16217,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: PositionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_POSITION = gql`
       mutation deleteOnePosition($where: PositionWhereUniqueInput!) {
@@ -16256,7 +16256,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: PositionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_POSITION = gql`
       query getPosition($where: PositionWhereUniqueInput!) {
@@ -16299,7 +16299,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_POSITION = gql`
       query getAllPosition {
@@ -16330,7 +16330,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: PositionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<PositionType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_POSITION = gql`
       query findManyPosition($where: PositionWhereInput!) {

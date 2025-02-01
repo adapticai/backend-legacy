@@ -260,7 +260,7 @@ id
 
     async create(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_CONTRACT = gql`
         mutation createOneContract($data: ContractCreateInput!) {
@@ -1312,7 +1312,7 @@ id
    */
   async createMany(props: ContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_CONTRACT = gql`
       mutation createManyContract($data: [ContractCreateManyInput!]!) {
@@ -1371,7 +1371,7 @@ id
    */
   async update(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_CONTRACT = gql`
       mutation updateOneContract($data: ContractUpdateInput!, $where: ContractWhereUniqueInput!) {
@@ -5432,7 +5432,7 @@ id
    */
   async upsert(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_CONTRACT = gql`
       mutation upsertOneContract($where: ContractWhereUniqueInput!, $create: ContractCreateInput!, $update: ContractUpdateInput!) {
@@ -10498,7 +10498,7 @@ id
    */
   async updateMany(props: ContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_CONTRACT = gql`
       mutation updateManyContract($data: [ContractCreateManyInput!]!) {
@@ -14562,7 +14562,7 @@ id
    */
   async delete(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_CONTRACT = gql`
       mutation deleteOneContract($where: ContractWhereUniqueInput!) {
@@ -14601,7 +14601,7 @@ id
    */
   async get(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_CONTRACT = gql`
       query getContract($where: ContractWhereUniqueInput!) {
@@ -14646,7 +14646,7 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_CONTRACT = gql`
       query getAllContract {
@@ -14677,7 +14677,7 @@ id
    */
   async findMany(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_CONTRACT = gql`
       query findManyContract($where: ContractWhereInput!) {

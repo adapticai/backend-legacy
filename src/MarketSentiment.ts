@@ -30,7 +30,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_MARKETSENTIMENT = gql`
         mutation createOneMarketSentiment($data: MarketSentimentCreateInput!) {
@@ -73,7 +73,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: MarketSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_MARKETSENTIMENT = gql`
       mutation createManyMarketSentiment($data: [MarketSentimentCreateManyInput!]!) {
@@ -114,7 +114,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_MARKETSENTIMENT = gql`
       mutation updateOneMarketSentiment($data: MarketSentimentUpdateInput!, $where: MarketSentimentWhereUniqueInput!) {
@@ -173,7 +173,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_MARKETSENTIMENT = gql`
       mutation upsertOneMarketSentiment($where: MarketSentimentWhereUniqueInput!, $create: MarketSentimentCreateInput!, $update: MarketSentimentUpdateInput!) {
@@ -228,7 +228,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: MarketSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_MARKETSENTIMENT = gql`
       mutation updateManyMarketSentiment($data: [MarketSentimentCreateManyInput!]!) {
@@ -290,7 +290,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_MARKETSENTIMENT = gql`
       mutation deleteOneMarketSentiment($where: MarketSentimentWhereUniqueInput!) {
@@ -329,7 +329,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_MARKETSENTIMENT = gql`
       query getMarketSentiment($where: MarketSentimentWhereUniqueInput!) {
@@ -366,7 +366,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_MARKETSENTIMENT = gql`
       query getAllMarketSentiment {
@@ -397,7 +397,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<MarketSentimentType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_MARKETSENTIMENT = gql`
       query findManyMarketSentiment($where: MarketSentimentWhereInput!) {

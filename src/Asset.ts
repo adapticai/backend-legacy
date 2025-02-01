@@ -82,7 +82,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_ASSET = gql`
         mutation createOneAsset($data: AssetCreateInput!) {
@@ -1444,7 +1444,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: AssetType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_ASSET = gql`
       mutation createManyAsset($data: [AssetCreateManyInput!]!) {
@@ -1537,7 +1537,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_ASSET = gql`
       mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
@@ -6919,7 +6919,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_ASSET = gql`
       mutation upsertOneAsset($where: AssetWhereUniqueInput!, $create: AssetCreateInput!, $update: AssetUpdateInput!) {
@@ -13616,7 +13616,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: AssetType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_ASSET = gql`
       mutation updateManyAsset($data: [AssetCreateManyInput!]!) {
@@ -19001,7 +19001,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_ASSET = gql`
       mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
@@ -19040,7 +19040,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ASSET = gql`
       query getAsset($where: AssetWhereUniqueInput!) {
@@ -19079,7 +19079,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_ASSET = gql`
       query getAllAsset {
@@ -19110,7 +19110,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_ASSET = gql`
       query findManyAsset($where: AssetWhereInput!) {

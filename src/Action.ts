@@ -157,7 +157,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_ACTION = gql`
         mutation createOneAction($data: ActionCreateInput!) {
@@ -1209,7 +1209,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_ACTION = gql`
       mutation createManyAction($data: [ActionCreateManyInput!]!) {
@@ -1260,7 +1260,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_ACTION = gql`
       mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
@@ -5641,7 +5641,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_ACTION = gql`
       mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
@@ -11027,7 +11027,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_ACTION = gql`
       mutation updateManyAction($data: [ActionCreateManyInput!]!) {
@@ -15411,7 +15411,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_ACTION = gql`
       mutation deleteOneAction($where: ActionWhereUniqueInput!) {
@@ -15450,7 +15450,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ACTION = gql`
       query getAction($where: ActionWhereUniqueInput!) {
@@ -15490,7 +15490,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_ACTION = gql`
       query getAllAction {
@@ -15521,7 +15521,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_ACTION = gql`
       query findManyAction($where: ActionWhereInput!) {

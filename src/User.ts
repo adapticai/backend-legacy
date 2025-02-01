@@ -411,7 +411,7 @@ id
 
     async create(props: UserType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_USER = gql`
         mutation createOneUser($data: UserCreateInput!) {
@@ -1081,7 +1081,7 @@ id
    */
   async createMany(props: UserType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_USER = gql`
       mutation createManyUser($data: [UserCreateManyInput!]!) {
@@ -1131,7 +1131,7 @@ id
    */
   async update(props: UserType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_USER = gql`
       mutation updateOneUser($data: UserUpdateInput!, $where: UserWhereUniqueInput!) {
@@ -3720,7 +3720,7 @@ id
    */
   async upsert(props: UserType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_USER = gql`
       mutation upsertOneUser($where: UserWhereUniqueInput!, $create: UserCreateInput!, $update: UserUpdateInput!) {
@@ -6932,7 +6932,7 @@ id
    */
   async updateMany(props: UserType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_USER = gql`
       mutation updateManyUser($data: [UserCreateManyInput!]!) {
@@ -9524,7 +9524,7 @@ id
    */
   async delete(props: UserType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_USER = gql`
       mutation deleteOneUser($where: UserWhereUniqueInput!) {
@@ -9563,7 +9563,7 @@ id
    */
   async get(props: UserType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_USER = gql`
       query getUser($where: UserWhereUniqueInput!) {
@@ -9604,7 +9604,7 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_USER = gql`
       query getAllUser {
@@ -9635,7 +9635,7 @@ id
    */
   async findMany(props: UserType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<UserType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_USER = gql`
       query findManyUser($where: UserWhereInput!) {

@@ -28,7 +28,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_VERIFICATIONTOKEN = gql`
         mutation createOneVerificationToken($data: VerificationTokenCreateInput!) {
@@ -71,7 +71,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: VerificationTokenType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_VERIFICATIONTOKEN = gql`
       mutation createManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
@@ -112,7 +112,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_VERIFICATIONTOKEN = gql`
       mutation updateOneVerificationToken($data: VerificationTokenUpdateInput!, $where: VerificationTokenWhereUniqueInput!) {
@@ -165,7 +165,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_VERIFICATIONTOKEN = gql`
       mutation upsertOneVerificationToken($where: VerificationTokenWhereUniqueInput!, $create: VerificationTokenCreateInput!, $update: VerificationTokenUpdateInput!) {
@@ -220,7 +220,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: VerificationTokenType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_VERIFICATIONTOKEN = gql`
       mutation updateManyVerificationToken($data: [VerificationTokenCreateManyInput!]!) {
@@ -276,7 +276,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
@@ -315,7 +315,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_VERIFICATIONTOKEN = gql`
       query getVerificationToken($where: VerificationTokenWhereUniqueInput!) {
@@ -352,7 +352,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_VERIFICATIONTOKEN = gql`
       query getAllVerificationToken {
@@ -383,7 +383,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<VerificationTokenType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_VERIFICATIONTOKEN = gql`
       query findManyVerificationToken($where: VerificationTokenWhereInput!) {

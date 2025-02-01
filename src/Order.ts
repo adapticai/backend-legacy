@@ -157,7 +157,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: OrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_ORDER = gql`
         mutation createOneOrder($data: OrderCreateInput!) {
@@ -1533,7 +1533,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: OrderType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_ORDER = gql`
       mutation createManyOrder($data: [OrderCreateManyInput!]!) {
@@ -1611,7 +1611,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: OrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_ORDER = gql`
       mutation updateOneOrder($data: OrderUpdateInput!, $where: OrderWhereUniqueInput!) {
@@ -7094,7 +7094,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: OrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_ORDER = gql`
       mutation upsertOneOrder($where: OrderWhereUniqueInput!, $create: OrderCreateInput!, $update: OrderUpdateInput!) {
@@ -13906,7 +13906,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: OrderType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_ORDER = gql`
       mutation updateManyOrder($data: [OrderCreateManyInput!]!) {
@@ -19392,7 +19392,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: OrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_ORDER = gql`
       mutation deleteOneOrder($where: OrderWhereUniqueInput!) {
@@ -19431,7 +19431,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: OrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ORDER = gql`
       query getOrder($where: OrderWhereUniqueInput!) {
@@ -19475,7 +19475,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_ORDER = gql`
       query getAllOrder {
@@ -19506,7 +19506,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: OrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrderType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_ORDER = gql`
       query findManyOrder($where: OrderWhereInput!) {

@@ -235,7 +235,7 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_TRADE = gql`
         mutation createOneTrade($data: TradeCreateInput!) {
@@ -1584,7 +1584,7 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: TradeType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_TRADE = gql`
       mutation createManyTrade($data: [TradeCreateManyInput!]!) {
@@ -1635,7 +1635,7 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_TRADE = gql`
       mutation updateOneTrade($data: TradeUpdateInput!, $where: TradeWhereUniqueInput!) {
@@ -7220,7 +7220,7 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_TRADE = gql`
       mutation upsertOneTrade($where: TradeWhereUniqueInput!, $create: TradeCreateInput!, $update: TradeUpdateInput!) {
@@ -14107,7 +14107,7 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: TradeType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_TRADE = gql`
       mutation updateManyTrade($data: [TradeCreateManyInput!]!) {
@@ -19695,7 +19695,7 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_TRADE = gql`
       mutation deleteOneTrade($where: TradeWhereUniqueInput!) {
@@ -19734,7 +19734,7 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_TRADE = gql`
       query getTrade($where: TradeWhereUniqueInput!) {
@@ -19774,7 +19774,7 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_TRADE = gql`
       query getAllTrade {
@@ -19805,7 +19805,7 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TradeType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_TRADE = gql`
       query findManyTrade($where: TradeWhereInput!) {

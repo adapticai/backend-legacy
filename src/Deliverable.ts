@@ -260,7 +260,7 @@ id
 
     async create(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_DELIVERABLE = gql`
         mutation createOneDeliverable($data: DeliverableCreateInput!) {
@@ -785,7 +785,7 @@ id
    */
   async createMany(props: DeliverableType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_DELIVERABLE = gql`
       mutation createManyDeliverable($data: [DeliverableCreateManyInput!]!) {
@@ -832,7 +832,7 @@ id
    */
   async update(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_DELIVERABLE = gql`
       mutation updateOneDeliverable($data: DeliverableUpdateInput!, $where: DeliverableWhereUniqueInput!) {
@@ -3028,7 +3028,7 @@ id
    */
   async upsert(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_DELIVERABLE = gql`
       mutation upsertOneDeliverable($where: DeliverableWhereUniqueInput!, $create: DeliverableCreateInput!, $update: DeliverableUpdateInput!) {
@@ -5702,7 +5702,7 @@ id
    */
   async updateMany(props: DeliverableType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_DELIVERABLE = gql`
       mutation updateManyDeliverable($data: [DeliverableCreateManyInput!]!) {
@@ -7901,7 +7901,7 @@ id
    */
   async delete(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_DELIVERABLE = gql`
       mutation deleteOneDeliverable($where: DeliverableWhereUniqueInput!) {
@@ -7940,7 +7940,7 @@ id
    */
   async get(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_DELIVERABLE = gql`
       query getDeliverable($where: DeliverableWhereUniqueInput!) {
@@ -7983,7 +7983,7 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_DELIVERABLE = gql`
       query getAllDeliverable {
@@ -8014,7 +8014,7 @@ id
    */
   async findMany(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_DELIVERABLE = gql`
       query findManyDeliverable($where: DeliverableWhereInput!) {

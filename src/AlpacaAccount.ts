@@ -417,7 +417,7 @@ id
 
     async create(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_ALPACAACCOUNT = gql`
         mutation createOneAlpacaAccount($data: AlpacaAccountCreateInput!) {
@@ -1704,7 +1704,7 @@ id
    */
   async createMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_ALPACAACCOUNT = gql`
       mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
@@ -1757,7 +1757,7 @@ id
    */
   async update(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_ALPACAACCOUNT = gql`
       mutation updateOneAlpacaAccount($data: AlpacaAccountUpdateInput!, $where: AlpacaAccountWhereUniqueInput!) {
@@ -6879,7 +6879,7 @@ id
    */
   async upsert(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_ALPACAACCOUNT = gql`
       mutation upsertOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!, $create: AlpacaAccountCreateInput!, $update: AlpacaAccountUpdateInput!) {
@@ -13241,7 +13241,7 @@ id
    */
   async updateMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_ALPACAACCOUNT = gql`
       mutation updateManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
@@ -18366,7 +18366,7 @@ id
    */
   async delete(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_ALPACAACCOUNT = gql`
       mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
@@ -18405,7 +18405,7 @@ id
    */
   async get(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALPACAACCOUNT = gql`
       query getAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
@@ -18445,7 +18445,7 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_ALPACAACCOUNT = gql`
       query getAllAlpacaAccount {
@@ -18476,7 +18476,7 @@ id
    */
   async findMany(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType[] | null> {
 
-    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_ALPACAACCOUNT = gql`
       query findManyAlpacaAccount($where: AlpacaAccountWhereInput!) {
