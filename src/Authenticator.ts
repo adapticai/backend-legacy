@@ -1,7 +1,7 @@
 
   
 import { Authenticator as AuthenticatorType } from './generated/typegraphql-prisma/models/Authenticator';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -216,7 +216,14 @@ id
 
     async create(props: AuthenticatorType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
 
     const CREATE_ONE_AUTHENTICATOR = gql`
         mutation createOneAuthenticator($data: AuthenticatorCreateInput!) {
@@ -540,7 +547,15 @@ id
    */
   async createMany(props: AuthenticatorType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const CREATE_MANY_AUTHENTICATOR = gql`
       mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
@@ -582,7 +597,15 @@ id
    */
   async update(props: AuthenticatorType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_ONE_AUTHENTICATOR = gql`
       mutation updateOneAuthenticator($data: AuthenticatorUpdateInput!, $where: AuthenticatorWhereUniqueInput!) {
@@ -1704,7 +1727,15 @@ id
    */
   async upsert(props: AuthenticatorType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPSERT_ONE_AUTHENTICATOR = gql`
       mutation upsertOneAuthenticator($where: AuthenticatorWhereUniqueInput!, $create: AuthenticatorCreateInput!, $update: AuthenticatorUpdateInput!) {
@@ -3103,7 +3134,15 @@ id
    */
   async updateMany(props: AuthenticatorType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_MANY_AUTHENTICATOR = gql`
       mutation updateManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
@@ -4228,7 +4267,15 @@ id
    */
   async delete(props: AuthenticatorType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const DELETE_ONE_AUTHENTICATOR = gql`
       mutation deleteOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
@@ -4267,7 +4314,15 @@ id
    */
   async get(props: AuthenticatorType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_AUTHENTICATOR = gql`
       query getAuthenticator($where: AuthenticatorWhereUniqueInput!) {
@@ -4307,7 +4362,15 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALL_AUTHENTICATOR = gql`
       query getAllAuthenticator {
@@ -4338,7 +4401,15 @@ id
    */
   async findMany(props: AuthenticatorType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AuthenticatorType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const FIND_MANY_AUTHENTICATOR = gql`
       query findManyAuthenticator($where: AuthenticatorWhereInput!) {

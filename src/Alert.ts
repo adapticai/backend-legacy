@@ -1,7 +1,7 @@
 
   
 import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -31,7 +31,14 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
 
     const CREATE_ONE_ALERT = gql`
         mutation createOneAlert($data: AlertCreateInput!) {
@@ -702,7 +709,15 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: AlertType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const CREATE_MANY_ALERT = gql`
       mutation createManyAlert($data: [AlertCreateManyInput!]!) {
@@ -744,7 +759,15 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_ONE_ALERT = gql`
       mutation updateOneAlert($data: AlertUpdateInput!, $where: AlertWhereUniqueInput!) {
@@ -3563,7 +3586,15 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPSERT_ONE_ALERT = gql`
       mutation upsertOneAlert($where: AlertWhereUniqueInput!, $create: AlertCreateInput!, $update: AlertUpdateInput!) {
@@ -7006,7 +7037,15 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: AlertType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_MANY_ALERT = gql`
       mutation updateManyAlert($data: [AlertCreateManyInput!]!) {
@@ -9828,7 +9867,15 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const DELETE_ONE_ALERT = gql`
       mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
@@ -9867,7 +9914,15 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALERT = gql`
       query getAlert($where: AlertWhereUniqueInput!) {
@@ -9907,7 +9962,15 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALL_ALERT = gql`
       query getAllAlert {
@@ -9938,7 +10001,15 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const FIND_MANY_ALERT = gql`
       query findManyAlert($where: AlertWhereInput!) {

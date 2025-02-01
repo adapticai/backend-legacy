@@ -1,7 +1,7 @@
 
   
 import { Customer as CustomerType } from './generated/typegraphql-prisma/models/Customer';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -216,7 +216,14 @@ id
 
     async create(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
 
     const CREATE_ONE_CUSTOMER = gql`
         mutation createOneCustomer($data: CustomerCreateInput!) {
@@ -532,7 +539,15 @@ id
    */
   async createMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const CREATE_MANY_CUSTOMER = gql`
       mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
@@ -577,7 +592,15 @@ id
    */
   async update(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_ONE_CUSTOMER = gql`
       mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
@@ -1671,7 +1694,15 @@ id
    */
   async upsert(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPSERT_ONE_CUSTOMER = gql`
       mutation upsertOneCustomer($where: CustomerWhereUniqueInput!, $create: CustomerCreateInput!, $update: CustomerUpdateInput!) {
@@ -3037,7 +3068,15 @@ id
    */
   async updateMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_MANY_CUSTOMER = gql`
       mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
@@ -4134,7 +4173,15 @@ id
    */
   async delete(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const DELETE_ONE_CUSTOMER = gql`
       mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
@@ -4173,7 +4220,15 @@ id
    */
   async get(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_CUSTOMER = gql`
       query getCustomer($where: CustomerWhereUniqueInput!) {
@@ -4221,7 +4276,15 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALL_CUSTOMER = gql`
       query getAllCustomer {
@@ -4252,7 +4315,15 @@ id
    */
   async findMany(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const FIND_MANY_CUSTOMER = gql`
       query findManyCustomer($where: CustomerWhereInput!) {

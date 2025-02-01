@@ -1,4 +1,6 @@
-// Import types from @apollo/client for type-checking only.
+// client.ts
+
+// === Export type definitions (statically) ===
 import type {
   ApolloClient as ApolloClientType,
   InMemoryCache as InMemoryCacheType,
@@ -6,79 +8,69 @@ import type {
   NormalizedCacheObject,
 } from "@apollo/client";
 
-// Import runtime implementations.
-import {
-  ApolloClient as ApolloClientImported,
-  InMemoryCache as InMemoryCacheImported,
-  HttpLink as HttpLinkImported,
-  gql as gqlImported,
-  ApolloError as ApolloErrorImported,
-  split as splitImported,
-} from "@apollo/client";
-import { setContext as setContextImported } from "@apollo/client/link/context/context.cjs";
-import { onError as onErrorImported } from "@apollo/client/link/error/error.cjs";
+export type {
+  ApolloClientType,
+  InMemoryCacheType,
+  HttpLinkType,
+  NormalizedCacheObject,
+};
 
-// Declare runtime variables that will eventually hold the proper implementations.
-let ApolloClient: typeof ApolloClientImported;
-let ApolloError: typeof ApolloErrorImported;
-let gql: typeof gqlImported;
-let InMemoryCache: typeof InMemoryCacheImported;
-let HttpLink: typeof HttpLinkImported;
-let setContext: typeof setContextImported;
-let onError: typeof onErrorImported;
-let split: typeof splitImported;
-
-const isLambda = Boolean(process.env.AWS_EXECUTION_ENV);
-const isServer = typeof window === "undefined";
-
-// Conditional logic: on server use require(), on client use the static imports.
-if (isServer || isLambda) {
-  // --- Server-side ---
-  // Use require() to load the modules at runtime.
-  const pkg = require("@apollo/client");
-  ApolloClient = pkg.ApolloClient;
-  InMemoryCache = pkg.InMemoryCache;
-  HttpLink = pkg.HttpLink;
-  gql = pkg.gql;
-  ApolloError = pkg.ApolloError;
-  split = pkg.split;
-
-  const contextPkg = require("@apollo/client/link/context/context.cjs");
-  setContext = contextPkg.setContext;
-
-  const errorPkg = require("@apollo/client/link/error/error.cjs");
-  onError = errorPkg.onError;
-} else {
-  // --- Client-side ---
-  // Use the statically imported implementations.
-  ApolloClient = ApolloClientImported;
-  InMemoryCache = InMemoryCacheImported;
-  HttpLink = HttpLinkImported;
-  gql = gqlImported;
-  ApolloError = ApolloErrorImported;
-  setContext = setContextImported;
-  onError = onErrorImported;
-  split = splitImported;
+// === Define an interface for the expected runtime exports ===
+export interface ApolloModules {
+  ApolloClient: typeof import("@apollo/client").ApolloClient;
+  InMemoryCache: typeof import("@apollo/client").InMemoryCache;
+  HttpLink: typeof import("@apollo/client").HttpLink;
+  gql: typeof import("@apollo/client").gql;
+  ApolloError: typeof import("@apollo/client").ApolloError;
+  split: typeof import("@apollo/client").split;
+  setContext: typeof import("@apollo/client/link/context").setContext;
+  onError: typeof import("@apollo/client/link/error").onError;
 }
 
-// Use the type-only alias (ApolloClientType) for type annotations.
-let apolloClient: ApolloClientType<NormalizedCacheObject> | null = null;
+// === Internal state ===
+let apolloModules: ApolloModules | undefined;
+let apolloClient: ApolloClientType<NormalizedCacheObject> | undefined;
 
 /**
- * Initializes a new Apollo Client instance.
- * @returns ApolloClient instance.
+ * Dynamically loads the correct Apollo modules based on the runtime environment.
  */
-function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
-  const isProduction = process.env.NODE_ENV === "production";
-  const httpUrl = isProduction
-    ? process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
-    : "http://localhost:4000/graphql";
+async function loadApolloModules(): Promise<ApolloModules> {
+  if (typeof window === "undefined" || process.env.AWS_EXECUTION_ENV) {
+    // Server-side (or Lambda): load the CommonJS‑based implementation.
+    return (await import("./apollo-client.server")) as ApolloModules;
+  } else {
+    // Client-side: load the ESM‑based implementation.
+    return (await import("./apollo-client.client")) as ApolloModules;
+  }
+}
 
-  // Create the HTTP link.
+/**
+ * Returns a singleton Apollo Client instance.
+ * **IMPORTANT:** Because module loading is asynchronous,
+ * make sure to await this function before using the client.
+ */
+export async function getApolloClient(): Promise<ApolloClientType<NormalizedCacheObject>> {
+  if (apolloClient) {
+    return apolloClient;
+  }
+  if (!apolloModules) {
+    apolloModules = await loadApolloModules();
+  }
+  const { ApolloClient, InMemoryCache, HttpLink, setContext, onError } = apolloModules;
+
+  // Determine the GraphQL endpoint.
+  const isProduction = process.env.NODE_ENV === "production";
+  const httpUrl =
+    isProduction
+      ? process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
+      : "http://localhost:4000/graphql";
+
+  // Create the HTTP link. (Ensure that a global fetch is available.)
   const httpLinkInstance = new HttpLink({ uri: httpUrl, fetch });
 
   // Create the auth link.
-  const authLink = setContext((_, { headers }) => {
+  const authLink = setContext((request, prevContext) => {
+    const headers = prevContext.headers || {};
     // Retrieve the token from environment variables or other secure storage.
     const token = process.env.SERVER_AUTH_TOKEN || "";
     return {
@@ -93,7 +85,7 @@ function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
   // Create the error handling link.
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      graphQLErrors.forEach(({ message, locations, path }) =>
+      graphQLErrors.forEach(({ message, locations, path }: any) =>
         console.error(
           `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
         )
@@ -104,34 +96,29 @@ function initializeApollo(): ApolloClientType<NormalizedCacheObject> {
     }
   });
 
-  // Combine the links and initialize the Apollo Client.
-  return new ApolloClient({
+  // Initialize the Apollo Client.
+  apolloClient = new ApolloClient({
     link: errorLink.concat(authLink.concat(httpLinkInstance)),
     cache: new InMemoryCache(),
   });
-}
 
-/**
- * Retrieves the singleton Apollo Client instance.
- * @returns ApolloClient instance.
- */
-export function getApolloClient(): ApolloClientType<NormalizedCacheObject> {
-  if (!apolloClient) {
-    apolloClient = initializeApollo();
-  }
   return apolloClient;
 }
 
-// Export the singleton instance.
+/**
+ * Returns the underlying runtime exports.
+ *
+ * **Note:** Because the exports are loaded dynamically,
+ * they are not available as named (synchronous) exports from this module.
+ */
+export async function getApolloModules(): Promise<ApolloModules> {
+  if (!apolloModules) {
+    apolloModules = await loadApolloModules();
+  }
+  return apolloModules;
+}
+
+/**
+ * For convenience, you may also export a promise that resolves to the Apollo Client.
+ */
 export const client = getApolloClient();
-
-// Re-export the runtime implementations so they can be imported elsewhere.
-export { ApolloClient, ApolloError, gql, InMemoryCache, HttpLink, setContext, onError, split };
-
-// Also re-export the types for convenience.
-export type {
-  ApolloClientType,
-  InMemoryCacheType,
-  HttpLinkType,
-  NormalizedCacheObject,
-};

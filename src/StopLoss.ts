@@ -1,7 +1,7 @@
 
   
 import { StopLoss as StopLossType } from './generated/typegraphql-prisma/models/StopLoss';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -30,7 +30,14 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: StopLossType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
 
     const CREATE_ONE_STOPLOSS = gql`
         mutation createOneStopLoss($data: StopLossCreateInput!) {
@@ -685,7 +692,15 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: StopLossType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const CREATE_MANY_STOPLOSS = gql`
       mutation createManyStopLoss($data: [StopLossCreateManyInput!]!) {
@@ -726,7 +741,15 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: StopLossType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_ONE_STOPLOSS = gql`
       mutation updateOneStopLoss($data: StopLossUpdateInput!, $where: StopLossWhereUniqueInput!) {
@@ -3376,7 +3399,15 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: StopLossType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPSERT_ONE_STOPLOSS = gql`
       mutation upsertOneStopLoss($where: StopLossWhereUniqueInput!, $create: StopLossCreateInput!, $update: StopLossUpdateInput!) {
@@ -6634,7 +6665,15 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: StopLossType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_MANY_STOPLOSS = gql`
       mutation updateManyStopLoss($data: [StopLossCreateManyInput!]!) {
@@ -9287,7 +9326,15 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: StopLossType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const DELETE_ONE_STOPLOSS = gql`
       mutation deleteOneStopLoss($where: StopLossWhereUniqueInput!) {
@@ -9326,7 +9373,15 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: StopLossType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_STOPLOSS = gql`
       query getStopLoss($where: StopLossWhereUniqueInput!) {
@@ -9364,7 +9419,15 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALL_STOPLOSS = gql`
       query getAllStopLoss {
@@ -9395,7 +9458,15 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: StopLossType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<StopLossType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const FIND_MANY_STOPLOSS = gql`
       query findManyStopLoss($where: StopLossWhereInput!) {

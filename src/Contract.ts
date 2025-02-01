@@ -1,7 +1,7 @@
 
   
 import { Contract as ContractType } from './generated/typegraphql-prisma/models/Contract';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -260,7 +260,14 @@ id
 
     async create(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
 
     const CREATE_ONE_CONTRACT = gql`
         mutation createOneContract($data: ContractCreateInput!) {
@@ -1312,7 +1319,15 @@ id
    */
   async createMany(props: ContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const CREATE_MANY_CONTRACT = gql`
       mutation createManyContract($data: [ContractCreateManyInput!]!) {
@@ -1371,7 +1386,15 @@ id
    */
   async update(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_ONE_CONTRACT = gql`
       mutation updateOneContract($data: ContractUpdateInput!, $where: ContractWhereUniqueInput!) {
@@ -5432,7 +5455,15 @@ id
    */
   async upsert(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPSERT_ONE_CONTRACT = gql`
       mutation upsertOneContract($where: ContractWhereUniqueInput!, $create: ContractCreateInput!, $update: ContractUpdateInput!) {
@@ -10498,7 +10529,15 @@ id
    */
   async updateMany(props: ContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_MANY_CONTRACT = gql`
       mutation updateManyContract($data: [ContractCreateManyInput!]!) {
@@ -14562,7 +14601,15 @@ id
    */
   async delete(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const DELETE_ONE_CONTRACT = gql`
       mutation deleteOneContract($where: ContractWhereUniqueInput!) {
@@ -14601,7 +14648,15 @@ id
    */
   async get(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_CONTRACT = gql`
       query getContract($where: ContractWhereUniqueInput!) {
@@ -14646,7 +14701,15 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALL_CONTRACT = gql`
       query getAllContract {
@@ -14677,7 +14740,15 @@ id
    */
   async findMany(props: ContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ContractType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const FIND_MANY_CONTRACT = gql`
       query findManyContract($where: ContractWhereInput!) {

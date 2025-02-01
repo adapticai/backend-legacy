@@ -1,7 +1,7 @@
 
   
 import { TakeProfit as TakeProfitType } from './generated/typegraphql-prisma/models/TakeProfit';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -30,7 +30,14 @@ import { removeUndefinedProps } from './utils';
 
     async create(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
 
     const CREATE_ONE_TAKEPROFIT = gql`
         mutation createOneTakeProfit($data: TakeProfitCreateInput!) {
@@ -685,7 +692,15 @@ import { removeUndefinedProps } from './utils';
    */
   async createMany(props: TakeProfitType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const CREATE_MANY_TAKEPROFIT = gql`
       mutation createManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
@@ -726,7 +741,15 @@ import { removeUndefinedProps } from './utils';
    */
   async update(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_ONE_TAKEPROFIT = gql`
       mutation updateOneTakeProfit($data: TakeProfitUpdateInput!, $where: TakeProfitWhereUniqueInput!) {
@@ -3376,7 +3399,15 @@ import { removeUndefinedProps } from './utils';
    */
   async upsert(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPSERT_ONE_TAKEPROFIT = gql`
       mutation upsertOneTakeProfit($where: TakeProfitWhereUniqueInput!, $create: TakeProfitCreateInput!, $update: TakeProfitUpdateInput!) {
@@ -6634,7 +6665,15 @@ import { removeUndefinedProps } from './utils';
    */
   async updateMany(props: TakeProfitType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const UPDATE_MANY_TAKEPROFIT = gql`
       mutation updateManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
@@ -9287,7 +9326,15 @@ import { removeUndefinedProps } from './utils';
    */
   async delete(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const DELETE_ONE_TAKEPROFIT = gql`
       mutation deleteOneTakeProfit($where: TakeProfitWhereUniqueInput!) {
@@ -9326,7 +9373,15 @@ import { removeUndefinedProps } from './utils';
    */
   async get(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_TAKEPROFIT = gql`
       query getTakeProfit($where: TakeProfitWhereUniqueInput!) {
@@ -9364,7 +9419,15 @@ import { removeUndefinedProps } from './utils';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const GET_ALL_TAKEPROFIT = gql`
       query getAllTakeProfit {
@@ -9395,7 +9458,15 @@ import { removeUndefinedProps } from './utils';
    */
   async findMany(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType[] | null> {
 
-    const client = globalClient as ApolloClientType<NormalizedCacheObject> || importedClient as ApolloClientType<NormalizedCacheObject>;
+    const [modules, client] = await Promise.all([
+      getApolloModules(),
+      globalClient
+        ? Promise.resolve(globalClient)
+        : importedClient
+    ]);
+
+    const { gql, ApolloError } = modules;
+
 
     const FIND_MANY_TAKEPROFIT = gql`
       query findManyTakeProfit($where: TakeProfitWhereInput!) {
