@@ -1,8 +1,7 @@
 
   
 import { Customer as CustomerType } from './generated/typegraphql-prisma/models/Customer';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -80,6 +79,10 @@ import { removeUndefinedProps } from './utils';
       maxOrderSize
       minPercentageChange
       volumeThreshold
+      enablePortfolioTrailingStop
+      portfolioTrailPercent
+      portfolioProfitThresholdPercent
+      reducedPortfolioTrailPercent
       userId
       createdAt
       updatedAt
@@ -145,6 +148,17 @@ id
         fee
         strikePrice
         expirationDate
+        expiredAt
+        failedAt
+        replacedAt
+        replacedBy
+        replaces
+        positionIntent
+        legs
+        hwm
+        subtag
+        source
+        expiresAt
         optionType
         stopLossId
         takeProfitId
@@ -200,9 +214,9 @@ id
      * @returns The created Customer or null.
      */
 
-    async create(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
+    async create(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_CUSTOMER = gql`
         mutation createOneCustomer($data: CustomerCreateInput!) {
@@ -340,6 +354,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -408,6 +426,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -501,9 +530,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: CustomerType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_CUSTOMER = gql`
       mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
@@ -546,9 +575,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The updated Customer or null.
    */
-  async update(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
+  async update(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_CUSTOMER = gql`
       mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
@@ -825,6 +854,18 @@ id
           volumeThreshold: item.volumeThreshold !== undefined ? {
               set: item.volumeThreshold
             } : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? {
+              set: item.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? {
+              set: item.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? {
+              set: item.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
+              set: item.reducedPortfolioTrailPercent
+            } : undefined,
       trades: item.trades ? 
       Array.isArray(item.trades) && item.trades.length > 0 && item.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.trades.map((item: any) => ({
@@ -985,6 +1026,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -1018,6 +1092,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1156,6 +1241,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -1224,6 +1313,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1394,6 +1494,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -1462,6 +1566,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1554,9 +1669,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The updated Customer or null.
    */
-  async upsert(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
+  async upsert(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_CUSTOMER = gql`
       mutation upsertOneCustomer($where: CustomerWhereUniqueInput!, $create: CustomerCreateInput!, $update: CustomerUpdateInput!) {
@@ -1707,6 +1822,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -1775,6 +1894,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -2090,6 +2220,18 @@ id
           volumeThreshold: item.volumeThreshold !== undefined ? {
               set: item.volumeThreshold
             } : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? {
+              set: item.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? {
+              set: item.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? {
+              set: item.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
+              set: item.reducedPortfolioTrailPercent
+            } : undefined,
       trades: item.trades ? 
       Array.isArray(item.trades) && item.trades.length > 0 && item.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.trades.map((item: any) => ({
@@ -2250,6 +2392,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -2283,6 +2458,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -2421,6 +2607,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -2489,6 +2679,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -2659,6 +2860,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -2727,6 +2932,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -2819,9 +3035,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: CustomerType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_CUSTOMER = gql`
       mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
@@ -3099,6 +3315,18 @@ id
           volumeThreshold: item.volumeThreshold !== undefined ? {
               set: item.volumeThreshold
             } : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? {
+              set: item.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? {
+              set: item.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? {
+              set: item.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
+              set: item.reducedPortfolioTrailPercent
+            } : undefined,
       trades: item.trades ? 
       Array.isArray(item.trades) && item.trades.length > 0 && item.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.trades.map((item: any) => ({
@@ -3259,6 +3487,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -3292,6 +3553,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -3430,6 +3702,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -3498,6 +3774,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -3668,6 +3955,10 @@ id
           maxOrderSize: item.maxOrderSize !== undefined ? item.maxOrderSize : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
       trades: item.trades ? 
         Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.trades.map((item: any) => ({
@@ -3736,6 +4027,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -3830,9 +4132,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Customer or null.
    */
-  async delete(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType> {
+  async delete(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_CUSTOMER = gql`
       mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
@@ -3869,9 +4171,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved Customer or null.
    */
-  async get(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType | null> {
+  async get(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_CUSTOMER = gql`
       query getCustomer($where: CustomerWhereUniqueInput!) {
@@ -3917,9 +4219,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of Customer records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<CustomerType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_CUSTOMER = gql`
       query getAllCustomer {
@@ -3948,9 +4250,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of found Customer records or null.
    */
-  async findMany(props: CustomerType, globalClient?: ApolloClient<any>): Promise<CustomerType[] | null> {
+  async findMany(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_CUSTOMER = gql`
       query findManyCustomer($where: CustomerWhereInput!) {

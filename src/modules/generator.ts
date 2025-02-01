@@ -596,7 +596,7 @@ export const generateModelFunctions = (
   inputsPath: string,
   functionsOutputPath: string
 ): string | null => {
-  const capitalModelName = capitalizeFirstLetter(modelName) as ModelName;
+  const capitalModelName = capitalizeFirstLetter(modelName) as ModelName as string;
   const pluralModelName = pluralize(capitalModelName); // Accurate pluralization
 
   const inputTypes: InputTypePaths = {
@@ -622,8 +622,7 @@ export const generateModelFunctions = (
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   `;
 
@@ -646,9 +645,9 @@ import { removeUndefinedProps } from './utils';
      * @returns The created ${capitalModelName} or null.
      */
 
-    async create(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+    async create(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
         mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
@@ -693,9 +692,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
@@ -738,9 +737,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
-  async update(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+  async update(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
@@ -792,9 +791,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
-  async upsert(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+  async upsert(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation upsertOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!, $create: ${capitalModelName}CreateInput!, $update: ${capitalModelName}UpdateInput!) {
@@ -855,9 +854,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ${capitalModelName}Type[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: ${capitalModelName}Type[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
       mutation updateMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
@@ -912,9 +911,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
-  async delete(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type> {
+  async delete(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
@@ -951,9 +950,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type | null> {
+  async get(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_${capitalModelName.toUpperCase()} = gql\`
       query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
@@ -994,9 +993,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns An array of ${capitalModelName} records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
       query getAll${capitalModelName} {
@@ -1025,9 +1024,9 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClient<any>): Promise<${capitalModelName}Type[] | null> {
+  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
       query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {

@@ -1,8 +1,7 @@
 
   
 import { AlpacaAccount as AlpacaAccountType } from './generated/typegraphql-prisma/models/AlpacaAccount';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -22,6 +21,10 @@ import { removeUndefinedProps } from './utils';
   maxOrderSize
   minPercentageChange
   volumeThreshold
+  enablePortfolioTrailingStop
+  portfolioTrailPercent
+  portfolioProfitThresholdPercent
+  reducedPortfolioTrailPercent
   user {
     id
     name
@@ -166,6 +169,17 @@ id
         fee
         strikePrice
         expirationDate
+        expiredAt
+        failedAt
+        replacedAt
+        replacedBy
+        replaces
+        positionIntent
+        legs
+        hwm
+        subtag
+        source
+        expiresAt
         optionType
         stopLossId
         takeProfitId
@@ -282,6 +296,17 @@ id
     fee
     strikePrice
     expirationDate
+    expiredAt
+    failedAt
+    replacedAt
+    replacedBy
+    replaces
+    positionIntent
+    legs
+    hwm
+    subtag
+    source
+    expiresAt
     optionType
     stopLossId
     takeProfitId
@@ -390,9 +415,9 @@ id
      * @returns The created AlpacaAccount or null.
      */
 
-    async create(props: AlpacaAccountType, globalClient?: ApolloClient<any>): Promise<AlpacaAccountType> {
+    async create(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_ALPACAACCOUNT = gql`
         mutation createOneAlpacaAccount($data: AlpacaAccountCreateInput!) {
@@ -414,6 +439,10 @@ id
   maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
+  enablePortfolioTrailingStop: props.enablePortfolioTrailingStop !== undefined ? props.enablePortfolioTrailingStop : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -677,6 +706,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -851,6 +891,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -903,6 +954,17 @@ id
         fee: item.fee !== undefined ? item.fee : undefined,
         strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
         expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+        failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+        replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+        replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+        replaces: item.replaces !== undefined ? item.replaces : undefined,
+        positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+        legs: item.legs !== undefined ? item.legs : undefined,
+        hwm: item.hwm !== undefined ? item.hwm : undefined,
+        subtag: item.subtag !== undefined ? item.subtag : undefined,
+        source: item.source !== undefined ? item.source : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
         optionType: item.optionType !== undefined ? item.optionType : undefined,
         stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
         takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1507,6 +1569,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1629,9 +1702,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AlpacaAccountType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_ALPACAACCOUNT = gql`
       mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
@@ -1652,6 +1725,10 @@ id
   maxOrderSize: prop.maxOrderSize !== undefined ? prop.maxOrderSize : undefined,
   minPercentageChange: prop.minPercentageChange !== undefined ? prop.minPercentageChange : undefined,
   volumeThreshold: prop.volumeThreshold !== undefined ? prop.volumeThreshold : undefined,
+  enablePortfolioTrailingStop: prop.enablePortfolioTrailingStop !== undefined ? prop.enablePortfolioTrailingStop : undefined,
+  portfolioTrailPercent: prop.portfolioTrailPercent !== undefined ? prop.portfolioTrailPercent : undefined,
+  portfolioProfitThresholdPercent: prop.portfolioProfitThresholdPercent !== undefined ? prop.portfolioProfitThresholdPercent : undefined,
+  reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? prop.reducedPortfolioTrailPercent : undefined,
   userId: prop.userId !== undefined ? prop.userId : undefined,
       })),
     };
@@ -1678,9 +1755,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The updated AlpacaAccount or null.
    */
-  async update(props: AlpacaAccountType, globalClient?: ApolloClient<any>): Promise<AlpacaAccountType> {
+  async update(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_ALPACAACCOUNT = gql`
       mutation updateOneAlpacaAccount($data: AlpacaAccountUpdateInput!, $where: AlpacaAccountWhereUniqueInput!) {
@@ -1729,6 +1806,18 @@ id
            } : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? {
             set: props.volumeThreshold 
+           } : undefined,
+  enablePortfolioTrailingStop: props.enablePortfolioTrailingStop !== undefined ? {
+            set: props.enablePortfolioTrailingStop 
+           } : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? {
+            set: props.portfolioTrailPercent 
+           } : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? {
+            set: props.portfolioProfitThresholdPercent 
+           } : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
+            set: props.reducedPortfolioTrailPercent 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -2429,6 +2518,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -2462,6 +2584,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -2805,6 +2938,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -3056,6 +3200,39 @@ id
             expirationDate: item.order.expirationDate !== undefined ? {
                 set: item.order.expirationDate
               } : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? {
+                set: item.order.expiredAt
+              } : undefined,
+            failedAt: item.order.failedAt !== undefined ? {
+                set: item.order.failedAt
+              } : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? {
+                set: item.order.replacedAt
+              } : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? {
+                set: item.order.replacedBy
+              } : undefined,
+            replaces: item.order.replaces !== undefined ? {
+                set: item.order.replaces
+              } : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? {
+                set: item.order.positionIntent
+              } : undefined,
+            legs: item.order.legs !== undefined ? {
+                set: item.order.legs
+              } : undefined,
+            hwm: item.order.hwm !== undefined ? {
+                set: item.order.hwm
+              } : undefined,
+            subtag: item.order.subtag !== undefined ? {
+                set: item.order.subtag
+              } : undefined,
+            source: item.order.source !== undefined ? {
+                set: item.order.source
+              } : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? {
+                set: item.order.expiresAt
+              } : undefined,
             optionType: item.order.optionType !== undefined ? {
                 set: item.order.optionType
               } : undefined,
@@ -3089,6 +3266,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -3149,6 +3337,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -3279,6 +3478,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -3453,6 +3663,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -3556,6 +3777,39 @@ id
           } : undefined,
         expirationDate: item.expirationDate !== undefined ? {
             set: item.expirationDate
+          } : undefined,
+        expiredAt: item.expiredAt !== undefined ? {
+            set: item.expiredAt
+          } : undefined,
+        failedAt: item.failedAt !== undefined ? {
+            set: item.failedAt
+          } : undefined,
+        replacedAt: item.replacedAt !== undefined ? {
+            set: item.replacedAt
+          } : undefined,
+        replacedBy: item.replacedBy !== undefined ? {
+            set: item.replacedBy
+          } : undefined,
+        replaces: item.replaces !== undefined ? {
+            set: item.replaces
+          } : undefined,
+        positionIntent: item.positionIntent !== undefined ? {
+            set: item.positionIntent
+          } : undefined,
+        legs: item.legs !== undefined ? {
+            set: item.legs
+          } : undefined,
+        hwm: item.hwm !== undefined ? {
+            set: item.hwm
+          } : undefined,
+        subtag: item.subtag !== undefined ? {
+            set: item.subtag
+          } : undefined,
+        source: item.source !== undefined ? {
+            set: item.source
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
           } : undefined,
         optionType: item.optionType !== undefined ? {
             set: item.optionType
@@ -5019,6 +5273,17 @@ id
         fee: item.fee !== undefined ? item.fee : undefined,
         strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
         expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+        failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+        replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+        replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+        replaces: item.replaces !== undefined ? item.replaces : undefined,
+        positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+        legs: item.legs !== undefined ? item.legs : undefined,
+        hwm: item.hwm !== undefined ? item.hwm : undefined,
+        subtag: item.subtag !== undefined ? item.subtag : undefined,
+        source: item.source !== undefined ? item.source : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
         optionType: item.optionType !== undefined ? item.optionType : undefined,
         stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
         takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -5869,6 +6134,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -5902,6 +6200,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -6186,6 +6495,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -6412,6 +6732,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -6546,9 +6877,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The updated AlpacaAccount or null.
    */
-  async upsert(props: AlpacaAccountType, globalClient?: ApolloClient<any>): Promise<AlpacaAccountType> {
+  async upsert(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_ALPACAACCOUNT = gql`
       mutation upsertOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!, $create: AlpacaAccountCreateInput!, $update: AlpacaAccountUpdateInput!) {
@@ -6575,6 +6906,10 @@ id
   maxOrderSize: props.maxOrderSize !== undefined ? props.maxOrderSize : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
+  enablePortfolioTrailingStop: props.enablePortfolioTrailingStop !== undefined ? props.enablePortfolioTrailingStop : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -6838,6 +7173,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -7012,6 +7358,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -7064,6 +7421,17 @@ id
         fee: item.fee !== undefined ? item.fee : undefined,
         strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
         expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+        failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+        replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+        replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+        replaces: item.replaces !== undefined ? item.replaces : undefined,
+        positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+        legs: item.legs !== undefined ? item.legs : undefined,
+        hwm: item.hwm !== undefined ? item.hwm : undefined,
+        subtag: item.subtag !== undefined ? item.subtag : undefined,
+        source: item.source !== undefined ? item.source : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
         optionType: item.optionType !== undefined ? item.optionType : undefined,
         stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
         takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -7668,6 +8036,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -7795,6 +8174,18 @@ id
            } : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? {
             set: props.volumeThreshold 
+           } : undefined,
+  enablePortfolioTrailingStop: props.enablePortfolioTrailingStop !== undefined ? {
+            set: props.enablePortfolioTrailingStop 
+           } : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? {
+            set: props.portfolioTrailPercent 
+           } : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? {
+            set: props.portfolioProfitThresholdPercent 
+           } : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
+            set: props.reducedPortfolioTrailPercent 
            } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
@@ -8489,6 +8880,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -8522,6 +8946,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -8865,6 +9300,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -9116,6 +9562,39 @@ id
             expirationDate: item.order.expirationDate !== undefined ? {
                 set: item.order.expirationDate
               } : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? {
+                set: item.order.expiredAt
+              } : undefined,
+            failedAt: item.order.failedAt !== undefined ? {
+                set: item.order.failedAt
+              } : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? {
+                set: item.order.replacedAt
+              } : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? {
+                set: item.order.replacedBy
+              } : undefined,
+            replaces: item.order.replaces !== undefined ? {
+                set: item.order.replaces
+              } : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? {
+                set: item.order.positionIntent
+              } : undefined,
+            legs: item.order.legs !== undefined ? {
+                set: item.order.legs
+              } : undefined,
+            hwm: item.order.hwm !== undefined ? {
+                set: item.order.hwm
+              } : undefined,
+            subtag: item.order.subtag !== undefined ? {
+                set: item.order.subtag
+              } : undefined,
+            source: item.order.source !== undefined ? {
+                set: item.order.source
+              } : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? {
+                set: item.order.expiresAt
+              } : undefined,
             optionType: item.order.optionType !== undefined ? {
                 set: item.order.optionType
               } : undefined,
@@ -9149,6 +9628,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -9209,6 +9699,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -9339,6 +9840,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -9513,6 +10025,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -9616,6 +10139,39 @@ id
           } : undefined,
         expirationDate: item.expirationDate !== undefined ? {
             set: item.expirationDate
+          } : undefined,
+        expiredAt: item.expiredAt !== undefined ? {
+            set: item.expiredAt
+          } : undefined,
+        failedAt: item.failedAt !== undefined ? {
+            set: item.failedAt
+          } : undefined,
+        replacedAt: item.replacedAt !== undefined ? {
+            set: item.replacedAt
+          } : undefined,
+        replacedBy: item.replacedBy !== undefined ? {
+            set: item.replacedBy
+          } : undefined,
+        replaces: item.replaces !== undefined ? {
+            set: item.replaces
+          } : undefined,
+        positionIntent: item.positionIntent !== undefined ? {
+            set: item.positionIntent
+          } : undefined,
+        legs: item.legs !== undefined ? {
+            set: item.legs
+          } : undefined,
+        hwm: item.hwm !== undefined ? {
+            set: item.hwm
+          } : undefined,
+        subtag: item.subtag !== undefined ? {
+            set: item.subtag
+          } : undefined,
+        source: item.source !== undefined ? {
+            set: item.source
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
           } : undefined,
         optionType: item.optionType !== undefined ? {
             set: item.optionType
@@ -11079,6 +11635,17 @@ id
         fee: item.fee !== undefined ? item.fee : undefined,
         strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
         expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+        failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+        replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+        replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+        replaces: item.replaces !== undefined ? item.replaces : undefined,
+        positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+        legs: item.legs !== undefined ? item.legs : undefined,
+        hwm: item.hwm !== undefined ? item.hwm : undefined,
+        subtag: item.subtag !== undefined ? item.subtag : undefined,
+        source: item.source !== undefined ? item.source : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
         optionType: item.optionType !== undefined ? item.optionType : undefined,
         stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
         takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -11929,6 +12496,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -11962,6 +12562,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -12246,6 +12857,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -12472,6 +13094,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -12606,9 +13239,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AlpacaAccountType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_ALPACAACCOUNT = gql`
       mutation updateManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
@@ -12658,6 +13291,18 @@ id
            } : undefined,
   volumeThreshold: prop.volumeThreshold !== undefined ? {
             set: prop.volumeThreshold 
+           } : undefined,
+  enablePortfolioTrailingStop: prop.enablePortfolioTrailingStop !== undefined ? {
+            set: prop.enablePortfolioTrailingStop 
+           } : undefined,
+  portfolioTrailPercent: prop.portfolioTrailPercent !== undefined ? {
+            set: prop.portfolioTrailPercent 
+           } : undefined,
+  portfolioProfitThresholdPercent: prop.portfolioProfitThresholdPercent !== undefined ? {
+            set: prop.portfolioProfitThresholdPercent 
+           } : undefined,
+  reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? {
+            set: prop.reducedPortfolioTrailPercent 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -13358,6 +14003,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -13391,6 +14069,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -13734,6 +14423,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -13985,6 +14685,39 @@ id
             expirationDate: item.order.expirationDate !== undefined ? {
                 set: item.order.expirationDate
               } : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? {
+                set: item.order.expiredAt
+              } : undefined,
+            failedAt: item.order.failedAt !== undefined ? {
+                set: item.order.failedAt
+              } : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? {
+                set: item.order.replacedAt
+              } : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? {
+                set: item.order.replacedBy
+              } : undefined,
+            replaces: item.order.replaces !== undefined ? {
+                set: item.order.replaces
+              } : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? {
+                set: item.order.positionIntent
+              } : undefined,
+            legs: item.order.legs !== undefined ? {
+                set: item.order.legs
+              } : undefined,
+            hwm: item.order.hwm !== undefined ? {
+                set: item.order.hwm
+              } : undefined,
+            subtag: item.order.subtag !== undefined ? {
+                set: item.order.subtag
+              } : undefined,
+            source: item.order.source !== undefined ? {
+                set: item.order.source
+              } : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? {
+                set: item.order.expiresAt
+              } : undefined,
             optionType: item.order.optionType !== undefined ? {
                 set: item.order.optionType
               } : undefined,
@@ -14018,6 +14751,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -14078,6 +14822,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -14208,6 +14963,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -14382,6 +15148,17 @@ id
             fee: item.order.fee !== undefined ? item.order.fee : undefined,
             strikePrice: item.order.strikePrice !== undefined ? item.order.strikePrice : undefined,
             expirationDate: item.order.expirationDate !== undefined ? item.order.expirationDate : undefined,
+            expiredAt: item.order.expiredAt !== undefined ? item.order.expiredAt : undefined,
+            failedAt: item.order.failedAt !== undefined ? item.order.failedAt : undefined,
+            replacedAt: item.order.replacedAt !== undefined ? item.order.replacedAt : undefined,
+            replacedBy: item.order.replacedBy !== undefined ? item.order.replacedBy : undefined,
+            replaces: item.order.replaces !== undefined ? item.order.replaces : undefined,
+            positionIntent: item.order.positionIntent !== undefined ? item.order.positionIntent : undefined,
+            legs: item.order.legs !== undefined ? item.order.legs : undefined,
+            hwm: item.order.hwm !== undefined ? item.order.hwm : undefined,
+            subtag: item.order.subtag !== undefined ? item.order.subtag : undefined,
+            source: item.order.source !== undefined ? item.order.source : undefined,
+            expiresAt: item.order.expiresAt !== undefined ? item.order.expiresAt : undefined,
             optionType: item.order.optionType !== undefined ? item.order.optionType : undefined,
             stopLossId: item.order.stopLossId !== undefined ? item.order.stopLossId : undefined,
             takeProfitId: item.order.takeProfitId !== undefined ? item.order.takeProfitId : undefined,
@@ -14485,6 +15262,39 @@ id
           } : undefined,
         expirationDate: item.expirationDate !== undefined ? {
             set: item.expirationDate
+          } : undefined,
+        expiredAt: item.expiredAt !== undefined ? {
+            set: item.expiredAt
+          } : undefined,
+        failedAt: item.failedAt !== undefined ? {
+            set: item.failedAt
+          } : undefined,
+        replacedAt: item.replacedAt !== undefined ? {
+            set: item.replacedAt
+          } : undefined,
+        replacedBy: item.replacedBy !== undefined ? {
+            set: item.replacedBy
+          } : undefined,
+        replaces: item.replaces !== undefined ? {
+            set: item.replaces
+          } : undefined,
+        positionIntent: item.positionIntent !== undefined ? {
+            set: item.positionIntent
+          } : undefined,
+        legs: item.legs !== undefined ? {
+            set: item.legs
+          } : undefined,
+        hwm: item.hwm !== undefined ? {
+            set: item.hwm
+          } : undefined,
+        subtag: item.subtag !== undefined ? {
+            set: item.subtag
+          } : undefined,
+        source: item.source !== undefined ? {
+            set: item.source
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
           } : undefined,
         optionType: item.optionType !== undefined ? {
             set: item.optionType
@@ -15948,6 +16758,17 @@ id
         fee: item.fee !== undefined ? item.fee : undefined,
         strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
         expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+        expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+        failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+        replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+        replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+        replaces: item.replaces !== undefined ? item.replaces : undefined,
+        positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+        legs: item.legs !== undefined ? item.legs : undefined,
+        hwm: item.hwm !== undefined ? item.hwm : undefined,
+        subtag: item.subtag !== undefined ? item.subtag : undefined,
+        source: item.source !== undefined ? item.source : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
         optionType: item.optionType !== undefined ? item.optionType : undefined,
         stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
         takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -16798,6 +17619,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -16831,6 +17685,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -17115,6 +17980,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -17341,6 +18217,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -17477,9 +18364,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The deleted AlpacaAccount or null.
    */
-  async delete(props: AlpacaAccountType, globalClient?: ApolloClient<any>): Promise<AlpacaAccountType> {
+  async delete(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_ALPACAACCOUNT = gql`
       mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
@@ -17516,9 +18403,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved AlpacaAccount or null.
    */
-  async get(props: AlpacaAccountType, globalClient?: ApolloClient<any>): Promise<AlpacaAccountType | null> {
+  async get(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALPACAACCOUNT = gql`
       query getAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
@@ -17556,9 +18443,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of AlpacaAccount records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<AlpacaAccountType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_ALPACAACCOUNT = gql`
       query getAllAlpacaAccount {
@@ -17587,9 +18474,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of found AlpacaAccount records or null.
    */
-  async findMany(props: AlpacaAccountType, globalClient?: ApolloClient<any>): Promise<AlpacaAccountType[] | null> {
+  async findMany(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_ALPACAACCOUNT = gql`
       query findManyAlpacaAccount($where: AlpacaAccountWhereInput!) {

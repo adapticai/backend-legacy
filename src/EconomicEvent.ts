@@ -1,8 +1,7 @@
 
   
 import { EconomicEvent as EconomicEventType } from './generated/typegraphql-prisma/models/EconomicEvent';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -30,9 +29,9 @@ import { removeUndefinedProps } from './utils';
      * @returns The created EconomicEvent or null.
      */
 
-    async create(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
+    async create(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_ECONOMICEVENT = gql`
         mutation createOneEconomicEvent($data: EconomicEventCreateInput!) {
@@ -74,9 +73,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: EconomicEventType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: EconomicEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_ECONOMICEVENT = gql`
       mutation createManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
@@ -116,9 +115,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The updated EconomicEvent or null.
    */
-  async update(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
+  async update(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_ECONOMICEVENT = gql`
       mutation updateOneEconomicEvent($data: EconomicEventUpdateInput!, $where: EconomicEventWhereUniqueInput!) {
@@ -181,9 +180,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The updated EconomicEvent or null.
    */
-  async upsert(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
+  async upsert(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_ECONOMICEVENT = gql`
       mutation upsertOneEconomicEvent($where: EconomicEventWhereUniqueInput!, $create: EconomicEventCreateInput!, $update: EconomicEventUpdateInput!) {
@@ -243,9 +242,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: EconomicEventType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: EconomicEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_ECONOMICEVENT = gql`
       mutation updateManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
@@ -311,9 +310,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The deleted EconomicEvent or null.
    */
-  async delete(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType> {
+  async delete(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
@@ -350,9 +349,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved EconomicEvent or null.
    */
-  async get(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType | null> {
+  async get(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ECONOMICEVENT = gql`
       query getEconomicEvent($where: EconomicEventWhereUniqueInput!) {
@@ -390,9 +389,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of EconomicEvent records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<EconomicEventType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_ECONOMICEVENT = gql`
       query getAllEconomicEvent {
@@ -421,9 +420,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found EconomicEvent records or null.
    */
-  async findMany(props: EconomicEventType, globalClient?: ApolloClient<any>): Promise<EconomicEventType[] | null> {
+  async findMany(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_ECONOMICEVENT = gql`
       query findManyEconomicEvent($where: EconomicEventWhereInput!) {

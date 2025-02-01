@@ -1,8 +1,7 @@
 
   
 import { Deliverable as DeliverableType } from './generated/typegraphql-prisma/models/Deliverable';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -224,6 +223,17 @@ id
       fee
       strikePrice
       expirationDate
+      expiredAt
+      failedAt
+      replacedAt
+      replacedBy
+      replaces
+      positionIntent
+      legs
+      hwm
+      subtag
+      source
+      expiresAt
       optionType
       stopLossId
       takeProfitId
@@ -248,9 +258,9 @@ id
      * @returns The created Deliverable or null.
      */
 
-    async create(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
+    async create(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_DELIVERABLE = gql`
         mutation createOneDeliverable($data: DeliverableCreateInput!) {
@@ -445,6 +455,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -551,6 +572,17 @@ id
           fee: props.contract.order.fee !== undefined ? props.contract.order.fee : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? props.contract.order.strikePrice : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? props.contract.order.expirationDate : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? props.contract.order.expiredAt : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? props.contract.order.failedAt : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? props.contract.order.replacedAt : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? props.contract.order.replacedBy : undefined,
+          replaces: props.contract.order.replaces !== undefined ? props.contract.order.replaces : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? props.contract.order.positionIntent : undefined,
+          legs: props.contract.order.legs !== undefined ? props.contract.order.legs : undefined,
+          hwm: props.contract.order.hwm !== undefined ? props.contract.order.hwm : undefined,
+          subtag: props.contract.order.subtag !== undefined ? props.contract.order.subtag : undefined,
+          source: props.contract.order.source !== undefined ? props.contract.order.source : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? props.contract.order.expiresAt : undefined,
           optionType: props.contract.order.optionType !== undefined ? props.contract.order.optionType : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? props.contract.order.stopLossId : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? props.contract.order.takeProfitId : undefined,
@@ -612,6 +644,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -747,9 +783,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: DeliverableType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: DeliverableType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_DELIVERABLE = gql`
       mutation createManyDeliverable($data: [DeliverableCreateManyInput!]!) {
@@ -794,9 +830,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The updated Deliverable or null.
    */
-  async update(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
+  async update(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_DELIVERABLE = gql`
       mutation updateOneDeliverable($data: DeliverableUpdateInput!, $where: DeliverableWhereUniqueInput!) {
@@ -1290,6 +1326,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -1323,6 +1392,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1582,6 +1662,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -1751,6 +1842,39 @@ id
           expirationDate: props.contract.order.expirationDate !== undefined ? {
               set: props.contract.order.expirationDate
             } : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? {
+              set: props.contract.order.expiredAt
+            } : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? {
+              set: props.contract.order.failedAt
+            } : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? {
+              set: props.contract.order.replacedAt
+            } : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? {
+              set: props.contract.order.replacedBy
+            } : undefined,
+          replaces: props.contract.order.replaces !== undefined ? {
+              set: props.contract.order.replaces
+            } : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? {
+              set: props.contract.order.positionIntent
+            } : undefined,
+          legs: props.contract.order.legs !== undefined ? {
+              set: props.contract.order.legs
+            } : undefined,
+          hwm: props.contract.order.hwm !== undefined ? {
+              set: props.contract.order.hwm
+            } : undefined,
+          subtag: props.contract.order.subtag !== undefined ? {
+              set: props.contract.order.subtag
+            } : undefined,
+          source: props.contract.order.source !== undefined ? {
+              set: props.contract.order.source
+            } : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? {
+              set: props.contract.order.expiresAt
+            } : undefined,
           optionType: props.contract.order.optionType !== undefined ? {
               set: props.contract.order.optionType
             } : undefined,
@@ -1873,6 +1997,18 @@ id
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? {
                 set: props.contract.order.alpacaAccount.volumeThreshold
               } : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: props.contract.order.alpacaAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? {
+                set: props.contract.order.alpacaAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent
+              } : undefined,
           },
           create: {
             type: props.contract.order.alpacaAccount.type !== undefined ? props.contract.order.alpacaAccount.type : undefined,
@@ -1885,6 +2021,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -2219,6 +2359,17 @@ id
           fee: props.contract.order.fee !== undefined ? props.contract.order.fee : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? props.contract.order.strikePrice : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? props.contract.order.expirationDate : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? props.contract.order.expiredAt : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? props.contract.order.failedAt : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? props.contract.order.replacedAt : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? props.contract.order.replacedBy : undefined,
+          replaces: props.contract.order.replaces !== undefined ? props.contract.order.replaces : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? props.contract.order.positionIntent : undefined,
+          legs: props.contract.order.legs !== undefined ? props.contract.order.legs : undefined,
+          hwm: props.contract.order.hwm !== undefined ? props.contract.order.hwm : undefined,
+          subtag: props.contract.order.subtag !== undefined ? props.contract.order.subtag : undefined,
+          source: props.contract.order.source !== undefined ? props.contract.order.source : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? props.contract.order.expiresAt : undefined,
           optionType: props.contract.order.optionType !== undefined ? props.contract.order.optionType : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? props.contract.order.stopLossId : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? props.contract.order.takeProfitId : undefined,
@@ -2280,6 +2431,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -2544,6 +2699,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -2650,6 +2816,17 @@ id
           fee: props.contract.order.fee !== undefined ? props.contract.order.fee : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? props.contract.order.strikePrice : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? props.contract.order.expirationDate : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? props.contract.order.expiredAt : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? props.contract.order.failedAt : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? props.contract.order.replacedAt : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? props.contract.order.replacedBy : undefined,
+          replaces: props.contract.order.replaces !== undefined ? props.contract.order.replaces : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? props.contract.order.positionIntent : undefined,
+          legs: props.contract.order.legs !== undefined ? props.contract.order.legs : undefined,
+          hwm: props.contract.order.hwm !== undefined ? props.contract.order.hwm : undefined,
+          subtag: props.contract.order.subtag !== undefined ? props.contract.order.subtag : undefined,
+          source: props.contract.order.source !== undefined ? props.contract.order.source : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? props.contract.order.expiresAt : undefined,
           optionType: props.contract.order.optionType !== undefined ? props.contract.order.optionType : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? props.contract.order.stopLossId : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? props.contract.order.takeProfitId : undefined,
@@ -2711,6 +2888,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -2845,9 +3026,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The updated Deliverable or null.
    */
-  async upsert(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
+  async upsert(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_DELIVERABLE = gql`
       mutation upsertOneDeliverable($where: DeliverableWhereUniqueInput!, $create: DeliverableCreateInput!, $update: DeliverableUpdateInput!) {
@@ -3050,6 +3231,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -3156,6 +3348,17 @@ id
           fee: props.contract.order.fee !== undefined ? props.contract.order.fee : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? props.contract.order.strikePrice : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? props.contract.order.expirationDate : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? props.contract.order.expiredAt : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? props.contract.order.failedAt : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? props.contract.order.replacedAt : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? props.contract.order.replacedBy : undefined,
+          replaces: props.contract.order.replaces !== undefined ? props.contract.order.replaces : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? props.contract.order.positionIntent : undefined,
+          legs: props.contract.order.legs !== undefined ? props.contract.order.legs : undefined,
+          hwm: props.contract.order.hwm !== undefined ? props.contract.order.hwm : undefined,
+          subtag: props.contract.order.subtag !== undefined ? props.contract.order.subtag : undefined,
+          source: props.contract.order.source !== undefined ? props.contract.order.source : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? props.contract.order.expiresAt : undefined,
           optionType: props.contract.order.optionType !== undefined ? props.contract.order.optionType : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? props.contract.order.stopLossId : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? props.contract.order.takeProfitId : undefined,
@@ -3217,6 +3420,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -3793,6 +4000,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -3826,6 +4066,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -4085,6 +4336,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -4254,6 +4516,39 @@ id
           expirationDate: props.contract.order.expirationDate !== undefined ? {
               set: props.contract.order.expirationDate
             } : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? {
+              set: props.contract.order.expiredAt
+            } : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? {
+              set: props.contract.order.failedAt
+            } : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? {
+              set: props.contract.order.replacedAt
+            } : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? {
+              set: props.contract.order.replacedBy
+            } : undefined,
+          replaces: props.contract.order.replaces !== undefined ? {
+              set: props.contract.order.replaces
+            } : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? {
+              set: props.contract.order.positionIntent
+            } : undefined,
+          legs: props.contract.order.legs !== undefined ? {
+              set: props.contract.order.legs
+            } : undefined,
+          hwm: props.contract.order.hwm !== undefined ? {
+              set: props.contract.order.hwm
+            } : undefined,
+          subtag: props.contract.order.subtag !== undefined ? {
+              set: props.contract.order.subtag
+            } : undefined,
+          source: props.contract.order.source !== undefined ? {
+              set: props.contract.order.source
+            } : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? {
+              set: props.contract.order.expiresAt
+            } : undefined,
           optionType: props.contract.order.optionType !== undefined ? {
               set: props.contract.order.optionType
             } : undefined,
@@ -4376,6 +4671,18 @@ id
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? {
                 set: props.contract.order.alpacaAccount.volumeThreshold
               } : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: props.contract.order.alpacaAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? {
+                set: props.contract.order.alpacaAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent
+              } : undefined,
           },
           create: {
             type: props.contract.order.alpacaAccount.type !== undefined ? props.contract.order.alpacaAccount.type : undefined,
@@ -4388,6 +4695,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -4722,6 +5033,17 @@ id
           fee: props.contract.order.fee !== undefined ? props.contract.order.fee : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? props.contract.order.strikePrice : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? props.contract.order.expirationDate : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? props.contract.order.expiredAt : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? props.contract.order.failedAt : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? props.contract.order.replacedAt : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? props.contract.order.replacedBy : undefined,
+          replaces: props.contract.order.replaces !== undefined ? props.contract.order.replaces : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? props.contract.order.positionIntent : undefined,
+          legs: props.contract.order.legs !== undefined ? props.contract.order.legs : undefined,
+          hwm: props.contract.order.hwm !== undefined ? props.contract.order.hwm : undefined,
+          subtag: props.contract.order.subtag !== undefined ? props.contract.order.subtag : undefined,
+          source: props.contract.order.source !== undefined ? props.contract.order.source : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? props.contract.order.expiresAt : undefined,
           optionType: props.contract.order.optionType !== undefined ? props.contract.order.optionType : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? props.contract.order.stopLossId : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? props.contract.order.takeProfitId : undefined,
@@ -4783,6 +5105,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -5047,6 +5373,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -5153,6 +5490,17 @@ id
           fee: props.contract.order.fee !== undefined ? props.contract.order.fee : undefined,
           strikePrice: props.contract.order.strikePrice !== undefined ? props.contract.order.strikePrice : undefined,
           expirationDate: props.contract.order.expirationDate !== undefined ? props.contract.order.expirationDate : undefined,
+          expiredAt: props.contract.order.expiredAt !== undefined ? props.contract.order.expiredAt : undefined,
+          failedAt: props.contract.order.failedAt !== undefined ? props.contract.order.failedAt : undefined,
+          replacedAt: props.contract.order.replacedAt !== undefined ? props.contract.order.replacedAt : undefined,
+          replacedBy: props.contract.order.replacedBy !== undefined ? props.contract.order.replacedBy : undefined,
+          replaces: props.contract.order.replaces !== undefined ? props.contract.order.replaces : undefined,
+          positionIntent: props.contract.order.positionIntent !== undefined ? props.contract.order.positionIntent : undefined,
+          legs: props.contract.order.legs !== undefined ? props.contract.order.legs : undefined,
+          hwm: props.contract.order.hwm !== undefined ? props.contract.order.hwm : undefined,
+          subtag: props.contract.order.subtag !== undefined ? props.contract.order.subtag : undefined,
+          source: props.contract.order.source !== undefined ? props.contract.order.source : undefined,
+          expiresAt: props.contract.order.expiresAt !== undefined ? props.contract.order.expiresAt : undefined,
           optionType: props.contract.order.optionType !== undefined ? props.contract.order.optionType : undefined,
           stopLossId: props.contract.order.stopLossId !== undefined ? props.contract.order.stopLossId : undefined,
           takeProfitId: props.contract.order.takeProfitId !== undefined ? props.contract.order.takeProfitId : undefined,
@@ -5214,6 +5562,10 @@ id
             maxOrderSize: props.contract.order.alpacaAccount.maxOrderSize !== undefined ? props.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: props.contract.order.alpacaAccount.minPercentageChange !== undefined ? props.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: props.contract.order.alpacaAccount.volumeThreshold !== undefined ? props.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: props.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -5348,9 +5700,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: DeliverableType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: DeliverableType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_DELIVERABLE = gql`
       mutation updateManyDeliverable($data: [DeliverableCreateManyInput!]!) {
@@ -5845,6 +6197,39 @@ id
             expirationDate: item.expirationDate !== undefined ? {
                 set: item.expirationDate
               } : undefined,
+            expiredAt: item.expiredAt !== undefined ? {
+                set: item.expiredAt
+              } : undefined,
+            failedAt: item.failedAt !== undefined ? {
+                set: item.failedAt
+              } : undefined,
+            replacedAt: item.replacedAt !== undefined ? {
+                set: item.replacedAt
+              } : undefined,
+            replacedBy: item.replacedBy !== undefined ? {
+                set: item.replacedBy
+              } : undefined,
+            replaces: item.replaces !== undefined ? {
+                set: item.replaces
+              } : undefined,
+            positionIntent: item.positionIntent !== undefined ? {
+                set: item.positionIntent
+              } : undefined,
+            legs: item.legs !== undefined ? {
+                set: item.legs
+              } : undefined,
+            hwm: item.hwm !== undefined ? {
+                set: item.hwm
+              } : undefined,
+            subtag: item.subtag !== undefined ? {
+                set: item.subtag
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
             optionType: item.optionType !== undefined ? {
                 set: item.optionType
               } : undefined,
@@ -5878,6 +6263,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -6137,6 +6533,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -6306,6 +6713,39 @@ id
           expirationDate: prop.contract.order.expirationDate !== undefined ? {
               set: prop.contract.order.expirationDate
             } : undefined,
+          expiredAt: prop.contract.order.expiredAt !== undefined ? {
+              set: prop.contract.order.expiredAt
+            } : undefined,
+          failedAt: prop.contract.order.failedAt !== undefined ? {
+              set: prop.contract.order.failedAt
+            } : undefined,
+          replacedAt: prop.contract.order.replacedAt !== undefined ? {
+              set: prop.contract.order.replacedAt
+            } : undefined,
+          replacedBy: prop.contract.order.replacedBy !== undefined ? {
+              set: prop.contract.order.replacedBy
+            } : undefined,
+          replaces: prop.contract.order.replaces !== undefined ? {
+              set: prop.contract.order.replaces
+            } : undefined,
+          positionIntent: prop.contract.order.positionIntent !== undefined ? {
+              set: prop.contract.order.positionIntent
+            } : undefined,
+          legs: prop.contract.order.legs !== undefined ? {
+              set: prop.contract.order.legs
+            } : undefined,
+          hwm: prop.contract.order.hwm !== undefined ? {
+              set: prop.contract.order.hwm
+            } : undefined,
+          subtag: prop.contract.order.subtag !== undefined ? {
+              set: prop.contract.order.subtag
+            } : undefined,
+          source: prop.contract.order.source !== undefined ? {
+              set: prop.contract.order.source
+            } : undefined,
+          expiresAt: prop.contract.order.expiresAt !== undefined ? {
+              set: prop.contract.order.expiresAt
+            } : undefined,
           optionType: prop.contract.order.optionType !== undefined ? {
               set: prop.contract.order.optionType
             } : undefined,
@@ -6428,6 +6868,18 @@ id
             volumeThreshold: prop.contract.order.alpacaAccount.volumeThreshold !== undefined ? {
                 set: prop.contract.order.alpacaAccount.volumeThreshold
               } : undefined,
+            enablePortfolioTrailingStop: prop.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: prop.contract.order.alpacaAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: prop.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? {
+                set: prop.contract.order.alpacaAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent
+              } : undefined,
           },
           create: {
             type: prop.contract.order.alpacaAccount.type !== undefined ? prop.contract.order.alpacaAccount.type : undefined,
@@ -6440,6 +6892,10 @@ id
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? prop.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? prop.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: prop.contract.order.alpacaAccount.volumeThreshold !== undefined ? prop.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: prop.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? prop.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? prop.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -6774,6 +7230,17 @@ id
           fee: prop.contract.order.fee !== undefined ? prop.contract.order.fee : undefined,
           strikePrice: prop.contract.order.strikePrice !== undefined ? prop.contract.order.strikePrice : undefined,
           expirationDate: prop.contract.order.expirationDate !== undefined ? prop.contract.order.expirationDate : undefined,
+          expiredAt: prop.contract.order.expiredAt !== undefined ? prop.contract.order.expiredAt : undefined,
+          failedAt: prop.contract.order.failedAt !== undefined ? prop.contract.order.failedAt : undefined,
+          replacedAt: prop.contract.order.replacedAt !== undefined ? prop.contract.order.replacedAt : undefined,
+          replacedBy: prop.contract.order.replacedBy !== undefined ? prop.contract.order.replacedBy : undefined,
+          replaces: prop.contract.order.replaces !== undefined ? prop.contract.order.replaces : undefined,
+          positionIntent: prop.contract.order.positionIntent !== undefined ? prop.contract.order.positionIntent : undefined,
+          legs: prop.contract.order.legs !== undefined ? prop.contract.order.legs : undefined,
+          hwm: prop.contract.order.hwm !== undefined ? prop.contract.order.hwm : undefined,
+          subtag: prop.contract.order.subtag !== undefined ? prop.contract.order.subtag : undefined,
+          source: prop.contract.order.source !== undefined ? prop.contract.order.source : undefined,
+          expiresAt: prop.contract.order.expiresAt !== undefined ? prop.contract.order.expiresAt : undefined,
           optionType: prop.contract.order.optionType !== undefined ? prop.contract.order.optionType : undefined,
           stopLossId: prop.contract.order.stopLossId !== undefined ? prop.contract.order.stopLossId : undefined,
           takeProfitId: prop.contract.order.takeProfitId !== undefined ? prop.contract.order.takeProfitId : undefined,
@@ -6835,6 +7302,10 @@ id
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? prop.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? prop.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: prop.contract.order.alpacaAccount.volumeThreshold !== undefined ? prop.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: prop.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? prop.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? prop.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -7099,6 +7570,17 @@ id
             fee: item.fee !== undefined ? item.fee : undefined,
             strikePrice: item.strikePrice !== undefined ? item.strikePrice : undefined,
             expirationDate: item.expirationDate !== undefined ? item.expirationDate : undefined,
+            expiredAt: item.expiredAt !== undefined ? item.expiredAt : undefined,
+            failedAt: item.failedAt !== undefined ? item.failedAt : undefined,
+            replacedAt: item.replacedAt !== undefined ? item.replacedAt : undefined,
+            replacedBy: item.replacedBy !== undefined ? item.replacedBy : undefined,
+            replaces: item.replaces !== undefined ? item.replaces : undefined,
+            positionIntent: item.positionIntent !== undefined ? item.positionIntent : undefined,
+            legs: item.legs !== undefined ? item.legs : undefined,
+            hwm: item.hwm !== undefined ? item.hwm : undefined,
+            subtag: item.subtag !== undefined ? item.subtag : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
             optionType: item.optionType !== undefined ? item.optionType : undefined,
             stopLossId: item.stopLossId !== undefined ? item.stopLossId : undefined,
             takeProfitId: item.takeProfitId !== undefined ? item.takeProfitId : undefined,
@@ -7205,6 +7687,17 @@ id
           fee: prop.contract.order.fee !== undefined ? prop.contract.order.fee : undefined,
           strikePrice: prop.contract.order.strikePrice !== undefined ? prop.contract.order.strikePrice : undefined,
           expirationDate: prop.contract.order.expirationDate !== undefined ? prop.contract.order.expirationDate : undefined,
+          expiredAt: prop.contract.order.expiredAt !== undefined ? prop.contract.order.expiredAt : undefined,
+          failedAt: prop.contract.order.failedAt !== undefined ? prop.contract.order.failedAt : undefined,
+          replacedAt: prop.contract.order.replacedAt !== undefined ? prop.contract.order.replacedAt : undefined,
+          replacedBy: prop.contract.order.replacedBy !== undefined ? prop.contract.order.replacedBy : undefined,
+          replaces: prop.contract.order.replaces !== undefined ? prop.contract.order.replaces : undefined,
+          positionIntent: prop.contract.order.positionIntent !== undefined ? prop.contract.order.positionIntent : undefined,
+          legs: prop.contract.order.legs !== undefined ? prop.contract.order.legs : undefined,
+          hwm: prop.contract.order.hwm !== undefined ? prop.contract.order.hwm : undefined,
+          subtag: prop.contract.order.subtag !== undefined ? prop.contract.order.subtag : undefined,
+          source: prop.contract.order.source !== undefined ? prop.contract.order.source : undefined,
+          expiresAt: prop.contract.order.expiresAt !== undefined ? prop.contract.order.expiresAt : undefined,
           optionType: prop.contract.order.optionType !== undefined ? prop.contract.order.optionType : undefined,
           stopLossId: prop.contract.order.stopLossId !== undefined ? prop.contract.order.stopLossId : undefined,
           takeProfitId: prop.contract.order.takeProfitId !== undefined ? prop.contract.order.takeProfitId : undefined,
@@ -7266,6 +7759,10 @@ id
             maxOrderSize: prop.contract.order.alpacaAccount.maxOrderSize !== undefined ? prop.contract.order.alpacaAccount.maxOrderSize : undefined,
             minPercentageChange: prop.contract.order.alpacaAccount.minPercentageChange !== undefined ? prop.contract.order.alpacaAccount.minPercentageChange : undefined,
             volumeThreshold: prop.contract.order.alpacaAccount.volumeThreshold !== undefined ? prop.contract.order.alpacaAccount.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: prop.contract.order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? prop.contract.order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.contract.order.alpacaAccount.portfolioTrailPercent !== undefined ? prop.contract.order.alpacaAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? prop.contract.order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? prop.contract.order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
           },
         }
       } : undefined,
@@ -7402,9 +7899,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Deliverable or null.
    */
-  async delete(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType> {
+  async delete(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_DELIVERABLE = gql`
       mutation deleteOneDeliverable($where: DeliverableWhereUniqueInput!) {
@@ -7441,9 +7938,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved Deliverable or null.
    */
-  async get(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType | null> {
+  async get(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_DELIVERABLE = gql`
       query getDeliverable($where: DeliverableWhereUniqueInput!) {
@@ -7484,9 +7981,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of Deliverable records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<DeliverableType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_DELIVERABLE = gql`
       query getAllDeliverable {
@@ -7515,9 +8012,9 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of found Deliverable records or null.
    */
-  async findMany(props: DeliverableType, globalClient?: ApolloClient<any>): Promise<DeliverableType[] | null> {
+  async findMany(props: DeliverableType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DeliverableType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_DELIVERABLE = gql`
       query findManyDeliverable($where: DeliverableWhereInput!) {

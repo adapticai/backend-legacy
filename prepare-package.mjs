@@ -282,23 +282,23 @@ try {
 }
 
 // Step 5: Update Apollo Client imports in dist/server/*.mjs files
-try {
-  const serverMjsFiles = getFilesRecursively(distServerDir).filter(file => file.endsWith('.mjs'));
+// try {
+//   const serverMjsFiles = getFilesRecursively(distServerDir).filter(file => file.endsWith('.mjs'));
 
-  serverMjsFiles.forEach((file) => {
-    let content = fs.readFileSync(file, 'utf8');
-    // Replace import { gql } from "@apollo/client"; with import pkg from "@apollo/client"; const { gql } = pkg;
-    content = content.replace(
-      /import\s+\{([^}]+)\}\s+from\s+(['"])(@apollo\/client)\2;/g,
-      (match, p1, p2, p3) => `import pkg from '${p3}';\nconst { ${p1.trim()} } = pkg;`
-    );
-    fs.writeFileSync(file, content, 'utf8');
-  });
-  console.log('Updated Apollo client imports in .mjs files.');
-} catch (err) {
-  console.error('Error updating Apollo client imports in .mjs files:', err);
-  process.exit(1);
-}
+//   serverMjsFiles.forEach((file) => {
+//     let content = fs.readFileSync(file, 'utf8');
+//     // Replace import { gql } from "@apollo/client"; with import pkg from "@apollo/client"; const { gql } = pkg;
+//     content = content.replace(
+//       /import\s+\{([^}]+)\}\s+from\s+(['"])(@apollo\/client)\2;/g,
+//       (match, p1, p2, p3) => `import pkg from '${p3}';\nconst { ${p1.trim()} } = pkg;`
+//     );
+//     fs.writeFileSync(file, content, 'utf8');
+//   });
+//   console.log('Updated Apollo client imports in .mjs files.');
+// } catch (err) {
+//   console.error('Error updating Apollo client imports in .mjs files:', err);
+//   process.exit(1);
+// }
 
 // Step 6. Update import paths with .mjs in dist/server .mjs files
 try {

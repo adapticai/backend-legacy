@@ -1,8 +1,7 @@
 
   
 import { TakeProfit as TakeProfitType } from './generated/typegraphql-prisma/models/TakeProfit';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -29,9 +28,9 @@ import { removeUndefinedProps } from './utils';
      * @returns The created TakeProfit or null.
      */
 
-    async create(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
+    async create(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_TAKEPROFIT = gql`
         mutation createOneTakeProfit($data: TakeProfitCreateInput!) {
@@ -85,6 +84,17 @@ import { removeUndefinedProps } from './utils';
         fee: props.Order.fee !== undefined ? props.Order.fee : undefined,
         strikePrice: props.Order.strikePrice !== undefined ? props.Order.strikePrice : undefined,
         expirationDate: props.Order.expirationDate !== undefined ? props.Order.expirationDate : undefined,
+        expiredAt: props.Order.expiredAt !== undefined ? props.Order.expiredAt : undefined,
+        failedAt: props.Order.failedAt !== undefined ? props.Order.failedAt : undefined,
+        replacedAt: props.Order.replacedAt !== undefined ? props.Order.replacedAt : undefined,
+        replacedBy: props.Order.replacedBy !== undefined ? props.Order.replacedBy : undefined,
+        replaces: props.Order.replaces !== undefined ? props.Order.replaces : undefined,
+        positionIntent: props.Order.positionIntent !== undefined ? props.Order.positionIntent : undefined,
+        legs: props.Order.legs !== undefined ? props.Order.legs : undefined,
+        hwm: props.Order.hwm !== undefined ? props.Order.hwm : undefined,
+        subtag: props.Order.subtag !== undefined ? props.Order.subtag : undefined,
+        source: props.Order.source !== undefined ? props.Order.source : undefined,
+        expiresAt: props.Order.expiresAt !== undefined ? props.Order.expiresAt : undefined,
         optionType: props.Order.optionType !== undefined ? props.Order.optionType : undefined,
         stopLossId: props.Order.stopLossId !== undefined ? props.Order.stopLossId : undefined,
         takeProfitId: props.Order.takeProfitId !== undefined ? props.Order.takeProfitId : undefined,
@@ -129,6 +139,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? props.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: props.Order.alpacaAccount.user ? 
         typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -669,9 +683,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: TakeProfitType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: TakeProfitType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_TAKEPROFIT = gql`
       mutation createManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
@@ -710,9 +724,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The updated TakeProfit or null.
    */
-  async update(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
+  async update(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_TAKEPROFIT = gql`
       mutation updateOneTakeProfit($data: TakeProfitUpdateInput!, $where: TakeProfitWhereUniqueInput!) {
@@ -845,6 +859,39 @@ import { removeUndefinedProps } from './utils';
         expirationDate: props.Order.expirationDate !== undefined ? {
             set: props.Order.expirationDate
           } : undefined,
+        expiredAt: props.Order.expiredAt !== undefined ? {
+            set: props.Order.expiredAt
+          } : undefined,
+        failedAt: props.Order.failedAt !== undefined ? {
+            set: props.Order.failedAt
+          } : undefined,
+        replacedAt: props.Order.replacedAt !== undefined ? {
+            set: props.Order.replacedAt
+          } : undefined,
+        replacedBy: props.Order.replacedBy !== undefined ? {
+            set: props.Order.replacedBy
+          } : undefined,
+        replaces: props.Order.replaces !== undefined ? {
+            set: props.Order.replaces
+          } : undefined,
+        positionIntent: props.Order.positionIntent !== undefined ? {
+            set: props.Order.positionIntent
+          } : undefined,
+        legs: props.Order.legs !== undefined ? {
+            set: props.Order.legs
+          } : undefined,
+        hwm: props.Order.hwm !== undefined ? {
+            set: props.Order.hwm
+          } : undefined,
+        subtag: props.Order.subtag !== undefined ? {
+            set: props.Order.subtag
+          } : undefined,
+        source: props.Order.source !== undefined ? {
+            set: props.Order.source
+          } : undefined,
+        expiresAt: props.Order.expiresAt !== undefined ? {
+            set: props.Order.expiresAt
+          } : undefined,
         optionType: props.Order.optionType !== undefined ? {
             set: props.Order.optionType
           } : undefined,
@@ -934,6 +981,18 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? {
               set: props.Order.alpacaAccount.volumeThreshold
+            } : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? {
+              set: props.Order.alpacaAccount.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? {
+              set: props.Order.alpacaAccount.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? {
+              set: props.Order.alpacaAccount.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
+              set: props.Order.alpacaAccount.reducedPortfolioTrailPercent
             } : undefined,
       user: props.Order.alpacaAccount.user ? 
       typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && (Object.keys(props.Order.alpacaAccount.user)[0] === 'id' || Object.keys(props.Order.alpacaAccount.user)[0] === 'symbol')
@@ -1209,6 +1268,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? props.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: props.Order.alpacaAccount.user ? 
         typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -2713,6 +2776,17 @@ import { removeUndefinedProps } from './utils';
         fee: props.Order.fee !== undefined ? props.Order.fee : undefined,
         strikePrice: props.Order.strikePrice !== undefined ? props.Order.strikePrice : undefined,
         expirationDate: props.Order.expirationDate !== undefined ? props.Order.expirationDate : undefined,
+        expiredAt: props.Order.expiredAt !== undefined ? props.Order.expiredAt : undefined,
+        failedAt: props.Order.failedAt !== undefined ? props.Order.failedAt : undefined,
+        replacedAt: props.Order.replacedAt !== undefined ? props.Order.replacedAt : undefined,
+        replacedBy: props.Order.replacedBy !== undefined ? props.Order.replacedBy : undefined,
+        replaces: props.Order.replaces !== undefined ? props.Order.replaces : undefined,
+        positionIntent: props.Order.positionIntent !== undefined ? props.Order.positionIntent : undefined,
+        legs: props.Order.legs !== undefined ? props.Order.legs : undefined,
+        hwm: props.Order.hwm !== undefined ? props.Order.hwm : undefined,
+        subtag: props.Order.subtag !== undefined ? props.Order.subtag : undefined,
+        source: props.Order.source !== undefined ? props.Order.source : undefined,
+        expiresAt: props.Order.expiresAt !== undefined ? props.Order.expiresAt : undefined,
         optionType: props.Order.optionType !== undefined ? props.Order.optionType : undefined,
         stopLossId: props.Order.stopLossId !== undefined ? props.Order.stopLossId : undefined,
         takeProfitId: props.Order.takeProfitId !== undefined ? props.Order.takeProfitId : undefined,
@@ -2757,6 +2831,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? props.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: props.Order.alpacaAccount.user ? 
         typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -3296,9 +3374,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The updated TakeProfit or null.
    */
-  async upsert(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
+  async upsert(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_TAKEPROFIT = gql`
       mutation upsertOneTakeProfit($where: TakeProfitWhereUniqueInput!, $create: TakeProfitCreateInput!, $update: TakeProfitUpdateInput!) {
@@ -3355,6 +3433,17 @@ import { removeUndefinedProps } from './utils';
         fee: props.Order.fee !== undefined ? props.Order.fee : undefined,
         strikePrice: props.Order.strikePrice !== undefined ? props.Order.strikePrice : undefined,
         expirationDate: props.Order.expirationDate !== undefined ? props.Order.expirationDate : undefined,
+        expiredAt: props.Order.expiredAt !== undefined ? props.Order.expiredAt : undefined,
+        failedAt: props.Order.failedAt !== undefined ? props.Order.failedAt : undefined,
+        replacedAt: props.Order.replacedAt !== undefined ? props.Order.replacedAt : undefined,
+        replacedBy: props.Order.replacedBy !== undefined ? props.Order.replacedBy : undefined,
+        replaces: props.Order.replaces !== undefined ? props.Order.replaces : undefined,
+        positionIntent: props.Order.positionIntent !== undefined ? props.Order.positionIntent : undefined,
+        legs: props.Order.legs !== undefined ? props.Order.legs : undefined,
+        hwm: props.Order.hwm !== undefined ? props.Order.hwm : undefined,
+        subtag: props.Order.subtag !== undefined ? props.Order.subtag : undefined,
+        source: props.Order.source !== undefined ? props.Order.source : undefined,
+        expiresAt: props.Order.expiresAt !== undefined ? props.Order.expiresAt : undefined,
         optionType: props.Order.optionType !== undefined ? props.Order.optionType : undefined,
         stopLossId: props.Order.stopLossId !== undefined ? props.Order.stopLossId : undefined,
         takeProfitId: props.Order.takeProfitId !== undefined ? props.Order.takeProfitId : undefined,
@@ -3399,6 +3488,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? props.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: props.Order.alpacaAccount.user ? 
         typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -4024,6 +4117,39 @@ import { removeUndefinedProps } from './utils';
         expirationDate: props.Order.expirationDate !== undefined ? {
             set: props.Order.expirationDate
           } : undefined,
+        expiredAt: props.Order.expiredAt !== undefined ? {
+            set: props.Order.expiredAt
+          } : undefined,
+        failedAt: props.Order.failedAt !== undefined ? {
+            set: props.Order.failedAt
+          } : undefined,
+        replacedAt: props.Order.replacedAt !== undefined ? {
+            set: props.Order.replacedAt
+          } : undefined,
+        replacedBy: props.Order.replacedBy !== undefined ? {
+            set: props.Order.replacedBy
+          } : undefined,
+        replaces: props.Order.replaces !== undefined ? {
+            set: props.Order.replaces
+          } : undefined,
+        positionIntent: props.Order.positionIntent !== undefined ? {
+            set: props.Order.positionIntent
+          } : undefined,
+        legs: props.Order.legs !== undefined ? {
+            set: props.Order.legs
+          } : undefined,
+        hwm: props.Order.hwm !== undefined ? {
+            set: props.Order.hwm
+          } : undefined,
+        subtag: props.Order.subtag !== undefined ? {
+            set: props.Order.subtag
+          } : undefined,
+        source: props.Order.source !== undefined ? {
+            set: props.Order.source
+          } : undefined,
+        expiresAt: props.Order.expiresAt !== undefined ? {
+            set: props.Order.expiresAt
+          } : undefined,
         optionType: props.Order.optionType !== undefined ? {
             set: props.Order.optionType
           } : undefined,
@@ -4113,6 +4239,18 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? {
               set: props.Order.alpacaAccount.volumeThreshold
+            } : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? {
+              set: props.Order.alpacaAccount.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? {
+              set: props.Order.alpacaAccount.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? {
+              set: props.Order.alpacaAccount.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
+              set: props.Order.alpacaAccount.reducedPortfolioTrailPercent
             } : undefined,
       user: props.Order.alpacaAccount.user ? 
       typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && (Object.keys(props.Order.alpacaAccount.user)[0] === 'id' || Object.keys(props.Order.alpacaAccount.user)[0] === 'symbol')
@@ -4388,6 +4526,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? props.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: props.Order.alpacaAccount.user ? 
         typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -5892,6 +6034,17 @@ import { removeUndefinedProps } from './utils';
         fee: props.Order.fee !== undefined ? props.Order.fee : undefined,
         strikePrice: props.Order.strikePrice !== undefined ? props.Order.strikePrice : undefined,
         expirationDate: props.Order.expirationDate !== undefined ? props.Order.expirationDate : undefined,
+        expiredAt: props.Order.expiredAt !== undefined ? props.Order.expiredAt : undefined,
+        failedAt: props.Order.failedAt !== undefined ? props.Order.failedAt : undefined,
+        replacedAt: props.Order.replacedAt !== undefined ? props.Order.replacedAt : undefined,
+        replacedBy: props.Order.replacedBy !== undefined ? props.Order.replacedBy : undefined,
+        replaces: props.Order.replaces !== undefined ? props.Order.replaces : undefined,
+        positionIntent: props.Order.positionIntent !== undefined ? props.Order.positionIntent : undefined,
+        legs: props.Order.legs !== undefined ? props.Order.legs : undefined,
+        hwm: props.Order.hwm !== undefined ? props.Order.hwm : undefined,
+        subtag: props.Order.subtag !== undefined ? props.Order.subtag : undefined,
+        source: props.Order.source !== undefined ? props.Order.source : undefined,
+        expiresAt: props.Order.expiresAt !== undefined ? props.Order.expiresAt : undefined,
         optionType: props.Order.optionType !== undefined ? props.Order.optionType : undefined,
         stopLossId: props.Order.stopLossId !== undefined ? props.Order.stopLossId : undefined,
         takeProfitId: props.Order.takeProfitId !== undefined ? props.Order.takeProfitId : undefined,
@@ -5936,6 +6089,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: props.Order.alpacaAccount.maxOrderSize !== undefined ? props.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: props.Order.alpacaAccount.minPercentageChange !== undefined ? props.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: props.Order.alpacaAccount.volumeThreshold !== undefined ? props.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: props.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.Order.alpacaAccount.portfolioTrailPercent !== undefined ? props.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: props.Order.alpacaAccount.user ? 
         typeof props.Order.alpacaAccount.user === 'object' && Object.keys(props.Order.alpacaAccount.user).length === 1 && Object.keys(props.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -6475,9 +6632,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: TakeProfitType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: TakeProfitType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_TAKEPROFIT = gql`
       mutation updateManyTakeProfit($data: [TakeProfitCreateManyInput!]!) {
@@ -6611,6 +6768,39 @@ import { removeUndefinedProps } from './utils';
         expirationDate: prop.Order.expirationDate !== undefined ? {
             set: prop.Order.expirationDate
           } : undefined,
+        expiredAt: prop.Order.expiredAt !== undefined ? {
+            set: prop.Order.expiredAt
+          } : undefined,
+        failedAt: prop.Order.failedAt !== undefined ? {
+            set: prop.Order.failedAt
+          } : undefined,
+        replacedAt: prop.Order.replacedAt !== undefined ? {
+            set: prop.Order.replacedAt
+          } : undefined,
+        replacedBy: prop.Order.replacedBy !== undefined ? {
+            set: prop.Order.replacedBy
+          } : undefined,
+        replaces: prop.Order.replaces !== undefined ? {
+            set: prop.Order.replaces
+          } : undefined,
+        positionIntent: prop.Order.positionIntent !== undefined ? {
+            set: prop.Order.positionIntent
+          } : undefined,
+        legs: prop.Order.legs !== undefined ? {
+            set: prop.Order.legs
+          } : undefined,
+        hwm: prop.Order.hwm !== undefined ? {
+            set: prop.Order.hwm
+          } : undefined,
+        subtag: prop.Order.subtag !== undefined ? {
+            set: prop.Order.subtag
+          } : undefined,
+        source: prop.Order.source !== undefined ? {
+            set: prop.Order.source
+          } : undefined,
+        expiresAt: prop.Order.expiresAt !== undefined ? {
+            set: prop.Order.expiresAt
+          } : undefined,
         optionType: prop.Order.optionType !== undefined ? {
             set: prop.Order.optionType
           } : undefined,
@@ -6700,6 +6890,18 @@ import { removeUndefinedProps } from './utils';
             } : undefined,
           volumeThreshold: prop.Order.alpacaAccount.volumeThreshold !== undefined ? {
               set: prop.Order.alpacaAccount.volumeThreshold
+            } : undefined,
+          enablePortfolioTrailingStop: prop.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? {
+              set: prop.Order.alpacaAccount.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: prop.Order.alpacaAccount.portfolioTrailPercent !== undefined ? {
+              set: prop.Order.alpacaAccount.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: prop.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? {
+              set: prop.Order.alpacaAccount.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: prop.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
+              set: prop.Order.alpacaAccount.reducedPortfolioTrailPercent
             } : undefined,
       user: prop.Order.alpacaAccount.user ? 
       typeof prop.Order.alpacaAccount.user === 'object' && Object.keys(prop.Order.alpacaAccount.user).length === 1 && (Object.keys(prop.Order.alpacaAccount.user)[0] === 'id' || Object.keys(prop.Order.alpacaAccount.user)[0] === 'symbol')
@@ -6975,6 +7177,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: prop.Order.alpacaAccount.maxOrderSize !== undefined ? prop.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: prop.Order.alpacaAccount.minPercentageChange !== undefined ? prop.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: prop.Order.alpacaAccount.volumeThreshold !== undefined ? prop.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: prop.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? prop.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: prop.Order.alpacaAccount.portfolioTrailPercent !== undefined ? prop.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: prop.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? prop.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: prop.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? prop.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: prop.Order.alpacaAccount.user ? 
         typeof prop.Order.alpacaAccount.user === 'object' && Object.keys(prop.Order.alpacaAccount.user).length === 1 && Object.keys(prop.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -8479,6 +8685,17 @@ import { removeUndefinedProps } from './utils';
         fee: prop.Order.fee !== undefined ? prop.Order.fee : undefined,
         strikePrice: prop.Order.strikePrice !== undefined ? prop.Order.strikePrice : undefined,
         expirationDate: prop.Order.expirationDate !== undefined ? prop.Order.expirationDate : undefined,
+        expiredAt: prop.Order.expiredAt !== undefined ? prop.Order.expiredAt : undefined,
+        failedAt: prop.Order.failedAt !== undefined ? prop.Order.failedAt : undefined,
+        replacedAt: prop.Order.replacedAt !== undefined ? prop.Order.replacedAt : undefined,
+        replacedBy: prop.Order.replacedBy !== undefined ? prop.Order.replacedBy : undefined,
+        replaces: prop.Order.replaces !== undefined ? prop.Order.replaces : undefined,
+        positionIntent: prop.Order.positionIntent !== undefined ? prop.Order.positionIntent : undefined,
+        legs: prop.Order.legs !== undefined ? prop.Order.legs : undefined,
+        hwm: prop.Order.hwm !== undefined ? prop.Order.hwm : undefined,
+        subtag: prop.Order.subtag !== undefined ? prop.Order.subtag : undefined,
+        source: prop.Order.source !== undefined ? prop.Order.source : undefined,
+        expiresAt: prop.Order.expiresAt !== undefined ? prop.Order.expiresAt : undefined,
         optionType: prop.Order.optionType !== undefined ? prop.Order.optionType : undefined,
         stopLossId: prop.Order.stopLossId !== undefined ? prop.Order.stopLossId : undefined,
         takeProfitId: prop.Order.takeProfitId !== undefined ? prop.Order.takeProfitId : undefined,
@@ -8523,6 +8740,10 @@ import { removeUndefinedProps } from './utils';
           maxOrderSize: prop.Order.alpacaAccount.maxOrderSize !== undefined ? prop.Order.alpacaAccount.maxOrderSize : undefined,
           minPercentageChange: prop.Order.alpacaAccount.minPercentageChange !== undefined ? prop.Order.alpacaAccount.minPercentageChange : undefined,
           volumeThreshold: prop.Order.alpacaAccount.volumeThreshold !== undefined ? prop.Order.alpacaAccount.volumeThreshold : undefined,
+          enablePortfolioTrailingStop: prop.Order.alpacaAccount.enablePortfolioTrailingStop !== undefined ? prop.Order.alpacaAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: prop.Order.alpacaAccount.portfolioTrailPercent !== undefined ? prop.Order.alpacaAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: prop.Order.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? prop.Order.alpacaAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: prop.Order.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? prop.Order.alpacaAccount.reducedPortfolioTrailPercent : undefined,
       user: prop.Order.alpacaAccount.user ? 
         typeof prop.Order.alpacaAccount.user === 'object' && Object.keys(prop.Order.alpacaAccount.user).length === 1 && Object.keys(prop.Order.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -9064,9 +9285,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The deleted TakeProfit or null.
    */
-  async delete(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType> {
+  async delete(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_TAKEPROFIT = gql`
       mutation deleteOneTakeProfit($where: TakeProfitWhereUniqueInput!) {
@@ -9103,9 +9324,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved TakeProfit or null.
    */
-  async get(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType | null> {
+  async get(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_TAKEPROFIT = gql`
       query getTakeProfit($where: TakeProfitWhereUniqueInput!) {
@@ -9141,9 +9362,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of TakeProfit records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<TakeProfitType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_TAKEPROFIT = gql`
       query getAllTakeProfit {
@@ -9172,9 +9393,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found TakeProfit records or null.
    */
-  async findMany(props: TakeProfitType, globalClient?: ApolloClient<any>): Promise<TakeProfitType[] | null> {
+  async findMany(props: TakeProfitType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<TakeProfitType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_TAKEPROFIT = gql`
       query findManyTakeProfit($where: TakeProfitWhereInput!) {

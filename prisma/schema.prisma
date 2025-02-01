@@ -523,17 +523,23 @@ enum SubscriptionPlan {
 
 // OpenAI API language models available for text generation.
 enum OpenaiModel {
-  // gpt-4o model (OpenAI's high-intelligence flagship model for complex, multi-step tasks)
+  /// gpt-4o model (OpenAI's high-intelligence flagship model for complex, multi-step tasks)
   GPT_4O
 
-  // gpt-4o-mini model (OpenAI's affordable and intelligent small model for fast, lightweight tasks)
+  /// gpt-4o-mini model (OpenAI's affordable and intelligent small model for fast, lightweight tasks)
   GPT_4O_MINI
 
-  // o1-preview model (OpenAI's latest model, trained with reinforcement learning to perform complex reasoning)
-  O1_PREVIEW
+  /// o1 model (OpenAI's latest model, trained with reinforcement learning to perform complex reasoning)
+  O1
 
-  // o1-mini model (OpenAI's lightweight model for quick, simple tasks, of its latest language model)
+  /// o1-mini model (OpenAI's lightweight model for quick, simple tasks, of its latest language model)
   O1_MINI
+
+  /// o3-mini model (OpenAI's small model, trained with reinforcement learning to perform complex reasoning)
+  O3_MINI
+
+  /// o1-preview model (OpenAI's latest model, trained with reinforcement learning to perform complex reasoning)
+  O1_PREVIEW
 }
 
 /// ### Models
@@ -648,7 +654,7 @@ model User {
   openaiAPIKey String?
 
   /// OpenAI API Language model selected by the user
-  openaiModel OpenaiModel? @default(O1_MINI)
+  openaiModel OpenaiModel? @default(GPT_4O_MINI)
 
   @@map(name: "users")
 }
@@ -689,16 +695,16 @@ model AlpacaAccount {
   volumeThreshold Float @default(50000)
 
   /// Opt-in for enabling the portfolio-level trailing stop service within Adaptic's Realtime Trade Engine. TYPESTRING.SKIP=true
-  enablePortfolioTrailingStop            Boolean       @default(false)
+  enablePortfolioTrailingStop Boolean @default(false)
 
   /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
-  portfolioTrailPercent                  Float         @default(4.0)
+  portfolioTrailPercent Float @default(4.0)
 
   /// The portfolio-level profit threshold percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
-  portfolioProfitThresholdPercent        Float         @default(2.0)
+  portfolioProfitThresholdPercent Float @default(2.0)
 
   /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
-  reducedPortfolioTrailPercent           Float         @default(0.5)
+  reducedPortfolioTrailPercent Float @default(0.5)
 
   /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts', 'customer', 'accounts', 'sessions', 'authenticators']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

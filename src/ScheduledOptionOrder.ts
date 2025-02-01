@@ -1,8 +1,7 @@
 
   
 import { ScheduledOptionOrder as ScheduledOptionOrderType } from './generated/typegraphql-prisma/models/ScheduledOptionOrder';
-import { ApolloClient, ApolloError, gql } from '@apollo/client';
-import { client as importedClient } from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, ApolloError, gql } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
@@ -26,9 +25,9 @@ import { removeUndefinedProps } from './utils';
      * @returns The created ScheduledOptionOrder or null.
      */
 
-    async create(props: ScheduledOptionOrderType, globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType> {
+    async create(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_ONE_SCHEDULEDOPTIONORDER = gql`
         mutation createOneScheduledOptionOrder($data: ScheduledOptionOrderCreateInput!) {
@@ -68,9 +67,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ScheduledOptionOrderType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async createMany(props: ScheduledOptionOrderType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const CREATE_MANY_SCHEDULEDOPTIONORDER = gql`
       mutation createManyScheduledOptionOrder($data: [ScheduledOptionOrderCreateManyInput!]!) {
@@ -108,9 +107,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The updated ScheduledOptionOrder or null.
    */
-  async update(props: ScheduledOptionOrderType, globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType> {
+  async update(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_ONE_SCHEDULEDOPTIONORDER = gql`
       mutation updateOneScheduledOptionOrder($data: ScheduledOptionOrderUpdateInput!, $where: ScheduledOptionOrderWhereUniqueInput!) {
@@ -158,9 +157,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The updated ScheduledOptionOrder or null.
    */
-  async upsert(props: ScheduledOptionOrderType, globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType> {
+  async upsert(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPSERT_ONE_SCHEDULEDOPTIONORDER = gql`
       mutation upsertOneScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!, $create: ScheduledOptionOrderCreateInput!, $update: ScheduledOptionOrderUpdateInput!) {
@@ -209,9 +208,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ScheduledOptionOrderType[], globalClient?: ApolloClient<any>): Promise<{ count: number } | null> {
+  async updateMany(props: ScheduledOptionOrderType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const UPDATE_MANY_SCHEDULEDOPTIONORDER = gql`
       mutation updateManyScheduledOptionOrder($data: [ScheduledOptionOrderCreateManyInput!]!) {
@@ -262,9 +261,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The deleted ScheduledOptionOrder or null.
    */
-  async delete(props: ScheduledOptionOrderType, globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType> {
+  async delete(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const DELETE_ONE_SCHEDULEDOPTIONORDER = gql`
       mutation deleteOneScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!) {
@@ -301,9 +300,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved ScheduledOptionOrder or null.
    */
-  async get(props: ScheduledOptionOrderType, globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType | null> {
+  async get(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_SCHEDULEDOPTIONORDER = gql`
       query getScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!) {
@@ -338,9 +337,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of ScheduledOptionOrder records or null.
    */
-  async getAll(globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const GET_ALL_SCHEDULEDOPTIONORDER = gql`
       query getAllScheduledOptionOrder {
@@ -369,9 +368,9 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found ScheduledOptionOrder records or null.
    */
-  async findMany(props: ScheduledOptionOrderType, globalClient?: ApolloClient<any>): Promise<ScheduledOptionOrderType[] | null> {
+  async findMany(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType[] | null> {
 
-    const client = globalClient || importedClient;
+    const client = globalClient || importedClient as ApolloClientType<NormalizedCacheObject>;
 
     const FIND_MANY_SCHEDULEDOPTIONORDER = gql`
       query findManyScheduledOptionOrder($where: ScheduledOptionOrderWhereInput!) {
