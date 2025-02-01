@@ -17,6 +17,7 @@
     "README.md",
     "generated/typegraphql-prisma",
     "generated/typeStrings",
+    "esm/",
     "server/",
     "*.d.ts",
     "*.js",
