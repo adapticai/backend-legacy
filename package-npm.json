@@ -5,7 +5,7 @@
   "type": "module",
   "types": "index.d.ts",
   "main": "index.js",
-  "module": "server/index.mjs",
+  "module": "esm/index.mjs",
   "scripts": {
     "build": "tsc --declaration --emitDeclarationOnly"
   },
