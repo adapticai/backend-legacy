@@ -13,6 +13,7 @@ import {
   HttpLink as HttpLinkImported,
   gql as gqlImported,
   ApolloError as ApolloErrorImported,
+  split as splitImported,
 } from "@apollo/client";
 import { setContext as setContextImported } from "@apollo/client/link/context/context.cjs";
 import { onError as onErrorImported } from "@apollo/client/link/error/error.cjs";
@@ -25,6 +26,7 @@ let InMemoryCache: typeof InMemoryCacheImported;
 let HttpLink: typeof HttpLinkImported;
 let setContext: typeof setContextImported;
 let onError: typeof onErrorImported;
+let split: typeof splitImported;
 
 // Conditional logic: on server use require(), on client use the static imports.
 if (typeof window === "undefined") {
@@ -36,6 +38,7 @@ if (typeof window === "undefined") {
   HttpLink = pkg.HttpLink;
   gql = pkg.gql;
   ApolloError = pkg.ApolloError;
+  split = pkg.split;
 
   const contextPkg = require("@apollo/client/link/context/context.cjs");
   setContext = contextPkg.setContext;
@@ -52,6 +55,7 @@ if (typeof window === "undefined") {
   ApolloError = ApolloErrorImported;
   setContext = setContextImported;
   onError = onErrorImported;
+  split = splitImported;
 }
 
 // Use the type-only alias (ApolloClientType) for type annotations.
@@ -119,7 +123,7 @@ export function getApolloClient(): ApolloClientType<NormalizedCacheObject> {
 export const client = getApolloClient();
 
 // Re-export the runtime implementations so they can be imported elsewhere.
-export { ApolloClient, ApolloError, gql, InMemoryCache, HttpLink, setContext, onError };
+export { ApolloClient, ApolloError, gql, InMemoryCache, HttpLink, setContext, onError, split };
 
 // Also re-export the types for convenience.
 export type {
