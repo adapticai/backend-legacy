@@ -12,13 +12,13 @@ import type {
 import {
   ApolloClient,
   InMemoryCache,
-  HttpLink,
   gql,
   ApolloError,
   split,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
+import { HttpLink } from "@apollo/client/link/http";
 
 // Re‑export the runtime implementations.
 export {

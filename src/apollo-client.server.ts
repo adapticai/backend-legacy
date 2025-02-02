@@ -9,9 +9,10 @@ import type {
 } from "@apollo/client";
 
 import * as pkg from "@apollo/client";
-const { ApolloClient, InMemoryCache, HttpLink, gql, ApolloError, split } = pkg;
+const { ApolloClient, InMemoryCache, gql, ApolloError, split } = pkg;
 import { setContext } from "@apollo/client/link/context/context.cjs";
 import { onError } from "@apollo/client/link/error/error.cjs";
+import { HttpLink} from "@apollo/client/link/http/http.cjs";
 
 // Re‑export the runtime implementations.
 export {

@@ -4,9 +4,10 @@
 import type {
   ApolloClient as ApolloClientType,
   InMemoryCache as InMemoryCacheType,
-  HttpLink as HttpLinkType,
   NormalizedCacheObject,
 } from "@apollo/client";
+
+import { HttpLink as HttpLinkType } from "@apollo/client/link/http";
 
 export type {
   ApolloClientType,
@@ -19,7 +20,7 @@ export type {
 export interface ApolloModules {
   ApolloClient: typeof import("@apollo/client").ApolloClient;
   InMemoryCache: typeof import("@apollo/client").InMemoryCache;
-  HttpLink: typeof import("@apollo/client").HttpLink;
+  HttpLink: typeof import("@apollo/client/link/http").HttpLink;
   gql: typeof import("@apollo/client").gql;
   ApolloError: typeof import("@apollo/client").ApolloError;
   split: typeof import("@apollo/client").split;
