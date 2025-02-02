@@ -10,15 +10,15 @@ import type {
 
 // Import runtime implementations.
 import {
-  ApolloClient,
-  InMemoryCache,
   gql,
   ApolloError,
   split,
 } from "@apollo/client";
+import { ApolloClient } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { HttpLink } from "@apollo/client/link/http";
+import { InMemoryCache } from "@apollo/client/cache/inmemory/inMemoryCache";
 
 // Re‑export the runtime implementations.
 export {

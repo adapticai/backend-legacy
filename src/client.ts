@@ -19,7 +19,7 @@ export type {
 // === Define an interface for the expected runtime exports ===
 export interface ApolloModules {
   ApolloClient: typeof import("@apollo/client").ApolloClient;
-  InMemoryCache: typeof import("@apollo/client").InMemoryCache;
+  InMemoryCache: typeof import("@apollo/client/cache/inmemory/inMemoryCache").InMemoryCache;
   HttpLink: typeof import("@apollo/client/link/http").HttpLink;
   gql: typeof import("@apollo/client").gql;
   ApolloError: typeof import("@apollo/client").ApolloError;
