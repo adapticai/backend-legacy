@@ -8,9 +8,8 @@ import type {
   NormalizedCacheObject,
 } from "@apollo/client";
 
-import * as pkg from "@apollo/client";
-const { gql, ApolloError, split } = pkg;
-import { ApolloClient } from "@apollo/client/core/core.cjs";
+import { ApolloClient, gql, ApolloError } from "@apollo/client/core/core.cjs";
+import { split } from "@apollo/client/link/core/core.cjs";
 import { setContext } from "@apollo/client/link/context/context.cjs";
 import { onError } from "@apollo/client/link/error/error.cjs";
 import { HttpLink } from "@apollo/client/link/http/http.cjs";

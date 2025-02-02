@@ -9,12 +9,8 @@ import type {
 } from "@apollo/client";
 
 // Import runtime implementations.
-import {
-  gql,
-  ApolloError,
-  split,
-} from "@apollo/client";
-import { ApolloClient } from "@apollo/client/core";
+import { ApolloClient, gql, ApolloError } from "@apollo/client/core";
+import { split } from "@apollo/client/link/core";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { HttpLink } from "@apollo/client/link/http";
