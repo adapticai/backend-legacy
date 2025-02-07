@@ -683,7 +683,7 @@ model AlpacaAccount {
   realTime Boolean @default(false)
 
   /// Trade allocation percentage for the account. TYPESTRING.SKIP=true
-  tradeAllocationPct Float @default(0.5)
+  tradeAllocationPct Float @default(5)
 
   /// Minimum percentage change (from intraday high/low) to consider for a trade signal. TYPESTRING.SKIP=true
   minPercentageChange Float @default(0.5)
