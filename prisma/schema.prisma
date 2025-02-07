@@ -1300,7 +1300,7 @@ model Trade {
   confidence Float
 
   /// Timestamp when the trade was executed. TYPESTRING.SKIP=true
-  timestamp DateTime @default(now()) @map(name: "timestamp")
+  timestamp String?
 
   /// Timestamp when the trade record was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
