@@ -682,11 +682,8 @@ model AlpacaAccount {
   /// Opt-in for connecting to real-time monitoring and trading. TYPESTRING.SKIP=true
   realTime Boolean @default(false)
 
-  /// Minimum order size for the account. TYPESTRING.SKIP=true
-  minOrderSize Float @default(500)
-
-  /// Maximum order size for the account. TYPESTRING.SKIP=true
-  maxOrderSize Float @default(100000)
+  /// Trade allocation percentage for the account. TYPESTRING.SKIP=true
+  tradeAllocationPct Float @default(0.5)
 
   /// Minimum percentage change (from intraday high/low) to consider for a trade signal. TYPESTRING.SKIP=true
   minPercentageChange Float @default(0.5)
