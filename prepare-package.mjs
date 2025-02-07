@@ -264,23 +264,6 @@ try {
 //   • For esm/index.mjs, update generated/typeStrings import to use .mjs
 // -----------------------------------------------------------------------------
 
-// 4a: Update index.cjs (root)
-try {
-  const indexCjsPath = path.join(distDir, 'index.cjs');
-  if (fs.existsSync(indexCjsPath)) {
-    let content = fs.readFileSync(indexCjsPath, 'utf8');
-    content = content.replace(/\.\/generated\/typeStrings\/index/g, './generated/typeStrings/index.cjs');
-    fs.writeFileSync(indexCjsPath, content, 'utf8');
-    console.log('Updated import in index.cjs for "./generated/typeStrings/index" to use .cjs extension.');
-  } else {
-    console.log('index.cjs not found, skipping update for index.cjs.');
-  }
-} catch (err) {
-  console.error('Error updating import in index.cjs:', err);
-  process.exit(1);
-}
-
-// 4b: Update esm/index.mjs (ESM entry point)
 try {
   const esmIndexPath = path.join(esmDir, 'index.mjs');
   if (fs.existsSync(esmIndexPath)) {

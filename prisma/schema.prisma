@@ -1320,7 +1320,7 @@ model Trade {
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions', 'contracts']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
-  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order", "dependsOn", "dependedOnBy"] GQL.EXCLUDE=['trade']
+  /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
 
   @@map(name: "trades")
@@ -1357,12 +1357,6 @@ model Action {
 
   /// The order associated with this action. GQL.EXCLUDE=['alpacaAccount', 'action'] TYPESTRING.INCLUDE=["qty","side","type","orderClass","timeInForce","trailPercent","extendedHours","status","strikePrice","expirationDate","optionType"]
   order Order? @relation
-
-  /// A list of action sequence numbers, for any sibling actions that are part of the same trade, that this action depends on.
-  dependsOn String[]
-
-  /// A list of action sequence numbers, for any sibling actions that depend on this action.
-  dependedOnBy String[]
 
   /// Timestamp when the action was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
