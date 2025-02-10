@@ -715,9 +715,6 @@ model AlpacaAccount {
   /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount', 'action']
-  orders Order[]
-
   /// List of positions held in this Alpaca account. TYPESTRING.INCLUDE=['id','qty','asset'] GQL.EXCLUDE=['alpacaAccount']
   positions Position[]
 
@@ -1407,9 +1404,6 @@ model Order {
 
   /// Reference to the action associated with the order. TYPESTRING.SKIP=true
   actionId String? @unique @db.Uuid
-
-  /// The Alpaca account this order is associated with. TYPESTRING.SKIP=true GQL.SKIP=true
-  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// The action this order is associated with. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade', 'order']
   action Action? @relation(fields: [actionId], references: [id], onDelete: Cascade)
