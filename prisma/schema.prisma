@@ -715,9 +715,6 @@ model AlpacaAccount {
   /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of trades executed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
-  trades Trade[]
-
   /// List of orders placed through this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount', 'action']
   orders Order[]
 
@@ -741,7 +738,7 @@ model Position {
   /// The symbol of the asset.
   symbol String?
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'trades', 'orders', 'newsMentions', 'contracts']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['positions', 'orders', 'newsMentions', 'contracts']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// The average price at which the asset was acquired.
@@ -1117,9 +1114,6 @@ model Asset {
   /// Timestamp when the asset was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
-  /// List of trades involving this asset. TYPESTRING.SKIP=true GQL.SKIP=true
-  trades Trade[]
-
   /// List of orders involving this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   orders Order[]
 
@@ -1311,11 +1305,8 @@ model Trade {
   /// Current status of the trade.
   status TradeStatus @default(PENDING)
 
-  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
-  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
-
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['trades', 'orders', 'positions', 'newsMentions', 'contracts']
-  asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  /// The symbol of the asset.
+  symbol String?
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
@@ -1670,7 +1661,7 @@ model NewsArticleAssetSentiment {
   /// Relation to the NewsArticle model. TYPESTRING.SKIP=true GQL.EXCLUDE=['assets']
   news NewsArticle @relation(fields: [newsArticleId], references: [id])
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions', 'trades', 'orders', 'positions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions', 'orders', 'positions']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Relevancy score indicating how relevant the news is to the asset.

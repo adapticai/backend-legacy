@@ -232,34 +232,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -784,74 +756,6 @@ import { removeUndefinedProps } from './utils';
           bidPrice: item.asset.bidPrice !== undefined ? {
               set: item.asset.bidPrice
             } : undefined,
-      trades: item.asset.trades ? 
-      Array.isArray(item.asset.trades) && item.asset.trades.length > 0 && item.asset.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.asset.trades.map((item: any) => ({
-        id: item.id
-      }))
-} : { upsert: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId
-              } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId
-              } : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id
-              } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty
-              } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price
-              } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total
-              } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType
-              } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal
-              } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy
-              } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis
-              } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary
-              } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence
-              } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp
-              } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status
-              } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
       Array.isArray(item.asset.orders) && item.asset.orders.length > 0 && item.asset.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.asset.orders.map((item: any) => ({
@@ -1283,34 +1187,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -1522,34 +1398,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -1847,34 +1695,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -2275,74 +2095,6 @@ import { removeUndefinedProps } from './utils';
           bidPrice: item.asset.bidPrice !== undefined ? {
               set: item.asset.bidPrice
             } : undefined,
-      trades: item.asset.trades ? 
-      Array.isArray(item.asset.trades) && item.asset.trades.length > 0 && item.asset.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.asset.trades.map((item: any) => ({
-        id: item.id
-      }))
-} : { upsert: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId
-              } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId
-              } : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id
-              } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty
-              } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price
-              } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total
-              } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType
-              } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal
-              } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy
-              } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis
-              } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary
-              } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence
-              } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp
-              } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status
-              } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
       Array.isArray(item.asset.orders) && item.asset.orders.length > 0 && item.asset.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.asset.orders.map((item: any) => ({
@@ -2774,34 +2526,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -3013,34 +2737,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -3502,74 +3198,6 @@ import { removeUndefinedProps } from './utils';
           bidPrice: item.asset.bidPrice !== undefined ? {
               set: item.asset.bidPrice
             } : undefined,
-      trades: item.asset.trades ? 
-      Array.isArray(item.asset.trades) && item.asset.trades.length > 0 && item.asset.trades.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.asset.trades.map((item: any) => ({
-        id: item.id
-      }))
-} : { upsert: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId
-              } : undefined,
-            assetId: item.assetId !== undefined ? {
-                equals: item.assetId
-              } : undefined,
-          },
-          update: {
-            id: item.id !== undefined ? {
-                set: item.id
-              } : undefined,
-            qty: item.qty !== undefined ? {
-                set: item.qty
-              } : undefined,
-            price: item.price !== undefined ? {
-                set: item.price
-              } : undefined,
-            total: item.total !== undefined ? {
-                set: item.total
-              } : undefined,
-            optionType: item.optionType !== undefined ? {
-                set: item.optionType
-              } : undefined,
-            signal: item.signal !== undefined ? {
-                set: item.signal
-              } : undefined,
-            strategy: item.strategy !== undefined ? {
-                set: item.strategy
-              } : undefined,
-            analysis: item.analysis !== undefined ? {
-                set: item.analysis
-              } : undefined,
-            summary: item.summary !== undefined ? {
-                set: item.summary
-              } : undefined,
-            confidence: item.confidence !== undefined ? {
-                set: item.confidence
-              } : undefined,
-            timestamp: item.timestamp !== undefined ? {
-                set: item.timestamp
-              } : undefined,
-            status: item.status !== undefined ? {
-                set: item.status
-              } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
       Array.isArray(item.asset.orders) && item.asset.orders.length > 0 && item.asset.orders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.asset.orders.map((item: any) => ({
@@ -4001,34 +3629,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
@@ -4240,34 +3840,6 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
-      trades: item.asset.trades ? 
-        Array.isArray(item.asset.trades) && item.asset.trades.length > 0 &&  item.asset.trades.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.asset.trades.map((item: any) => ({
-             id: item.id
-          }))
- }
- : { connectOrCreate: item.asset.trades.map((item: any) => ({
-          where: {
-            id: item.id !== undefined ? item.id : undefined,
-            alpacaAccountId: item.alpacaAccountId !== undefined ? {
-                equals: item.alpacaAccountId 
-               } : undefined,
-          },
-          create: {
-            qty: item.qty !== undefined ? item.qty : undefined,
-            price: item.price !== undefined ? item.price : undefined,
-            total: item.total !== undefined ? item.total : undefined,
-            optionType: item.optionType !== undefined ? item.optionType : undefined,
-            signal: item.signal !== undefined ? item.signal : undefined,
-            strategy: item.strategy !== undefined ? item.strategy : undefined,
-            analysis: item.analysis !== undefined ? item.analysis : undefined,
-            summary: item.summary !== undefined ? item.summary : undefined,
-            confidence: item.confidence !== undefined ? item.confidence : undefined,
-            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
-            status: item.status !== undefined ? item.status : undefined,
-          },
-        }))
-      } : undefined,
       orders: item.asset.orders ? 
         Array.isArray(item.asset.orders) && item.asset.orders.length > 0 &&  item.asset.orders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.asset.orders.map((item: any) => ({
