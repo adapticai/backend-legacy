@@ -730,7 +730,7 @@ model Position {
   id String @id @default(uuid()) @db.Uuid
 
   /// The symbol of the asset.
-  symbol String?
+  symbol String
 
   /// The average price at which the asset was acquired.
   averageEntryPrice Float
@@ -1276,7 +1276,7 @@ model Trade {
   status TradeStatus @default(PENDING)
 
   /// The symbol of the asset associated with this trade.
-  symbol String?
+  symbol String
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
@@ -1409,7 +1409,7 @@ model Order {
   action Action? @relation(fields: [actionId], references: [id], onDelete: Cascade)
 
   /// The symbol of the asset associated with this trade.
-  symbol String?
+  symbol String
 
   /// Fee associated with the order. TYPESTRING.SKIP=true
   fee Float?
