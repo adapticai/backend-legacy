@@ -998,6 +998,9 @@ model Action {
   /// Timestamp when the action was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @default(now())
 
+  /// alpacaOrderId for the Alpaca order associated with this action. TYPESTRING.SKIP=true
+  alpacaOrderId String?
+
   @@map(name: "actions")
 }
 
