@@ -63,7 +63,7 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
   const isProduction = process.env.NODE_ENV === "production";
   const httpUrl =
     isProduction
-      ? process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
+      ? process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL || process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
       : "http://localhost:4000/graphql";
 
   // Create the HTTP link. (Ensure that a global fetch is available.)
@@ -73,7 +73,7 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
   const authLink = setContext((request, prevContext) => {
     const headers = prevContext.headers || {};
     // Retrieve the token from environment variables or other secure storage.
-    const token = process.env.SERVER_AUTH_TOKEN || "";
+    const token = process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN || process.env.SERVER_AUTH_TOKEN || "";
     return {
       headers: {
         ...headers,

@@ -336,27 +336,6 @@ enum TradeStatus {
   CANCELED
 }
 
-/// Time in force enum (day, gtc, opg, cls, etc.).
-enum TimeInForce {
-  /// The order is valid for the day and expires at market close.
-  DAY
-
-  /// The order is valid until canceled by the user.
-  GTC
-
-  /// The order is valid for the opening of the market.
-  OPG
-
-  /// The order is valid until the close of the market.
-  CLS
-
-  /// The order must be executed immediately or canceled.
-  IOC
-
-  /// The order must be executed immediately or canceled.
-  FOK
-}
-
 // Categorizes the types of alerts that can be generated.
 enum AlertType {
   /// Indicates a successful operation or event.
