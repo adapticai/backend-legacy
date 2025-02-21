@@ -305,6 +305,9 @@ enum ActionStatus {
   /// The trade action is planned and awaiting execution.
   STAGED
 
+  /// The trade action has been sent to the broker for processing, but not yet executed.
+  PENDING
+
   /// The trade action has been executed but not yet finalized.
   EXECUTED
 
