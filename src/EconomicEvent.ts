@@ -396,7 +396,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved EconomicEvent or null.
    */
-  async get(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType | null> {
+  async get(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<EconomicEventType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -416,7 +416,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: {
+      where: where ? where : {
         id: props.id !== undefined ? props.id : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
@@ -483,7 +483,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found EconomicEvent records or null.
    */
-  async findMany(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EconomicEventType[] | null> {
+  async findMany(props: EconomicEventType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<EconomicEventType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -503,7 +503,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: {
+      where: where ? where : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

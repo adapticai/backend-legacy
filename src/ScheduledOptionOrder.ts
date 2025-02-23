@@ -347,7 +347,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved ScheduledOptionOrder or null.
    */
-  async get(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType | null> {
+  async get(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<ScheduledOptionOrderType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -367,7 +367,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: {
+      where: where ? where : {
         id: props.id !== undefined ? props.id : undefined,
 },
 };
@@ -431,7 +431,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found ScheduledOptionOrder records or null.
    */
-  async findMany(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ScheduledOptionOrderType[] | null> {
+  async findMany(props: ScheduledOptionOrderType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<ScheduledOptionOrderType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -451,7 +451,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: {
+      where: where ? where : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
