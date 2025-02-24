@@ -360,7 +360,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved VerificationToken or null.
    */
-  async get(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<VerificationTokenType | null> {
+  async get(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<VerificationTokenType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -380,7 +380,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
 },
 };
@@ -444,7 +444,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found VerificationToken records or null.
    */
-  async findMany(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<VerificationTokenType[] | null> {
+  async findMany(props: VerificationTokenType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<VerificationTokenType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -464,7 +464,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

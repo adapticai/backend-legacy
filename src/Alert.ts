@@ -2409,7 +2409,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved Alert or null.
    */
-  async get(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<AlertType | null> {
+  async get(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlertType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2429,7 +2429,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
@@ -2496,7 +2496,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found Alert records or null.
    */
-  async findMany(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<AlertType[] | null> {
+  async findMany(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlertType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2516,7 +2516,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

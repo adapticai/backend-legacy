@@ -374,7 +374,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved MarketSentiment or null.
    */
-  async get(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<MarketSentimentType | null> {
+  async get(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<MarketSentimentType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -394,7 +394,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
 },
 };
@@ -458,7 +458,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found MarketSentiment records or null.
    */
-  async findMany(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<MarketSentimentType[] | null> {
+  async findMany(props: MarketSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<MarketSentimentType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -478,7 +478,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

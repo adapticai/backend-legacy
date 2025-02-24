@@ -1669,7 +1669,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
-  async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<NewsArticleAssetSentimentType | null> {
+  async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1689,7 +1689,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
   newsArticleId: props.newsArticleId !== undefined ? {
@@ -1757,7 +1757,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<NewsArticleAssetSentimentType[] | null> {
+  async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1777,7 +1777,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

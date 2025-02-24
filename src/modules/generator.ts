@@ -997,7 +997,7 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<${capitalModelName}Type | null> {
+  async get(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<${capitalModelName}Type | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1017,7 +1017,7 @@ ${constructVariablesObject(
       }\`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
       ${constructVariablesObject(
     'props',
     inputTypePaths.whereUnique,
@@ -1087,7 +1087,7 @@ ${constructVariablesObject(
    * @param globalClient - Apollo Client instance.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<${capitalModelName}Type[] | null> {
+  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<${capitalModelName}Type[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1107,7 +1107,7 @@ ${constructVariablesObject(
       }\`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
 ${constructVariablesObject(
     'props',
     inputTypePaths.where,

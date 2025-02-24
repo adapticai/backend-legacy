@@ -1860,7 +1860,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved NewsArticle or null.
    */
-  async get(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<NewsArticleType | null> {
+  async get(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1880,7 +1880,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
   title: props.title !== undefined ? {
@@ -1948,7 +1948,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found NewsArticle records or null.
    */
-  async findMany(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<NewsArticleType[] | null> {
+  async findMany(props: NewsArticleType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1968,7 +1968,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

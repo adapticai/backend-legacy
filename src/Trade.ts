@@ -717,7 +717,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved Trade or null.
    */
-  async get(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<TradeType | null> {
+  async get(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<TradeType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -737,7 +737,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
@@ -807,7 +807,7 @@ import { removeUndefinedProps } from './utils';
    * @param globalClient - Apollo Client instance.
    * @returns An array of found Trade records or null.
    */
-  async findMany(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<TradeType[] | null> {
+  async findMany(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<TradeType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -827,7 +827,7 @@ import { removeUndefinedProps } from './utils';
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,

@@ -2221,7 +2221,7 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns The retrieved Session or null.
    */
-  async get(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<SessionType | null> {
+  async get(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SessionType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2241,7 +2241,7 @@ id
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
@@ -2308,7 +2308,7 @@ id
    * @param globalClient - Apollo Client instance.
    * @returns An array of found Session records or null.
    */
-  async findMany(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, where?: any): Promise<SessionType[] | null> {
+  async findMany(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SessionType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2328,7 +2328,7 @@ id
       }`;
 
     const variables = {
-      where: where ? where : {
+      where: whereInput ? whereInput : {
   id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
