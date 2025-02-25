@@ -62,36 +62,20 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
 
   // Determine the GraphQL endpoint.
   const isProduction = process.env.NODE_ENV === "production";
-  const httpUrl =
-    isProduction
-      ? process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL || process.env.BACKEND_HTTPS_URL || "https://api.adaptic.ai/graphql"
-      : "http://localhost:4000/graphql";
+  const httpUrl = process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL || process.env.BACKEND_HTTPS_URL || (isProduction ? "https://api.adaptic.ai/graphql" : "http://localhost:4000/graphql");
 
   // Create the HTTP link. (Ensure that a global fetch is available.)
   const httpLinkInstance = new HttpLink({ uri: httpUrl, fetch });
 
   // Create the auth link.
   const authLink = setContext((request, prevContext) => {
-    let authorization = '';
-
-    const headers = request || prevContext.headers || {};
-
-    if (request && request.context && request.context.headers && request.context.headers.authorization && request.context.headers.authorization !== '') {
-      authorization = request.context.headers.authorization;
-    } else if (prevContext && prevContext.headers && prevContext.headers.authorization && prevContext.headers.authorization !== '') {
-      authorization = prevContext.headers.authorization;
-    } else {
-
-      // Retrieve the token from environment variables or other secure storage.
-      const ctx = (global as any).ctx;
-      // get token from within request headers
-      authorization = (ctx.connectionParams as { authorization?: string })?.authorization || '';
-    }
-
+    const headers = prevContext.headers || {};
+    // Retrieve the token from environment variables or other secure storage.
+    const token = process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN || process.env.SERVER_AUTH_TOKEN || "";
     return {
       headers: {
         ...headers,
-        authorization: authorization,
+        authorization: token ? `Bearer ${token}` : "",
         connection: "keep-alive",
       },
     };
