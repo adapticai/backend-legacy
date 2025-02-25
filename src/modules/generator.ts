@@ -1123,7 +1123,7 @@ ${constructVariablesObject(
     try {
       const response = await client.query({ query: FIND_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.${pluralModelName}) {
+      if (response && response.data && response.data.${pluralModelName.toLocaleLowerCase()}) {
         return response.data.${lowerCaseFirstLetter(pluralModelName)};
       } else {
        return [] as ${capitalModelName}Type[];
