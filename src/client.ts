@@ -72,16 +72,26 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
 
   // Create the auth link.
   const authLink = setContext((request, prevContext) => {
-    const headers = prevContext.headers || {};
-    // Retrieve the token from environment variables or other secure storage.
-    const ctx = (global as any).ctx;
-    // get token from within request headers
-    const token = (ctx.connectionParams as { authorization?: string })?.authorization?.split(' ')[1] || '';
+    let authorization = '';
+
+    const headers = request || prevContext.headers || {};
+
+    if (request && request.context && request.context.headers && request.context.headers.authorization && request.context.headers.authorization !== '') {
+      authorization = request.context.headers.authorization;
+    } else if (prevContext && prevContext.headers && prevContext.headers.authorization && prevContext.headers.authorization !== '') {
+      authorization = prevContext.headers.authorization;
+    } else {
+
+      // Retrieve the token from environment variables or other secure storage.
+      const ctx = (global as any).ctx;
+      // get token from within request headers
+      authorization = (ctx.connectionParams as { authorization?: string })?.authorization || '';
+    }
 
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",
+        authorization: authorization,
         connection: "keep-alive",
       },
     };
