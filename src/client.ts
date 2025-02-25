@@ -51,6 +51,7 @@ async function loadApolloModules(): Promise<ApolloModules> {
  * make sure to await this function before using the client.
  */
 export async function getApolloClient(): Promise<ApolloClientType<NormalizedCacheObject>> {
+
   if (apolloClient) {
     return apolloClient;
   }
@@ -73,7 +74,10 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
   const authLink = setContext((request, prevContext) => {
     const headers = prevContext.headers || {};
     // Retrieve the token from environment variables or other secure storage.
-    const token = process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN || process.env.SERVER_AUTH_TOKEN || "";
+    const ctx = (global as any).ctx;
+    // get token from within request headers
+    const token = (ctx.connectionParams as { authorization?: string })?.authorization?.split(' ')[1] || '';
+
     return {
       headers: {
         ...headers,
