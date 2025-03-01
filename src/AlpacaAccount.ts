@@ -17,6 +17,8 @@ import { removeUndefinedProps } from './utils';
   configuration
   marketOpen
   realTime
+  cryptoTradingEnabled
+  cryptoTradingPairs
   tradeAllocationPct
   minPercentageChange
   volumeThreshold
@@ -92,6 +94,10 @@ import { removeUndefinedProps } from './utils';
   configuration: props.configuration !== undefined ? props.configuration : undefined,
   marketOpen: props.marketOpen !== undefined ? props.marketOpen : undefined,
   realTime: props.realTime !== undefined ? props.realTime : undefined,
+  cryptoTradingEnabled: props.cryptoTradingEnabled !== undefined ? props.cryptoTradingEnabled : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+    set: props.cryptoTradingPairs 
+  } : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? props.tradeAllocationPct : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
@@ -302,6 +308,10 @@ import { removeUndefinedProps } from './utils';
   configuration: prop.configuration !== undefined ? prop.configuration : undefined,
   marketOpen: prop.marketOpen !== undefined ? prop.marketOpen : undefined,
   realTime: prop.realTime !== undefined ? prop.realTime : undefined,
+  cryptoTradingEnabled: prop.cryptoTradingEnabled !== undefined ? prop.cryptoTradingEnabled : undefined,
+  cryptoTradingPairs: prop.cryptoTradingPairs !== undefined ? {
+    set: prop.cryptoTradingPairs 
+  } : undefined,
   tradeAllocationPct: prop.tradeAllocationPct !== undefined ? prop.tradeAllocationPct : undefined,
   minPercentageChange: prop.minPercentageChange !== undefined ? prop.minPercentageChange : undefined,
   volumeThreshold: prop.volumeThreshold !== undefined ? prop.volumeThreshold : undefined,
@@ -382,6 +392,12 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   realTime: props.realTime !== undefined ? {
             set: props.realTime 
+           } : undefined,
+  cryptoTradingEnabled: props.cryptoTradingEnabled !== undefined ? {
+            set: props.cryptoTradingEnabled 
+           } : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+            set: props.cryptoTradingPairs 
            } : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
             set: props.tradeAllocationPct 
@@ -863,6 +879,10 @@ import { removeUndefinedProps } from './utils';
   configuration: props.configuration !== undefined ? props.configuration : undefined,
   marketOpen: props.marketOpen !== undefined ? props.marketOpen : undefined,
   realTime: props.realTime !== undefined ? props.realTime : undefined,
+  cryptoTradingEnabled: props.cryptoTradingEnabled !== undefined ? props.cryptoTradingEnabled : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+    set: props.cryptoTradingPairs 
+  } : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? props.tradeAllocationPct : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
@@ -1039,6 +1059,12 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   realTime: props.realTime !== undefined ? {
             set: props.realTime 
+           } : undefined,
+  cryptoTradingEnabled: props.cryptoTradingEnabled !== undefined ? {
+            set: props.cryptoTradingEnabled 
+           } : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+            set: props.cryptoTradingPairs 
            } : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
             set: props.tradeAllocationPct 
@@ -1529,6 +1555,12 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   realTime: prop.realTime !== undefined ? {
             set: prop.realTime 
+           } : undefined,
+  cryptoTradingEnabled: prop.cryptoTradingEnabled !== undefined ? {
+            set: prop.cryptoTradingEnabled 
+           } : undefined,
+  cryptoTradingPairs: prop.cryptoTradingPairs !== undefined ? {
+            set: prop.cryptoTradingPairs 
            } : undefined,
   tradeAllocationPct: prop.tradeAllocationPct !== undefined ? {
             set: prop.tradeAllocationPct 
@@ -2148,7 +2180,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_ALPACAACCOUNT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.AlpacaAccounts) {
+      if (response && response.data && response.data.alpacaaccounts) {
         return response.data.alpacaAccounts;
       } else {
        return [] as AlpacaAccountType[];

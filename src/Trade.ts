@@ -845,7 +845,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_TRADE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Trades) {
+      if (response && response.data && response.data.trades) {
         return response.data.trades;
       } else {
        return [] as TradeType[];

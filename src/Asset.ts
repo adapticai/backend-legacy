@@ -1771,7 +1771,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_ASSET, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Assets) {
+      if (response && response.data && response.data.assets) {
         return response.data.assets;
       } else {
        return [] as AssetType[];

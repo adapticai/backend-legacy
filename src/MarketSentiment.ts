@@ -490,7 +490,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_MARKETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.MarketSentiments) {
+      if (response && response.data && response.data.marketsentiments) {
         return response.data.marketSentiments;
       } else {
        return [] as MarketSentimentType[];

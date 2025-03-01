@@ -536,6 +536,12 @@ model AlpacaAccount {
   /// Opt-in for connecting to real-time monitoring and trading. TYPESTRING.SKIP=true
   realTime Boolean @default(false)
 
+  /// Opt-in for enabling crypto trading on the account. TYPESTRING.SKIP=true
+  cryptoTradingEnabled Boolean @default(false)
+
+  /// List of crypto trading pairs available for the account. TYPESTRING.SKIP=true
+  cryptoTradingPairs String[]
+
   /// Trade allocation percentage for the account. TYPESTRING.SKIP=true
   tradeAllocationPct Float @default(5)
 

@@ -236,6 +236,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -636,6 +640,12 @@ id
           realTime: item.realTime !== undefined ? {
               set: item.realTime
             } : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+              set: item.cryptoTradingEnabled
+            } : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -698,6 +708,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -843,6 +857,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1058,6 +1076,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1349,6 +1371,12 @@ id
           realTime: item.realTime !== undefined ? {
               set: item.realTime
             } : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+              set: item.cryptoTradingEnabled
+            } : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -1411,6 +1439,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1556,6 +1588,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1907,6 +1943,12 @@ id
           realTime: item.realTime !== undefined ? {
               set: item.realTime
             } : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+              set: item.cryptoTradingEnabled
+            } : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -1969,6 +2011,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -2114,6 +2160,10 @@ id
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -2343,7 +2393,7 @@ id
     try {
       const response = await client.query({ query: FIND_MANY_SESSION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Sessions) {
+      if (response && response.data && response.data.sessions) {
         return response.data.sessions;
       } else {
        return [] as SessionType[];

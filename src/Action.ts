@@ -850,7 +850,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_ACTION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Actions) {
+      if (response && response.data && response.data.actions) {
         return response.data.actions;
       } else {
        return [] as ActionType[];

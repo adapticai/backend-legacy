@@ -73,6 +73,10 @@ import { removeUndefinedProps } from './utils';
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
         realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
+        cryptoTradingEnabled: props.alpacaAccount.cryptoTradingEnabled !== undefined ? props.alpacaAccount.cryptoTradingEnabled : undefined,
+        cryptoTradingPairs: props.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingPairs 
+           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
@@ -371,6 +375,12 @@ import { removeUndefinedProps } from './utils';
         realTime: props.alpacaAccount.realTime !== undefined ? {
             set: props.alpacaAccount.realTime
           } : undefined,
+        cryptoTradingEnabled: props.alpacaAccount.cryptoTradingEnabled !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingEnabled
+          } : undefined,
+        cryptoTradingPairs: props.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingPairs
+          } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? {
             set: props.alpacaAccount.tradeAllocationPct
           } : undefined,
@@ -762,6 +772,10 @@ import { removeUndefinedProps } from './utils';
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
         realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
+        cryptoTradingEnabled: props.alpacaAccount.cryptoTradingEnabled !== undefined ? props.alpacaAccount.cryptoTradingEnabled : undefined,
+        cryptoTradingPairs: props.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingPairs 
+           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
@@ -977,6 +991,10 @@ import { removeUndefinedProps } from './utils';
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
         realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
+        cryptoTradingEnabled: props.alpacaAccount.cryptoTradingEnabled !== undefined ? props.alpacaAccount.cryptoTradingEnabled : undefined,
+        cryptoTradingPairs: props.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingPairs 
+           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
@@ -1164,6 +1182,12 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         realTime: props.alpacaAccount.realTime !== undefined ? {
             set: props.alpacaAccount.realTime
+          } : undefined,
+        cryptoTradingEnabled: props.alpacaAccount.cryptoTradingEnabled !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingEnabled
+          } : undefined,
+        cryptoTradingPairs: props.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingPairs
           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? {
             set: props.alpacaAccount.tradeAllocationPct
@@ -1556,6 +1580,10 @@ import { removeUndefinedProps } from './utils';
         configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? props.alpacaAccount.marketOpen : undefined,
         realTime: props.alpacaAccount.realTime !== undefined ? props.alpacaAccount.realTime : undefined,
+        cryptoTradingEnabled: props.alpacaAccount.cryptoTradingEnabled !== undefined ? props.alpacaAccount.cryptoTradingEnabled : undefined,
+        cryptoTradingPairs: props.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: props.alpacaAccount.cryptoTradingPairs 
+           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
@@ -1803,6 +1831,12 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         realTime: prop.alpacaAccount.realTime !== undefined ? {
             set: prop.alpacaAccount.realTime
+          } : undefined,
+        cryptoTradingEnabled: prop.alpacaAccount.cryptoTradingEnabled !== undefined ? {
+            set: prop.alpacaAccount.cryptoTradingEnabled
+          } : undefined,
+        cryptoTradingPairs: prop.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: prop.alpacaAccount.cryptoTradingPairs
           } : undefined,
         tradeAllocationPct: prop.alpacaAccount.tradeAllocationPct !== undefined ? {
             set: prop.alpacaAccount.tradeAllocationPct
@@ -2195,6 +2229,10 @@ import { removeUndefinedProps } from './utils';
         configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
         marketOpen: prop.alpacaAccount.marketOpen !== undefined ? prop.alpacaAccount.marketOpen : undefined,
         realTime: prop.alpacaAccount.realTime !== undefined ? prop.alpacaAccount.realTime : undefined,
+        cryptoTradingEnabled: prop.alpacaAccount.cryptoTradingEnabled !== undefined ? prop.alpacaAccount.cryptoTradingEnabled : undefined,
+        cryptoTradingPairs: prop.alpacaAccount.cryptoTradingPairs !== undefined ? {
+            set: prop.alpacaAccount.cryptoTradingPairs 
+           } : undefined,
         tradeAllocationPct: prop.alpacaAccount.tradeAllocationPct !== undefined ? prop.alpacaAccount.tradeAllocationPct : undefined,
         minPercentageChange: prop.alpacaAccount.minPercentageChange !== undefined ? prop.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: prop.alpacaAccount.volumeThreshold !== undefined ? prop.alpacaAccount.volumeThreshold : undefined,
@@ -2531,7 +2569,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_ALERT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Alerts) {
+      if (response && response.data && response.data.alerts) {
         return response.data.alerts;
       } else {
        return [] as AlertType[];

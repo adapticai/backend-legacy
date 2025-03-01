@@ -476,7 +476,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_VERIFICATIONTOKEN, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.VerificationTokens) {
+      if (response && response.data && response.data.verificationtokens) {
         return response.data.verificationTokens;
       } else {
        return [] as VerificationTokenType[];

@@ -1986,7 +1986,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_NEWSARTICLE, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.NewsArticles) {
+      if (response && response.data && response.data.newsarticles) {
         return response.data.newsArticles;
       } else {
        return [] as NewsArticleType[];

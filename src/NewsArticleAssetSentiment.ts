@@ -1795,7 +1795,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_NEWSARTICLEASSETSENTIMENT, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.NewsArticleAssetSentiments) {
+      if (response && response.data && response.data.newsarticleassetsentiments) {
         return response.data.newsArticleAssetSentiments;
       } else {
        return [] as NewsArticleAssetSentimentType[];

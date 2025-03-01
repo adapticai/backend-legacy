@@ -75,6 +75,8 @@ import { removeUndefinedProps } from './utils';
       configuration
       marketOpen
       realTime
+      cryptoTradingEnabled
+      cryptoTradingPairs
       tradeAllocationPct
       minPercentageChange
       volumeThreshold
@@ -253,6 +255,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -640,6 +646,12 @@ import { removeUndefinedProps } from './utils';
           realTime: item.realTime !== undefined ? {
               set: item.realTime
             } : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+              set: item.cryptoTradingEnabled
+            } : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -702,6 +714,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -834,6 +850,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1049,6 +1069,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1318,6 +1342,12 @@ import { removeUndefinedProps } from './utils';
           realTime: item.realTime !== undefined ? {
               set: item.realTime
             } : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+              set: item.cryptoTradingEnabled
+            } : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -1380,6 +1410,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1512,6 +1546,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1846,6 +1884,12 @@ import { removeUndefinedProps } from './utils';
           realTime: item.realTime !== undefined ? {
               set: item.realTime
             } : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+              set: item.cryptoTradingEnabled
+            } : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -1908,6 +1952,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -2040,6 +2088,10 @@ import { removeUndefinedProps } from './utils';
           configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
           realTime: item.realTime !== undefined ? item.realTime : undefined,
+          cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+          cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+              set: item.cryptoTradingPairs 
+             } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -2289,7 +2341,7 @@ import { removeUndefinedProps } from './utils';
     try {
       const response = await client.query({ query: FIND_MANY_CUSTOMER, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.Customers) {
+      if (response && response.data && response.data.customers) {
         return response.data.customers;
       } else {
        return [] as CustomerType[];
