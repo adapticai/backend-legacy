@@ -542,8 +542,14 @@ model AlpacaAccount {
   /// List of crypto trading pairs available for the account. TYPESTRING.SKIP=true
   cryptoTradingPairs String[]
 
+  /// Trade allocation percentage for crypto assets. TYPESTRING.SKIP=true
+  cryptoTradeAllocationPct Float @default(5)
+
   /// Trade allocation percentage for the account. TYPESTRING.SKIP=true
   tradeAllocationPct Float @default(5)
+
+  /// Account-level asset class allocation configuration. TYPESTRING.SKIP=true
+  allocation Allocation?
 
   /// Minimum percentage change (from intraday high/low) to consider for a trade signal. TYPESTRING.SKIP=true
   minPercentageChange Float @default(0.5)
@@ -579,6 +585,35 @@ model AlpacaAccount {
   alerts Alert[]
 
   @@map(name: "alpaca_accounts")
+}
+
+// Allocation settings for the Alpaca account.
+model Allocation {
+  /// Unique identifier for the allocation settings. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Percentage allocation for stocks in the account.
+  stocks Float @default(70)
+
+  /// Percentage allocation for cryptocurrencies in the account.
+  crypto Float @default(30)
+
+  /// Percentage allocation for ETFs in the account.
+  etfs Float @default(10)
+
+  /// Reference to the Alpaca account associated with the allocation settings. TYPESTRING.SKIP=true
+  alpacaAccountId String @unique @db.Uuid
+
+  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.EXCLUDE=['allocation']
+  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  /// Timestamp when the allocation settings were created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the allocation settings were last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @default(now())
+
+  @@map(name: "allocations")
 }
 
 // Represents an authenticator for multi-factor authentication.

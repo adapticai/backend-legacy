@@ -6,6 +6,7 @@ export * from './generated/typeStrings/index';
 import { Account } from './Account';
 import { Action } from './Action';
 import { Alert } from './Alert';
+import { Allocation } from './Allocation';
 import { AlpacaAccount } from './AlpacaAccount';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
@@ -24,6 +25,7 @@ const adaptic = {
   account: Account,
   action: Action,
   alert: Alert,
+  allocation: Allocation,
   alpacaAccount: AlpacaAccount,
   asset: Asset,
   authenticator: Authenticator,

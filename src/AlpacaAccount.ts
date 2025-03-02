@@ -19,7 +19,20 @@ import { removeUndefinedProps } from './utils';
   realTime
   cryptoTradingEnabled
   cryptoTradingPairs
+  cryptoTradeAllocationPct
   tradeAllocationPct
+  allocation {
+    id
+    stocks
+    crypto
+    etfs
+    alpacaAccountId
+    alpacaAccount {
+id
+    }
+    createdAt
+    updatedAt
+  }
   minPercentageChange
   volumeThreshold
   enablePortfolioTrailingStop
@@ -98,6 +111,7 @@ import { removeUndefinedProps } from './utils';
   cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
     set: props.cryptoTradingPairs 
   } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? props.cryptoTradeAllocationPct : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? props.tradeAllocationPct : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
@@ -105,6 +119,24 @@ import { removeUndefinedProps } from './utils';
   portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
+  allocation: props.allocation ? 
+    typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && Object.keys(props.allocation)[0] === 'id'
+    ? { connect: {
+        id: props.allocation.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.allocation.id !== undefined ? props.allocation.id : undefined,
+        alpacaAccountId: props.allocation.alpacaAccountId !== undefined ? props.allocation.alpacaAccountId : undefined,
+      },
+      create: {
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+      },
+    }
+  } : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -312,6 +344,7 @@ import { removeUndefinedProps } from './utils';
   cryptoTradingPairs: prop.cryptoTradingPairs !== undefined ? {
     set: prop.cryptoTradingPairs 
   } : undefined,
+  cryptoTradeAllocationPct: prop.cryptoTradeAllocationPct !== undefined ? prop.cryptoTradeAllocationPct : undefined,
   tradeAllocationPct: prop.tradeAllocationPct !== undefined ? prop.tradeAllocationPct : undefined,
   minPercentageChange: prop.minPercentageChange !== undefined ? prop.minPercentageChange : undefined,
   volumeThreshold: prop.volumeThreshold !== undefined ? prop.volumeThreshold : undefined,
@@ -399,6 +432,9 @@ import { removeUndefinedProps } from './utils';
   cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
             set: props.cryptoTradingPairs 
            } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? {
+            set: props.cryptoTradeAllocationPct 
+           } : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
             set: props.tradeAllocationPct 
            } : undefined,
@@ -426,6 +462,42 @@ import { removeUndefinedProps } from './utils';
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
+  allocation: props.allocation ? 
+  typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && (Object.keys(props.allocation)[0] === 'id' || Object.keys(props.allocation)[0] === 'symbol')
+? {
+  connect: {
+    id: props.allocation.id
+  }
+} : { upsert: {
+      where: {
+        id: props.allocation.id !== undefined ? {
+            equals: props.allocation.id
+          } : undefined,
+        alpacaAccountId: props.allocation.alpacaAccountId !== undefined ? {
+            equals: props.allocation.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: props.allocation.id !== undefined ? {
+            set: props.allocation.id
+          } : undefined,
+        stocks: props.allocation.stocks !== undefined ? {
+            set: props.allocation.stocks
+          } : undefined,
+        crypto: props.allocation.crypto !== undefined ? {
+            set: props.allocation.crypto
+          } : undefined,
+        etfs: props.allocation.etfs !== undefined ? {
+            set: props.allocation.etfs
+          } : undefined,
+      },
+      create: {
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+      },
+    }
+  } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
 ? {
@@ -883,6 +955,7 @@ import { removeUndefinedProps } from './utils';
   cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
     set: props.cryptoTradingPairs 
   } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? props.cryptoTradeAllocationPct : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? props.tradeAllocationPct : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
@@ -890,6 +963,24 @@ import { removeUndefinedProps } from './utils';
   portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
+  allocation: props.allocation ? 
+    typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && Object.keys(props.allocation)[0] === 'id'
+    ? { connect: {
+        id: props.allocation.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.allocation.id !== undefined ? props.allocation.id : undefined,
+        alpacaAccountId: props.allocation.alpacaAccountId !== undefined ? props.allocation.alpacaAccountId : undefined,
+      },
+      create: {
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+      },
+    }
+  } : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -1066,6 +1157,9 @@ import { removeUndefinedProps } from './utils';
   cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
             set: props.cryptoTradingPairs 
            } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? {
+            set: props.cryptoTradeAllocationPct 
+           } : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
             set: props.tradeAllocationPct 
            } : undefined,
@@ -1087,6 +1181,42 @@ import { removeUndefinedProps } from './utils';
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
             set: props.reducedPortfolioTrailPercent 
            } : undefined,
+  allocation: props.allocation ? 
+  typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && (Object.keys(props.allocation)[0] === 'id' || Object.keys(props.allocation)[0] === 'symbol')
+? {
+  connect: {
+    id: props.allocation.id
+  }
+} : { upsert: {
+      where: {
+        id: props.allocation.id !== undefined ? {
+            equals: props.allocation.id
+          } : undefined,
+        alpacaAccountId: props.allocation.alpacaAccountId !== undefined ? {
+            equals: props.allocation.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: props.allocation.id !== undefined ? {
+            set: props.allocation.id
+          } : undefined,
+        stocks: props.allocation.stocks !== undefined ? {
+            set: props.allocation.stocks
+          } : undefined,
+        crypto: props.allocation.crypto !== undefined ? {
+            set: props.allocation.crypto
+          } : undefined,
+        etfs: props.allocation.etfs !== undefined ? {
+            set: props.allocation.etfs
+          } : undefined,
+      },
+      create: {
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+      },
+    }
+  } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
 ? {
@@ -1562,6 +1692,9 @@ import { removeUndefinedProps } from './utils';
   cryptoTradingPairs: prop.cryptoTradingPairs !== undefined ? {
             set: prop.cryptoTradingPairs 
            } : undefined,
+  cryptoTradeAllocationPct: prop.cryptoTradeAllocationPct !== undefined ? {
+            set: prop.cryptoTradeAllocationPct 
+           } : undefined,
   tradeAllocationPct: prop.tradeAllocationPct !== undefined ? {
             set: prop.tradeAllocationPct 
            } : undefined,
@@ -1589,6 +1722,42 @@ import { removeUndefinedProps } from './utils';
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,
+  allocation: prop.allocation ? 
+  typeof prop.allocation === 'object' && Object.keys(prop.allocation).length === 1 && (Object.keys(prop.allocation)[0] === 'id' || Object.keys(prop.allocation)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.allocation.id
+  }
+} : { upsert: {
+      where: {
+        id: prop.allocation.id !== undefined ? {
+            equals: prop.allocation.id
+          } : undefined,
+        alpacaAccountId: prop.allocation.alpacaAccountId !== undefined ? {
+            equals: prop.allocation.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: prop.allocation.id !== undefined ? {
+            set: prop.allocation.id
+          } : undefined,
+        stocks: prop.allocation.stocks !== undefined ? {
+            set: prop.allocation.stocks
+          } : undefined,
+        crypto: prop.allocation.crypto !== undefined ? {
+            set: prop.allocation.crypto
+          } : undefined,
+        etfs: prop.allocation.etfs !== undefined ? {
+            set: prop.allocation.etfs
+          } : undefined,
+      },
+      create: {
+        stocks: prop.allocation.stocks !== undefined ? prop.allocation.stocks : undefined,
+        crypto: prop.allocation.crypto !== undefined ? prop.allocation.crypto : undefined,
+        etfs: prop.allocation.etfs !== undefined ? prop.allocation.etfs : undefined,
+      },
+    }
+  } : undefined,
   user: prop.user ? 
   typeof prop.user === 'object' && Object.keys(prop.user).length === 1 && (Object.keys(prop.user)[0] === 'id' || Object.keys(prop.user)[0] === 'symbol')
 ? {

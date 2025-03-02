@@ -1,35 +1,83 @@
 
   
-import { Alert as AlertType } from './generated/typegraphql-prisma/models/Alert';
+import { Allocation as AllocationType } from './generated/typegraphql-prisma/models/Allocation';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
-   * CRUD operations for the Alert model.
+   * CRUD operations for the Allocation model.
    */
 
   const selectionSet = `
     
   id
+  stocks
+  crypto
+  etfs
   alpacaAccountId
-  message
-  type
-  isRead
+  alpacaAccount {
+    id
+    type
+    APIKey
+    APISecret
+    configuration
+    marketOpen
+    realTime
+    cryptoTradingEnabled
+    cryptoTradingPairs
+    cryptoTradeAllocationPct
+    tradeAllocationPct
+    minPercentageChange
+    volumeThreshold
+    enablePortfolioTrailingStop
+    portfolioTrailPercent
+    portfolioProfitThresholdPercent
+    reducedPortfolioTrailPercent
+    user {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customerId
+      plan
+      openaiAPIKey
+      openaiModel
+    }
+    userId
+    createdAt
+    updatedAt
+    alerts {
+      id
+      alpacaAccountId
+      message
+      type
+      isRead
+      createdAt
+      updatedAt
+    }
+  }
   createdAt
   updatedAt
 
   `;
 
-  export const Alert = {
+  export const Allocation = {
 
     /**
-     * Create a new Alert record.
+     * Create a new Allocation record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Alert or null.
+     * @returns The created Allocation or null.
      */
 
-    async create(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
+    async create(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -40,9 +88,9 @@ import { removeUndefinedProps } from './utils';
 
     const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_ALERT = gql`
-        mutation createOneAlert($data: AlertCreateInput!) {
-          createOneAlert(data: $data) {
+    const CREATE_ONE_ALLOCATION = gql`
+        mutation createOneAllocation($data: AllocationCreateInput!) {
+          createOneAllocation(data: $data) {
             ${selectionSet}
           }
         }
@@ -50,9 +98,9 @@ import { removeUndefinedProps } from './utils';
 
       const variables = {
         data: {
-            message: props.message !== undefined ? props.message : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  isRead: props.isRead !== undefined ? props.isRead : undefined,
+            stocks: props.stocks !== undefined ? props.stocks : undefined,
+  crypto: props.crypto !== undefined ? props.crypto : undefined,
+  etfs: props.etfs !== undefined ? props.etfs : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -85,24 +133,6 @@ import { removeUndefinedProps } from './utils';
         portfolioTrailPercent: props.alpacaAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.portfolioTrailPercent : undefined,
         portfolioProfitThresholdPercent: props.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.portfolioProfitThresholdPercent : undefined,
         reducedPortfolioTrailPercent: props.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.reducedPortfolioTrailPercent : undefined,
-    allocation: props.alpacaAccount.allocation ? 
-      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.allocation.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
-          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
-        },
-        create: {
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -233,6 +263,26 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: props.alpacaAccount.alerts ? 
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -243,26 +293,26 @@ import { removeUndefinedProps } from './utils';
       const filteredVariables = removeUndefinedProps(variables);
 
       try {
-      const response = await client.mutate({ mutation: CREATE_ONE_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_ONE_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneAlert) {
-        return response.data.createOneAlert;
+      if (response && response.data && response.data.createOneAllocation) {
+        return response.data.createOneAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createOneAlert:', error);
+      console.error('Error in createOneAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Create multiple Alert records.
-   * @param props - Array of Alert objects for the new records.
+   * Create multiple Allocation records.
+   * @param props - Array of Allocation objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AlertType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AllocationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -274,45 +324,45 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const CREATE_MANY_ALERT = gql`
-      mutation createManyAlert($data: [AlertCreateManyInput!]!) {
-        createManyAlert(data: $data) {
+    const CREATE_MANY_ALLOCATION = gql`
+      mutation createManyAllocation($data: [AllocationCreateManyInput!]!) {
+        createManyAllocation(data: $data) {
           count
         }
       }`;
 
     const variables = {
       data: props.map(prop => ({
+  stocks: prop.stocks !== undefined ? prop.stocks : undefined,
+  crypto: prop.crypto !== undefined ? prop.crypto : undefined,
+  etfs: prop.etfs !== undefined ? prop.etfs : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
-  message: prop.message !== undefined ? prop.message : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  isRead: prop.isRead !== undefined ? prop.isRead : undefined,
       })),
     };
 
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: CREATE_MANY_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: CREATE_MANY_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyAlert) {
-        return response.data.createManyAlert;
+      if (response && response.data && response.data.createManyAllocation) {
+        return response.data.createManyAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in createManyAlert:', error);
+      console.error('Error in createManyAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Update a single Alert record.
+   * Update a single Allocation record.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Alert or null.
+   * @returns The updated Allocation or null.
    */
-  async update(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
+  async update(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -324,9 +374,9 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const UPDATE_ONE_ALERT = gql`
-      mutation updateOneAlert($data: AlertUpdateInput!, $where: AlertWhereUniqueInput!) {
-        updateOneAlert(data: $data, where: $where) {
+    const UPDATE_ONE_ALLOCATION = gql`
+      mutation updateOneAllocation($data: AllocationUpdateInput!, $where: AllocationWhereUniqueInput!) {
+        updateOneAllocation(data: $data, where: $where) {
           ${selectionSet}
         }
       }`;
@@ -334,22 +384,20 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId 
-  } : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
       data: {
   id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  message: props.message !== undefined ? {
-            set: props.message 
+  stocks: props.stocks !== undefined ? {
+            set: props.stocks 
            } : undefined,
-  type: props.type !== undefined ? {
-            set: props.type 
+  crypto: props.crypto !== undefined ? {
+            set: props.crypto 
            } : undefined,
-  isRead: props.isRead !== undefined ? {
-            set: props.isRead 
+  etfs: props.etfs !== undefined ? {
+            set: props.etfs 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -424,42 +472,6 @@ import { removeUndefinedProps } from './utils';
         reducedPortfolioTrailPercent: props.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
             set: props.alpacaAccount.reducedPortfolioTrailPercent
           } : undefined,
-    allocation: props.alpacaAccount.allocation ? 
-    typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && (Object.keys(props.alpacaAccount.allocation)[0] === 'id' || Object.keys(props.alpacaAccount.allocation)[0] === 'symbol')
-? {
-    connect: {
-      id: props.alpacaAccount.allocation.id
-    }
-} : { upsert: {
-        where: {
-          id: props.alpacaAccount.allocation.id !== undefined ? {
-              equals: props.alpacaAccount.allocation.id
-            } : undefined,
-          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? {
-              equals: props.alpacaAccount.allocation.alpacaAccountId
-            } : undefined,
-        },
-        update: {
-          id: props.alpacaAccount.allocation.id !== undefined ? {
-              set: props.alpacaAccount.allocation.id
-            } : undefined,
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? {
-              set: props.alpacaAccount.allocation.stocks
-            } : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? {
-              set: props.alpacaAccount.allocation.crypto
-            } : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? {
-              set: props.alpacaAccount.allocation.etfs
-            } : undefined,
-        },
-        create: {
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: props.alpacaAccount.user ? 
     typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && (Object.keys(props.alpacaAccount.user)[0] === 'id' || Object.keys(props.alpacaAccount.user)[0] === 'symbol')
 ? {
@@ -822,6 +834,39 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: props.alpacaAccount.alerts ? 
+    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.alpacaAccount.alerts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead
+            } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
@@ -842,24 +887,6 @@ import { removeUndefinedProps } from './utils';
         portfolioTrailPercent: props.alpacaAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.portfolioTrailPercent : undefined,
         portfolioProfitThresholdPercent: props.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.portfolioProfitThresholdPercent : undefined,
         reducedPortfolioTrailPercent: props.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.reducedPortfolioTrailPercent : undefined,
-    allocation: props.alpacaAccount.allocation ? 
-      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.allocation.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
-          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
-        },
-        create: {
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -990,6 +1017,26 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: props.alpacaAccount.alerts ? 
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -999,26 +1046,26 @@ import { removeUndefinedProps } from './utils';
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_ONE_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneAlert) {
-        return response.data.updateOneAlert;
+      if (response && response.data && response.data.updateOneAllocation) {
+        return response.data.updateOneAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateOneAlert:', error);
+      console.error('Error in updateOneAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Upsert a single Alert record.
+   * Upsert a single Allocation record.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Alert or null.
+   * @returns The updated Allocation or null.
    */
-  async upsert(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
+  async upsert(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1030,9 +1077,9 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const UPSERT_ONE_ALERT = gql`
-      mutation upsertOneAlert($where: AlertWhereUniqueInput!, $create: AlertCreateInput!, $update: AlertUpdateInput!) {
-        upsertOneAlert(where: $where, create: $create, update: $update) {
+    const UPSERT_ONE_ALLOCATION = gql`
+      mutation upsertOneAllocation($where: AllocationWhereUniqueInput!, $create: AllocationCreateInput!, $update: AllocationUpdateInput!) {
+        upsertOneAllocation(where: $where, create: $create, update: $update) {
           ${selectionSet}
         }
       }`;
@@ -1040,14 +1087,12 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId 
-  } : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
       create: {
-    message: props.message !== undefined ? props.message : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  isRead: props.isRead !== undefined ? props.isRead : undefined,
+    stocks: props.stocks !== undefined ? props.stocks : undefined,
+  crypto: props.crypto !== undefined ? props.crypto : undefined,
+  etfs: props.etfs !== undefined ? props.etfs : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1080,24 +1125,6 @@ import { removeUndefinedProps } from './utils';
         portfolioTrailPercent: props.alpacaAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.portfolioTrailPercent : undefined,
         portfolioProfitThresholdPercent: props.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.portfolioProfitThresholdPercent : undefined,
         reducedPortfolioTrailPercent: props.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.reducedPortfolioTrailPercent : undefined,
-    allocation: props.alpacaAccount.allocation ? 
-      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.allocation.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
-          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
-        },
-        create: {
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -1228,19 +1255,39 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: props.alpacaAccount.alerts ? 
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
       },
       update: {
-  message: props.message !== undefined ? {
-            set: props.message 
+  stocks: props.stocks !== undefined ? {
+            set: props.stocks 
            } : undefined,
-  type: props.type !== undefined ? {
-            set: props.type 
+  crypto: props.crypto !== undefined ? {
+            set: props.crypto 
            } : undefined,
-  isRead: props.isRead !== undefined ? {
-            set: props.isRead 
+  etfs: props.etfs !== undefined ? {
+            set: props.etfs 
            } : undefined,
   alpacaAccount: props.alpacaAccount ? 
   typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
@@ -1309,42 +1356,6 @@ import { removeUndefinedProps } from './utils';
         reducedPortfolioTrailPercent: props.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
             set: props.alpacaAccount.reducedPortfolioTrailPercent
           } : undefined,
-    allocation: props.alpacaAccount.allocation ? 
-    typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && (Object.keys(props.alpacaAccount.allocation)[0] === 'id' || Object.keys(props.alpacaAccount.allocation)[0] === 'symbol')
-? {
-    connect: {
-      id: props.alpacaAccount.allocation.id
-    }
-} : { upsert: {
-        where: {
-          id: props.alpacaAccount.allocation.id !== undefined ? {
-              equals: props.alpacaAccount.allocation.id
-            } : undefined,
-          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? {
-              equals: props.alpacaAccount.allocation.alpacaAccountId
-            } : undefined,
-        },
-        update: {
-          id: props.alpacaAccount.allocation.id !== undefined ? {
-              set: props.alpacaAccount.allocation.id
-            } : undefined,
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? {
-              set: props.alpacaAccount.allocation.stocks
-            } : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? {
-              set: props.alpacaAccount.allocation.crypto
-            } : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? {
-              set: props.alpacaAccount.allocation.etfs
-            } : undefined,
-        },
-        create: {
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: props.alpacaAccount.user ? 
     typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && (Object.keys(props.alpacaAccount.user)[0] === 'id' || Object.keys(props.alpacaAccount.user)[0] === 'symbol')
 ? {
@@ -1707,6 +1718,39 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: props.alpacaAccount.alerts ? 
+    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.alpacaAccount.alerts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead
+            } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
@@ -1727,24 +1771,6 @@ import { removeUndefinedProps } from './utils';
         portfolioTrailPercent: props.alpacaAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.portfolioTrailPercent : undefined,
         portfolioProfitThresholdPercent: props.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.portfolioProfitThresholdPercent : undefined,
         reducedPortfolioTrailPercent: props.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.reducedPortfolioTrailPercent : undefined,
-    allocation: props.alpacaAccount.allocation ? 
-      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.allocation.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
-          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
-        },
-        create: {
-          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
-          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
-          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -1875,6 +1901,26 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: props.alpacaAccount.alerts ? 
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -1884,26 +1930,26 @@ import { removeUndefinedProps } from './utils';
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPSERT_ONE_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOneAlert) {
-        return response.data.upsertOneAlert;
+      if (response && response.data && response.data.upsertOneAllocation) {
+        return response.data.upsertOneAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in upsertOneAlert:', error);
+      console.error('Error in upsertOneAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Update multiple Alert records.
-   * @param props - Array of Alert objects for the updated records.
+   * Update multiple Allocation records.
+   * @param props - Array of Allocation objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AlertType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: AllocationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -1915,9 +1961,9 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const UPDATE_MANY_ALERT = gql`
-      mutation updateManyAlert($data: [AlertCreateManyInput!]!) {
-        updateManyAlert(data: $data) {
+    const UPDATE_MANY_ALLOCATION = gql`
+      mutation updateManyAllocation($data: [AllocationCreateManyInput!]!) {
+        updateManyAllocation(data: $data) {
           count
         }
       }`;
@@ -1925,23 +1971,21 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
-    equals: prop.alpacaAccountId 
-  } : undefined,
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
 
       },
       data: {
           id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  message: prop.message !== undefined ? {
-            set: prop.message 
+  stocks: prop.stocks !== undefined ? {
+            set: prop.stocks 
            } : undefined,
-  type: prop.type !== undefined ? {
-            set: prop.type 
+  crypto: prop.crypto !== undefined ? {
+            set: prop.crypto 
            } : undefined,
-  isRead: prop.isRead !== undefined ? {
-            set: prop.isRead 
+  etfs: prop.etfs !== undefined ? {
+            set: prop.etfs 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -2016,42 +2060,6 @@ import { removeUndefinedProps } from './utils';
         reducedPortfolioTrailPercent: prop.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? {
             set: prop.alpacaAccount.reducedPortfolioTrailPercent
           } : undefined,
-    allocation: prop.alpacaAccount.allocation ? 
-    typeof prop.alpacaAccount.allocation === 'object' && Object.keys(prop.alpacaAccount.allocation).length === 1 && (Object.keys(prop.alpacaAccount.allocation)[0] === 'id' || Object.keys(prop.alpacaAccount.allocation)[0] === 'symbol')
-? {
-    connect: {
-      id: prop.alpacaAccount.allocation.id
-    }
-} : { upsert: {
-        where: {
-          id: prop.alpacaAccount.allocation.id !== undefined ? {
-              equals: prop.alpacaAccount.allocation.id
-            } : undefined,
-          alpacaAccountId: prop.alpacaAccount.allocation.alpacaAccountId !== undefined ? {
-              equals: prop.alpacaAccount.allocation.alpacaAccountId
-            } : undefined,
-        },
-        update: {
-          id: prop.alpacaAccount.allocation.id !== undefined ? {
-              set: prop.alpacaAccount.allocation.id
-            } : undefined,
-          stocks: prop.alpacaAccount.allocation.stocks !== undefined ? {
-              set: prop.alpacaAccount.allocation.stocks
-            } : undefined,
-          crypto: prop.alpacaAccount.allocation.crypto !== undefined ? {
-              set: prop.alpacaAccount.allocation.crypto
-            } : undefined,
-          etfs: prop.alpacaAccount.allocation.etfs !== undefined ? {
-              set: prop.alpacaAccount.allocation.etfs
-            } : undefined,
-        },
-        create: {
-          stocks: prop.alpacaAccount.allocation.stocks !== undefined ? prop.alpacaAccount.allocation.stocks : undefined,
-          crypto: prop.alpacaAccount.allocation.crypto !== undefined ? prop.alpacaAccount.allocation.crypto : undefined,
-          etfs: prop.alpacaAccount.allocation.etfs !== undefined ? prop.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: prop.alpacaAccount.user ? 
     typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && (Object.keys(prop.alpacaAccount.user)[0] === 'id' || Object.keys(prop.alpacaAccount.user)[0] === 'symbol')
 ? {
@@ -2414,6 +2422,39 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: prop.alpacaAccount.alerts ? 
+    Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 && prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.alpacaAccount.alerts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          message: item.message !== undefined ? {
+              set: item.message
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          isRead: item.isRead !== undefined ? {
+              set: item.isRead
+            } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         type: prop.alpacaAccount.type !== undefined ? prop.alpacaAccount.type : undefined,
@@ -2434,24 +2475,6 @@ import { removeUndefinedProps } from './utils';
         portfolioTrailPercent: prop.alpacaAccount.portfolioTrailPercent !== undefined ? prop.alpacaAccount.portfolioTrailPercent : undefined,
         portfolioProfitThresholdPercent: prop.alpacaAccount.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.portfolioProfitThresholdPercent : undefined,
         reducedPortfolioTrailPercent: prop.alpacaAccount.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.reducedPortfolioTrailPercent : undefined,
-    allocation: prop.alpacaAccount.allocation ? 
-      typeof prop.alpacaAccount.allocation === 'object' && Object.keys(prop.alpacaAccount.allocation).length === 1 && Object.keys(prop.alpacaAccount.allocation)[0] === 'id'
-    ? { connect: {
-          id: prop.alpacaAccount.allocation.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: prop.alpacaAccount.allocation.id !== undefined ? prop.alpacaAccount.allocation.id : undefined,
-          alpacaAccountId: prop.alpacaAccount.allocation.alpacaAccountId !== undefined ? prop.alpacaAccount.allocation.alpacaAccountId : undefined,
-        },
-        create: {
-          stocks: prop.alpacaAccount.allocation.stocks !== undefined ? prop.alpacaAccount.allocation.stocks : undefined,
-          crypto: prop.alpacaAccount.allocation.crypto !== undefined ? prop.alpacaAccount.allocation.crypto : undefined,
-          etfs: prop.alpacaAccount.allocation.etfs !== undefined ? prop.alpacaAccount.allocation.etfs : undefined,
-        },
-      }
-    } : undefined,
     user: prop.alpacaAccount.user ? 
       typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && Object.keys(prop.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -2582,6 +2605,26 @@ import { removeUndefinedProps } from './utils';
         },
       }
     } : undefined,
+    alerts: prop.alpacaAccount.alerts ? 
+      Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 &&  prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.alpacaAccount.alerts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.alerts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+        },
+        create: {
+          message: item.message !== undefined ? item.message : undefined,
+          type: item.type !== undefined ? item.type : undefined,
+          isRead: item.isRead !== undefined ? item.isRead : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -2593,26 +2636,26 @@ import { removeUndefinedProps } from './utils';
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: UPDATE_MANY_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyAlert) {
-        return response.data.updateManyAlert;
+      if (response && response.data && response.data.updateManyAllocation) {
+        return response.data.updateManyAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in updateManyAlert:', error);
+      console.error('Error in updateManyAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Delete a single Alert record.
+   * Delete a single Allocation record.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Alert or null.
+   * @returns The deleted Allocation or null.
    */
-  async delete(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType> {
+  async delete(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2624,9 +2667,9 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const DELETE_ONE_ALERT = gql`
-      mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
-        deleteOneAlert(where: $where) {
+    const DELETE_ONE_ALLOCATION = gql`
+      mutation deleteOneAllocation($where: AllocationWhereUniqueInput!) {
+        deleteOneAllocation(where: $where) {
           ${selectionSet}
         }
       }`;
@@ -2640,26 +2683,26 @@ import { removeUndefinedProps } from './utils';
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ALERT, variables: filteredVariables });
+      const response = await client.mutate({ mutation: DELETE_ONE_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneAlert) {
-        return response.data.deleteOneAlert;
+      if (response && response.data && response.data.deleteOneAllocation) {
+        return response.data.deleteOneAllocation;
       } else {
         return null as any;
       }
     } catch (error) {
-      console.error('Error in deleteOneAlert:', error);
+      console.error('Error in deleteOneAllocation:', error);
       throw error;
     }
   },
 
   /**
-   * Retrieve a single Alert record by ID.
+   * Retrieve a single Allocation record by ID.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The retrieved Alert or null.
+   * @returns The retrieved Allocation or null.
    */
-  async get(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlertType | null> {
+  async get(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AllocationType | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2671,9 +2714,9 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const GET_ALERT = gql`
-      query getAlert($where: AlertWhereUniqueInput!) {
-        getAlert(where: $where) {
+    const GET_ALLOCATION = gql`
+      query getAllocation($where: AllocationWhereUniqueInput!) {
+        getAllocation(where: $where) {
           ${selectionSet}
         }
       }`;
@@ -2681,33 +2724,31 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId 
-  } : undefined,
+  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
 },
 };
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: GET_ALERT, variables: filteredVariables });
+      const response = await client.query({ query: GET_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getAlert ?? null;
+      return response.data?.getAllocation ?? null;
     } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Alert found') {
+      if (error instanceof ApolloError && error.message === 'No Allocation found') {
         return null;
       } else {
-        console.error('Error in getAlert:', error);
+        console.error('Error in getAllocation:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Retrieve all Alerts records.
+   * Retrieve all Allocations records.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Alert records or null.
+   * @returns An array of Allocation records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlertType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2719,34 +2760,34 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const GET_ALL_ALERT = gql`
-      query getAllAlert {
-        alerts {
+    const GET_ALL_ALLOCATION = gql`
+      query getAllAllocation {
+        allocations {
           ${selectionSet}
         }
       }`;
 
     try {
-      const response = await client.query({ query: GET_ALL_ALERT });
+      const response = await client.query({ query: GET_ALL_ALLOCATION });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.alerts ?? null;
+      return response.data?.allocations ?? null;
     } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Alert found') {
+      if (error instanceof ApolloError && error.message === 'No Allocation found') {
         return null;
       } else {
-        console.error('Error in getAlert:', error);
+        console.error('Error in getAllocation:', error);
         throw error;
       }
     }
   },
 
   /**
-   * Find multiple Alert records based on conditions.
+   * Find multiple Allocation records based on conditions.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of found Alert records or null.
+   * @returns An array of found Allocation records or null.
    */
-  async findMany(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlertType[] | null> {
+  async findMany(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AllocationType[] | null> {
 
     const [modules, client] = await Promise.all([
       getApolloModules(),
@@ -2758,9 +2799,9 @@ import { removeUndefinedProps } from './utils';
     const { gql, ApolloError } = modules;
 
 
-    const FIND_MANY_ALERT = gql`
-      query findManyAlert($where: AlertWhereInput!) {
-        alerts(where: $where) {
+    const FIND_MANY_ALLOCATION = gql`
+      query findManyAllocation($where: AllocationWhereInput!) {
+        allocations(where: $where) {
           ${selectionSet}
         }
       }`;
@@ -2779,18 +2820,18 @@ import { removeUndefinedProps } from './utils';
     const filteredVariables = removeUndefinedProps(variables);
 
     try {
-      const response = await client.query({ query: FIND_MANY_ALERT, variables: filteredVariables });
+      const response = await client.query({ query: FIND_MANY_ALLOCATION, variables: filteredVariables });
       if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.alerts) {
-        return response.data.alerts;
+      if (response && response.data && response.data.allocations) {
+        return response.data.allocations;
       } else {
-       return [] as AlertType[];
+       return [] as AllocationType[];
       }
     } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Alert found') {
+      if (error instanceof ApolloError && error.message === 'No Allocation found') {
         return null;
       } else {
-        console.error('Error in getAlert:', error);
+        console.error('Error in getAllocation:', error);
         throw error;
       }
     }

@@ -240,6 +240,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -247,6 +248,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -646,6 +665,9 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs
             } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? {
+              set: item.cryptoTradeAllocationPct
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -667,6 +689,42 @@ id
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
               set: item.reducedPortfolioTrailPercent
             } : undefined,
+      allocation: item.allocation ? 
+      typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
+? {
+      connect: {
+        id: item.allocation.id
+      }
+} : { upsert: {
+          where: {
+            id: item.allocation.id !== undefined ? {
+                equals: item.allocation.id
+              } : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? {
+                equals: item.allocation.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.allocation.id !== undefined ? {
+                set: item.allocation.id
+              } : undefined,
+            stocks: item.allocation.stocks !== undefined ? {
+                set: item.allocation.stocks
+              } : undefined,
+            crypto: item.allocation.crypto !== undefined ? {
+                set: item.allocation.crypto
+              } : undefined,
+            etfs: item.allocation.etfs !== undefined ? {
+                set: item.allocation.etfs
+              } : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
       Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.alerts.map((item: any) => ({
@@ -712,6 +770,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -719,6 +778,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -861,6 +938,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -868,6 +946,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -1080,6 +1176,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1087,6 +1184,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -1377,6 +1492,9 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs
             } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? {
+              set: item.cryptoTradeAllocationPct
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -1398,6 +1516,42 @@ id
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
               set: item.reducedPortfolioTrailPercent
             } : undefined,
+      allocation: item.allocation ? 
+      typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
+? {
+      connect: {
+        id: item.allocation.id
+      }
+} : { upsert: {
+          where: {
+            id: item.allocation.id !== undefined ? {
+                equals: item.allocation.id
+              } : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? {
+                equals: item.allocation.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.allocation.id !== undefined ? {
+                set: item.allocation.id
+              } : undefined,
+            stocks: item.allocation.stocks !== undefined ? {
+                set: item.allocation.stocks
+              } : undefined,
+            crypto: item.allocation.crypto !== undefined ? {
+                set: item.allocation.crypto
+              } : undefined,
+            etfs: item.allocation.etfs !== undefined ? {
+                set: item.allocation.etfs
+              } : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
       Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.alerts.map((item: any) => ({
@@ -1443,6 +1597,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1450,6 +1605,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -1592,6 +1765,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -1599,6 +1773,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -1949,6 +2141,9 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs
             } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? {
+              set: item.cryptoTradeAllocationPct
+            } : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
               set: item.tradeAllocationPct
             } : undefined,
@@ -1970,6 +2165,42 @@ id
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
               set: item.reducedPortfolioTrailPercent
             } : undefined,
+      allocation: item.allocation ? 
+      typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
+? {
+      connect: {
+        id: item.allocation.id
+      }
+} : { upsert: {
+          where: {
+            id: item.allocation.id !== undefined ? {
+                equals: item.allocation.id
+              } : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? {
+                equals: item.allocation.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.allocation.id !== undefined ? {
+                set: item.allocation.id
+              } : undefined,
+            stocks: item.allocation.stocks !== undefined ? {
+                set: item.allocation.stocks
+              } : undefined,
+            crypto: item.allocation.crypto !== undefined ? {
+                set: item.allocation.crypto
+              } : undefined,
+            etfs: item.allocation.etfs !== undefined ? {
+                set: item.allocation.etfs
+              } : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
       Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: item.alerts.map((item: any) => ({
@@ -2015,6 +2246,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -2022,6 +2254,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
@@ -2164,6 +2414,7 @@ id
           cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
               set: item.cryptoTradingPairs 
              } : undefined,
+          cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
           tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
           minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
           volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
@@ -2171,6 +2422,24 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+      allocation: item.allocation ? 
+        typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
+    ? { connect: {
+            id: item.allocation.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.allocation.id !== undefined ? item.allocation.id : undefined,
+            alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
+          },
+          create: {
+            stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+            crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          },
+        }
+      } : undefined,
       alerts: item.alerts ? 
         Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        item.alerts.map((item: any) => ({
