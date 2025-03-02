@@ -540,7 +540,7 @@ model AlpacaAccount {
   cryptoTradingEnabled Boolean @default(false)
 
   /// List of crypto trading pairs available for the account. TYPESTRING.SKIP=true
-  cryptoTradingPairs String[]
+  cryptoTradingPairs String[] @default([])
 
   /// Trade allocation percentage for crypto assets. TYPESTRING.SKIP=true
   cryptoTradeAllocationPct Float @default(5)
