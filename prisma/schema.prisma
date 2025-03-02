@@ -596,7 +596,7 @@ model Allocation {
   stocks Float @default(70)
 
   /// Percentage allocation for cryptocurrencies in the account.
-  crypto Float @default(30)
+  crypto Float @default(20)
 
   /// Percentage allocation for ETFs in the account.
   etfs Float @default(10)
