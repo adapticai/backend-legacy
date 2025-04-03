@@ -965,7 +965,7 @@ ${constructVariablesObject(
     const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
       mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
         deleteOne${capitalModelName}(where: $where) {
-          \${selectionSet}
+          id
         }
       }\`;
 
