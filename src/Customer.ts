@@ -2449,7 +2449,7 @@ id
     const DELETE_ONE_CUSTOMER = gql`
       mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
         deleteOneCustomer(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

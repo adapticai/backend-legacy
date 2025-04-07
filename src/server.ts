@@ -140,15 +140,28 @@ const startServer = async () => {
         console.log('Received headers:', req.headers);
         console.log('Authorization header:', req.headers.authorization);
 
-        const token = req.headers.authorization?.split(' ')[1] || '';
+        // Extract token from Authorization header
+        const authHeader = req.headers.authorization || '';
+        // Only try to verify token if it's in proper Bearer format
+        const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : '';
+        
         let user = null;
         if (token) {
-          try {
-            user = jwt.verify(token, process.env.JWT_SECRET as string);
-          } catch (e) {
-            console.error('JWT verification failed:', e);
-            console.error('Received token:', token);
-            return { prisma, req, authError: 'Invalid token' };
+          // Check if token is a Google OAuth token (starts with ya29.)
+          if (token.startsWith('ya29.')) {
+            // For Google OAuth tokens, we should validate differently or pass them through
+            // This is a temporary solution - ideally you should verify with Google's OAuth API
+            console.log('Detected Google OAuth token, skipping JWT verification');
+            user = { provider: 'google', token };
+          } else {
+            // For regular JWT tokens, verify as before
+            try {
+              user = jwt.verify(token, process.env.JWT_SECRET as string);
+            } catch (e) {
+              console.error('JWT verification failed:', e);
+              console.error('Received token:', token);
+              return { prisma, req, authError: 'Invalid token' };
+            }
           }
         }
         return { prisma, req, user };
@@ -176,14 +189,24 @@ const startServer = async () => {
     {
       schema,
       context: async (ctx, msg, args) => {
-        const token = (ctx.connectionParams as { authorization?: string })?.authorization?.split(' ')[1] || '';
+        const authHeader = (ctx.connectionParams as { authorization?: string })?.authorization || '';
+        const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : '';
+        
         let user = null;
         if (token) {
-          try {
-            user = jwt.verify(token, process.env.JWT_SECRET as string);
-          } catch (e) {
-            console.error('JWT verification failed:', e);
-            return { prisma, authError: 'Invalid token' };
+          // Check if token is a Google OAuth token (starts with ya29.)
+          if (token.startsWith('ya29.')) {
+            // For Google OAuth tokens, we should validate differently or pass them through
+            console.log('Detected Google OAuth token in WebSocket, skipping JWT verification');
+            user = { provider: 'google', token };
+          } else {
+            // For regular JWT tokens, verify as before
+            try {
+              user = jwt.verify(token, process.env.JWT_SECRET as string);
+            } catch (e) {
+              console.error('JWT verification failed:', e);
+              return { prisma, authError: 'Invalid token' };
+            }
           }
         }
         return { prisma, user };

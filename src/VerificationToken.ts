@@ -328,7 +328,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_VERIFICATIONTOKEN = gql`
       mutation deleteOneVerificationToken($where: VerificationTokenWhereUniqueInput!) {
         deleteOneVerificationToken(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

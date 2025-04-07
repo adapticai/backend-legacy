@@ -685,7 +685,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_TRADE = gql`
       mutation deleteOneTrade($where: TradeWhereUniqueInput!) {
         deleteOneTrade(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

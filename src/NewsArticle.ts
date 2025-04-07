@@ -1828,7 +1828,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_NEWSARTICLE = gql`
       mutation deleteOneNewsArticle($where: NewsArticleWhereUniqueInput!) {
         deleteOneNewsArticle(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

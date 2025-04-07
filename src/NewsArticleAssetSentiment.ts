@@ -1637,7 +1637,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
       mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
         deleteOneNewsArticleAssetSentiment(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

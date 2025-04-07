@@ -2195,7 +2195,7 @@ id
     const DELETE_ONE_ALPACAACCOUNT = gql`
       mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
         deleteOneAlpacaAccount(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

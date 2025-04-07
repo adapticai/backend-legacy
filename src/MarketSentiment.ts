@@ -342,7 +342,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_MARKETSENTIMENT = gql`
       mutation deleteOneMarketSentiment($where: MarketSentimentWhereUniqueInput!) {
         deleteOneMarketSentiment(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

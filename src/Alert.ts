@@ -2627,7 +2627,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_ALERT = gql`
       mutation deleteOneAlert($where: AlertWhereUniqueInput!) {
         deleteOneAlert(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

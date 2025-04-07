@@ -2493,7 +2493,7 @@ id
     const DELETE_ONE_ACCOUNT = gql`
       mutation deleteOneAccount($where: AccountWhereUniqueInput!) {
         deleteOneAccount(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

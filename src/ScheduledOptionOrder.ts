@@ -315,7 +315,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_SCHEDULEDOPTIONORDER = gql`
       mutation deleteOneScheduledOptionOrder($where: ScheduledOptionOrderWhereUniqueInput!) {
         deleteOneScheduledOptionOrder(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

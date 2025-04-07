@@ -1615,7 +1615,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_ASSET = gql`
       mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
         deleteOneAsset(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

@@ -2670,7 +2670,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_ALLOCATION = gql`
       mutation deleteOneAllocation($where: AllocationWhereUniqueInput!) {
         deleteOneAllocation(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

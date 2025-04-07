@@ -2508,7 +2508,7 @@ id
     const DELETE_ONE_SESSION = gql`
       mutation deleteOneSession($where: SessionWhereUniqueInput!) {
         deleteOneSession(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

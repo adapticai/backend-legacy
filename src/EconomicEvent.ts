@@ -364,7 +364,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_ECONOMICEVENT = gql`
       mutation deleteOneEconomicEvent($where: EconomicEventWhereUniqueInput!) {
         deleteOneEconomicEvent(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

@@ -2543,7 +2543,7 @@ id
     const DELETE_ONE_AUTHENTICATOR = gql`
       mutation deleteOneAuthenticator($where: AuthenticatorWhereUniqueInput!) {
         deleteOneAuthenticator(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 

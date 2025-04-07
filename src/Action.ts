@@ -690,7 +690,7 @@ import { removeUndefinedProps } from './utils';
     const DELETE_ONE_ACTION = gql`
       mutation deleteOneAction($where: ActionWhereUniqueInput!) {
         deleteOneAction(where: $where) {
-          ${selectionSet}
+          id
         }
       }`;
 
