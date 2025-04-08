@@ -192,11 +192,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
-  } : undefined,
-  alpacaOrderId: props.alpacaOrderId !== undefined ? {
-    equals: props.alpacaOrderId 
   } : undefined,
       },
       data: {
@@ -349,11 +347,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: {
         id: props.id !== undefined ? props.id : undefined,
+  alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
-  } : undefined,
-  alpacaOrderId: props.alpacaOrderId !== undefined ? {
-    equals: props.alpacaOrderId 
   } : undefined,
       },
       create: {
@@ -537,11 +533,9 @@ import { removeUndefinedProps } from './utils';
     const variables = props.map(prop => ({
       where: {
           id: prop.id !== undefined ? prop.id : undefined,
+  alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
   tradeId: prop.tradeId !== undefined ? {
     equals: prop.tradeId 
-  } : undefined,
-  alpacaOrderId: prop.alpacaOrderId !== undefined ? {
-    equals: prop.alpacaOrderId 
   } : undefined,
 
       },
@@ -744,11 +738,9 @@ import { removeUndefinedProps } from './utils';
     const variables = {
       where: whereInput ? whereInput : {
         id: props.id !== undefined ? props.id : undefined,
+  alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
-  } : undefined,
-  alpacaOrderId: props.alpacaOrderId !== undefined ? {
-    equals: props.alpacaOrderId 
   } : undefined,
 },
 };
@@ -838,9 +830,6 @@ import { removeUndefinedProps } from './utils';
   } : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
-  } : undefined,
-  alpacaOrderId: props.alpacaOrderId !== undefined ? {
-    equals: props.alpacaOrderId 
   } : undefined,
       },
     };

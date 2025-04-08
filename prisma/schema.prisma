@@ -1022,7 +1022,7 @@ model Action {
   updatedAt DateTime @default(now())
 
   /// alpacaOrderId for the Alpaca order associated with this action. TYPESTRING.SKIP=true
-  alpacaOrderId String?
+  alpacaOrderId String? @unique @db.Uuid
 
   @@map(name: "actions")
 }

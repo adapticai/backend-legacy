@@ -91,11 +91,9 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: props.actions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId 
-           } : undefined,
-        alpacaOrderId: item.alpacaOrderId !== undefined ? {
-            equals: item.alpacaOrderId 
            } : undefined,
       },
       create: {
@@ -275,11 +273,9 @@ import { removeUndefinedProps } from './utils';
 } : { upsert: props.actions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
-          } : undefined,
-        alpacaOrderId: item.alpacaOrderId !== undefined ? {
-            equals: item.alpacaOrderId
           } : undefined,
       },
       update: {
@@ -391,11 +387,9 @@ import { removeUndefinedProps } from './utils';
  : { connectOrCreate: props.actions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId 
-           } : undefined,
-        alpacaOrderId: item.alpacaOrderId !== undefined ? {
-            equals: item.alpacaOrderId 
            } : undefined,
       },
       create: {
@@ -454,11 +448,9 @@ import { removeUndefinedProps } from './utils';
 } : { upsert: props.actions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
-          } : undefined,
-        alpacaOrderId: item.alpacaOrderId !== undefined ? {
-            equals: item.alpacaOrderId
           } : undefined,
       },
       update: {
@@ -603,11 +595,9 @@ import { removeUndefinedProps } from './utils';
 } : { upsert: prop.actions.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
-          } : undefined,
-        alpacaOrderId: item.alpacaOrderId !== undefined ? {
-            equals: item.alpacaOrderId
           } : undefined,
       },
       update: {
