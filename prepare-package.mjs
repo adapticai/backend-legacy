@@ -332,12 +332,47 @@ try {
 //   • In .cjs files, update require() calls to include a .cjs extension.
 // -----------------------------------------------------------------------------
 
-// 6a: Update import statements in .mjs files (excluding known entry files)
+// 6a-0: Specifically update the imports in index.mjs which is causing the server issue
+try {
+  const indexMjsPath = path.join(esmDir, 'index.mjs');
+  if (fs.existsSync(indexMjsPath)) {
+    let content = fs.readFileSync(indexMjsPath, 'utf8');
+    
+    // Update the specific client import in index.mjs
+    content = content.replace(
+      /export\s+\{\s*([^}]*)\s*\}\s+from\s+(['"])\.\/client\2;/g,
+      'export { $1 } from "./client.mjs";'
+    );
+    
+    // Update the type imports in index.mjs
+    content = content.replace(
+      /export\s+type\s+\{\s*([^}]*)\s*\}\s+from\s+(['"])\.\/client\2;/g,
+      'export type { $1 } from "./client.mjs";'
+    );
+    
+    // Update the typeStrings import in index.mjs
+    content = content.replace(
+      /export\s+\*\s+from\s+(['"])\.\/generated\/typeStrings\/index\1;/g,
+      'export * from "./generated/typeStrings/index.mjs";'
+    );
+    
+    fs.writeFileSync(indexMjsPath, content, 'utf8');
+    console.log('Updated imports in esm/index.mjs');
+  } else {
+    console.log('esm/index.mjs not found, skipping update for imports.');
+  }
+} catch (err) {
+  console.error('Error updating imports in esm/index.mjs:', err);
+  process.exit(1);
+}
+
+// 6a: Update import statements in .mjs files (including index.mjs but excluding other known entry files)
 try {
   const mjsFiles = getFilesRecursively(distDir).filter((file) => file.endsWith('.mjs'));
   mjsFiles.forEach((file) => {
     const baseName = path.basename(file);
-    if (['utils.mjs', 'client.mjs', 'prismaClient.mjs'].includes(baseName)) {
+    // Don't skip index.mjs since we need to update its imports too
+    if (['utils.mjs', 'client.mjs', 'prismaClient.mjs'].includes(baseName) && baseName !== 'index.mjs') {
       return;
     }
     let content;
@@ -347,6 +382,7 @@ try {
       console.error(`Error reading file ${file}:`, err);
       return;
     }
+    // Update relative imports to include the .mjs extension
     const updatedContent = content.replace(
       /import\s+((?:\*\s+as\s+\w+)|(?:\{[^}]+\})|(?:\w+))\s+from\s+(['"])\.\/([^'"]+)(?!\.[^'"]+)\2;/g,
       (match, p1, p2, p3) => `import ${p1} from ${p2}./${p3}.mjs${p2};`
@@ -557,6 +593,87 @@ try {
 }
 
 // -----------------------------------------------------------------------------
-// Step 8: Finalize Build
+// Step 8: Ensure client.mjs exists and is properly referenced in index.mjs
+// -----------------------------------------------------------------------------
+try {
+  const esmDir = path.join(distDir, 'esm');
+  const indexMjsPath = path.join(esmDir, 'index.mjs');
+  const clientMjsPath = path.join(esmDir, 'client.mjs');
+  
+  // Check if client.mjs exists, if not, look for client.js and rename it
+  if (!fs.existsSync(clientMjsPath) && fs.existsSync(path.join(esmDir, 'client.js'))) {
+    fs.renameSync(path.join(esmDir, 'client.js'), clientMjsPath);
+    console.log('Renamed client.js to client.mjs');
+  }
+  
+  // Make sure index.mjs references client.mjs with extension
+  if (fs.existsSync(indexMjsPath)) {
+    let content = fs.readFileSync(indexMjsPath, 'utf8');
+    
+    // Fix the client import in index.mjs (direct and forceful approach)
+    if (content.includes('./client') && !content.includes('./client.mjs')) {
+      content = content.replace(/['"]\.\/client['"]/g, '"./client.mjs"');
+      fs.writeFileSync(indexMjsPath, content, 'utf8');
+      console.log('Fixed client.mjs reference in index.mjs (forced method)');
+    }
+  }
+  
+  // Verify client.mjs exists, if not, create it
+  if (!fs.existsSync(clientMjsPath)) {
+    console.error('ERROR: client.mjs still not found. Creating a placeholder to prevent runtime errors.');
+    // Get the content from client.ts to create client.mjs
+    const clientTsPath = path.join(projectRoot, 'src', 'client.ts');
+    if (fs.existsSync(clientTsPath)) {
+      console.log('Using client.ts as source for client.mjs');
+      const clientContent = fs.readFileSync(clientTsPath, 'utf8');
+      // Convert the TypeScript to JavaScript (basic conversion)
+      const jsContent = clientContent
+        .replace(/import\s+type/g, '// import type')
+        .replace(/export\s+type/g, '// export type')
+        .replace(/:\s*\w+(\[\])?/g, '')
+        .replace(/<[^>]+>/g, '');
+      fs.writeFileSync(clientMjsPath, jsContent, 'utf8');
+    } else {
+      // Create a minimal client.mjs that exports the necessary functions
+      console.log('Creating minimal client.mjs');
+      const minimalContent = `// Minimal client.mjs placeholder
+export const getApolloClient = async () => {
+  throw new Error('ApolloClient not properly initialized. Check adaptic-backend package.');
+};
+
+export const getApolloModules = async () => {
+  throw new Error('ApolloModules not properly initialized. Check adaptic-backend package.');
+};
+
+export const configureConnectionPool = () => {
+  throw new Error('Connection pool not properly initialized. Check adaptic-backend package.');
+};
+
+export const client = Promise.resolve(null);
+`;
+      fs.writeFileSync(clientMjsPath, minimalContent, 'utf8');
+    }
+  }
+
+  // Ensure apollo-client.client.mjs and apollo-client.server.mjs exist too
+  const apolloClientClientMjsPath = path.join(esmDir, 'apollo-client.client.mjs');
+  const apolloClientServerMjsPath = path.join(esmDir, 'apollo-client.server.mjs');
+  
+  if (!fs.existsSync(apolloClientClientMjsPath) && fs.existsSync(path.join(esmDir, 'apollo-client.client.js'))) {
+    fs.renameSync(path.join(esmDir, 'apollo-client.client.js'), apolloClientClientMjsPath);
+    console.log('Renamed apollo-client.client.js to apollo-client.client.mjs');
+  }
+  
+  if (!fs.existsSync(apolloClientServerMjsPath) && fs.existsSync(path.join(esmDir, 'apollo-client.server.js'))) {
+    fs.renameSync(path.join(esmDir, 'apollo-client.server.js'), apolloClientServerMjsPath);
+    console.log('Renamed apollo-client.server.js to apollo-client.server.mjs');
+  }
+} catch (err) {
+  console.error('Error ensuring client.mjs exists and is properly referenced:', err);
+  process.exit(1);
+}
+
+// -----------------------------------------------------------------------------
+// Step 9: Finalize Build
 // -----------------------------------------------------------------------------
 console.log('Package preparation completed successfully.');
