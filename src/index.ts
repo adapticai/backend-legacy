@@ -4,12 +4,20 @@ export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 export * from './generated/typeStrings/index';
 
 // Re-export Apollo Client functions from client.ts
-export { 
-  getApolloClient, 
-  getApolloModules, 
+export {
+  getApolloClient,
+  getApolloModules,
   configureConnectionPool,
   client
 } from './client';
+
+ export type {
+  ApolloClientType,
+  InMemoryCacheType,
+  HttpLinkType,
+  NormalizedCacheObject,
+} from './client';
+
 
 import { Account } from './Account';
 import { Action } from './Action';
