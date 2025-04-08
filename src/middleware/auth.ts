@@ -22,7 +22,9 @@ export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: N
 
   // Handle regular JWT tokens
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    // Use a default secret for development if JWT_SECRET is not set
+    const secretKey = process.env.JWT_SECRET || 'development_secret_key_for_local_testing_only';
+    const decoded = jwt.verify(token, secretKey);
     req.user = decoded;
     next();
   } catch (error) {

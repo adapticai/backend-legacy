@@ -307,7 +307,7 @@ export async function getToken<R extends boolean = false>(
     raw = false,
     decode: _decode = decode,
     logger = defaultLogger,
-    secret = process.env.JWT_SECRET || '',
+    secret = process.env.JWT_SECRET || 'eYJkJ8PNIcBR6MppvxjjjdS+m3Ssoiu4boS6tp4tz71i',
     salt = process.env.JWT_SALT || ''
   } = params;
 

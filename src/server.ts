@@ -156,7 +156,9 @@ const startServer = async () => {
           } else {
             // For regular JWT tokens, verify as before
             try {
-              user = jwt.verify(token, process.env.JWT_SECRET as string);
+              // Use a default secret for development if JWT_SECRET is not set
+              const secretKey = process.env.JWT_SECRET || 'development_secret_key_for_local_testing_only';
+              user = jwt.verify(token, secretKey);
             } catch (e) {
               console.error('JWT verification failed:', e);
               console.error('Received token:', token);
@@ -202,7 +204,9 @@ const startServer = async () => {
           } else {
             // For regular JWT tokens, verify as before
             try {
-              user = jwt.verify(token, process.env.JWT_SECRET as string);
+              // Use a default secret for development if JWT_SECRET is not set
+              const secretKey = process.env.JWT_SECRET || 'development_secret_key_for_local_testing_only';
+              user = jwt.verify(token, secretKey);
             } catch (e) {
               console.error('JWT verification failed:', e);
               return { prisma, authError: 'Invalid token' };
