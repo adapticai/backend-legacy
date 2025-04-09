@@ -578,7 +578,7 @@ const isUniqueField = (name: string): boolean => {
   }
 
   // return true if the field matches any of the unique fields
-  const uniqueFields = ['id', 'email', 'username', 'alpacaAccountId', 'tradeId', 'slug', 'name', 'title', 'url', 'key', 'handle', 'symbol', 'clientOrderId'];
+  const uniqueFields = ['id', 'email', 'username', 'alpacaAccountId', 'tradeId', 'alpacaOrderId', 'slug', 'name', 'title', 'url', 'key', 'handle', 'symbol', 'clientOrderId'];
   return uniqueFields.includes(name);
 };
 
