@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "alpaca_accounts" ADD COLUMN     "defaultTrailingStopPercentage100" DOUBLE PRECISION NOT NULL DEFAULT 4.0,
+ADD COLUMN     "firstReducedTrailPercentage100" DOUBLE PRECISION NOT NULL DEFAULT 1.0,
+ADD COLUMN     "firstTrailReductionThreshold100" DOUBLE PRECISION NOT NULL DEFAULT 2.0,
+ADD COLUMN     "minimumPriceChangePercent100" DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+ADD COLUMN     "secondReducedTrailPercentage100" DOUBLE PRECISION NOT NULL DEFAULT 0.5,
+ADD COLUMN     "secondTrailReductionThreshold100" DOUBLE PRECISION NOT NULL DEFAULT 5.0;

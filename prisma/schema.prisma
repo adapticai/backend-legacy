@@ -569,6 +569,24 @@ model AlpacaAccount {
   /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
   reducedPortfolioTrailPercent Float @default(0.5)
 
+  /// The initial trailing stop percentage used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  defaultTrailingStopPercentage100 Float @default(4.0)
+
+  /// The first profit threshold at which to reduce the trailing stop used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  firstTrailReductionThreshold100 Float @default(2.0)
+
+  /// The second profit threshold at which to further reduce the trailing stop used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  secondTrailReductionThreshold100 Float @default(5.0)
+
+  /// The trailing stop percentage to use when profit exceeds the first threshold used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  firstReducedTrailPercentage100 Float @default(1.0)
+
+  /// The trailing stop percentage to use when profit exceeds the second threshold used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  secondReducedTrailPercentage100 Float @default(0.5)
+
+  /// The minimum change in trailing stop percent to warrant an adjustment used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  minimumPriceChangePercent100 Float @default(0.5)
+
   /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts', 'customer', 'accounts', 'sessions', 'authenticators']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

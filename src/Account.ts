@@ -97,6 +97,12 @@ id
       portfolioTrailPercent
       portfolioProfitThresholdPercent
       reducedPortfolioTrailPercent
+      defaultTrailingStopPercentage100
+      firstTrailReductionThreshold100
+      secondTrailReductionThreshold100
+      firstReducedTrailPercentage100
+      secondReducedTrailPercentage100
+      minimumPriceChangePercent100
       userId
       createdAt
       updatedAt
@@ -285,6 +291,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -726,6 +738,24 @@ id
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
               set: item.reducedPortfolioTrailPercent
             } : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? {
+              set: item.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? {
+              set: item.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? {
+              set: item.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? {
+              set: item.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? {
+              set: item.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
+              set: item.minimumPriceChangePercent100
+            } : undefined,
       allocation: item.allocation ? 
       typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
 ? {
@@ -815,6 +845,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -972,6 +1008,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -1210,6 +1252,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -1531,6 +1579,24 @@ id
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
               set: item.reducedPortfolioTrailPercent
             } : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? {
+              set: item.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? {
+              set: item.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? {
+              set: item.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? {
+              set: item.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? {
+              set: item.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
+              set: item.minimumPriceChangePercent100
+            } : undefined,
       allocation: item.allocation ? 
       typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
 ? {
@@ -1620,6 +1686,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -1777,6 +1849,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -2161,6 +2239,24 @@ id
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
               set: item.reducedPortfolioTrailPercent
             } : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? {
+              set: item.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? {
+              set: item.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? {
+              set: item.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? {
+              set: item.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? {
+              set: item.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
+              set: item.minimumPriceChangePercent100
+            } : undefined,
       allocation: item.allocation ? 
       typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
 ? {
@@ -2250,6 +2346,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -2407,6 +2509,12 @@ id
           portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {

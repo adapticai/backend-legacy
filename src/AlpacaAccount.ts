@@ -39,6 +39,12 @@ id
   portfolioTrailPercent
   portfolioProfitThresholdPercent
   reducedPortfolioTrailPercent
+  defaultTrailingStopPercentage100
+  firstTrailReductionThreshold100
+  secondTrailReductionThreshold100
+  firstReducedTrailPercentage100
+  secondReducedTrailPercentage100
+  minimumPriceChangePercent100
   user {
     id
     name
@@ -119,6 +125,12 @@ id
   portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? props.defaultTrailingStopPercentage100 : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? props.firstTrailReductionThreshold100 : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? props.secondTrailReductionThreshold100 : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? props.firstReducedTrailPercentage100 : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? props.secondReducedTrailPercentage100 : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? props.minimumPriceChangePercent100 : undefined,
   allocation: props.allocation ? 
     typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && Object.keys(props.allocation)[0] === 'id'
     ? { connect: {
@@ -352,6 +364,12 @@ id
   portfolioTrailPercent: prop.portfolioTrailPercent !== undefined ? prop.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: prop.portfolioProfitThresholdPercent !== undefined ? prop.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? prop.reducedPortfolioTrailPercent : undefined,
+  defaultTrailingStopPercentage100: prop.defaultTrailingStopPercentage100 !== undefined ? prop.defaultTrailingStopPercentage100 : undefined,
+  firstTrailReductionThreshold100: prop.firstTrailReductionThreshold100 !== undefined ? prop.firstTrailReductionThreshold100 : undefined,
+  secondTrailReductionThreshold100: prop.secondTrailReductionThreshold100 !== undefined ? prop.secondTrailReductionThreshold100 : undefined,
+  firstReducedTrailPercentage100: prop.firstReducedTrailPercentage100 !== undefined ? prop.firstReducedTrailPercentage100 : undefined,
+  secondReducedTrailPercentage100: prop.secondReducedTrailPercentage100 !== undefined ? prop.secondReducedTrailPercentage100 : undefined,
+  minimumPriceChangePercent100: prop.minimumPriceChangePercent100 !== undefined ? prop.minimumPriceChangePercent100 : undefined,
   userId: prop.userId !== undefined ? prop.userId : undefined,
       })),
     };
@@ -455,6 +473,24 @@ id
            } : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
             set: props.reducedPortfolioTrailPercent 
+           } : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
+            set: props.defaultTrailingStopPercentage100 
+           } : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? {
+            set: props.firstTrailReductionThreshold100 
+           } : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? {
+            set: props.secondTrailReductionThreshold100 
+           } : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? {
+            set: props.firstReducedTrailPercentage100 
+           } : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? {
+            set: props.secondReducedTrailPercentage100 
+           } : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
+            set: props.minimumPriceChangePercent100 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -963,6 +999,12 @@ id
   portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? props.defaultTrailingStopPercentage100 : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? props.firstTrailReductionThreshold100 : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? props.secondTrailReductionThreshold100 : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? props.firstReducedTrailPercentage100 : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? props.secondReducedTrailPercentage100 : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? props.minimumPriceChangePercent100 : undefined,
   allocation: props.allocation ? 
     typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && Object.keys(props.allocation)[0] === 'id'
     ? { connect: {
@@ -1180,6 +1222,24 @@ id
            } : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
             set: props.reducedPortfolioTrailPercent 
+           } : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
+            set: props.defaultTrailingStopPercentage100 
+           } : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? {
+            set: props.firstTrailReductionThreshold100 
+           } : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? {
+            set: props.secondTrailReductionThreshold100 
+           } : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? {
+            set: props.firstReducedTrailPercentage100 
+           } : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? {
+            set: props.secondReducedTrailPercentage100 
+           } : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
+            set: props.minimumPriceChangePercent100 
            } : undefined,
   allocation: props.allocation ? 
   typeof props.allocation === 'object' && Object.keys(props.allocation).length === 1 && (Object.keys(props.allocation)[0] === 'id' || Object.keys(props.allocation)[0] === 'symbol')
@@ -1715,6 +1775,24 @@ id
            } : undefined,
   reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? {
             set: prop.reducedPortfolioTrailPercent 
+           } : undefined,
+  defaultTrailingStopPercentage100: prop.defaultTrailingStopPercentage100 !== undefined ? {
+            set: prop.defaultTrailingStopPercentage100 
+           } : undefined,
+  firstTrailReductionThreshold100: prop.firstTrailReductionThreshold100 !== undefined ? {
+            set: prop.firstTrailReductionThreshold100 
+           } : undefined,
+  secondTrailReductionThreshold100: prop.secondTrailReductionThreshold100 !== undefined ? {
+            set: prop.secondTrailReductionThreshold100 
+           } : undefined,
+  firstReducedTrailPercentage100: prop.firstReducedTrailPercentage100 !== undefined ? {
+            set: prop.firstReducedTrailPercentage100 
+           } : undefined,
+  secondReducedTrailPercentage100: prop.secondReducedTrailPercentage100 !== undefined ? {
+            set: prop.secondReducedTrailPercentage100 
+           } : undefined,
+  minimumPriceChangePercent100: prop.minimumPriceChangePercent100 !== undefined ? {
+            set: prop.minimumPriceChangePercent100 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
