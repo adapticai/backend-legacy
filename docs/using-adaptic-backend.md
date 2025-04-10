@@ -128,7 +128,7 @@ function MyComponent() {
 
 ## Using Content Models (With Connection Pooling)
 
-The adaptic-backend package provides typed CRUD operations for all content models with built-in connection pooling.
+The adaptic-backend package provides typed CRUD operations for all content models with built-in connection pooling. All CRUD functions automatically handle the transformation of your content model objects into the appropriate GraphQL input formats.
 
 ### Importing Types
 
@@ -161,54 +161,333 @@ const asset = await adaptic.asset.get({ symbol: "AAPL" }, client);
 const trades = await adaptic.trade.findMany({ symbol: "AAPL" }, client);
 ```
 
+## CRUD Operations Guide
+
+Each content model in adaptic-backend provides a comprehensive set of CRUD (Create, Read, Update, Delete) operations through generated resolvers. This section explains when and how to use each operation.
+
+> **IMPORTANT**: One of the key advantages of the adaptic-backend CRUD functions is that they handle all the GraphQL input transformation automatically. You simply pass a valid instance of your content model type object, and the library handles converting it to the appropriate GraphQL input format, including constructing where objects and input structures. You don't need to manually structure complex GraphQL inputs.
+>
+> For create, update, and upsert functions, you only need to pass a valid instance of the content model type that the CRUD function is for. You don't need to pass a where object or structure the GraphQL input yourself - the function will convert your content model object into the relevant input for the CRUD GraphQL operation automatically.
+
 ### Creating Records
+
+The system provides different creation methods based on your needs. You simply provide the data object with the fields you want to set, and the library handles converting it to the correct GraphQL input format:
+
+#### `create`: Create a Single Record
+
+Use when: You want to create a new record and you're sure it doesn't already exist.
 
 ```typescript
 import adaptic from 'adaptic-backend';
 import { getApolloClient } from 'adaptic-backend';
 
-// Initialize client once
 const client = await getApolloClient();
 
-// Create a single record using the shared client
+// Create a new user
 const newUser = await adaptic.user.create({
   name: "John Doe",
   email: "john@example.com",
   role: "USER"
 }, client);
 
-// Create multiple records (with shared client)
-const result = await adaptic.trade.createMany([
-  { symbol: "AAPL", qty: 10, price: 150.0 },
-  { symbol: "MSFT", qty: 5, price: 300.0 }
+// Create an asset with a relation (using an ID reference)
+const newAsset = await adaptic.asset.create({
+  symbol: "AAPL",
+  name: "Apple Inc.",
+  user: { id: "user123" } // Connects to existing user by ID
+}, client);
+
+// Create an asset with nested creation of relations
+const assetWithRelations = await adaptic.asset.create({
+  symbol: "MSFT",
+  name: "Microsoft Corporation",
+  // Creates a new news article related to this asset
+  newsArticles: {
+    title: "Microsoft Announces New Product",
+    content: "Detailed news article content...",
+    publishedAt: new Date()
+  }
+}, client);
+```
+
+#### `createMany`: Create Multiple Records in a Batch
+
+Use when: You need to create multiple records of the same type efficiently.
+
+```typescript
+// Create multiple assets in a single operation
+const result = await adaptic.asset.createMany([
+  { symbol: "AAPL", name: "Apple Inc." },
+  { symbol: "MSFT", name: "Microsoft Corporation" },
+  { symbol: "GOOGL", name: "Alphabet Inc." }
 ], client);
-console.log(`Created ${result.count} trades`);
+
+console.log(`Created ${result.count} assets`);
+```
+
+### Updating Records
+
+Choose the appropriate update method based on your scenario. For all update methods, you simply pass your model object, and the library automatically extracts the identifier and update fields, converting them to the appropriate GraphQL format:
+
+#### `update`: Update an Existing Record
+
+Use when: You know the record exists and have its unique identifier.
+
+```typescript
+// Update a user by ID - just pass a user object with the ID and fields to update
+// The library handles converting this to the proper GraphQL where/data input format
+// You don't need to structure a separate where object - the function does this for you
+const updatedUser = await adaptic.user.update({
+  id: "user123",
+  name: "John Smith", // Updated field
+  bio: "Software engineer" // Add new field value
+}, client);
+
+// Update a trade by ID with nested relations
+const updatedTrade = await adaptic.trade.update({
+  id: "trade456",
+  summary: "Updated trade summary",
+  // Update related action
+  action: {
+    id: "action789",
+    status: "COMPLETED"
+  }
+}, client);
+```
+
+#### `upsert`: Create or Update a Record
+
+Use when: You're not sure if the record exists and want to either create it or update it if it does.
+
+```typescript
+// Create a user if not exists, or update if exists
+// Just pass a normal user object - the library automatically extracts the unique 
+// identifier and other fields, structuring them into proper GraphQL inputs
+// No need to create separate where/create/update objects - the function handles this conversion
+const user = await adaptic.user.upsert({
+  email: "john@example.com", // Unique identifier to find the record
+  name: "John Doe",          // Data for create/update
+  jobTitle: "Developer"      // Data for create/update
+}, client);
+
+// Upsert an asset by symbol
+const asset = await adaptic.asset.upsert({
+  symbol: "AAPL",           // Unique identifier
+  name: "Apple Inc.",       // Updated name if exists
+  type: "STOCK"             // Type will be set for new or updated record
+}, client);
+```
+
+> **When to use update vs. upsert:**
+> - Use `update` when you're certain the record exists and only want to modify it
+> - Use `upsert` when you want to create a record if it doesn't exist or update it if it does
+> - `upsert` is more forgiving but slightly less efficient than a direct `update` or `create`
+
+#### `updateMany`: Update Multiple Records
+
+Use when: You need to apply the same update to multiple records that match certain criteria.
+
+```typescript
+// Update status of multiple trades (each with unique ID)
+const result = await adaptic.trade.updateMany([
+  { id: "trade1", status: "COMPLETED" },
+  { id: "trade2", status: "COMPLETED" },
+  { id: "trade3", status: "FAILED" }
+], client);
+
+console.log(`Updated ${result.count} trades`);
 ```
 
 ### Reading Records
 
+Different methods for retrieving data. For the basic operations (`get`, `getAll`), you can simply pass an object with the needed unique identifier fields, and the library will automatically construct the correct GraphQL query format:
+
+#### `get`: Retrieve a Single Record by Unique Identifier
+
+Use when: You need to fetch a specific record using a unique field.
+
 ```typescript
-// Using a shared client instance
-const client = await getApolloClient();
+// Get a user by ID
+const user = await adaptic.user.get({ id: "user123" }, client);
 
-// Get a record by ID
-const asset = await adaptic.asset.get({ id: "1234" }, client);
+// Get a user by email (unique field)
+const userByEmail = await adaptic.user.get({ email: "john@example.com" }, client);
 
-// Get a record by unique field
-const user = await adaptic.user.get({ email: "john@example.com" }, client);
+// Get an asset by symbol (unique field)
+const asset = await adaptic.asset.get({ symbol: "AAPL" }, client);
 
-// Get all records of a type
-const allTrades = await adaptic.trade.getAll(client);
+// Using explicit whereInput parameter
+const order = await adaptic.order.get({}, client, { clientOrderId: "order-abc-123" });
+```
 
-// Find records with conditions
-const appleAssets = await adaptic.asset.findMany({ symbol: "AAPL" }, client);
+#### `getAll`: Retrieve All Records of a Type
 
-// Custom where conditions
+Use when: You need a complete list of records of a certain type.
+
+```typescript
+// Get all users
+const allUsers = await adaptic.user.getAll(client);
+
+// Get all assets
+const allAssets = await adaptic.asset.getAll(client);
+```
+
+#### `findMany`: Retrieve Multiple Records Based on Criteria
+
+Use when: You need to find records matching specific conditions.
+
+```typescript
+// Find trades for a specific symbol
+const appleTrades = await adaptic.trade.findMany({ symbol: "AAPL" }, client);
+
+// Find users with a specific role
+const adminUsers = await adaptic.user.findMany({ role: "ADMIN" }, client);
+
+// Using explicit whereInput for complex filtering
 const recentTrades = await adaptic.trade.findMany({}, client, {
   createdAt: {
     gte: new Date(Date.now() - 86400000) // Trades from last 24 hours
+  },
+  status: "COMPLETED"
+});
+
+// Using array conditions and logical operators
+const specificAssets = await adaptic.asset.findMany({}, client, {
+  OR: [
+    { symbol: "AAPL" },
+    { symbol: "MSFT" }
+  ],
+  type: "STOCK"
+});
+
+// Find records with nested relation conditions
+const usersWithCompletedTrades = await adaptic.user.findMany({}, client, {
+  trades: {
+    some: {
+      status: "COMPLETED",
+      createdAt: {
+        gte: new Date(Date.now() - 7 * 86400000) // Last 7 days
+      }
+    }
   }
 });
+```
+
+### Structuring WhereInput for Queries
+
+For more complex queries using `findMany`, you can either:
+
+1. Pass a simple object with field values (the library will convert it to the appropriate `where` format)
+2. Use the optional third parameter to provide complex filter criteria directly
+
+The following examples show how to structure the `whereInput` object when using the explicit third parameter:
+
+#### Simple Field Equality
+
+```typescript
+// Find assets with symbol="AAPL"
+const assets = await adaptic.asset.findMany({}, client, {
+  symbol: "AAPL"
+});
+```
+
+#### Comparison Operators
+
+```typescript
+// Find trades with price >= 100
+const trades = await adaptic.trade.findMany({}, client, {
+  price: {
+    gte: 100  // greater than or equal
+  }
+});
+```
+
+Available comparison operators:
+- `equals`: Exact match
+- `not`: Not equal
+- `in`: Value in array
+- `notIn`: Value not in array
+- `lt`: Less than
+- `lte`: Less than or equal
+- `gt`: Greater than
+- `gte`: Greater than or equal
+- `contains`: String contains
+- `startsWith`: String starts with
+- `endsWith`: String ends with
+
+#### Logical Operators
+
+```typescript
+// Find assets that are STOCK OR CRYPTO
+const assets = await adaptic.asset.findMany({}, client, {
+  OR: [
+    { type: "STOCK" },
+    { type: "CRYPTO" }
+  ]
+});
+
+// Find users who are ADMIN AND have a specific email domain
+const users = await adaptic.user.findMany({}, client, {
+  AND: [
+    { role: "ADMIN" },
+    { email: { endsWith: "@company.com" } }
+  ]
+});
+
+// Find users who are NOT basic users
+const nonBasicUsers = await adaptic.user.findMany({}, client, {
+  NOT: { role: "USER" }
+});
+```
+
+#### Filtering on Relations
+
+```typescript
+// Find assets that have at least one related news article
+const assetsWithNews = await adaptic.asset.findMany({}, client, {
+  newsArticles: {
+    some: {} // Any news article
+  }
+});
+
+// Find users with completed trades
+const usersWithCompletedTrades = await adaptic.user.findMany({}, client, {
+  trades: {
+    some: {
+      status: "COMPLETED"
+    }
+  }
+});
+
+// Find assets with no related news
+const assetsWithoutNews = await adaptic.asset.findMany({}, client, {
+  newsArticles: {
+    none: {}
+  }
+});
+
+// Find users where ALL trades are completed
+const usersWithAllCompletedTrades = await adaptic.user.findMany({}, client, {
+  trades: {
+    every: {
+      status: "COMPLETED"
+    }
+  }
+});
+```
+
+### Deleting Records
+
+#### `delete`: Delete a Single Record
+
+Use when: You want to remove a specific record.
+
+```typescript
+// Delete a user by ID
+const deletedUser = await adaptic.user.delete({ id: "user123" }, client);
+
+// Delete a trade by ID
+const deletedTrade = await adaptic.trade.delete({ id: "trade456" }, client);
 ```
 
 ### Batch Operations for Efficiency
