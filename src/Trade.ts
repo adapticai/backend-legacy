@@ -37,6 +37,20 @@ import { removeUndefinedProps } from './utils';
     updatedAt
     alpacaOrderId
   }
+  entryPrice
+  exitPrice
+  entryQty
+  exitQty
+  entryValue
+  exitValue
+  entryTime
+  exitTime
+  pnlAmount
+  pnlPercent
+  durationMinutes
+  marketPhase
+  marketVolatility
+  thresholdsJson
 
   `;
 
@@ -82,6 +96,20 @@ import { removeUndefinedProps } from './utils';
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   status: props.status !== undefined ? props.status : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
+  entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
+  exitPrice: props.exitPrice !== undefined ? props.exitPrice : undefined,
+  entryQty: props.entryQty !== undefined ? props.entryQty : undefined,
+  exitQty: props.exitQty !== undefined ? props.exitQty : undefined,
+  entryValue: props.entryValue !== undefined ? props.entryValue : undefined,
+  exitValue: props.exitValue !== undefined ? props.exitValue : undefined,
+  entryTime: props.entryTime !== undefined ? props.entryTime : undefined,
+  exitTime: props.exitTime !== undefined ? props.exitTime : undefined,
+  pnlAmount: props.pnlAmount !== undefined ? props.pnlAmount : undefined,
+  pnlPercent: props.pnlPercent !== undefined ? props.pnlPercent : undefined,
+  durationMinutes: props.durationMinutes !== undefined ? props.durationMinutes : undefined,
+  marketPhase: props.marketPhase !== undefined ? props.marketPhase : undefined,
+  marketVolatility: props.marketVolatility !== undefined ? props.marketVolatility : undefined,
+  thresholdsJson: props.thresholdsJson !== undefined ? props.thresholdsJson : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item: any) => ({
@@ -165,6 +193,20 @@ import { removeUndefinedProps } from './utils';
   timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
   symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  entryPrice: prop.entryPrice !== undefined ? prop.entryPrice : undefined,
+  exitPrice: prop.exitPrice !== undefined ? prop.exitPrice : undefined,
+  entryQty: prop.entryQty !== undefined ? prop.entryQty : undefined,
+  exitQty: prop.exitQty !== undefined ? prop.exitQty : undefined,
+  entryValue: prop.entryValue !== undefined ? prop.entryValue : undefined,
+  exitValue: prop.exitValue !== undefined ? prop.exitValue : undefined,
+  entryTime: prop.entryTime !== undefined ? prop.entryTime : undefined,
+  exitTime: prop.exitTime !== undefined ? prop.exitTime : undefined,
+  pnlAmount: prop.pnlAmount !== undefined ? prop.pnlAmount : undefined,
+  pnlPercent: prop.pnlPercent !== undefined ? prop.pnlPercent : undefined,
+  durationMinutes: prop.durationMinutes !== undefined ? prop.durationMinutes : undefined,
+  marketPhase: prop.marketPhase !== undefined ? prop.marketPhase : undefined,
+  marketVolatility: prop.marketVolatility !== undefined ? prop.marketVolatility : undefined,
+  thresholdsJson: prop.thresholdsJson !== undefined ? prop.thresholdsJson : undefined,
       })),
     };
 
@@ -264,6 +306,48 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
+           } : undefined,
+  entryPrice: props.entryPrice !== undefined ? {
+            set: props.entryPrice 
+           } : undefined,
+  exitPrice: props.exitPrice !== undefined ? {
+            set: props.exitPrice 
+           } : undefined,
+  entryQty: props.entryQty !== undefined ? {
+            set: props.entryQty 
+           } : undefined,
+  exitQty: props.exitQty !== undefined ? {
+            set: props.exitQty 
+           } : undefined,
+  entryValue: props.entryValue !== undefined ? {
+            set: props.entryValue 
+           } : undefined,
+  exitValue: props.exitValue !== undefined ? {
+            set: props.exitValue 
+           } : undefined,
+  entryTime: props.entryTime !== undefined ? {
+            set: props.entryTime 
+           } : undefined,
+  exitTime: props.exitTime !== undefined ? {
+            set: props.exitTime 
+           } : undefined,
+  pnlAmount: props.pnlAmount !== undefined ? {
+            set: props.pnlAmount 
+           } : undefined,
+  pnlPercent: props.pnlPercent !== undefined ? {
+            set: props.pnlPercent 
+           } : undefined,
+  durationMinutes: props.durationMinutes !== undefined ? {
+            set: props.durationMinutes 
+           } : undefined,
+  marketPhase: props.marketPhase !== undefined ? {
+            set: props.marketPhase 
+           } : undefined,
+  marketVolatility: props.marketVolatility !== undefined ? {
+            set: props.marketVolatility 
+           } : undefined,
+  thresholdsJson: props.thresholdsJson !== undefined ? {
+            set: props.thresholdsJson 
            } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -378,6 +462,20 @@ import { removeUndefinedProps } from './utils';
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   status: props.status !== undefined ? props.status : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
+  entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
+  exitPrice: props.exitPrice !== undefined ? props.exitPrice : undefined,
+  entryQty: props.entryQty !== undefined ? props.entryQty : undefined,
+  exitQty: props.exitQty !== undefined ? props.exitQty : undefined,
+  entryValue: props.entryValue !== undefined ? props.entryValue : undefined,
+  exitValue: props.exitValue !== undefined ? props.exitValue : undefined,
+  entryTime: props.entryTime !== undefined ? props.entryTime : undefined,
+  exitTime: props.exitTime !== undefined ? props.exitTime : undefined,
+  pnlAmount: props.pnlAmount !== undefined ? props.pnlAmount : undefined,
+  pnlPercent: props.pnlPercent !== undefined ? props.pnlPercent : undefined,
+  durationMinutes: props.durationMinutes !== undefined ? props.durationMinutes : undefined,
+  marketPhase: props.marketPhase !== undefined ? props.marketPhase : undefined,
+  marketVolatility: props.marketVolatility !== undefined ? props.marketVolatility : undefined,
+  thresholdsJson: props.thresholdsJson !== undefined ? props.thresholdsJson : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item: any) => ({
@@ -439,6 +537,48 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
+           } : undefined,
+  entryPrice: props.entryPrice !== undefined ? {
+            set: props.entryPrice 
+           } : undefined,
+  exitPrice: props.exitPrice !== undefined ? {
+            set: props.exitPrice 
+           } : undefined,
+  entryQty: props.entryQty !== undefined ? {
+            set: props.entryQty 
+           } : undefined,
+  exitQty: props.exitQty !== undefined ? {
+            set: props.exitQty 
+           } : undefined,
+  entryValue: props.entryValue !== undefined ? {
+            set: props.entryValue 
+           } : undefined,
+  exitValue: props.exitValue !== undefined ? {
+            set: props.exitValue 
+           } : undefined,
+  entryTime: props.entryTime !== undefined ? {
+            set: props.entryTime 
+           } : undefined,
+  exitTime: props.exitTime !== undefined ? {
+            set: props.exitTime 
+           } : undefined,
+  pnlAmount: props.pnlAmount !== undefined ? {
+            set: props.pnlAmount 
+           } : undefined,
+  pnlPercent: props.pnlPercent !== undefined ? {
+            set: props.pnlPercent 
+           } : undefined,
+  durationMinutes: props.durationMinutes !== undefined ? {
+            set: props.durationMinutes 
+           } : undefined,
+  marketPhase: props.marketPhase !== undefined ? {
+            set: props.marketPhase 
+           } : undefined,
+  marketVolatility: props.marketVolatility !== undefined ? {
+            set: props.marketVolatility 
+           } : undefined,
+  thresholdsJson: props.thresholdsJson !== undefined ? {
+            set: props.thresholdsJson 
            } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -586,6 +726,48 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   symbol: prop.symbol !== undefined ? {
             set: prop.symbol 
+           } : undefined,
+  entryPrice: prop.entryPrice !== undefined ? {
+            set: prop.entryPrice 
+           } : undefined,
+  exitPrice: prop.exitPrice !== undefined ? {
+            set: prop.exitPrice 
+           } : undefined,
+  entryQty: prop.entryQty !== undefined ? {
+            set: prop.entryQty 
+           } : undefined,
+  exitQty: prop.exitQty !== undefined ? {
+            set: prop.exitQty 
+           } : undefined,
+  entryValue: prop.entryValue !== undefined ? {
+            set: prop.entryValue 
+           } : undefined,
+  exitValue: prop.exitValue !== undefined ? {
+            set: prop.exitValue 
+           } : undefined,
+  entryTime: prop.entryTime !== undefined ? {
+            set: prop.entryTime 
+           } : undefined,
+  exitTime: prop.exitTime !== undefined ? {
+            set: prop.exitTime 
+           } : undefined,
+  pnlAmount: prop.pnlAmount !== undefined ? {
+            set: prop.pnlAmount 
+           } : undefined,
+  pnlPercent: prop.pnlPercent !== undefined ? {
+            set: prop.pnlPercent 
+           } : undefined,
+  durationMinutes: prop.durationMinutes !== undefined ? {
+            set: prop.durationMinutes 
+           } : undefined,
+  marketPhase: prop.marketPhase !== undefined ? {
+            set: prop.marketPhase 
+           } : undefined,
+  marketVolatility: prop.marketVolatility !== undefined ? {
+            set: prop.marketVolatility 
+           } : undefined,
+  thresholdsJson: prop.thresholdsJson !== undefined ? {
+            set: prop.thresholdsJson 
            } : undefined,
   actions: prop.actions ? 
   Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {

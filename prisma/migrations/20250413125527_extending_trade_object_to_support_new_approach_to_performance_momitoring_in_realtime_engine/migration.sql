@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE "trades" ADD COLUMN     "durationMinutes" DOUBLE PRECISION,
+ADD COLUMN     "entryPrice" DOUBLE PRECISION,
+ADD COLUMN     "entryQty" DOUBLE PRECISION,
+ADD COLUMN     "entryTime" TIMESTAMP(3),
+ADD COLUMN     "entryValue" DOUBLE PRECISION,
+ADD COLUMN     "exitPrice" DOUBLE PRECISION,
+ADD COLUMN     "exitQty" DOUBLE PRECISION,
+ADD COLUMN     "exitTime" TIMESTAMP(3),
+ADD COLUMN     "exitValue" DOUBLE PRECISION,
+ADD COLUMN     "marketPhase" TEXT,
+ADD COLUMN     "marketVolatility" TEXT,
+ADD COLUMN     "pnlAmount" DOUBLE PRECISION,
+ADD COLUMN     "pnlPercent" DOUBLE PRECISION,
+ADD COLUMN     "thresholds" TEXT;

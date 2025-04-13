@@ -962,15 +962,6 @@ model Trade {
   /// Reference to the Alpaca account used for the trade. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 
-  /// Quantity of the asset being traded.
-  qty Float
-
-  /// Price at which the asset was traded.
-  price Float
-
-  /// Total value of the trade (qty * price).
-  total Float
-
   /// Signal that triggered the trade.
   signal TradeSignal @default(PRICE_ACTION)
 
@@ -1003,6 +994,48 @@ model Trade {
 
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
+
+  /// Entry price for the trade (average of all entry orders). TYPESTRING.SKIP=true
+  entryPrice Float?
+
+  /// Exit price for the trade (average of all exit orders). TYPESTRING.SKIP=true
+  exitPrice Float?
+
+  /// Quantity of shares/units entered. TYPESTRING.SKIP=true
+  entryQty Float?
+
+  /// Quantity of shares/units exited. TYPESTRING.SKIP=true
+  exitQty Float?
+
+  /// Total entry value (price * quantity). TYPESTRING.SKIP=true
+  entryValue Float?
+
+  /// Total exit value (price * quantity). TYPESTRING.SKIP=true
+  exitValue Float?
+
+  /// When the position was entered. TYPESTRING.SKIP=true
+  entryTime DateTime?
+
+  /// When the position was exited (null if still open). TYPESTRING.SKIP=true
+  exitTime DateTime?
+
+  /// Profit/loss amount in currency. TYPESTRING.SKIP=true
+  pnlAmount Float?
+
+  /// Profit/loss as a percentage. TYPESTRING.SKIP=true
+  pnlPercent Float?
+
+  /// Duration of the trade in minutes. TYPESTRING.SKIP=true
+  durationMinutes Float?
+
+  /// Market phase when the trade was entered. TYPESTRING.SKIP=true
+  marketPhase String?
+
+  /// Market volatility when the trade was entered. TYPESTRING.SKIP=true
+  marketVolatility String?
+
+  /// Thresholds used for this trade as JSON. TYPESTRING.SKIP=true
+  thresholdsJson String? @map("thresholds")
 
   @@map(name: "trades")
 }
