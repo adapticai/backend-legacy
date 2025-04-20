@@ -137,6 +137,12 @@ const startServer = async () => {
     bodyParser.json(),
     expressMiddleware(server, {
       context: async ({ req }) => {
+        // Ensure we're using the global prisma instance and never disconnecting it between requests
+        if (!global.prisma) {
+          console.warn('Prisma client not found in global scope, reinitializing');
+          global.prisma = prisma;
+        }
+
         console.log('Received headers:', req.headers);
         console.log('Authorization header:', req.headers.authorization);
 
@@ -169,11 +175,11 @@ const startServer = async () => {
             } catch (e) {
               console.error('JWT verification failed:', e);
               console.error('Received token:', token);
-              return { prisma, req, authError: 'Invalid token' };
+              return { prisma: global.prisma, req, authError: 'Invalid token' };
             }
           }
         }
-        return { prisma, req, user };
+        return { prisma: global.prisma, req, user };
       },
     }),
   );
@@ -198,6 +204,12 @@ const startServer = async () => {
     {
       schema,
       context: async (ctx, msg, args) => {
+        // Ensure we're using the global prisma instance for WebSocket connections too
+        if (!global.prisma) {
+          console.warn('Prisma client not found in global scope for WebSocket context, reinitializing');
+          global.prisma = prisma;
+        }
+
         const authHeader = (ctx.connectionParams as { authorization?: string })?.authorization || '';
         const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : '';
         
@@ -223,11 +235,11 @@ const startServer = async () => {
               }
             } catch (e) {
               console.error('JWT verification failed:', e);
-              return { prisma, authError: 'Invalid token' };
+              return { prisma: global.prisma, authError: 'Invalid token' };
             }
           }
         }
-        return { prisma, user };
+        return { prisma: global.prisma, user };
       },
     },
     wsServer
@@ -253,8 +265,27 @@ process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
 });
 
+// Only disconnect Prisma when the process is truly shutting down
 process.on('SIGINT', async () => {
-  await prisma.$disconnect();
+  console.log('Gracefully shutting down and closing database connections...');
+  try {
+    await global.prisma?.$disconnect();
+    console.log('Database connections closed successfully');
+  } catch (e) {
+    console.error('Error disconnecting from database:', e);
+  }
+  process.exit(0);
+});
+
+// Also handle SIGTERM for containerized environments
+process.on('SIGTERM', async () => {
+  console.log('Received SIGTERM, gracefully shutting down...');
+  try {
+    await global.prisma?.$disconnect();
+    console.log('Database connections closed successfully');
+  } catch (e) {
+    console.error('Error disconnecting from database:', e);
+  }
   process.exit(0);
 });
 

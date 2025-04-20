@@ -85,28 +85,42 @@ id
      * @returns The created Session or null.
      */
 
+    /**
+     * Create a new Session record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created Session or null.
+     */
     async create(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-    const { gql, ApolloError } = modules;
+          const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_SESSION = gql`
-        mutation createOneSession($data: SessionCreateInput!) {
-          createOneSession(data: $data) {
-            ${selectionSet}
-          }
-        }
-     `;
+          const CREATE_ONE_SESSION = gql`
+              mutation createOneSession($data: SessionCreateInput!) {
+                createOneSession(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
 
-      const variables = {
-        data: {
-            sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
+          const variables = {
+            data: {
+                sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
   expires: props.expires !== undefined ? props.expires : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
@@ -299,108 +313,178 @@ id
     }
   } : undefined,
 
-        },
-      };
+            },
+          };
 
-      const filteredVariables = removeUndefinedProps(variables);
+          const filteredVariables = removeUndefinedProps(variables);
 
-      try {
-      const response = await client.mutate({ mutation: CREATE_ONE_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneSession) {
-        return response.data.createOneSession;
-      } else {
-        return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_SESSION,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneSession) {
+            return response.data.createOneSession;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            console.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          console.error("Database error occurred:", error);
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Error in createOneSession:', error);
-      throw error;
-    }
-  },
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple Session records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Session objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: SessionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const CREATE_MANY_SESSION = gql`
+          mutation createManySession($data: [SessionCreateManyInput!]!) {
+            createManySession(data: $data) {
+              count
+            }
+          }`;
 
-    const CREATE_MANY_SESSION = gql`
-      mutation createManySession($data: [SessionCreateManyInput!]!) {
-        createManySession(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = {
-      data: props.map(prop => ({
-  sessionToken: prop.sessionToken !== undefined ? prop.sessionToken : undefined,
+        const variables = {
+          data: props.map(prop => ({
+      sessionToken: prop.sessionToken !== undefined ? prop.sessionToken : undefined,
   userId: prop.userId !== undefined ? prop.userId : undefined,
   expires: prop.expires !== undefined ? prop.expires : undefined,
       })),
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: CREATE_MANY_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManySession) {
-        return response.data.createManySession;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: CREATE_MANY_SESSION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManySession) {
+          return response.data.createManySession;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in createManySession:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update a single Session record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Session or null.
    */
   async update(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_ONE_SESSION = gql`
+          mutation updateOneSession($data: SessionUpdateInput!, $where: SessionWhereUniqueInput!) {
+            updateOneSession(data: $data, where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPDATE_ONE_SESSION = gql`
-      mutation updateOneSession($data: SessionUpdateInput!, $where: SessionWhereUniqueInput!) {
-        updateOneSession(data: $data, where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
-      data: {
-  id: props.id !== undefined ? {
+          data: {
+      id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
   sessionToken: props.sessionToken !== undefined ? {
@@ -1027,58 +1111,93 @@ id
     }
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneSession) {
-        return response.data.updateOneSession;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPDATE_ONE_SESSION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneSession) {
+          return response.data.updateOneSession;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateOneSession:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Upsert a single Session record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Session or null.
    */
   async upsert(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPSERT_ONE_SESSION = gql`
+          mutation upsertOneSession($where: SessionWhereUniqueInput!, $create: SessionCreateInput!, $update: SessionUpdateInput!) {
+            upsertOneSession(where: $where, create: $create, update: $update) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPSERT_ONE_SESSION = gql`
-      mutation upsertOneSession($where: SessionWhereUniqueInput!, $create: SessionCreateInput!, $update: SessionUpdateInput!) {
-        upsertOneSession(where: $where, create: $create, update: $update) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
-      create: {
-    sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
+          create: {
+        sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
   expires: props.expires !== undefined ? props.expires : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
@@ -1271,8 +1390,8 @@ id
     }
   } : undefined,
       },
-      update: {
-  sessionToken: props.sessionToken !== undefined ? {
+          update: {
+      sessionToken: props.sessionToken !== undefined ? {
             set: props.sessionToken 
            } : undefined,
   expires: props.expires !== undefined ? {
@@ -1890,59 +2009,94 @@ id
     }
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOneSession) {
-        return response.data.upsertOneSession;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPSERT_ONE_SESSION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneSession) {
+          return response.data.upsertOneSession;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in upsertOneSession:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update multiple Session records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Session objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: SessionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_MANY_SESSION = gql`
+          mutation updateManySession($data: [SessionCreateManyInput!]!) {
+            updateManySession(data: $data) {
+              count
+            }
+          }`;
 
-    const UPDATE_MANY_SESSION = gql`
-      mutation updateManySession($data: [SessionCreateManyInput!]!) {
-        updateManySession(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = props.map(prop => ({
-      where: {
-          id: prop.id !== undefined ? prop.id : undefined,
+        const variables = props.map(prop => ({
+          where: {
+              id: prop.id !== undefined ? prop.id : undefined,
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
 
-      },
-      data: {
-          id: prop.id !== undefined ? {
+          },
+          data: {
+              id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
   sessionToken: prop.sessionToken !== undefined ? {
@@ -2569,213 +2723,381 @@ id
     }
   } : undefined,
 
-      },
-      }));
+          },
+        }));
 
+        const filteredVariables = removeUndefinedProps(variables);
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const response = await client.mutate({
+          mutation: UPDATE_MANY_SESSION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManySession) {
-        return response.data.updateManySession;
-      } else {
-        return null as any;
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManySession) {
+          return response.data.updateManySession;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateManySession:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Delete a single Session record.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Session or null.
    */
   async delete(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const DELETE_ONE_SESSION = gql`
+          mutation deleteOneSession($where: SessionWhereUniqueInput!) {
+            deleteOneSession(where: $where) {
+              id
+            }
+          }`;
 
-    const DELETE_ONE_SESSION = gql`
-      mutation deleteOneSession($where: SessionWhereUniqueInput!) {
-        deleteOneSession(where: $where) {
-          id
+        const variables = {
+          where: {
+            id: props.id ? props.id : undefined,
+          }
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: DELETE_ONE_SESSION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneSession) {
+          return response.data.deleteOneSession;
+        } else {
+          return null as any;
         }
-      }`;
+      } catch (error: any) {
+        lastError = error;
 
-    const variables = {
-      where: {
-        id: props.id ? props.id : undefined,
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    };
-
-    const filteredVariables = removeUndefinedProps(variables);
-
-    try {
-      const response = await client.mutate({ mutation: DELETE_ONE_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneSession) {
-        return response.data.deleteOneSession;
-      } else {
-        return null as any;
-      }
-    } catch (error) {
-      console.error('Error in deleteOneSession:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve a single Session record by ID.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns The retrieved Session or null.
    */
   async get(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SessionType | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_SESSION = gql`
+          query getSession($where: SessionWhereUniqueInput!) {
+            getSession(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_SESSION = gql`
-      query getSession($where: SessionWhereUniqueInput!) {
-        getSession(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
 },
-};
-    const filteredVariables = removeUndefinedProps(variables);
+        };
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: GET_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getSession ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Session found') {
-        return null;
-      } else {
-        console.error('Error in getSession:', error);
+        const response = await client.query({
+          query: GET_SESSION,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.getSession ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Session found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve all Sessions records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
    * @returns An array of Session records or null.
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALL_SESSION = gql`
+          query getAllSession {
+            sessions {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ALL_SESSION = gql`
-      query getAllSession {
-        sessions {
-          ${selectionSet}
+        const response = await client.query({
+          query: GET_ALL_SESSION,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.sessions ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Session found') {
+          return null;
         }
-      }`;
 
-    try {
-      const response = await client.query({ query: GET_ALL_SESSION });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.sessions ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Session found') {
-        return null;
-      } else {
-        console.error('Error in getSession:', error);
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Find multiple Session records based on conditions.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns An array of found Session records or null.
    */
   async findMany(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SessionType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const FIND_MANY_SESSION = gql`
+          query findManySession($where: SessionWhereInput!) {
+            sessions(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const FIND_MANY_SESSION = gql`
-      query findManySession($where: SessionWhereInput!) {
-        sessions(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-  id: props.id !== undefined ? {
+        const variables = {
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: FIND_MANY_SESSION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.sessions) {
-        return response.data.sessions;
-      } else {
-       return [] as SessionType[];
-      }
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Session found') {
-        return null;
-      } else {
-        console.error('Error in getSession:', error);
+        const response = await client.query({
+          query: FIND_MANY_SESSION,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.sessions) {
+          return response.data.sessions;
+        } else {
+          return [] as SessionType[];
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Session found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   }
 };

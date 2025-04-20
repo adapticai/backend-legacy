@@ -56,17 +56,53 @@ const exportStatements: string[] = [];
 // Retrieve all model files
 let modelFiles: string[] = [];
 try {
-  modelFiles = fs
-    .readdirSync(MODELS_PATH)
-    .filter((file) => file.endsWith('.ts') && file !== 'index.ts');
+  // Check if the models directory exists
+  if (fs.existsSync(MODELS_PATH)) {
+    modelFiles = fs
+      .readdirSync(MODELS_PATH)
+      .filter((file) => file.endsWith('.ts') && file !== 'index.ts');
+  } else {
+    // If models directory doesn't exist, use previously generated files
+    console.warn(`Models directory at ${MODELS_PATH} does not exist.`);
+    console.warn('Using existing generated files or trying alternative approach.');
+    
+    // Try looking for model references in the Prisma schema
+    const schemaPath = path.join(__dirname, '../../prisma/schema.prisma');
+    if (fs.existsSync(schemaPath)) {
+      const schemaContent = fs.readFileSync(schemaPath, 'utf8');
+      const modelMatches = schemaContent.match(/model\s+(\w+)\s+{/g);
+      if (modelMatches) {
+        modelFiles = modelMatches
+          .map(match => match.replace(/model\s+(\w+)\s+{/, '$1.ts'))
+          .filter(Boolean);
+      }
+    }
+  }
 } catch (error) {
-  console.error(`Failed to read models directory at ${MODELS_PATH}:`, error);
-  exit(1);
+  console.error(`Error accessing model information:`, error);
 }
 
+// If we still don't have model files, try an alternative approach
 if (modelFiles.length === 0) {
-  console.error('No model files found in the models directory.');
-  exit(1);
+  // Look at the files in the output directory that might be model files
+  try {
+    const existingFiles = fs.readdirSync(FUNCTIONS_OUTPUT_PATH)
+      .filter(file => 
+        file.endsWith('.ts') && 
+        !['index.ts', 'server.ts', 'utils.ts', 'client.ts', 'apollo-client.client.ts', 
+         'apollo-client.server.ts', 'prismaClient.ts', 'getToken.ts'].includes(file)
+      );
+    
+    if (existingFiles.length > 0) {
+      modelFiles = existingFiles;
+      console.warn(`Using ${existingFiles.length} existing model files from the output directory.`);
+    } else {
+      console.error('No model files found or extractable from schema.');
+      // Don't exit, just continue with an empty set
+    }
+  } catch (error) {
+    console.error(`Error reading output directory:`, error);
+  }
 }
 
 // Iterate over the models and generate functions

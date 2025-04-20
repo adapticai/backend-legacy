@@ -645,28 +645,42 @@ import { removeUndefinedProps } from './utils';
      * @returns The created ${capitalModelName} or null.
      */
 
+    /**
+     * Create a new ${capitalModelName} record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created ${capitalModelName} or null.
+     */
     async create(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-    const { gql, ApolloError } = modules;
+          const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
-        mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
-          createOne${capitalModelName}(data: $data) {
-            \${selectionSet}
-          }
-        }
-     \`;
+          const CREATE_ONE_${capitalModelName.toUpperCase()} = gql\`
+              mutation createOne${capitalModelName}($data: ${capitalModelName}CreateInput!) {
+                createOne${capitalModelName}(data: $data) {
+                  \${selectionSet}
+                }
+              }
+           \`;
 
-      const variables = {
-        data: {
-          ${constructVariablesObject(
+          const variables = {
+            data: {
+              ${constructVariablesObject(
     'props',
     inputTypePaths.create,
     capitalModelName,
@@ -674,53 +688,88 @@ import { removeUndefinedProps } from './utils';
     modelsPath,
     'create'
   )}
-        },
-      };
+            },
+          };
 
-      const filteredVariables = removeUndefinedProps(variables);
+          const filteredVariables = removeUndefinedProps(variables);
 
-      try {
-      const response = await client.mutate({ mutation: CREATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOne${capitalModelName}) {
-        return response.data.createOne${capitalModelName};
-      } else {
-        return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_${capitalModelName.toUpperCase()},
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOne${capitalModelName}) {
+            return response.data.createOne${capitalModelName};
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            console.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          console.error("Database error occurred:", error);
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Error in createOne${capitalModelName}:', error);
-      throw error;
-    }
-  },
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple ${capitalModelName} records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of ${capitalModelName} objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+          mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
+            createMany${capitalModelName}(data: $data) {
+              count
+            }
+          }\`;
 
-    const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
-      mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
-        createMany${capitalModelName}(data: $data) {
-          count
-        }
-      }\`;
-
-    const variables = {
-      data: props.map(prop => ({
-${constructVariablesObject(
+        const variables = {
+          data: props.map(prop => ({
+    ${constructVariablesObject(
     'prop',
     inputTypePaths.createMany,
     capitalModelName,
@@ -728,52 +777,87 @@ ${constructVariablesObject(
     modelsPath,
     'createMany'
   )}      })),
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: CREATE_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createMany${capitalModelName}) {
-        return response.data.createMany${capitalModelName};
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: CREATE_MANY_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createMany${capitalModelName}) {
+          return response.data.createMany${capitalModelName};
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in createMany${capitalModelName}:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update a single ${capitalModelName} record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
   async update(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
+          mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
+            updateOne${capitalModelName}(data: $data, where: $where) {
+              \${selectionSet}
+            }
+          }\`;
 
-    const UPDATE_ONE_${capitalModelName.toUpperCase()} = gql\`
-      mutation updateOne${capitalModelName}($data: ${capitalModelName}UpdateInput!, $where: ${capitalModelName}WhereUniqueInput!) {
-        updateOne${capitalModelName}(data: $data, where: $where) {
-          \${selectionSet}
-        }
-      }\`;
-
-    const variables = {
-      where: {
-      ${constructVariablesObject(
+        const variables = {
+          where: {
+          ${constructVariablesObject(
     'props',
     inputTypePaths.whereUnique,
     capitalModelName,
@@ -781,8 +865,8 @@ ${constructVariablesObject(
     modelsPath,
     'where'
   )}      },
-      data: {
-${constructVariablesObject(
+          data: {
+    ${constructVariablesObject(
     'props',
     inputTypePaths.update,
     capitalModelName,
@@ -790,52 +874,87 @@ ${constructVariablesObject(
     modelsPath,
     'update'
   )}      },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOne${capitalModelName}) {
-        return response.data.updateOne${capitalModelName};
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPDATE_ONE_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOne${capitalModelName}) {
+          return response.data.updateOne${capitalModelName};
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateOne${capitalModelName}:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Upsert a single ${capitalModelName} record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated ${capitalModelName} or null.
    */
   async upsert(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
+          mutation upsertOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!, $create: ${capitalModelName}CreateInput!, $update: ${capitalModelName}UpdateInput!) {
+            upsertOne${capitalModelName}(where: $where, create: $create, update: $update) {
+              \${selectionSet}
+            }
+          }\`;
 
-    const UPSERT_ONE_${capitalModelName.toUpperCase()} = gql\`
-      mutation upsertOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!, $create: ${capitalModelName}CreateInput!, $update: ${capitalModelName}UpdateInput!) {
-        upsertOne${capitalModelName}(where: $where, create: $create, update: $update) {
-          \${selectionSet}
-        }
-      }\`;
-
-    const variables = {
-      where: {
-      ${constructVariablesObject(
+        const variables = {
+          where: {
+          ${constructVariablesObject(
     'props',
     inputTypePaths.whereUnique,
     capitalModelName,
@@ -843,8 +962,8 @@ ${constructVariablesObject(
     modelsPath,
     'where'
   )}      },
-      create: {
-  ${constructVariablesObject(
+          create: {
+      ${constructVariablesObject(
     'props',
     inputTypePaths.create,
     capitalModelName,
@@ -852,8 +971,8 @@ ${constructVariablesObject(
     modelsPath,
     'create'
   )}      },
-      update: {
-${constructVariablesObject(
+          update: {
+    ${constructVariablesObject(
     'props',
     inputTypePaths.update,
     capitalModelName,
@@ -861,52 +980,87 @@ ${constructVariablesObject(
     modelsPath,
     'updateWithoutId'
   )}      },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOne${capitalModelName}) {
-        return response.data.upsertOne${capitalModelName};
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPSERT_ONE_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOne${capitalModelName}) {
+          return response.data.upsertOne${capitalModelName};
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in upsertOne${capitalModelName}:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update multiple ${capitalModelName} records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of ${capitalModelName} objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: ${capitalModelName}Type[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
+          mutation updateMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
+            updateMany${capitalModelName}(data: $data) {
+              count
+            }
+          }\`;
 
-    const UPDATE_MANY_${capitalModelName.toUpperCase()} = gql\`
-      mutation updateMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
-        updateMany${capitalModelName}(data: $data) {
-          count
-        }
-      }\`;
-
-    const variables = props.map(prop => ({
-      where: {
-        ${constructVariablesObject(
+        const variables = props.map(prop => ({
+          where: {
+            ${constructVariablesObject(
     'prop',
     inputTypePaths.whereUnique,
     capitalModelName,
@@ -914,9 +1068,9 @@ ${constructVariablesObject(
     modelsPath,
     'where'
   )}
-      },
-      data: {
-        ${constructVariablesObject(
+          },
+          data: {
+            ${constructVariablesObject(
     'prop',
     inputTypePaths.update,
     capitalModelName,
@@ -924,101 +1078,171 @@ ${constructVariablesObject(
     modelsPath,
     'updateMany'
   )}
-      },
-      }));
+          },
+        }));
 
+        const filteredVariables = removeUndefinedProps(variables);
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const response = await client.mutate({
+          mutation: UPDATE_MANY_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateMany${capitalModelName}) {
-        return response.data.updateMany${capitalModelName};
-      } else {
-        return null as any;
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateMany${capitalModelName}) {
+          return response.data.updateMany${capitalModelName};
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateMany${capitalModelName}:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Delete a single ${capitalModelName} record.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
    * @returns The deleted ${capitalModelName} or null.
    */
   async delete(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
+          mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
+            deleteOne${capitalModelName}(where: $where) {
+              id
+            }
+          }\`;
 
-    const DELETE_ONE_${capitalModelName.toUpperCase()} = gql\`
-      mutation deleteOne${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
-        deleteOne${capitalModelName}(where: $where) {
-          id
+        const variables = {
+          where: {
+            id: props.id ? props.id : undefined,
+          }
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: DELETE_ONE_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOne${capitalModelName}) {
+          return response.data.deleteOne${capitalModelName};
+        } else {
+          return null as any;
         }
-      }\`;
+      } catch (error: any) {
+        lastError = error;
 
-    const variables = {
-      where: {
-        id: props.id ? props.id : undefined,
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    };
-
-    const filteredVariables = removeUndefinedProps(variables);
-
-    try {
-      const response = await client.mutate({ mutation: DELETE_ONE_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOne${capitalModelName}) {
-        return response.data.deleteOne${capitalModelName};
-      } else {
-        return null as any;
-      }
-    } catch (error) {
-      console.error('Error in deleteOne${capitalModelName}:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve a single ${capitalModelName} record by ID.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns The retrieved ${capitalModelName} or null.
    */
   async get(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<${capitalModelName}Type | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_${capitalModelName.toUpperCase()} = gql\`
+          query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
+            get${capitalModelName}(where: $where) {
+              \${selectionSet}
+            }
+          }\`;
 
-    const GET_${capitalModelName.toUpperCase()} = gql\`
-      query get${capitalModelName}($where: ${capitalModelName}WhereUniqueInput!) {
-        get${capitalModelName}(where: $where) {
-          \${selectionSet}
-        }
-      }\`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-      ${constructVariablesObject(
+        const variables = {
+          where: whereInput ? whereInput : {
+          ${constructVariablesObject(
     'props',
     inputTypePaths.whereUnique,
     capitalModelName,
@@ -1026,89 +1250,159 @@ ${constructVariablesObject(
     modelsPath,
     'where'
   )}},
-};
-    const filteredVariables = removeUndefinedProps(variables);
+        };
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: GET_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.get${capitalModelName} ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
-        return null;
-      } else {
-        console.error('Error in get${capitalModelName}:', error);
+        const response = await client.query({
+          query: GET_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.get${capitalModelName} ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No ${capitalModelName} found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve all ${pluralModelName} records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
    * @returns An array of ${capitalModelName} records or null.
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
+          query getAll${capitalModelName} {
+            ${lowerCaseFirstLetter(pluralModelName)} {
+              \${selectionSet}
+            }
+          }\`;
 
-    const GET_ALL_${capitalModelName.toUpperCase()} = gql\`
-      query getAll${capitalModelName} {
-        ${lowerCaseFirstLetter(pluralModelName)} {
-          \${selectionSet}
+        const response = await client.query({
+          query: GET_ALL_${capitalModelName.toUpperCase()},
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No ${capitalModelName} found') {
+          return null;
         }
-      }\`;
 
-    try {
-      const response = await client.query({ query: GET_ALL_${capitalModelName.toUpperCase()} });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
-        return null;
-      } else {
-        console.error('Error in get${capitalModelName}:', error);
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Find multiple ${capitalModelName} records based on conditions.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns An array of found ${capitalModelName} records or null.
    */
   async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<${capitalModelName}Type[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
+          query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
+            ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
+              \${selectionSet}
+            }
+          }\`;
 
-    const FIND_MANY_${capitalModelName.toUpperCase()} = gql\`
-      query findMany${capitalModelName}($where: ${capitalModelName}WhereInput!) {
-        ${lowerCaseFirstLetter(pluralModelName)}(where: $where) {
-          \${selectionSet}
-        }
-      }\`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-${constructVariablesObject(
+        const variables = {
+          where: whereInput ? whereInput : {
+    ${constructVariablesObject(
     'props',
     inputTypePaths.where,
     capitalModelName,
@@ -1116,26 +1410,54 @@ ${constructVariablesObject(
     modelsPath,
     'findMany'
   )}      },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: FIND_MANY_${capitalModelName.toUpperCase()}, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.${pluralModelName.toLocaleLowerCase()}) {
-        return response.data.${lowerCaseFirstLetter(pluralModelName)};
-      } else {
-       return [] as ${capitalModelName}Type[];
-      }
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No ${capitalModelName} found') {
-        return null;
-      } else {
-        console.error('Error in get${capitalModelName}:', error);
+        const response = await client.query({
+          query: FIND_MANY_${capitalModelName.toUpperCase()},
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.${pluralModelName.toLocaleLowerCase()}) {
+          return response.data.${lowerCaseFirstLetter(pluralModelName)};
+        } else {
+          return [] as ${capitalModelName}Type[];
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No ${capitalModelName} found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   }
 };
 `;

@@ -131,28 +131,42 @@ id
      * @returns The created Customer or null.
      */
 
+    /**
+     * Create a new Customer record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created Customer or null.
+     */
     async create(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-    const { gql, ApolloError } = modules;
+          const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_CUSTOMER = gql`
-        mutation createOneCustomer($data: CustomerCreateInput!) {
-          createOneCustomer(data: $data) {
-            ${selectionSet}
-          }
-        }
-     `;
+          const CREATE_ONE_CUSTOMER = gql`
+              mutation createOneCustomer($data: CustomerCreateInput!) {
+                createOneCustomer(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
 
-      const variables = {
-        data: {
-            authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
+          const variables = {
+            data: {
+                authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
   name: props.name !== undefined ? props.name : undefined,
   plan: props.plan !== undefined ? props.plan : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
@@ -337,53 +351,88 @@ id
     }))
   } : undefined,
 
-        },
-      };
+            },
+          };
 
-      const filteredVariables = removeUndefinedProps(variables);
+          const filteredVariables = removeUndefinedProps(variables);
 
-      try {
-      const response = await client.mutate({ mutation: CREATE_ONE_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneCustomer) {
-        return response.data.createOneCustomer;
-      } else {
-        return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_CUSTOMER,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneCustomer) {
+            return response.data.createOneCustomer;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            console.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          console.error("Database error occurred:", error);
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Error in createOneCustomer:', error);
-      throw error;
-    }
-  },
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple Customer records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Customer objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const CREATE_MANY_CUSTOMER = gql`
+          mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
+            createManyCustomer(data: $data) {
+              count
+            }
+          }`;
 
-    const CREATE_MANY_CUSTOMER = gql`
-      mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
-        createManyCustomer(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = {
-      data: props.map(prop => ({
-  authUserId: prop.authUserId !== undefined ? prop.authUserId : undefined,
+        const variables = {
+          data: props.map(prop => ({
+      authUserId: prop.authUserId !== undefined ? prop.authUserId : undefined,
   name: prop.name !== undefined ? prop.name : undefined,
   plan: prop.plan !== undefined ? prop.plan : undefined,
   stripeCustomerId: prop.stripeCustomerId !== undefined ? prop.stripeCustomerId : undefined,
@@ -391,52 +440,87 @@ id
   stripePriceId: prop.stripePriceId !== undefined ? prop.stripePriceId : undefined,
   stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? prop.stripeCurrentPeriodEnd : undefined,
       })),
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: CREATE_MANY_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyCustomer) {
-        return response.data.createManyCustomer;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: CREATE_MANY_CUSTOMER,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyCustomer) {
+          return response.data.createManyCustomer;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in createManyCustomer:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update a single Customer record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Customer or null.
    */
   async update(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_ONE_CUSTOMER = gql`
+          mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
+            updateOneCustomer(data: $data, where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPDATE_ONE_CUSTOMER = gql`
-      mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
-        updateOneCustomer(data: $data, where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
   stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
   authUserId: props.authUserId !== undefined ? {
@@ -449,8 +533,8 @@ id
     equals: props.stripePriceId 
   } : undefined,
       },
-      data: {
-  authUserId: props.authUserId !== undefined ? {
+          data: {
+      authUserId: props.authUserId !== undefined ? {
             set: props.authUserId 
            } : undefined,
   name: props.name !== undefined ? {
@@ -1039,52 +1123,87 @@ id
     }))
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneCustomer) {
-        return response.data.updateOneCustomer;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPDATE_ONE_CUSTOMER,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneCustomer) {
+          return response.data.updateOneCustomer;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateOneCustomer:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Upsert a single Customer record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Customer or null.
    */
   async upsert(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPSERT_ONE_CUSTOMER = gql`
+          mutation upsertOneCustomer($where: CustomerWhereUniqueInput!, $create: CustomerCreateInput!, $update: CustomerUpdateInput!) {
+            upsertOneCustomer(where: $where, create: $create, update: $update) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPSERT_ONE_CUSTOMER = gql`
-      mutation upsertOneCustomer($where: CustomerWhereUniqueInput!, $create: CustomerCreateInput!, $update: CustomerUpdateInput!) {
-        upsertOneCustomer(where: $where, create: $create, update: $update) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
   stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
   authUserId: props.authUserId !== undefined ? {
@@ -1097,8 +1216,8 @@ id
     equals: props.stripePriceId 
   } : undefined,
       },
-      create: {
-    authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
+          create: {
+        authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
   name: props.name !== undefined ? props.name : undefined,
   plan: props.plan !== undefined ? props.plan : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
@@ -1283,8 +1402,8 @@ id
     }))
   } : undefined,
       },
-      update: {
-  authUserId: props.authUserId !== undefined ? {
+          update: {
+      authUserId: props.authUserId !== undefined ? {
             set: props.authUserId 
            } : undefined,
   name: props.name !== undefined ? {
@@ -1867,52 +1986,87 @@ id
     }))
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOneCustomer) {
-        return response.data.upsertOneCustomer;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPSERT_ONE_CUSTOMER,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneCustomer) {
+          return response.data.upsertOneCustomer;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in upsertOneCustomer:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update multiple Customer records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Customer objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_MANY_CUSTOMER = gql`
+          mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
+            updateManyCustomer(data: $data) {
+              count
+            }
+          }`;
 
-    const UPDATE_MANY_CUSTOMER = gql`
-      mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
-        updateManyCustomer(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = props.map(prop => ({
-      where: {
-          id: prop.id !== undefined ? prop.id : undefined,
+        const variables = props.map(prop => ({
+          where: {
+              id: prop.id !== undefined ? prop.id : undefined,
   stripeCustomerId: prop.stripeCustomerId !== undefined ? prop.stripeCustomerId : undefined,
   stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? prop.stripeSubscriptionId : undefined,
   authUserId: prop.authUserId !== undefined ? {
@@ -1925,9 +2079,9 @@ id
     equals: prop.stripePriceId 
   } : undefined,
 
-      },
-      data: {
-          authUserId: prop.authUserId !== undefined ? {
+          },
+          data: {
+              authUserId: prop.authUserId !== undefined ? {
             set: prop.authUserId 
            } : undefined,
   name: prop.name !== undefined ? {
@@ -2516,101 +2670,171 @@ id
     }))
   } : undefined,
 
-      },
-      }));
+          },
+        }));
 
+        const filteredVariables = removeUndefinedProps(variables);
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const response = await client.mutate({
+          mutation: UPDATE_MANY_CUSTOMER,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyCustomer) {
-        return response.data.updateManyCustomer;
-      } else {
-        return null as any;
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyCustomer) {
+          return response.data.updateManyCustomer;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateManyCustomer:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Delete a single Customer record.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Customer or null.
    */
   async delete(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const DELETE_ONE_CUSTOMER = gql`
+          mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
+            deleteOneCustomer(where: $where) {
+              id
+            }
+          }`;
 
-    const DELETE_ONE_CUSTOMER = gql`
-      mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
-        deleteOneCustomer(where: $where) {
-          id
+        const variables = {
+          where: {
+            id: props.id ? props.id : undefined,
+          }
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: DELETE_ONE_CUSTOMER,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneCustomer) {
+          return response.data.deleteOneCustomer;
+        } else {
+          return null as any;
         }
-      }`;
+      } catch (error: any) {
+        lastError = error;
 
-    const variables = {
-      where: {
-        id: props.id ? props.id : undefined,
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    };
-
-    const filteredVariables = removeUndefinedProps(variables);
-
-    try {
-      const response = await client.mutate({ mutation: DELETE_ONE_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneCustomer) {
-        return response.data.deleteOneCustomer;
-      } else {
-        return null as any;
-      }
-    } catch (error) {
-      console.error('Error in deleteOneCustomer:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve a single Customer record by ID.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns The retrieved Customer or null.
    */
   async get(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<CustomerType | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_CUSTOMER = gql`
+          query getCustomer($where: CustomerWhereUniqueInput!) {
+            getCustomer(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_CUSTOMER = gql`
-      query getCustomer($where: CustomerWhereUniqueInput!) {
-        getCustomer(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
   stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
   stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
   authUserId: props.authUserId !== undefined ? {
@@ -2623,89 +2847,159 @@ id
     equals: props.stripePriceId 
   } : undefined,
 },
-};
-    const filteredVariables = removeUndefinedProps(variables);
+        };
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: GET_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getCustomer ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Customer found') {
-        return null;
-      } else {
-        console.error('Error in getCustomer:', error);
+        const response = await client.query({
+          query: GET_CUSTOMER,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.getCustomer ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Customer found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve all Customers records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
    * @returns An array of Customer records or null.
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALL_CUSTOMER = gql`
+          query getAllCustomer {
+            customers {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ALL_CUSTOMER = gql`
-      query getAllCustomer {
-        customers {
-          ${selectionSet}
+        const response = await client.query({
+          query: GET_ALL_CUSTOMER,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.customers ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Customer found') {
+          return null;
         }
-      }`;
 
-    try {
-      const response = await client.query({ query: GET_ALL_CUSTOMER });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.customers ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Customer found') {
-        return null;
-      } else {
-        console.error('Error in getCustomer:', error);
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Find multiple Customer records based on conditions.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns An array of found Customer records or null.
    */
   async findMany(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<CustomerType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const FIND_MANY_CUSTOMER = gql`
+          query findManyCustomer($where: CustomerWhereInput!) {
+            customers(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const FIND_MANY_CUSTOMER = gql`
-      query findManyCustomer($where: CustomerWhereInput!) {
-        customers(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-  id: props.id !== undefined ? {
+        const variables = {
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
   authUserId: props.authUserId !== undefined ? {
@@ -2724,25 +3018,53 @@ id
     equals: props.stripePriceId 
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: FIND_MANY_CUSTOMER, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.customers) {
-        return response.data.customers;
-      } else {
-       return [] as CustomerType[];
-      }
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Customer found') {
-        return null;
-      } else {
-        console.error('Error in getCustomer:', error);
+        const response = await client.query({
+          query: FIND_MANY_CUSTOMER,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.customers) {
+          return response.data.customers;
+        } else {
+          return [] as CustomerType[];
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Customer found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   }
 };

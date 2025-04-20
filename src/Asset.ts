@@ -80,28 +80,42 @@ import { removeUndefinedProps } from './utils';
      * @returns The created Asset or null.
      */
 
+    /**
+     * Create a new Asset record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created Asset or null.
+     */
     async create(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-    const { gql, ApolloError } = modules;
+          const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_ASSET = gql`
-        mutation createOneAsset($data: AssetCreateInput!) {
-          createOneAsset(data: $data) {
-            ${selectionSet}
-          }
-        }
-     `;
+          const CREATE_ONE_ASSET = gql`
+              mutation createOneAsset($data: AssetCreateInput!) {
+                createOneAsset(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
 
-      const variables = {
-        data: {
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
+          const variables = {
+            data: {
+                symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
   type: props.type !== undefined ? props.type : undefined,
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
@@ -214,53 +228,88 @@ import { removeUndefinedProps } from './utils';
     }))
   } : undefined,
 
-        },
-      };
+            },
+          };
 
-      const filteredVariables = removeUndefinedProps(variables);
+          const filteredVariables = removeUndefinedProps(variables);
 
-      try {
-      const response = await client.mutate({ mutation: CREATE_ONE_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneAsset) {
-        return response.data.createOneAsset;
-      } else {
-        return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_ASSET,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneAsset) {
+            return response.data.createOneAsset;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            console.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          console.error("Database error occurred:", error);
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Error in createOneAsset:', error);
-      throw error;
-    }
-  },
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple Asset records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Asset objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: AssetType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const CREATE_MANY_ASSET = gql`
+          mutation createManyAsset($data: [AssetCreateManyInput!]!) {
+            createManyAsset(data: $data) {
+              count
+            }
+          }`;
 
-    const CREATE_MANY_ASSET = gql`
-      mutation createManyAsset($data: [AssetCreateManyInput!]!) {
-        createManyAsset(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = {
-      data: props.map(prop => ({
-  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+        const variables = {
+          data: props.map(prop => ({
+      symbol: prop.symbol !== undefined ? prop.symbol : undefined,
   name: prop.name !== undefined ? prop.name : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
   logoUrl: prop.logoUrl !== undefined ? prop.logoUrl : undefined,
@@ -316,57 +365,92 @@ import { removeUndefinedProps } from './utils';
   askPrice: prop.askPrice !== undefined ? prop.askPrice : undefined,
   bidPrice: prop.bidPrice !== undefined ? prop.bidPrice : undefined,
       })),
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: CREATE_MANY_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyAsset) {
-        return response.data.createManyAsset;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: CREATE_MANY_ASSET,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyAsset) {
+          return response.data.createManyAsset;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in createManyAsset:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update a single Asset record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Asset or null.
    */
   async update(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_ONE_ASSET = gql`
+          mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
+            updateOneAsset(data: $data, where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPDATE_ONE_ASSET = gql`
-      mutation updateOneAsset($data: AssetUpdateInput!, $where: AssetWhereUniqueInput!) {
-        updateOneAsset(data: $data, where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
       },
-      data: {
-  id: props.id !== undefined ? {
+          data: {
+      id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
   symbol: props.symbol !== undefined ? {
@@ -700,57 +784,92 @@ import { removeUndefinedProps } from './utils';
     }))
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneAsset) {
-        return response.data.updateOneAsset;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPDATE_ONE_ASSET,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneAsset) {
+          return response.data.updateOneAsset;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateOneAsset:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Upsert a single Asset record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Asset or null.
    */
   async upsert(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPSERT_ONE_ASSET = gql`
+          mutation upsertOneAsset($where: AssetWhereUniqueInput!, $create: AssetCreateInput!, $update: AssetUpdateInput!) {
+            upsertOneAsset(where: $where, create: $create, update: $update) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPSERT_ONE_ASSET = gql`
-      mutation upsertOneAsset($where: AssetWhereUniqueInput!, $create: AssetCreateInput!, $update: AssetUpdateInput!) {
-        upsertOneAsset(where: $where, create: $create, update: $update) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
       },
-      create: {
-    symbol: props.symbol !== undefined ? props.symbol : undefined,
+          create: {
+        symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
   type: props.type !== undefined ? props.type : undefined,
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
@@ -863,8 +982,8 @@ import { removeUndefinedProps } from './utils';
     }))
   } : undefined,
       },
-      update: {
-  symbol: props.symbol !== undefined ? {
+          update: {
+      symbol: props.symbol !== undefined ? {
             set: props.symbol 
            } : undefined,
   name: props.name !== undefined ? {
@@ -1189,58 +1308,93 @@ import { removeUndefinedProps } from './utils';
     }))
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOneAsset) {
-        return response.data.upsertOneAsset;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPSERT_ONE_ASSET,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneAsset) {
+          return response.data.upsertOneAsset;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in upsertOneAsset:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update multiple Asset records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Asset objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: AssetType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_MANY_ASSET = gql`
+          mutation updateManyAsset($data: [AssetCreateManyInput!]!) {
+            updateManyAsset(data: $data) {
+              count
+            }
+          }`;
 
-    const UPDATE_MANY_ASSET = gql`
-      mutation updateManyAsset($data: [AssetCreateManyInput!]!) {
-        updateManyAsset(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = props.map(prop => ({
-      where: {
-          id: prop.id !== undefined ? prop.id : undefined,
+        const variables = props.map(prop => ({
+          where: {
+              id: prop.id !== undefined ? prop.id : undefined,
   symbol: prop.symbol !== undefined ? prop.symbol : undefined,
   name: prop.name !== undefined ? prop.name : undefined,
 
-      },
-      data: {
-          id: prop.id !== undefined ? {
+          },
+          data: {
+              id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
   symbol: prop.symbol !== undefined ? {
@@ -1574,187 +1728,327 @@ import { removeUndefinedProps } from './utils';
     }))
   } : undefined,
 
-      },
-      }));
+          },
+        }));
 
+        const filteredVariables = removeUndefinedProps(variables);
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const response = await client.mutate({
+          mutation: UPDATE_MANY_ASSET,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyAsset) {
-        return response.data.updateManyAsset;
-      } else {
-        return null as any;
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyAsset) {
+          return response.data.updateManyAsset;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateManyAsset:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Delete a single Asset record.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Asset or null.
    */
   async delete(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const DELETE_ONE_ASSET = gql`
+          mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
+            deleteOneAsset(where: $where) {
+              id
+            }
+          }`;
 
-    const DELETE_ONE_ASSET = gql`
-      mutation deleteOneAsset($where: AssetWhereUniqueInput!) {
-        deleteOneAsset(where: $where) {
-          id
+        const variables = {
+          where: {
+            id: props.id ? props.id : undefined,
+          }
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: DELETE_ONE_ASSET,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneAsset) {
+          return response.data.deleteOneAsset;
+        } else {
+          return null as any;
         }
-      }`;
+      } catch (error: any) {
+        lastError = error;
 
-    const variables = {
-      where: {
-        id: props.id ? props.id : undefined,
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    };
-
-    const filteredVariables = removeUndefinedProps(variables);
-
-    try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneAsset) {
-        return response.data.deleteOneAsset;
-      } else {
-        return null as any;
-      }
-    } catch (error) {
-      console.error('Error in deleteOneAsset:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve a single Asset record by ID.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns The retrieved Asset or null.
    */
   async get(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AssetType | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ASSET = gql`
+          query getAsset($where: AssetWhereUniqueInput!) {
+            getAsset(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ASSET = gql`
-      query getAsset($where: AssetWhereUniqueInput!) {
-        getAsset(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
 },
-};
-    const filteredVariables = removeUndefinedProps(variables);
+        };
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: GET_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getAsset ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Asset found') {
-        return null;
-      } else {
-        console.error('Error in getAsset:', error);
+        const response = await client.query({
+          query: GET_ASSET,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.getAsset ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Asset found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve all Assets records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
    * @returns An array of Asset records or null.
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AssetType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALL_ASSET = gql`
+          query getAllAsset {
+            assets {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ALL_ASSET = gql`
-      query getAllAsset {
-        assets {
-          ${selectionSet}
+        const response = await client.query({
+          query: GET_ALL_ASSET,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.assets ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Asset found') {
+          return null;
         }
-      }`;
 
-    try {
-      const response = await client.query({ query: GET_ALL_ASSET });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.assets ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Asset found') {
-        return null;
-      } else {
-        console.error('Error in getAsset:', error);
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Find multiple Asset records based on conditions.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns An array of found Asset records or null.
    */
   async findMany(props: AssetType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AssetType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const FIND_MANY_ASSET = gql`
+          query findManyAsset($where: AssetWhereInput!) {
+            assets(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const FIND_MANY_ASSET = gql`
-      query findManyAsset($where: AssetWhereInput!) {
-        assets(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-  id: props.id !== undefined ? {
+        const variables = {
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
   symbol: props.symbol !== undefined ? {
@@ -1764,25 +2058,53 @@ import { removeUndefinedProps } from './utils';
     equals: props.name 
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: FIND_MANY_ASSET, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.assets) {
-        return response.data.assets;
-      } else {
-       return [] as AssetType[];
-      }
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Asset found') {
-        return null;
-      } else {
-        console.error('Error in getAsset:', error);
+        const response = await client.query({
+          query: FIND_MANY_ASSET,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.assets) {
+          return response.data.assets;
+        } else {
+          return [] as AssetType[];
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Asset found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   }
 };

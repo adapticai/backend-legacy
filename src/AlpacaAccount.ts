@@ -86,28 +86,42 @@ id
      * @returns The created AlpacaAccount or null.
      */
 
+    /**
+     * Create a new AlpacaAccount record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created AlpacaAccount or null.
+     */
     async create(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-    const { gql, ApolloError } = modules;
+          const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_ALPACAACCOUNT = gql`
-        mutation createOneAlpacaAccount($data: AlpacaAccountCreateInput!) {
-          createOneAlpacaAccount(data: $data) {
-            ${selectionSet}
-          }
-        }
-     `;
+          const CREATE_ONE_ALPACAACCOUNT = gql`
+              mutation createOneAlpacaAccount($data: AlpacaAccountCreateInput!) {
+                createOneAlpacaAccount(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
 
-      const variables = {
-        data: {
-            type: props.type !== undefined ? props.type : undefined,
+          const variables = {
+            data: {
+                type: props.type !== undefined ? props.type : undefined,
   APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
   APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
   configuration: props.configuration !== undefined ? props.configuration : undefined,
@@ -300,53 +314,88 @@ id
     }))
   } : undefined,
 
-        },
-      };
+            },
+          };
 
-      const filteredVariables = removeUndefinedProps(variables);
+          const filteredVariables = removeUndefinedProps(variables);
 
-      try {
-      const response = await client.mutate({ mutation: CREATE_ONE_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneAlpacaAccount) {
-        return response.data.createOneAlpacaAccount;
-      } else {
-        return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_ALPACAACCOUNT,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneAlpacaAccount) {
+            return response.data.createOneAlpacaAccount;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            console.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          console.error("Database error occurred:", error);
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Error in createOneAlpacaAccount:', error);
-      throw error;
-    }
-  },
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple AlpacaAccount records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of AlpacaAccount objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const CREATE_MANY_ALPACAACCOUNT = gql`
+          mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
+            createManyAlpacaAccount(data: $data) {
+              count
+            }
+          }`;
 
-    const CREATE_MANY_ALPACAACCOUNT = gql`
-      mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
-        createManyAlpacaAccount(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = {
-      data: props.map(prop => ({
-  type: prop.type !== undefined ? prop.type : undefined,
+        const variables = {
+          data: props.map(prop => ({
+      type: prop.type !== undefined ? prop.type : undefined,
   APIKey: prop.APIKey !== undefined ? prop.APIKey : undefined,
   APISecret: prop.APISecret !== undefined ? prop.APISecret : undefined,
   configuration: prop.configuration !== undefined ? prop.configuration : undefined,
@@ -372,58 +421,93 @@ id
   minimumPriceChangePercent100: prop.minimumPriceChangePercent100 !== undefined ? prop.minimumPriceChangePercent100 : undefined,
   userId: prop.userId !== undefined ? prop.userId : undefined,
       })),
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: CREATE_MANY_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyAlpacaAccount) {
-        return response.data.createManyAlpacaAccount;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: CREATE_MANY_ALPACAACCOUNT,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyAlpacaAccount) {
+          return response.data.createManyAlpacaAccount;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in createManyAlpacaAccount:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update a single AlpacaAccount record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated AlpacaAccount or null.
    */
   async update(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_ONE_ALPACAACCOUNT = gql`
+          mutation updateOneAlpacaAccount($data: AlpacaAccountUpdateInput!, $where: AlpacaAccountWhereUniqueInput!) {
+            updateOneAlpacaAccount(data: $data, where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPDATE_ONE_ALPACAACCOUNT = gql`
-      mutation updateOneAlpacaAccount($data: AlpacaAccountUpdateInput!, $where: AlpacaAccountWhereUniqueInput!) {
-        updateOneAlpacaAccount(data: $data, where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
-      data: {
-  id: props.id !== undefined ? {
+          data: {
+      id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
   type: props.type !== undefined ? {
@@ -930,58 +1014,93 @@ id
     }))
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneAlpacaAccount) {
-        return response.data.updateOneAlpacaAccount;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPDATE_ONE_ALPACAACCOUNT,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneAlpacaAccount) {
+          return response.data.updateOneAlpacaAccount;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateOneAlpacaAccount:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Upsert a single AlpacaAccount record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated AlpacaAccount or null.
    */
   async upsert(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPSERT_ONE_ALPACAACCOUNT = gql`
+          mutation upsertOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!, $create: AlpacaAccountCreateInput!, $update: AlpacaAccountUpdateInput!) {
+            upsertOneAlpacaAccount(where: $where, create: $create, update: $update) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPSERT_ONE_ALPACAACCOUNT = gql`
-      mutation upsertOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!, $create: AlpacaAccountCreateInput!, $update: AlpacaAccountUpdateInput!) {
-        upsertOneAlpacaAccount(where: $where, create: $create, update: $update) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
-      create: {
-    type: props.type !== undefined ? props.type : undefined,
+          create: {
+        type: props.type !== undefined ? props.type : undefined,
   APIKey: props.APIKey !== undefined ? props.APIKey : undefined,
   APISecret: props.APISecret !== undefined ? props.APISecret : undefined,
   configuration: props.configuration !== undefined ? props.configuration : undefined,
@@ -1174,8 +1293,8 @@ id
     }))
   } : undefined,
       },
-      update: {
-  type: props.type !== undefined ? {
+          update: {
+      type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
   APIKey: props.APIKey !== undefined ? {
@@ -1673,59 +1792,94 @@ id
     }))
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOneAlpacaAccount) {
-        return response.data.upsertOneAlpacaAccount;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPSERT_ONE_ALPACAACCOUNT,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneAlpacaAccount) {
+          return response.data.upsertOneAlpacaAccount;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in upsertOneAlpacaAccount:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update multiple AlpacaAccount records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of AlpacaAccount objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_MANY_ALPACAACCOUNT = gql`
+          mutation updateManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
+            updateManyAlpacaAccount(data: $data) {
+              count
+            }
+          }`;
 
-    const UPDATE_MANY_ALPACAACCOUNT = gql`
-      mutation updateManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
-        updateManyAlpacaAccount(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = props.map(prop => ({
-      where: {
-          id: prop.id !== undefined ? prop.id : undefined,
+        const variables = props.map(prop => ({
+          where: {
+              id: prop.id !== undefined ? prop.id : undefined,
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
 
-      },
-      data: {
-          id: prop.id !== undefined ? {
+          },
+          data: {
+              id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
   type: prop.type !== undefined ? {
@@ -2232,213 +2386,381 @@ id
     }))
   } : undefined,
 
-      },
-      }));
+          },
+        }));
 
+        const filteredVariables = removeUndefinedProps(variables);
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const response = await client.mutate({
+          mutation: UPDATE_MANY_ALPACAACCOUNT,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyAlpacaAccount) {
-        return response.data.updateManyAlpacaAccount;
-      } else {
-        return null as any;
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyAlpacaAccount) {
+          return response.data.updateManyAlpacaAccount;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateManyAlpacaAccount:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Delete a single AlpacaAccount record.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
    * @returns The deleted AlpacaAccount or null.
    */
   async delete(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const DELETE_ONE_ALPACAACCOUNT = gql`
+          mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
+            deleteOneAlpacaAccount(where: $where) {
+              id
+            }
+          }`;
 
-    const DELETE_ONE_ALPACAACCOUNT = gql`
-      mutation deleteOneAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
-        deleteOneAlpacaAccount(where: $where) {
-          id
+        const variables = {
+          where: {
+            id: props.id ? props.id : undefined,
+          }
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: DELETE_ONE_ALPACAACCOUNT,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneAlpacaAccount) {
+          return response.data.deleteOneAlpacaAccount;
+        } else {
+          return null as any;
         }
-      }`;
+      } catch (error: any) {
+        lastError = error;
 
-    const variables = {
-      where: {
-        id: props.id ? props.id : undefined,
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    };
-
-    const filteredVariables = removeUndefinedProps(variables);
-
-    try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneAlpacaAccount) {
-        return response.data.deleteOneAlpacaAccount;
-      } else {
-        return null as any;
-      }
-    } catch (error) {
-      console.error('Error in deleteOneAlpacaAccount:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve a single AlpacaAccount record by ID.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns The retrieved AlpacaAccount or null.
    */
   async get(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlpacaAccountType | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALPACAACCOUNT = gql`
+          query getAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
+            getAlpacaAccount(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ALPACAACCOUNT = gql`
-      query getAlpacaAccount($where: AlpacaAccountWhereUniqueInput!) {
-        getAlpacaAccount(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
 },
-};
-    const filteredVariables = removeUndefinedProps(variables);
+        };
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: GET_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getAlpacaAccount ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
-        return null;
-      } else {
-        console.error('Error in getAlpacaAccount:', error);
+        const response = await client.query({
+          query: GET_ALPACAACCOUNT,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.getAlpacaAccount ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No AlpacaAccount found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve all AlpacaAccounts records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
    * @returns An array of AlpacaAccount records or null.
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AlpacaAccountType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALL_ALPACAACCOUNT = gql`
+          query getAllAlpacaAccount {
+            alpacaAccounts {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ALL_ALPACAACCOUNT = gql`
-      query getAllAlpacaAccount {
-        alpacaAccounts {
-          ${selectionSet}
+        const response = await client.query({
+          query: GET_ALL_ALPACAACCOUNT,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.alpacaAccounts ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No AlpacaAccount found') {
+          return null;
         }
-      }`;
 
-    try {
-      const response = await client.query({ query: GET_ALL_ALPACAACCOUNT });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.alpacaAccounts ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
-        return null;
-      } else {
-        console.error('Error in getAlpacaAccount:', error);
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Find multiple AlpacaAccount records based on conditions.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns An array of found AlpacaAccount records or null.
    */
   async findMany(props: AlpacaAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlpacaAccountType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const FIND_MANY_ALPACAACCOUNT = gql`
+          query findManyAlpacaAccount($where: AlpacaAccountWhereInput!) {
+            alpacaAccounts(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const FIND_MANY_ALPACAACCOUNT = gql`
-      query findManyAlpacaAccount($where: AlpacaAccountWhereInput!) {
-        alpacaAccounts(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-  id: props.id !== undefined ? {
+        const variables = {
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: FIND_MANY_ALPACAACCOUNT, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.alpacaaccounts) {
-        return response.data.alpacaAccounts;
-      } else {
-       return [] as AlpacaAccountType[];
-      }
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No AlpacaAccount found') {
-        return null;
-      } else {
-        console.error('Error in getAlpacaAccount:', error);
+        const response = await client.query({
+          query: FIND_MANY_ALPACAACCOUNT,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.alpacaaccounts) {
+          return response.data.alpacaAccounts;
+        } else {
+          return [] as AlpacaAccountType[];
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No AlpacaAccount found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   }
 };

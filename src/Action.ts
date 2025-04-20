@@ -32,28 +32,42 @@ import { removeUndefinedProps } from './utils';
      * @returns The created Action or null.
      */
 
+    /**
+     * Create a new Action record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created Action or null.
+     */
     async create(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-    const { gql, ApolloError } = modules;
+          const { gql, ApolloError } = modules;
 
-    const CREATE_ONE_ACTION = gql`
-        mutation createOneAction($data: ActionCreateInput!) {
-          createOneAction(data: $data) {
-            ${selectionSet}
-          }
-        }
-     `;
+          const CREATE_ONE_ACTION = gql`
+              mutation createOneAction($data: ActionCreateInput!) {
+                createOneAction(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
 
-      const variables = {
-        data: {
-            sequence: props.sequence !== undefined ? props.sequence : undefined,
+          const variables = {
+            data: {
+                sequence: props.sequence !== undefined ? props.sequence : undefined,
   type: props.type !== undefined ? props.type : undefined,
   primary: props.primary !== undefined ? props.primary : undefined,
   note: props.note !== undefined ? props.note : undefined,
@@ -77,9 +91,6 @@ import { removeUndefinedProps } from './utils';
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
-        qty: props.trade.qty !== undefined ? props.trade.qty : undefined,
-        price: props.trade.price !== undefined ? props.trade.price : undefined,
-        total: props.trade.total !== undefined ? props.trade.total : undefined,
         signal: props.trade.signal !== undefined ? props.trade.signal : undefined,
         strategy: props.trade.strategy !== undefined ? props.trade.strategy : undefined,
         analysis: props.trade.analysis !== undefined ? props.trade.analysis : undefined,
@@ -106,53 +117,88 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
 
-        },
-      };
+            },
+          };
 
-      const filteredVariables = removeUndefinedProps(variables);
+          const filteredVariables = removeUndefinedProps(variables);
 
-      try {
-      const response = await client.mutate({ mutation: CREATE_ONE_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createOneAction) {
-        return response.data.createOneAction;
-      } else {
-        return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_ACTION,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneAction) {
+            return response.data.createOneAction;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            console.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          console.error("Database error occurred:", error);
+          throw error;
+        }
       }
-    } catch (error) {
-      console.error('Error in createOneAction:', error);
-      throw error;
-    }
-  },
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple Action records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Action objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const CREATE_MANY_ACTION = gql`
+          mutation createManyAction($data: [ActionCreateManyInput!]!) {
+            createManyAction(data: $data) {
+              count
+            }
+          }`;
 
-    const CREATE_MANY_ACTION = gql`
-      mutation createManyAction($data: [ActionCreateManyInput!]!) {
-        createManyAction(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = {
-      data: props.map(prop => ({
-  sequence: prop.sequence !== undefined ? prop.sequence : undefined,
+        const variables = {
+          data: props.map(prop => ({
+      sequence: prop.sequence !== undefined ? prop.sequence : undefined,
   tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
   primary: prop.primary !== undefined ? prop.primary : undefined,
@@ -160,59 +206,94 @@ import { removeUndefinedProps } from './utils';
   status: prop.status !== undefined ? prop.status : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
       })),
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: CREATE_MANY_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.createManyAction) {
-        return response.data.createManyAction;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: CREATE_MANY_ACTION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyAction) {
+          return response.data.createManyAction;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in createManyAction:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update a single Action record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Action or null.
    */
   async update(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_ONE_ACTION = gql`
+          mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
+            updateOneAction(data: $data, where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPDATE_ONE_ACTION = gql`
-      mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
-        updateOneAction(data: $data, where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
   } : undefined,
       },
-      data: {
-  id: props.id !== undefined ? {
+          data: {
+      id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
   sequence: props.sequence !== undefined ? {
@@ -264,15 +345,6 @@ import { removeUndefinedProps } from './utils';
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? {
             set: props.trade.alpacaAccountId
           } : undefined,
-        qty: props.trade.qty !== undefined ? {
-            set: props.trade.qty
-          } : undefined,
-        price: props.trade.price !== undefined ? {
-            set: props.trade.price
-          } : undefined,
-        total: props.trade.total !== undefined ? {
-            set: props.trade.total
-          } : undefined,
         signal: props.trade.signal !== undefined ? {
             set: props.trade.signal
           } : undefined,
@@ -342,9 +414,6 @@ import { removeUndefinedProps } from './utils';
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
-        qty: props.trade.qty !== undefined ? props.trade.qty : undefined,
-        price: props.trade.price !== undefined ? props.trade.price : undefined,
-        total: props.trade.total !== undefined ? props.trade.total : undefined,
         signal: props.trade.signal !== undefined ? props.trade.signal : undefined,
         strategy: props.trade.strategy !== undefined ? props.trade.strategy : undefined,
         analysis: props.trade.analysis !== undefined ? props.trade.analysis : undefined,
@@ -371,59 +440,94 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_ONE_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateOneAction) {
-        return response.data.updateOneAction;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPDATE_ONE_ACTION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneAction) {
+          return response.data.updateOneAction;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateOneAction:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Upsert a single Action record.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
    * @returns The updated Action or null.
    */
   async upsert(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPSERT_ONE_ACTION = gql`
+          mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
+            upsertOneAction(where: $where, create: $create, update: $update) {
+              ${selectionSet}
+            }
+          }`;
 
-    const UPSERT_ONE_ACTION = gql`
-      mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
-        upsertOneAction(where: $where, create: $create, update: $update) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: {
+            id: props.id !== undefined ? props.id : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
   } : undefined,
       },
-      create: {
-    sequence: props.sequence !== undefined ? props.sequence : undefined,
+          create: {
+        sequence: props.sequence !== undefined ? props.sequence : undefined,
   type: props.type !== undefined ? props.type : undefined,
   primary: props.primary !== undefined ? props.primary : undefined,
   note: props.note !== undefined ? props.note : undefined,
@@ -447,9 +551,6 @@ import { removeUndefinedProps } from './utils';
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
-        qty: props.trade.qty !== undefined ? props.trade.qty : undefined,
-        price: props.trade.price !== undefined ? props.trade.price : undefined,
-        total: props.trade.total !== undefined ? props.trade.total : undefined,
         signal: props.trade.signal !== undefined ? props.trade.signal : undefined,
         strategy: props.trade.strategy !== undefined ? props.trade.strategy : undefined,
         analysis: props.trade.analysis !== undefined ? props.trade.analysis : undefined,
@@ -476,8 +577,8 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
       },
-      update: {
-  sequence: props.sequence !== undefined ? {
+          update: {
+      sequence: props.sequence !== undefined ? {
             set: props.sequence 
            } : undefined,
   type: props.type !== undefined ? {
@@ -520,15 +621,6 @@ import { removeUndefinedProps } from './utils';
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? {
             set: props.trade.alpacaAccountId
           } : undefined,
-        qty: props.trade.qty !== undefined ? {
-            set: props.trade.qty
-          } : undefined,
-        price: props.trade.price !== undefined ? {
-            set: props.trade.price
-          } : undefined,
-        total: props.trade.total !== undefined ? {
-            set: props.trade.total
-          } : undefined,
         signal: props.trade.signal !== undefined ? {
             set: props.trade.signal
           } : undefined,
@@ -598,9 +690,6 @@ import { removeUndefinedProps } from './utils';
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
-        qty: props.trade.qty !== undefined ? props.trade.qty : undefined,
-        price: props.trade.price !== undefined ? props.trade.price : undefined,
-        total: props.trade.total !== undefined ? props.trade.total : undefined,
         signal: props.trade.signal !== undefined ? props.trade.signal : undefined,
         strategy: props.trade.strategy !== undefined ? props.trade.strategy : undefined,
         analysis: props.trade.analysis !== undefined ? props.trade.analysis : undefined,
@@ -627,60 +716,95 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.mutate({ mutation: UPSERT_ONE_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.upsertOneAction) {
-        return response.data.upsertOneAction;
-      } else {
-        return null as any;
+        const response = await client.mutate({
+          mutation: UPSERT_ONE_ACTION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneAction) {
+          return response.data.upsertOneAction;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in upsertOneAction:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Update multiple Action records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Action objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
   async updateMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const UPDATE_MANY_ACTION = gql`
+          mutation updateManyAction($data: [ActionCreateManyInput!]!) {
+            updateManyAction(data: $data) {
+              count
+            }
+          }`;
 
-    const UPDATE_MANY_ACTION = gql`
-      mutation updateManyAction($data: [ActionCreateManyInput!]!) {
-        updateManyAction(data: $data) {
-          count
-        }
-      }`;
-
-    const variables = props.map(prop => ({
-      where: {
-          id: prop.id !== undefined ? prop.id : undefined,
+        const variables = props.map(prop => ({
+          where: {
+              id: prop.id !== undefined ? prop.id : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
   tradeId: prop.tradeId !== undefined ? {
     equals: prop.tradeId 
   } : undefined,
 
-      },
-      data: {
-          id: prop.id !== undefined ? {
+          },
+          data: {
+              id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
   sequence: prop.sequence !== undefined ? {
@@ -731,15 +855,6 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         alpacaAccountId: prop.trade.alpacaAccountId !== undefined ? {
             set: prop.trade.alpacaAccountId
-          } : undefined,
-        qty: prop.trade.qty !== undefined ? {
-            set: prop.trade.qty
-          } : undefined,
-        price: prop.trade.price !== undefined ? {
-            set: prop.trade.price
-          } : undefined,
-        total: prop.trade.total !== undefined ? {
-            set: prop.trade.total
           } : undefined,
         signal: prop.trade.signal !== undefined ? {
             set: prop.trade.signal
@@ -810,9 +925,6 @@ import { removeUndefinedProps } from './utils';
       },
       create: {
         alpacaAccountId: prop.trade.alpacaAccountId !== undefined ? prop.trade.alpacaAccountId : undefined,
-        qty: prop.trade.qty !== undefined ? prop.trade.qty : undefined,
-        price: prop.trade.price !== undefined ? prop.trade.price : undefined,
-        total: prop.trade.total !== undefined ? prop.trade.total : undefined,
         signal: prop.trade.signal !== undefined ? prop.trade.signal : undefined,
         strategy: prop.trade.strategy !== undefined ? prop.trade.strategy : undefined,
         analysis: prop.trade.analysis !== undefined ? prop.trade.analysis : undefined,
@@ -839,214 +951,382 @@ import { removeUndefinedProps } from './utils';
     }
   } : undefined,
 
-      },
-      }));
+          },
+        }));
 
+        const filteredVariables = removeUndefinedProps(variables);
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const response = await client.mutate({
+          mutation: UPDATE_MANY_ACTION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
 
-    try {
-      const response = await client.mutate({ mutation: UPDATE_MANY_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.updateManyAction) {
-        return response.data.updateManyAction;
-      } else {
-        return null as any;
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyAction) {
+          return response.data.updateManyAction;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error('Error in updateManyAction:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Delete a single Action record.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Action or null.
    */
   async delete(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const DELETE_ONE_ACTION = gql`
+          mutation deleteOneAction($where: ActionWhereUniqueInput!) {
+            deleteOneAction(where: $where) {
+              id
+            }
+          }`;
 
-    const DELETE_ONE_ACTION = gql`
-      mutation deleteOneAction($where: ActionWhereUniqueInput!) {
-        deleteOneAction(where: $where) {
-          id
+        const variables = {
+          where: {
+            id: props.id ? props.id : undefined,
+          }
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: DELETE_ONE_ACTION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache'
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneAction) {
+          return response.data.deleteOneAction;
+        } else {
+          return null as any;
         }
-      }`;
+      } catch (error: any) {
+        lastError = error;
 
-    const variables = {
-      where: {
-        id: props.id ? props.id : undefined,
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
+        throw error;
       }
-    };
-
-    const filteredVariables = removeUndefinedProps(variables);
-
-    try {
-      const response = await client.mutate({ mutation: DELETE_ONE_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.deleteOneAction) {
-        return response.data.deleteOneAction;
-      } else {
-        return null as any;
-      }
-    } catch (error) {
-      console.error('Error in deleteOneAction:', error);
-      throw error;
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve a single Action record by ID.
-   * @param props - Properties to update.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns The retrieved Action or null.
    */
   async get(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ACTION = gql`
+          query getAction($where: ActionWhereUniqueInput!) {
+            getAction(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ACTION = gql`
-      query getAction($where: ActionWhereUniqueInput!) {
-        getAction(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-        id: props.id !== undefined ? props.id : undefined,
+        const variables = {
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
   } : undefined,
 },
-};
-    const filteredVariables = removeUndefinedProps(variables);
+        };
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: GET_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.getAction ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Action found') {
-        return null;
-      } else {
-        console.error('Error in getAction:', error);
+        const response = await client.query({
+          query: GET_ACTION,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.getAction ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Action found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Retrieve all Actions records.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
    * @returns An array of Action records or null.
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const GET_ALL_ACTION = gql`
+          query getAllAction {
+            actions {
+              ${selectionSet}
+            }
+          }`;
 
-    const GET_ALL_ACTION = gql`
-      query getAllAction {
-        actions {
-          ${selectionSet}
+        const response = await client.query({
+          query: GET_ALL_ACTION,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        return response.data?.actions ?? null;
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Action found') {
+          return null;
         }
-      }`;
 
-    try {
-      const response = await client.query({ query: GET_ALL_ACTION });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      return response.data?.actions ?? null;
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Action found') {
-        return null;
-      } else {
-        console.error('Error in getAction:', error);
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   },
 
   /**
    * Find multiple Action records based on conditions.
+   * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
+   * @param whereInput - Optional custom where input.
    * @returns An array of found Action records or null.
    */
   async findMany(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType[] | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 3;
+    let retryCount = 0;
+    let lastError: any = null;
 
-    const [modules, client] = await Promise.all([
-      getApolloModules(),
-      globalClient
-        ? Promise.resolve(globalClient)
-        : importedClient
-    ]);
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
+        ]);
 
-    const { gql, ApolloError } = modules;
+        const { gql, ApolloError } = modules;
 
+        const FIND_MANY_ACTION = gql`
+          query findManyAction($where: ActionWhereInput!) {
+            actions(where: $where) {
+              ${selectionSet}
+            }
+          }`;
 
-    const FIND_MANY_ACTION = gql`
-      query findManyAction($where: ActionWhereInput!) {
-        actions(where: $where) {
-          ${selectionSet}
-        }
-      }`;
-
-    const variables = {
-      where: whereInput ? whereInput : {
-  id: props.id !== undefined ? {
+        const variables = {
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
   tradeId: props.tradeId !== undefined ? {
     equals: props.tradeId 
   } : undefined,
       },
-    };
+        };
 
-    const filteredVariables = removeUndefinedProps(variables);
+        const filteredVariables = removeUndefinedProps(variables);
 
-    try {
-      const response = await client.query({ query: FIND_MANY_ACTION, variables: filteredVariables });
-      if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-      if (response && response.data && response.data.actions) {
-        return response.data.actions;
-      } else {
-       return [] as ActionType[];
-      }
-    } catch (error: any) {
-      if (error instanceof ApolloError && error.message === 'No Action found') {
-        return null;
-      } else {
-        console.error('Error in getAction:', error);
+        const response = await client.query({
+          query: FIND_MANY_ACTION,
+          variables: filteredVariables,
+          fetchPolicy: 'network-only', // Force network request to avoid stale cache
+        });
+
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.actions) {
+          return response.data.actions;
+        } else {
+          return [] as ActionType[];
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a "No record found" error - this is an expected condition, not a failure
+        if (error.message === 'No Action found') {
+          return null;
+        }
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+          console.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        console.error("Database error occurred:", error);
         throw error;
       }
     }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
   }
 };
