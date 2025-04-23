@@ -21,7 +21,7 @@
     "build:server": "tsc --project tsconfig.server.json",
     "build:package": "npm run build && npm run prepare-package-folder",
     "start": "npm run migrate && node dist/server.js",
-    "generate": "SKIP_PRISMA_VERSION_CHECK=true npx prisma generate",
+    "generate": "SKIP_PRISMA_VERSION_CHECK=true npx prisma generate --no-engine",
     "migrate:dev": "SKIP_PRISMA_VERSION_CHECK=true npx prisma migrate dev && npm run migrate",
     "migrate": "npx prisma migrate deploy",
     "update-backend-functions": "node update-backend-functions.mjs",

@@ -329,49 +329,11 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy 
-  } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis 
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary 
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence 
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  entryTime: props.entryTime !== undefined ? {
-    equals: props.entryTime 
-  } : undefined,
-  exitTime: props.exitTime !== undefined ? {
-    equals: props.exitTime 
-  } : undefined,
-  marketPhase: props.marketPhase !== undefined ? {
-    equals: props.marketPhase 
-  } : undefined,
-  marketVolatility: props.marketVolatility !== undefined ? {
-    equals: props.marketVolatility 
-  } : undefined,
-  thresholdsJson: props.thresholdsJson !== undefined ? {
-    equals: props.thresholdsJson 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
       },
           data: {
@@ -581,49 +543,11 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy 
-  } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis 
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary 
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence 
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  entryTime: props.entryTime !== undefined ? {
-    equals: props.entryTime 
-  } : undefined,
-  exitTime: props.exitTime !== undefined ? {
-    equals: props.exitTime 
-  } : undefined,
-  marketPhase: props.marketPhase !== undefined ? {
-    equals: props.marketPhase 
-  } : undefined,
-  marketVolatility: props.marketVolatility !== undefined ? {
-    equals: props.marketVolatility 
-  } : undefined,
-  thresholdsJson: props.thresholdsJson !== undefined ? {
-    equals: props.thresholdsJson 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
       },
           create: {
@@ -873,49 +797,11 @@ import { removeUndefinedProps } from './utils';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
-  signal: prop.signal !== undefined ? {
-    equals: prop.signal 
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
+    equals: prop.alpacaAccountId 
   } : undefined,
-  strategy: prop.strategy !== undefined ? {
-    equals: prop.strategy 
-  } : undefined,
-  analysis: prop.analysis !== undefined ? {
-    equals: prop.analysis 
-  } : undefined,
-  summary: prop.summary !== undefined ? {
-    equals: prop.summary 
-  } : undefined,
-  confidence: prop.confidence !== undefined ? {
-    equals: prop.confidence 
-  } : undefined,
-  timestamp: prop.timestamp !== undefined ? {
-    equals: prop.timestamp 
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt 
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt 
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status 
-  } : undefined,
-  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
-  entryTime: prop.entryTime !== undefined ? {
-    equals: prop.entryTime 
-  } : undefined,
-  exitTime: prop.exitTime !== undefined ? {
-    equals: prop.exitTime 
-  } : undefined,
-  marketPhase: prop.marketPhase !== undefined ? {
-    equals: prop.marketPhase 
-  } : undefined,
-  marketVolatility: prop.marketVolatility !== undefined ? {
-    equals: prop.marketVolatility 
-  } : undefined,
-  thresholdsJson: prop.thresholdsJson !== undefined ? {
-    equals: prop.thresholdsJson 
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
   } : undefined,
 
           },
@@ -1210,49 +1096,11 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy 
-  } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis 
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary 
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence 
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  entryTime: props.entryTime !== undefined ? {
-    equals: props.entryTime 
-  } : undefined,
-  exitTime: props.exitTime !== undefined ? {
-    equals: props.exitTime 
-  } : undefined,
-  marketPhase: props.marketPhase !== undefined ? {
-    equals: props.marketPhase 
-  } : undefined,
-  marketVolatility: props.marketVolatility !== undefined ? {
-    equals: props.marketVolatility 
-  } : undefined,
-  thresholdsJson: props.thresholdsJson !== undefined ? {
-    equals: props.thresholdsJson 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
 },
         };
@@ -1407,50 +1255,14 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  signal: props.signal !== undefined ? {
-    equals: props.signal 
+      id: props.id !== undefined ? {
+    equals: props.id 
   } : undefined,
-  strategy: props.strategy !== undefined ? {
-    equals: props.strategy 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
-  analysis: props.analysis !== undefined ? {
-    equals: props.analysis 
-  } : undefined,
-  summary: props.summary !== undefined ? {
-    equals: props.summary 
-  } : undefined,
-  confidence: props.confidence !== undefined ? {
-    equals: props.confidence 
-  } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-    equals: props.timestamp 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  entryTime: props.entryTime !== undefined ? {
-    equals: props.entryTime 
-  } : undefined,
-  exitTime: props.exitTime !== undefined ? {
-    equals: props.exitTime 
-  } : undefined,
-  marketPhase: props.marketPhase !== undefined ? {
-    equals: props.marketPhase 
-  } : undefined,
-  marketVolatility: props.marketVolatility !== undefined ? {
-    equals: props.marketVolatility 
-  } : undefined,
-  thresholdsJson: props.thresholdsJson !== undefined ? {
-    equals: props.thresholdsJson 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
       },
         };

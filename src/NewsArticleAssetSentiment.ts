@@ -423,15 +423,8 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore 
-  } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore 
-  } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel 
+  newsArticleId: props.newsArticleId !== undefined ? {
+    equals: props.newsArticleId 
   } : undefined,
       },
           data: {
@@ -863,15 +856,8 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore 
-  } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore 
-  } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel 
+  newsArticleId: props.newsArticleId !== undefined ? {
+    equals: props.newsArticleId 
   } : undefined,
       },
           create: {
@@ -1412,15 +1398,8 @@ import { removeUndefinedProps } from './utils';
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
   url: prop.url !== undefined ? prop.url : undefined,
-  newsArticleId: prop.newsArticleId !== undefined ? prop.newsArticleId : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? {
-    equals: prop.relevancyScore 
-  } : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? {
-    equals: prop.sentimentScore 
-  } : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? {
-    equals: prop.sentimentLabel 
+  newsArticleId: prop.newsArticleId !== undefined ? {
+    equals: prop.newsArticleId 
   } : undefined,
 
           },
@@ -1937,15 +1916,8 @@ import { removeUndefinedProps } from './utils';
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore 
-  } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore 
-  } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel 
+  newsArticleId: props.newsArticleId !== undefined ? {
+    equals: props.newsArticleId 
   } : undefined,
 },
         };
@@ -2100,17 +2072,14 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? props.id : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? props.newsArticleId : undefined,
-  url: props.url !== undefined ? props.url : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-    equals: props.relevancyScore 
+      id: props.id !== undefined ? {
+    equals: props.id 
   } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-    equals: props.sentimentScore 
+  newsArticleId: props.newsArticleId !== undefined ? {
+    equals: props.newsArticleId 
   } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-    equals: props.sentimentLabel 
+  url: props.url !== undefined ? {
+    equals: props.url 
   } : undefined,
       },
         };

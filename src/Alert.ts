@@ -422,18 +422,8 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  message: props.message !== undefined ? {
-    equals: props.message 
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
       },
           data: {
@@ -1191,18 +1181,8 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  message: props.message !== undefined ? {
-    equals: props.message 
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
       },
           create: {
@@ -2143,18 +2123,8 @@ import { removeUndefinedProps } from './utils';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
-  message: prop.message !== undefined ? {
-    equals: prop.message 
-  } : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type 
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt 
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt 
+  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
+    equals: prop.alpacaAccountId 
   } : undefined,
 
           },
@@ -2997,18 +2967,8 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  message: props.message !== undefined ? {
-    equals: props.message 
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
 },
         };
@@ -3163,19 +3123,11 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  message: props.message !== undefined ? {
-    equals: props.message 
+      id: props.id !== undefined ? {
+    equals: props.id 
   } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
       },
         };

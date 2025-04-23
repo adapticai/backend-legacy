@@ -479,21 +479,6 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  stocks: props.stocks !== undefined ? {
-    equals: props.stocks 
-  } : undefined,
-  crypto: props.crypto !== undefined ? {
-    equals: props.crypto 
-  } : undefined,
-  etfs: props.etfs !== undefined ? {
-    equals: props.etfs 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -1250,21 +1235,6 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  stocks: props.stocks !== undefined ? {
-    equals: props.stocks 
-  } : undefined,
-  crypto: props.crypto !== undefined ? {
-    equals: props.crypto 
-  } : undefined,
-  etfs: props.etfs !== undefined ? {
-    equals: props.etfs 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
       },
           create: {
         stocks: props.stocks !== undefined ? props.stocks : undefined,
@@ -2206,21 +2176,6 @@ import { removeUndefinedProps } from './utils';
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
-  stocks: prop.stocks !== undefined ? {
-    equals: prop.stocks 
-  } : undefined,
-  crypto: prop.crypto !== undefined ? {
-    equals: prop.crypto 
-  } : undefined,
-  etfs: prop.etfs !== undefined ? {
-    equals: prop.etfs 
-  } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-    equals: prop.createdAt 
-  } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-    equals: prop.updatedAt 
-  } : undefined,
 
           },
           data: {
@@ -3062,21 +3017,6 @@ import { removeUndefinedProps } from './utils';
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  stocks: props.stocks !== undefined ? {
-    equals: props.stocks 
-  } : undefined,
-  crypto: props.crypto !== undefined ? {
-    equals: props.crypto 
-  } : undefined,
-  etfs: props.etfs !== undefined ? {
-    equals: props.etfs 
-  } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
-  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -3230,22 +3170,11 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? props.id : undefined,
-  stocks: props.stocks !== undefined ? {
-    equals: props.stocks 
+      id: props.id !== undefined ? {
+    equals: props.id 
   } : undefined,
-  crypto: props.crypto !== undefined ? {
-    equals: props.crypto 
-  } : undefined,
-  etfs: props.etfs !== undefined ? {
-    equals: props.etfs 
-  } : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  createdAt: props.createdAt !== undefined ? {
-    equals: props.createdAt 
-  } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-    equals: props.updatedAt 
+  alpacaAccountId: props.alpacaAccountId !== undefined ? {
+    equals: props.alpacaAccountId 
   } : undefined,
       },
         };
