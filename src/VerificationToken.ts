@@ -231,6 +231,12 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier 
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -327,6 +333,12 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier 
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
       },
           create: {
         identifier: props.identifier !== undefined ? props.identifier : undefined,
@@ -425,6 +437,12 @@ import { removeUndefinedProps } from './utils';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
+  identifier: prop.identifier !== undefined ? {
+    equals: prop.identifier 
+  } : undefined,
+  expires: prop.expires !== undefined ? {
+    equals: prop.expires 
+  } : undefined,
 
           },
           data: {
@@ -606,6 +624,12 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier 
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -759,8 +783,15 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  identifier: props.identifier !== undefined ? {
+    equals: props.identifier 
+  } : undefined,
+  token: props.token !== undefined ? {
+    equals: props.token 
+  } : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
   } : undefined,
       },
         };

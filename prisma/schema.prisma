@@ -12,9 +12,9 @@ generator typegraphql {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_DATABASE_URL")
 }
 
 /// ### Enums
@@ -679,7 +679,7 @@ model Account {
   provider String
 
   /// Unique identifier provided by the external provider.
-  providerAccountId String
+  providerAccountId String @unique
 
   /// Refresh token for the external account, if applicable. TYPESTRING.SKIP=true
   refresh_token String? @db.Text

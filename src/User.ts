@@ -218,11 +218,9 @@ id
  : { connectOrCreate: props.accounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
         userId: item.userId !== undefined ? {
             equals: item.userId 
-           } : undefined,
-        providerAccountId: item.providerAccountId !== undefined ? {
-            equals: item.providerAccountId 
            } : undefined,
       },
       create: {
@@ -534,8 +532,39 @@ id
           where: {
             id: props.id !== undefined ? props.id : undefined,
   email: props.email !== undefined ? props.email : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  name: props.name !== undefined ? props.name : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+    equals: props.emailVerified 
+  } : undefined,
+  image: props.image !== undefined ? {
+    equals: props.image 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
+  } : undefined,
+  role: props.role !== undefined ? {
+    equals: props.role 
+  } : undefined,
+  bio: props.bio !== undefined ? {
+    equals: props.bio 
+  } : undefined,
+  jobTitle: props.jobTitle !== undefined ? {
+    equals: props.jobTitle 
+  } : undefined,
+  currentAccount: props.currentAccount !== undefined ? {
+    equals: props.currentAccount 
+  } : undefined,
+  plan: props.plan !== undefined ? {
+    equals: props.plan 
+  } : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? {
+    equals: props.openaiAPIKey 
+  } : undefined,
+  openaiModel: props.openaiModel !== undefined ? {
+    equals: props.openaiModel 
   } : undefined,
       },
           data: {
@@ -650,11 +679,9 @@ id
 } : { upsert: props.accounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
         userId: item.userId !== undefined ? {
             equals: item.userId
-          } : undefined,
-        providerAccountId: item.providerAccountId !== undefined ? {
-            equals: item.providerAccountId
           } : undefined,
       },
       update: {
@@ -1069,8 +1096,39 @@ id
           where: {
             id: props.id !== undefined ? props.id : undefined,
   email: props.email !== undefined ? props.email : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  name: props.name !== undefined ? props.name : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+    equals: props.emailVerified 
+  } : undefined,
+  image: props.image !== undefined ? {
+    equals: props.image 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
+  } : undefined,
+  role: props.role !== undefined ? {
+    equals: props.role 
+  } : undefined,
+  bio: props.bio !== undefined ? {
+    equals: props.bio 
+  } : undefined,
+  jobTitle: props.jobTitle !== undefined ? {
+    equals: props.jobTitle 
+  } : undefined,
+  currentAccount: props.currentAccount !== undefined ? {
+    equals: props.currentAccount 
+  } : undefined,
+  plan: props.plan !== undefined ? {
+    equals: props.plan 
+  } : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? {
+    equals: props.openaiAPIKey 
+  } : undefined,
+  openaiModel: props.openaiModel !== undefined ? {
+    equals: props.openaiModel 
   } : undefined,
       },
           create: {
@@ -1126,11 +1184,9 @@ id
  : { connectOrCreate: props.accounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
         userId: item.userId !== undefined ? {
             equals: item.userId 
-           } : undefined,
-        providerAccountId: item.providerAccountId !== undefined ? {
-            equals: item.providerAccountId 
            } : undefined,
       },
       create: {
@@ -1369,11 +1425,9 @@ id
 } : { upsert: props.accounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
         userId: item.userId !== undefined ? {
             equals: item.userId
-          } : undefined,
-        providerAccountId: item.providerAccountId !== undefined ? {
-            equals: item.providerAccountId
           } : undefined,
       },
       update: {
@@ -1788,8 +1842,39 @@ id
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
   email: prop.email !== undefined ? prop.email : undefined,
-  name: prop.name !== undefined ? {
-    equals: prop.name 
+  name: prop.name !== undefined ? prop.name : undefined,
+  emailVerified: prop.emailVerified !== undefined ? {
+    equals: prop.emailVerified 
+  } : undefined,
+  image: prop.image !== undefined ? {
+    equals: prop.image 
+  } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt 
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt 
+  } : undefined,
+  role: prop.role !== undefined ? {
+    equals: prop.role 
+  } : undefined,
+  bio: prop.bio !== undefined ? {
+    equals: prop.bio 
+  } : undefined,
+  jobTitle: prop.jobTitle !== undefined ? {
+    equals: prop.jobTitle 
+  } : undefined,
+  currentAccount: prop.currentAccount !== undefined ? {
+    equals: prop.currentAccount 
+  } : undefined,
+  plan: prop.plan !== undefined ? {
+    equals: prop.plan 
+  } : undefined,
+  openaiAPIKey: prop.openaiAPIKey !== undefined ? {
+    equals: prop.openaiAPIKey 
+  } : undefined,
+  openaiModel: prop.openaiModel !== undefined ? {
+    equals: prop.openaiModel 
   } : undefined,
 
           },
@@ -1905,11 +1990,9 @@ id
 } : { upsert: prop.accounts.map((item: any) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
         userId: item.userId !== undefined ? {
             equals: item.userId
-          } : undefined,
-        providerAccountId: item.providerAccountId !== undefined ? {
-            equals: item.providerAccountId
           } : undefined,
       },
       update: {
@@ -2408,8 +2491,39 @@ id
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
   email: props.email !== undefined ? props.email : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  name: props.name !== undefined ? props.name : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+    equals: props.emailVerified 
+  } : undefined,
+  image: props.image !== undefined ? {
+    equals: props.image 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
+  } : undefined,
+  role: props.role !== undefined ? {
+    equals: props.role 
+  } : undefined,
+  bio: props.bio !== undefined ? {
+    equals: props.bio 
+  } : undefined,
+  jobTitle: props.jobTitle !== undefined ? {
+    equals: props.jobTitle 
+  } : undefined,
+  currentAccount: props.currentAccount !== undefined ? {
+    equals: props.currentAccount 
+  } : undefined,
+  plan: props.plan !== undefined ? {
+    equals: props.plan 
+  } : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? {
+    equals: props.openaiAPIKey 
+  } : undefined,
+  openaiModel: props.openaiModel !== undefined ? {
+    equals: props.openaiModel 
   } : undefined,
 },
         };
@@ -2564,14 +2678,41 @@ id
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  name: props.name !== undefined ? props.name : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+    equals: props.emailVerified 
   } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  image: props.image !== undefined ? {
+    equals: props.image 
   } : undefined,
-  email: props.email !== undefined ? {
-    equals: props.email 
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
+  } : undefined,
+  role: props.role !== undefined ? {
+    equals: props.role 
+  } : undefined,
+  bio: props.bio !== undefined ? {
+    equals: props.bio 
+  } : undefined,
+  jobTitle: props.jobTitle !== undefined ? {
+    equals: props.jobTitle 
+  } : undefined,
+  currentAccount: props.currentAccount !== undefined ? {
+    equals: props.currentAccount 
+  } : undefined,
+  plan: props.plan !== undefined ? {
+    equals: props.plan 
+  } : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? {
+    equals: props.openaiAPIKey 
+  } : undefined,
+  openaiModel: props.openaiModel !== undefined ? {
+    equals: props.openaiModel 
   } : undefined,
       },
         };

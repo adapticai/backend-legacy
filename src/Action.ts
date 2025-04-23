@@ -288,8 +288,24 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId 
+  sequence: props.sequence !== undefined ? {
+    equals: props.sequence 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  note: props.note !== undefined ? {
+    equals: props.note 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           data: {
@@ -522,8 +538,24 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId 
+  sequence: props.sequence !== undefined ? {
+    equals: props.sequence 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  note: props.note !== undefined ? {
+    equals: props.note 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           create: {
@@ -798,8 +830,24 @@ import { removeUndefinedProps } from './utils';
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
-  tradeId: prop.tradeId !== undefined ? {
-    equals: prop.tradeId 
+  sequence: prop.sequence !== undefined ? {
+    equals: prop.sequence 
+  } : undefined,
+  tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
+  type: prop.type !== undefined ? {
+    equals: prop.type 
+  } : undefined,
+  note: prop.note !== undefined ? {
+    equals: prop.note 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
+  } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt 
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt 
   } : undefined,
 
           },
@@ -1117,8 +1165,24 @@ import { removeUndefinedProps } from './utils';
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId 
+  sequence: props.sequence !== undefined ? {
+    equals: props.sequence 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  note: props.note !== undefined ? {
+    equals: props.note 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
 },
         };
@@ -1273,11 +1337,25 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  sequence: props.sequence !== undefined ? {
+    equals: props.sequence 
   } : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId 
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  note: props.note !== undefined ? {
+    equals: props.note 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
         };

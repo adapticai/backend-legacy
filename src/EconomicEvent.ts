@@ -236,8 +236,21 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description 
+  } : undefined,
+  date: props.date !== undefined ? {
+    equals: props.date 
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           data: {
@@ -344,8 +357,21 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description 
+  } : undefined,
+  date: props.date !== undefined ? {
+    equals: props.date 
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           create: {
@@ -449,8 +475,21 @@ import { removeUndefinedProps } from './utils';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  title: prop.title !== undefined ? {
-    equals: prop.title 
+  title: prop.title !== undefined ? prop.title : undefined,
+  description: prop.description !== undefined ? {
+    equals: prop.description 
+  } : undefined,
+  date: prop.date !== undefined ? {
+    equals: prop.date 
+  } : undefined,
+  importance: prop.importance !== undefined ? {
+    equals: prop.importance 
+  } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt 
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt 
   } : undefined,
 
           },
@@ -642,8 +681,21 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description 
+  } : undefined,
+  date: props.date !== undefined ? {
+    equals: props.date 
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
 },
         };
@@ -798,11 +850,22 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? {
+    equals: props.description 
   } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  date: props.date !== undefined ? {
+    equals: props.date 
+  } : undefined,
+  importance: props.importance !== undefined ? {
+    equals: props.importance 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
         };

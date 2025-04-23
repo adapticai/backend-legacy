@@ -230,11 +230,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -502,8 +500,66 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  APIKey: props.APIKey !== undefined ? {
+    equals: props.APIKey 
+  } : undefined,
+  APISecret: props.APISecret !== undefined ? {
+    equals: props.APISecret 
+  } : undefined,
+  configuration: props.configuration !== undefined ? {
+    equals: props.configuration 
+  } : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+    equals: props.cryptoTradingPairs 
+  } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? {
+    equals: props.cryptoTradeAllocationPct 
+  } : undefined,
+  tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
+    equals: props.tradeAllocationPct 
+  } : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? {
+    equals: props.minPercentageChange 
+  } : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? {
+    equals: props.volumeThreshold 
+  } : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? {
+    equals: props.portfolioTrailPercent 
+  } : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? {
+    equals: props.portfolioProfitThresholdPercent 
+  } : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
+    equals: props.reducedPortfolioTrailPercent 
+  } : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
+    equals: props.defaultTrailingStopPercentage100 
+  } : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? {
+    equals: props.firstTrailReductionThreshold100 
+  } : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? {
+    equals: props.secondTrailReductionThreshold100 
+  } : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? {
+    equals: props.firstReducedTrailPercentage100 
+  } : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? {
+    equals: props.secondReducedTrailPercentage100 
+  } : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
+    equals: props.minimumPriceChangePercent100 
+  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           data: {
@@ -745,11 +801,9 @@ id
 } : { upsert: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
             } : undefined,
         },
         update: {
@@ -917,11 +971,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -1095,8 +1147,66 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  APIKey: props.APIKey !== undefined ? {
+    equals: props.APIKey 
+  } : undefined,
+  APISecret: props.APISecret !== undefined ? {
+    equals: props.APISecret 
+  } : undefined,
+  configuration: props.configuration !== undefined ? {
+    equals: props.configuration 
+  } : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+    equals: props.cryptoTradingPairs 
+  } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? {
+    equals: props.cryptoTradeAllocationPct 
+  } : undefined,
+  tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
+    equals: props.tradeAllocationPct 
+  } : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? {
+    equals: props.minPercentageChange 
+  } : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? {
+    equals: props.volumeThreshold 
+  } : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? {
+    equals: props.portfolioTrailPercent 
+  } : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? {
+    equals: props.portfolioProfitThresholdPercent 
+  } : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
+    equals: props.reducedPortfolioTrailPercent 
+  } : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
+    equals: props.defaultTrailingStopPercentage100 
+  } : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? {
+    equals: props.firstTrailReductionThreshold100 
+  } : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? {
+    equals: props.secondTrailReductionThreshold100 
+  } : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? {
+    equals: props.firstReducedTrailPercentage100 
+  } : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? {
+    equals: props.secondReducedTrailPercentage100 
+  } : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
+    equals: props.minimumPriceChangePercent100 
+  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           create: {
@@ -1209,11 +1319,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -1523,11 +1631,9 @@ id
 } : { upsert: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
             } : undefined,
         },
         update: {
@@ -1695,11 +1801,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -1873,8 +1977,66 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId 
+  type: prop.type !== undefined ? {
+    equals: prop.type 
+  } : undefined,
+  APIKey: prop.APIKey !== undefined ? {
+    equals: prop.APIKey 
+  } : undefined,
+  APISecret: prop.APISecret !== undefined ? {
+    equals: prop.APISecret 
+  } : undefined,
+  configuration: prop.configuration !== undefined ? {
+    equals: prop.configuration 
+  } : undefined,
+  cryptoTradingPairs: prop.cryptoTradingPairs !== undefined ? {
+    equals: prop.cryptoTradingPairs 
+  } : undefined,
+  cryptoTradeAllocationPct: prop.cryptoTradeAllocationPct !== undefined ? {
+    equals: prop.cryptoTradeAllocationPct 
+  } : undefined,
+  tradeAllocationPct: prop.tradeAllocationPct !== undefined ? {
+    equals: prop.tradeAllocationPct 
+  } : undefined,
+  minPercentageChange: prop.minPercentageChange !== undefined ? {
+    equals: prop.minPercentageChange 
+  } : undefined,
+  volumeThreshold: prop.volumeThreshold !== undefined ? {
+    equals: prop.volumeThreshold 
+  } : undefined,
+  portfolioTrailPercent: prop.portfolioTrailPercent !== undefined ? {
+    equals: prop.portfolioTrailPercent 
+  } : undefined,
+  portfolioProfitThresholdPercent: prop.portfolioProfitThresholdPercent !== undefined ? {
+    equals: prop.portfolioProfitThresholdPercent 
+  } : undefined,
+  reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? {
+    equals: prop.reducedPortfolioTrailPercent 
+  } : undefined,
+  defaultTrailingStopPercentage100: prop.defaultTrailingStopPercentage100 !== undefined ? {
+    equals: prop.defaultTrailingStopPercentage100 
+  } : undefined,
+  firstTrailReductionThreshold100: prop.firstTrailReductionThreshold100 !== undefined ? {
+    equals: prop.firstTrailReductionThreshold100 
+  } : undefined,
+  secondTrailReductionThreshold100: prop.secondTrailReductionThreshold100 !== undefined ? {
+    equals: prop.secondTrailReductionThreshold100 
+  } : undefined,
+  firstReducedTrailPercentage100: prop.firstReducedTrailPercentage100 !== undefined ? {
+    equals: prop.firstReducedTrailPercentage100 
+  } : undefined,
+  secondReducedTrailPercentage100: prop.secondReducedTrailPercentage100 !== undefined ? {
+    equals: prop.secondReducedTrailPercentage100 
+  } : undefined,
+  minimumPriceChangePercent100: prop.minimumPriceChangePercent100 !== undefined ? {
+    equals: prop.minimumPriceChangePercent100 
+  } : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt 
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt 
   } : undefined,
 
           },
@@ -2117,11 +2279,9 @@ id
 } : { upsert: prop.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
             } : undefined,
         },
         update: {
@@ -2289,11 +2449,9 @@ id
  : { connectOrCreate: prop.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -2551,8 +2709,66 @@ id
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  APIKey: props.APIKey !== undefined ? {
+    equals: props.APIKey 
+  } : undefined,
+  APISecret: props.APISecret !== undefined ? {
+    equals: props.APISecret 
+  } : undefined,
+  configuration: props.configuration !== undefined ? {
+    equals: props.configuration 
+  } : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+    equals: props.cryptoTradingPairs 
+  } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? {
+    equals: props.cryptoTradeAllocationPct 
+  } : undefined,
+  tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
+    equals: props.tradeAllocationPct 
+  } : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? {
+    equals: props.minPercentageChange 
+  } : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? {
+    equals: props.volumeThreshold 
+  } : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? {
+    equals: props.portfolioTrailPercent 
+  } : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? {
+    equals: props.portfolioProfitThresholdPercent 
+  } : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
+    equals: props.reducedPortfolioTrailPercent 
+  } : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
+    equals: props.defaultTrailingStopPercentage100 
+  } : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? {
+    equals: props.firstTrailReductionThreshold100 
+  } : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? {
+    equals: props.secondTrailReductionThreshold100 
+  } : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? {
+    equals: props.firstReducedTrailPercentage100 
+  } : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? {
+    equals: props.secondReducedTrailPercentage100 
+  } : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
+    equals: props.minimumPriceChangePercent100 
+  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
 },
         };
@@ -2707,11 +2923,67 @@ id
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
   } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  APIKey: props.APIKey !== undefined ? {
+    equals: props.APIKey 
+  } : undefined,
+  APISecret: props.APISecret !== undefined ? {
+    equals: props.APISecret 
+  } : undefined,
+  configuration: props.configuration !== undefined ? {
+    equals: props.configuration 
+  } : undefined,
+  cryptoTradingPairs: props.cryptoTradingPairs !== undefined ? {
+    equals: props.cryptoTradingPairs 
+  } : undefined,
+  cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? {
+    equals: props.cryptoTradeAllocationPct 
+  } : undefined,
+  tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
+    equals: props.tradeAllocationPct 
+  } : undefined,
+  minPercentageChange: props.minPercentageChange !== undefined ? {
+    equals: props.minPercentageChange 
+  } : undefined,
+  volumeThreshold: props.volumeThreshold !== undefined ? {
+    equals: props.volumeThreshold 
+  } : undefined,
+  portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? {
+    equals: props.portfolioTrailPercent 
+  } : undefined,
+  portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? {
+    equals: props.portfolioProfitThresholdPercent 
+  } : undefined,
+  reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
+    equals: props.reducedPortfolioTrailPercent 
+  } : undefined,
+  defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
+    equals: props.defaultTrailingStopPercentage100 
+  } : undefined,
+  firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? {
+    equals: props.firstTrailReductionThreshold100 
+  } : undefined,
+  secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? {
+    equals: props.secondTrailReductionThreshold100 
+  } : undefined,
+  firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? {
+    equals: props.firstReducedTrailPercentage100 
+  } : undefined,
+  secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? {
+    equals: props.secondReducedTrailPercentage100 
+  } : undefined,
+  minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
+    equals: props.minimumPriceChangePercent100 
+  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
         };

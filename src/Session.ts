@@ -189,11 +189,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -479,8 +477,15 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           data: {
@@ -626,11 +631,9 @@ id
 } : { upsert: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
             } : undefined,
         },
         update: {
@@ -987,11 +990,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -1192,8 +1193,15 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           create: {
@@ -1266,11 +1274,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -1524,11 +1530,9 @@ id
 } : { upsert: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
             } : undefined,
         },
         update: {
@@ -1885,11 +1889,9 @@ id
  : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -2090,8 +2092,15 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId 
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  expires: prop.expires !== undefined ? {
+    equals: prop.expires 
+  } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt 
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt 
   } : undefined,
 
           },
@@ -2238,11 +2247,9 @@ id
 } : { upsert: prop.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
             } : undefined,
         },
         update: {
@@ -2599,11 +2606,9 @@ id
  : { connectOrCreate: prop.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
              } : undefined,
         },
         create: {
@@ -2888,8 +2893,15 @@ id
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
 },
         };
@@ -3044,11 +3056,19 @@ id
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  sessionToken: props.sessionToken !== undefined ? {
+    equals: props.sessionToken 
   } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
+  userId: props.userId !== undefined ? props.userId : undefined,
+  expires: props.expires !== undefined ? {
+    equals: props.expires 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
         };

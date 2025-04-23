@@ -434,8 +434,45 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  title: props.title !== undefined ? props.title : undefined,
+  content: props.content !== undefined ? {
+    equals: props.content 
+  } : undefined,
+  source: props.source !== undefined ? {
+    equals: props.source 
+  } : undefined,
+  sourceDomain: props.sourceDomain !== undefined ? {
+    equals: props.sourceDomain 
+  } : undefined,
+  sentiment: props.sentiment !== undefined ? {
+    equals: props.sentiment 
+  } : undefined,
+  authors: props.authors !== undefined ? {
+    equals: props.authors 
+  } : undefined,
+  summary: props.summary !== undefined ? {
+    equals: props.summary 
+  } : undefined,
+  bannerImage: props.bannerImage !== undefined ? {
+    equals: props.bannerImage 
+  } : undefined,
+  timePublished: props.timePublished !== undefined ? {
+    equals: props.timePublished 
+  } : undefined,
+  category: props.category !== undefined ? {
+    equals: props.category 
+  } : undefined,
+  topics: props.topics !== undefined ? {
+    equals: props.topics 
+  } : undefined,
+  logo: props.logo !== undefined ? {
+    equals: props.logo 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           data: {
@@ -929,8 +966,45 @@ import { removeUndefinedProps } from './utils';
           where: {
             id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  title: props.title !== undefined ? props.title : undefined,
+  content: props.content !== undefined ? {
+    equals: props.content 
+  } : undefined,
+  source: props.source !== undefined ? {
+    equals: props.source 
+  } : undefined,
+  sourceDomain: props.sourceDomain !== undefined ? {
+    equals: props.sourceDomain 
+  } : undefined,
+  sentiment: props.sentiment !== undefined ? {
+    equals: props.sentiment 
+  } : undefined,
+  authors: props.authors !== undefined ? {
+    equals: props.authors 
+  } : undefined,
+  summary: props.summary !== undefined ? {
+    equals: props.summary 
+  } : undefined,
+  bannerImage: props.bannerImage !== undefined ? {
+    equals: props.bannerImage 
+  } : undefined,
+  timePublished: props.timePublished !== undefined ? {
+    equals: props.timePublished 
+  } : undefined,
+  category: props.category !== undefined ? {
+    equals: props.category 
+  } : undefined,
+  topics: props.topics !== undefined ? {
+    equals: props.topics 
+  } : undefined,
+  logo: props.logo !== undefined ? {
+    equals: props.logo 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
           create: {
@@ -1527,8 +1601,45 @@ import { removeUndefinedProps } from './utils';
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
   url: prop.url !== undefined ? prop.url : undefined,
-  title: prop.title !== undefined ? {
-    equals: prop.title 
+  title: prop.title !== undefined ? prop.title : undefined,
+  content: prop.content !== undefined ? {
+    equals: prop.content 
+  } : undefined,
+  source: prop.source !== undefined ? {
+    equals: prop.source 
+  } : undefined,
+  sourceDomain: prop.sourceDomain !== undefined ? {
+    equals: prop.sourceDomain 
+  } : undefined,
+  sentiment: prop.sentiment !== undefined ? {
+    equals: prop.sentiment 
+  } : undefined,
+  authors: prop.authors !== undefined ? {
+    equals: prop.authors 
+  } : undefined,
+  summary: prop.summary !== undefined ? {
+    equals: prop.summary 
+  } : undefined,
+  bannerImage: prop.bannerImage !== undefined ? {
+    equals: prop.bannerImage 
+  } : undefined,
+  timePublished: prop.timePublished !== undefined ? {
+    equals: prop.timePublished 
+  } : undefined,
+  category: prop.category !== undefined ? {
+    equals: prop.category 
+  } : undefined,
+  topics: prop.topics !== undefined ? {
+    equals: prop.topics 
+  } : undefined,
+  logo: prop.logo !== undefined ? {
+    equals: prop.logo 
+  } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+    equals: prop.createdAt 
+  } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+    equals: prop.updatedAt 
   } : undefined,
 
           },
@@ -2107,8 +2218,45 @@ import { removeUndefinedProps } from './utils';
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
   url: props.url !== undefined ? props.url : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  title: props.title !== undefined ? props.title : undefined,
+  content: props.content !== undefined ? {
+    equals: props.content 
+  } : undefined,
+  source: props.source !== undefined ? {
+    equals: props.source 
+  } : undefined,
+  sourceDomain: props.sourceDomain !== undefined ? {
+    equals: props.sourceDomain 
+  } : undefined,
+  sentiment: props.sentiment !== undefined ? {
+    equals: props.sentiment 
+  } : undefined,
+  authors: props.authors !== undefined ? {
+    equals: props.authors 
+  } : undefined,
+  summary: props.summary !== undefined ? {
+    equals: props.summary 
+  } : undefined,
+  bannerImage: props.bannerImage !== undefined ? {
+    equals: props.bannerImage 
+  } : undefined,
+  timePublished: props.timePublished !== undefined ? {
+    equals: props.timePublished 
+  } : undefined,
+  category: props.category !== undefined ? {
+    equals: props.category 
+  } : undefined,
+  topics: props.topics !== undefined ? {
+    equals: props.topics 
+  } : undefined,
+  logo: props.logo !== undefined ? {
+    equals: props.logo 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
 },
         };
@@ -2263,14 +2411,47 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
+      id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? props.title : undefined,
+  content: props.content !== undefined ? {
+    equals: props.content 
   } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
+  source: props.source !== undefined ? {
+    equals: props.source 
   } : undefined,
-  url: props.url !== undefined ? {
-    equals: props.url 
+  sourceDomain: props.sourceDomain !== undefined ? {
+    equals: props.sourceDomain 
+  } : undefined,
+  url: props.url !== undefined ? props.url : undefined,
+  sentiment: props.sentiment !== undefined ? {
+    equals: props.sentiment 
+  } : undefined,
+  authors: props.authors !== undefined ? {
+    equals: props.authors 
+  } : undefined,
+  summary: props.summary !== undefined ? {
+    equals: props.summary 
+  } : undefined,
+  bannerImage: props.bannerImage !== undefined ? {
+    equals: props.bannerImage 
+  } : undefined,
+  timePublished: props.timePublished !== undefined ? {
+    equals: props.timePublished 
+  } : undefined,
+  category: props.category !== undefined ? {
+    equals: props.category 
+  } : undefined,
+  topics: props.topics !== undefined ? {
+    equals: props.topics 
+  } : undefined,
+  logo: props.logo !== undefined ? {
+    equals: props.logo 
+  } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+    equals: props.createdAt 
+  } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+    equals: props.updatedAt 
   } : undefined,
       },
         };

@@ -474,12 +474,13 @@ const handleWhereOperation = (
   }
 
   if (field.type.isScalar) {
-    // Check if the scalar field requires an "equals" wrapper
-    if (field.type.isFilterObject && isUniqueField(field.name)) {
-      return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  equals: ${accessor} \n${indent}} : undefined,\n`;
-    } else if (isUniqueField(field.name)) {
-      // Handle regular scalar fields without "equals" wrapper
+    // For WhereUniqueInput fields, we need to use a direct value rather than an equals object
+    if (isUniqueField(field.name)) {
+      // Always use direct value for unique identifier fields in WhereUniqueInput
       return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+    } else if (field.type.isFilterObject) {
+      // Use equals wrapper for filter objects that aren't unique identifiers
+      return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}  equals: ${accessor} \n${indent}} : undefined,\n`;
     } else {
       return '';
     }
