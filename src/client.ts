@@ -40,7 +40,7 @@ interface ConnectionPoolConfig {
 const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
   maxConcurrentOperations: 100,  // Maximum concurrent operations to the database
   retryAttempts: 3,            // Number of retry attempts for failed operations
-  retryDelay: 300,             // Base delay in ms between retries (will use exponential backoff)
+  retryDelay: 1000,             // Base delay in ms between retries (will use exponential backoff)
   connectionTimeout: 10000,    // Connection timeout in ms
 };
 
