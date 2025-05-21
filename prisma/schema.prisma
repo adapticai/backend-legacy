@@ -1034,6 +1034,9 @@ model Trade {
   /// Market volatility when the trade was entered. TYPESTRING.SKIP=true
   marketVolatility String?
 
+  /// Session Horizon (i.e. the forecasted time horizon for the trade). TYPESTRING.SKIP=true
+  sessionHorizonMinutes Int?
+
   /// Thresholds used for this trade as JSON. TYPESTRING.SKIP=true
   thresholdsJson String? @map("thresholds")
 
