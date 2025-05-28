@@ -112,6 +112,7 @@ import { removeUndefinedProps } from './utils';
         durationMinutes: props.trade.durationMinutes !== undefined ? props.trade.durationMinutes : undefined,
         marketPhase: props.trade.marketPhase !== undefined ? props.trade.marketPhase : undefined,
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
+        sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
       },
     }
@@ -408,6 +409,9 @@ import { removeUndefinedProps } from './utils';
         marketVolatility: props.trade.marketVolatility !== undefined ? {
             set: props.trade.marketVolatility
           } : undefined,
+        sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? {
+            set: props.trade.sessionHorizonMinutes
+          } : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? {
             set: props.trade.thresholdsJson
           } : undefined,
@@ -435,6 +439,7 @@ import { removeUndefinedProps } from './utils';
         durationMinutes: props.trade.durationMinutes !== undefined ? props.trade.durationMinutes : undefined,
         marketPhase: props.trade.marketPhase !== undefined ? props.trade.marketPhase : undefined,
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
+        sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
       },
     }
@@ -572,6 +577,7 @@ import { removeUndefinedProps } from './utils';
         durationMinutes: props.trade.durationMinutes !== undefined ? props.trade.durationMinutes : undefined,
         marketPhase: props.trade.marketPhase !== undefined ? props.trade.marketPhase : undefined,
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
+        sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
       },
     }
@@ -684,6 +690,9 @@ import { removeUndefinedProps } from './utils';
         marketVolatility: props.trade.marketVolatility !== undefined ? {
             set: props.trade.marketVolatility
           } : undefined,
+        sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? {
+            set: props.trade.sessionHorizonMinutes
+          } : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? {
             set: props.trade.thresholdsJson
           } : undefined,
@@ -711,6 +720,7 @@ import { removeUndefinedProps } from './utils';
         durationMinutes: props.trade.durationMinutes !== undefined ? props.trade.durationMinutes : undefined,
         marketPhase: props.trade.marketPhase !== undefined ? props.trade.marketPhase : undefined,
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
+        sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
       },
     }
@@ -919,6 +929,9 @@ import { removeUndefinedProps } from './utils';
         marketVolatility: prop.trade.marketVolatility !== undefined ? {
             set: prop.trade.marketVolatility
           } : undefined,
+        sessionHorizonMinutes: prop.trade.sessionHorizonMinutes !== undefined ? {
+            set: prop.trade.sessionHorizonMinutes
+          } : undefined,
         thresholdsJson: prop.trade.thresholdsJson !== undefined ? {
             set: prop.trade.thresholdsJson
           } : undefined,
@@ -946,6 +959,7 @@ import { removeUndefinedProps } from './utils';
         durationMinutes: prop.trade.durationMinutes !== undefined ? prop.trade.durationMinutes : undefined,
         marketPhase: prop.trade.marketPhase !== undefined ? prop.trade.marketPhase : undefined,
         marketVolatility: prop.trade.marketVolatility !== undefined ? prop.trade.marketVolatility : undefined,
+        sessionHorizonMinutes: prop.trade.sessionHorizonMinutes !== undefined ? prop.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: prop.trade.thresholdsJson !== undefined ? prop.trade.thresholdsJson : undefined,
       },
     }

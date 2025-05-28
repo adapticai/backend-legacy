@@ -47,6 +47,7 @@ import { removeUndefinedProps } from './utils';
   durationMinutes
   marketPhase
   marketVolatility
+  sessionHorizonMinutes
   thresholdsJson
 
   `;
@@ -117,6 +118,7 @@ import { removeUndefinedProps } from './utils';
   durationMinutes: props.durationMinutes !== undefined ? props.durationMinutes : undefined,
   marketPhase: props.marketPhase !== undefined ? props.marketPhase : undefined,
   marketVolatility: props.marketVolatility !== undefined ? props.marketVolatility : undefined,
+  sessionHorizonMinutes: props.sessionHorizonMinutes !== undefined ? props.sessionHorizonMinutes : undefined,
   thresholdsJson: props.thresholdsJson !== undefined ? props.thresholdsJson : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -246,6 +248,7 @@ import { removeUndefinedProps } from './utils';
   durationMinutes: prop.durationMinutes !== undefined ? prop.durationMinutes : undefined,
   marketPhase: prop.marketPhase !== undefined ? prop.marketPhase : undefined,
   marketVolatility: prop.marketVolatility !== undefined ? prop.marketVolatility : undefined,
+  sessionHorizonMinutes: prop.sessionHorizonMinutes !== undefined ? prop.sessionHorizonMinutes : undefined,
   thresholdsJson: prop.thresholdsJson !== undefined ? prop.thresholdsJson : undefined,
       })),
         };
@@ -412,6 +415,9 @@ import { removeUndefinedProps } from './utils';
   marketVolatility: props.marketVolatility !== undefined ? {
             set: props.marketVolatility 
            } : undefined,
+  sessionHorizonMinutes: props.sessionHorizonMinutes !== undefined ? {
+            set: props.sessionHorizonMinutes 
+           } : undefined,
   thresholdsJson: props.thresholdsJson !== undefined ? {
             set: props.thresholdsJson 
            } : undefined,
@@ -573,6 +579,7 @@ import { removeUndefinedProps } from './utils';
   durationMinutes: props.durationMinutes !== undefined ? props.durationMinutes : undefined,
   marketPhase: props.marketPhase !== undefined ? props.marketPhase : undefined,
   marketVolatility: props.marketVolatility !== undefined ? props.marketVolatility : undefined,
+  sessionHorizonMinutes: props.sessionHorizonMinutes !== undefined ? props.sessionHorizonMinutes : undefined,
   thresholdsJson: props.thresholdsJson !== undefined ? props.thresholdsJson : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -665,6 +672,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   marketVolatility: props.marketVolatility !== undefined ? {
             set: props.marketVolatility 
+           } : undefined,
+  sessionHorizonMinutes: props.sessionHorizonMinutes !== undefined ? {
+            set: props.sessionHorizonMinutes 
            } : undefined,
   thresholdsJson: props.thresholdsJson !== undefined ? {
             set: props.thresholdsJson 
@@ -880,6 +890,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   marketVolatility: prop.marketVolatility !== undefined ? {
             set: prop.marketVolatility 
+           } : undefined,
+  sessionHorizonMinutes: prop.sessionHorizonMinutes !== undefined ? {
+            set: prop.sessionHorizonMinutes 
            } : undefined,
   thresholdsJson: prop.thresholdsJson !== undefined ? {
             set: prop.thresholdsJson 

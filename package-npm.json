@@ -27,9 +27,20 @@
     "*.map.js"
   ],
   "peerDependencies": {
-    "@apollo/client": "^3.11.8",
-    "graphql": "^16.9.0",
-    "type-graphql": "^2.0.0-rc.2"
+    "@apollo/client": "^3.11.0",
+    "graphql": "^16.0.0",
+    "type-graphql": "^2.0.0-rc.1"
+  },
+  "peerDependenciesMeta": {
+    "@apollo/client": {
+      "optional": false
+    },
+    "graphql": {
+      "optional": false
+    },
+    "type-graphql": {
+      "optional": false
+    }
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
