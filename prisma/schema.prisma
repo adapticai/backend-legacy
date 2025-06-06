@@ -98,6 +98,9 @@ enum TradeStrategy {
   /// Trades based on the flow and volume of orders in the market.
   ORDER_FLOW_TRADING
 
+  /// Utilizes options trading strategies to manage risk and enhance returns.
+  OPTIONS_SPREAD
+
   /// No specific strategy or approach to trading.
   NO_STRATEGY
 }
