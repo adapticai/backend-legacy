@@ -13,6 +13,7 @@ import { removeUndefinedProps } from './utils';
   id
   stocks
   crypto
+  options
   etfs
   alpacaAccountId
   alpacaAccount {
@@ -120,6 +121,7 @@ import { removeUndefinedProps } from './utils';
             data: {
                 stocks: props.stocks !== undefined ? props.stocks : undefined,
   crypto: props.crypto !== undefined ? props.crypto : undefined,
+  options: props.options !== undefined ? props.options : undefined,
   etfs: props.etfs !== undefined ? props.etfs : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
@@ -394,6 +396,7 @@ import { removeUndefinedProps } from './utils';
           data: props.map(prop => ({
       stocks: prop.stocks !== undefined ? prop.stocks : undefined,
   crypto: prop.crypto !== undefined ? prop.crypto : undefined,
+  options: prop.options !== undefined ? prop.options : undefined,
   etfs: prop.etfs !== undefined ? prop.etfs : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
       })),
@@ -489,6 +492,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   crypto: props.crypto !== undefined ? {
             set: props.crypto 
+           } : undefined,
+  options: props.options !== undefined ? {
+            set: props.options 
            } : undefined,
   etfs: props.etfs !== undefined ? {
             set: props.etfs 
@@ -1239,6 +1245,7 @@ import { removeUndefinedProps } from './utils';
           create: {
         stocks: props.stocks !== undefined ? props.stocks : undefined,
   crypto: props.crypto !== undefined ? props.crypto : undefined,
+  options: props.options !== undefined ? props.options : undefined,
   etfs: props.etfs !== undefined ? props.etfs : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
@@ -1436,6 +1443,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   crypto: props.crypto !== undefined ? {
             set: props.crypto 
+           } : undefined,
+  options: props.options !== undefined ? {
+            set: props.options 
            } : undefined,
   etfs: props.etfs !== undefined ? {
             set: props.etfs 
@@ -2187,6 +2197,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   crypto: prop.crypto !== undefined ? {
             set: prop.crypto 
+           } : undefined,
+  options: prop.options !== undefined ? {
+            set: prop.options 
            } : undefined,
   etfs: prop.etfs !== undefined ? {
             set: prop.etfs 

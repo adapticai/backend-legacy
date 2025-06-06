@@ -119,6 +119,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -555,6 +556,9 @@ import { removeUndefinedProps } from './utils';
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? {
               set: props.alpacaAccount.allocation.crypto
             } : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? {
+              set: props.alpacaAccount.allocation.options
+            } : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? {
               set: props.alpacaAccount.allocation.etfs
             } : undefined,
@@ -562,6 +566,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -964,6 +969,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -1241,6 +1247,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -1497,6 +1504,9 @@ import { removeUndefinedProps } from './utils';
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? {
               set: props.alpacaAccount.allocation.crypto
             } : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? {
+              set: props.alpacaAccount.allocation.options
+            } : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? {
               set: props.alpacaAccount.allocation.etfs
             } : undefined,
@@ -1504,6 +1514,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -1906,6 +1917,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
           crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
           etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -2257,6 +2269,9 @@ import { removeUndefinedProps } from './utils';
           crypto: prop.alpacaAccount.allocation.crypto !== undefined ? {
               set: prop.alpacaAccount.allocation.crypto
             } : undefined,
+          options: prop.alpacaAccount.allocation.options !== undefined ? {
+              set: prop.alpacaAccount.allocation.options
+            } : undefined,
           etfs: prop.alpacaAccount.allocation.etfs !== undefined ? {
               set: prop.alpacaAccount.allocation.etfs
             } : undefined,
@@ -2264,6 +2279,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: prop.alpacaAccount.allocation.stocks !== undefined ? prop.alpacaAccount.allocation.stocks : undefined,
           crypto: prop.alpacaAccount.allocation.crypto !== undefined ? prop.alpacaAccount.allocation.crypto : undefined,
+          options: prop.alpacaAccount.allocation.options !== undefined ? prop.alpacaAccount.allocation.options : undefined,
           etfs: prop.alpacaAccount.allocation.etfs !== undefined ? prop.alpacaAccount.allocation.etfs : undefined,
         },
       }
@@ -2666,6 +2682,7 @@ import { removeUndefinedProps } from './utils';
         create: {
           stocks: prop.alpacaAccount.allocation.stocks !== undefined ? prop.alpacaAccount.allocation.stocks : undefined,
           crypto: prop.alpacaAccount.allocation.crypto !== undefined ? prop.alpacaAccount.allocation.crypto : undefined,
+          options: prop.alpacaAccount.allocation.options !== undefined ? prop.alpacaAccount.allocation.options : undefined,
           etfs: prop.alpacaAccount.allocation.etfs !== undefined ? prop.alpacaAccount.allocation.etfs : undefined,
         },
       }

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "allocations" ADD COLUMN     "options" DOUBLE PRECISION NOT NULL DEFAULT 10,
+ALTER COLUMN "crypto" SET DEFAULT 10;

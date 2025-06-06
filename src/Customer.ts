@@ -83,6 +83,7 @@ import { removeUndefinedProps } from './utils';
         id
         stocks
         crypto
+        options
         etfs
         alpacaAccountId
         alpacaAccount {
@@ -318,6 +319,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -843,6 +845,9 @@ id
             crypto: item.allocation.crypto !== undefined ? {
                 set: item.allocation.crypto
               } : undefined,
+            options: item.allocation.options !== undefined ? {
+                set: item.allocation.options
+              } : undefined,
             etfs: item.allocation.etfs !== undefined ? {
                 set: item.allocation.etfs
               } : undefined,
@@ -850,6 +855,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -927,6 +933,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -1086,6 +1093,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -1363,6 +1371,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -1700,6 +1709,9 @@ id
             crypto: item.allocation.crypto !== undefined ? {
                 set: item.allocation.crypto
               } : undefined,
+            options: item.allocation.options !== undefined ? {
+                set: item.allocation.options
+              } : undefined,
             etfs: item.allocation.etfs !== undefined ? {
                 set: item.allocation.etfs
               } : undefined,
@@ -1707,6 +1719,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -1784,6 +1797,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -1943,6 +1957,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -2380,6 +2395,9 @@ id
             crypto: item.allocation.crypto !== undefined ? {
                 set: item.allocation.crypto
               } : undefined,
+            options: item.allocation.options !== undefined ? {
+                set: item.allocation.options
+              } : undefined,
             etfs: item.allocation.etfs !== undefined ? {
                 set: item.allocation.etfs
               } : undefined,
@@ -2387,6 +2405,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -2464,6 +2483,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
@@ -2623,6 +2643,7 @@ id
           create: {
             stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
             crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+            options: item.allocation.options !== undefined ? item.allocation.options : undefined,
             etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
           },
         }
