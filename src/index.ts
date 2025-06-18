@@ -28,6 +28,10 @@ import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
+import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
+import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
+import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
+import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
 import { MarketSentiment } from './MarketSentiment';
 import { NewsArticle } from './NewsArticle';
 import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
@@ -47,6 +51,10 @@ const adaptic = {
   authenticator: Authenticator,
   customer: Customer,
   economicEvent: EconomicEvent,
+  institutionalSentimentAlerts: InstitutionalSentimentAlerts,
+  institutionalSentimentErrors: InstitutionalSentimentErrors,
+  institutionalSentimentHistory: InstitutionalSentimentHistory,
+  institutionalSentimentMetrics: InstitutionalSentimentMetrics,
   marketSentiment: MarketSentiment,
   newsArticle: NewsArticle,
   newsArticleAssetSentiment: NewsArticleAssetSentiment,

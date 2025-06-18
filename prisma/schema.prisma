@@ -1239,3 +1239,134 @@ model ScheduledOptionOrder {
   /// Timestamp when the scheduled option order was created. TYPESTRING.SKIP=true
   status ScheduledOptionOrderStatus @default(PENDING)
 }
+
+// Institutional Sentiment History - Main time-series data
+model InstitutionalSentimentHistory {
+  id        String   @id @default(cuid())
+  timestamp DateTime
+  symbol    String
+  
+  // Overall sentiment metrics
+  overallSentiment Float
+  confidence       Float
+  
+  // SEC Filings Sentiment
+  secFilingsSentiment        Float
+  secFilingsConfidence      Float
+  secInsiderTradingSignal   Float
+  secInstitutionalFlowSignal Float
+  secAnalystRevisionsSignal Float
+  secGuidanceChangesSignal  Float
+  secShortTrend             Float
+  secMediumTrend            Float
+  secLongTrend              Float
+  
+  // Insider Trading Sentiment
+  insiderTradingOverall   Float
+  insiderBuyingSentiment  Float
+  insiderSellingSentiment Float
+  insiderSignificantCount Int
+  insiderTotalValue       Float
+  insiderRecentActivity   Int
+  
+  // Analyst Reports Sentiment
+  analystOverall       Float
+  analystAverageRating Float
+  analystAverageTarget Float
+  analystUpgrades      Int
+  analystDowngrades    Int
+  analystTargetChanges Int
+  analystConsensus     String
+  
+  // Options Flow Sentiment
+  optionsFlowOverall     Float
+  optionsCallFlow        Float
+  optionsPutFlow         Float
+  optionsUnusualActivity Float
+  optionsBlockActivity   Float
+  optionsSweepActivity   Float
+  optionsSentimentScore  Float
+  
+  // Institutional Flow Sentiment
+  institutionalFlowOverall           Float
+  institutionalNetFlow               Float
+  institutionalIncreasingPositions   Float
+  institutionalDecreasingPositions   Float
+  institutionalNewPositions          Float
+  institutionalClosedPositions       Float
+  
+  // Dark Pool Sentiment
+  darkPoolOverall            Float
+  darkPoolBuyPressure        Float
+  darkPoolSellPressure       Float
+  darkPoolVolumeSignificance Float
+  darkPoolPriceImpact        Float
+  
+  // Metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Composite index for time-series queries
+  @@unique([timestamp, symbol])
+  @@index([symbol, timestamp])
+  @@index([timestamp])
+  @@map("institutional_sentiment_history")
+}
+
+// Processing Metrics for Monitoring
+model InstitutionalSentimentMetrics {
+  id               String   @id @default(cuid())
+  timestamp        DateTime
+  operation        String
+  totalRecords     Int
+  successCount     Int
+  errorCount       Int
+  processingTimeMs Int
+  batchSize        Int
+  
+  createdAt DateTime @default(now())
+  
+  @@index([timestamp])
+  @@index([operation])
+  @@map("institutional_sentiment_metrics")
+}
+
+// Error Tracking
+model InstitutionalSentimentErrors {
+  id          String   @id @default(cuid())
+  timestamp   DateTime
+  operation   String
+  error       String
+  recordCount Int
+  severity    String   // 'low', 'medium', 'high', 'critical'
+  
+  createdAt DateTime @default(now())
+  
+  @@index([timestamp])
+  @@index([severity])
+  @@index([operation])
+  @@map("institutional_sentiment_errors")
+}
+
+// Data Quality Alerts
+model InstitutionalSentimentAlerts {
+  id           String   @id @default(cuid())
+  timestamp    DateTime
+  type         String
+  errorRate    Float
+  totalRecords Int
+  errorCount   Int
+  severity     String   // 'low', 'medium', 'high', 'critical'
+  resolved     Boolean  @default(false)
+  resolvedAt   DateTime?
+  resolvedBy   String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@index([timestamp])
+  @@index([severity])
+  @@index([resolved])
+  @@index([type])
+  @@map("institutional_sentiment_alerts")
+}
