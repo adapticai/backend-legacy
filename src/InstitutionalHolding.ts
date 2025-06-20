@@ -1,37 +1,28 @@
 
   
-import { NewsArticleAssetSentiment as NewsArticleAssetSentimentType } from './generated/typegraphql-prisma/models/NewsArticleAssetSentiment';
+import { InstitutionalHolding as InstitutionalHoldingType } from './generated/typegraphql-prisma/models/InstitutionalHolding';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
-   * CRUD operations for the NewsArticleAssetSentiment model.
+   * CRUD operations for the InstitutionalHolding model.
    */
 
   const selectionSet = `
     
   id
-  assetId
-  newsArticleId
-  url
-  news {
-    id
-    title
-    content
-    source
-    sourceDomain
-    url
-    sentiment
-    authors
-    summary
-    bannerImage
-    timePublished
-    category
-    topics
-    logo
-    createdAt
-    updatedAt
-  }
+  symbol
+  institutionName
+  filingDate
+  reportDate
+  sharesHeld
+  marketValue
+  percentOfClass
+  changeShares
+  changePercent
+  metadata
+  createdAt
+  updatedAt
   asset {
     id
     symbol
@@ -92,19 +83,7 @@ import { removeUndefinedProps } from './utils';
     createdAt
     updatedAt
     institutionalHoldings {
-      id
-      symbol
-      institutionName
-      filingDate
-      reportDate
-      sharesHeld
-      marketValue
-      percentOfClass
-      changeShares
-      changePercent
-      metadata
-      createdAt
-      updatedAt
+id
     }
     institutionalFlowSignals {
       id
@@ -118,29 +97,26 @@ import { removeUndefinedProps } from './utils';
       createdAt
     }
   }
-  relevancyScore
-  sentimentScore
-  sentimentLabel
 
   `;
 
-  export const NewsArticleAssetSentiment = {
+  export const InstitutionalHolding = {
 
     /**
-     * Create a new NewsArticleAssetSentiment record.
+     * Create a new InstitutionalHolding record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created NewsArticleAssetSentiment or null.
+     * @returns The created InstitutionalHolding or null.
      */
 
     /**
-     * Create a new NewsArticleAssetSentiment record.
+     * Create a new InstitutionalHolding record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created NewsArticleAssetSentiment or null.
+     * @returns The created InstitutionalHolding or null.
      */
-    async create(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+    async create(props: InstitutionalHoldingType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<InstitutionalHoldingType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -158,9 +134,9 @@ import { removeUndefinedProps } from './utils';
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-              mutation createOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentCreateInput!) {
-                createOneNewsArticleAssetSentiment(data: $data) {
+          const CREATE_ONE_INSTITUTIONALHOLDING = gql`
+              mutation createOneInstitutionalHolding($data: InstitutionalHoldingCreateInput!) {
+                createOneInstitutionalHolding(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -168,45 +144,10 @@ import { removeUndefinedProps } from './utils';
 
           const variables = {
             data: {
-                url: props.url !== undefined ? props.url : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
-  news: props.news ? 
-    typeof props.news === 'object' && Object.keys(props.news).length === 1 && Object.keys(props.news)[0] === 'id'
-    ? { connect: {
-        id: props.news.id
-        }
-      }
-    : { connectOrCreate: {
-      where: {
-        id: props.news.id !== undefined ? props.news.id : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        title: props.news.title !== undefined ? {
-            equals: props.news.title 
-           } : undefined,
-      },
-      create: {
-        title: props.news.title !== undefined ? props.news.title : undefined,
-        content: props.news.content !== undefined ? props.news.content : undefined,
-        source: props.news.source !== undefined ? props.news.source : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors 
-           } : undefined,
-        summary: props.news.summary !== undefined ? props.news.summary : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
-        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
-        category: props.news.category !== undefined ? props.news.category : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics 
-           } : undefined,
-        logo: props.news.logo !== undefined ? props.news.logo : undefined,
-      },
-    }
-  } : undefined,
+                institutionName: props.institutionName !== undefined ? props.institutionName : undefined,
+  filingDate: props.filingDate !== undefined ? props.filingDate : undefined,
+  reportDate: props.reportDate !== undefined ? props.reportDate : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
     typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
     ? { connect: {
@@ -275,24 +216,60 @@ import { removeUndefinedProps } from './utils';
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
-    institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? 
+      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 &&  props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol 
+          url: item.url !== undefined ? item.url : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId 
              } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -326,15 +303,15 @@ import { removeUndefinedProps } from './utils';
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_NEWSARTICLEASSETSENTIMENT,
+            mutation: CREATE_ONE_INSTITUTIONALHOLDING,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneNewsArticleAssetSentiment) {
-            return response.data.createOneNewsArticleAssetSentiment;
+          if (response && response.data && response.data.createOneInstitutionalHolding) {
+            return response.data.createOneInstitutionalHolding;
           } else {
             return null as any;
           }
@@ -368,13 +345,13 @@ import { removeUndefinedProps } from './utils';
     },
 
   /**
-   * Create multiple NewsArticleAssetSentiment records.
+   * Create multiple InstitutionalHolding records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of NewsArticleAssetSentiment objects for the new records.
+   * @param props - Array of InstitutionalHolding objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: NewsArticleAssetSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: InstitutionalHoldingType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -392,36 +369,35 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
-          mutation createManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
-            createManyNewsArticleAssetSentiment(data: $data) {
+        const CREATE_MANY_INSTITUTIONALHOLDING = gql`
+          mutation createManyInstitutionalHolding($data: [InstitutionalHoldingCreateManyInput!]!) {
+            createManyInstitutionalHolding(data: $data) {
               count
             }
           }`;
 
         const variables = {
           data: props.map(prop => ({
-      assetId: prop.assetId !== undefined ? prop.assetId : undefined,
-  newsArticleId: prop.newsArticleId !== undefined ? prop.newsArticleId : undefined,
-  url: prop.url !== undefined ? prop.url : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? prop.relevancyScore : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? prop.sentimentScore : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? prop.sentimentLabel : undefined,
+      symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  institutionName: prop.institutionName !== undefined ? prop.institutionName : undefined,
+  filingDate: prop.filingDate !== undefined ? prop.filingDate : undefined,
+  reportDate: prop.reportDate !== undefined ? prop.reportDate : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
       })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_NEWSARTICLEASSETSENTIMENT,
+          mutation: CREATE_MANY_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyNewsArticleAssetSentiment) {
-          return response.data.createManyNewsArticleAssetSentiment;
+        if (response && response.data && response.data.createManyInstitutionalHolding) {
+          return response.data.createManyInstitutionalHolding;
         } else {
           return null as any;
         }
@@ -455,13 +431,13 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Update a single NewsArticleAssetSentiment record.
+   * Update a single InstitutionalHolding record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated NewsArticleAssetSentiment or null.
+   * @returns The updated InstitutionalHolding or null.
    */
-  async update(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+  async update(props: InstitutionalHoldingType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<InstitutionalHoldingType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -479,9 +455,9 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-          mutation updateOneNewsArticleAssetSentiment($data: NewsArticleAssetSentimentUpdateInput!, $where: NewsArticleAssetSentimentWhereUniqueInput!) {
-            updateOneNewsArticleAssetSentiment(data: $data, where: $where) {
+        const UPDATE_ONE_INSTITUTIONALHOLDING = gql`
+          mutation updateOneInstitutionalHolding($data: InstitutionalHoldingUpdateInput!, $where: InstitutionalHoldingWhereUniqueInput!) {
+            updateOneInstitutionalHolding(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -489,110 +465,47 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  url: props.url !== undefined ? props.url : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  url: props.url !== undefined ? {
-            set: props.url 
+  institutionName: props.institutionName !== undefined ? {
+            set: props.institutionName 
            } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-            set: props.relevancyScore 
+  filingDate: props.filingDate !== undefined ? {
+            set: props.filingDate 
            } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-            set: props.sentimentScore 
+  reportDate: props.reportDate !== undefined ? {
+            set: props.reportDate 
            } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-            set: props.sentimentLabel 
+  sharesHeld: props.sharesHeld !== undefined ? {
+            set: props.sharesHeld 
            } : undefined,
-  news: props.news ? 
-  typeof props.news === 'object' && Object.keys(props.news).length === 1 && (Object.keys(props.news)[0] === 'id' || Object.keys(props.news)[0] === 'symbol')
-? {
-  connect: {
-    id: props.news.id
-  }
-} : { upsert: {
-      where: {
-        id: props.news.id !== undefined ? {
-            equals: props.news.id
-          } : undefined,
-        title: props.news.title !== undefined ? {
-            equals: props.news.title
-          } : undefined,
-        url: props.news.url !== undefined ? {
-            equals: props.news.url
-          } : undefined,
-      },
-      update: {
-        id: props.news.id !== undefined ? {
-            set: props.news.id
-          } : undefined,
-        title: props.news.title !== undefined ? {
-            set: props.news.title
-          } : undefined,
-        content: props.news.content !== undefined ? {
-            set: props.news.content
-          } : undefined,
-        source: props.news.source !== undefined ? {
-            set: props.news.source
-          } : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? {
-            set: props.news.sourceDomain
-          } : undefined,
-        url: props.news.url !== undefined ? {
-            set: props.news.url
-          } : undefined,
-        sentiment: props.news.sentiment !== undefined ? {
-            set: props.news.sentiment
-          } : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors
-          } : undefined,
-        summary: props.news.summary !== undefined ? {
-            set: props.news.summary
-          } : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? {
-            set: props.news.bannerImage
-          } : undefined,
-        timePublished: props.news.timePublished !== undefined ? {
-            set: props.news.timePublished
-          } : undefined,
-        category: props.news.category !== undefined ? {
-            set: props.news.category
-          } : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics
-          } : undefined,
-        logo: props.news.logo !== undefined ? {
-            set: props.news.logo
-          } : undefined,
-      },
-      create: {
-        title: props.news.title !== undefined ? props.news.title : undefined,
-        content: props.news.content !== undefined ? props.news.content : undefined,
-        source: props.news.source !== undefined ? props.news.source : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors 
+  marketValue: props.marketValue !== undefined ? {
+            set: props.marketValue 
            } : undefined,
-        summary: props.news.summary !== undefined ? props.news.summary : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
-        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
-        category: props.news.category !== undefined ? props.news.category : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics 
+  percentOfClass: props.percentOfClass !== undefined ? {
+            set: props.percentOfClass 
            } : undefined,
-        logo: props.news.logo !== undefined ? props.news.logo : undefined,
-      },
-    }
-  } : undefined,
+  changeShares: props.changeShares !== undefined ? {
+            set: props.changeShares 
+           } : undefined,
+  changePercent: props.changePercent !== undefined ? {
+            set: props.changePercent 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
   asset: props.asset ? 
   typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && (Object.keys(props.asset)[0] === 'id' || Object.keys(props.asset)[0] === 'symbol')
 ? {
@@ -780,55 +693,162 @@ import { removeUndefinedProps } from './utils';
         bidPrice: props.asset.bidPrice !== undefined ? {
             set: props.asset.bidPrice
           } : undefined,
-    institutionalHoldings: props.asset.institutionalHoldings ? 
-    Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 && props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? 
+    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.asset.newsMentions.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: props.asset.institutionalHoldings.map((item: any) => ({
+} : { upsert: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol
+          url: item.url !== undefined ? item.url : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId
+            } : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId
             } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
               set: item.id
             } : undefined,
-          institutionName: item.institutionName !== undefined ? {
-              set: item.institutionName
+          url: item.url !== undefined ? {
+              set: item.url
             } : undefined,
-          filingDate: item.filingDate !== undefined ? {
-              set: item.filingDate
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore
             } : undefined,
-          reportDate: item.reportDate !== undefined ? {
-              set: item.reportDate
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore
             } : undefined,
-          sharesHeld: item.sharesHeld !== undefined ? {
-              set: item.sharesHeld
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel
             } : undefined,
-          marketValue: item.marketValue !== undefined ? {
-              set: item.marketValue
-            } : undefined,
-          percentOfClass: item.percentOfClass !== undefined ? {
-              set: item.percentOfClass
-            } : undefined,
-          changeShares: item.changeShares !== undefined ? {
-              set: item.changeShares
-            } : undefined,
-          changePercent: item.changePercent !== undefined ? {
-              set: item.changePercent
-            } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+      news: item.news ? 
+      typeof item.news === 'object' && Object.keys(item.news).length === 1 && (Object.keys(item.news)[0] === 'id' || Object.keys(item.news)[0] === 'symbol')
+? {
+      connect: {
+        id: item.news.id
+      }
+} : { upsert: {
+          where: {
+            id: item.news.id !== undefined ? {
+                equals: item.news.id
+              } : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title
+              } : undefined,
+            url: item.news.url !== undefined ? {
+                equals: item.news.url
+              } : undefined,
+          },
+          update: {
+            id: item.news.id !== undefined ? {
+                set: item.news.id
+              } : undefined,
+            title: item.news.title !== undefined ? {
+                set: item.news.title
+              } : undefined,
+            content: item.news.content !== undefined ? {
+                set: item.news.content
+              } : undefined,
+            source: item.news.source !== undefined ? {
+                set: item.news.source
+              } : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? {
+                set: item.news.sourceDomain
+              } : undefined,
+            url: item.news.url !== undefined ? {
+                set: item.news.url
+              } : undefined,
+            sentiment: item.news.sentiment !== undefined ? {
+                set: item.news.sentiment
+              } : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors
+              } : undefined,
+            summary: item.news.summary !== undefined ? {
+                set: item.news.summary
+              } : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? {
+                set: item.news.bannerImage
+              } : undefined,
+            timePublished: item.news.timePublished !== undefined ? {
+                set: item.news.timePublished
+              } : undefined,
+            category: item.news.category !== undefined ? {
+                set: item.news.category
+              } : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics
+              } : undefined,
+            logo: item.news.logo !== undefined ? {
+                set: item.news.logo
+              } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -931,24 +951,60 @@ import { removeUndefinedProps } from './utils';
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
-    institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? 
+      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 &&  props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol 
+          url: item.url !== undefined ? item.url : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId 
              } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -981,15 +1037,15 @@ import { removeUndefinedProps } from './utils';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_NEWSARTICLEASSETSENTIMENT,
+          mutation: UPDATE_ONE_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneNewsArticleAssetSentiment) {
-          return response.data.updateOneNewsArticleAssetSentiment;
+        if (response && response.data && response.data.updateOneInstitutionalHolding) {
+          return response.data.updateOneInstitutionalHolding;
         } else {
           return null as any;
         }
@@ -1023,13 +1079,13 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Upsert a single NewsArticleAssetSentiment record.
+   * Upsert a single InstitutionalHolding record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated NewsArticleAssetSentiment or null.
+   * @returns The updated InstitutionalHolding or null.
    */
-  async upsert(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+  async upsert(props: InstitutionalHoldingType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<InstitutionalHoldingType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1047,9 +1103,9 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-          mutation upsertOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!, $create: NewsArticleAssetSentimentCreateInput!, $update: NewsArticleAssetSentimentUpdateInput!) {
-            upsertOneNewsArticleAssetSentiment(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_INSTITUTIONALHOLDING = gql`
+          mutation upsertOneInstitutionalHolding($where: InstitutionalHoldingWhereUniqueInput!, $create: InstitutionalHoldingCreateInput!, $update: InstitutionalHoldingUpdateInput!) {
+            upsertOneInstitutionalHolding(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -1057,51 +1113,15 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  url: props.url !== undefined ? props.url : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
       },
           create: {
-        url: props.url !== undefined ? props.url : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? props.relevancyScore : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? props.sentimentScore : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? props.sentimentLabel : undefined,
-  news: props.news ? 
-    typeof props.news === 'object' && Object.keys(props.news).length === 1 && Object.keys(props.news)[0] === 'id'
-    ? { connect: {
-        id: props.news.id
-        }
-      }
-    : { connectOrCreate: {
-      where: {
-        id: props.news.id !== undefined ? props.news.id : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        title: props.news.title !== undefined ? {
-            equals: props.news.title 
-           } : undefined,
-      },
-      create: {
-        title: props.news.title !== undefined ? props.news.title : undefined,
-        content: props.news.content !== undefined ? props.news.content : undefined,
-        source: props.news.source !== undefined ? props.news.source : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors 
-           } : undefined,
-        summary: props.news.summary !== undefined ? props.news.summary : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
-        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
-        category: props.news.category !== undefined ? props.news.category : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics 
-           } : undefined,
-        logo: props.news.logo !== undefined ? props.news.logo : undefined,
-      },
-    }
-  } : undefined,
+        institutionName: props.institutionName !== undefined ? props.institutionName : undefined,
+  filingDate: props.filingDate !== undefined ? props.filingDate : undefined,
+  reportDate: props.reportDate !== undefined ? props.reportDate : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
     typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
     ? { connect: {
@@ -1170,24 +1190,60 @@ import { removeUndefinedProps } from './utils';
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
-    institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? 
+      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 &&  props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol 
+          url: item.url !== undefined ? item.url : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId 
              } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1216,101 +1272,33 @@ import { removeUndefinedProps } from './utils';
   } : undefined,
       },
           update: {
-      url: props.url !== undefined ? {
-            set: props.url 
+      institutionName: props.institutionName !== undefined ? {
+            set: props.institutionName 
            } : undefined,
-  relevancyScore: props.relevancyScore !== undefined ? {
-            set: props.relevancyScore 
+  filingDate: props.filingDate !== undefined ? {
+            set: props.filingDate 
            } : undefined,
-  sentimentScore: props.sentimentScore !== undefined ? {
-            set: props.sentimentScore 
+  reportDate: props.reportDate !== undefined ? {
+            set: props.reportDate 
            } : undefined,
-  sentimentLabel: props.sentimentLabel !== undefined ? {
-            set: props.sentimentLabel 
+  sharesHeld: props.sharesHeld !== undefined ? {
+            set: props.sharesHeld 
            } : undefined,
-  news: props.news ? 
-  typeof props.news === 'object' && Object.keys(props.news).length === 1 && (Object.keys(props.news)[0] === 'id' || Object.keys(props.news)[0] === 'symbol')
-? {
-  connect: {
-    id: props.news.id
-  }
-} : { upsert: {
-      where: {
-        id: props.news.id !== undefined ? {
-            equals: props.news.id
-          } : undefined,
-        title: props.news.title !== undefined ? {
-            equals: props.news.title
-          } : undefined,
-        url: props.news.url !== undefined ? {
-            equals: props.news.url
-          } : undefined,
-      },
-      update: {
-        id: props.news.id !== undefined ? {
-            set: props.news.id
-          } : undefined,
-        title: props.news.title !== undefined ? {
-            set: props.news.title
-          } : undefined,
-        content: props.news.content !== undefined ? {
-            set: props.news.content
-          } : undefined,
-        source: props.news.source !== undefined ? {
-            set: props.news.source
-          } : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? {
-            set: props.news.sourceDomain
-          } : undefined,
-        url: props.news.url !== undefined ? {
-            set: props.news.url
-          } : undefined,
-        sentiment: props.news.sentiment !== undefined ? {
-            set: props.news.sentiment
-          } : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors
-          } : undefined,
-        summary: props.news.summary !== undefined ? {
-            set: props.news.summary
-          } : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? {
-            set: props.news.bannerImage
-          } : undefined,
-        timePublished: props.news.timePublished !== undefined ? {
-            set: props.news.timePublished
-          } : undefined,
-        category: props.news.category !== undefined ? {
-            set: props.news.category
-          } : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics
-          } : undefined,
-        logo: props.news.logo !== undefined ? {
-            set: props.news.logo
-          } : undefined,
-      },
-      create: {
-        title: props.news.title !== undefined ? props.news.title : undefined,
-        content: props.news.content !== undefined ? props.news.content : undefined,
-        source: props.news.source !== undefined ? props.news.source : undefined,
-        sourceDomain: props.news.sourceDomain !== undefined ? props.news.sourceDomain : undefined,
-        url: props.news.url !== undefined ? props.news.url : undefined,
-        sentiment: props.news.sentiment !== undefined ? props.news.sentiment : undefined,
-        authors: props.news.authors !== undefined ? {
-            set: props.news.authors 
+  marketValue: props.marketValue !== undefined ? {
+            set: props.marketValue 
            } : undefined,
-        summary: props.news.summary !== undefined ? props.news.summary : undefined,
-        bannerImage: props.news.bannerImage !== undefined ? props.news.bannerImage : undefined,
-        timePublished: props.news.timePublished !== undefined ? props.news.timePublished : undefined,
-        category: props.news.category !== undefined ? props.news.category : undefined,
-        topics: props.news.topics !== undefined ? {
-            set: props.news.topics 
+  percentOfClass: props.percentOfClass !== undefined ? {
+            set: props.percentOfClass 
            } : undefined,
-        logo: props.news.logo !== undefined ? props.news.logo : undefined,
-      },
-    }
-  } : undefined,
+  changeShares: props.changeShares !== undefined ? {
+            set: props.changeShares 
+           } : undefined,
+  changePercent: props.changePercent !== undefined ? {
+            set: props.changePercent 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
   asset: props.asset ? 
   typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && (Object.keys(props.asset)[0] === 'id' || Object.keys(props.asset)[0] === 'symbol')
 ? {
@@ -1498,55 +1486,162 @@ import { removeUndefinedProps } from './utils';
         bidPrice: props.asset.bidPrice !== undefined ? {
             set: props.asset.bidPrice
           } : undefined,
-    institutionalHoldings: props.asset.institutionalHoldings ? 
-    Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 && props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? 
+    Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 && props.asset.newsMentions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.asset.newsMentions.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: props.asset.institutionalHoldings.map((item: any) => ({
+} : { upsert: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol
+          url: item.url !== undefined ? item.url : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId
+            } : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId
             } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
               set: item.id
             } : undefined,
-          institutionName: item.institutionName !== undefined ? {
-              set: item.institutionName
+          url: item.url !== undefined ? {
+              set: item.url
             } : undefined,
-          filingDate: item.filingDate !== undefined ? {
-              set: item.filingDate
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore
             } : undefined,
-          reportDate: item.reportDate !== undefined ? {
-              set: item.reportDate
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore
             } : undefined,
-          sharesHeld: item.sharesHeld !== undefined ? {
-              set: item.sharesHeld
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel
             } : undefined,
-          marketValue: item.marketValue !== undefined ? {
-              set: item.marketValue
-            } : undefined,
-          percentOfClass: item.percentOfClass !== undefined ? {
-              set: item.percentOfClass
-            } : undefined,
-          changeShares: item.changeShares !== undefined ? {
-              set: item.changeShares
-            } : undefined,
-          changePercent: item.changePercent !== undefined ? {
-              set: item.changePercent
-            } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+      news: item.news ? 
+      typeof item.news === 'object' && Object.keys(item.news).length === 1 && (Object.keys(item.news)[0] === 'id' || Object.keys(item.news)[0] === 'symbol')
+? {
+      connect: {
+        id: item.news.id
+      }
+} : { upsert: {
+          where: {
+            id: item.news.id !== undefined ? {
+                equals: item.news.id
+              } : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title
+              } : undefined,
+            url: item.news.url !== undefined ? {
+                equals: item.news.url
+              } : undefined,
+          },
+          update: {
+            id: item.news.id !== undefined ? {
+                set: item.news.id
+              } : undefined,
+            title: item.news.title !== undefined ? {
+                set: item.news.title
+              } : undefined,
+            content: item.news.content !== undefined ? {
+                set: item.news.content
+              } : undefined,
+            source: item.news.source !== undefined ? {
+                set: item.news.source
+              } : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? {
+                set: item.news.sourceDomain
+              } : undefined,
+            url: item.news.url !== undefined ? {
+                set: item.news.url
+              } : undefined,
+            sentiment: item.news.sentiment !== undefined ? {
+                set: item.news.sentiment
+              } : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors
+              } : undefined,
+            summary: item.news.summary !== undefined ? {
+                set: item.news.summary
+              } : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? {
+                set: item.news.bannerImage
+              } : undefined,
+            timePublished: item.news.timePublished !== undefined ? {
+                set: item.news.timePublished
+              } : undefined,
+            category: item.news.category !== undefined ? {
+                set: item.news.category
+              } : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics
+              } : undefined,
+            logo: item.news.logo !== undefined ? {
+                set: item.news.logo
+              } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1649,24 +1744,60 @@ import { removeUndefinedProps } from './utils';
         exDividendDate: props.asset.exDividendDate !== undefined ? props.asset.exDividendDate : undefined,
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
-    institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: props.asset.newsMentions ? 
+      Array.isArray(props.asset.newsMentions) && props.asset.newsMentions.length > 0 &&  props.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol 
+          url: item.url !== undefined ? item.url : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId 
              } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1699,15 +1830,15 @@ import { removeUndefinedProps } from './utils';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_NEWSARTICLEASSETSENTIMENT,
+          mutation: UPSERT_ONE_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneNewsArticleAssetSentiment) {
-          return response.data.upsertOneNewsArticleAssetSentiment;
+        if (response && response.data && response.data.upsertOneInstitutionalHolding) {
+          return response.data.upsertOneInstitutionalHolding;
         } else {
           return null as any;
         }
@@ -1741,13 +1872,13 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Update multiple NewsArticleAssetSentiment records.
+   * Update multiple InstitutionalHolding records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of NewsArticleAssetSentiment objects for the updated records.
+   * @param props - Array of InstitutionalHolding objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: NewsArticleAssetSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: InstitutionalHoldingType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1765,9 +1896,9 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_NEWSARTICLEASSETSENTIMENT = gql`
-          mutation updateManyNewsArticleAssetSentiment($data: [NewsArticleAssetSentimentCreateManyInput!]!) {
-            updateManyNewsArticleAssetSentiment(data: $data) {
+        const UPDATE_MANY_INSTITUTIONALHOLDING = gql`
+          mutation updateManyInstitutionalHolding($data: [InstitutionalHoldingCreateManyInput!]!) {
+            updateManyInstitutionalHolding(data: $data) {
               count
             }
           }`;
@@ -1775,9 +1906,8 @@ import { removeUndefinedProps } from './utils';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  url: prop.url !== undefined ? prop.url : undefined,
-  newsArticleId: prop.newsArticleId !== undefined ? {
-    equals: prop.newsArticleId 
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
   } : undefined,
 
           },
@@ -1785,101 +1915,39 @@ import { removeUndefinedProps } from './utils';
               id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  url: prop.url !== undefined ? {
-            set: prop.url 
+  institutionName: prop.institutionName !== undefined ? {
+            set: prop.institutionName 
            } : undefined,
-  relevancyScore: prop.relevancyScore !== undefined ? {
-            set: prop.relevancyScore 
+  filingDate: prop.filingDate !== undefined ? {
+            set: prop.filingDate 
            } : undefined,
-  sentimentScore: prop.sentimentScore !== undefined ? {
-            set: prop.sentimentScore 
+  reportDate: prop.reportDate !== undefined ? {
+            set: prop.reportDate 
            } : undefined,
-  sentimentLabel: prop.sentimentLabel !== undefined ? {
-            set: prop.sentimentLabel 
+  sharesHeld: prop.sharesHeld !== undefined ? {
+            set: prop.sharesHeld 
            } : undefined,
-  news: prop.news ? 
-  typeof prop.news === 'object' && Object.keys(prop.news).length === 1 && (Object.keys(prop.news)[0] === 'id' || Object.keys(prop.news)[0] === 'symbol')
-? {
-  connect: {
-    id: prop.news.id
-  }
-} : { upsert: {
-      where: {
-        id: prop.news.id !== undefined ? {
-            equals: prop.news.id
-          } : undefined,
-        title: prop.news.title !== undefined ? {
-            equals: prop.news.title
-          } : undefined,
-        url: prop.news.url !== undefined ? {
-            equals: prop.news.url
-          } : undefined,
-      },
-      update: {
-        id: prop.news.id !== undefined ? {
-            set: prop.news.id
-          } : undefined,
-        title: prop.news.title !== undefined ? {
-            set: prop.news.title
-          } : undefined,
-        content: prop.news.content !== undefined ? {
-            set: prop.news.content
-          } : undefined,
-        source: prop.news.source !== undefined ? {
-            set: prop.news.source
-          } : undefined,
-        sourceDomain: prop.news.sourceDomain !== undefined ? {
-            set: prop.news.sourceDomain
-          } : undefined,
-        url: prop.news.url !== undefined ? {
-            set: prop.news.url
-          } : undefined,
-        sentiment: prop.news.sentiment !== undefined ? {
-            set: prop.news.sentiment
-          } : undefined,
-        authors: prop.news.authors !== undefined ? {
-            set: prop.news.authors
-          } : undefined,
-        summary: prop.news.summary !== undefined ? {
-            set: prop.news.summary
-          } : undefined,
-        bannerImage: prop.news.bannerImage !== undefined ? {
-            set: prop.news.bannerImage
-          } : undefined,
-        timePublished: prop.news.timePublished !== undefined ? {
-            set: prop.news.timePublished
-          } : undefined,
-        category: prop.news.category !== undefined ? {
-            set: prop.news.category
-          } : undefined,
-        topics: prop.news.topics !== undefined ? {
-            set: prop.news.topics
-          } : undefined,
-        logo: prop.news.logo !== undefined ? {
-            set: prop.news.logo
-          } : undefined,
-      },
-      create: {
-        title: prop.news.title !== undefined ? prop.news.title : undefined,
-        content: prop.news.content !== undefined ? prop.news.content : undefined,
-        source: prop.news.source !== undefined ? prop.news.source : undefined,
-        sourceDomain: prop.news.sourceDomain !== undefined ? prop.news.sourceDomain : undefined,
-        url: prop.news.url !== undefined ? prop.news.url : undefined,
-        sentiment: prop.news.sentiment !== undefined ? prop.news.sentiment : undefined,
-        authors: prop.news.authors !== undefined ? {
-            set: prop.news.authors 
+  marketValue: prop.marketValue !== undefined ? {
+            set: prop.marketValue 
            } : undefined,
-        summary: prop.news.summary !== undefined ? prop.news.summary : undefined,
-        bannerImage: prop.news.bannerImage !== undefined ? prop.news.bannerImage : undefined,
-        timePublished: prop.news.timePublished !== undefined ? prop.news.timePublished : undefined,
-        category: prop.news.category !== undefined ? prop.news.category : undefined,
-        topics: prop.news.topics !== undefined ? {
-            set: prop.news.topics 
+  percentOfClass: prop.percentOfClass !== undefined ? {
+            set: prop.percentOfClass 
            } : undefined,
-        logo: prop.news.logo !== undefined ? prop.news.logo : undefined,
-      },
-    }
-  } : undefined,
+  changeShares: prop.changeShares !== undefined ? {
+            set: prop.changeShares 
+           } : undefined,
+  changePercent: prop.changePercent !== undefined ? {
+            set: prop.changePercent 
+           } : undefined,
+  metadata: prop.metadata !== undefined ? {
+            set: prop.metadata 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
   asset: prop.asset ? 
   typeof prop.asset === 'object' && Object.keys(prop.asset).length === 1 && (Object.keys(prop.asset)[0] === 'id' || Object.keys(prop.asset)[0] === 'symbol')
 ? {
@@ -2067,55 +2135,162 @@ import { removeUndefinedProps } from './utils';
         bidPrice: prop.asset.bidPrice !== undefined ? {
             set: prop.asset.bidPrice
           } : undefined,
-    institutionalHoldings: prop.asset.institutionalHoldings ? 
-    Array.isArray(prop.asset.institutionalHoldings) && prop.asset.institutionalHoldings.length > 0 && prop.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: prop.asset.newsMentions ? 
+    Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0 && prop.asset.newsMentions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.asset.newsMentions.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: prop.asset.institutionalHoldings.map((item: any) => ({
+} : { upsert: prop.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol
+          url: item.url !== undefined ? item.url : undefined,
+          assetId: item.assetId !== undefined ? {
+              equals: item.assetId
+            } : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId
             } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
               set: item.id
             } : undefined,
-          institutionName: item.institutionName !== undefined ? {
-              set: item.institutionName
+          url: item.url !== undefined ? {
+              set: item.url
             } : undefined,
-          filingDate: item.filingDate !== undefined ? {
-              set: item.filingDate
+          relevancyScore: item.relevancyScore !== undefined ? {
+              set: item.relevancyScore
             } : undefined,
-          reportDate: item.reportDate !== undefined ? {
-              set: item.reportDate
+          sentimentScore: item.sentimentScore !== undefined ? {
+              set: item.sentimentScore
             } : undefined,
-          sharesHeld: item.sharesHeld !== undefined ? {
-              set: item.sharesHeld
+          sentimentLabel: item.sentimentLabel !== undefined ? {
+              set: item.sentimentLabel
             } : undefined,
-          marketValue: item.marketValue !== undefined ? {
-              set: item.marketValue
-            } : undefined,
-          percentOfClass: item.percentOfClass !== undefined ? {
-              set: item.percentOfClass
-            } : undefined,
-          changeShares: item.changeShares !== undefined ? {
-              set: item.changeShares
-            } : undefined,
-          changePercent: item.changePercent !== undefined ? {
-              set: item.changePercent
-            } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+      news: item.news ? 
+      typeof item.news === 'object' && Object.keys(item.news).length === 1 && (Object.keys(item.news)[0] === 'id' || Object.keys(item.news)[0] === 'symbol')
+? {
+      connect: {
+        id: item.news.id
+      }
+} : { upsert: {
+          where: {
+            id: item.news.id !== undefined ? {
+                equals: item.news.id
+              } : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title
+              } : undefined,
+            url: item.news.url !== undefined ? {
+                equals: item.news.url
+              } : undefined,
+          },
+          update: {
+            id: item.news.id !== undefined ? {
+                set: item.news.id
+              } : undefined,
+            title: item.news.title !== undefined ? {
+                set: item.news.title
+              } : undefined,
+            content: item.news.content !== undefined ? {
+                set: item.news.content
+              } : undefined,
+            source: item.news.source !== undefined ? {
+                set: item.news.source
+              } : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? {
+                set: item.news.sourceDomain
+              } : undefined,
+            url: item.news.url !== undefined ? {
+                set: item.news.url
+              } : undefined,
+            sentiment: item.news.sentiment !== undefined ? {
+                set: item.news.sentiment
+              } : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors
+              } : undefined,
+            summary: item.news.summary !== undefined ? {
+                set: item.news.summary
+              } : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? {
+                set: item.news.bannerImage
+              } : undefined,
+            timePublished: item.news.timePublished !== undefined ? {
+                set: item.news.timePublished
+              } : undefined,
+            category: item.news.category !== undefined ? {
+                set: item.news.category
+              } : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics
+              } : undefined,
+            logo: item.news.logo !== undefined ? {
+                set: item.news.logo
+              } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -2218,24 +2393,60 @@ import { removeUndefinedProps } from './utils';
         exDividendDate: prop.asset.exDividendDate !== undefined ? prop.asset.exDividendDate : undefined,
         askPrice: prop.asset.askPrice !== undefined ? prop.asset.askPrice : undefined,
         bidPrice: prop.asset.bidPrice !== undefined ? prop.asset.bidPrice : undefined,
-    institutionalHoldings: prop.asset.institutionalHoldings ? 
-      Array.isArray(prop.asset.institutionalHoldings) && prop.asset.institutionalHoldings.length > 0 &&  prop.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.asset.institutionalHoldings.map((item: any) => ({
+    newsMentions: prop.asset.newsMentions ? 
+      Array.isArray(prop.asset.newsMentions) && prop.asset.newsMentions.length > 0 &&  prop.asset.newsMentions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.asset.newsMentions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: prop.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: prop.asset.newsMentions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
-          symbol: item.symbol !== undefined ? {
-              equals: item.symbol 
+          url: item.url !== undefined ? item.url : undefined,
+          newsArticleId: item.newsArticleId !== undefined ? {
+              equals: item.newsArticleId 
              } : undefined,
         },
         create: {
-          institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
-          filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
-          reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
-          metadata: item.metadata !== undefined ? item.metadata : undefined,
+          url: item.url !== undefined ? item.url : undefined,
+          relevancyScore: item.relevancyScore !== undefined ? item.relevancyScore : undefined,
+          sentimentScore: item.sentimentScore !== undefined ? item.sentimentScore : undefined,
+          sentimentLabel: item.sentimentLabel !== undefined ? item.sentimentLabel : undefined,
+      news: item.news ? 
+        typeof item.news === 'object' && Object.keys(item.news).length === 1 && Object.keys(item.news)[0] === 'id'
+    ? { connect: {
+            id: item.news.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.news.id !== undefined ? item.news.id : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            title: item.news.title !== undefined ? {
+                equals: item.news.title 
+               } : undefined,
+          },
+          create: {
+            title: item.news.title !== undefined ? item.news.title : undefined,
+            content: item.news.content !== undefined ? item.news.content : undefined,
+            source: item.news.source !== undefined ? item.news.source : undefined,
+            sourceDomain: item.news.sourceDomain !== undefined ? item.news.sourceDomain : undefined,
+            url: item.news.url !== undefined ? item.news.url : undefined,
+            sentiment: item.news.sentiment !== undefined ? item.news.sentiment : undefined,
+            authors: item.news.authors !== undefined ? {
+                set: item.news.authors 
+               } : undefined,
+            summary: item.news.summary !== undefined ? item.news.summary : undefined,
+            bannerImage: item.news.bannerImage !== undefined ? item.news.bannerImage : undefined,
+            timePublished: item.news.timePublished !== undefined ? item.news.timePublished : undefined,
+            category: item.news.category !== undefined ? item.news.category : undefined,
+            topics: item.news.topics !== undefined ? {
+                set: item.news.topics 
+               } : undefined,
+            logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -2269,15 +2480,15 @@ import { removeUndefinedProps } from './utils';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_NEWSARTICLEASSETSENTIMENT,
+          mutation: UPDATE_MANY_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyNewsArticleAssetSentiment) {
-          return response.data.updateManyNewsArticleAssetSentiment;
+        if (response && response.data && response.data.updateManyInstitutionalHolding) {
+          return response.data.updateManyInstitutionalHolding;
         } else {
           return null as any;
         }
@@ -2311,13 +2522,13 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Delete a single NewsArticleAssetSentiment record.
+   * Delete a single InstitutionalHolding record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted NewsArticleAssetSentiment or null.
+   * @returns The deleted InstitutionalHolding or null.
    */
-  async delete(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
+  async delete(props: InstitutionalHoldingType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<InstitutionalHoldingType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2335,9 +2546,9 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_NEWSARTICLEASSETSENTIMENT = gql`
-          mutation deleteOneNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
-            deleteOneNewsArticleAssetSentiment(where: $where) {
+        const DELETE_ONE_INSTITUTIONALHOLDING = gql`
+          mutation deleteOneInstitutionalHolding($where: InstitutionalHoldingWhereUniqueInput!) {
+            deleteOneInstitutionalHolding(where: $where) {
               id
             }
           }`;
@@ -2351,15 +2562,15 @@ import { removeUndefinedProps } from './utils';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_NEWSARTICLEASSETSENTIMENT,
+          mutation: DELETE_ONE_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneNewsArticleAssetSentiment) {
-          return response.data.deleteOneNewsArticleAssetSentiment;
+        if (response && response.data && response.data.deleteOneInstitutionalHolding) {
+          return response.data.deleteOneInstitutionalHolding;
         } else {
           return null as any;
         }
@@ -2393,14 +2604,14 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Retrieve a single NewsArticleAssetSentiment record by ID.
+   * Retrieve a single InstitutionalHolding record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved NewsArticleAssetSentiment or null.
+   * @returns The retrieved InstitutionalHolding or null.
    */
-  async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType | null> {
+  async get(props: InstitutionalHoldingType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<InstitutionalHoldingType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2418,9 +2629,9 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const GET_NEWSARTICLEASSETSENTIMENT = gql`
-          query getNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereUniqueInput!) {
-            getNewsArticleAssetSentiment(where: $where) {
+        const GET_INSTITUTIONALHOLDING = gql`
+          query getInstitutionalHolding($where: InstitutionalHoldingWhereUniqueInput!) {
+            getInstitutionalHolding(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -2428,27 +2639,26 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  url: props.url !== undefined ? props.url : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_NEWSARTICLEASSETSENTIMENT,
+          query: GET_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getNewsArticleAssetSentiment ?? null;
+        return response.data?.getInstitutionalHolding ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No NewsArticleAssetSentiment found') {
+        if (error.message === 'No InstitutionalHolding found') {
           return null;
         }
 
@@ -2479,12 +2689,12 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Retrieve all NewsArticleAssetSentiments records.
+   * Retrieve all InstitutionalHoldings records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of NewsArticleAssetSentiment records or null.
+   * @returns An array of InstitutionalHolding records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<InstitutionalHoldingType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2502,25 +2712,25 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_NEWSARTICLEASSETSENTIMENT = gql`
-          query getAllNewsArticleAssetSentiment {
-            newsArticleAssetSentiments {
+        const GET_ALL_INSTITUTIONALHOLDING = gql`
+          query getAllInstitutionalHolding {
+            institutionalHoldings {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_NEWSARTICLEASSETSENTIMENT,
+          query: GET_ALL_INSTITUTIONALHOLDING,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.newsArticleAssetSentiments ?? null;
+        return response.data?.institutionalHoldings ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No NewsArticleAssetSentiment found') {
+        if (error.message === 'No InstitutionalHolding found') {
           return null;
         }
 
@@ -2551,14 +2761,14 @@ import { removeUndefinedProps } from './utils';
   },
 
   /**
-   * Find multiple NewsArticleAssetSentiment records based on conditions.
+   * Find multiple InstitutionalHolding records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found NewsArticleAssetSentiment records or null.
+   * @returns An array of found InstitutionalHolding records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType[] | null> {
+  async findMany(props: InstitutionalHoldingType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<InstitutionalHoldingType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2576,9 +2786,9 @@ import { removeUndefinedProps } from './utils';
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_NEWSARTICLEASSETSENTIMENT = gql`
-          query findManyNewsArticleAssetSentiment($where: NewsArticleAssetSentimentWhereInput!) {
-            newsArticleAssetSentiments(where: $where) {
+        const FIND_MANY_INSTITUTIONALHOLDING = gql`
+          query findManyInstitutionalHolding($where: InstitutionalHoldingWhereInput!) {
+            institutionalHoldings(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -2588,11 +2798,8 @@ import { removeUndefinedProps } from './utils';
       id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  newsArticleId: props.newsArticleId !== undefined ? {
-    equals: props.newsArticleId 
-  } : undefined,
-  url: props.url !== undefined ? {
-    equals: props.url 
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
   } : undefined,
       },
         };
@@ -2600,22 +2807,22 @@ import { removeUndefinedProps } from './utils';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_NEWSARTICLEASSETSENTIMENT,
+          query: FIND_MANY_INSTITUTIONALHOLDING,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.newsarticleassetsentiments) {
-          return response.data.newsArticleAssetSentiments;
+        if (response && response.data && response.data.institutionalholdings) {
+          return response.data.institutionalHoldings;
         } else {
-          return [] as NewsArticleAssetSentimentType[];
+          return [] as InstitutionalHoldingType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No NewsArticleAssetSentiment found') {
+        if (error.message === 'No InstitutionalHolding found') {
           return null;
         }
 

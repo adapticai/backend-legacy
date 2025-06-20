@@ -90,6 +90,32 @@ import { removeUndefinedProps } from './utils';
       bidPrice
       createdAt
       updatedAt
+      institutionalHoldings {
+        id
+        symbol
+        institutionName
+        filingDate
+        reportDate
+        sharesHeld
+        marketValue
+        percentOfClass
+        changeShares
+        changePercent
+        metadata
+        createdAt
+        updatedAt
+      }
+      institutionalFlowSignals {
+        id
+        symbol
+        signalDate
+        signalType
+        signalStrength
+        netFlow
+        confidence
+        metadata
+        createdAt
+      }
     }
     relevancyScore
     sentimentScore
@@ -246,6 +272,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -706,6 +773,100 @@ import { removeUndefinedProps } from './utils';
           bidPrice: item.asset.bidPrice !== undefined ? {
               set: item.asset.bidPrice
             } : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+      Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 && item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.asset.institutionalHoldings.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            institutionName: item.institutionName !== undefined ? {
+                set: item.institutionName
+              } : undefined,
+            filingDate: item.filingDate !== undefined ? {
+                set: item.filingDate
+              } : undefined,
+            reportDate: item.reportDate !== undefined ? {
+                set: item.reportDate
+              } : undefined,
+            sharesHeld: item.sharesHeld !== undefined ? {
+                set: item.sharesHeld
+              } : undefined,
+            marketValue: item.marketValue !== undefined ? {
+                set: item.marketValue
+              } : undefined,
+            percentOfClass: item.percentOfClass !== undefined ? {
+                set: item.percentOfClass
+              } : undefined,
+            changeShares: item.changeShares !== undefined ? {
+                set: item.changeShares
+              } : undefined,
+            changePercent: item.changePercent !== undefined ? {
+                set: item.changePercent
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+      Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 && item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.asset.institutionalFlowSignals.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            signalDate: item.signalDate !== undefined ? {
+                set: item.signalDate
+              } : undefined,
+            signalType: item.signalType !== undefined ? {
+                set: item.signalType
+              } : undefined,
+            signalStrength: item.signalStrength !== undefined ? {
+                set: item.signalStrength
+              } : undefined,
+            netFlow: item.netFlow !== undefined ? {
+                set: item.netFlow
+              } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -763,6 +924,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -840,6 +1042,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1038,6 +1281,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1304,6 +1588,100 @@ import { removeUndefinedProps } from './utils';
           bidPrice: item.asset.bidPrice !== undefined ? {
               set: item.asset.bidPrice
             } : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+      Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 && item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.asset.institutionalHoldings.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            institutionName: item.institutionName !== undefined ? {
+                set: item.institutionName
+              } : undefined,
+            filingDate: item.filingDate !== undefined ? {
+                set: item.filingDate
+              } : undefined,
+            reportDate: item.reportDate !== undefined ? {
+                set: item.reportDate
+              } : undefined,
+            sharesHeld: item.sharesHeld !== undefined ? {
+                set: item.sharesHeld
+              } : undefined,
+            marketValue: item.marketValue !== undefined ? {
+                set: item.marketValue
+              } : undefined,
+            percentOfClass: item.percentOfClass !== undefined ? {
+                set: item.percentOfClass
+              } : undefined,
+            changeShares: item.changeShares !== undefined ? {
+                set: item.changeShares
+              } : undefined,
+            changePercent: item.changePercent !== undefined ? {
+                set: item.changePercent
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+      Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 && item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.asset.institutionalFlowSignals.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            signalDate: item.signalDate !== undefined ? {
+                set: item.signalDate
+              } : undefined,
+            signalType: item.signalType !== undefined ? {
+                set: item.signalType
+              } : undefined,
+            signalStrength: item.signalStrength !== undefined ? {
+                set: item.signalStrength
+              } : undefined,
+            netFlow: item.netFlow !== undefined ? {
+                set: item.netFlow
+              } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1361,6 +1739,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1438,6 +1857,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1800,6 +2260,100 @@ import { removeUndefinedProps } from './utils';
           bidPrice: item.asset.bidPrice !== undefined ? {
               set: item.asset.bidPrice
             } : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+      Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 && item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.asset.institutionalHoldings.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            institutionName: item.institutionName !== undefined ? {
+                set: item.institutionName
+              } : undefined,
+            filingDate: item.filingDate !== undefined ? {
+                set: item.filingDate
+              } : undefined,
+            reportDate: item.reportDate !== undefined ? {
+                set: item.reportDate
+              } : undefined,
+            sharesHeld: item.sharesHeld !== undefined ? {
+                set: item.sharesHeld
+              } : undefined,
+            marketValue: item.marketValue !== undefined ? {
+                set: item.marketValue
+              } : undefined,
+            percentOfClass: item.percentOfClass !== undefined ? {
+                set: item.percentOfClass
+              } : undefined,
+            changeShares: item.changeShares !== undefined ? {
+                set: item.changeShares
+              } : undefined,
+            changePercent: item.changePercent !== undefined ? {
+                set: item.changePercent
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+      Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 && item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.asset.institutionalFlowSignals.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            signalDate: item.signalDate !== undefined ? {
+                set: item.signalDate
+              } : undefined,
+            signalType: item.signalType !== undefined ? {
+                set: item.signalType
+              } : undefined,
+            signalStrength: item.signalStrength !== undefined ? {
+                set: item.signalStrength
+              } : undefined,
+            netFlow: item.netFlow !== undefined ? {
+                set: item.netFlow
+              } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1857,6 +2411,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1934,6 +2529,47 @@ import { removeUndefinedProps } from './utils';
           exDividendDate: item.asset.exDividendDate !== undefined ? item.asset.exDividendDate : undefined,
           askPrice: item.asset.askPrice !== undefined ? item.asset.askPrice : undefined,
           bidPrice: item.asset.bidPrice !== undefined ? item.asset.bidPrice : undefined,
+      institutionalHoldings: item.asset.institutionalHoldings ? 
+        Array.isArray(item.asset.institutionalHoldings) && item.asset.institutionalHoldings.length > 0 &&  item.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalHoldings.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalHoldings.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
+            filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
+            reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      institutionalFlowSignals: item.asset.institutionalFlowSignals ? 
+        Array.isArray(item.asset.institutionalFlowSignals) && item.asset.institutionalFlowSignals.length > 0 &&  item.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.asset.institutionalFlowSignals.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.asset.institutionalFlowSignals.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+          },
+          create: {
+            signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
+            signalType: item.signalType !== undefined ? item.signalType : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,

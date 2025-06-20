@@ -957,6 +957,12 @@ model Asset {
   /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   newsMentions NewsArticleAssetSentiment[]
 
+  /// List of institutional holdings for this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset']
+  institutionalHoldings InstitutionalHolding[] @relation("InstitutionalHoldingAsset")
+
+  /// List of institutional flow signals for this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset']
+  institutionalFlowSignals InstitutionalFlowSignal[] @relation("InstitutionalFlowSignalAsset")
+
   @@map(name: "assets")
 }
 
@@ -1369,4 +1375,189 @@ model InstitutionalSentimentAlerts {
   @@index([resolved])
   @@index([type])
   @@map("institutional_sentiment_alerts")
+}
+
+// Stores weight analytics data for volatility models and analytics metadata.
+model AnalyticsSnapshot {
+  /// Unique identifier for the analytics snapshot. TYPESTRING.SKIP=true
+  id String @id @default(cuid())
+  
+  /// Symbol of the asset for which analytics data is stored.
+  symbol String
+  
+  /// Timestamp when the analytics snapshot was created.
+  timestamp DateTime
+  
+  /// Type of analytics data stored (ENSEMBLE, VOLATILITY, REGIME, SMOOTHED).
+  dataType String
+  
+  /// JSON metadata containing weights and analytics metadata.
+  metadata Json
+  
+  /// Timestamp when the analytics snapshot was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+  
+  /// Timestamp when the analytics snapshot was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+  
+  /// Indexes for performance optimization
+  @@index([symbol, dataType, timestamp])
+  @@index([timestamp])
+  @@map("analytics_snapshots")
+}
+
+// Stores analytics parameter configuration for weight analytics operations.
+model AnalyticsConfiguration {
+  /// Unique identifier for the analytics configuration. TYPESTRING.SKIP=true
+  id String @id @default(cuid())
+  
+  /// Unique key identifying the configuration.
+  configKey String @unique
+  
+  /// Type of configuration (WEIGHT_CONFIG, ANALYTICS_PARAMS, MODEL_PARAMS).
+  configType String
+  
+  /// JSON configuration data with flexible structure.
+  configValue Json
+  
+  /// Optional symbol for symbol-specific configuration.
+  symbol String?
+  
+  /// Additional metadata for the configuration.
+  metadata Json
+  
+  /// Timestamp when the analytics configuration was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+  
+  /// Timestamp when the analytics configuration was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+  
+  /// Indexes for performance optimization
+  @@index([configKey, configType])
+  @@index([configType])
+  @@map("analytics_configurations")
+}
+
+// Stores connection health monitoring data for system connections.
+model ConnectionHealthSnapshot {
+  /// Unique identifier for the connection health snapshot. TYPESTRING.SKIP=true
+  id String @id @default(cuid())
+  
+  /// Timestamp when the connection health was recorded.
+  timestamp DateTime
+  
+  /// Type of connection being monitored (WS, HTTP, DATABASE, EXTERNAL_API).
+  connectionType String
+  
+  /// Connection endpoint or identifier being monitored.
+  endpoint String
+  
+  /// Current status of the connection (HEALTHY, DEGRADED, DOWN).
+  status String
+  
+  /// JSON metrics containing performance and health data.
+  metrics Json
+  
+  /// Additional context and metadata for the connection health.
+  metadata Json
+  
+  /// Timestamp when the connection health snapshot was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+  
+  /// Indexes for performance optimization
+  @@index([timestamp])
+  @@index([connectionType, status])
+  @@index([endpoint, timestamp])
+  @@map("connection_health_snapshots")
+}
+
+// Stores SEC EDGAR institutional holding data for financial analysis.
+model InstitutionalHolding {
+  /// Unique identifier for the institutional holding record. TYPESTRING.SKIP=true
+  id String @id @default(cuid())
+  
+  /// Symbol of the asset being held by the institution.
+  symbol String
+  
+  /// Name of the institutional investor.
+  institutionName String
+  
+  /// Date when the SEC filing was submitted.
+  filingDate DateTime
+  
+  /// Reporting date for the institutional holding.
+  reportDate DateTime
+  
+  /// Number of shares held by the institution.
+  sharesHeld BigInt
+  
+  /// Market value of the holding in USD.
+  marketValue Decimal
+  
+  /// Percentage of the asset class held by the institution.
+  percentOfClass Decimal?
+  
+  /// Change in shares from the previous filing.
+  changeShares BigInt?
+  
+  /// Percentage change in shares from the previous filing.
+  changePercent Decimal?
+  
+  /// Additional SEC filing data and metadata.
+  metadata Json
+  
+  /// Timestamp when the institutional holding was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+  
+  /// Timestamp when the institutional holding was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+  
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions']
+  asset Asset @relation("InstitutionalHoldingAsset", fields: [symbol], references: [symbol])
+  
+  /// Indexes for performance optimization
+  @@index([symbol, filingDate])
+  @@index([institutionName, filingDate])
+  @@index([filingDate])
+  @@unique([symbol, institutionName, filingDate])
+  @@map("institutional_holdings")
+}
+
+// Stores institutional flow analysis signals for trading decisions.
+model InstitutionalFlowSignal {
+  /// Unique identifier for the institutional flow signal. TYPESTRING.SKIP=true
+  id String @id @default(cuid())
+  
+  /// Symbol of the asset for which the signal was generated.
+  symbol String
+  
+  /// Date when the institutional flow signal was generated.
+  signalDate DateTime
+  
+  /// Type of signal (BUY_PRESSURE, SELL_PRESSURE, ACCUMULATION, DISTRIBUTION).
+  signalType String
+  
+  /// Strength of the signal from 0.0 to 1.0.
+  signalStrength Decimal
+  
+  /// Net institutional flow amount.
+  netFlow Decimal
+  
+  /// Confidence level in the signal from 0.0 to 1.0.
+  confidence Decimal
+  
+  /// Analysis details and additional signal metadata.
+  metadata Json
+  
+  /// Timestamp when the institutional flow signal was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+  
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions']
+  asset Asset @relation("InstitutionalFlowSignalAsset", fields: [symbol], references: [symbol])
+  
+  /// Indexes for performance optimization
+  @@index([symbol, signalDate])
+  @@index([signalDate])
+  @@index([signalType, signalStrength])
+  @@map("institutional_flow_signals")
 }

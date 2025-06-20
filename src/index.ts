@@ -24,10 +24,15 @@ import { Action } from './Action';
 import { Alert } from './Alert';
 import { Allocation } from './Allocation';
 import { AlpacaAccount } from './AlpacaAccount';
+import { AnalyticsConfiguration } from './AnalyticsConfiguration';
+import { AnalyticsSnapshot } from './AnalyticsSnapshot';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
+import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
+import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
+import { InstitutionalHolding } from './InstitutionalHolding';
 import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
 import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
 import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
@@ -47,10 +52,15 @@ const adaptic = {
   alert: Alert,
   allocation: Allocation,
   alpacaAccount: AlpacaAccount,
+  analyticsConfiguration: AnalyticsConfiguration,
+  analyticsSnapshot: AnalyticsSnapshot,
   asset: Asset,
   authenticator: Authenticator,
+  connectionHealthSnapshot: ConnectionHealthSnapshot,
   customer: Customer,
   economicEvent: EconomicEvent,
+  institutionalFlowSignal: InstitutionalFlowSignal,
+  institutionalHolding: InstitutionalHolding,
   institutionalSentimentAlerts: InstitutionalSentimentAlerts,
   institutionalSentimentErrors: InstitutionalSentimentErrors,
   institutionalSentimentHistory: InstitutionalSentimentHistory,
