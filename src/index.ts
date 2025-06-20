@@ -19,6 +19,7 @@ export {
 } from './client';
 
 
+import { ABTest } from './ABTest';
 import { Account } from './Account';
 import { Action } from './Action';
 import { Alert } from './Alert';
@@ -31,22 +32,29 @@ import { Authenticator } from './Authenticator';
 import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
+import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
 import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
 import { InstitutionalHolding } from './InstitutionalHolding';
 import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
 import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
 import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
 import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
+import { MLTrainingData } from './MLTrainingData';
 import { MarketSentiment } from './MarketSentiment';
+import { ModelArtifact } from './ModelArtifact';
+import { ModelVersion } from './ModelVersion';
+import { ModelVersionArtifact } from './ModelVersionArtifact';
 import { NewsArticle } from './NewsArticle';
 import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
+import { SystemAlert } from './SystemAlert';
 import { Trade } from './Trade';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
 
 const adaptic = {
+  aBTest: ABTest,
   account: Account,
   action: Action,
   alert: Alert,
@@ -59,17 +67,23 @@ const adaptic = {
   connectionHealthSnapshot: ConnectionHealthSnapshot,
   customer: Customer,
   economicEvent: EconomicEvent,
+  featureImportanceAnalysis: FeatureImportanceAnalysis,
   institutionalFlowSignal: InstitutionalFlowSignal,
   institutionalHolding: InstitutionalHolding,
   institutionalSentimentAlerts: InstitutionalSentimentAlerts,
   institutionalSentimentErrors: InstitutionalSentimentErrors,
   institutionalSentimentHistory: InstitutionalSentimentHistory,
   institutionalSentimentMetrics: InstitutionalSentimentMetrics,
+  mLTrainingData: MLTrainingData,
   marketSentiment: MarketSentiment,
+  modelArtifact: ModelArtifact,
+  modelVersion: ModelVersion,
+  modelVersionArtifact: ModelVersionArtifact,
   newsArticle: NewsArticle,
   newsArticleAssetSentiment: NewsArticleAssetSentiment,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
+  systemAlert: SystemAlert,
   trade: Trade,
   user: User,
   verificationToken: VerificationToken,

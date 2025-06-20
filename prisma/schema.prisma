@@ -399,6 +399,330 @@ enum OpenaiModel {
   O1_PREVIEW
 }
 
+// Defines the status of model versions during their lifecycle.
+enum ModelVersionStatus {
+  /// Model is currently being trained.
+  TRAINING
+
+  /// Model is being validated before deployment.
+  VALIDATION
+
+  /// Model is deployed and actively used.
+  DEPLOYED
+
+  /// Model has been deprecated and replaced.
+  DEPRECATED
+
+  /// Model training or deployment failed.
+  FAILED
+}
+
+// Defines the deployment environment for models.
+enum DeploymentEnvironment {
+  /// Development environment for testing.
+  DEVELOPMENT
+
+  /// Staging environment for pre-production testing.
+  STAGING
+
+  /// Production environment for live usage.
+  PRODUCTION
+}
+
+// Defines rollout strategies for model deployment.
+enum RolloutStrategy {
+  /// Deploy immediately to all traffic.
+  IMMEDIATE
+
+  /// Gradually increase traffic allocation.
+  GRADUAL
+
+  /// Deploy to small percentage of traffic first.
+  CANARY
+
+  /// Use blue-green deployment strategy.
+  BLUE_GREEN
+}
+
+// Defines artifact types for storing model components.
+enum ArtifactType {
+  /// Model weights file.
+  WEIGHTS
+
+  /// Complete model file.
+  MODEL_FILE
+
+  /// Data preprocessing component.
+  PREPROCESSOR
+
+  /// Feature transformation component.
+  FEATURE_TRANSFORMER
+
+  /// Ensemble configuration.
+  ENSEMBLE_CONFIG
+}
+
+// Defines storage providers for model artifacts.
+enum StorageProvider {
+  /// Amazon S3 storage.
+  AWS_S3
+
+  /// Google Cloud Storage.
+  GCP_STORAGE
+
+  /// Azure Blob Storage.
+  AZURE_BLOB
+
+  /// Local filesystem storage.
+  LOCAL
+}
+
+// Defines the status of A/B tests.
+enum ABTestStatus {
+  /// Test is in draft state.
+  DRAFT
+
+  /// Test is currently running.
+  RUNNING
+
+  /// Test has been completed.
+  COMPLETED
+
+  /// Test has been cancelled.
+  CANCELLED
+}
+
+// Defines recommendations from A/B test results.
+enum ABTestRecommendation {
+  /// Promote the treatment version.
+  PROMOTE_TREATMENT
+
+  /// Keep the control version.
+  KEEP_CONTROL
+
+  /// Results are inconclusive.
+  INCONCLUSIVE
+}
+
+// Defines the types of system alerts.
+enum SystemAlertType {
+  /// Performance degradation detected.
+  PERFORMANCE_DEGRADATION
+
+  /// Model training failure.
+  TRAINING_FAILURE
+
+  /// Deployment issue encountered.
+  DEPLOYMENT_ISSUE
+
+  /// Data quality problems detected.
+  DATA_QUALITY
+
+  /// Resource limit reached.
+  RESOURCE_LIMIT
+
+  /// General system alert.
+  GENERAL
+}
+
+// Defines the severity levels of system alerts.
+enum AlertSeverity {
+  /// Low priority alert.
+  LOW
+
+  /// Medium priority alert.
+  MEDIUM
+
+  /// High priority alert.
+  HIGH
+
+  /// Critical priority alert requiring immediate attention.
+  CRITICAL
+}
+
+// Defines the status of system alerts.
+enum SystemAlertStatus {
+  /// Alert is active and needs attention.
+  ACTIVE
+
+  /// Alert has been acknowledged by someone.
+  ACKNOWLEDGED
+
+  /// Alert has been resolved.
+  RESOLVED
+
+  /// Alert has been suppressed temporarily.
+  SUPPRESSED
+}
+
+// Defines the types of feature importance analysis methods.
+enum FeatureImportanceAnalysisType {
+  /// SHAP (SHapley Additive exPlanations) analysis.
+  SHAP
+
+  /// Permutation importance analysis.
+  PERMUTATION
+
+  /// LIME (Local Interpretable Model-agnostic Explanations) analysis.
+  LIME
+
+  /// Integrated gradients analysis.
+  INTEGRATED_GRADIENTS
+
+  /// Feature ablation analysis.
+  FEATURE_ABLATION
+}
+
+// Defines the exit reasons for trades in training data.
+enum TradeExitReason {
+  /// Trade exited due to stop loss.
+  STOP_LOSS
+
+  /// Trade exited due to take profit.
+  TAKE_PROFIT
+
+  /// Trade exited due to trailing stop.
+  TRAILING_STOP
+
+  /// Manual exit by trader.
+  MANUAL_EXIT
+
+  /// Time-based exit.
+  TIME_EXIT
+
+  /// Market close exit.
+  MARKET_CLOSE
+
+  /// Signal reversal exit.
+  SIGNAL_REVERSAL
+
+  /// Risk management exit.
+  RISK_MANAGEMENT
+}
+
+// Defines quality assessment of trade outcomes.
+enum TradeOutcomeQuality {
+  /// Excellent trade outcome.
+  EXCELLENT
+
+  /// Good trade outcome.
+  GOOD
+
+  /// Fair trade outcome.
+  FAIR
+
+  /// Poor trade outcome.
+  POOR
+
+  /// Very poor trade outcome.
+  VERY_POOR
+}
+
+// Defines market regime types for context analysis.
+enum MarketRegime {
+  /// Bull market regime.
+  BULL
+
+  /// Bear market regime.
+  BEAR
+
+  /// Sideways market regime.
+  SIDEWAYS
+
+  /// High volatility regime.
+  HIGH_VOLATILITY
+
+  /// Low volatility regime.
+  LOW_VOLATILITY
+
+  /// Trending regime.
+  TRENDING
+
+  /// Mean reverting regime.
+  MEAN_REVERTING
+}
+
+// Defines market volatility levels.
+enum VolatilityLevel {
+  /// Very low volatility.
+  VERY_LOW
+
+  /// Low volatility.
+  LOW
+
+  /// Medium volatility.
+  MEDIUM
+
+  /// High volatility.
+  HIGH
+
+  /// Very high volatility.
+  VERY_HIGH
+}
+
+// Defines market sentiment levels for context.
+enum MarketSentimentContext {
+  /// Very bearish sentiment.
+  VERY_BEARISH
+
+  /// Bearish sentiment.
+  BEARISH
+
+  /// Neutral sentiment.
+  NEUTRAL
+
+  /// Bullish sentiment.
+  BULLISH
+
+  /// Very bullish sentiment.
+  VERY_BULLISH
+}
+
+// Defines volume levels for market context.
+enum VolumeLevel {
+  /// Very low volume.
+  VERY_LOW
+
+  /// Low volume.
+  LOW
+
+  /// Medium volume.
+  MEDIUM
+
+  /// High volume.
+  HIGH
+
+  /// Very high volume.
+  VERY_HIGH
+}
+
+// Defines market conditions during execution.
+enum MarketCondition {
+  /// Normal market conditions.
+  NORMAL
+
+  /// Volatile market conditions.
+  VOLATILE
+
+  /// Illiquid market conditions.
+  ILLIQUID
+
+  /// High spread conditions.
+  HIGH_SPREAD
+
+  /// Pre-market conditions.
+  PRE_MARKET
+
+  /// After-hours conditions.
+  AFTER_HOURS
+
+  /// Market opening conditions.
+  MARKET_OPEN
+
+  /// Market closing conditions.
+  MARKET_CLOSE
+}
+
 /// ### Models
 
 // Represents the overall market sentiment at a given time.
@@ -1560,4 +1884,641 @@ model InstitutionalFlowSignal {
   @@index([signalDate])
   @@index([signalType, signalStrength])
   @@map("institutional_flow_signals")
+}
+
+// Stores training data collected from trade outcomes for model retraining.
+model MLTrainingData {
+  /// Unique identifier for the training data record. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the original signal that generated this trade.
+  signalId String
+
+  /// Symbol of the asset that was traded.
+  symbol String
+
+  /// Type of signal that triggered the trade.
+  signalType String
+
+  /// Strength of the signal when it was generated (0.0 to 1.0).
+  signalStrength Float
+
+  /// Predicted confidence level at time of signal generation (0.0 to 1.0).
+  predictedConfidence Float
+
+  /// Whether the trade was successful.
+  actualOutcomeSuccess Boolean
+
+  /// Profit or loss amount from the trade.
+  actualOutcomeProfitLoss Float
+
+  /// Return percentage from the trade.
+  actualOutcomeReturnPercent Float
+
+  /// Sharpe ratio for the trade.
+  actualOutcomeSharpeRatio Float
+
+  /// Maximum drawdown during the trade.
+  actualOutcomeMaxDrawdown Float
+
+  /// Number of days the position was held.
+  actualOutcomeDaysHeld Int
+
+  /// Reason for exiting the trade.
+  actualOutcomeExitReason TradeExitReason
+
+  /// Quality assessment of the trade outcome.
+  actualOutcomeQuality TradeOutcomeQuality
+
+  /// Entry price for the trade.
+  entryPrice Float
+
+  /// Exit price for the trade.
+  exitPrice Float
+
+  /// Timestamp when the position was entered.
+  entryTime DateTime
+
+  /// Timestamp when the position was exited.
+  exitTime DateTime
+
+  /// Holding period in minutes.
+  holdingPeriod Int
+
+  /// Return percentage achieved.
+  returnPercent Float
+
+  /// Maximum drawdown experienced during the trade.
+  maxDrawdown Float
+
+  /// Maximum gain achieved during the trade.
+  maxGain Float
+
+  /// Volatility level during the holding period.
+  volatilityDuringHold Float
+
+  /// Market regime during the trade.
+  marketContextRegime MarketRegime
+
+  /// Market volatility level during the trade.
+  marketContextVolatility VolatilityLevel
+
+  /// Market sentiment during the trade.
+  marketContextSentiment MarketSentimentContext
+
+  /// Volume level during the trade.
+  marketContextVolume VolumeLevel
+
+  /// Market correlation factor during the trade.
+  marketContextCorrelation Float
+
+  /// Market breadth indicator during the trade.
+  marketContextBreadth Float
+
+  /// Signal features as JSON object with feature names and values.
+  signalFeatures Json
+
+  /// Execution latency in milliseconds.
+  executionMetricsLatency Float
+
+  /// Slippage amount experienced during execution.
+  executionMetricsSlippage Float
+
+  /// Market impact of the trade execution.
+  executionMetricsMarketImpact Float
+
+  /// Timing accuracy score for the execution.
+  executionMetricsTimingAccuracy Float
+
+  /// Fill quality score for the execution.
+  executionMetricsFillQuality Float
+
+  /// Order size for the trade.
+  executionMetricsOrderSize Float
+
+  /// Liquidity score at time of execution.
+  executionMetricsLiquidityScore Float
+
+  /// Expected slippage before execution.
+  slippageAnalysisExpected Float
+
+  /// Actual slippage experienced.
+  slippageAnalysisActual Float
+
+  /// Difference between expected and actual slippage.
+  slippageAnalysisDifference Float
+
+  /// Market conditions during execution.
+  slippageAnalysisMarketConditions MarketCondition
+
+  /// Timestamp of execution for slippage analysis.
+  slippageAnalysisTimeOfExecution DateTime
+
+  /// Volume at time of execution.
+  slippageAnalysisVolumeAtExecution Float
+
+  /// Spread at time of execution.
+  slippageAnalysisSpreadAtExecution Float
+
+  /// Alpha generation score for the trade.
+  attributionAlphaGeneration Float
+
+  /// Beta exposure during the trade.
+  attributionBetaExposure Float
+
+  /// Factor exposures as JSON object.
+  attributionFactorExposures Json
+
+  /// Skill versus luck assessment score.
+  attributionSkillVsLuck Float
+
+  /// Information ratio for the trade.
+  attributionInformationRatio Float
+
+  /// Timestamp when the training data record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the training data record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Indexes for performance optimization
+  @@index([symbol, signalType])
+  @@index([entryTime])
+  @@index([signalId])
+  @@map("ml_training_data")
+}
+
+// Stores ML model artifacts and metadata.
+model ModelArtifact {
+  /// Unique identifier for the model artifact. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Name of the model this artifact belongs to.
+  modelName String
+
+  /// Version of the model this artifact belongs to.
+  version String
+
+  /// Type of artifact being stored.
+  artifactType ArtifactType
+
+  /// URL or path to the stored artifact.
+  storageUrl String
+
+  /// Storage provider used to store the artifact.
+  storageProvider StorageProvider
+
+  /// File size of the artifact in bytes.
+  fileSize BigInt
+
+  /// Checksum hash for artifact integrity verification.
+  checksum String
+
+  /// Compression type used for the artifact (optional).
+  compressionType String?
+
+  /// ML framework used to create the artifact.
+  metadataFramework String
+
+  /// Python version used during training (optional).
+  metadataPythonVersion String?
+
+  /// Dependencies as JSON object with package names and versions.
+  metadataDependencies Json?
+
+  /// Date when the model was trained.
+  metadataTrainingDate DateTime
+
+  /// Size of the dataset used for training.
+  metadataDatasetSize Int
+
+  /// Hyperparameters used during training as JSON object.
+  metadataHyperparameters Json
+
+  /// Timestamp when the artifact record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the artifact record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// List of model versions that reference this artifact. TYPESTRING.SKIP=true GQL.EXCLUDE=['artifacts']
+  modelVersions ModelVersionArtifact[]
+
+  /// Indexes for performance optimization
+  @@index([modelName, version])
+  @@index([artifactType])
+  @@index([storageProvider])
+  @@map("model_artifacts")
+}
+
+// Junction table for ModelVersion to ModelArtifact many-to-many relationship.
+model ModelVersionArtifact {
+  /// Unique identifier for the relationship. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the model version. TYPESTRING.SKIP=true
+  modelVersionId String @db.Uuid
+
+  /// Reference to the model artifact. TYPESTRING.SKIP=true
+  modelArtifactId String @db.Uuid
+
+  /// Relation to the ModelVersion. TYPESTRING.SKIP=true GQL.EXCLUDE=['artifacts']
+  modelVersion ModelVersion @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
+
+  /// Relation to the ModelArtifact. TYPESTRING.SKIP=true GQL.EXCLUDE=['modelVersions']
+  modelArtifact ModelArtifact @relation(fields: [modelArtifactId], references: [id], onDelete: Cascade)
+
+  /// Timestamp when the relationship was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@unique([modelVersionId, modelArtifactId])
+  @@map("model_version_artifacts")
+}
+
+// Tracks ML model versions and their performance metrics.
+model ModelVersion {
+  /// Unique identifier for the model version. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Name of the model.
+  modelName String
+
+  /// Version identifier for the model.
+  version String
+
+  /// Current status of the model version.
+  status ModelVersionStatus
+
+  /// Reference to parent version if this is derived from another version.
+  parentVersionId String? @db.Uuid
+
+  /// Relation to parent ModelVersion (self-reference).
+  parentVersion ModelVersion? @relation("ModelVersionHierarchy", fields: [parentVersionId], references: [id])
+
+  /// List of child versions derived from this version. TYPESTRING.SKIP=true GQL.EXCLUDE=['parentVersion']
+  childVersions ModelVersion[] @relation("ModelVersionHierarchy")
+
+  /// List of artifacts associated with this model version. TYPESTRING.SKIP=true GQL.EXCLUDE=['modelVersion']
+  artifacts ModelVersionArtifact[]
+
+  /// Model accuracy score (0.0 to 1.0).
+  performanceAccuracy Float
+
+  /// Model precision score (0.0 to 1.0).
+  performancePrecision Float
+
+  /// Model recall score (0.0 to 1.0).
+  performanceRecall Float
+
+  /// Model F1 score (0.0 to 1.0).
+  performanceF1Score Float
+
+  /// Area under the ROC curve score (0.0 to 1.0).
+  performanceAuc Float
+
+  /// Sharpe ratio for the model's trading performance.
+  performanceSharpeRatio Float
+
+  /// Maximum drawdown observed during validation.
+  performanceMaxDrawdown Float
+
+  /// Win rate percentage for trading decisions.
+  performanceWinRate Float
+
+  /// Average return percentage per trade.
+  performanceAvgReturn Float
+
+  /// Calibration score measuring prediction reliability (0.0 to 1.0).
+  performanceCalibrationScore Float
+
+  /// Stability score measuring consistency across time (0.0 to 1.0).
+  performanceStabilityScore Float
+
+  /// Cross-validation score from model validation.
+  validationCrossValidationScore Float
+
+  /// Out-of-sample performance metrics as JSON object.
+  validationOutOfSamplePerformance Json
+
+  /// Backtest results as JSON object.
+  validationBacktestResults Json
+
+  /// Statistical test results as JSON object.
+  validationStatTestResults Json
+
+  /// Deployment environment for this version.
+  deploymentEnvironment DeploymentEnvironment
+
+  /// Traffic allocation percentage for this version (0.0 to 100.0).
+  deploymentTrafficAllocation Float
+
+  /// Rollout strategy used for deployment.
+  deploymentRolloutStrategy RolloutStrategy
+
+  /// Health check configuration as JSON object.
+  deploymentHealthCheckConfig Json
+
+  /// Timestamp when model training started.
+  trainingStartTime DateTime
+
+  /// Timestamp when model training ended.
+  trainingEndTime DateTime
+
+  /// Training duration in seconds.
+  trainingDuration Int
+
+  /// Size of the dataset used for training.
+  trainingDatasetSize Int
+
+  /// List of features used in training as JSON array.
+  trainingFeaturesUsed Json
+
+  /// Hyperparameters used during training as JSON object.
+  trainingHyperparameters Json
+
+  /// Peak memory usage during training in MB.
+  trainingResourcePeakMemoryMB Int
+
+  /// Total CPU hours consumed during training.
+  trainingResourceTotalCpuHours Float
+
+  /// GPU hours consumed during training (optional).
+  trainingResourceGpuHours Float?
+
+  /// Timestamp when the model version was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the model version was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the model version was deployed (optional).
+  deployedAt DateTime?
+
+  /// Timestamp when the model version was deprecated (optional).
+  deprecatedAt DateTime?
+
+  /// List of A/B tests using this version as control. TYPESTRING.SKIP=true GQL.EXCLUDE=['controlVersion']
+  abTestsAsControl ABTest[] @relation("ABTestControlVersion")
+
+  /// List of A/B tests using this version as treatment. TYPESTRING.SKIP=true GQL.EXCLUDE=['treatmentVersion']
+  abTestsAsTreatment ABTest[] @relation("ABTestTreatmentVersion")
+
+  /// List of feature importance analyses for this version. TYPESTRING.SKIP=true GQL.EXCLUDE=['modelVersion']
+  featureImportanceAnalyses FeatureImportanceAnalysis[]
+
+  /// Indexes for performance optimization
+  @@unique([modelName, version])
+  @@index([status])
+  @@index([deploymentEnvironment])
+  @@index([createdAt])
+  @@map("model_versions")
+}
+
+// Manages A/B testing for model deployments.
+model ABTest {
+  /// Unique identifier for the A/B test. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Name of the A/B test.
+  name String
+
+  /// Description of what the A/B test is measuring.
+  description String
+
+  /// Current status of the A/B test.
+  status ABTestStatus
+
+  /// Reference to the control model version. TYPESTRING.SKIP=true
+  modelVersionAId String @db.Uuid
+
+  /// Reference to the treatment model version. TYPESTRING.SKIP=true
+  modelVersionBId String @db.Uuid
+
+  /// Relation to control ModelVersion. TYPESTRING.INCLUDE=['modelName','version','status'] GQL.EXCLUDE=['abTestsAsControl']
+  controlVersion ModelVersion @relation("ABTestControlVersion", fields: [modelVersionAId], references: [id])
+
+  /// Relation to treatment ModelVersion. TYPESTRING.INCLUDE=['modelName','version','status'] GQL.EXCLUDE=['abTestsAsTreatment']
+  treatmentVersion ModelVersion @relation("ABTestTreatmentVersion", fields: [modelVersionBId], references: [id])
+
+  /// Percentage of traffic allocated to control version (0.0 to 100.0).
+  trafficSplitControlPercent Float
+
+  /// Percentage of traffic allocated to treatment version (0.0 to 100.0).
+  trafficSplitTreatmentPercent Float
+
+  /// Target metrics to measure as JSON array of metric names.
+  targetMetrics Json
+
+  /// Primary metric for success evaluation.
+  successCriteriaPrimaryMetric String
+
+  /// Minimum detectable effect size for the test.
+  successCriteriaMinimumDetectableEffect Float
+
+  /// Statistical significance level required (e.g., 0.05).
+  successCriteriaSignificanceLevel Float
+
+  /// Statistical power level required (e.g., 0.8).
+  successCriteriaPowerLevel Float
+
+  /// Start date and time of the A/B test.
+  startDate DateTime
+
+  /// End date and time of the A/B test (optional if still running).
+  endDate DateTime?
+
+  /// Planned duration of the test in milliseconds.
+  plannedDuration BigInt
+
+  /// Control group metrics results as JSON object.
+  resultsControlMetrics Json?
+
+  /// Treatment group metrics results as JSON object.
+  resultsTreatmentMetrics Json?
+
+  /// Statistical significance results as JSON object.
+  resultsStatisticalSignificance Json?
+
+  /// P-values for each metric as JSON object.
+  resultsPValues Json?
+
+  /// Confidence intervals for metrics as JSON object.
+  resultsConfidenceIntervals Json?
+
+  /// Final recommendation from the test results.
+  resultsRecommendation ABTestRecommendation?
+
+  /// Environment where the test is running.
+  metadataEnvironment String
+
+  /// Eligibility criteria for test participants as JSON object.
+  metadataEligibilityCriteria Json
+
+  /// Exclusion criteria for test participants as JSON object.
+  metadataExclusionCriteria Json
+
+  /// Segmentation rules for the test as JSON object.
+  metadataSegmentationRules Json
+
+  /// Timestamp when the A/B test was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the A/B test was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the A/B test was completed (optional).
+  completedAt DateTime?
+
+  /// Indexes for performance optimization
+  @@index([status])
+  @@index([startDate, endDate])
+  @@index([modelVersionAId])
+  @@index([modelVersionBId])
+  @@map("ab_tests")
+}
+
+// Stores system alerts and notifications for model performance monitoring.
+model SystemAlert {
+  /// Unique identifier for the system alert. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Type of system alert.
+  type SystemAlertType
+
+  /// Severity level of the alert.
+  severity AlertSeverity
+
+  /// Title of the alert.
+  title String
+
+  /// Detailed message describing the alert.
+  message String
+
+  /// Source service or component that generated the alert.
+  source String
+
+  /// Model name associated with the alert (optional).
+  metadataModelName String?
+
+  /// Model version associated with the alert (optional).
+  metadataVersion String?
+
+  /// Job ID associated with the alert (optional).
+  metadataJobId String?
+
+  /// Metrics related to the alert as JSON object (optional).
+  metadataMetrics Json?
+
+  /// Error details for the alert (optional).
+  metadataErrorDetails String?
+
+  /// Recommended actions as JSON array of strings (optional).
+  metadataRecommendations Json?
+
+  /// Current status of the alert.
+  status SystemAlertStatus @default(ACTIVE)
+
+  /// User who acknowledged the alert (optional).
+  acknowledgedBy String?
+
+  /// Timestamp when the alert was acknowledged (optional).
+  acknowledgedAt DateTime?
+
+  /// User who resolved the alert (optional).
+  resolvedBy String?
+
+  /// Timestamp when the alert was resolved (optional).
+  resolvedAt DateTime?
+
+  /// Notes about the resolution (optional).
+  resolutionNotes String?
+
+  /// Timestamp until which the alert is suppressed (optional).
+  suppressedUntil DateTime?
+
+  /// Escalation level for the alert (starts at 0).
+  escalationLevel Int @default(0)
+
+  /// Notification channels as JSON array of channel names.
+  notificationChannels Json
+
+  /// Timestamp when the alert was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the alert was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Indexes for performance optimization
+  @@index([type, severity])
+  @@index([status])
+  @@index([source])
+  @@index([createdAt])
+  @@index([metadataModelName, metadataVersion])
+  @@map("system_alerts")
+}
+
+// Stores feature importance analysis results for model interpretability.
+model FeatureImportanceAnalysis {
+  /// Unique identifier for the feature importance analysis. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the model version being analyzed. TYPESTRING.SKIP=true
+  modelVersionId String @db.Uuid
+
+  /// Relation to ModelVersion. TYPESTRING.INCLUDE=['modelName','version','status'] GQL.EXCLUDE=['featureImportanceAnalyses']
+  modelVersion ModelVersion @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
+
+  /// Type of analysis method used.
+  analysisType FeatureImportanceAnalysisType
+
+  /// Feature importance results as JSON array with structure: [{featureName, importance, rank, confidenceInterval?, pValue?}]
+  featureImportances Json
+
+  /// Global importance scores as JSON object with feature names as keys.
+  globalImportance Json
+
+  /// Local importance for specific samples as JSON array (optional).
+  localImportance Json?
+
+  /// Sample size used for the analysis.
+  analysisMetadataSampleSize Int
+
+  /// Baseline accuracy before feature analysis.
+  analysisMetadataBaselineAccuracy Float
+
+  /// Date when the analysis was performed.
+  analysisMetadataAnalysisDate DateTime
+
+  /// Time taken to compute the analysis in seconds.
+  analysisMetadataComputationTime Int
+
+  /// Analysis parameters used as JSON object.
+  analysisMetadataAnalysisParameters Json
+
+  /// Top important features as JSON array of feature names.
+  insightsTopFeatures Json
+
+  /// Redundant features identified as JSON array of feature names.
+  insightsRedundantFeatures Json
+
+  /// Features with unexpected importance as JSON array of feature names.
+  insightsUnexpectedImportances Json
+
+  /// Stability score of the feature importance results (0.0 to 1.0).
+  insightsStabilityScore Float
+
+  /// Recommendations based on the analysis as JSON array of strings.
+  insightsRecommendations Json
+
+  /// Timestamp when the analysis record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the analysis record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Indexes for performance optimization
+  @@index([modelVersionId])
+  @@index([analysisType])
+  @@index([analysisMetadataAnalysisDate])
+  @@map("feature_importance_analyses")
 }
