@@ -723,7 +723,63 @@ enum MarketCondition {
   MARKET_CLOSE
 }
 
+// Defines the types of configurations available in the system.
+enum ConfigType {
+  /// Configuration related to analytics and data processing
+  ANALYTICS
+
+  /// Configuration related to risk management
+  RISK_MANAGEMENT
+
+  /// Configuration related to trading strategies
+  TRADING
+
+  /// Configuration related to system settings
+  SYSTEM
+
+  /// Configuration related to user preferences
+  USER_PREFERENCE
+}
+
 /// ### Models
+
+// Represents a configuration setting in the system.
+model Configuration {
+  /// Unique identifier for the configuration. TYPESTRING.SKIP=true
+  id String @id @default(cuid())
+
+  /// The key for the configuration setting, must be unique.
+  configKey String @unique
+
+  /// The value of the configuration setting, stored as JSON.
+  configValue Json
+
+  /// The type of the configuration setting, defined by ConfigType enum.
+  type ConfigType
+
+  /// Optional scope for namespacing the configuration (e.g., symbol, service name).
+  scope String? // Optional scope for namespacing (e.g., symbol, service name)
+
+  /// Version of the configuration setting.
+  version String?
+
+  /// A one-sentence description of the configuration setting.
+  description String?
+
+  /// A detailed, multi-paragraph description of the configuration setting, including usage examples and references.
+  isActive Boolean @default(true)
+
+  /// Indicates whether the configuration is active or not.
+  expiresAt DateTime?
+
+  /// Timestamp when the configuration setting was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the configuration setting was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@map("configurations")
+}
 
 // Represents the overall market sentiment at a given time.
 model MarketSentiment {
@@ -1575,22 +1631,22 @@ model InstitutionalSentimentHistory {
   id        String   @id @default(cuid())
   timestamp DateTime
   symbol    String
-  
+
   // Overall sentiment metrics
   overallSentiment Float
   confidence       Float
-  
+
   // SEC Filings Sentiment
   secFilingsSentiment        Float
-  secFilingsConfidence      Float
-  secInsiderTradingSignal   Float
+  secFilingsConfidence       Float
+  secInsiderTradingSignal    Float
   secInstitutionalFlowSignal Float
-  secAnalystRevisionsSignal Float
-  secGuidanceChangesSignal  Float
-  secShortTrend             Float
-  secMediumTrend            Float
-  secLongTrend              Float
-  
+  secAnalystRevisionsSignal  Float
+  secGuidanceChangesSignal   Float
+  secShortTrend              Float
+  secMediumTrend             Float
+  secLongTrend               Float
+
   // Insider Trading Sentiment
   insiderTradingOverall   Float
   insiderBuyingSentiment  Float
@@ -1598,7 +1654,7 @@ model InstitutionalSentimentHistory {
   insiderSignificantCount Int
   insiderTotalValue       Float
   insiderRecentActivity   Int
-  
+
   // Analyst Reports Sentiment
   analystOverall       Float
   analystAverageRating Float
@@ -1607,7 +1663,7 @@ model InstitutionalSentimentHistory {
   analystDowngrades    Int
   analystTargetChanges Int
   analystConsensus     String
-  
+
   // Options Flow Sentiment
   optionsFlowOverall     Float
   optionsCallFlow        Float
@@ -1616,26 +1672,26 @@ model InstitutionalSentimentHistory {
   optionsBlockActivity   Float
   optionsSweepActivity   Float
   optionsSentimentScore  Float
-  
+
   // Institutional Flow Sentiment
-  institutionalFlowOverall           Float
-  institutionalNetFlow               Float
-  institutionalIncreasingPositions   Float
-  institutionalDecreasingPositions   Float
-  institutionalNewPositions          Float
-  institutionalClosedPositions       Float
-  
+  institutionalFlowOverall         Float
+  institutionalNetFlow             Float
+  institutionalIncreasingPositions Float
+  institutionalDecreasingPositions Float
+  institutionalNewPositions        Float
+  institutionalClosedPositions     Float
+
   // Dark Pool Sentiment
   darkPoolOverall            Float
   darkPoolBuyPressure        Float
   darkPoolSellPressure       Float
   darkPoolVolumeSignificance Float
   darkPoolPriceImpact        Float
-  
+
   // Metadata
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   // Composite index for time-series queries
   @@unique([timestamp, symbol])
   @@index([symbol, timestamp])
@@ -1653,9 +1709,9 @@ model InstitutionalSentimentMetrics {
   errorCount       Int
   processingTimeMs Int
   batchSize        Int
-  
+
   createdAt DateTime @default(now())
-  
+
   @@index([timestamp])
   @@index([operation])
   @@map("institutional_sentiment_metrics")
@@ -1668,10 +1724,10 @@ model InstitutionalSentimentErrors {
   operation   String
   error       String
   recordCount Int
-  severity    String   // 'low', 'medium', 'high', 'critical'
-  
+  severity    String // 'low', 'medium', 'high', 'critical'
+
   createdAt DateTime @default(now())
-  
+
   @@index([timestamp])
   @@index([severity])
   @@index([operation])
@@ -1680,20 +1736,20 @@ model InstitutionalSentimentErrors {
 
 // Data Quality Alerts
 model InstitutionalSentimentAlerts {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   timestamp    DateTime
   type         String
   errorRate    Float
   totalRecords Int
   errorCount   Int
-  severity     String   // 'low', 'medium', 'high', 'critical'
-  resolved     Boolean  @default(false)
+  severity     String // 'low', 'medium', 'high', 'critical'
+  resolved     Boolean   @default(false)
   resolvedAt   DateTime?
   resolvedBy   String?
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+
   @@index([timestamp])
   @@index([severity])
   @@index([resolved])
@@ -1705,25 +1761,25 @@ model InstitutionalSentimentAlerts {
 model AnalyticsSnapshot {
   /// Unique identifier for the analytics snapshot. TYPESTRING.SKIP=true
   id String @id @default(cuid())
-  
+
   /// Symbol of the asset for which analytics data is stored.
   symbol String
-  
+
   /// Timestamp when the analytics snapshot was created.
   timestamp DateTime
-  
+
   /// Type of analytics data stored (ENSEMBLE, VOLATILITY, REGIME, SMOOTHED).
   dataType String
-  
+
   /// JSON metadata containing weights and analytics metadata.
   metadata Json
-  
+
   /// Timestamp when the analytics snapshot was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
-  
+
   /// Timestamp when the analytics snapshot was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
-  
+
   /// Indexes for performance optimization
   @@index([symbol, dataType, timestamp])
   @@index([timestamp])
@@ -1734,28 +1790,28 @@ model AnalyticsSnapshot {
 model AnalyticsConfiguration {
   /// Unique identifier for the analytics configuration. TYPESTRING.SKIP=true
   id String @id @default(cuid())
-  
+
   /// Unique key identifying the configuration.
   configKey String @unique
-  
+
   /// Type of configuration (WEIGHT_CONFIG, ANALYTICS_PARAMS, MODEL_PARAMS).
   configType String
-  
+
   /// JSON configuration data with flexible structure.
   configValue Json
-  
+
   /// Optional symbol for symbol-specific configuration.
   symbol String?
-  
+
   /// Additional metadata for the configuration.
   metadata Json
-  
+
   /// Timestamp when the analytics configuration was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
-  
+
   /// Timestamp when the analytics configuration was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
-  
+
   /// Indexes for performance optimization
   @@index([configKey, configType])
   @@index([configType])
@@ -1766,28 +1822,28 @@ model AnalyticsConfiguration {
 model ConnectionHealthSnapshot {
   /// Unique identifier for the connection health snapshot. TYPESTRING.SKIP=true
   id String @id @default(cuid())
-  
+
   /// Timestamp when the connection health was recorded.
   timestamp DateTime
-  
+
   /// Type of connection being monitored (WS, HTTP, DATABASE, EXTERNAL_API).
   connectionType String
-  
+
   /// Connection endpoint or identifier being monitored.
   endpoint String
-  
+
   /// Current status of the connection (HEALTHY, DEGRADED, DOWN).
   status String
-  
+
   /// JSON metrics containing performance and health data.
   metrics Json
-  
+
   /// Additional context and metadata for the connection health.
   metadata Json
-  
+
   /// Timestamp when the connection health snapshot was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
-  
+
   /// Indexes for performance optimization
   @@index([timestamp])
   @@index([connectionType, status])
@@ -1799,51 +1855,51 @@ model ConnectionHealthSnapshot {
 model InstitutionalHolding {
   /// Unique identifier for the institutional holding record. TYPESTRING.SKIP=true
   id String @id @default(cuid())
-  
+
   /// Symbol of the asset being held by the institution.
   symbol String
-  
+
   /// Name of the institutional investor.
   institutionName String
-  
+
   /// Date when the SEC filing was submitted.
   filingDate DateTime
-  
+
   /// Reporting date for the institutional holding.
   reportDate DateTime
-  
+
   /// Number of shares held by the institution.
   sharesHeld BigInt
-  
+
   /// Market value of the holding in USD.
   marketValue Decimal
-  
+
   /// Percentage of the asset class held by the institution.
   percentOfClass Decimal?
-  
+
   /// Change in shares from the previous filing.
   changeShares BigInt?
-  
+
   /// Percentage change in shares from the previous filing.
   changePercent Decimal?
-  
+
   /// Additional SEC filing data and metadata.
   metadata Json
-  
+
   /// Timestamp when the institutional holding was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
-  
+
   /// Timestamp when the institutional holding was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
-  
+
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions']
   asset Asset @relation("InstitutionalHoldingAsset", fields: [symbol], references: [symbol])
-  
+
+  @@unique([symbol, institutionName, filingDate])
   /// Indexes for performance optimization
   @@index([symbol, filingDate])
   @@index([institutionName, filingDate])
   @@index([filingDate])
-  @@unique([symbol, institutionName, filingDate])
   @@map("institutional_holdings")
 }
 
@@ -1851,34 +1907,34 @@ model InstitutionalHolding {
 model InstitutionalFlowSignal {
   /// Unique identifier for the institutional flow signal. TYPESTRING.SKIP=true
   id String @id @default(cuid())
-  
+
   /// Symbol of the asset for which the signal was generated.
   symbol String
-  
+
   /// Date when the institutional flow signal was generated.
   signalDate DateTime
-  
+
   /// Type of signal (BUY_PRESSURE, SELL_PRESSURE, ACCUMULATION, DISTRIBUTION).
   signalType String
-  
+
   /// Strength of the signal from 0.0 to 1.0.
   signalStrength Decimal
-  
+
   /// Net institutional flow amount.
   netFlow Decimal
-  
+
   /// Confidence level in the signal from 0.0 to 1.0.
   confidence Decimal
-  
+
   /// Analysis details and additional signal metadata.
   metadata Json
-  
+
   /// Timestamp when the institutional flow signal was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
-  
+
   /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions']
   asset Asset @relation("InstitutionalFlowSignalAsset", fields: [symbol], references: [symbol])
-  
+
   /// Indexes for performance optimization
   @@index([symbol, signalDate])
   @@index([signalDate])

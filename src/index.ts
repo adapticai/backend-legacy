@@ -29,6 +29,7 @@ import { AnalyticsConfiguration } from './AnalyticsConfiguration';
 import { AnalyticsSnapshot } from './AnalyticsSnapshot';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
+import { Configuration } from './Configuration';
 import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
 import { Customer } from './Customer';
 import { EconomicEvent } from './EconomicEvent';
@@ -64,6 +65,7 @@ const adaptic = {
   analyticsSnapshot: AnalyticsSnapshot,
   asset: Asset,
   authenticator: Authenticator,
+  configuration: Configuration,
   connectionHealthSnapshot: ConnectionHealthSnapshot,
   customer: Customer,
   economicEvent: EconomicEvent,
