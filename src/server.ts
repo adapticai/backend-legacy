@@ -135,7 +135,7 @@ const startServer = async () => {
     '/graphql',
     cors<Request>(),
     bodyParser.json(),
-    expressMiddleware(server, {
+    expressMiddleware(server as any, {
       context: async ({ req }) => {
         // Ensure we're using the global prisma instance and never disconnecting it between requests
         if (!global.prisma) {
