@@ -1,21 +1,21 @@
 # Using Adaptic Backend
 
-This guide explains how to effectively use the adaptic-backend package in your applications, covering both server-side and client-side integration scenarios.
+This guide explains how to effectively use the @adaptic/backend-legacy package in your applications, covering both server-side and client-side integration scenarios.
 
 ## Installation
 
 ```bash
-npm install adaptic-backend
+npm install @adaptic/backend-legacy
 ```
 
 ## Apollo Client Setup (Improved Connection Pooling)
 
-The adaptic-backend package provides a singleton Apollo Client with **connection pooling** that automatically detects your environment (server or client) and configures itself appropriately. The connection pool helps prevent database connection overload and handles errors with automatic retries.
+The @adaptic/backend-legacy package provides a singleton Apollo Client with **connection pooling** that automatically detects your environment (server or client) and configures itself appropriately. The connection pool helps prevent database connection overload and handles errors with automatic retries.
 
 ### Best Practices for Client Usage
 
 ```typescript
-import { getApolloClient } from 'adaptic-backend';
+import { getApolloClient } from '@adaptic/backend-legacy';
 
 // Create ONE Apollo Client instance at the app level and reuse it
 // IMPORTANT: Maintaining a single instance prevents connection overload
@@ -30,7 +30,7 @@ const client = await getApolloClient();
 You can customize the connection pool settings to match your specific needs:
 
 ```typescript
-import { configureConnectionPool, getApolloClient } from 'adaptic-backend';
+import { configureConnectionPool, getApolloClient } from '@adaptic/backend-legacy';
 
 // Optional: Configure connection pool before getting the client
 configureConnectionPool({
@@ -50,7 +50,7 @@ When running in a server environment (Node.js), the package uses CommonJS-based 
 
 ```typescript
 // Next.js API route or server-side code
-import { getApolloClient, getApolloModules } from 'adaptic-backend';
+import { getApolloClient, getApolloModules } from '@adaptic/backend-legacy';
 
 // IMPORTANT: Create a single client for your entire application
 let apolloClient = null;
@@ -78,7 +78,7 @@ For browser environments, the package uses ESM-based Apollo modules with the sam
 ```typescript
 // React component or client-side code
 import { useEffect, useState, useContext } from 'react';
-import { getApolloClient } from 'adaptic-backend';
+import { getApolloClient } from '@adaptic/backend-legacy';
 
 // Create a context to share the client across your app
 const ApolloClientContext = React.createContext(null);
@@ -128,7 +128,7 @@ function MyComponent() {
 
 ## Using Content Models (With Connection Pooling)
 
-The adaptic-backend package provides typed CRUD operations for all content models with built-in connection pooling. All CRUD functions automatically handle the transformation of your content model objects into the appropriate GraphQL input formats.
+The @adaptic/backend-legacy package provides typed CRUD operations for all content models with built-in connection pooling. All CRUD functions automatically handle the transformation of your content model objects into the appropriate GraphQL input formats.
 
 ### Available CRUD Functions
 
@@ -151,11 +151,11 @@ Every content model provides these 9 standardized CRUD operations:
 Access all 34 content models through the `adaptic` object:
 
 ```typescript
-import adaptic from 'adaptic-backend';
+import adaptic from '@adaptic/backend-legacy';
 
 // Core Trading Models
 adaptic.user              // User management
-adaptic.alpacaAccount     // Trading accounts  
+adaptic.alpacaAccount     // Trading accounts
 adaptic.allocation        // Asset allocation settings
 adaptic.asset             // Financial instruments
 adaptic.trade             // Executed trades
@@ -204,7 +204,7 @@ adaptic.scheduledOptionOrder // Scheduled orders
 
 ```typescript
 // Import specific model types
-import { types } from 'adaptic-backend';
+import { types } from '@adaptic/backend-legacy';
 
 // Use the imported types
 const user: types.User = {
@@ -219,8 +219,8 @@ const user: types.User = {
 For best performance and to prevent connection overload, initialize a single Apollo client and pass it to all operations:
 
 ```typescript
-import adaptic from 'adaptic-backend';
-import { getApolloClient } from 'adaptic-backend';
+import adaptic from '@adaptic/backend-legacy';
+import { getApolloClient } from '@adaptic/backend-legacy';
 
 // Initialize the Apollo client ONCE in your application
 const client = await getApolloClient();
@@ -233,7 +233,7 @@ const trades = await adaptic.trade.findMany({ symbol: "AAPL" }, client);
 
 ## Content Models
 
-The adaptic-backend package provides access to 34 content models representing various aspects of financial trading, analytics, and system management:
+The @adaptic/backend-legacy package provides access to 34 content models representing various aspects of financial trading, analytics, and system management:
 
 ### Core Trading Models
 - **User** - Trading platform users with roles and permissions
@@ -328,9 +328,9 @@ The system includes 27 enums for type safety and consistency:
 
 ## CRUD Operations Guide
 
-Each content model in adaptic-backend provides a comprehensive set of CRUD (Create, Read, Update, Delete) operations through generated resolvers. This section explains when and how to use each operation.
+Each content model in @adaptic/backend-legacy provides a comprehensive set of CRUD (Create, Read, Update, Delete) operations through generated resolvers. This section explains when and how to use each operation.
 
-> **IMPORTANT**: One of the key advantages of the adaptic-backend CRUD functions is that they handle all the GraphQL input transformation automatically. You simply pass a valid instance of your content model type object, and the library handles converting it to the appropriate GraphQL input format, including constructing where objects and input structures. You don't need to manually structure complex GraphQL inputs.
+> **IMPORTANT**: One of the key advantages of the @adaptic/backend-legacy CRUD functions is that they handle all the GraphQL input transformation automatically. You simply pass a valid instance of your content model type object, and the library handles converting it to the appropriate GraphQL input format, including constructing where objects and input structures. You don't need to manually structure complex GraphQL inputs.
 >
 > For create, update, and upsert functions, you only need to pass a valid instance of the content model type that the CRUD function is for. You don't need to pass a where object or structure the GraphQL input yourself - the function will convert your content model object into the relevant input for the CRUD GraphQL operation automatically.
 
@@ -348,8 +348,8 @@ async create(props: ModelType, globalClient?: ApolloClientType): Promise<ModelTy
 ```
 
 ```typescript
-import adaptic from 'adaptic-backend';
-import { getApolloClient } from 'adaptic-backend';
+import adaptic from '@adaptic/backend-legacy';
+import { getApolloClient } from '@adaptic/backend-legacy';
 
 const client = await getApolloClient();
 
@@ -733,8 +733,8 @@ const result = await client.query({
 The connection pool automatically retries database connection errors with exponential backoff:
 
 ```typescript
-import adaptic from 'adaptic-backend';
-import { getApolloClient, getApolloModules } from 'adaptic-backend';
+import adaptic from '@adaptic/backend-legacy';
+import { getApolloClient, getApolloModules } from '@adaptic/backend-legacy';
 
 async function fetchData() {
   const client = await getApolloClient();
@@ -781,4 +781,4 @@ If you encounter database connection errors (like "Accelerate was not able to co
 4. **Batch Related Queries**: Combine multiple queries into one where possible
 5. **Review Usage Patterns**: Look for loops or repeated calls creating many connections
 
-This documentation provides the essential information you need to effectively use the adaptic-backend package in your applications. For more specific use cases, refer to the API reference or examples in the codebase.
+This documentation provides the essential information you need to effectively use the @adaptic/backend-legacy package in your applications. For more specific use cases, refer to the API reference or examples in the codebase.

@@ -86,7 +86,7 @@ function generateModelsSection() {
   const enums = enumFiles.map((file) => path.basename(file, '.mjs'));
 
   let section = `### Model TypeStrings, Types, and available CRUD Resolvers\n\n`;
-  section += `The \`adaptic-backend\` package includes a comprehensive set of CRUD (Create, Read, Update, Delete) resolvers for each of your models. Each model has the following functions (available directly under the \`${GLOBAL_NAMESPACE}\` namespace) and types (under the \`types\` namespace):\n\n`;
+  section += `The \`@adaptic/backend-legacy\` package includes a comprehensive set of CRUD (Create, Read, Update, Delete) resolvers for each of your models. Each model has the following functions (available directly under the \`${GLOBAL_NAMESPACE}\` namespace) and types (under the \`types\` namespace):\n\n`;
   section += `| Model Name | TypeString | Type | CRUD Resolvers |\n`;
   section += `|------------|------------|------------|-----------------|\n`;
 
@@ -337,25 +337,25 @@ try {
   const indexMjsPath = path.join(esmDir, 'index.mjs');
   if (fs.existsSync(indexMjsPath)) {
     let content = fs.readFileSync(indexMjsPath, 'utf8');
-    
+
     // Update the specific client import in index.mjs
     content = content.replace(
       /export\s+\{\s*([^}]*)\s*\}\s+from\s+(['"])\.\/client\2;/g,
       'export { $1 } from "./client.mjs";'
     );
-    
+
     // Update the type imports in index.mjs
     content = content.replace(
       /export\s+type\s+\{\s*([^}]*)\s*\}\s+from\s+(['"])\.\/client\2;/g,
       'export type { $1 } from "./client.mjs";'
     );
-    
+
     // Update the typeStrings import in index.mjs
     content = content.replace(
       /export\s+\*\s+from\s+(['"])\.\/generated\/typeStrings\/index\1;/g,
       'export * from "./generated/typeStrings/index.mjs";'
     );
-    
+
     fs.writeFileSync(indexMjsPath, content, 'utf8');
     console.log('Updated imports in esm/index.mjs');
   } else {
@@ -599,17 +599,17 @@ try {
   const esmDir = path.join(distDir, 'esm');
   const indexMjsPath = path.join(esmDir, 'index.mjs');
   const clientMjsPath = path.join(esmDir, 'client.mjs');
-  
+
   // Check if client.mjs exists, if not, look for client.js and rename it
   if (!fs.existsSync(clientMjsPath) && fs.existsSync(path.join(esmDir, 'client.js'))) {
     fs.renameSync(path.join(esmDir, 'client.js'), clientMjsPath);
     console.log('Renamed client.js to client.mjs');
   }
-  
+
   // Make sure index.mjs references client.mjs with extension
   if (fs.existsSync(indexMjsPath)) {
     let content = fs.readFileSync(indexMjsPath, 'utf8');
-    
+
     // Fix the client import in index.mjs (direct and forceful approach)
     if (content.includes('./client') && !content.includes('./client.mjs')) {
       content = content.replace(/['"]\.\/client['"]/g, '"./client.mjs"');
@@ -617,7 +617,7 @@ try {
       console.log('Fixed client.mjs reference in index.mjs (forced method)');
     }
   }
-  
+
   // Verify client.mjs exists, if not, create it
   if (!fs.existsSync(clientMjsPath)) {
     console.error('ERROR: client.mjs still not found. Creating a placeholder to prevent runtime errors.');
@@ -638,15 +638,15 @@ try {
       console.log('Creating minimal client.mjs');
       const minimalContent = `// Minimal client.mjs placeholder
 export const getApolloClient = async () => {
-  throw new Error('ApolloClient not properly initialized. Check adaptic-backend package.');
+  throw new Error('ApolloClient not properly initialized. Check @adaptic/backend-legacy package.');
 };
 
 export const getApolloModules = async () => {
-  throw new Error('ApolloModules not properly initialized. Check adaptic-backend package.');
+  throw new Error('ApolloModules not properly initialized. Check @adaptic/backend-legacy package.');
 };
 
 export const configureConnectionPool = () => {
-  throw new Error('Connection pool not properly initialized. Check adaptic-backend package.');
+  throw new Error('Connection pool not properly initialized. Check @adaptic/backend-legacy package.');
 };
 
 export const client = Promise.resolve(null);
@@ -658,12 +658,12 @@ export const client = Promise.resolve(null);
   // Ensure apollo-client.client.mjs and apollo-client.server.mjs exist too
   const apolloClientClientMjsPath = path.join(esmDir, 'apollo-client.client.mjs');
   const apolloClientServerMjsPath = path.join(esmDir, 'apollo-client.server.mjs');
-  
+
   if (!fs.existsSync(apolloClientClientMjsPath) && fs.existsSync(path.join(esmDir, 'apollo-client.client.js'))) {
     fs.renameSync(path.join(esmDir, 'apollo-client.client.js'), apolloClientClientMjsPath);
     console.log('Renamed apollo-client.client.js to apollo-client.client.mjs');
   }
-  
+
   if (!fs.existsSync(apolloClientServerMjsPath) && fs.existsSync(path.join(esmDir, 'apollo-client.server.js'))) {
     fs.renameSync(path.join(esmDir, 'apollo-client.server.js'), apolloClientServerMjsPath);
     console.log('Renamed apollo-client.server.js to apollo-client.server.mjs');

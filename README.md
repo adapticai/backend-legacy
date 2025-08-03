@@ -1,10 +1,10 @@
-# adaptic-backend
+# @adaptic/backend-legacy
 
 ![Adaptic Readme Banner](https://adaptic-public.s3.ap-southeast-2.amazonaws.com/adaptic-readme-banner.png?=1)
 
 ## Description
 
-The `adaptic-backend` repository provides a comprehensive collection of TypeScript type definitions that correspond to the various models and input types used in the Adaptic backend. These type definitions are crucial for ensuring type safety and consistency across backend operations, particularly when interacting with GraphQL queries, mutations, and Prisma models. By utilizing these type definitions, developers can build and maintain robust and scalable backend applications with confidence.
+The `@adaptic/backend-legacy` repository provides a comprehensive collection of TypeScript type definitions that correspond to the various models and input types used in the Adaptic backend. These type definitions are crucial for ensuring type safety and consistency across backend operations, particularly when interacting with GraphQL queries, mutations, and Prisma models. By utilizing these type definitions, developers can build and maintain robust and scalable backend applications with confidence.
 
 ## File Tree Structure
 
@@ -57,11 +57,11 @@ The following NPM packages are required:
 1. Ensure you have Node.js and npm installed. Download from [Node.js official website](https://nodejs.org/).
 2. Clone the repository:
    ```bash
-   git clone https://github.com/Adaptic-ai/adaptic-backend.git
+   git clone https://github.com/Adaptic-ai/@adaptic/backend-legacy.git
    ```
 3. Navigate to the project directory:
    ```bash
-   cd adaptic-backend
+   cd @adaptic/backend-legacy
    ```
 
 ## Installation
@@ -95,7 +95,7 @@ Your backend server should now be up and running, ready to handle GraphQL reques
 
 ### Importing Type Definitions
 
-You can import and use the type definitions provided by the `adaptic-backend` package to ensure type safety in your application. Here’s how to do it:
+You can import and use the type definitions provided by the `@adaptic/backend-legacy` package to ensure type safety in your application. Here’s how to do it:
 
 - **User Authentication**
 
@@ -105,7 +105,7 @@ You can import and use the type definitions provided by the `adaptic-backend` pa
 For example, to use the `Workspace` type definition:
 
 ```typescript
-import { Workspace } from 'adaptic-backend/types';
+import { Workspace } from '@adaptic/backend-legacy/types';
 
 // Example usage of the Workspace type
 const myWorkspace: Workspace = {
@@ -133,7 +133,7 @@ When performing a GraphQL query or mutation, you can use the imported type defin
 
 ```typescript
 import { gql } from '@apollo/client';
-import { WorkspaceInput } from 'adaptic-backend/types';
+import { WorkspaceInput } from '@adaptic/backend-legacy/types';
 
 To test the backend, use the following sample data:
 
@@ -232,12 +232,12 @@ fetchUserData('USER_ID').then(console.log)
 
 ## Contributing
 
-We welcome contributions to the `adaptic-backend` repository! To contribute, please follow these guidelines:
+We welcome contributions to the `@adaptic/backend-legacy` repository! To contribute, please follow these guidelines:
 
 1. **Fork the Repository**: Click the "Fork" button at the top right of the repository page.
 2. **Clone Your Fork**: Clone your forked repository to your local machine.
    ```bash
-   git clone https://github.com/YOUR_USERNAME/adaptic-backend.git
+   git clone https://github.com/YOUR_USERNAME/@adaptic/backend-legacy.git
    ```
 3. **Create a Branch**: Create a new branch for your feature or bug fix.
    ```bash
