@@ -142,10 +142,18 @@ jobs:
         if: steps.should_publish.outputs.should_publish == 'true'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_TOKEN: ${{ secrets.NPM_TOKEN }}
         working-directory: dist
         run: |
           # Ensure temporary files are removed
           rm -f ../npm_package_files.txt ../local_dist_files.txt diff.txt
+          echo "Publishing package..."
+          echo "Registry URL: $(npm config get registry)"
+          echo "Package name: $(jq -r .name package.json)"
+          echo "Package version: $(jq -r .version package.json)"
+          echo "NPM whoami: $(npm whoami || echo 'Not authenticated')"
+
+          echo "Running: npm publish --access public"
           npm publish --access public
 
       - name: Remove dist/package.json after publish and push changes
