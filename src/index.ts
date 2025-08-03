@@ -21,6 +21,7 @@ export {
 
 import { ABTest } from './ABTest';
 import { Account } from './Account';
+import { AccountLinkingRequest } from './AccountLinkingRequest';
 import { Action } from './Action';
 import { Alert } from './Alert';
 import { Allocation } from './Allocation';
@@ -40,6 +41,7 @@ import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
 import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
 import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
 import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
+import { LinkedProvider } from './LinkedProvider';
 import { MLTrainingData } from './MLTrainingData';
 import { MarketSentiment } from './MarketSentiment';
 import { ModelArtifact } from './ModelArtifact';
@@ -57,6 +59,7 @@ import { VerificationToken } from './VerificationToken';
 const adaptic = {
   aBTest: ABTest,
   account: Account,
+  accountLinkingRequest: AccountLinkingRequest,
   action: Action,
   alert: Alert,
   allocation: Allocation,
@@ -76,6 +79,7 @@ const adaptic = {
   institutionalSentimentErrors: InstitutionalSentimentErrors,
   institutionalSentimentHistory: InstitutionalSentimentHistory,
   institutionalSentimentMetrics: InstitutionalSentimentMetrics,
+  linkedProvider: LinkedProvider,
   mLTrainingData: MLTrainingData,
   marketSentiment: MarketSentiment,
   modelArtifact: ModelArtifact,

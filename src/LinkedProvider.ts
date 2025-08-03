@@ -1,26 +1,26 @@
 
   
-import { Customer as CustomerType } from './generated/typegraphql-prisma/models/Customer';
+import { LinkedProvider as LinkedProviderType } from './generated/typegraphql-prisma/models/LinkedProvider';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
   
   /**
-   * CRUD operations for the Customer model.
+   * CRUD operations for the LinkedProvider model.
    */
 
   const selectionSet = `
     
   id
-  authUserId
-  name
-  plan
-  stripeCustomerId
-  stripeSubscriptionId
-  stripePriceId
-  stripeCurrentPeriodEnd
-  createdAt
+  userId
+  provider
+  providerAccountId
+  email
+  accessToken
+  refreshToken
+  expiresAt
+  linkedAt
   updatedAt
-  users {
+  user {
     id
     name
     email
@@ -32,6 +32,18 @@ import { removeUndefinedProps } from './utils';
     bio
     jobTitle
     currentAccount
+    customer {
+      id
+      authUserId
+      name
+      plan
+      stripeCustomerId
+      stripeSubscriptionId
+      stripePriceId
+      stripeCurrentPeriodEnd
+      createdAt
+      updatedAt
+    }
     customerId
     accounts {
       id
@@ -119,18 +131,6 @@ id
     }
     openaiAPIKey
     openaiModel
-    linkedProviders {
-      id
-      userId
-      provider
-      providerAccountId
-      email
-      accessToken
-      refreshToken
-      expiresAt
-      linkedAt
-      updatedAt
-    }
     accountLinkingRequests {
       id
       userId
@@ -151,23 +151,23 @@ id
 
   `;
 
-  export const Customer = {
+  export const LinkedProvider = {
 
     /**
-     * Create a new Customer record.
+     * Create a new LinkedProvider record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Customer or null.
+     * @returns The created LinkedProvider or null.
      */
 
     /**
-     * Create a new Customer record.
+     * Create a new LinkedProvider record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Customer or null.
+     * @returns The created LinkedProvider or null.
      */
-    async create(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+    async create(props: LinkedProviderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LinkedProviderType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -185,9 +185,9 @@ id
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_CUSTOMER = gql`
-              mutation createOneCustomer($data: CustomerCreateInput!) {
-                createOneCustomer(data: $data) {
+          const CREATE_ONE_LINKEDPROVIDER = gql`
+              mutation createOneLinkedProvider($data: LinkedProviderCreateInput!) {
+                createOneLinkedProvider(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -195,46 +195,78 @@ id
 
           const variables = {
             data: {
-                authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
-  name: props.name !== undefined ? props.name : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
-  users: props.users ? 
-    Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.users.map((item: any) => ({
-         id: item.id
-      }))
- }
- : { connectOrCreate: props.users.map((item: any) => ({
+                provider: props.provider !== undefined ? props.provider : undefined,
+  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  accessToken: props.accessToken !== undefined ? props.accessToken : undefined,
+  refreshToken: props.refreshToken !== undefined ? props.refreshToken : undefined,
+  expiresAt: props.expiresAt !== undefined ? props.expiresAt : undefined,
+  linkedAt: props.linkedAt !== undefined ? props.linkedAt : undefined,
+  user: props.user ? 
+    typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
+    ? { connect: {
+        id: props.user.id
+        }
+      }
+    : { connectOrCreate: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name 
+        id: props.user.id !== undefined ? props.user.id : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        name: props.user.name !== undefined ? {
+            equals: props.user.name 
            } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
-        image: item.image !== undefined ? item.image : undefined,
-        role: item.role !== undefined ? item.role : undefined,
-        bio: item.bio !== undefined ? item.bio : undefined,
-        jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
-        plan: item.plan !== undefined ? item.plan : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
-        openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
-    accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+        name: props.user.name !== undefined ? props.user.name : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
+        image: props.user.image !== undefined ? props.user.image : undefined,
+        role: props.user.role !== undefined ? props.user.role : undefined,
+        bio: props.user.bio !== undefined ? props.user.bio : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
+        plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
+        openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+    customer: props.user.customer ? 
+      typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
+    ? { connect: {
+          id: props.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              equals: props.user.customer.authUserId 
+             } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
+             } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              equals: props.user.customer.stripePriceId 
+             } : undefined,
+        },
+        create: {
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -256,13 +288,13 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -275,13 +307,13 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.authenticators.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -295,13 +327,13 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+      Array.isArray(props.user.alpacaAccounts) && props.user.alpacaAccounts.length > 0 &&  props.user.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.alpacaAccounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -375,43 +407,13 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: props.user.accountLinkingRequests ? 
+      Array.isArray(props.user.accountLinkingRequests) && props.user.accountLinkingRequests.length > 0 &&  props.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accountLinkingRequests.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
-             } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email 
-             } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -440,7 +442,7 @@ id
       }))
     } : undefined,
       },
-    }))
+    }
   } : undefined,
 
             },
@@ -449,15 +451,15 @@ id
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_CUSTOMER,
+            mutation: CREATE_ONE_LINKEDPROVIDER,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneCustomer) {
-            return response.data.createOneCustomer;
+          if (response && response.data && response.data.createOneLinkedProvider) {
+            return response.data.createOneLinkedProvider;
           } else {
             return null as any;
           }
@@ -491,13 +493,13 @@ id
     },
 
   /**
-   * Create multiple Customer records.
+   * Create multiple LinkedProvider records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Customer objects for the new records.
+   * @param props - Array of LinkedProvider objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: LinkedProviderType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -515,37 +517,38 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_CUSTOMER = gql`
-          mutation createManyCustomer($data: [CustomerCreateManyInput!]!) {
-            createManyCustomer(data: $data) {
+        const CREATE_MANY_LINKEDPROVIDER = gql`
+          mutation createManyLinkedProvider($data: [LinkedProviderCreateManyInput!]!) {
+            createManyLinkedProvider(data: $data) {
               count
             }
           }`;
 
         const variables = {
           data: props.map(prop => ({
-      authUserId: prop.authUserId !== undefined ? prop.authUserId : undefined,
-  name: prop.name !== undefined ? prop.name : undefined,
-  plan: prop.plan !== undefined ? prop.plan : undefined,
-  stripeCustomerId: prop.stripeCustomerId !== undefined ? prop.stripeCustomerId : undefined,
-  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? prop.stripeSubscriptionId : undefined,
-  stripePriceId: prop.stripePriceId !== undefined ? prop.stripePriceId : undefined,
-  stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? prop.stripeCurrentPeriodEnd : undefined,
+      userId: prop.userId !== undefined ? prop.userId : undefined,
+  provider: prop.provider !== undefined ? prop.provider : undefined,
+  providerAccountId: prop.providerAccountId !== undefined ? prop.providerAccountId : undefined,
+  email: prop.email !== undefined ? prop.email : undefined,
+  accessToken: prop.accessToken !== undefined ? prop.accessToken : undefined,
+  refreshToken: prop.refreshToken !== undefined ? prop.refreshToken : undefined,
+  expiresAt: prop.expiresAt !== undefined ? prop.expiresAt : undefined,
+  linkedAt: prop.linkedAt !== undefined ? prop.linkedAt : undefined,
       })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_CUSTOMER,
+          mutation: CREATE_MANY_LINKEDPROVIDER,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyCustomer) {
-          return response.data.createManyCustomer;
+        if (response && response.data && response.data.createManyLinkedProvider) {
+          return response.data.createManyLinkedProvider;
         } else {
           return null as any;
         }
@@ -579,13 +582,13 @@ id
   },
 
   /**
-   * Update a single Customer record.
+   * Update a single LinkedProvider record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Customer or null.
+   * @returns The updated LinkedProvider or null.
    */
-  async update(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+  async update(props: LinkedProviderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LinkedProviderType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -603,9 +606,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_CUSTOMER = gql`
-          mutation updateOneCustomer($data: CustomerUpdateInput!, $where: CustomerWhereUniqueInput!) {
-            updateOneCustomer(data: $data, where: $where) {
+        const UPDATE_ONE_LINKEDPROVIDER = gql`
+          mutation updateOneLinkedProvider($data: LinkedProviderUpdateInput!, $where: LinkedProviderWhereUniqueInput!) {
+            updateOneLinkedProvider(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -613,105 +616,169 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId 
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
   } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  providerAccountId: props.providerAccountId !== undefined ? {
+    equals: props.providerAccountId 
   } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId 
+  email: props.email !== undefined ? {
+    equals: props.email 
   } : undefined,
       },
           data: {
-      authUserId: props.authUserId !== undefined ? {
-            set: props.authUserId 
+      id: props.id !== undefined ? {
+            set: props.id 
            } : undefined,
-  name: props.name !== undefined ? {
-            set: props.name 
+  provider: props.provider !== undefined ? {
+            set: props.provider 
            } : undefined,
-  plan: props.plan !== undefined ? {
-            set: props.plan 
+  providerAccountId: props.providerAccountId !== undefined ? {
+            set: props.providerAccountId 
            } : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? {
-            set: props.stripeCustomerId 
+  email: props.email !== undefined ? {
+            set: props.email 
            } : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? {
-            set: props.stripeSubscriptionId 
+  accessToken: props.accessToken !== undefined ? {
+            set: props.accessToken 
            } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-            set: props.stripePriceId 
+  refreshToken: props.refreshToken !== undefined ? {
+            set: props.refreshToken 
            } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
-            set: props.stripeCurrentPeriodEnd 
+  expiresAt: props.expiresAt !== undefined ? {
+            set: props.expiresAt 
            } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-            set: props.createdAt 
+  linkedAt: props.linkedAt !== undefined ? {
+            set: props.linkedAt 
            } : undefined,
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
-  users: props.users ? 
-  Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.users.map((item: any) => ({
-    id: item.id
-  }))
-} : { upsert: props.users.map((item: any) => ({
+  user: props.user ? 
+  typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
+? {
+  connect: {
+    id: props.user.id
+  }
+} : { upsert: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name
+        id: props.user.id !== undefined ? {
+            equals: props.user.id
           } : undefined,
-        customerId: item.customerId !== undefined ? {
-            equals: item.customerId
+        name: props.user.name !== undefined ? {
+            equals: props.user.name
+          } : undefined,
+        email: props.user.email !== undefined ? {
+            equals: props.user.email
+          } : undefined,
+        customerId: props.user.customerId !== undefined ? {
+            equals: props.user.customerId
           } : undefined,
       },
       update: {
-        id: item.id !== undefined ? {
-            set: item.id
+        id: props.user.id !== undefined ? {
+            set: props.user.id
           } : undefined,
-        name: item.name !== undefined ? {
-            set: item.name
+        name: props.user.name !== undefined ? {
+            set: props.user.name
           } : undefined,
-        email: item.email !== undefined ? {
-            set: item.email
+        email: props.user.email !== undefined ? {
+            set: props.user.email
           } : undefined,
-        emailVerified: item.emailVerified !== undefined ? {
-            set: item.emailVerified
+        emailVerified: props.user.emailVerified !== undefined ? {
+            set: props.user.emailVerified
           } : undefined,
-        image: item.image !== undefined ? {
-            set: item.image
+        image: props.user.image !== undefined ? {
+            set: props.user.image
           } : undefined,
-        role: item.role !== undefined ? {
-            set: item.role
+        role: props.user.role !== undefined ? {
+            set: props.user.role
           } : undefined,
-        bio: item.bio !== undefined ? {
-            set: item.bio
+        bio: props.user.bio !== undefined ? {
+            set: props.user.bio
           } : undefined,
-        jobTitle: item.jobTitle !== undefined ? {
-            set: item.jobTitle
+        jobTitle: props.user.jobTitle !== undefined ? {
+            set: props.user.jobTitle
           } : undefined,
-        currentAccount: item.currentAccount !== undefined ? {
-            set: item.currentAccount
+        currentAccount: props.user.currentAccount !== undefined ? {
+            set: props.user.currentAccount
           } : undefined,
-        plan: item.plan !== undefined ? {
-            set: item.plan
+        plan: props.user.plan !== undefined ? {
+            set: props.user.plan
           } : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? {
-            set: item.openaiAPIKey
+        openaiAPIKey: props.user.openaiAPIKey !== undefined ? {
+            set: props.user.openaiAPIKey
           } : undefined,
-        openaiModel: item.openaiModel !== undefined ? {
-            set: item.openaiModel
+        openaiModel: props.user.openaiModel !== undefined ? {
+            set: props.user.openaiModel
           } : undefined,
-    accounts: item.accounts ? 
-    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accounts.map((item: any) => ({
+    customer: props.user.customer ? 
+    typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && (Object.keys(props.user.customer)[0] === 'id' || Object.keys(props.user.customer)[0] === 'symbol')
+? {
+    connect: {
+      id: props.user.customer.id
+    }
+} : { upsert: {
+        where: {
+          id: props.user.customer.id !== undefined ? {
+              equals: props.user.customer.id
+            } : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              equals: props.user.customer.authUserId
+            } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name
+            } : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
+              equals: props.user.customer.stripeCustomerId
+            } : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
+              equals: props.user.customer.stripeSubscriptionId
+            } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              equals: props.user.customer.stripePriceId
+            } : undefined,
+        },
+        update: {
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              set: props.user.customer.authUserId
+            } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              set: props.user.customer.name
+            } : undefined,
+          plan: props.user.customer.plan !== undefined ? {
+              set: props.user.customer.plan
+            } : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
+              set: props.user.customer.stripeCustomerId
+            } : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
+              set: props.user.customer.stripeSubscriptionId
+            } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              set: props.user.customer.stripePriceId
+            } : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? {
+              set: props.user.customer.stripeCurrentPeriodEnd
+            } : undefined,
+        },
+        create: {
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: props.user.accounts ? 
+    Array.isArray(props.user.accounts) && props.user.accounts.length > 0 && props.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.accounts.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.accounts.map((item: any) => ({
+} : { upsert: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -768,12 +835,12 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+    Array.isArray(props.user.sessions) && props.user.sessions.length > 0 && props.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.sessions.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.sessions.map((item: any) => ({
+} : { upsert: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -797,12 +864,12 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+    Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 && props.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.authenticators.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.authenticators.map((item: any) => ({
+} : { upsert: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -830,12 +897,12 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+    Array.isArray(props.user.alpacaAccounts) && props.user.alpacaAccounts.length > 0 && props.user.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.alpacaAccounts.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.alpacaAccounts.map((item: any) => ({
+} : { upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1053,67 +1120,12 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: props.user.accountLinkingRequests ? 
+    Array.isArray(props.user.accountLinkingRequests) && props.user.accountLinkingRequests.length > 0 && props.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.accountLinkingRequests.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
-            } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email
-            } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id
-            } : undefined,
-          provider: item.provider !== undefined ? {
-              set: item.provider
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              set: item.providerAccountId
-            } : undefined,
-          email: item.email !== undefined ? {
-              set: item.email
-            } : undefined,
-          accessToken: item.accessToken !== undefined ? {
-              set: item.accessToken
-            } : undefined,
-          refreshToken: item.refreshToken !== undefined ? {
-              set: item.refreshToken
-            } : undefined,
-          expiresAt: item.expiresAt !== undefined ? {
-              set: item.expiresAt
-            } : undefined,
-          linkedAt: item.linkedAt !== undefined ? {
-              set: item.linkedAt
-            } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accountLinkingRequests.map((item: any) => ({
-      id: item.id
-    }))
-} : { upsert: item.accountLinkingRequests.map((item: any) => ({
+} : { upsert: props.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1181,24 +1193,56 @@ id
     } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
-        image: item.image !== undefined ? item.image : undefined,
-        role: item.role !== undefined ? item.role : undefined,
-        bio: item.bio !== undefined ? item.bio : undefined,
-        jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
-        plan: item.plan !== undefined ? item.plan : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
-        openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
-    accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+        name: props.user.name !== undefined ? props.user.name : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
+        image: props.user.image !== undefined ? props.user.image : undefined,
+        role: props.user.role !== undefined ? props.user.role : undefined,
+        bio: props.user.bio !== undefined ? props.user.bio : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
+        plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
+        openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+    customer: props.user.customer ? 
+      typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
+    ? { connect: {
+          id: props.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              equals: props.user.customer.authUserId 
+             } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
+             } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              equals: props.user.customer.stripePriceId 
+             } : undefined,
+        },
+        create: {
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1220,13 +1264,13 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1239,13 +1283,13 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.authenticators.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1259,13 +1303,13 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+      Array.isArray(props.user.alpacaAccounts) && props.user.alpacaAccounts.length > 0 &&  props.user.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.alpacaAccounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1339,43 +1383,13 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: props.user.accountLinkingRequests ? 
+      Array.isArray(props.user.accountLinkingRequests) && props.user.accountLinkingRequests.length > 0 &&  props.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accountLinkingRequests.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
-             } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email 
-             } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1404,7 +1418,7 @@ id
       }))
     } : undefined,
       },
-    }))
+    }
   } : undefined,
       },
         };
@@ -1412,15 +1426,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_CUSTOMER,
+          mutation: UPDATE_ONE_LINKEDPROVIDER,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneCustomer) {
-          return response.data.updateOneCustomer;
+        if (response && response.data && response.data.updateOneLinkedProvider) {
+          return response.data.updateOneLinkedProvider;
         } else {
           return null as any;
         }
@@ -1454,13 +1468,13 @@ id
   },
 
   /**
-   * Upsert a single Customer record.
+   * Upsert a single LinkedProvider record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Customer or null.
+   * @returns The updated LinkedProvider or null.
    */
-  async upsert(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+  async upsert(props: LinkedProviderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LinkedProviderType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1478,9 +1492,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_CUSTOMER = gql`
-          mutation upsertOneCustomer($where: CustomerWhereUniqueInput!, $create: CustomerCreateInput!, $update: CustomerUpdateInput!) {
-            upsertOneCustomer(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_LINKEDPROVIDER = gql`
+          mutation upsertOneLinkedProvider($where: LinkedProviderWhereUniqueInput!, $create: LinkedProviderCreateInput!, $update: LinkedProviderUpdateInput!) {
+            upsertOneLinkedProvider(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -1488,59 +1502,89 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId 
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
   } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  providerAccountId: props.providerAccountId !== undefined ? {
+    equals: props.providerAccountId 
   } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId 
+  email: props.email !== undefined ? {
+    equals: props.email 
   } : undefined,
       },
           create: {
-        authUserId: props.authUserId !== undefined ? props.authUserId : undefined,
-  name: props.name !== undefined ? props.name : undefined,
-  plan: props.plan !== undefined ? props.plan : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
-  users: props.users ? 
-    Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.users.map((item: any) => ({
-         id: item.id
-      }))
- }
- : { connectOrCreate: props.users.map((item: any) => ({
+        provider: props.provider !== undefined ? props.provider : undefined,
+  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  accessToken: props.accessToken !== undefined ? props.accessToken : undefined,
+  refreshToken: props.refreshToken !== undefined ? props.refreshToken : undefined,
+  expiresAt: props.expiresAt !== undefined ? props.expiresAt : undefined,
+  linkedAt: props.linkedAt !== undefined ? props.linkedAt : undefined,
+  user: props.user ? 
+    typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
+    ? { connect: {
+        id: props.user.id
+        }
+      }
+    : { connectOrCreate: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name 
+        id: props.user.id !== undefined ? props.user.id : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        name: props.user.name !== undefined ? {
+            equals: props.user.name 
            } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
-        image: item.image !== undefined ? item.image : undefined,
-        role: item.role !== undefined ? item.role : undefined,
-        bio: item.bio !== undefined ? item.bio : undefined,
-        jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
-        plan: item.plan !== undefined ? item.plan : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
-        openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
-    accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+        name: props.user.name !== undefined ? props.user.name : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
+        image: props.user.image !== undefined ? props.user.image : undefined,
+        role: props.user.role !== undefined ? props.user.role : undefined,
+        bio: props.user.bio !== undefined ? props.user.bio : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
+        plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
+        openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+    customer: props.user.customer ? 
+      typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
+    ? { connect: {
+          id: props.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              equals: props.user.customer.authUserId 
+             } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
+             } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              equals: props.user.customer.stripePriceId 
+             } : undefined,
+        },
+        create: {
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1562,13 +1606,13 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1581,13 +1625,13 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.authenticators.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1601,13 +1645,13 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+      Array.isArray(props.user.alpacaAccounts) && props.user.alpacaAccounts.length > 0 &&  props.user.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.alpacaAccounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1681,43 +1725,13 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: props.user.accountLinkingRequests ? 
+      Array.isArray(props.user.accountLinkingRequests) && props.user.accountLinkingRequests.length > 0 &&  props.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accountLinkingRequests.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
-             } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email 
-             } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1746,90 +1760,156 @@ id
       }))
     } : undefined,
       },
-    }))
+    }
   } : undefined,
       },
           update: {
-      authUserId: props.authUserId !== undefined ? {
-            set: props.authUserId 
+      provider: props.provider !== undefined ? {
+            set: props.provider 
            } : undefined,
-  name: props.name !== undefined ? {
-            set: props.name 
+  providerAccountId: props.providerAccountId !== undefined ? {
+            set: props.providerAccountId 
            } : undefined,
-  plan: props.plan !== undefined ? {
-            set: props.plan 
+  email: props.email !== undefined ? {
+            set: props.email 
            } : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? {
-            set: props.stripeCustomerId 
+  accessToken: props.accessToken !== undefined ? {
+            set: props.accessToken 
            } : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? {
-            set: props.stripeSubscriptionId 
+  refreshToken: props.refreshToken !== undefined ? {
+            set: props.refreshToken 
            } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-            set: props.stripePriceId 
+  expiresAt: props.expiresAt !== undefined ? {
+            set: props.expiresAt 
            } : undefined,
-  stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
-            set: props.stripeCurrentPeriodEnd 
+  linkedAt: props.linkedAt !== undefined ? {
+            set: props.linkedAt 
            } : undefined,
-  users: props.users ? 
-  Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.users.map((item: any) => ({
-    id: item.id
-  }))
-} : { upsert: props.users.map((item: any) => ({
+  user: props.user ? 
+  typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
+? {
+  connect: {
+    id: props.user.id
+  }
+} : { upsert: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name
+        id: props.user.id !== undefined ? {
+            equals: props.user.id
           } : undefined,
-        customerId: item.customerId !== undefined ? {
-            equals: item.customerId
+        name: props.user.name !== undefined ? {
+            equals: props.user.name
+          } : undefined,
+        email: props.user.email !== undefined ? {
+            equals: props.user.email
+          } : undefined,
+        customerId: props.user.customerId !== undefined ? {
+            equals: props.user.customerId
           } : undefined,
       },
       update: {
-        id: item.id !== undefined ? {
-            set: item.id
+        id: props.user.id !== undefined ? {
+            set: props.user.id
           } : undefined,
-        name: item.name !== undefined ? {
-            set: item.name
+        name: props.user.name !== undefined ? {
+            set: props.user.name
           } : undefined,
-        email: item.email !== undefined ? {
-            set: item.email
+        email: props.user.email !== undefined ? {
+            set: props.user.email
           } : undefined,
-        emailVerified: item.emailVerified !== undefined ? {
-            set: item.emailVerified
+        emailVerified: props.user.emailVerified !== undefined ? {
+            set: props.user.emailVerified
           } : undefined,
-        image: item.image !== undefined ? {
-            set: item.image
+        image: props.user.image !== undefined ? {
+            set: props.user.image
           } : undefined,
-        role: item.role !== undefined ? {
-            set: item.role
+        role: props.user.role !== undefined ? {
+            set: props.user.role
           } : undefined,
-        bio: item.bio !== undefined ? {
-            set: item.bio
+        bio: props.user.bio !== undefined ? {
+            set: props.user.bio
           } : undefined,
-        jobTitle: item.jobTitle !== undefined ? {
-            set: item.jobTitle
+        jobTitle: props.user.jobTitle !== undefined ? {
+            set: props.user.jobTitle
           } : undefined,
-        currentAccount: item.currentAccount !== undefined ? {
-            set: item.currentAccount
+        currentAccount: props.user.currentAccount !== undefined ? {
+            set: props.user.currentAccount
           } : undefined,
-        plan: item.plan !== undefined ? {
-            set: item.plan
+        plan: props.user.plan !== undefined ? {
+            set: props.user.plan
           } : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? {
-            set: item.openaiAPIKey
+        openaiAPIKey: props.user.openaiAPIKey !== undefined ? {
+            set: props.user.openaiAPIKey
           } : undefined,
-        openaiModel: item.openaiModel !== undefined ? {
-            set: item.openaiModel
+        openaiModel: props.user.openaiModel !== undefined ? {
+            set: props.user.openaiModel
           } : undefined,
-    accounts: item.accounts ? 
-    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accounts.map((item: any) => ({
+    customer: props.user.customer ? 
+    typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && (Object.keys(props.user.customer)[0] === 'id' || Object.keys(props.user.customer)[0] === 'symbol')
+? {
+    connect: {
+      id: props.user.customer.id
+    }
+} : { upsert: {
+        where: {
+          id: props.user.customer.id !== undefined ? {
+              equals: props.user.customer.id
+            } : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              equals: props.user.customer.authUserId
+            } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name
+            } : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
+              equals: props.user.customer.stripeCustomerId
+            } : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
+              equals: props.user.customer.stripeSubscriptionId
+            } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              equals: props.user.customer.stripePriceId
+            } : undefined,
+        },
+        update: {
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              set: props.user.customer.authUserId
+            } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              set: props.user.customer.name
+            } : undefined,
+          plan: props.user.customer.plan !== undefined ? {
+              set: props.user.customer.plan
+            } : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? {
+              set: props.user.customer.stripeCustomerId
+            } : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? {
+              set: props.user.customer.stripeSubscriptionId
+            } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              set: props.user.customer.stripePriceId
+            } : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? {
+              set: props.user.customer.stripeCurrentPeriodEnd
+            } : undefined,
+        },
+        create: {
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: props.user.accounts ? 
+    Array.isArray(props.user.accounts) && props.user.accounts.length > 0 && props.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.accounts.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.accounts.map((item: any) => ({
+} : { upsert: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1886,12 +1966,12 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+    Array.isArray(props.user.sessions) && props.user.sessions.length > 0 && props.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.sessions.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.sessions.map((item: any) => ({
+} : { upsert: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1915,12 +1995,12 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+    Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 && props.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.authenticators.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.authenticators.map((item: any) => ({
+} : { upsert: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1948,12 +2028,12 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+    Array.isArray(props.user.alpacaAccounts) && props.user.alpacaAccounts.length > 0 && props.user.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.alpacaAccounts.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.alpacaAccounts.map((item: any) => ({
+} : { upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2171,67 +2251,12 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: props.user.accountLinkingRequests ? 
+    Array.isArray(props.user.accountLinkingRequests) && props.user.accountLinkingRequests.length > 0 && props.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.accountLinkingRequests.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
-            } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email
-            } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id
-            } : undefined,
-          provider: item.provider !== undefined ? {
-              set: item.provider
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              set: item.providerAccountId
-            } : undefined,
-          email: item.email !== undefined ? {
-              set: item.email
-            } : undefined,
-          accessToken: item.accessToken !== undefined ? {
-              set: item.accessToken
-            } : undefined,
-          refreshToken: item.refreshToken !== undefined ? {
-              set: item.refreshToken
-            } : undefined,
-          expiresAt: item.expiresAt !== undefined ? {
-              set: item.expiresAt
-            } : undefined,
-          linkedAt: item.linkedAt !== undefined ? {
-              set: item.linkedAt
-            } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accountLinkingRequests.map((item: any) => ({
-      id: item.id
-    }))
-} : { upsert: item.accountLinkingRequests.map((item: any) => ({
+} : { upsert: props.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2299,24 +2324,56 @@ id
     } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
-        image: item.image !== undefined ? item.image : undefined,
-        role: item.role !== undefined ? item.role : undefined,
-        bio: item.bio !== undefined ? item.bio : undefined,
-        jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
-        plan: item.plan !== undefined ? item.plan : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
-        openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
-    accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+        name: props.user.name !== undefined ? props.user.name : undefined,
+        email: props.user.email !== undefined ? props.user.email : undefined,
+        emailVerified: props.user.emailVerified !== undefined ? props.user.emailVerified : undefined,
+        image: props.user.image !== undefined ? props.user.image : undefined,
+        role: props.user.role !== undefined ? props.user.role : undefined,
+        bio: props.user.bio !== undefined ? props.user.bio : undefined,
+        jobTitle: props.user.jobTitle !== undefined ? props.user.jobTitle : undefined,
+        currentAccount: props.user.currentAccount !== undefined ? props.user.currentAccount : undefined,
+        plan: props.user.plan !== undefined ? props.user.plan : undefined,
+        openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
+        openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+    customer: props.user.customer ? 
+      typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
+    ? { connect: {
+          id: props.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.customer.id !== undefined ? props.user.customer.id : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          authUserId: props.user.customer.authUserId !== undefined ? {
+              equals: props.user.customer.authUserId 
+             } : undefined,
+          name: props.user.customer.name !== undefined ? {
+              equals: props.user.customer.name 
+             } : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? {
+              equals: props.user.customer.stripePriceId 
+             } : undefined,
+        },
+        create: {
+          authUserId: props.user.customer.authUserId !== undefined ? props.user.customer.authUserId : undefined,
+          name: props.user.customer.name !== undefined ? props.user.customer.name : undefined,
+          plan: props.user.customer.plan !== undefined ? props.user.customer.plan : undefined,
+          stripeCustomerId: props.user.customer.stripeCustomerId !== undefined ? props.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: props.user.customer.stripeSubscriptionId !== undefined ? props.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: props.user.customer.stripePriceId !== undefined ? props.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -2338,13 +2395,13 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2357,13 +2414,13 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+    authenticators: props.user.authenticators ? 
+      Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.authenticators.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2377,13 +2434,13 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: props.user.alpacaAccounts ? 
+      Array.isArray(props.user.alpacaAccounts) && props.user.alpacaAccounts.length > 0 &&  props.user.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.alpacaAccounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2457,43 +2514,13 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: props.user.accountLinkingRequests ? 
+      Array.isArray(props.user.accountLinkingRequests) && props.user.accountLinkingRequests.length > 0 &&  props.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accountLinkingRequests.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
-             } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email 
-             } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2522,7 +2549,7 @@ id
       }))
     } : undefined,
       },
-    }))
+    }
   } : undefined,
       },
         };
@@ -2530,15 +2557,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_CUSTOMER,
+          mutation: UPSERT_ONE_LINKEDPROVIDER,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneCustomer) {
-          return response.data.upsertOneCustomer;
+        if (response && response.data && response.data.upsertOneLinkedProvider) {
+          return response.data.upsertOneLinkedProvider;
         } else {
           return null as any;
         }
@@ -2572,13 +2599,13 @@ id
   },
 
   /**
-   * Update multiple Customer records.
+   * Update multiple LinkedProvider records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Customer objects for the updated records.
+   * @param props - Array of LinkedProvider objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: CustomerType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: LinkedProviderType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2596,9 +2623,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_CUSTOMER = gql`
-          mutation updateManyCustomer($data: [CustomerCreateManyInput!]!) {
-            updateManyCustomer(data: $data) {
+        const UPDATE_MANY_LINKEDPROVIDER = gql`
+          mutation updateManyLinkedProvider($data: [LinkedProviderCreateManyInput!]!) {
+            updateManyLinkedProvider(data: $data) {
               count
             }
           }`;
@@ -2606,106 +2633,170 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  stripeCustomerId: prop.stripeCustomerId !== undefined ? prop.stripeCustomerId : undefined,
-  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? prop.stripeSubscriptionId : undefined,
-  authUserId: prop.authUserId !== undefined ? {
-    equals: prop.authUserId 
+  userId: prop.userId !== undefined ? {
+    equals: prop.userId 
   } : undefined,
-  name: prop.name !== undefined ? {
-    equals: prop.name 
+  providerAccountId: prop.providerAccountId !== undefined ? {
+    equals: prop.providerAccountId 
   } : undefined,
-  stripePriceId: prop.stripePriceId !== undefined ? {
-    equals: prop.stripePriceId 
+  email: prop.email !== undefined ? {
+    equals: prop.email 
   } : undefined,
 
           },
           data: {
-              authUserId: prop.authUserId !== undefined ? {
-            set: prop.authUserId 
+              id: prop.id !== undefined ? {
+            set: prop.id 
            } : undefined,
-  name: prop.name !== undefined ? {
-            set: prop.name 
+  provider: prop.provider !== undefined ? {
+            set: prop.provider 
            } : undefined,
-  plan: prop.plan !== undefined ? {
-            set: prop.plan 
+  providerAccountId: prop.providerAccountId !== undefined ? {
+            set: prop.providerAccountId 
            } : undefined,
-  stripeCustomerId: prop.stripeCustomerId !== undefined ? {
-            set: prop.stripeCustomerId 
+  email: prop.email !== undefined ? {
+            set: prop.email 
            } : undefined,
-  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? {
-            set: prop.stripeSubscriptionId 
+  accessToken: prop.accessToken !== undefined ? {
+            set: prop.accessToken 
            } : undefined,
-  stripePriceId: prop.stripePriceId !== undefined ? {
-            set: prop.stripePriceId 
+  refreshToken: prop.refreshToken !== undefined ? {
+            set: prop.refreshToken 
            } : undefined,
-  stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? {
-            set: prop.stripeCurrentPeriodEnd 
+  expiresAt: prop.expiresAt !== undefined ? {
+            set: prop.expiresAt 
            } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-            set: prop.createdAt 
+  linkedAt: prop.linkedAt !== undefined ? {
+            set: prop.linkedAt 
            } : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,
-  users: prop.users ? 
-  Array.isArray(prop.users) && prop.users.length > 0 && prop.users.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: prop.users.map((item: any) => ({
-    id: item.id
-  }))
-} : { upsert: prop.users.map((item: any) => ({
+  user: prop.user ? 
+  typeof prop.user === 'object' && Object.keys(prop.user).length === 1 && (Object.keys(prop.user)[0] === 'id' || Object.keys(prop.user)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.user.id
+  }
+} : { upsert: {
       where: {
-        id: item.id !== undefined ? item.id : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        name: item.name !== undefined ? {
-            equals: item.name
+        id: prop.user.id !== undefined ? {
+            equals: prop.user.id
           } : undefined,
-        customerId: item.customerId !== undefined ? {
-            equals: item.customerId
+        name: prop.user.name !== undefined ? {
+            equals: prop.user.name
+          } : undefined,
+        email: prop.user.email !== undefined ? {
+            equals: prop.user.email
+          } : undefined,
+        customerId: prop.user.customerId !== undefined ? {
+            equals: prop.user.customerId
           } : undefined,
       },
       update: {
-        id: item.id !== undefined ? {
-            set: item.id
+        id: prop.user.id !== undefined ? {
+            set: prop.user.id
           } : undefined,
-        name: item.name !== undefined ? {
-            set: item.name
+        name: prop.user.name !== undefined ? {
+            set: prop.user.name
           } : undefined,
-        email: item.email !== undefined ? {
-            set: item.email
+        email: prop.user.email !== undefined ? {
+            set: prop.user.email
           } : undefined,
-        emailVerified: item.emailVerified !== undefined ? {
-            set: item.emailVerified
+        emailVerified: prop.user.emailVerified !== undefined ? {
+            set: prop.user.emailVerified
           } : undefined,
-        image: item.image !== undefined ? {
-            set: item.image
+        image: prop.user.image !== undefined ? {
+            set: prop.user.image
           } : undefined,
-        role: item.role !== undefined ? {
-            set: item.role
+        role: prop.user.role !== undefined ? {
+            set: prop.user.role
           } : undefined,
-        bio: item.bio !== undefined ? {
-            set: item.bio
+        bio: prop.user.bio !== undefined ? {
+            set: prop.user.bio
           } : undefined,
-        jobTitle: item.jobTitle !== undefined ? {
-            set: item.jobTitle
+        jobTitle: prop.user.jobTitle !== undefined ? {
+            set: prop.user.jobTitle
           } : undefined,
-        currentAccount: item.currentAccount !== undefined ? {
-            set: item.currentAccount
+        currentAccount: prop.user.currentAccount !== undefined ? {
+            set: prop.user.currentAccount
           } : undefined,
-        plan: item.plan !== undefined ? {
-            set: item.plan
+        plan: prop.user.plan !== undefined ? {
+            set: prop.user.plan
           } : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? {
-            set: item.openaiAPIKey
+        openaiAPIKey: prop.user.openaiAPIKey !== undefined ? {
+            set: prop.user.openaiAPIKey
           } : undefined,
-        openaiModel: item.openaiModel !== undefined ? {
-            set: item.openaiModel
+        openaiModel: prop.user.openaiModel !== undefined ? {
+            set: prop.user.openaiModel
           } : undefined,
-    accounts: item.accounts ? 
-    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accounts.map((item: any) => ({
+    customer: prop.user.customer ? 
+    typeof prop.user.customer === 'object' && Object.keys(prop.user.customer).length === 1 && (Object.keys(prop.user.customer)[0] === 'id' || Object.keys(prop.user.customer)[0] === 'symbol')
+? {
+    connect: {
+      id: prop.user.customer.id
+    }
+} : { upsert: {
+        where: {
+          id: prop.user.customer.id !== undefined ? {
+              equals: prop.user.customer.id
+            } : undefined,
+          authUserId: prop.user.customer.authUserId !== undefined ? {
+              equals: prop.user.customer.authUserId
+            } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              equals: prop.user.customer.name
+            } : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? {
+              equals: prop.user.customer.stripeCustomerId
+            } : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? {
+              equals: prop.user.customer.stripeSubscriptionId
+            } : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? {
+              equals: prop.user.customer.stripePriceId
+            } : undefined,
+        },
+        update: {
+          authUserId: prop.user.customer.authUserId !== undefined ? {
+              set: prop.user.customer.authUserId
+            } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              set: prop.user.customer.name
+            } : undefined,
+          plan: prop.user.customer.plan !== undefined ? {
+              set: prop.user.customer.plan
+            } : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? {
+              set: prop.user.customer.stripeCustomerId
+            } : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? {
+              set: prop.user.customer.stripeSubscriptionId
+            } : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? {
+              set: prop.user.customer.stripePriceId
+            } : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? {
+              set: prop.user.customer.stripeCurrentPeriodEnd
+            } : undefined,
+        },
+        create: {
+          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
+          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
+          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: prop.user.accounts ? 
+    Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0 && prop.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.accounts.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.accounts.map((item: any) => ({
+} : { upsert: prop.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -2762,12 +2853,12 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.sessions.map((item: any) => ({
+    sessions: prop.user.sessions ? 
+    Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 && prop.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.sessions.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.sessions.map((item: any) => ({
+} : { upsert: prop.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2791,12 +2882,12 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.authenticators.map((item: any) => ({
+    authenticators: prop.user.authenticators ? 
+    Array.isArray(prop.user.authenticators) && prop.user.authenticators.length > 0 && prop.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.authenticators.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.authenticators.map((item: any) => ({
+} : { upsert: prop.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2824,12 +2915,12 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: prop.user.alpacaAccounts ? 
+    Array.isArray(prop.user.alpacaAccounts) && prop.user.alpacaAccounts.length > 0 && prop.user.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.alpacaAccounts.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.alpacaAccounts.map((item: any) => ({
+} : { upsert: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3047,67 +3138,12 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: prop.user.accountLinkingRequests ? 
+    Array.isArray(prop.user.accountLinkingRequests) && prop.user.accountLinkingRequests.length > 0 && prop.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.accountLinkingRequests.map((item: any) => ({
       id: item.id
     }))
-} : { upsert: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId
-            } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email
-            } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id
-            } : undefined,
-          provider: item.provider !== undefined ? {
-              set: item.provider
-            } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              set: item.providerAccountId
-            } : undefined,
-          email: item.email !== undefined ? {
-              set: item.email
-            } : undefined,
-          accessToken: item.accessToken !== undefined ? {
-              set: item.accessToken
-            } : undefined,
-          refreshToken: item.refreshToken !== undefined ? {
-              set: item.refreshToken
-            } : undefined,
-          expiresAt: item.expiresAt !== undefined ? {
-              set: item.expiresAt
-            } : undefined,
-          linkedAt: item.linkedAt !== undefined ? {
-              set: item.linkedAt
-            } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accountLinkingRequests.map((item: any) => ({
-      id: item.id
-    }))
-} : { upsert: item.accountLinkingRequests.map((item: any) => ({
+} : { upsert: prop.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3175,24 +3211,56 @@ id
     } : undefined,
       },
       create: {
-        name: item.name !== undefined ? item.name : undefined,
-        email: item.email !== undefined ? item.email : undefined,
-        emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
-        image: item.image !== undefined ? item.image : undefined,
-        role: item.role !== undefined ? item.role : undefined,
-        bio: item.bio !== undefined ? item.bio : undefined,
-        jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
-        currentAccount: item.currentAccount !== undefined ? item.currentAccount : undefined,
-        plan: item.plan !== undefined ? item.plan : undefined,
-        openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
-        openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
-    accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+        name: prop.user.name !== undefined ? prop.user.name : undefined,
+        email: prop.user.email !== undefined ? prop.user.email : undefined,
+        emailVerified: prop.user.emailVerified !== undefined ? prop.user.emailVerified : undefined,
+        image: prop.user.image !== undefined ? prop.user.image : undefined,
+        role: prop.user.role !== undefined ? prop.user.role : undefined,
+        bio: prop.user.bio !== undefined ? prop.user.bio : undefined,
+        jobTitle: prop.user.jobTitle !== undefined ? prop.user.jobTitle : undefined,
+        currentAccount: prop.user.currentAccount !== undefined ? prop.user.currentAccount : undefined,
+        plan: prop.user.plan !== undefined ? prop.user.plan : undefined,
+        openaiAPIKey: prop.user.openaiAPIKey !== undefined ? prop.user.openaiAPIKey : undefined,
+        openaiModel: prop.user.openaiModel !== undefined ? prop.user.openaiModel : undefined,
+    customer: prop.user.customer ? 
+      typeof prop.user.customer === 'object' && Object.keys(prop.user.customer).length === 1 && Object.keys(prop.user.customer)[0] === 'id'
+    ? { connect: {
+          id: prop.user.customer.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.user.customer.id !== undefined ? prop.user.customer.id : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          authUserId: prop.user.customer.authUserId !== undefined ? {
+              equals: prop.user.customer.authUserId 
+             } : undefined,
+          name: prop.user.customer.name !== undefined ? {
+              equals: prop.user.customer.name 
+             } : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? {
+              equals: prop.user.customer.stripePriceId 
+             } : undefined,
+        },
+        create: {
+          authUserId: prop.user.customer.authUserId !== undefined ? prop.user.customer.authUserId : undefined,
+          name: prop.user.customer.name !== undefined ? prop.user.customer.name : undefined,
+          plan: prop.user.customer.plan !== undefined ? prop.user.customer.plan : undefined,
+          stripeCustomerId: prop.user.customer.stripeCustomerId !== undefined ? prop.user.customer.stripeCustomerId : undefined,
+          stripeSubscriptionId: prop.user.customer.stripeSubscriptionId !== undefined ? prop.user.customer.stripeSubscriptionId : undefined,
+          stripePriceId: prop.user.customer.stripePriceId !== undefined ? prop.user.customer.stripePriceId : undefined,
+          stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
+        },
+      }
+    } : undefined,
+    accounts: prop.user.accounts ? 
+      Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0 &&  prop.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.accounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: prop.user.accounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -3214,13 +3282,13 @@ id
         },
       }))
     } : undefined,
-    sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+    sessions: prop.user.sessions ? 
+      Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 &&  prop.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.sessions.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: prop.user.sessions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3233,13 +3301,13 @@ id
         },
       }))
     } : undefined,
-    authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+    authenticators: prop.user.authenticators ? 
+      Array.isArray(prop.user.authenticators) && prop.user.authenticators.length > 0 &&  prop.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.authenticators.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: prop.user.authenticators.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3253,13 +3321,13 @@ id
         },
       }))
     } : undefined,
-    alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+    alpacaAccounts: prop.user.alpacaAccounts ? 
+      Array.isArray(prop.user.alpacaAccounts) && prop.user.alpacaAccounts.length > 0 &&  prop.user.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.alpacaAccounts.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3333,43 +3401,13 @@ id
         },
       }))
     } : undefined,
-    linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+    accountLinkingRequests: prop.user.accountLinkingRequests ? 
+      Array.isArray(prop.user.accountLinkingRequests) && prop.user.accountLinkingRequests.length > 0 &&  prop.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.accountLinkingRequests.map((item: any) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? {
-              equals: item.providerAccountId 
-             } : undefined,
-          email: item.email !== undefined ? {
-              equals: item.email 
-             } : undefined,
-        },
-        create: {
-          provider: item.provider !== undefined ? item.provider : undefined,
-          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
-          email: item.email !== undefined ? item.email : undefined,
-          accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
-          refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
-          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
-          linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
-        },
-      }))
-    } : undefined,
-    accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: prop.user.accountLinkingRequests.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3398,7 +3436,7 @@ id
       }))
     } : undefined,
       },
-    }))
+    }
   } : undefined,
 
           },
@@ -3407,15 +3445,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_CUSTOMER,
+          mutation: UPDATE_MANY_LINKEDPROVIDER,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyCustomer) {
-          return response.data.updateManyCustomer;
+        if (response && response.data && response.data.updateManyLinkedProvider) {
+          return response.data.updateManyLinkedProvider;
         } else {
           return null as any;
         }
@@ -3449,13 +3487,13 @@ id
   },
 
   /**
-   * Delete a single Customer record.
+   * Delete a single LinkedProvider record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Customer or null.
+   * @returns The deleted LinkedProvider or null.
    */
-  async delete(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType> {
+  async delete(props: LinkedProviderType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LinkedProviderType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3473,9 +3511,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_CUSTOMER = gql`
-          mutation deleteOneCustomer($where: CustomerWhereUniqueInput!) {
-            deleteOneCustomer(where: $where) {
+        const DELETE_ONE_LINKEDPROVIDER = gql`
+          mutation deleteOneLinkedProvider($where: LinkedProviderWhereUniqueInput!) {
+            deleteOneLinkedProvider(where: $where) {
               id
             }
           }`;
@@ -3489,15 +3527,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_CUSTOMER,
+          mutation: DELETE_ONE_LINKEDPROVIDER,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneCustomer) {
-          return response.data.deleteOneCustomer;
+        if (response && response.data && response.data.deleteOneLinkedProvider) {
+          return response.data.deleteOneLinkedProvider;
         } else {
           return null as any;
         }
@@ -3531,14 +3569,14 @@ id
   },
 
   /**
-   * Retrieve a single Customer record by ID.
+   * Retrieve a single LinkedProvider record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Customer or null.
+   * @returns The retrieved LinkedProvider or null.
    */
-  async get(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<CustomerType | null> {
+  async get(props: LinkedProviderType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<LinkedProviderType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3556,9 +3594,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const GET_CUSTOMER = gql`
-          query getCustomer($where: CustomerWhereUniqueInput!) {
-            getCustomer(where: $where) {
+        const GET_LINKEDPROVIDER = gql`
+          query getLinkedProvider($where: LinkedProviderWhereUniqueInput!) {
+            getLinkedProvider(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -3566,34 +3604,32 @@ id
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId 
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
   } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  providerAccountId: props.providerAccountId !== undefined ? {
+    equals: props.providerAccountId 
   } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId 
+  email: props.email !== undefined ? {
+    equals: props.email 
   } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_CUSTOMER,
+          query: GET_LINKEDPROVIDER,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getCustomer ?? null;
+        return response.data?.getLinkedProvider ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Customer found') {
+        if (error.message === 'No LinkedProvider found') {
           return null;
         }
 
@@ -3624,12 +3660,12 @@ id
   },
 
   /**
-   * Retrieve all Customers records.
+   * Retrieve all LinkedProviders records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Customer records or null.
+   * @returns An array of LinkedProvider records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<CustomerType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LinkedProviderType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3647,25 +3683,25 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_CUSTOMER = gql`
-          query getAllCustomer {
-            customers {
+        const GET_ALL_LINKEDPROVIDER = gql`
+          query getAllLinkedProvider {
+            linkedProviders {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_CUSTOMER,
+          query: GET_ALL_LINKEDPROVIDER,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.customers ?? null;
+        return response.data?.linkedProviders ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Customer found') {
+        if (error.message === 'No LinkedProvider found') {
           return null;
         }
 
@@ -3696,14 +3732,14 @@ id
   },
 
   /**
-   * Find multiple Customer records based on conditions.
+   * Find multiple LinkedProvider records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Customer records or null.
+   * @returns An array of found LinkedProvider records or null.
    */
-  async findMany(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<CustomerType[] | null> {
+  async findMany(props: LinkedProviderType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<LinkedProviderType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3721,9 +3757,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_CUSTOMER = gql`
-          query findManyCustomer($where: CustomerWhereInput!) {
-            customers(where: $where) {
+        const FIND_MANY_LINKEDPROVIDER = gql`
+          query findManyLinkedProvider($where: LinkedProviderWhereInput!) {
+            linkedProviders(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -3733,20 +3769,14 @@ id
       id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId 
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
   } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
+  providerAccountId: props.providerAccountId !== undefined ? {
+    equals: props.providerAccountId 
   } : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? {
-    equals: props.stripeCustomerId 
-  } : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? {
-    equals: props.stripeSubscriptionId 
-  } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId 
+  email: props.email !== undefined ? {
+    equals: props.email 
   } : undefined,
       },
         };
@@ -3754,22 +3784,22 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_CUSTOMER,
+          query: FIND_MANY_LINKEDPROVIDER,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.customers) {
-          return response.data.customers;
+        if (response && response.data && response.data.linkedproviders) {
+          return response.data.linkedProviders;
         } else {
-          return [] as CustomerType[];
+          return [] as LinkedProviderType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Customer found') {
+        if (error.message === 'No LinkedProvider found') {
           return null;
         }
 

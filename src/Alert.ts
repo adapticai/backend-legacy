@@ -249,6 +249,70 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -814,6 +878,132 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                set: item.providerAccountId
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            accessToken: item.accessToken !== undefined ? {
+                set: item.accessToken
+              } : undefined,
+            refreshToken: item.refreshToken !== undefined ? {
+                set: item.refreshToken
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            linkedAt: item.linkedAt !== undefined ? {
+                set: item.linkedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                set: item.providerAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            verificationToken: item.verificationToken !== undefined ? {
+                set: item.verificationToken
+              } : undefined,
+            userAgent: item.userAgent !== undefined ? {
+                set: item.userAgent
+              } : undefined,
+            ipAddress: item.ipAddress !== undefined ? {
+                set: item.ipAddress
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? {
+                set: item.verifiedAt
+              } : undefined,
+            approvedAt: item.approvedAt !== undefined ? {
+                set: item.approvedAt
+              } : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? {
+                set: item.rejectedAt
+              } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -923,6 +1113,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,
@@ -1096,6 +1350,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,
@@ -1374,6 +1692,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,
@@ -1762,6 +2144,132 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                set: item.providerAccountId
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            accessToken: item.accessToken !== undefined ? {
+                set: item.accessToken
+              } : undefined,
+            refreshToken: item.refreshToken !== undefined ? {
+                set: item.refreshToken
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            linkedAt: item.linkedAt !== undefined ? {
+                set: item.linkedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                set: item.providerAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            verificationToken: item.verificationToken !== undefined ? {
+                set: item.verificationToken
+              } : undefined,
+            userAgent: item.userAgent !== undefined ? {
+                set: item.userAgent
+              } : undefined,
+            ipAddress: item.ipAddress !== undefined ? {
+                set: item.ipAddress
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? {
+                set: item.verifiedAt
+              } : undefined,
+            approvedAt: item.approvedAt !== undefined ? {
+                set: item.approvedAt
+              } : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? {
+                set: item.rejectedAt
+              } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -1871,6 +2379,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,
@@ -2044,6 +2616,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: props.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,
@@ -2527,6 +3163,132 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
+      Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 && prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                set: item.providerAccountId
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            accessToken: item.accessToken !== undefined ? {
+                set: item.accessToken
+              } : undefined,
+            refreshToken: item.refreshToken !== undefined ? {
+                set: item.refreshToken
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            linkedAt: item.linkedAt !== undefined ? {
+                set: item.linkedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
+      Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 && prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                set: item.providerAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            verificationToken: item.verificationToken !== undefined ? {
+                set: item.verificationToken
+              } : undefined,
+            userAgent: item.userAgent !== undefined ? {
+                set: item.userAgent
+              } : undefined,
+            ipAddress: item.ipAddress !== undefined ? {
+                set: item.ipAddress
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? {
+                set: item.verifiedAt
+              } : undefined,
+            approvedAt: item.approvedAt !== undefined ? {
+                set: item.approvedAt
+              } : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? {
+                set: item.rejectedAt
+              } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
@@ -2636,6 +3398,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,
@@ -2809,6 +3635,70 @@ import { removeUndefinedProps } from './utils';
             credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
             publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
             counter: item.counter !== undefined ? item.counter : undefined,
+          },
+        }))
+      } : undefined,
+      linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
+        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+            refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+          },
+        }))
+      } : undefined,
+      accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
+        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? {
+                equals: item.providerAccountId 
+               } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+            userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+            ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+            approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+            rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
       } : undefined,

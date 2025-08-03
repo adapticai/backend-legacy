@@ -741,6 +741,40 @@ enum ConfigType {
   USER_PREFERENCE
 }
 
+// Defines the status of account linking requests.
+enum AccountLinkingStatus {
+  /// The account linking request is pending
+  PENDING
+
+  /// Email has been sent for verification
+  EMAIL_SENT
+
+  /// Email has been verified
+  VERIFIED
+
+  /// Account linking has been approved by the user
+  APPROVED
+
+  /// Account linking has been rejected by the user
+  REJECTED
+
+  /// The account linking request has expired
+  EXPIRED
+}
+
+// Defines the authentication providers supported for account linking.
+enum AuthProvider {
+  /// Standard email/password authentication
+  CREDENTIALS
+
+  /// Google OAuth provider
+  GOOGLE
+
+  /// GitHub OAuth provider
+  GITHUB
+  // Add more providers as needed
+}
+
 /// ### Models
 
 // Represents a configuration setting in the system.
@@ -893,7 +927,118 @@ model User {
   /// OpenAI API Language model selected by the user
   openaiModel OpenaiModel? @default(GPT_4O_MINI)
 
+  /// List of linked authentication providers. TYPESTRING.INCLUDE=['id','provider','email'] GQL.EXCLUDE=['user']
+  linkedProviders LinkedProvider[]
+
+  /// List of account linking requests. TYPESTRING.INCLUDE=['id','status','provider','email'] GQL.EXCLUDE=['user']
+  accountLinkingRequests AccountLinkingRequest[]
+
   @@map(name: "users")
+}
+
+// Store linked authentication providers for users
+model LinkedProvider {
+  /// Unique identifier for the linked provider. TYPESTRING.SKIP=true
+  id                String        @id @default(uuid()) @db.Uuid
+  
+  /// Reference to the user who owns this linked provider. TYPESTRING.SKIP=true
+  userId            String        @db.Uuid
+  
+  /// The authentication provider type.
+  provider          AuthProvider
+  
+  /// The unique account ID from the provider.
+  providerAccountId String
+  
+  /// Email associated with this provider (optional).
+  email             String?
+  
+  /// Encrypted OAuth access token (optional). TYPESTRING.SKIP=true
+  accessToken       String?
+  
+  /// Encrypted OAuth refresh token (optional). TYPESTRING.SKIP=true
+  refreshToken      String?
+  
+  /// Token expiration date and time (optional).
+  expiresAt         DateTime?
+  
+  /// Timestamp when the provider was linked. TYPESTRING.SKIP=true
+  linkedAt          DateTime      @default(now())
+  
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt         DateTime      @updatedAt
+  
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['linkedProviders']
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  /// Unique constraints
+  @@unique([provider, providerAccountId])
+  @@unique([userId, provider])
+  
+  /// Indexes for performance
+  @@index([userId])
+  @@index([email])
+  
+  @@map(name: "linked_providers")
+}
+
+// Track account linking requests for security
+model AccountLinkingRequest {
+  /// Unique identifier for the account linking request. TYPESTRING.SKIP=true
+  id                  String                  @id @default(uuid()) @db.Uuid
+  
+  /// Reference to the existing user to link to. TYPESTRING.SKIP=true
+  userId              String                  @db.Uuid
+  
+  /// Email to verify for the linking request.
+  email               String
+  
+  /// Provider being linked.
+  provider            AuthProvider
+  
+  /// Provider's account ID.
+  providerAccountId   String
+  
+  /// Current status of the linking request.
+  status              AccountLinkingStatus    @default(PENDING)
+  
+  /// Token sent in email for verification (must be unique). TYPESTRING.SKIP=true
+  verificationToken   String?                 @unique
+  
+  /// User agent for security tracking (optional).
+  userAgent           String?
+  
+  /// IP address for rate limiting (optional).
+  ipAddress           String?
+  
+  /// Timestamp when the request was created. TYPESTRING.SKIP=true
+  createdAt           DateTime                @default(now())
+  
+  /// When this request expires.
+  expiresAt           DateTime
+  
+  /// When email was verified (optional).
+  verifiedAt          DateTime?
+  
+  /// When user gave consent (optional).
+  approvedAt          DateTime?
+  
+  /// When user rejected (optional).
+  rejectedAt          DateTime?
+  
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['accountLinkingRequests']
+  user                User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  /// Indexes for performance and rate limiting
+  @@index([userId])
+  @@index([email])
+  @@index([status])
+  @@index([verificationToken])
+  @@index([expiresAt])
+  @@index([ipAddress, createdAt])
+  @@index([email, createdAt])
+  
+  @@map(name: "account_linking_requests")
 }
 
 // Represents an Alpaca trading account linked to a user.
