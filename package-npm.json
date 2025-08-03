@@ -10,8 +10,8 @@
     "build": "tsc --declaration --emitDeclarationOnly"
   },
   "keywords": [],
-  "author": "Mehran",
-  "license": "ISC",
+  "author": "Adaptic Team",
+  "license": "MIT",
   "files": [
     "package.json",
     "README.md",

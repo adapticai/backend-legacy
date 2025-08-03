@@ -32,8 +32,8 @@
     "prepare-package-folder": "node prepare-package.mjs"
   },
   "keywords": [],
-  "author": "Mehran",
-  "license": "ISC",
+  "author": "Adaptic Team",
+  "license": "MIT",
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.17",
