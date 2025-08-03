@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from '@apollo/server/express4';
+import { expressMiddleware } from '@as-integrations/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { buildSchema } from 'type-graphql';
 import { resolvers } from './generated/typegraphql-prisma';
@@ -135,8 +135,8 @@ const startServer = async () => {
     '/graphql',
     cors<Request>(),
     bodyParser.json(),
-    expressMiddleware(server as any, {
-      context: async ({ req }) => {
+    expressMiddleware(server, {
+      context: async ({ req }: { req: Request }) => {
         // Ensure we're using the global prisma instance and never disconnecting it between requests
         if (!global.prisma) {
           console.warn('Prisma client not found in global scope, reinitializing');
