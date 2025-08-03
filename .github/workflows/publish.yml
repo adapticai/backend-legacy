@@ -146,7 +146,7 @@ jobs:
         run: |
           # Ensure temporary files are removed
           rm -f ../npm_package_files.txt ../local_dist_files.txt diff.txt
-          npm publish
+          npm publish --access public
 
       - name: Remove dist/package.json after publish and push changes
         if: steps.should_publish.outputs.should_publish == 'true'
