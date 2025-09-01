@@ -2723,3 +2723,74 @@ model FeatureImportanceAnalysis {
   @@index([analysisMetadataAnalysisDate])
   @@map("feature_importance_analyses")
 }
+
+/// Enum for account linking request status
+enum LinkingStatus {
+  /// Request has been created but not yet verified
+  PENDING
+  /// Verification email has been sent
+  EMAIL_SENT
+  /// Email has been verified by the user
+  VERIFIED
+  /// Account linking has been approved and completed
+  APPROVED
+  /// Request was rejected or cancelled
+  REJECTED
+  /// Request has expired
+  EXPIRED
+}
+
+/// Account linking requests for securely linking OAuth providers to existing accounts
+model AccountLinkingRequest {
+  /// Unique identifier for the linking request. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+  
+  /// The user this linking request belongs to
+  userId String @db.Uuid
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  /// Email address being linked
+  email String
+  
+  /// OAuth provider name (e.g., 'google', 'github')
+  provider String
+  
+  /// Provider account ID
+  providerAccountId String
+  
+  /// Current status of the linking request
+  status LinkingStatus @default(PENDING)
+  
+  /// Verification token for email verification
+  verificationToken String? @unique
+  
+  /// User agent of the request
+  userAgent String?
+  
+  /// IP address of the request
+  ipAddress String?
+  
+  /// Timestamp when the request was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+  
+  /// Timestamp when the request expires. TYPESTRING.SKIP=true
+  expiresAt DateTime
+  
+  /// Timestamp when the email was verified. TYPESTRING.SKIP=true
+  verifiedAt DateTime?
+  
+  /// Timestamp when the request was approved. TYPESTRING.SKIP=true
+  approvedAt DateTime?
+  
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+  
+  /// Indexes for performance
+  @@index([userId])
+  @@index([email])
+  @@index([provider])
+  @@index([status])
+  @@index([verificationToken])
+  @@index([expiresAt])
+  @@map("account_linking_requests")
+}
