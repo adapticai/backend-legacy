@@ -201,7 +201,9 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
       link: errorLink.concat(authLink.concat(httpLinkInstance)),
       cache: new InMemoryCache(),
       defaultOptions,
-      connectToDevTools: process.env.NODE_ENV !== 'production',
+      devtools: {
+        enabled: process.env.NODE_ENV !== 'production',
+      },
     });
 
     // Wrap the client's query and mutate methods to use our connection pool
