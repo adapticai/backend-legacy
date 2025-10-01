@@ -1,6 +1,6 @@
 {
   "name": "@adaptic/backend-legacy",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A scalable backend solution using Prisma, Apollo Server, and TypeGraphQL, featuring GraphQL and RESTful APIs with real-time subscriptions and robust authentication.",
   "main": "dist/server.js",
   "types": "dist/index.d.ts",
