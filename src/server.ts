@@ -1,4 +1,6 @@
 import 'reflect-metadata';
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express4';
@@ -14,8 +16,6 @@ import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import prisma from './prismaClient';
 import { exec } from 'child_process';
-import dotenv from 'dotenv';
-dotenv.config();
 
 import { Request } from 'express';
 
