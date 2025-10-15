@@ -199,9 +199,7 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
     // Initialize the Apollo Client with our custom settings
     apolloClient = new ApolloClient({
       link: errorLink.concat(authLink.concat(httpLinkInstance)),
-      cache: new InMemoryCache({
-        canonizeResults: false,
-      }),
+      cache: new InMemoryCache(),
       defaultOptions,
       devtools: {
         enabled: process.env.NODE_ENV !== 'production',
