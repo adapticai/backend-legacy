@@ -197,9 +197,13 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
     };
 
     // Initialize the Apollo Client with our custom settings
+    // Note: Explicitly avoid canonizeResults (deprecated in Apollo Client 3.14+)
     apolloClient = new ApolloClient({
       link: errorLink.concat(authLink.concat(httpLinkInstance)),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        // Explicitly set type policies without deprecated options
+        typePolicies: {}
+      }),
       defaultOptions,
       devtools: {
         enabled: process.env.NODE_ENV !== 'production',
