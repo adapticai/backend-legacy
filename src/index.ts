@@ -49,6 +49,10 @@ import { ModelVersion } from './ModelVersion';
 import { ModelVersionArtifact } from './ModelVersionArtifact';
 import { NewsArticle } from './NewsArticle';
 import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
+import { OptionsContract } from './OptionsContract';
+import { OptionsGreeksHistory } from './OptionsGreeksHistory';
+import { OptionsPosition } from './OptionsPosition';
+import { OptionsTradeExecution } from './OptionsTradeExecution';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
 import { SystemAlert } from './SystemAlert';
@@ -87,6 +91,10 @@ const adaptic = {
   modelVersionArtifact: ModelVersionArtifact,
   newsArticle: NewsArticle,
   newsArticleAssetSentiment: NewsArticleAssetSentiment,
+  optionsContract: OptionsContract,
+  optionsGreeksHistory: OptionsGreeksHistory,
+  optionsPosition: OptionsPosition,
+  optionsTradeExecution: OptionsTradeExecution,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
   systemAlert: SystemAlert,
