@@ -7,6 +7,7 @@ import { expressMiddleware } from '@as-integrations/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { buildSchema } from 'type-graphql';
 import { resolvers } from './generated/typegraphql-prisma';
+import { OptionsGreeksHistoryCustomResolver } from './resolvers/custom';
 import { createServer } from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -60,7 +61,7 @@ async function restartDatabase() {
 
 const startServer = async () => {
   const schema = await buildSchema({
-    resolvers,
+    resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
     validate: false,
   });
 

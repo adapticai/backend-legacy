@@ -32,6 +32,9 @@ export type * as types from './generated/typegraphql-prisma/models/index.d.ts';
 export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 export * from './generated/typeStrings/index';
 
+// Export custom resolvers
+export * from './resolvers/custom';
+
 // Re-export Apollo Client functions from client.ts
 export {
   getApolloClient,

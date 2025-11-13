@@ -2939,8 +2939,8 @@ model OptionsPosition {
   currentDelta Decimal? @db.Decimal(8, 6)
   currentGamma Decimal? @db.Decimal(8, 6)
   currentTheta Decimal? @db.Decimal(8, 6)
-  currentVega Decimal? @db.Decimal(8, 6)
-  currentRho Decimal? @db.Decimal(8, 6)
+  currentVega  Decimal? @db.Decimal(8, 6)
+  currentRho   Decimal? @db.Decimal(8, 6)
 
   /// Current implied volatility
   currentImpliedVolatility Decimal? @db.Decimal(8, 6)
@@ -3050,6 +3050,84 @@ model OptionsGreeksHistory {
   @@map("options_greeks_history")
 }
 
+// Portfolio-level Greeks tracking for multi-position analysis
+model PortfolioGreeksHistory {
+  /// Unique identifier for the portfolio Greeks history record
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Account identifier for multi-account support
+  accountId String @db.Uuid
+
+  /// Timestamp of the Greeks snapshot
+  timestamp DateTime
+
+  // Individual contract data (when contractId is provided)
+  /// Optional reference to specific contract
+  contractId String? @db.Uuid
+
+  /// Option contract symbol (if contract-specific)
+  symbol String?
+
+  /// Underlying asset symbol
+  underlying String
+
+  /// Individual Greeks for contract or position
+  delta Decimal @db.Decimal(8, 6)
+  gamma Decimal @db.Decimal(8, 6)
+  theta Decimal @db.Decimal(8, 6)
+  vega  Decimal @db.Decimal(8, 6)
+  rho   Decimal @db.Decimal(8, 6)
+
+  // Portfolio-level aggregates
+  /// Total portfolio delta exposure
+  totalDelta Decimal? @db.Decimal(10, 6)
+
+  /// Total portfolio gamma exposure
+  totalGamma Decimal? @db.Decimal(10, 6)
+
+  /// Total portfolio theta exposure
+  totalTheta Decimal? @db.Decimal(10, 6)
+
+  /// Total portfolio vega exposure
+  totalVega Decimal? @db.Decimal(10, 6)
+
+  /// Total portfolio rho exposure
+  totalRho Decimal? @db.Decimal(10, 6)
+
+  // Portfolio metadata
+  /// Number of positions in portfolio
+  positionCount Int?
+
+  /// List of underlying symbols in portfolio
+  underlyingSymbols Json?
+
+  /// List of expiration dates in portfolio
+  expirationDates Json?
+
+  // Market context
+  /// Whether recorded during market hours
+  marketHours Boolean?
+
+  /// VIX level at timestamp
+  vix Decimal? @db.Decimal(8, 4)
+
+  /// SPY price at timestamp
+  spyPrice Decimal? @db.Decimal(10, 4)
+
+  // Data provenance
+  /// Data source identifier
+  source String?
+
+  /// Record creation timestamp
+  createdAt DateTime @default(now())
+
+  @@unique([accountId, timestamp, contractId])
+  @@index([accountId, timestamp])
+  @@index([timestamp])
+  @@index([underlying])
+  @@map("portfolio_greeks_history")
+}
+
 // Stores individual options trade execution details
 model OptionsTradeExecution {
   /// Unique identifier for the trade execution. TYPESTRING.SKIP=true
@@ -3098,8 +3176,8 @@ model OptionsTradeExecution {
   deltaAtExecution Decimal? @db.Decimal(8, 6)
   gammaAtExecution Decimal? @db.Decimal(8, 6)
   thetaAtExecution Decimal? @db.Decimal(8, 6)
-  vegaAtExecution Decimal? @db.Decimal(8, 6)
-  rhoAtExecution Decimal? @db.Decimal(8, 6)
+  vegaAtExecution  Decimal? @db.Decimal(8, 6)
+  rhoAtExecution   Decimal? @db.Decimal(8, 6)
 
   /// Implied volatility at execution
   impliedVolatilityAtExecution Decimal? @db.Decimal(8, 6)

@@ -3,6 +3,9 @@ export type * as types from './generated/typegraphql-prisma/models/index.d.ts';
 export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 export * from './generated/typeStrings/index';
 
+// Export custom resolvers
+export * from './resolvers/custom';
+
 // Re-export Apollo Client functions from client.ts
 export {
   getApolloClient,
@@ -53,6 +56,7 @@ import { OptionsContract } from './OptionsContract';
 import { OptionsGreeksHistory } from './OptionsGreeksHistory';
 import { OptionsPosition } from './OptionsPosition';
 import { OptionsTradeExecution } from './OptionsTradeExecution';
+import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
 import { SystemAlert } from './SystemAlert';
@@ -95,6 +99,7 @@ const adaptic = {
   optionsGreeksHistory: OptionsGreeksHistory,
   optionsPosition: OptionsPosition,
   optionsTradeExecution: OptionsTradeExecution,
+  portfolioGreeksHistory: PortfolioGreeksHistory,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
   systemAlert: SystemAlert,
