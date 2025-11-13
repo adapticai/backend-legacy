@@ -2726,3 +2726,419 @@ model FeatureImportanceAnalysis {
   @@index([analysisMetadataAnalysisDate])
   @@map("feature_importance_analyses")
 }
+
+// Enums for options trading
+enum OptionType {
+  /// Call option - right to buy
+  CALL
+
+  /// Put option - right to sell
+  PUT
+}
+
+enum OptionPositionStatus {
+  /// Position is currently open
+  OPEN
+
+  /// Position has been closed
+  CLOSED
+
+  /// Position expired worthless
+  EXPIRED
+
+  /// Position was assigned/exercised
+  ASSIGNED
+}
+
+enum OptionExecutionSide {
+  /// Buying to open a position
+  BUY_TO_OPEN
+
+  /// Selling to close a position
+  SELL_TO_CLOSE
+
+  /// Selling to open a position (writing)
+  SELL_TO_OPEN
+
+  /// Buying to close a position
+  BUY_TO_CLOSE
+}
+
+// Stores options contract details and chain data
+model OptionsContract {
+  /// Unique identifier for the options contract. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Underlying asset symbol
+  symbol String
+
+  /// Contract symbol (OCC format)
+  contractSymbol String @unique
+
+  /// Option type (CALL or PUT)
+  optionType OptionType
+
+  /// Strike price of the option
+  strikePrice Decimal @db.Decimal(10, 2)
+
+  /// Expiration date of the option
+  expirationDate DateTime
+
+  /// Days to expiration
+  daysToExpiration Int?
+
+  /// Last traded price
+  lastPrice Decimal? @db.Decimal(10, 4)
+
+  /// Bid price
+  bidPrice Decimal? @db.Decimal(10, 4)
+
+  /// Ask price
+  askPrice Decimal? @db.Decimal(10, 4)
+
+  /// Mid price (average of bid and ask)
+  midPrice Decimal? @db.Decimal(10, 4)
+
+  /// Bid size
+  bidSize Int?
+
+  /// Ask size
+  askSize Int?
+
+  /// Trading volume for the contract
+  volume Int?
+
+  /// Open interest
+  openInterest Int?
+
+  /// Implied volatility
+  impliedVolatility Decimal? @db.Decimal(8, 6)
+
+  /// Delta Greek
+  delta Decimal? @db.Decimal(8, 6)
+
+  /// Gamma Greek
+  gamma Decimal? @db.Decimal(8, 6)
+
+  /// Theta Greek
+  theta Decimal? @db.Decimal(8, 6)
+
+  /// Vega Greek
+  vega Decimal? @db.Decimal(8, 6)
+
+  /// Rho Greek
+  rho Decimal? @db.Decimal(8, 6)
+
+  /// Whether the option is in the money
+  inTheMoney Boolean?
+
+  /// Intrinsic value of the option
+  intrinsicValue Decimal? @db.Decimal(10, 4)
+
+  /// Extrinsic (time) value of the option
+  extrinsicValue Decimal? @db.Decimal(10, 4)
+
+  /// Theoretical price from pricing model
+  theoreticalPrice Decimal? @db.Decimal(10, 4)
+
+  /// Underlying asset price at time of data capture
+  underlyingPrice Decimal? @db.Decimal(10, 4)
+
+  /// Additional metadata as JSON
+  metadata Json?
+
+  /// Timestamp when the contract data was captured
+  dataTimestamp DateTime @default(now())
+
+  /// Timestamp when the contract record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the contract record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// List of positions using this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract']
+  positions OptionsPosition[]
+
+  /// List of Greeks history records for this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract']
+  greeksHistory OptionsGreeksHistory[]
+
+  /// List of trade executions for this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract']
+  executions OptionsTradeExecution[]
+
+  /// Indexes for performance optimization
+  @@index([symbol, expirationDate])
+  @@index([expirationDate])
+  @@index([symbol, optionType, strikePrice, expirationDate])
+  @@index([dataTimestamp])
+  @@map("options_contracts")
+}
+
+// Tracks open and closed options positions
+model OptionsPosition {
+  /// Unique identifier for the options position. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the Alpaca account
+  alpacaAccountId String @db.Uuid
+
+  /// Reference to the options contract
+  contractId String @db.Uuid
+
+  /// Relation to OptionsContract. TYPESTRING.INCLUDE=['contractSymbol','symbol','optionType','strikePrice','expirationDate'] GQL.EXCLUDE=['positions']
+  contract OptionsContract @relation(fields: [contractId], references: [id])
+
+  /// Position status
+  status OptionPositionStatus @default(OPEN)
+
+  /// Execution side for opening the position
+  openingSide OptionExecutionSide
+
+  /// Number of contracts in the position
+  quantity Int
+
+  /// Average entry price per contract
+  entryPrice Decimal @db.Decimal(10, 4)
+
+  /// Total entry cost (quantity * entryPrice * 100)
+  entryCost Decimal @db.Decimal(12, 2)
+
+  /// Timestamp when position was opened
+  entryTime DateTime
+
+  /// Exit price per contract (null if still open)
+  exitPrice Decimal? @db.Decimal(10, 4)
+
+  /// Total exit value (quantity * exitPrice * 100)
+  exitValue Decimal? @db.Decimal(12, 2)
+
+  /// Timestamp when position was closed (null if still open)
+  exitTime DateTime?
+
+  /// Current market price (for open positions)
+  currentPrice Decimal? @db.Decimal(10, 4)
+
+  /// Current position value
+  currentValue Decimal? @db.Decimal(12, 2)
+
+  /// Unrealized P&L (for open positions)
+  unrealizedPnL Decimal? @db.Decimal(12, 2)
+
+  /// Unrealized P&L percentage
+  unrealizedPnLPercent Decimal? @db.Decimal(8, 4)
+
+  /// Realized P&L (for closed positions)
+  realizedPnL Decimal? @db.Decimal(12, 2)
+
+  /// Realized P&L percentage
+  realizedPnLPercent Decimal? @db.Decimal(8, 4)
+
+  /// Total fees and commissions paid
+  totalFees Decimal @default(0) @db.Decimal(10, 2)
+
+  /// Current Greeks for the position (snapshot)
+  currentDelta Decimal? @db.Decimal(8, 6)
+  currentGamma Decimal? @db.Decimal(8, 6)
+  currentTheta Decimal? @db.Decimal(8, 6)
+  currentVega Decimal? @db.Decimal(8, 6)
+  currentRho Decimal? @db.Decimal(8, 6)
+
+  /// Current implied volatility
+  currentImpliedVolatility Decimal? @db.Decimal(8, 6)
+
+  /// Days held (calculated)
+  daysHeld Int?
+
+  /// Exit reason or notes
+  exitReason String?
+
+  /// Strategy type (e.g., "covered_call", "protective_put", "vertical_spread")
+  strategyType String?
+
+  /// Reference to parent trade if linked
+  tradeId String? @db.Uuid
+
+  /// Additional metadata as JSON
+  metadata Json?
+
+  /// Timestamp when the position record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the position record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// List of trade executions for this position. TYPESTRING.SKIP=true GQL.EXCLUDE=['position']
+  executions OptionsTradeExecution[]
+
+  /// Indexes for performance optimization
+  @@index([alpacaAccountId, status])
+  @@index([contractId])
+  @@index([status])
+  @@index([entryTime])
+  @@index([tradeId])
+  @@map("options_positions")
+}
+
+// Time-series Greeks data for options contracts
+model OptionsGreeksHistory {
+  /// Unique identifier for the Greeks history record. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the options contract
+  contractId String @db.Uuid
+
+  /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['greeksHistory']
+  contract OptionsContract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  /// Timestamp of the Greeks snapshot
+  timestamp DateTime
+
+  /// Underlying asset price at this timestamp
+  underlyingPrice Decimal @db.Decimal(10, 4)
+
+  /// Option price at this timestamp
+  optionPrice Decimal @db.Decimal(10, 4)
+
+  /// Bid price
+  bidPrice Decimal? @db.Decimal(10, 4)
+
+  /// Ask price
+  askPrice Decimal? @db.Decimal(10, 4)
+
+  /// Implied volatility
+  impliedVolatility Decimal @db.Decimal(8, 6)
+
+  /// Delta Greek
+  delta Decimal @db.Decimal(8, 6)
+
+  /// Gamma Greek
+  gamma Decimal @db.Decimal(8, 6)
+
+  /// Theta Greek
+  theta Decimal @db.Decimal(8, 6)
+
+  /// Vega Greek
+  vega Decimal @db.Decimal(8, 6)
+
+  /// Rho Greek
+  rho Decimal @db.Decimal(8, 6)
+
+  /// Trading volume
+  volume Int?
+
+  /// Open interest
+  openInterest Int?
+
+  /// Days to expiration at this timestamp
+  daysToExpiration Int
+
+  /// Intrinsic value
+  intrinsicValue Decimal @db.Decimal(10, 4)
+
+  /// Extrinsic value
+  extrinsicValue Decimal @db.Decimal(10, 4)
+
+  /// Additional metadata as JSON
+  metadata Json?
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Indexes for performance optimization
+  @@unique([contractId, timestamp])
+  @@index([contractId, timestamp])
+  @@index([timestamp])
+  @@map("options_greeks_history")
+}
+
+// Stores individual options trade execution details
+model OptionsTradeExecution {
+  /// Unique identifier for the trade execution. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the options position
+  positionId String @db.Uuid
+
+  /// Relation to OptionsPosition. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions']
+  position OptionsPosition @relation(fields: [positionId], references: [id])
+
+  /// Reference to the options contract
+  contractId String @db.Uuid
+
+  /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions']
+  contract OptionsContract @relation(fields: [contractId], references: [id])
+
+  /// Reference to the Alpaca account
+  alpacaAccountId String @db.Uuid
+
+  /// Broker order ID
+  brokerOrderId String?
+
+  /// Execution side (BUY_TO_OPEN, SELL_TO_CLOSE, etc.)
+  executionSide OptionExecutionSide
+
+  /// Number of contracts executed
+  quantity Int
+
+  /// Execution price per contract
+  executionPrice Decimal @db.Decimal(10, 4)
+
+  /// Total execution value (quantity * executionPrice * 100)
+  executionValue Decimal @db.Decimal(12, 2)
+
+  /// Fees and commissions for this execution
+  fees Decimal @default(0) @db.Decimal(10, 2)
+
+  /// Timestamp of the execution
+  executionTime DateTime
+
+  /// Underlying price at execution time
+  underlyingPriceAtExecution Decimal? @db.Decimal(10, 4)
+
+  /// Greeks at execution time
+  deltaAtExecution Decimal? @db.Decimal(8, 6)
+  gammaAtExecution Decimal? @db.Decimal(8, 6)
+  thetaAtExecution Decimal? @db.Decimal(8, 6)
+  vegaAtExecution Decimal? @db.Decimal(8, 6)
+  rhoAtExecution Decimal? @db.Decimal(8, 6)
+
+  /// Implied volatility at execution
+  impliedVolatilityAtExecution Decimal? @db.Decimal(8, 6)
+
+  /// Order type (MARKET, LIMIT, STOP, etc.)
+  orderType String?
+
+  /// Limit price if limit order
+  limitPrice Decimal? @db.Decimal(10, 4)
+
+  /// Stop price if stop order
+  stopPrice Decimal? @db.Decimal(10, 4)
+
+  /// Time in force (DAY, GTC, etc.)
+  timeInForce String?
+
+  /// Execution venue
+  venue String?
+
+  /// Slippage amount (difference from expected price)
+  slippage Decimal? @db.Decimal(10, 4)
+
+  /// Execution notes or comments
+  notes String?
+
+  /// Additional metadata as JSON
+  metadata Json?
+
+  /// Timestamp when the execution record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the execution record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Indexes for performance optimization
+  @@index([positionId])
+  @@index([contractId])
+  @@index([alpacaAccountId, executionTime])
+  @@index([executionTime])
+  @@index([brokerOrderId])
+  @@map("options_trade_executions")
+}
