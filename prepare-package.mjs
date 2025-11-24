@@ -356,6 +356,12 @@ try {
       'export * from "./generated/typeStrings/index.mjs";'
     );
 
+    // Fix directory import for resolvers/custom to include /index.mjs
+    content = content.replace(
+      /export\s+\*\s+from\s+(['"])\.\/resolvers\/custom\1;/g,
+      'export * from "./resolvers/custom/index.mjs";'
+    );
+
     fs.writeFileSync(indexMjsPath, content, 'utf8');
     console.log('Updated imports in esm/index.mjs');
   } else {
