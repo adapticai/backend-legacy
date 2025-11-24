@@ -4,7 +4,7 @@ export type * as enums from './generated/typegraphql-prisma/enums/index.d.ts';
 export * from './generated/typeStrings/index';
 
 // Export custom resolvers
-export * from './resolvers/custom';
+export * from './resolvers/custom/index';
 
 // Re-export Apollo Client functions from client.ts
 export {
