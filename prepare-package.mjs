@@ -362,6 +362,12 @@ try {
       'export * from "./resolvers/custom/index.mjs";'
     );
 
+    // Also fix if it already has /index but missing .mjs
+    content = content.replace(
+      /export\s+\*\s+from\s+(['"])\.\/resolvers\/custom\/index\1;/g,
+      'export * from "./resolvers/custom/index.mjs";'
+    );
+
     fs.writeFileSync(indexMjsPath, content, 'utf8');
     console.log('Updated imports in esm/index.mjs');
   } else {
