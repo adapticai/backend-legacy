@@ -356,6 +356,12 @@ try {
       'export * from "./generated/typeStrings/index.mjs";'
     );
 
+    // Update the enums import in index.mjs (export * as enums from ...)
+    content = content.replace(
+      /export\s+\*\s+as\s+enums\s+from\s+(['"])\.\/generated\/typegraphql-prisma\/enums\/index\1;/g,
+      'export * as enums from "./generated/typegraphql-prisma/enums/index.mjs";'
+    );
+
     // Fix directory import for resolvers/custom to include /index.mjs
     content = content.replace(
       /export\s+\*\s+from\s+(['"])\.\/resolvers\/custom\1;/g,
@@ -394,11 +400,26 @@ try {
       console.error(`Error reading file ${file}:`, err);
       return;
     }
-    // Update relative imports to include the .mjs extension
-    const updatedContent = content.replace(
-      /import\s+((?:\*\s+as\s+\w+)|(?:\{[^}]+\})|(?:\w+))\s+from\s+(['"])\.\/([^'"]+)(?!\.[^'"]+)\2;/g,
-      (match, p1, p2, p3) => `import ${p1} from ${p2}./${p3}.mjs${p2};`
+    // Update relative imports to include the .mjs extension (only if not already ending with .mjs)
+    let updatedContent = content.replace(
+      /import\s+((?:\*\s+as\s+\w+)|(?:\{[^}]+\})|(?:\w+))\s+from\s+(['"])\.\/([^'"]+)\2;/g,
+      (match, p1, p2, p3) => {
+        // Skip if already has .mjs extension
+        if (p3.endsWith('.mjs')) return match;
+        return `import ${p1} from ${p2}./${p3}.mjs${p2};`;
+      }
     );
+
+    // Update relative re-exports to include the .mjs extension (export { X } from './Y')
+    updatedContent = updatedContent.replace(
+      /export\s+\{\s*([^}]+)\s*\}\s+from\s+(['"])\.\/([^'"]+)\2;/g,
+      (match, p1, p2, p3) => {
+        // Skip if already has .mjs extension
+        if (p3.endsWith('.mjs')) return match;
+        return `export { ${p1} } from ${p2}./${p3}.mjs${p2};`;
+      }
+    );
+
     fs.writeFileSync(file, updatedContent, 'utf8');
     console.log(`Updated relative imports in ${file}`);
   });
