@@ -201,11 +201,9 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
     apolloClient = new ApolloClient({
       link: errorLink.concat(authLink.concat(httpLinkInstance)),
       cache: new InMemoryCache({
-        // Explicitly configure cache to avoid deprecated options
-        // Apollo Client 3.14+ requires explicit configuration to suppress warnings
+        // Apollo Client 3.14+ deprecates addTypename option
+        // __typename is added automatically by default, no need to specify
         typePolicies: {},
-        // Ensure no deprecated options are set
-        addTypename: true,
       }),
       defaultOptions,
       devtools: {
