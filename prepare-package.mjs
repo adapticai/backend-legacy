@@ -401,22 +401,24 @@ try {
       return;
     }
     // Update relative imports to include the .mjs extension (only if not already ending with .mjs)
+    // Matches both ./ and ../ patterns (any number of ../)
     let updatedContent = content.replace(
-      /import\s+((?:\*\s+as\s+\w+)|(?:\{[^}]+\})|(?:\w+))\s+from\s+(['"])\.\/([^'"]+)\2;/g,
+      /import\s+((?:\*\s+as\s+\w+)|(?:\{[^}]+\})|(?:\w+))\s+from\s+(['"])(\.\.?\/[^'"]+)\2;/g,
       (match, p1, p2, p3) => {
         // Skip if already has .mjs extension
         if (p3.endsWith('.mjs')) return match;
-        return `import ${p1} from ${p2}./${p3}.mjs${p2};`;
+        return `import ${p1} from ${p2}${p3}.mjs${p2};`;
       }
     );
 
     // Update relative re-exports to include the .mjs extension (export { X } from './Y')
+    // Matches both ./ and ../ patterns (any number of ../)
     updatedContent = updatedContent.replace(
-      /export\s+\{\s*([^}]+)\s*\}\s+from\s+(['"])\.\/([^'"]+)\2;/g,
+      /export\s+\{\s*([^}]+)\s*\}\s+from\s+(['"])(\.\.?\/[^'"]+)\2;/g,
       (match, p1, p2, p3) => {
         // Skip if already has .mjs extension
         if (p3.endsWith('.mjs')) return match;
-        return `export { ${p1} } from ${p2}./${p3}.mjs${p2};`;
+        return `export { ${p1} } from ${p2}${p3}.mjs${p2};`;
       }
     );
 
