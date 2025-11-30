@@ -23,10 +23,14 @@ import { removeUndefinedProps } from './utils';
   tradeAllocationPct
   allocation {
     id
-    stocks
-    crypto
-    options
+    equities
+    optionsContracts
+    futures
     etfs
+    forex
+    crypto
+    stocks
+    options
     alpacaAccountId
     alpacaAccount {
 id
@@ -34,6 +38,7 @@ id
     createdAt
     updatedAt
   }
+  autoAllocation
   minPercentageChange
   volumeThreshold
   enablePortfolioTrailingStop
@@ -162,6 +167,7 @@ id
   } : undefined,
   cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? props.cryptoTradeAllocationPct : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? props.tradeAllocationPct : undefined,
+  autoAllocation: props.autoAllocation !== undefined ? props.autoAllocation : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
   enablePortfolioTrailingStop: props.enablePortfolioTrailingStop !== undefined ? props.enablePortfolioTrailingStop : undefined,
@@ -186,10 +192,14 @@ id
         alpacaAccountId: props.allocation.alpacaAccountId !== undefined ? props.allocation.alpacaAccountId : undefined,
       },
       create: {
-        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
-        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
-        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
+        equities: props.allocation.equities !== undefined ? props.allocation.equities : undefined,
+        optionsContracts: props.allocation.optionsContracts !== undefined ? props.allocation.optionsContracts : undefined,
+        futures: props.allocation.futures !== undefined ? props.allocation.futures : undefined,
         etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+        forex: props.allocation.forex !== undefined ? props.allocation.forex : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
       },
     }
   } : undefined,
@@ -499,6 +509,7 @@ id
   } : undefined,
   cryptoTradeAllocationPct: prop.cryptoTradeAllocationPct !== undefined ? prop.cryptoTradeAllocationPct : undefined,
   tradeAllocationPct: prop.tradeAllocationPct !== undefined ? prop.tradeAllocationPct : undefined,
+  autoAllocation: prop.autoAllocation !== undefined ? prop.autoAllocation : undefined,
   minPercentageChange: prop.minPercentageChange !== undefined ? prop.minPercentageChange : undefined,
   volumeThreshold: prop.volumeThreshold !== undefined ? prop.volumeThreshold : undefined,
   enablePortfolioTrailingStop: prop.enablePortfolioTrailingStop !== undefined ? prop.enablePortfolioTrailingStop : undefined,
@@ -632,6 +643,9 @@ id
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
             set: props.tradeAllocationPct 
            } : undefined,
+  autoAllocation: props.autoAllocation !== undefined ? {
+            set: props.autoAllocation 
+           } : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? {
             set: props.minPercentageChange 
            } : undefined,
@@ -693,24 +707,40 @@ id
         id: props.allocation.id !== undefined ? {
             set: props.allocation.id
           } : undefined,
-        stocks: props.allocation.stocks !== undefined ? {
-            set: props.allocation.stocks
+        equities: props.allocation.equities !== undefined ? {
+            set: props.allocation.equities
           } : undefined,
-        crypto: props.allocation.crypto !== undefined ? {
-            set: props.allocation.crypto
+        optionsContracts: props.allocation.optionsContracts !== undefined ? {
+            set: props.allocation.optionsContracts
           } : undefined,
-        options: props.allocation.options !== undefined ? {
-            set: props.allocation.options
+        futures: props.allocation.futures !== undefined ? {
+            set: props.allocation.futures
           } : undefined,
         etfs: props.allocation.etfs !== undefined ? {
             set: props.allocation.etfs
           } : undefined,
+        forex: props.allocation.forex !== undefined ? {
+            set: props.allocation.forex
+          } : undefined,
+        crypto: props.allocation.crypto !== undefined ? {
+            set: props.allocation.crypto
+          } : undefined,
+        stocks: props.allocation.stocks !== undefined ? {
+            set: props.allocation.stocks
+          } : undefined,
+        options: props.allocation.options !== undefined ? {
+            set: props.allocation.options
+          } : undefined,
       },
       create: {
-        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
-        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
-        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
+        equities: props.allocation.equities !== undefined ? props.allocation.equities : undefined,
+        optionsContracts: props.allocation.optionsContracts !== undefined ? props.allocation.optionsContracts : undefined,
+        futures: props.allocation.futures !== undefined ? props.allocation.futures : undefined,
         etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+        forex: props.allocation.forex !== undefined ? props.allocation.forex : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
       },
     }
   } : undefined,
@@ -1394,6 +1424,7 @@ id
   } : undefined,
   cryptoTradeAllocationPct: props.cryptoTradeAllocationPct !== undefined ? props.cryptoTradeAllocationPct : undefined,
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? props.tradeAllocationPct : undefined,
+  autoAllocation: props.autoAllocation !== undefined ? props.autoAllocation : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? props.minPercentageChange : undefined,
   volumeThreshold: props.volumeThreshold !== undefined ? props.volumeThreshold : undefined,
   enablePortfolioTrailingStop: props.enablePortfolioTrailingStop !== undefined ? props.enablePortfolioTrailingStop : undefined,
@@ -1418,10 +1449,14 @@ id
         alpacaAccountId: props.allocation.alpacaAccountId !== undefined ? props.allocation.alpacaAccountId : undefined,
       },
       create: {
-        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
-        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
-        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
+        equities: props.allocation.equities !== undefined ? props.allocation.equities : undefined,
+        optionsContracts: props.allocation.optionsContracts !== undefined ? props.allocation.optionsContracts : undefined,
+        futures: props.allocation.futures !== undefined ? props.allocation.futures : undefined,
         etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+        forex: props.allocation.forex !== undefined ? props.allocation.forex : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
       },
     }
   } : undefined,
@@ -1669,6 +1704,9 @@ id
   tradeAllocationPct: props.tradeAllocationPct !== undefined ? {
             set: props.tradeAllocationPct 
            } : undefined,
+  autoAllocation: props.autoAllocation !== undefined ? {
+            set: props.autoAllocation 
+           } : undefined,
   minPercentageChange: props.minPercentageChange !== undefined ? {
             set: props.minPercentageChange 
            } : undefined,
@@ -1724,24 +1762,40 @@ id
         id: props.allocation.id !== undefined ? {
             set: props.allocation.id
           } : undefined,
-        stocks: props.allocation.stocks !== undefined ? {
-            set: props.allocation.stocks
+        equities: props.allocation.equities !== undefined ? {
+            set: props.allocation.equities
           } : undefined,
-        crypto: props.allocation.crypto !== undefined ? {
-            set: props.allocation.crypto
+        optionsContracts: props.allocation.optionsContracts !== undefined ? {
+            set: props.allocation.optionsContracts
           } : undefined,
-        options: props.allocation.options !== undefined ? {
-            set: props.allocation.options
+        futures: props.allocation.futures !== undefined ? {
+            set: props.allocation.futures
           } : undefined,
         etfs: props.allocation.etfs !== undefined ? {
             set: props.allocation.etfs
           } : undefined,
+        forex: props.allocation.forex !== undefined ? {
+            set: props.allocation.forex
+          } : undefined,
+        crypto: props.allocation.crypto !== undefined ? {
+            set: props.allocation.crypto
+          } : undefined,
+        stocks: props.allocation.stocks !== undefined ? {
+            set: props.allocation.stocks
+          } : undefined,
+        options: props.allocation.options !== undefined ? {
+            set: props.allocation.options
+          } : undefined,
       },
       create: {
-        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
-        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
-        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
+        equities: props.allocation.equities !== undefined ? props.allocation.equities : undefined,
+        optionsContracts: props.allocation.optionsContracts !== undefined ? props.allocation.optionsContracts : undefined,
+        futures: props.allocation.futures !== undefined ? props.allocation.futures : undefined,
         etfs: props.allocation.etfs !== undefined ? props.allocation.etfs : undefined,
+        forex: props.allocation.forex !== undefined ? props.allocation.forex : undefined,
+        crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
+        stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
+        options: props.allocation.options !== undefined ? props.allocation.options : undefined,
       },
     }
   } : undefined,
@@ -2447,6 +2501,9 @@ id
   tradeAllocationPct: prop.tradeAllocationPct !== undefined ? {
             set: prop.tradeAllocationPct 
            } : undefined,
+  autoAllocation: prop.autoAllocation !== undefined ? {
+            set: prop.autoAllocation 
+           } : undefined,
   minPercentageChange: prop.minPercentageChange !== undefined ? {
             set: prop.minPercentageChange 
            } : undefined,
@@ -2508,24 +2565,40 @@ id
         id: prop.allocation.id !== undefined ? {
             set: prop.allocation.id
           } : undefined,
-        stocks: prop.allocation.stocks !== undefined ? {
-            set: prop.allocation.stocks
+        equities: prop.allocation.equities !== undefined ? {
+            set: prop.allocation.equities
           } : undefined,
-        crypto: prop.allocation.crypto !== undefined ? {
-            set: prop.allocation.crypto
+        optionsContracts: prop.allocation.optionsContracts !== undefined ? {
+            set: prop.allocation.optionsContracts
           } : undefined,
-        options: prop.allocation.options !== undefined ? {
-            set: prop.allocation.options
+        futures: prop.allocation.futures !== undefined ? {
+            set: prop.allocation.futures
           } : undefined,
         etfs: prop.allocation.etfs !== undefined ? {
             set: prop.allocation.etfs
           } : undefined,
+        forex: prop.allocation.forex !== undefined ? {
+            set: prop.allocation.forex
+          } : undefined,
+        crypto: prop.allocation.crypto !== undefined ? {
+            set: prop.allocation.crypto
+          } : undefined,
+        stocks: prop.allocation.stocks !== undefined ? {
+            set: prop.allocation.stocks
+          } : undefined,
+        options: prop.allocation.options !== undefined ? {
+            set: prop.allocation.options
+          } : undefined,
       },
       create: {
-        stocks: prop.allocation.stocks !== undefined ? prop.allocation.stocks : undefined,
-        crypto: prop.allocation.crypto !== undefined ? prop.allocation.crypto : undefined,
-        options: prop.allocation.options !== undefined ? prop.allocation.options : undefined,
+        equities: prop.allocation.equities !== undefined ? prop.allocation.equities : undefined,
+        optionsContracts: prop.allocation.optionsContracts !== undefined ? prop.allocation.optionsContracts : undefined,
+        futures: prop.allocation.futures !== undefined ? prop.allocation.futures : undefined,
         etfs: prop.allocation.etfs !== undefined ? prop.allocation.etfs : undefined,
+        forex: prop.allocation.forex !== undefined ? prop.allocation.forex : undefined,
+        crypto: prop.allocation.crypto !== undefined ? prop.allocation.crypto : undefined,
+        stocks: prop.allocation.stocks !== undefined ? prop.allocation.stocks : undefined,
+        options: prop.allocation.options !== undefined ? prop.allocation.options : undefined,
       },
     }
   } : undefined,

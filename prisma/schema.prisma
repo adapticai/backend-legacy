@@ -1082,6 +1082,9 @@ model AlpacaAccount {
   /// Account-level asset class allocation configuration. TYPESTRING.SKIP=true
   allocation Allocation?
 
+  /// Whether the system should automatically determine allocation percentages based on market conditions. TYPESTRING.SKIP=true
+  autoAllocation Boolean @default(true)
+
   /// Minimum percentage change (from intraday high/low) to consider for a trade signal. TYPESTRING.SKIP=true
   minPercentageChange Float @default(0.5)
 
@@ -1141,17 +1144,29 @@ model Allocation {
   /// Unique identifier for the allocation settings. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Percentage allocation for stocks in the account.
-  stocks Float @default(70)
+  /// Percentage allocation for equities (stocks) in the account.
+  equities Float @default(70)
 
-  /// Percentage allocation for cryptocurrencies in the account.
-  crypto Float @default(10)
+  /// Percentage allocation for options contracts in the account.
+  optionsContracts Float @default(5)
 
-  /// Percentage allocation for options in the account.
-  options Float @default(10)
+  /// Percentage allocation for futures contracts in the account.
+  futures Float @default(0)
 
   /// Percentage allocation for ETFs in the account.
   etfs Float @default(10)
+
+  /// Percentage allocation for FOREX trading in the account.
+  forex Float @default(0)
+
+  /// Percentage allocation for cryptocurrencies in the account.
+  crypto Float @default(15)
+
+  /// DEPRECATED: Legacy field for stocks allocation. Use 'equities' instead.
+  stocks Float? @default(70)
+
+  /// DEPRECATED: Legacy field for options allocation. Use 'optionsContracts' instead.
+  options Float? @default(10)
 
   /// Reference to the Alpaca account associated with the allocation settings. TYPESTRING.SKIP=true
   alpacaAccountId String @unique @db.Uuid

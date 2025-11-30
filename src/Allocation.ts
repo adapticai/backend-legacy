@@ -11,10 +11,14 @@ import { removeUndefinedProps } from './utils';
   const selectionSet = `
     
   id
-  stocks
-  crypto
-  options
+  equities
+  optionsContracts
+  futures
   etfs
+  forex
+  crypto
+  stocks
+  options
   alpacaAccountId
   alpacaAccount {
     id
@@ -28,6 +32,7 @@ import { removeUndefinedProps } from './utils';
     cryptoTradingPairs
     cryptoTradeAllocationPct
     tradeAllocationPct
+    autoAllocation
     minPercentageChange
     volumeThreshold
     enablePortfolioTrailingStop
@@ -147,10 +152,14 @@ import { removeUndefinedProps } from './utils';
 
           const variables = {
             data: {
-                stocks: props.stocks !== undefined ? props.stocks : undefined,
-  crypto: props.crypto !== undefined ? props.crypto : undefined,
-  options: props.options !== undefined ? props.options : undefined,
+                equities: props.equities !== undefined ? props.equities : undefined,
+  optionsContracts: props.optionsContracts !== undefined ? props.optionsContracts : undefined,
+  futures: props.futures !== undefined ? props.futures : undefined,
   etfs: props.etfs !== undefined ? props.etfs : undefined,
+  forex: props.forex !== undefined ? props.forex : undefined,
+  crypto: props.crypto !== undefined ? props.crypto : undefined,
+  stocks: props.stocks !== undefined ? props.stocks : undefined,
+  options: props.options !== undefined ? props.options : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -177,6 +186,7 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
         cryptoTradeAllocationPct: props.alpacaAccount.cryptoTradeAllocationPct !== undefined ? props.alpacaAccount.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
+        autoAllocation: props.alpacaAccount.autoAllocation !== undefined ? props.alpacaAccount.autoAllocation : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
         enablePortfolioTrailingStop: props.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.enablePortfolioTrailingStop : undefined,
@@ -486,10 +496,14 @@ import { removeUndefinedProps } from './utils';
 
         const variables = {
           data: props.map(prop => ({
-      stocks: prop.stocks !== undefined ? prop.stocks : undefined,
-  crypto: prop.crypto !== undefined ? prop.crypto : undefined,
-  options: prop.options !== undefined ? prop.options : undefined,
+      equities: prop.equities !== undefined ? prop.equities : undefined,
+  optionsContracts: prop.optionsContracts !== undefined ? prop.optionsContracts : undefined,
+  futures: prop.futures !== undefined ? prop.futures : undefined,
   etfs: prop.etfs !== undefined ? prop.etfs : undefined,
+  forex: prop.forex !== undefined ? prop.forex : undefined,
+  crypto: prop.crypto !== undefined ? prop.crypto : undefined,
+  stocks: prop.stocks !== undefined ? prop.stocks : undefined,
+  options: prop.options !== undefined ? prop.options : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
       })),
         };
@@ -579,17 +593,29 @@ import { removeUndefinedProps } from './utils';
       id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  stocks: props.stocks !== undefined ? {
-            set: props.stocks 
+  equities: props.equities !== undefined ? {
+            set: props.equities 
+           } : undefined,
+  optionsContracts: props.optionsContracts !== undefined ? {
+            set: props.optionsContracts 
+           } : undefined,
+  futures: props.futures !== undefined ? {
+            set: props.futures 
+           } : undefined,
+  etfs: props.etfs !== undefined ? {
+            set: props.etfs 
+           } : undefined,
+  forex: props.forex !== undefined ? {
+            set: props.forex 
            } : undefined,
   crypto: props.crypto !== undefined ? {
             set: props.crypto 
            } : undefined,
+  stocks: props.stocks !== undefined ? {
+            set: props.stocks 
+           } : undefined,
   options: props.options !== undefined ? {
             set: props.options 
-           } : undefined,
-  etfs: props.etfs !== undefined ? {
-            set: props.etfs 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -645,6 +671,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? {
             set: props.alpacaAccount.tradeAllocationPct
+          } : undefined,
+        autoAllocation: props.alpacaAccount.autoAllocation !== undefined ? {
+            set: props.alpacaAccount.autoAllocation
           } : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? {
             set: props.alpacaAccount.minPercentageChange
@@ -1277,6 +1306,7 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
         cryptoTradeAllocationPct: props.alpacaAccount.cryptoTradeAllocationPct !== undefined ? props.alpacaAccount.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
+        autoAllocation: props.alpacaAccount.autoAllocation !== undefined ? props.alpacaAccount.autoAllocation : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
         enablePortfolioTrailingStop: props.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.enablePortfolioTrailingStop : undefined,
@@ -1589,10 +1619,14 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
           create: {
-        stocks: props.stocks !== undefined ? props.stocks : undefined,
-  crypto: props.crypto !== undefined ? props.crypto : undefined,
-  options: props.options !== undefined ? props.options : undefined,
+        equities: props.equities !== undefined ? props.equities : undefined,
+  optionsContracts: props.optionsContracts !== undefined ? props.optionsContracts : undefined,
+  futures: props.futures !== undefined ? props.futures : undefined,
   etfs: props.etfs !== undefined ? props.etfs : undefined,
+  forex: props.forex !== undefined ? props.forex : undefined,
+  crypto: props.crypto !== undefined ? props.crypto : undefined,
+  stocks: props.stocks !== undefined ? props.stocks : undefined,
+  options: props.options !== undefined ? props.options : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1619,6 +1653,7 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
         cryptoTradeAllocationPct: props.alpacaAccount.cryptoTradeAllocationPct !== undefined ? props.alpacaAccount.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
+        autoAllocation: props.alpacaAccount.autoAllocation !== undefined ? props.alpacaAccount.autoAllocation : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
         enablePortfolioTrailingStop: props.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.enablePortfolioTrailingStop : undefined,
@@ -1848,17 +1883,29 @@ import { removeUndefinedProps } from './utils';
   } : undefined,
       },
           update: {
-      stocks: props.stocks !== undefined ? {
-            set: props.stocks 
+      equities: props.equities !== undefined ? {
+            set: props.equities 
+           } : undefined,
+  optionsContracts: props.optionsContracts !== undefined ? {
+            set: props.optionsContracts 
+           } : undefined,
+  futures: props.futures !== undefined ? {
+            set: props.futures 
+           } : undefined,
+  etfs: props.etfs !== undefined ? {
+            set: props.etfs 
+           } : undefined,
+  forex: props.forex !== undefined ? {
+            set: props.forex 
            } : undefined,
   crypto: props.crypto !== undefined ? {
             set: props.crypto 
            } : undefined,
+  stocks: props.stocks !== undefined ? {
+            set: props.stocks 
+           } : undefined,
   options: props.options !== undefined ? {
             set: props.options 
-           } : undefined,
-  etfs: props.etfs !== undefined ? {
-            set: props.etfs 
            } : undefined,
   alpacaAccount: props.alpacaAccount ? 
   typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
@@ -1908,6 +1955,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? {
             set: props.alpacaAccount.tradeAllocationPct
+          } : undefined,
+        autoAllocation: props.alpacaAccount.autoAllocation !== undefined ? {
+            set: props.alpacaAccount.autoAllocation
           } : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? {
             set: props.alpacaAccount.minPercentageChange
@@ -2540,6 +2590,7 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
         cryptoTradeAllocationPct: props.alpacaAccount.cryptoTradeAllocationPct !== undefined ? props.alpacaAccount.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: props.alpacaAccount.tradeAllocationPct !== undefined ? props.alpacaAccount.tradeAllocationPct : undefined,
+        autoAllocation: props.alpacaAccount.autoAllocation !== undefined ? props.alpacaAccount.autoAllocation : undefined,
         minPercentageChange: props.alpacaAccount.minPercentageChange !== undefined ? props.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: props.alpacaAccount.volumeThreshold !== undefined ? props.alpacaAccount.volumeThreshold : undefined,
         enablePortfolioTrailingStop: props.alpacaAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.enablePortfolioTrailingStop : undefined,
@@ -2856,17 +2907,29 @@ import { removeUndefinedProps } from './utils';
               id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  stocks: prop.stocks !== undefined ? {
-            set: prop.stocks 
+  equities: prop.equities !== undefined ? {
+            set: prop.equities 
+           } : undefined,
+  optionsContracts: prop.optionsContracts !== undefined ? {
+            set: prop.optionsContracts 
+           } : undefined,
+  futures: prop.futures !== undefined ? {
+            set: prop.futures 
+           } : undefined,
+  etfs: prop.etfs !== undefined ? {
+            set: prop.etfs 
+           } : undefined,
+  forex: prop.forex !== undefined ? {
+            set: prop.forex 
            } : undefined,
   crypto: prop.crypto !== undefined ? {
             set: prop.crypto 
            } : undefined,
+  stocks: prop.stocks !== undefined ? {
+            set: prop.stocks 
+           } : undefined,
   options: prop.options !== undefined ? {
             set: prop.options 
-           } : undefined,
-  etfs: prop.etfs !== undefined ? {
-            set: prop.etfs 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -2922,6 +2985,9 @@ import { removeUndefinedProps } from './utils';
           } : undefined,
         tradeAllocationPct: prop.alpacaAccount.tradeAllocationPct !== undefined ? {
             set: prop.alpacaAccount.tradeAllocationPct
+          } : undefined,
+        autoAllocation: prop.alpacaAccount.autoAllocation !== undefined ? {
+            set: prop.alpacaAccount.autoAllocation
           } : undefined,
         minPercentageChange: prop.alpacaAccount.minPercentageChange !== undefined ? {
             set: prop.alpacaAccount.minPercentageChange
@@ -3554,6 +3620,7 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
         cryptoTradeAllocationPct: prop.alpacaAccount.cryptoTradeAllocationPct !== undefined ? prop.alpacaAccount.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: prop.alpacaAccount.tradeAllocationPct !== undefined ? prop.alpacaAccount.tradeAllocationPct : undefined,
+        autoAllocation: prop.alpacaAccount.autoAllocation !== undefined ? prop.alpacaAccount.autoAllocation : undefined,
         minPercentageChange: prop.alpacaAccount.minPercentageChange !== undefined ? prop.alpacaAccount.minPercentageChange : undefined,
         volumeThreshold: prop.alpacaAccount.volumeThreshold !== undefined ? prop.alpacaAccount.volumeThreshold : undefined,
         enablePortfolioTrailingStop: prop.alpacaAccount.enablePortfolioTrailingStop !== undefined ? prop.alpacaAccount.enablePortfolioTrailingStop : undefined,

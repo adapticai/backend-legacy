@@ -82,10 +82,14 @@ import { removeUndefinedProps } from './utils';
     tradeAllocationPct
     allocation {
       id
-      stocks
-      crypto
-      options
+      equities
+      optionsContracts
+      futures
       etfs
+      forex
+      crypto
+      stocks
+      options
       alpacaAccountId
       alpacaAccount {
 id
@@ -93,6 +97,7 @@ id
       createdAt
       updatedAt
     }
+    autoAllocation
     minPercentageChange
     volumeThreshold
     enablePortfolioTrailingStop
@@ -331,6 +336,7 @@ id
            } : undefined,
         cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
         volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
         enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
@@ -355,10 +361,14 @@ id
           alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -904,6 +914,9 @@ id
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
             set: item.tradeAllocationPct
           } : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? {
+            set: item.autoAllocation
+          } : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? {
             set: item.minPercentageChange
           } : undefined,
@@ -959,24 +972,40 @@ id
           id: item.allocation.id !== undefined ? {
               set: item.allocation.id
             } : undefined,
-          stocks: item.allocation.stocks !== undefined ? {
-              set: item.allocation.stocks
+          equities: item.allocation.equities !== undefined ? {
+              set: item.allocation.equities
             } : undefined,
-          crypto: item.allocation.crypto !== undefined ? {
-              set: item.allocation.crypto
+          optionsContracts: item.allocation.optionsContracts !== undefined ? {
+              set: item.allocation.optionsContracts
             } : undefined,
-          options: item.allocation.options !== undefined ? {
-              set: item.allocation.options
+          futures: item.allocation.futures !== undefined ? {
+              set: item.allocation.futures
             } : undefined,
           etfs: item.allocation.etfs !== undefined ? {
               set: item.allocation.etfs
             } : undefined,
+          forex: item.allocation.forex !== undefined ? {
+              set: item.allocation.forex
+            } : undefined,
+          crypto: item.allocation.crypto !== undefined ? {
+              set: item.allocation.crypto
+            } : undefined,
+          stocks: item.allocation.stocks !== undefined ? {
+              set: item.allocation.stocks
+            } : undefined,
+          options: item.allocation.options !== undefined ? {
+              set: item.allocation.options
+            } : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -1027,6 +1056,7 @@ id
            } : undefined,
         cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
         volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
         enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
@@ -1051,10 +1081,14 @@ id
           alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -1431,6 +1465,7 @@ id
            } : undefined,
         cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
         volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
         enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
@@ -1455,10 +1490,14 @@ id
           alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -1815,6 +1854,9 @@ id
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
             set: item.tradeAllocationPct
           } : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? {
+            set: item.autoAllocation
+          } : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? {
             set: item.minPercentageChange
           } : undefined,
@@ -1870,24 +1912,40 @@ id
           id: item.allocation.id !== undefined ? {
               set: item.allocation.id
             } : undefined,
-          stocks: item.allocation.stocks !== undefined ? {
-              set: item.allocation.stocks
+          equities: item.allocation.equities !== undefined ? {
+              set: item.allocation.equities
             } : undefined,
-          crypto: item.allocation.crypto !== undefined ? {
-              set: item.allocation.crypto
+          optionsContracts: item.allocation.optionsContracts !== undefined ? {
+              set: item.allocation.optionsContracts
             } : undefined,
-          options: item.allocation.options !== undefined ? {
-              set: item.allocation.options
+          futures: item.allocation.futures !== undefined ? {
+              set: item.allocation.futures
             } : undefined,
           etfs: item.allocation.etfs !== undefined ? {
               set: item.allocation.etfs
             } : undefined,
+          forex: item.allocation.forex !== undefined ? {
+              set: item.allocation.forex
+            } : undefined,
+          crypto: item.allocation.crypto !== undefined ? {
+              set: item.allocation.crypto
+            } : undefined,
+          stocks: item.allocation.stocks !== undefined ? {
+              set: item.allocation.stocks
+            } : undefined,
+          options: item.allocation.options !== undefined ? {
+              set: item.allocation.options
+            } : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -1938,6 +1996,7 @@ id
            } : undefined,
         cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
         volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
         enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
@@ -1962,10 +2021,14 @@ id
           alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -2480,6 +2543,9 @@ id
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
             set: item.tradeAllocationPct
           } : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? {
+            set: item.autoAllocation
+          } : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? {
             set: item.minPercentageChange
           } : undefined,
@@ -2535,24 +2601,40 @@ id
           id: item.allocation.id !== undefined ? {
               set: item.allocation.id
             } : undefined,
-          stocks: item.allocation.stocks !== undefined ? {
-              set: item.allocation.stocks
+          equities: item.allocation.equities !== undefined ? {
+              set: item.allocation.equities
             } : undefined,
-          crypto: item.allocation.crypto !== undefined ? {
-              set: item.allocation.crypto
+          optionsContracts: item.allocation.optionsContracts !== undefined ? {
+              set: item.allocation.optionsContracts
             } : undefined,
-          options: item.allocation.options !== undefined ? {
-              set: item.allocation.options
+          futures: item.allocation.futures !== undefined ? {
+              set: item.allocation.futures
             } : undefined,
           etfs: item.allocation.etfs !== undefined ? {
               set: item.allocation.etfs
             } : undefined,
+          forex: item.allocation.forex !== undefined ? {
+              set: item.allocation.forex
+            } : undefined,
+          crypto: item.allocation.crypto !== undefined ? {
+              set: item.allocation.crypto
+            } : undefined,
+          stocks: item.allocation.stocks !== undefined ? {
+              set: item.allocation.stocks
+            } : undefined,
+          options: item.allocation.options !== undefined ? {
+              set: item.allocation.options
+            } : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
@@ -2603,6 +2685,7 @@ id
            } : undefined,
         cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
         tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+        autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
         minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
         volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
         enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
@@ -2627,10 +2710,14 @@ id
           alpacaAccountId: item.allocation.alpacaAccountId !== undefined ? item.allocation.alpacaAccountId : undefined,
         },
         create: {
-          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
-          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
-          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
+          equities: item.allocation.equities !== undefined ? item.allocation.equities : undefined,
+          optionsContracts: item.allocation.optionsContracts !== undefined ? item.allocation.optionsContracts : undefined,
+          futures: item.allocation.futures !== undefined ? item.allocation.futures : undefined,
           etfs: item.allocation.etfs !== undefined ? item.allocation.etfs : undefined,
+          forex: item.allocation.forex !== undefined ? item.allocation.forex : undefined,
+          crypto: item.allocation.crypto !== undefined ? item.allocation.crypto : undefined,
+          stocks: item.allocation.stocks !== undefined ? item.allocation.stocks : undefined,
+          options: item.allocation.options !== undefined ? item.allocation.options : undefined,
         },
       }
     } : undefined,
