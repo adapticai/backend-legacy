@@ -15,14 +15,16 @@ export {
   getApolloClient,
   getApolloModules,
   configureConnectionPool,
+  setTokenProvider,
   client
 } from './client';
 
- export type {
+export type {
   ApolloClientType,
   InMemoryCacheType,
   HttpLinkType,
   NormalizedCacheObject,
+  TokenProvider,
 } from './client';
 
 

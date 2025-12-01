@@ -44,12 +44,20 @@ const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
   connectionTimeout: 10000,    // Connection timeout in ms
 };
 
+// === Token Provider Type ===
+/**
+ * Function type for dynamic token providers.
+ * Allows clients to provide tokens dynamically (e.g., from session storage).
+ */
+export type TokenProvider = () => string | Promise<string>;
+
 // === Internal state ===
 let apolloModules: ApolloModules | undefined;
 let apolloClient: ApolloClientType<NormalizedCacheObject> | undefined;
 let pendingOperations = 0;
 let operationQueue: Array<() => Promise<void>> = [];
 let poolConfig: ConnectionPoolConfig = DEFAULT_POOL_CONFIG;
+let customTokenProvider: TokenProvider | undefined;
 
 /**
  * Dynamically loads the correct Apollo modules based on the runtime environment.
@@ -71,6 +79,81 @@ async function loadApolloModules(): Promise<ApolloModules> {
 export function configureConnectionPool(config: Partial<ConnectionPoolConfig>): void {
   poolConfig = { ...poolConfig, ...config };
   console.log(`Apollo client connection pool configured: ${JSON.stringify(poolConfig)}`);
+}
+
+/**
+ * Sets a custom token provider for dynamic authentication.
+ * This allows clients to provide tokens from session storage, cookies, etc.
+ *
+ * @param provider - Function that returns the auth token (sync or async)
+ *
+ * @example
+ * // Using with NextAuth session token
+ * setTokenProvider(async () => {
+ *   const session = await getSession();
+ *   return session?.accessToken || '';
+ * });
+ */
+export function setTokenProvider(provider: TokenProvider): void {
+  customTokenProvider = provider;
+  // Reset the client so it picks up the new token provider
+  if (apolloClient) {
+    console.log('Token provider updated, Apollo client will be recreated on next request');
+    apolloClient = undefined;
+  }
+}
+
+/**
+ * Validates that a token looks like a valid JWT.
+ * JWTs have three base64url-encoded parts separated by dots.
+ */
+function isValidJwtFormat(token: string): boolean {
+  if (!token) return false;
+  const parts = token.split('.');
+  if (parts.length !== 3) return false;
+  // Check that each part is base64url encoded (alphanumeric, -, _, no padding needed)
+  const base64UrlRegex = /^[A-Za-z0-9_-]+$/;
+  return parts.every(part => base64UrlRegex.test(part));
+}
+
+/**
+ * Gets the authentication token with validation.
+ * Returns empty string if no valid token is available.
+ */
+async function getAuthToken(): Promise<string> {
+  let token = '';
+
+  // First, try the custom token provider if set
+  if (customTokenProvider) {
+    try {
+      token = await Promise.resolve(customTokenProvider());
+    } catch (error) {
+      console.error('[Apollo Client] Error getting token from custom provider:', error);
+    }
+  }
+
+  // Fall back to environment variables
+  if (!token) {
+    token = process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN || process.env.SERVER_AUTH_TOKEN || '';
+  }
+
+  // Validate the token format
+  if (token && !isValidJwtFormat(token)) {
+    // Check if it looks like a Google OAuth token
+    if (token.startsWith('ya29.')) {
+      // Google OAuth tokens are valid, pass through
+      return token;
+    }
+
+    console.warn(
+      '[Apollo Client] Token does not appear to be a valid JWT format. ' +
+      'Expected format: header.payload.signature (three base64url-encoded parts). ' +
+      'Token will not be sent. Please check your NEXT_PUBLIC_SERVER_AUTH_TOKEN or SERVER_AUTH_TOKEN environment variable.'
+    );
+    return '';
+  }
+
+  return token;
 }
 
 /**
@@ -153,11 +236,11 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
       }
     });
 
-    // Create the auth link.
-    const authLink = setContext((request, prevContext) => {
+    // Create the auth link with async token retrieval and validation.
+    const authLink = setContext(async (request, prevContext) => {
       const headers = prevContext.headers || {};
-      // Retrieve the token from environment variables or other secure storage.
-      const token = process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN || process.env.SERVER_AUTH_TOKEN || "";
+      // Retrieve and validate the token
+      const token = await getAuthToken();
       return {
         headers: {
           ...headers,
