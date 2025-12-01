@@ -354,6 +354,21 @@ enum AlertType {
   INFO
 }
 
+// Defines the lifecycle status of an alert.
+enum AlertStatus {
+  /// Alert is active and requires attention.
+  ACTIVE
+
+  /// Alert has been acknowledged by the user.
+  ACKNOWLEDGED
+
+  /// Alert has been resolved and no further action is needed.
+  RESOLVED
+
+  /// Alert has been suppressed temporarily.
+  SUPPRESSED
+}
+
 // Specifies the importance level of an event.
 enum EventImportance {
   /// Low importance events with minimal impact.
@@ -1649,6 +1664,9 @@ model Alert {
 
   /// Type of the alert, defined by AlertType enum.
   type AlertType
+
+  /// Lifecycle status of the alert, defined by AlertStatus enum.
+  status AlertStatus @default(ACTIVE)
 
   /// Indicates whether the alert has been read by the user.
   isRead Boolean @default(false)
