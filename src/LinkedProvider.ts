@@ -129,6 +129,7 @@ id
         alpacaAccountId
         message
         type
+        status
         isRead
         createdAt
         updatedAt
@@ -410,6 +411,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -1070,6 +1072,9 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
             isRead: item.isRead !== undefined ? {
                 set: item.isRead
               } : undefined,
@@ -1077,6 +1082,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -1147,6 +1153,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -1415,6 +1422,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -1762,6 +1770,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -2235,6 +2244,9 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
             isRead: item.isRead !== undefined ? {
                 set: item.isRead
               } : undefined,
@@ -2242,6 +2254,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -2312,6 +2325,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -2580,6 +2594,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -3151,6 +3166,9 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
             isRead: item.isRead !== undefined ? {
                 set: item.isRead
               } : undefined,
@@ -3158,6 +3176,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -3228,6 +3247,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))
@@ -3496,6 +3516,7 @@ id
           create: {
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
           },
         }))

@@ -14,6 +14,7 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId
   message
   type
+  status
   isRead
   createdAt
   updatedAt
@@ -66,6 +67,7 @@ import { removeUndefinedProps } from './utils';
             data: {
                 message: props.message !== undefined ? props.message : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  status: props.status !== undefined ? props.status : undefined,
   isRead: props.isRead !== undefined ? props.isRead : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
@@ -409,6 +411,7 @@ import { removeUndefinedProps } from './utils';
       alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
   message: prop.message !== undefined ? prop.message : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
   isRead: prop.isRead !== undefined ? prop.isRead : undefined,
       })),
         };
@@ -505,6 +508,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
            } : undefined,
   isRead: props.isRead !== undefined ? {
             set: props.isRead 
@@ -1541,6 +1547,7 @@ import { removeUndefinedProps } from './utils';
           create: {
         message: props.message !== undefined ? props.message : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  status: props.status !== undefined ? props.status : undefined,
   isRead: props.isRead !== undefined ? props.isRead : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
@@ -1806,6 +1813,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
            } : undefined,
   isRead: props.isRead !== undefined ? {
             set: props.isRead 
@@ -2843,6 +2853,9 @@ import { removeUndefinedProps } from './utils';
            } : undefined,
   type: prop.type !== undefined ? {
             set: prop.type 
+           } : undefined,
+  status: prop.status !== undefined ? {
+            set: prop.status 
            } : undefined,
   isRead: prop.isRead !== undefined ? {
             set: prop.isRead 
