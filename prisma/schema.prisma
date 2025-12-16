@@ -3253,3 +3253,993 @@ model OptionsTradeExecution {
   @@index([brokerOrderId])
   @@map("options_trade_executions")
 }
+
+// ============================================================================
+// ENGINE MIGRATION MODELS - Added from engine schema migration
+// These models support the realtime trading engine's time-series data needs
+// ============================================================================
+
+// Defines all supported signal generator types
+enum SignalGeneratorSource {
+  /// Enhanced signal generator
+  ENHANCED
+
+  /// Production signal generator
+  PRODUCTION
+
+  /// LLM-based signal generator
+  LLM
+
+  /// Hybrid signal generator
+  HYBRID
+
+  /// Event-driven signal generator
+  EVENT_DRIVEN
+
+  /// ML prediction-based signal generator
+  ML_PREDICTION
+
+  /// Options screener signal generator
+  OPTIONS_SCREENER
+
+  /// Technical analysis signal generator
+  TECHNICAL_ANALYSIS
+
+  /// Fundamental analysis signal generator
+  FUNDAMENTAL
+
+  /// Sentiment-based signal generator
+  SENTIMENT
+
+  /// Custom signal generator
+  CUSTOM
+}
+
+// Defines sync directions for engine-backend synchronization
+enum SyncDirection {
+  /// Sync from engine to backend
+  ENGINE_TO_BACKEND
+
+  /// Sync from backend to engine
+  BACKEND_TO_ENGINE
+
+  /// Bidirectional sync
+  BIDIRECTIONAL
+}
+
+// Defines conflict resolution strategies
+enum ConflictResolutionStrategy {
+  /// Server version wins
+  SERVER_WINS
+
+  /// Client version wins
+  CLIENT_WINS
+
+  /// Merge both versions
+  MERGE
+
+  /// Manual resolution required
+  MANUAL
+
+  /// Use timestamps to determine winner
+  TIMESTAMP_BASED
+}
+
+// Defines dead letter message statuses
+enum DeadLetterStatus {
+  /// Message is pending retry
+  PENDING
+
+  /// Message is being retried
+  RETRYING
+
+  /// Message has permanently failed
+  FAILED
+
+  /// Message was successfully resolved
+  RESOLVED
+
+  /// Message has been archived
+  ARCHIVED
+}
+
+// Defines severity levels for dead letter messages
+enum DeadLetterSeverity {
+  /// Low severity
+  LOW
+
+  /// Medium severity
+  MEDIUM
+
+  /// High severity
+  HIGH
+
+  /// Critical severity requiring immediate attention
+  CRITICAL
+}
+
+// Defines priority tiers for signal queue
+enum SignalPriorityTier {
+  /// High priority signals
+  HIGH
+
+  /// Medium priority signals
+  MEDIUM
+
+  /// Low priority signals
+  LOW
+
+  /// Deprioritized signals
+  DEPRIORITIZED
+}
+
+// Defines signal queue processing statuses
+enum SignalQueueStatus {
+  /// Signal is queued for processing
+  QUEUED
+
+  /// Signal is currently being processed
+  PROCESSING
+
+  /// Signal processing completed
+  COMPLETED
+
+  /// Signal was filtered out
+  FILTERED
+
+  /// Signal expired before processing
+  EXPIRED
+}
+
+// Defines signal outcome types
+enum SignalOutcomeType {
+  /// Successful signal outcome
+  SUCCESS
+
+  /// Failed signal outcome
+  FAILURE
+
+  /// Neutral outcome
+  NEUTRAL
+
+  /// Outcome pending determination
+  PENDING
+}
+
+// Defines signal execution statuses
+enum SignalExecutionStatus {
+  /// Execution pending
+  PENDING
+
+  /// Signal executed
+  EXECUTED
+
+  /// Partially executed
+  PARTIAL
+
+  /// Execution failed
+  FAILED
+
+  /// Execution cancelled
+  CANCELLED
+}
+
+// Defines signal decision types
+enum SignalDecisionType {
+  /// Signal accepted for execution
+  ACCEPT
+
+  /// Signal rejected
+  REJECT
+
+  /// Decision deferred
+  DEFER
+
+  /// Signal modified before execution
+  MODIFY
+}
+
+// Defines event categories for audit trail
+enum EventCategory {
+  /// Trade-related events
+  TRADE
+
+  /// Signal-related events
+  SIGNAL
+
+  /// Alert events
+  ALERT
+
+  /// Risk breach events
+  RISK_BREACH
+
+  /// System events
+  SYSTEM
+
+  /// Compliance events
+  COMPLIANCE
+
+  /// Execution events
+  EXECUTION
+
+  /// Sync events
+  SYNC
+}
+
+// Defines event severity levels
+enum EventSeverity {
+  /// Informational event
+  INFO
+
+  /// Warning event
+  WARN
+
+  /// Error event
+  ERROR
+
+  /// Critical event requiring immediate attention
+  CRITICAL
+}
+
+// Dead Letter Queue for Failed Options Trades
+// Stores failed trade attempts with retry metadata and full error context
+model DeadLetterMessage {
+  /// Unique identifier for the dead letter message. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp when the failure occurred
+  timestamp DateTime @default(now())
+
+  /// Account identifier
+  accountId String
+
+  /// Ticker symbol of the trade
+  ticker String @db.VarChar(50)
+
+  /// Trade action (buy, sell, buy_to_open, etc.)
+  action String @db.VarChar(20)
+
+  /// Number of contracts/shares
+  quantity Int
+
+  /// Strike price for options (optional)
+  strikePrice Decimal? @db.Decimal(10, 2)
+
+  /// Expiration date for options (optional)
+  expirationDate String? @db.VarChar(20)
+
+  /// Option type (call, put) (optional)
+  optionType String? @db.VarChar(10)
+
+  /// Trading strategy (optional)
+  strategy String? @db.VarChar(100)
+
+  /// Order type (market, limit, stop, etc.) (optional)
+  orderType String? @db.VarChar(50)
+
+  /// Limit price (optional)
+  limitPrice Decimal? @db.Decimal(10, 4)
+
+  /// Error message describing the failure
+  errorMessage String
+
+  /// Error code (optional)
+  errorCode String? @db.VarChar(100)
+
+  /// Error stack trace (optional)
+  errorStack String?
+
+  /// Number of retry attempts
+  retryCount Int @default(0)
+
+  /// Maximum retry attempts allowed
+  maxRetries Int @default(3)
+
+  /// Timestamp of last retry attempt (optional)
+  lastRetryAt DateTime?
+
+  /// Timestamp for next retry attempt (optional)
+  nextRetryAt DateTime?
+
+  /// Current backoff delay in milliseconds
+  backoffMs Int @default(1000)
+
+  /// Current status of the message
+  status DeadLetterStatus @default(PENDING)
+
+  /// Timestamp when resolved (optional)
+  resolvedAt DateTime?
+
+  /// How it was resolved (auto-retry, manual, user ID) (optional)
+  resolvedBy String? @db.VarChar(100)
+
+  /// Description of resolution (optional)
+  resolution String?
+
+  /// Original trade attempt data as JSON
+  tradeContext Json
+
+  /// Account state at time of failure (optional)
+  accountState Json?
+
+  /// Market conditions at time of failure (optional)
+  marketContext Json?
+
+  /// Detailed validation failures (optional)
+  validationErrors Json?
+
+  /// Failure category for analytics (optional)
+  failureCategory String? @db.VarChar(100)
+
+  /// Severity level of the failure
+  severity DeadLetterSeverity @default(MEDIUM)
+
+  /// Tags for flexible categorization (optional)
+  tags Json?
+
+  /// User who created the entry (optional)
+  createdBy String? @db.VarChar(100)
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Admin notes for manual interventions (optional)
+  notes String?
+
+  /// Indexes for efficient queries
+  @@index([timestamp])
+  @@index([accountId, timestamp])
+  @@index([ticker, timestamp])
+  @@index([status, timestamp])
+  @@index([errorCode, timestamp])
+  @@index([failureCategory, timestamp])
+  @@index([nextRetryAt])
+  @@index([accountId, status])
+  @@index([ticker, status])
+  @@map("dead_letter_messages")
+}
+
+// Sync Event - Track all sync operations between engine and backend
+model SyncEvent {
+  /// Unique identifier for the sync event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp of the sync event
+  timestamp DateTime @default(now())
+
+  /// Type of sync event (SYNC_STARTED, SYNC_COMPLETED, SYNC_FAILED, etc.)
+  type String @db.VarChar(100)
+
+  /// Direction of sync
+  direction SyncDirection
+
+  /// Type of entity being synced
+  entityType String @db.VarChar(100)
+
+  /// ID of the entity being synced
+  entityId String @db.VarChar(255)
+
+  /// Duration in milliseconds (optional)
+  duration Int?
+
+  /// Whether the sync was successful
+  success Boolean
+
+  /// Error message if sync failed (optional)
+  error String?
+
+  /// Additional context metadata (optional)
+  metadata Json?
+
+  /// Indexes for efficient querying
+  @@index([timestamp])
+  @@index([type, timestamp])
+  @@index([direction, timestamp])
+  @@index([entityType, timestamp])
+  @@index([success, timestamp])
+  @@map("sync_events")
+}
+
+// Conflict Event - Track sync conflicts and their resolution
+model ConflictEvent {
+  /// Unique identifier for the conflict event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp when conflict occurred
+  timestamp DateTime @default(now())
+
+  /// Type of entity with conflict
+  entityType String @db.VarChar(100)
+
+  /// ID of the conflicting entity
+  entityId String @db.VarChar(255)
+
+  /// Server version of the entity
+  serverVersion Json
+
+  /// Client version of the entity
+  clientVersion Json
+
+  /// Resolution strategy used
+  strategy ConflictResolutionStrategy
+
+  /// Whether conflict was resolved
+  resolved Boolean
+
+  /// Resolved version of the entity (optional)
+  resolution Json?
+
+  /// Time taken to resolve in milliseconds (optional)
+  resolutionTime Int?
+
+  /// Indexes for efficient querying
+  @@index([timestamp])
+  @@index([entityType, timestamp])
+  @@index([resolved, timestamp])
+  @@index([strategy, timestamp])
+  @@map("conflict_events")
+}
+
+// Signal Lineage - Comprehensive signal tracking from generation to execution
+model SignalLineage {
+  /// Unique identifier for the signal lineage record. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp of the lineage record
+  timestamp DateTime @default(now())
+
+  /// Unique lineage identifier
+  lineageId String @unique @db.VarChar(255)
+
+  /// Signal identifier
+  signalId String @db.VarChar(255)
+
+  /// Symbol for the signal
+  symbol String @db.VarChar(50)
+
+  /// Type of signal
+  signalType String @db.VarChar(50)
+
+  /// Unix timestamp in milliseconds when signal was created
+  createdAt BigInt
+
+  /// Source of the signal generator
+  generatorSource String @db.VarChar(100)
+
+  /// Version of the signal generator (optional)
+  generatorVersion String? @db.VarChar(50)
+
+  /// Array of DataSource objects
+  inputSources Json
+
+  /// Array of IndicatorContribution objects
+  technicalIndicators Json
+
+  /// LLMAnalysisResult object (optional)
+  llmAnalysis Json?
+
+  /// Array of PreAnalysisValidation objects
+  preAnalysisValidations Json
+
+  /// FilterResult object (optional)
+  filterResult Json?
+
+  /// CoordinationDecision object
+  coordinationDecision Json
+
+  /// ExecutionOutcome object (optional)
+  executionOutcome Json?
+
+  /// Original SignalMonitoringSignal object
+  originalSignal Json
+
+  /// Modified signal (optional)
+  finalSignal Json?
+
+  /// Array of lifecycle events
+  lifecycleEvents Json
+
+  /// Performance attribution data (optional)
+  performanceAttribution Json?
+
+  /// Unix timestamp in milliseconds of last update
+  lastUpdated BigInt
+
+  /// Storage location path (optional)
+  storageLocation String? @db.VarChar(500)
+
+  /// Number of days to retain
+  retentionDays Int @default(90)
+
+  /// Array of compliance tags (optional)
+  complianceTags Json?
+
+  /// Array of custom tags (optional)
+  customTags Json?
+
+  /// Current execution status
+  executionStatus SignalExecutionStatus?
+
+  /// Decision type made for signal
+  decisionType SignalDecisionType
+
+  /// Profit/loss percentage (optional)
+  pnlPercentage Decimal? @db.Decimal(10, 4)
+
+  /// Average input data quality score (0-1)
+  dataQuality Decimal @db.Decimal(5, 4)
+
+  /// Indexes for efficient time-series queries
+  @@index([timestamp])
+  @@index([signalId])
+  @@index([symbol, timestamp])
+  @@index([generatorSource, timestamp])
+  @@index([signalType, timestamp])
+  @@index([executionStatus, timestamp])
+  @@index([decisionType, timestamp])
+  @@index([symbol, generatorSource, timestamp])
+  @@index([pnlPercentage])
+  @@index([dataQuality])
+  @@map("signal_lineage")
+}
+
+// Trade Audit Events - Comprehensive audit trail for all trading decisions
+// Supports 7-year retention for SEC 17a-4, FINRA 4511, MiFID II compliance
+model TradeAuditEvent {
+  /// Unique identifier for the audit event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp of the audit event
+  timestamp DateTime @default(now())
+
+  /// Unique event identifier
+  eventId String @unique @db.VarChar(255)
+
+  /// Type of audit event
+  eventType String @db.VarChar(100)
+
+  /// Symbol being traded
+  symbol String @db.VarChar(50)
+
+  /// Account identifier
+  accountId String @db.VarChar(255)
+
+  /// Trade identifier (optional)
+  tradeId String? @db.VarChar(255)
+
+  /// Signal identifier (optional)
+  signalId String? @db.VarChar(255)
+
+  /// Order identifier (optional)
+  orderId String? @db.VarChar(255)
+
+  /// User identifier (optional)
+  userId String? @db.VarChar(255)
+
+  /// System identifier (optional)
+  systemId String? @db.VarChar(100)
+
+  /// Cryptographic signature for integrity (AuditRecordSignature object)
+  signatureJson Json
+
+  /// Chain of custody information (ChainOfCustody object)
+  custodyJson Json
+
+  /// Retention policy identifier
+  retentionPolicyId String @db.VarChar(100)
+
+  /// Whether the record is immutable
+  immutable Boolean @default(true)
+
+  /// Whether the record is encrypted
+  encrypted Boolean @default(false)
+
+  /// Array of compliance tags
+  complianceTags Json
+
+  /// Array of custom tags (optional)
+  customTags Json?
+
+  /// Complete event data
+  eventData Json
+
+  /// Event category for filtering
+  eventCategory EventCategory?
+
+  /// Severity level
+  severity EventSeverity?
+
+  /// For compliance checks - whether passed (optional)
+  passed Boolean?
+
+  /// Unix timestamp in milliseconds
+  createdAt BigInt
+
+  /// Auto-deletion/archival date (optional)
+  retentionDate DateTime?
+
+  /// Indexes for efficient time-series queries
+  @@index([timestamp])
+  @@index([eventId])
+  @@index([eventType, timestamp])
+  @@index([symbol, timestamp])
+  @@index([accountId, timestamp])
+  @@index([signalId, timestamp])
+  @@index([orderId, timestamp])
+  @@index([tradeId, timestamp])
+  @@index([eventCategory, timestamp])
+  @@index([severity, timestamp])
+  @@index([passed, timestamp])
+  @@index([retentionDate])
+  @@index([accountId, symbol, timestamp])
+  @@map("trade_audit_events")
+}
+
+// Signal Generator Performance Metrics - Track performance of each signal generator
+model SignalGeneratorMetrics {
+  /// Unique identifier for the metrics record. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp of the metrics snapshot
+  timestamp DateTime @default(now())
+
+  /// Signal generator source
+  generatorSource SignalGeneratorSource
+
+  /// Symbol-specific metrics (null for global metrics)
+  symbol String? @db.VarChar(50)
+
+  /// Total number of signals generated
+  totalSignals Int @default(0)
+
+  /// Number of successful signals
+  successfulSignals Int @default(0)
+
+  /// Number of failed signals
+  failedSignals Int @default(0)
+
+  /// Win rate percentage (0-1)
+  winRate Decimal @db.Decimal(5, 4)
+
+  /// Sharpe ratio
+  sharpeRatio Decimal @db.Decimal(10, 4)
+
+  /// Profit factor
+  profitFactor Decimal @db.Decimal(10, 4)
+
+  /// Average return percentage
+  averageReturn Decimal @db.Decimal(10, 4)
+
+  /// Maximum drawdown percentage
+  maxDrawdown Decimal @db.Decimal(10, 4)
+
+  /// Average time to profit in minutes
+  averageTimeToProfit Decimal @db.Decimal(10, 2)
+
+  /// Calibration accuracy (0-1)
+  calibrationAccuracy Decimal @db.Decimal(5, 4)
+
+  /// Performance trend (-1 to 1)
+  performanceTrend Decimal @db.Decimal(5, 4)
+
+  /// Lookback period in days
+  lookbackPeriodDays Int @default(30)
+
+  /// Health score (0-100)
+  healthScore Int @default(100)
+
+  /// Health status
+  healthStatus String @db.VarChar(20)
+
+  /// Array of health issue strings (optional)
+  healthIssues Json?
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([generatorSource, symbol, timestamp])
+  /// Indexes for efficient queries
+  @@index([timestamp])
+  @@index([generatorSource, timestamp])
+  @@index([generatorSource, symbol, timestamp])
+  @@index([healthStatus, timestamp])
+  @@index([winRate, timestamp])
+  @@index([sharpeRatio, timestamp])
+  @@map("signal_generator_metrics")
+}
+
+// Signal Priority Queue - Track queued signals with priority scores
+model SignalPriorityQueue {
+  /// Unique identifier for the queue entry. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp of queue entry
+  timestamp DateTime @default(now())
+
+  /// Unique signal identifier
+  signalId String @unique @db.VarChar(255)
+
+  /// Symbol for the signal
+  symbol String @db.VarChar(50)
+
+  /// Type of signal
+  signalType String @db.VarChar(100)
+
+  /// Signal generator source
+  generatorSource SignalGeneratorSource
+
+  /// Priority score (0-100)
+  priorityScore Decimal @db.Decimal(6, 2)
+
+  /// Generator win rate
+  generatorWinRate Decimal @db.Decimal(5, 4)
+
+  /// Generator Sharpe ratio
+  generatorSharpe Decimal @db.Decimal(10, 4)
+
+  /// Priority tier
+  priorityTier SignalPriorityTier
+
+  /// Breakdown of priority score calculation
+  scoreComponents Json
+
+  /// Position in queue
+  queuePosition Int @default(0)
+
+  /// Processing status
+  status SignalQueueStatus @default(QUEUED)
+
+  /// Timestamp when queued
+  queuedAt DateTime
+
+  /// Timestamp when processing started (optional)
+  processingStartedAt DateTime?
+
+  /// Timestamp when processing completed (optional)
+  processingCompletedAt DateTime?
+
+  /// Time spent in queue in milliseconds (optional)
+  timeInQueueMs Int?
+
+  /// Signal confidence score (0-1)
+  signalConfidence Decimal @db.Decimal(5, 4)
+
+  /// Full signal object
+  signalData Json
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Indexes for efficient queue operations
+  @@index([timestamp])
+  @@index([status, priorityTier, priorityScore])
+  @@index([generatorSource, timestamp])
+  @@index([symbol, timestamp])
+  @@index([priorityTier, queuePosition])
+  @@index([queuedAt])
+  @@index([status, queuedAt])
+  @@map("signal_priority_queue")
+}
+
+// Signal Outcome - Track actual outcomes for priority scoring calibration
+model SignalOutcome {
+  /// Unique identifier for the outcome record. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp of the outcome record
+  timestamp DateTime @default(now())
+
+  /// Signal identifier
+  signalId String @db.VarChar(255)
+
+  /// Signal generator source
+  generatorSource SignalGeneratorSource
+
+  /// Symbol for the signal
+  symbol String @db.VarChar(50)
+
+  /// Type of signal
+  signalType String @db.VarChar(100)
+
+  /// Original confidence score (0-1)
+  originalConfidence Decimal @db.Decimal(5, 4)
+
+  /// Priority score at generation
+  priorityScore Decimal @db.Decimal(6, 2)
+
+  /// Outcome type
+  outcome SignalOutcomeType
+
+  /// Profit/loss percentage (optional)
+  pnlPercentage Decimal? @db.Decimal(10, 4)
+
+  /// Time to outcome in minutes (optional)
+  timeToOutcome Int?
+
+  /// Timestamp of outcome (optional)
+  outcomeTimestamp DateTime?
+
+  /// Reason for outcome (optional)
+  outcomeReason String?
+
+  /// Timestamp when signal was generated
+  generatedAt DateTime
+
+  /// Market conditions at signal time (optional)
+  marketConditions Json?
+
+  /// Indexes for performance analysis
+  @@index([timestamp])
+  @@index([generatorSource, timestamp])
+  @@index([generatorSource, symbol, timestamp])
+  @@index([outcome, timestamp])
+  @@index([signalId])
+  @@index([generatedAt])
+  @@map("signal_outcomes")
+}
+
+// Event Storage - Production-grade event persistence for audit trail
+model Event {
+  /// Unique identifier for the event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Unique event identifier
+  eventId String @unique @db.VarChar(255)
+
+  /// Timestamp of the event
+  timestamp DateTime @default(now())
+
+  /// Event category
+  category EventCategory
+
+  /// Specific event type within category
+  eventType String @db.VarChar(100)
+
+  /// Event severity level
+  severity EventSeverity
+
+  /// Source system/component
+  source String @db.VarChar(100)
+
+  /// Symbol (optional)
+  symbol String? @db.VarChar(50)
+
+  /// Account identifier (optional)
+  accountId String? @db.VarChar(255)
+
+  /// Trade identifier (optional)
+  tradeId String? @db.VarChar(255)
+
+  /// Signal identifier (optional)
+  signalId String? @db.VarChar(255)
+
+  /// Order identifier (optional)
+  orderId String? @db.VarChar(255)
+
+  /// User identifier (optional)
+  userId String? @db.VarChar(255)
+
+  /// Aggregate identifier for event sourcing (optional)
+  aggregateId String? @db.VarChar(255)
+
+  /// Aggregate type (optional)
+  aggregateType String? @db.VarChar(100)
+
+  /// Event version within aggregate sequence (optional)
+  version Int?
+
+  /// Event data
+  eventData Json
+
+  /// Additional metadata (optional)
+  metadata Json?
+
+  /// Cryptographic signature (optional)
+  signature Json?
+
+  /// Retention policy identifier
+  retentionPolicyId String @db.VarChar(100)
+
+  /// Retention expiration timestamp
+  retentionExpiresAt DateTime
+
+  /// Whether the event has been archived
+  archived Boolean @default(false)
+
+  /// Array of tags (optional)
+  tags Json?
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([aggregateId, aggregateType, version])
+  /// Indexes for efficient time-series queries
+  @@index([timestamp])
+  @@index([eventId])
+  @@index([category, timestamp])
+  @@index([eventType, timestamp])
+  @@index([severity, timestamp])
+  @@index([source, timestamp])
+  @@index([symbol, timestamp])
+  @@index([accountId, timestamp])
+  @@index([tradeId, timestamp])
+  @@index([signalId, timestamp])
+  @@index([orderId, timestamp])
+  @@index([userId, timestamp])
+  @@index([retentionExpiresAt])
+  @@index([archived, timestamp])
+  @@index([category, severity, timestamp])
+  @@index([aggregateId, aggregateType, version])
+  @@index([aggregateId, timestamp])
+  @@map("events")
+}
+
+// Event Snapshot model for event sourcing optimization
+// Stores point-in-time aggregate state to avoid replaying all events
+model EventSnapshot {
+  /// Unique identifier for the snapshot. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Aggregate identifier
+  aggregateId String @db.VarChar(255)
+
+  /// Aggregate type
+  aggregateType String @db.VarChar(100)
+
+  /// Last event version included in this snapshot
+  version Int
+
+  /// Aggregate state at this version
+  state Json
+
+  /// Timestamp of the snapshot
+  timestamp DateTime @default(now())
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([aggregateId, version])
+  /// Indexes for efficient snapshot retrieval
+  @@index([aggregateId, version])
+  @@index([aggregateType, timestamp])
+  @@map("event_snapshots")
+}
+
+// Trade Execution History - Persistent execution tracking for deduplication
+// Prevents duplicate trades across service restarts with automatic TTL-based cleanup
+model TradeExecutionHistory {
+  /// Unique identifier for the execution record
+  id String @id @db.VarChar(255)
+
+  /// Ticker symbol that was traded
+  ticker String @db.VarChar(50)
+
+  /// Trade action (BUY, SELL, BUY_TO_OPEN, SELL_TO_CLOSE, etc.)
+  action ActionType
+
+  /// Execution timestamp
+  timestamp DateTime @default(now())
+
+  /// JSON array of account IDs that executed this trade
+  accounts Json
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Expiration timestamp for automatic cleanup (24h TTL)
+  expiresAt DateTime
+
+  @@unique([ticker, action, timestamp])
+  /// Indexes for efficient querying
+  @@index([ticker])
+  @@index([timestamp])
+  @@index([ticker, timestamp])
+  @@index([expiresAt])
+  @@map("trade_execution_history")
+}

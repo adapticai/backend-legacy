@@ -40,9 +40,13 @@ import { AnalyticsSnapshot } from './AnalyticsSnapshot';
 import { Asset } from './Asset';
 import { Authenticator } from './Authenticator';
 import { Configuration } from './Configuration';
+import { ConflictEvent } from './ConflictEvent';
 import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
 import { Customer } from './Customer';
+import { DeadLetterMessage } from './DeadLetterMessage';
 import { EconomicEvent } from './EconomicEvent';
+import { Event } from './Event';
+import { EventSnapshot } from './EventSnapshot';
 import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
 import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
 import { InstitutionalHolding } from './InstitutionalHolding';
@@ -65,8 +69,15 @@ import { OptionsTradeExecution } from './OptionsTradeExecution';
 import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
+import { SignalGeneratorMetrics } from './SignalGeneratorMetrics';
+import { SignalLineage } from './SignalLineage';
+import { SignalOutcome } from './SignalOutcome';
+import { SignalPriorityQueue } from './SignalPriorityQueue';
+import { SyncEvent } from './SyncEvent';
 import { SystemAlert } from './SystemAlert';
 import { Trade } from './Trade';
+import { TradeAuditEvent } from './TradeAuditEvent';
+import { TradeExecutionHistory } from './TradeExecutionHistory';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
 
@@ -83,9 +94,13 @@ const adaptic = {
   asset: Asset,
   authenticator: Authenticator,
   configuration: Configuration,
+  conflictEvent: ConflictEvent,
   connectionHealthSnapshot: ConnectionHealthSnapshot,
   customer: Customer,
+  deadLetterMessage: DeadLetterMessage,
   economicEvent: EconomicEvent,
+  event: Event,
+  eventSnapshot: EventSnapshot,
   featureImportanceAnalysis: FeatureImportanceAnalysis,
   institutionalFlowSignal: InstitutionalFlowSignal,
   institutionalHolding: InstitutionalHolding,
@@ -108,8 +123,15 @@ const adaptic = {
   portfolioGreeksHistory: PortfolioGreeksHistory,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
+  signalGeneratorMetrics: SignalGeneratorMetrics,
+  signalLineage: SignalLineage,
+  signalOutcome: SignalOutcome,
+  signalPriorityQueue: SignalPriorityQueue,
+  syncEvent: SyncEvent,
   systemAlert: SystemAlert,
   trade: Trade,
+  tradeAuditEvent: TradeAuditEvent,
+  tradeExecutionHistory: TradeExecutionHistory,
   user: User,
   verificationToken: VerificationToken,
 };
