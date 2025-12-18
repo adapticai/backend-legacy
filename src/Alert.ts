@@ -12,10 +12,18 @@ import { removeUndefinedProps } from './utils';
     
   id
   alpacaAccountId
+  title
   message
   type
+  severity
+  category
   status
   isRead
+  acknowledgedAt
+  resolvedAt
+  suppressedUntil
+  retryCount
+  metadata
   createdAt
   updatedAt
 
@@ -65,10 +73,18 @@ import { removeUndefinedProps } from './utils';
 
           const variables = {
             data: {
-                message: props.message !== undefined ? props.message : undefined,
+                title: props.title !== undefined ? props.title : undefined,
+  message: props.message !== undefined ? props.message : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  category: props.category !== undefined ? props.category : undefined,
   status: props.status !== undefined ? props.status : undefined,
   isRead: props.isRead !== undefined ? props.isRead : undefined,
+  acknowledgedAt: props.acknowledgedAt !== undefined ? props.acknowledgedAt : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? props.resolvedAt : undefined,
+  suppressedUntil: props.suppressedUntil !== undefined ? props.suppressedUntil : undefined,
+  retryCount: props.retryCount !== undefined ? props.retryCount : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -409,10 +425,18 @@ import { removeUndefinedProps } from './utils';
         const variables = {
           data: props.map(prop => ({
       alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
+  title: prop.title !== undefined ? prop.title : undefined,
   message: prop.message !== undefined ? prop.message : undefined,
   type: prop.type !== undefined ? prop.type : undefined,
+  severity: prop.severity !== undefined ? prop.severity : undefined,
+  category: prop.category !== undefined ? prop.category : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
   isRead: prop.isRead !== undefined ? prop.isRead : undefined,
+  acknowledgedAt: prop.acknowledgedAt !== undefined ? prop.acknowledgedAt : undefined,
+  resolvedAt: prop.resolvedAt !== undefined ? prop.resolvedAt : undefined,
+  suppressedUntil: prop.suppressedUntil !== undefined ? prop.suppressedUntil : undefined,
+  retryCount: prop.retryCount !== undefined ? prop.retryCount : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
       })),
         };
 
@@ -498,10 +522,16 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
             set: props.id 
+           } : undefined,
+  title: props.title !== undefined ? {
+            set: props.title 
            } : undefined,
   message: props.message !== undefined ? {
             set: props.message 
@@ -509,11 +539,32 @@ import { removeUndefinedProps } from './utils';
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  category: props.category !== undefined ? {
+            set: props.category 
+           } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
   isRead: props.isRead !== undefined ? {
             set: props.isRead 
+           } : undefined,
+  acknowledgedAt: props.acknowledgedAt !== undefined ? {
+            set: props.acknowledgedAt 
+           } : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? {
+            set: props.resolvedAt 
+           } : undefined,
+  suppressedUntil: props.suppressedUntil !== undefined ? {
+            set: props.suppressedUntil 
+           } : undefined,
+  retryCount: props.retryCount !== undefined ? {
+            set: props.retryCount 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -1543,12 +1594,23 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
       },
           create: {
-        message: props.message !== undefined ? props.message : undefined,
+        title: props.title !== undefined ? props.title : undefined,
+  message: props.message !== undefined ? props.message : undefined,
   type: props.type !== undefined ? props.type : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  category: props.category !== undefined ? props.category : undefined,
   status: props.status !== undefined ? props.status : undefined,
   isRead: props.isRead !== undefined ? props.isRead : undefined,
+  acknowledgedAt: props.acknowledgedAt !== undefined ? props.acknowledgedAt : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? props.resolvedAt : undefined,
+  suppressedUntil: props.suppressedUntil !== undefined ? props.suppressedUntil : undefined,
+  retryCount: props.retryCount !== undefined ? props.retryCount : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -1808,17 +1870,41 @@ import { removeUndefinedProps } from './utils';
   } : undefined,
       },
           update: {
-      message: props.message !== undefined ? {
+      title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
+  message: props.message !== undefined ? {
             set: props.message 
            } : undefined,
   type: props.type !== undefined ? {
             set: props.type 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  category: props.category !== undefined ? {
+            set: props.category 
            } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
   isRead: props.isRead !== undefined ? {
             set: props.isRead 
+           } : undefined,
+  acknowledgedAt: props.acknowledgedAt !== undefined ? {
+            set: props.acknowledgedAt 
+           } : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? {
+            set: props.resolvedAt 
+           } : undefined,
+  suppressedUntil: props.suppressedUntil !== undefined ? {
+            set: props.suppressedUntil 
+           } : undefined,
+  retryCount: props.retryCount !== undefined ? {
+            set: props.retryCount 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
            } : undefined,
   alpacaAccount: props.alpacaAccount ? 
   typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
@@ -2842,11 +2928,17 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: prop.alpacaAccountId !== undefined ? {
     equals: prop.alpacaAccountId 
   } : undefined,
+  title: prop.title !== undefined ? {
+    equals: prop.title 
+  } : undefined,
 
           },
           data: {
               id: prop.id !== undefined ? {
             set: prop.id 
+           } : undefined,
+  title: prop.title !== undefined ? {
+            set: prop.title 
            } : undefined,
   message: prop.message !== undefined ? {
             set: prop.message 
@@ -2854,11 +2946,32 @@ import { removeUndefinedProps } from './utils';
   type: prop.type !== undefined ? {
             set: prop.type 
            } : undefined,
+  severity: prop.severity !== undefined ? {
+            set: prop.severity 
+           } : undefined,
+  category: prop.category !== undefined ? {
+            set: prop.category 
+           } : undefined,
   status: prop.status !== undefined ? {
             set: prop.status 
            } : undefined,
   isRead: prop.isRead !== undefined ? {
             set: prop.isRead 
+           } : undefined,
+  acknowledgedAt: prop.acknowledgedAt !== undefined ? {
+            set: prop.acknowledgedAt 
+           } : undefined,
+  resolvedAt: prop.resolvedAt !== undefined ? {
+            set: prop.resolvedAt 
+           } : undefined,
+  suppressedUntil: prop.suppressedUntil !== undefined ? {
+            set: prop.suppressedUntil 
+           } : undefined,
+  retryCount: prop.retryCount !== undefined ? {
+            set: prop.retryCount 
+           } : undefined,
+  metadata: prop.metadata !== undefined ? {
+            set: prop.metadata 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -3972,6 +4085,9 @@ import { removeUndefinedProps } from './utils';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -4130,6 +4246,9 @@ import { removeUndefinedProps } from './utils';
   } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
   } : undefined,
       },
         };

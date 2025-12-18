@@ -369,6 +369,24 @@ enum AlertStatus {
   SUPPRESSED
 }
 
+// Categorizes the source/domain of an alert.
+enum AlertCategory {
+  /// Alerts related to economic event risks.
+  EVENT_RISK
+
+  /// Alerts related to market risks.
+  MARKET_RISK
+
+  /// System-level alerts (errors, performance, etc.).
+  SYSTEM
+
+  /// Alerts related to trade execution.
+  TRADE
+
+  /// Alerts related to portfolio management.
+  PORTFOLIO
+}
+
 // Specifies the importance level of an event.
 enum EventImportance {
   /// Low importance events with minimal impact.
@@ -1659,17 +1677,41 @@ model Alert {
   /// Reference to the Alpaca account associated with the alert. TYPESTRING.SKIP=true
   alpacaAccountId String @db.Uuid
 
+  /// Title/summary of the alert.
+  title String?
+
   /// Message content of the alert.
   message String
 
   /// Type of the alert, defined by AlertType enum.
   type AlertType
 
+  /// Severity level of the alert, defined by AlertSeverity enum.
+  severity AlertSeverity @default(MEDIUM)
+
+  /// Category/domain of the alert, defined by AlertCategory enum.
+  category AlertCategory @default(SYSTEM)
+
   /// Lifecycle status of the alert, defined by AlertStatus enum.
   status AlertStatus @default(ACTIVE)
 
   /// Indicates whether the alert has been read by the user.
   isRead Boolean @default(false)
+
+  /// Timestamp when the alert was acknowledged by a user. TYPESTRING.SKIP=true
+  acknowledgedAt DateTime?
+
+  /// Timestamp when the alert was resolved. TYPESTRING.SKIP=true
+  resolvedAt DateTime?
+
+  /// Timestamp until which the alert is suppressed. TYPESTRING.SKIP=true
+  suppressedUntil DateTime?
+
+  /// Number of retry attempts for alert-related operations.
+  retryCount Int @default(0)
+
+  /// Additional metadata for the alert stored as JSON.
+  metadata Json?
 
   /// Timestamp when the alert was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())

@@ -330,12 +330,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -962,10 +973,16 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId
               } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
                 set: item.id
+              } : undefined,
+            title: item.title !== undefined ? {
+                set: item.title
               } : undefined,
             message: item.message !== undefined ? {
                 set: item.message
@@ -973,18 +990,47 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            category: item.category !== undefined ? {
+                set: item.category
+              } : undefined,
             status: item.status !== undefined ? {
                 set: item.status
               } : undefined,
             isRead: item.isRead !== undefined ? {
                 set: item.isRead
               } : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? {
+                set: item.acknowledgedAt
+              } : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? {
+                set: item.resolvedAt
+              } : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? {
+                set: item.suppressedUntil
+              } : undefined,
+            retryCount: item.retryCount !== undefined ? {
+                set: item.retryCount
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -1050,12 +1096,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -1355,12 +1412,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -1703,12 +1771,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -2156,10 +2235,16 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId
               } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
                 set: item.id
+              } : undefined,
+            title: item.title !== undefined ? {
+                set: item.title
               } : undefined,
             message: item.message !== undefined ? {
                 set: item.message
@@ -2167,18 +2252,47 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            category: item.category !== undefined ? {
+                set: item.category
+              } : undefined,
             status: item.status !== undefined ? {
                 set: item.status
               } : undefined,
             isRead: item.isRead !== undefined ? {
                 set: item.isRead
               } : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? {
+                set: item.acknowledgedAt
+              } : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? {
+                set: item.resolvedAt
+              } : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? {
+                set: item.suppressedUntil
+              } : undefined,
+            retryCount: item.retryCount !== undefined ? {
+                set: item.retryCount
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -2244,12 +2358,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -2549,12 +2674,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -3097,10 +3233,16 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId
               } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
                 set: item.id
+              } : undefined,
+            title: item.title !== undefined ? {
+                set: item.title
               } : undefined,
             message: item.message !== undefined ? {
                 set: item.message
@@ -3108,18 +3250,47 @@ id
             type: item.type !== undefined ? {
                 set: item.type
               } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            category: item.category !== undefined ? {
+                set: item.category
+              } : undefined,
             status: item.status !== undefined ? {
                 set: item.status
               } : undefined,
             isRead: item.isRead !== undefined ? {
                 set: item.isRead
               } : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? {
+                set: item.acknowledgedAt
+              } : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? {
+                set: item.resolvedAt
+              } : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? {
+                set: item.suppressedUntil
+              } : undefined,
+            retryCount: item.retryCount !== undefined ? {
+                set: item.retryCount
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -3185,12 +3356,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
@@ -3490,12 +3672,23 @@ id
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
                 equals: item.alpacaAccountId 
                } : undefined,
+            title: item.title !== undefined ? {
+                equals: item.title 
+               } : undefined,
           },
           create: {
+            title: item.title !== undefined ? item.title : undefined,
             message: item.message !== undefined ? item.message : undefined,
             type: item.type !== undefined ? item.type : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            category: item.category !== undefined ? item.category : undefined,
             status: item.status !== undefined ? item.status : undefined,
             isRead: item.isRead !== undefined ? item.isRead : undefined,
+            acknowledgedAt: item.acknowledgedAt !== undefined ? item.acknowledgedAt : undefined,
+            resolvedAt: item.resolvedAt !== undefined ? item.resolvedAt : undefined,
+            suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
+            retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
         }))
       } : undefined,
