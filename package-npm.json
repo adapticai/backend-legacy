@@ -19,6 +19,7 @@
     "generated/typeStrings",
     "esm/",
     "server/",
+    "resolvers/",
     "*.d.ts",
     "*.js",
     "*.cjs",
