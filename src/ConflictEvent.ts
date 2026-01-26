@@ -9,18 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  timestamp
-  entityType
-  entityId
-  serverVersion
-  clientVersion
-  strategy
-  resolved
-  resolution
-  resolutionTime
-
+    undefined
   `;
 
   export const ConflictEvent = {

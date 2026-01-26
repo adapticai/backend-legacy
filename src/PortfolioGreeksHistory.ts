@@ -9,32 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  accountId
-  timestamp
-  contractId
-  symbol
-  underlying
-  delta
-  gamma
-  theta
-  vega
-  rho
-  totalDelta
-  totalGamma
-  totalTheta
-  totalVega
-  totalRho
-  positionCount
-  underlyingSymbols
-  expirationDates
-  marketHours
-  vix
-  spyPrice
-  source
-  createdAt
-
+    undefined
   `;
 
   export const PortfolioGreeksHistory = {

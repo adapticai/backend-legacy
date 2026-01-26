@@ -9,28 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  timestamp
-  generatorSource
-  symbol
-  totalSignals
-  successfulSignals
-  failedSignals
-  winRate
-  sharpeRatio
-  profitFactor
-  averageReturn
-  maxDrawdown
-  averageTimeToProfit
-  calibrationAccuracy
-  performanceTrend
-  lookbackPeriodDays
-  healthScore
-  healthStatus
-  healthIssues
-  updatedAt
-
+    undefined
   `;
 
   export const SignalGeneratorMetrics = {

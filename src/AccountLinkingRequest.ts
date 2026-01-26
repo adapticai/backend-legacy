@@ -97,14 +97,10 @@ import { removeUndefinedProps } from './utils';
       tradeAllocationPct
       allocation {
         id
-        equities
-        optionsContracts
-        futures
-        etfs
-        forex
-        crypto
         stocks
+        crypto
         options
+        etfs
         alpacaAccountId
         alpacaAccount {
 id
@@ -112,7 +108,6 @@ id
         createdAt
         updatedAt
       }
-      autoAllocation
       minPercentageChange
       volumeThreshold
       enablePortfolioTrailingStop
@@ -131,18 +126,9 @@ id
       alerts {
         id
         alpacaAccountId
-        title
         message
         type
-        severity
-        category
-        status
         isRead
-        acknowledgedAt
-        resolvedAt
-        suppressedUntil
-        retryCount
-        metadata
         createdAt
         updatedAt
       }
@@ -469,6 +455,53 @@ id
           refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
           expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
           linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+        },
+      }))
+    } : undefined,
+    reviewedWaitlistEntries: props.user.reviewedWaitlistEntries ? 
+      Array.isArray(props.user.reviewedWaitlistEntries) && props.user.reviewedWaitlistEntries.length > 0 &&  props.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.reviewedWaitlistEntries.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1297,6 +1330,134 @@ id
         },
       }))
     } : undefined,
+    reviewedWaitlistEntries: props.user.reviewedWaitlistEntries ? 
+    Array.isArray(props.user.reviewedWaitlistEntries) && props.user.reviewedWaitlistEntries.length > 0 && props.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.reviewedWaitlistEntries.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+          reviewedById: item.reviewedById !== undefined ? {
+              equals: item.reviewedById
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          email: item.email !== undefined ? {
+              set: item.email
+            } : undefined,
+          fullName: item.fullName !== undefined ? {
+              set: item.fullName
+            } : undefined,
+          companyName: item.companyName !== undefined ? {
+              set: item.companyName
+            } : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? {
+              set: item.companyWebsite
+            } : undefined,
+          jobRole: item.jobRole !== undefined ? {
+              set: item.jobRole
+            } : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+              set: item.professionalInvestorConfirmed
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          queuePosition: item.queuePosition !== undefined ? {
+              set: item.queuePosition
+            } : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? {
+              set: item.reviewedAt
+            } : undefined,
+      inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && (Object.keys(item.inviteToken)[0] === 'id' || Object.keys(item.inviteToken)[0] === 'symbol')
+? {
+      connect: {
+        id: item.inviteToken.id
+      }
+} : { upsert: {
+          where: {
+            id: item.inviteToken.id !== undefined ? {
+                equals: item.inviteToken.id
+              } : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email
+              } : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? {
+                equals: item.inviteToken.waitlistEntryId
+              } : undefined,
+          },
+          update: {
+            id: item.inviteToken.id !== undefined ? {
+                set: item.inviteToken.id
+              } : undefined,
+            token: item.inviteToken.token !== undefined ? {
+                set: item.inviteToken.token
+              } : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                set: item.inviteToken.email
+              } : undefined,
+            used: item.inviteToken.used !== undefined ? {
+                set: item.inviteToken.used
+              } : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? {
+                set: item.inviteToken.usedAt
+              } : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? {
+                set: item.inviteToken.expiresAt
+              } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1533,6 +1694,53 @@ id
           refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
           expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
           linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+        },
+      }))
+    } : undefined,
+    reviewedWaitlistEntries: props.user.reviewedWaitlistEntries ? 
+      Array.isArray(props.user.reviewedWaitlistEntries) && props.user.reviewedWaitlistEntries.length > 0 &&  props.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.reviewedWaitlistEntries.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1892,6 +2100,53 @@ id
           refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
           expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
           linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+        },
+      }))
+    } : undefined,
+    reviewedWaitlistEntries: props.user.reviewedWaitlistEntries ? 
+      Array.isArray(props.user.reviewedWaitlistEntries) && props.user.reviewedWaitlistEntries.length > 0 &&  props.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.reviewedWaitlistEntries.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -2529,6 +2784,134 @@ id
         },
       }))
     } : undefined,
+    reviewedWaitlistEntries: props.user.reviewedWaitlistEntries ? 
+    Array.isArray(props.user.reviewedWaitlistEntries) && props.user.reviewedWaitlistEntries.length > 0 && props.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.reviewedWaitlistEntries.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+          reviewedById: item.reviewedById !== undefined ? {
+              equals: item.reviewedById
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          email: item.email !== undefined ? {
+              set: item.email
+            } : undefined,
+          fullName: item.fullName !== undefined ? {
+              set: item.fullName
+            } : undefined,
+          companyName: item.companyName !== undefined ? {
+              set: item.companyName
+            } : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? {
+              set: item.companyWebsite
+            } : undefined,
+          jobRole: item.jobRole !== undefined ? {
+              set: item.jobRole
+            } : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+              set: item.professionalInvestorConfirmed
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          queuePosition: item.queuePosition !== undefined ? {
+              set: item.queuePosition
+            } : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? {
+              set: item.reviewedAt
+            } : undefined,
+      inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && (Object.keys(item.inviteToken)[0] === 'id' || Object.keys(item.inviteToken)[0] === 'symbol')
+? {
+      connect: {
+        id: item.inviteToken.id
+      }
+} : { upsert: {
+          where: {
+            id: item.inviteToken.id !== undefined ? {
+                equals: item.inviteToken.id
+              } : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email
+              } : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? {
+                equals: item.inviteToken.waitlistEntryId
+              } : undefined,
+          },
+          update: {
+            id: item.inviteToken.id !== undefined ? {
+                set: item.inviteToken.id
+              } : undefined,
+            token: item.inviteToken.token !== undefined ? {
+                set: item.inviteToken.token
+              } : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                set: item.inviteToken.email
+              } : undefined,
+            used: item.inviteToken.used !== undefined ? {
+                set: item.inviteToken.used
+              } : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? {
+                set: item.inviteToken.usedAt
+              } : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? {
+                set: item.inviteToken.expiresAt
+              } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -2765,6 +3148,53 @@ id
           refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
           expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
           linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+        },
+      }))
+    } : undefined,
+    reviewedWaitlistEntries: props.user.reviewedWaitlistEntries ? 
+      Array.isArray(props.user.reviewedWaitlistEntries) && props.user.reviewedWaitlistEntries.length > 0 &&  props.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.reviewedWaitlistEntries.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,
@@ -3500,6 +3930,134 @@ id
         },
       }))
     } : undefined,
+    reviewedWaitlistEntries: prop.user.reviewedWaitlistEntries ? 
+    Array.isArray(prop.user.reviewedWaitlistEntries) && prop.user.reviewedWaitlistEntries.length > 0 && prop.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.reviewedWaitlistEntries.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+          reviewedById: item.reviewedById !== undefined ? {
+              equals: item.reviewedById
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          email: item.email !== undefined ? {
+              set: item.email
+            } : undefined,
+          fullName: item.fullName !== undefined ? {
+              set: item.fullName
+            } : undefined,
+          companyName: item.companyName !== undefined ? {
+              set: item.companyName
+            } : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? {
+              set: item.companyWebsite
+            } : undefined,
+          jobRole: item.jobRole !== undefined ? {
+              set: item.jobRole
+            } : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+              set: item.professionalInvestorConfirmed
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          queuePosition: item.queuePosition !== undefined ? {
+              set: item.queuePosition
+            } : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? {
+              set: item.reviewedAt
+            } : undefined,
+      inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && (Object.keys(item.inviteToken)[0] === 'id' || Object.keys(item.inviteToken)[0] === 'symbol')
+? {
+      connect: {
+        id: item.inviteToken.id
+      }
+} : { upsert: {
+          where: {
+            id: item.inviteToken.id !== undefined ? {
+                equals: item.inviteToken.id
+              } : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email
+              } : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? {
+                equals: item.inviteToken.waitlistEntryId
+              } : undefined,
+          },
+          update: {
+            id: item.inviteToken.id !== undefined ? {
+                set: item.inviteToken.id
+              } : undefined,
+            token: item.inviteToken.token !== undefined ? {
+                set: item.inviteToken.token
+              } : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                set: item.inviteToken.email
+              } : undefined,
+            used: item.inviteToken.used !== undefined ? {
+                set: item.inviteToken.used
+              } : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? {
+                set: item.inviteToken.usedAt
+              } : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? {
+                set: item.inviteToken.expiresAt
+              } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -3736,6 +4294,53 @@ id
           refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
           expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
           linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+        },
+      }))
+    } : undefined,
+    reviewedWaitlistEntries: prop.user.reviewedWaitlistEntries ? 
+      Array.isArray(prop.user.reviewedWaitlistEntries) && prop.user.reviewedWaitlistEntries.length > 0 &&  prop.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.reviewedWaitlistEntries.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.user.reviewedWaitlistEntries.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          email: item.email !== undefined ? item.email : undefined,
+        },
+        create: {
+          email: item.email !== undefined ? item.email : undefined,
+          fullName: item.fullName !== undefined ? item.fullName : undefined,
+          companyName: item.companyName !== undefined ? item.companyName : undefined,
+          companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+          jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+          professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+          reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+      inviteToken: item.inviteToken ? 
+        typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+            id: item.inviteToken.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+            waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+            email: item.inviteToken.email !== undefined ? {
+                equals: item.inviteToken.email 
+               } : undefined,
+          },
+          create: {
+            token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+            email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+            used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+            usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+            expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+          },
+        }
+      } : undefined,
         },
       }))
     } : undefined,

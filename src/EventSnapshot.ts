@@ -9,16 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  aggregateId
-  aggregateType
-  version
-  state
-  timestamp
-  createdAt
-  updatedAt
-
+    undefined
   `;
 
   export const EventSnapshot = {

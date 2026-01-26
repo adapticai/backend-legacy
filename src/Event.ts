@@ -9,33 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  eventId
-  timestamp
-  category
-  eventType
-  severity
-  source
-  symbol
-  accountId
-  tradeId
-  signalId
-  orderId
-  userId
-  aggregateId
-  aggregateType
-  version
-  eventData
-  metadata
-  signature
-  retentionPolicyId
-  retentionExpiresAt
-  archived
-  tags
-  createdAt
-  updatedAt
-
+    undefined
   `;
 
   export const Event = {

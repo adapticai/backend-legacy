@@ -54,6 +54,7 @@ import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
 import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
 import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
 import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
+import { InviteToken } from './InviteToken';
 import { LinkedProvider } from './LinkedProvider';
 import { MLTrainingData } from './MLTrainingData';
 import { MarketSentiment } from './MarketSentiment';
@@ -80,6 +81,7 @@ import { TradeAuditEvent } from './TradeAuditEvent';
 import { TradeExecutionHistory } from './TradeExecutionHistory';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
+import { WaitlistEntry } from './WaitlistEntry';
 
 const adaptic = {
   aBTest: ABTest,
@@ -108,6 +110,7 @@ const adaptic = {
   institutionalSentimentErrors: InstitutionalSentimentErrors,
   institutionalSentimentHistory: InstitutionalSentimentHistory,
   institutionalSentimentMetrics: InstitutionalSentimentMetrics,
+  inviteToken: InviteToken,
   linkedProvider: LinkedProvider,
   mLTrainingData: MLTrainingData,
   marketSentiment: MarketSentiment,
@@ -134,6 +137,7 @@ const adaptic = {
   tradeExecutionHistory: TradeExecutionHistory,
   user: User,
   verificationToken: VerificationToken,
+  waitlistEntry: WaitlistEntry,
 };
 
 export default adaptic;

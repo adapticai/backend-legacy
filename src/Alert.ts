@@ -12,18 +12,9 @@ import { removeUndefinedProps } from './utils';
     
   id
   alpacaAccountId
-  title
   message
   type
-  severity
-  category
-  status
   isRead
-  acknowledgedAt
-  resolvedAt
-  suppressedUntil
-  retryCount
-  metadata
   createdAt
   updatedAt
 
@@ -333,6 +324,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -1085,6 +1100,64 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            reviewedById: item.reviewedById !== undefined ? {
+                equals: item.reviewedById
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            fullName: item.fullName !== undefined ? {
+                set: item.fullName
+              } : undefined,
+            companyName: item.companyName !== undefined ? {
+                set: item.companyName
+              } : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? {
+                set: item.companyWebsite
+              } : undefined,
+            jobRole: item.jobRole !== undefined ? {
+                set: item.jobRole
+              } : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+                set: item.professionalInvestorConfirmed
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            queuePosition: item.queuePosition !== undefined ? {
+                set: item.queuePosition
+              } : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? {
+                set: item.reviewedAt
+              } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -1258,6 +1331,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -1500,6 +1597,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -1859,6 +1980,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -2419,6 +2564,64 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            reviewedById: item.reviewedById !== undefined ? {
+                equals: item.reviewedById
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            fullName: item.fullName !== undefined ? {
+                set: item.fullName
+              } : undefined,
+            companyName: item.companyName !== undefined ? {
+                set: item.companyName
+              } : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? {
+                set: item.companyWebsite
+              } : undefined,
+            jobRole: item.jobRole !== undefined ? {
+                set: item.jobRole
+              } : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+                set: item.professionalInvestorConfirmed
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            queuePosition: item.queuePosition !== undefined ? {
+                set: item.queuePosition
+              } : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? {
+                set: item.reviewedAt
+              } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -2592,6 +2795,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -2834,6 +3061,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -3492,6 +3743,64 @@ import { removeUndefinedProps } from './utils';
           },
         }))
       } : undefined,
+      reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
+      Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            reviewedById: item.reviewedById !== undefined ? {
+                equals: item.reviewedById
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            fullName: item.fullName !== undefined ? {
+                set: item.fullName
+              } : undefined,
+            companyName: item.companyName !== undefined ? {
+                set: item.companyName
+              } : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? {
+                set: item.companyWebsite
+              } : undefined,
+            jobRole: item.jobRole !== undefined ? {
+                set: item.jobRole
+              } : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+                set: item.professionalInvestorConfirmed
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            queuePosition: item.queuePosition !== undefined ? {
+                set: item.queuePosition
+              } : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? {
+                set: item.reviewedAt
+              } : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
@@ -3665,6 +3974,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,
@@ -3907,6 +4240,30 @@ import { removeUndefinedProps } from './utils';
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
+        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+          },
+          create: {
+            email: item.email !== undefined ? item.email : undefined,
+            fullName: item.fullName !== undefined ? item.fullName : undefined,
+            companyName: item.companyName !== undefined ? item.companyName : undefined,
+            companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+            jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+            professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+            reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
       } : undefined,

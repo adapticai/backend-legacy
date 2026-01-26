@@ -9,18 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  timestamp
-  type
-  direction
-  entityType
-  entityId
-  duration
-  success
-  error
-  metadata
-
+    undefined
   `;
 
   export const SyncEvent = {

@@ -9,28 +9,7 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    
-  id
-  timestamp
-  signalId
-  symbol
-  signalType
-  generatorSource
-  priorityScore
-  generatorWinRate
-  generatorSharpe
-  priorityTier
-  scoreComponents
-  queuePosition
-  status
-  queuedAt
-  processingStartedAt
-  processingCompletedAt
-  timeInQueueMs
-  signalConfidence
-  signalData
-  updatedAt
-
+    undefined
   `;
 
   export const SignalPriorityQueue = {
