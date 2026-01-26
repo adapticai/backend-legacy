@@ -51,8 +51,23 @@ enum UserRole {
   /// An administrative user with elevated permissions.
   ADMIN
 
+  /// A super admin with cross-customer administrative permissions.
+  SUPERADMIN
+
   /// A regular user with standard access.
   USER
+}
+
+// Represents the status of a waitlist entry
+enum WaitlistStatus {
+  /// The waitlist entry is pending review.
+  PENDING
+
+  /// The waitlist entry has been approved.
+  APPROVED
+
+  /// The waitlist entry has been rejected.
+  REJECTED
 }
 
 enum ScheduledOptionOrderStatus {
@@ -971,6 +986,9 @@ model User {
 
   /// List of account linking requests. TYPESTRING.INCLUDE=['id','status','provider','email'] GQL.EXCLUDE=['user']
   accountLinkingRequests AccountLinkingRequest[]
+
+  /// List of waitlist entries reviewed by this user. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedBy']
+  reviewedWaitlistEntries WaitlistEntry[] @relation("WaitlistReviewer")
 
   @@map(name: "users")
 }
@@ -4284,4 +4302,86 @@ model TradeExecutionHistory {
   @@index([ticker, timestamp])
   @@index([expiresAt])
   @@map("trade_execution_history")
+}
+
+// Represents a waitlist entry for users requesting access to the platform
+model WaitlistEntry {
+  /// Unique identifier for the waitlist entry. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// The email address of the person on the waitlist.
+  email String @unique
+
+  /// The full name of the person on the waitlist.
+  fullName String
+
+  /// The company name of the person on the waitlist.
+  companyName String
+
+  /// The company website URL (optional).
+  companyWebsite String?
+
+  /// The job role/title of the person on the waitlist.
+  jobRole String
+
+  /// Whether the person has confirmed they are a professional investor.
+  professionalInvestorConfirmed Boolean @default(false)
+
+  /// The current status of the waitlist entry.
+  status WaitlistStatus @default(PENDING)
+
+  /// The position in the waitlist queue.
+  queuePosition Int @default(autoincrement())
+
+  /// Timestamp when the waitlist entry was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the waitlist entry was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the waitlist entry was reviewed. TYPESTRING.SKIP=true
+  reviewedAt DateTime?
+
+  /// The ID of the user who reviewed the entry. TYPESTRING.SKIP=true
+  reviewedById String? @db.Uuid
+
+  /// The user who reviewed the entry. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedWaitlistEntries']
+  reviewedBy User? @relation("WaitlistReviewer", fields: [reviewedById], references: [id])
+
+  /// The invite token associated with this waitlist entry. TYPESTRING.SKIP=true
+  inviteToken InviteToken?
+
+  @@map(name: "waitlist_entries")
+}
+
+// Represents an invite token for granting access to the platform
+model InviteToken {
+  /// Unique identifier for the invite token. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// The unique token string used for invitation.
+  token String @unique
+
+  /// The email address the token was generated for.
+  email String
+
+  /// The ID of the associated waitlist entry (optional). TYPESTRING.SKIP=true
+  waitlistEntryId String? @unique @db.Uuid
+
+  /// The associated waitlist entry (optional). TYPESTRING.SKIP=true
+  waitlistEntry WaitlistEntry? @relation(fields: [waitlistEntryId], references: [id])
+
+  /// Whether the token has been used.
+  used Boolean @default(false)
+
+  /// Timestamp when the token was used. TYPESTRING.SKIP=true
+  usedAt DateTime?
+
+  /// Timestamp when the token expires. TYPESTRING.SKIP=true
+  expiresAt DateTime?
+
+  /// Timestamp when the token was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@map(name: "invite_tokens")
 }
