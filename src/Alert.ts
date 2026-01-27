@@ -12,9 +12,18 @@ import { removeUndefinedProps } from './utils';
     
   id
   alpacaAccountId
+  title
   message
   type
+  severity
+  category
+  status
   isRead
+  acknowledgedAt
+  resolvedAt
+  suppressedUntil
+  retryCount
+  metadata
   createdAt
   updatedAt
 

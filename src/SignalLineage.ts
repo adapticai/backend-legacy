@@ -9,7 +9,37 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    undefined
+    
+  id
+  timestamp
+  lineageId
+  signalId
+  symbol
+  signalType
+  createdAt
+  generatorSource
+  generatorVersion
+  inputSources
+  technicalIndicators
+  llmAnalysis
+  preAnalysisValidations
+  filterResult
+  coordinationDecision
+  executionOutcome
+  originalSignal
+  finalSignal
+  lifecycleEvents
+  performanceAttribution
+  lastUpdated
+  storageLocation
+  retentionDays
+  complianceTags
+  customTags
+  executionStatus
+  decisionType
+  pnlPercentage
+  dataQuality
+
   `;
 
   export const SignalLineage = {

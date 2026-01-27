@@ -9,7 +9,15 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    undefined
+    
+  id
+  ticker
+  action
+  timestamp
+  accounts
+  createdAt
+  expiresAt
+
   `;
 
   export const TradeExecutionHistory = {

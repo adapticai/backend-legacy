@@ -9,7 +9,159 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    undefined
+    
+  id
+  token
+  email
+  waitlistEntryId
+  waitlistEntry {
+    id
+    email
+    fullName
+    companyName
+    companyWebsite
+    jobRole
+    professionalInvestorConfirmed
+    status
+    queuePosition
+    createdAt
+    updatedAt
+    reviewedAt
+    reviewedById
+    reviewedBy {
+      id
+      name
+      email
+      emailVerified
+      image
+      createdAt
+      updatedAt
+      role
+      bio
+      jobTitle
+      currentAccount
+      customer {
+        id
+        authUserId
+        name
+        plan
+        stripeCustomerId
+        stripeSubscriptionId
+        stripePriceId
+        stripeCurrentPeriodEnd
+        createdAt
+        updatedAt
+      }
+      customerId
+      accounts {
+        id
+        userId
+        type
+        provider
+        providerAccountId
+        refresh_token
+        access_token
+        expires_at
+        token_type
+        scope
+        id_token
+        session_state
+        createdAt
+        updatedAt
+      }
+      sessions {
+        id
+        sessionToken
+        userId
+        expires
+        createdAt
+        updatedAt
+      }
+      authenticators {
+        id
+        userId
+        credentialID
+        publicKey
+        counter
+        createdAt
+        updatedAt
+      }
+      plan
+      alpacaAccounts {
+        id
+        type
+        APIKey
+        APISecret
+        configuration
+        marketOpen
+        realTime
+        cryptoTradingEnabled
+        cryptoTradingPairs
+        cryptoTradeAllocationPct
+        tradeAllocationPct
+        allocation {
+id
+        }
+        autoAllocation
+        minPercentageChange
+        volumeThreshold
+        enablePortfolioTrailingStop
+        portfolioTrailPercent
+        portfolioProfitThresholdPercent
+        reducedPortfolioTrailPercent
+        defaultTrailingStopPercentage100
+        firstTrailReductionThreshold100
+        secondTrailReductionThreshold100
+        firstReducedTrailPercentage100
+        secondReducedTrailPercentage100
+        minimumPriceChangePercent100
+        userId
+        createdAt
+        updatedAt
+        alerts {
+id
+        }
+      }
+      openaiAPIKey
+      openaiModel
+      linkedProviders {
+        id
+        userId
+        provider
+        providerAccountId
+        email
+        accessToken
+        refreshToken
+        expiresAt
+        linkedAt
+        updatedAt
+      }
+      accountLinkingRequests {
+        id
+        userId
+        email
+        provider
+        providerAccountId
+        status
+        verificationToken
+        userAgent
+        ipAddress
+        createdAt
+        expiresAt
+        verifiedAt
+        approvedAt
+        rejectedAt
+      }
+    }
+    inviteToken {
+id
+    }
+  }
+  used
+  usedAt
+  expiresAt
+  createdAt
+
   `;
 
   export const InviteToken = {

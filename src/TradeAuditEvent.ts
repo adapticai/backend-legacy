@@ -9,7 +9,32 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    undefined
+    
+  id
+  timestamp
+  eventId
+  eventType
+  symbol
+  accountId
+  tradeId
+  signalId
+  orderId
+  userId
+  systemId
+  signatureJson
+  custodyJson
+  retentionPolicyId
+  immutable
+  encrypted
+  complianceTags
+  customTags
+  eventData
+  eventCategory
+  severity
+  passed
+  createdAt
+  retentionDate
+
   `;
 
   export const TradeAuditEvent = {

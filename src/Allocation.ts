@@ -11,10 +11,14 @@ import { removeUndefinedProps } from './utils';
   const selectionSet = `
     
   id
-  stocks
-  crypto
-  options
+  equities
+  optionsContracts
+  futures
   etfs
+  forex
+  crypto
+  stocks
+  options
   alpacaAccountId
   alpacaAccount {
     id
@@ -28,6 +32,7 @@ import { removeUndefinedProps } from './utils';
     cryptoTradingPairs
     cryptoTradeAllocationPct
     tradeAllocationPct
+    autoAllocation
     minPercentageChange
     volumeThreshold
     enablePortfolioTrailingStop
@@ -84,6 +89,24 @@ import { removeUndefinedProps } from './utils';
         approvedAt
         rejectedAt
       }
+      reviewedWaitlistEntries {
+        id
+        email
+        fullName
+        companyName
+        companyWebsite
+        jobRole
+        professionalInvestorConfirmed
+        status
+        queuePosition
+        createdAt
+        updatedAt
+        reviewedAt
+        reviewedById
+        inviteToken {
+id
+        }
+      }
     }
     userId
     createdAt
@@ -91,9 +114,18 @@ import { removeUndefinedProps } from './utils';
     alerts {
       id
       alpacaAccountId
+      title
       message
       type
+      severity
+      category
+      status
       isRead
+      acknowledgedAt
+      resolvedAt
+      suppressedUntil
+      retryCount
+      metadata
       createdAt
       updatedAt
     }

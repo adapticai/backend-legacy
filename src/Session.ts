@@ -98,6 +98,34 @@ id
       approvedAt
       rejectedAt
     }
+    reviewedWaitlistEntries {
+      id
+      email
+      fullName
+      companyName
+      companyWebsite
+      jobRole
+      professionalInvestorConfirmed
+      status
+      queuePosition
+      createdAt
+      updatedAt
+      reviewedAt
+      reviewedById
+      inviteToken {
+        id
+        token
+        email
+        waitlistEntryId
+        waitlistEntry {
+id
+        }
+        used
+        usedAt
+        expiresAt
+        createdAt
+      }
+    }
   }
   createdAt
   updatedAt

@@ -9,7 +9,42 @@ import { removeUndefinedProps } from './utils';
    */
 
   const selectionSet = `
-    undefined
+    
+  id
+  timestamp
+  accountId
+  ticker
+  action
+  quantity
+  strikePrice
+  expirationDate
+  optionType
+  strategy
+  orderType
+  limitPrice
+  errorMessage
+  errorCode
+  errorStack
+  retryCount
+  maxRetries
+  lastRetryAt
+  nextRetryAt
+  backoffMs
+  status
+  resolvedAt
+  resolvedBy
+  resolution
+  tradeContext
+  accountState
+  marketContext
+  validationErrors
+  failureCategory
+  severity
+  tags
+  createdBy
+  updatedAt
+  notes
+
   `;
 
   export const DeadLetterMessage = {

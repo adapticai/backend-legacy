@@ -82,10 +82,14 @@ import { removeUndefinedProps } from './utils';
     tradeAllocationPct
     allocation {
       id
-      stocks
-      crypto
-      options
+      equities
+      optionsContracts
+      futures
       etfs
+      forex
+      crypto
+      stocks
+      options
       alpacaAccountId
       alpacaAccount {
 id
@@ -93,6 +97,7 @@ id
       createdAt
       updatedAt
     }
+    autoAllocation
     minPercentageChange
     volumeThreshold
     enablePortfolioTrailingStop
@@ -111,9 +116,18 @@ id
     alerts {
       id
       alpacaAccountId
+      title
       message
       type
+      severity
+      category
+      status
       isRead
+      acknowledgedAt
+      resolvedAt
+      suppressedUntil
+      retryCount
+      metadata
       createdAt
       updatedAt
     }
@@ -147,6 +161,34 @@ id
     verifiedAt
     approvedAt
     rejectedAt
+  }
+  reviewedWaitlistEntries {
+    id
+    email
+    fullName
+    companyName
+    companyWebsite
+    jobRole
+    professionalInvestorConfirmed
+    status
+    queuePosition
+    createdAt
+    updatedAt
+    reviewedAt
+    reviewedById
+    inviteToken {
+      id
+      token
+      email
+      waitlistEntryId
+      waitlistEntry {
+id
+      }
+      used
+      usedAt
+      expiresAt
+      createdAt
+    }
   }
 
   `;
