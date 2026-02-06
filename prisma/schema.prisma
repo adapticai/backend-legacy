@@ -887,7 +887,7 @@ model MarketSentiment {
   createdAt DateTime @default(now())
 
   /// Timestamp when the market sentiment record was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map(name: "market_sentiments")
 }
@@ -913,7 +913,7 @@ model Session {
   createdAt DateTime @default(now())
 
   /// Timestamp when the session was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@map(name: "sessions")
@@ -940,7 +940,7 @@ model User {
   createdAt DateTime @default(now())
 
   /// Timestamp when the user account was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// The role assigned to the user, determining permissions.
   role UserRole @default(USER)
@@ -990,6 +990,7 @@ model User {
   /// List of waitlist entries reviewed by this user. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedBy']
   reviewedWaitlistEntries WaitlistEntry[] @relation("WaitlistReviewer")
 
+  @@index([customerId])
   @@map(name: "users")
 }
 
@@ -1182,11 +1183,12 @@ model AlpacaAccount {
   createdAt DateTime @default(now())
 
   /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   alerts Alert[]
 
+  @@index([userId])
   @@map(name: "alpaca_accounts")
 }
 
@@ -1229,8 +1231,9 @@ model Allocation {
   createdAt DateTime @default(now())
 
   /// Timestamp when the allocation settings were last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
+  @@index([alpacaAccountId])
   @@map(name: "allocations")
 }
 
@@ -1258,7 +1261,7 @@ model Authenticator {
   createdAt DateTime @default(now())
 
   /// Timestamp when the authenticator was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@map(name: "authenticators")
@@ -1306,7 +1309,7 @@ model Account {
   createdAt DateTime @default(now())
 
   /// Timestamp when the account was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['accounts']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1364,7 +1367,7 @@ model Customer {
   createdAt DateTime @default(now())
 
   /// Timestamp when the customer was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// List of users associated with the customer. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['customer']
   users User[]
@@ -1546,7 +1549,7 @@ model Asset {
   createdAt DateTime @default(now())
 
   /// Timestamp when the asset was last updated in the database. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   newsMentions NewsArticleAssetSentiment[]
@@ -1584,13 +1587,13 @@ model Trade {
   confidence Float
 
   /// Timestamp when the trade was executed. TYPESTRING.SKIP=true
-  timestamp String?
+  timestamp DateTime?
 
   /// Timestamp when the trade record was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
   /// Timestamp when the trade record was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// Current status of the trade.
   status TradeStatus @default(PENDING)
@@ -1646,6 +1649,9 @@ model Trade {
   /// Thresholds used for this trade as JSON. TYPESTRING.SKIP=true
   thresholdsJson String? @map("thresholds")
 
+  @@index([alpacaAccountId])
+  @@index([alpacaAccountId, status])
+  @@index([symbol])
   @@map(name: "trades")
 }
 
@@ -1679,11 +1685,13 @@ model Action {
   createdAt DateTime @default(now())
 
   /// Timestamp when the action was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// alpacaOrderId for the Alpaca order associated with this action. TYPESTRING.SKIP=true
   alpacaOrderId String? @unique @db.Uuid
 
+  @@index([tradeId])
+  @@index([tradeId, status])
   @@map(name: "actions")
 }
 
@@ -1735,11 +1743,15 @@ model Alert {
   createdAt DateTime @default(now())
 
   /// Timestamp when the alert was last updated. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
+  @@index([alpacaAccountId])
+  @@index([alpacaAccountId, status])
+  @@index([type])
+  @@index([category])
   @@map(name: "alerts")
 }
 
@@ -1791,11 +1803,12 @@ model NewsArticle {
   createdAt DateTime @default(now())
 
   /// Timestamp when the news article was last updated in the database. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   /// List of asset sentiments related to this news article. TYPESTRING.SKIP=true GQL.EXCLUDE=['news']
   assets NewsArticleAssetSentiment[]
 
+  @@index([createdAt])
   @@map(name: "news")
 }
 
@@ -1827,6 +1840,9 @@ model NewsArticleAssetSentiment {
 
   /// Label indicating the overall sentiment (e.g., Positive, Negative, Neutral).
   sentimentLabel String?
+
+  @@index([newsArticleId])
+  @@index([assetId])
 }
 
 // Represents an economic event that may impact the markets.
@@ -1850,7 +1866,7 @@ model EconomicEvent {
   createdAt DateTime @default(now())
 
   /// Timestamp when the economic event was last updated in the database. TYPESTRING.SKIP=true
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map(name: "economic_events")
 }
@@ -2429,6 +2445,8 @@ model ModelVersionArtifact {
   createdAt DateTime @default(now())
 
   @@unique([modelVersionId, modelArtifactId])
+  @@index([modelVersionId])
+  @@index([modelArtifactId])
   @@map("model_version_artifacts")
 }
 
@@ -2568,6 +2586,7 @@ model ModelVersion {
   @@index([status])
   @@index([deploymentEnvironment])
   @@index([createdAt])
+  @@index([parentVersionId])
   @@map("model_versions")
 }
 
@@ -4351,6 +4370,8 @@ model WaitlistEntry {
   /// The invite token associated with this waitlist entry. TYPESTRING.SKIP=true
   inviteToken InviteToken?
 
+  @@index([reviewedById])
+  @@index([status])
   @@map(name: "waitlist_entries")
 }
 
@@ -4383,5 +4404,6 @@ model InviteToken {
   /// Timestamp when the token was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
+  @@index([waitlistEntryId])
   @@map(name: "invite_tokens")
 }

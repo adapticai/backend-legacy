@@ -1,0 +1,23 @@
+-- Migration: Fix updatedAt patterns across models
+-- This migration changes updatedAt fields from @default(now()) to @updatedAt
+-- The @updatedAt directive is a Prisma-level feature that automatically updates
+-- the timestamp whenever a record is modified. This change does not require
+-- any SQL alterations as the database column remains a DateTime type.
+--
+-- Models affected:
+-- - MarketSentiment
+-- - Session
+-- - User
+-- - AlpacaAccount
+-- - Allocation
+-- - Authenticator
+-- - Account
+-- - Customer
+-- - Asset
+-- - Trade
+-- - Action
+-- - Alert
+-- - NewsArticle
+-- - EconomicEvent
+--
+-- No SQL changes are required for this migration.

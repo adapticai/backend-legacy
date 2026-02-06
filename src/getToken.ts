@@ -1,6 +1,7 @@
 import { IncomingHttpHeaders } from 'http';
 import { Buffer } from 'buffer';
 import * as crypto from 'crypto';
+import { jwtSecret } from './config/jwtConfig';
 
 /**
  * Default maximum age for JWT (30 days)
@@ -307,7 +308,7 @@ export async function getToken<R extends boolean = false>(
     raw = false,
     decode: _decode = decode,
     logger = defaultLogger,
-    secret = process.env.JWT_SECRET || 'eYJkJ8PNIcBR6MppvxjjjdS+m3Ssoiu4boS6tp4tz71i',
+    secret = jwtSecret,
     salt = process.env.JWT_SALT || ''
   } = params;
 

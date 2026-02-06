@@ -620,11 +620,16 @@ export const generateModelFunctions = (
   };
 
 
+  // Add validation import for Allocation model
+  const allocationValidationImport = capitalModelName === 'Allocation'
+    ? `import { assertValidAllocation } from './validators/allocation-validator';\n`
+    : '';
+
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
-  `;
+${allocationValidationImport}  `;
 
   const operations = `
   ${imports}
@@ -653,7 +658,17 @@ import { removeUndefinedProps } from './utils';
      * @returns The created ${capitalModelName} or null.
      */
     async create(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-      // Maximum number of retries for database connection issues
+      ${capitalModelName === 'Allocation' ? `// Validate allocation percentages before creating
+      assertValidAllocation({
+        equities: props.equities,
+        optionsContracts: props.optionsContracts,
+        futures: props.futures,
+        etfs: props.etfs,
+        forex: props.forex,
+        crypto: props.crypto
+      });
+
+      ` : ''}// Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
       let lastError: any = null;
@@ -831,7 +846,17 @@ import { removeUndefinedProps } from './utils';
    * @returns The updated ${capitalModelName} or null.
    */
   async update(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-    // Maximum number of retries for database connection issues
+    ${capitalModelName === 'Allocation' ? `// Validate allocation percentages before updating
+    assertValidAllocation({
+      equities: props.equities,
+      optionsContracts: props.optionsContracts,
+      futures: props.futures,
+      etfs: props.etfs,
+      forex: props.forex,
+      crypto: props.crypto
+    });
+
+    ` : ''}// Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
     let lastError: any = null;

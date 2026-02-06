@@ -3,6 +3,7 @@
 import { Allocation as AllocationType } from './generated/typegraphql-prisma/models/Allocation';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
+import { assertValidAllocation } from './validators/allocation-validator';
   
   /**
    * CRUD operations for the Allocation model.
@@ -152,6 +153,16 @@ id
      * @returns The created Allocation or null.
      */
     async create(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
+      // Validate allocation percentages before creating
+      assertValidAllocation({
+        equities: props.equities,
+        optionsContracts: props.optionsContracts,
+        futures: props.futures,
+        etfs: props.etfs,
+        forex: props.forex,
+        crypto: props.crypto
+      });
+
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -623,6 +634,16 @@ id
    * @returns The updated Allocation or null.
    */
   async update(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
+    // Validate allocation percentages before updating
+    assertValidAllocation({
+      equities: props.equities,
+      optionsContracts: props.optionsContracts,
+      futures: props.futures,
+      etfs: props.etfs,
+      forex: props.forex,
+      crypto: props.crypto
+    });
+
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
