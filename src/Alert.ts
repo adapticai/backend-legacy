@@ -125,6 +125,7 @@ import { logger } from './utils/logger';
         firstReducedTrailPercentage100: props.alpacaAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.firstReducedTrailPercentage100 : undefined,
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
+        deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
     allocation: props.alpacaAccount.allocation ? 
       typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
     ? { connect: {
@@ -167,6 +168,7 @@ import { logger } from './utils/logger';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
           jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
@@ -685,6 +687,9 @@ import { logger } from './utils/logger';
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? {
             set: props.alpacaAccount.minimumPriceChangePercent100
           } : undefined,
+        deletedAt: props.alpacaAccount.deletedAt !== undefined ? {
+            set: props.alpacaAccount.deletedAt
+          } : undefined,
     allocation: props.alpacaAccount.allocation ? 
     typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && (Object.keys(props.alpacaAccount.allocation)[0] === 'id' || Object.keys(props.alpacaAccount.allocation)[0] === 'symbol')
 ? {
@@ -777,6 +782,9 @@ import { logger } from './utils/logger';
             } : undefined,
           image: props.alpacaAccount.user.image !== undefined ? {
               set: props.alpacaAccount.user.image
+            } : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? {
+              set: props.alpacaAccount.user.deletedAt
             } : undefined,
           role: props.alpacaAccount.user.role !== undefined ? {
               set: props.alpacaAccount.user.role
@@ -1174,6 +1182,7 @@ import { logger } from './utils/logger';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
           jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
@@ -1398,6 +1407,7 @@ import { logger } from './utils/logger';
         firstReducedTrailPercentage100: props.alpacaAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.firstReducedTrailPercentage100 : undefined,
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
+        deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
     allocation: props.alpacaAccount.allocation ? 
       typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
     ? { connect: {
@@ -1440,6 +1450,7 @@ import { logger } from './utils/logger';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
           jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
@@ -1781,6 +1792,7 @@ import { logger } from './utils/logger';
         firstReducedTrailPercentage100: props.alpacaAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.firstReducedTrailPercentage100 : undefined,
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
+        deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
     allocation: props.alpacaAccount.allocation ? 
       typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
     ? { connect: {
@@ -1823,6 +1835,7 @@ import { logger } from './utils/logger';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
           jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
@@ -2149,6 +2162,9 @@ import { logger } from './utils/logger';
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? {
             set: props.alpacaAccount.minimumPriceChangePercent100
           } : undefined,
+        deletedAt: props.alpacaAccount.deletedAt !== undefined ? {
+            set: props.alpacaAccount.deletedAt
+          } : undefined,
     allocation: props.alpacaAccount.allocation ? 
     typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && (Object.keys(props.alpacaAccount.allocation)[0] === 'id' || Object.keys(props.alpacaAccount.allocation)[0] === 'symbol')
 ? {
@@ -2241,6 +2257,9 @@ import { logger } from './utils/logger';
             } : undefined,
           image: props.alpacaAccount.user.image !== undefined ? {
               set: props.alpacaAccount.user.image
+            } : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? {
+              set: props.alpacaAccount.user.deletedAt
             } : undefined,
           role: props.alpacaAccount.user.role !== undefined ? {
               set: props.alpacaAccount.user.role
@@ -2638,6 +2657,7 @@ import { logger } from './utils/logger';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
           jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
@@ -2862,6 +2882,7 @@ import { logger } from './utils/logger';
         firstReducedTrailPercentage100: props.alpacaAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.firstReducedTrailPercentage100 : undefined,
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
+        deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
     allocation: props.alpacaAccount.allocation ? 
       typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
     ? { connect: {
@@ -2904,6 +2925,7 @@ import { logger } from './utils/logger';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
           jobTitle: props.alpacaAccount.user.jobTitle !== undefined ? props.alpacaAccount.user.jobTitle : undefined,
@@ -3328,6 +3350,9 @@ import { logger } from './utils/logger';
         minimumPriceChangePercent100: prop.alpacaAccount.minimumPriceChangePercent100 !== undefined ? {
             set: prop.alpacaAccount.minimumPriceChangePercent100
           } : undefined,
+        deletedAt: prop.alpacaAccount.deletedAt !== undefined ? {
+            set: prop.alpacaAccount.deletedAt
+          } : undefined,
     allocation: prop.alpacaAccount.allocation ? 
     typeof prop.alpacaAccount.allocation === 'object' && Object.keys(prop.alpacaAccount.allocation).length === 1 && (Object.keys(prop.alpacaAccount.allocation)[0] === 'id' || Object.keys(prop.alpacaAccount.allocation)[0] === 'symbol')
 ? {
@@ -3420,6 +3445,9 @@ import { logger } from './utils/logger';
             } : undefined,
           image: prop.alpacaAccount.user.image !== undefined ? {
               set: prop.alpacaAccount.user.image
+            } : undefined,
+          deletedAt: prop.alpacaAccount.user.deletedAt !== undefined ? {
+              set: prop.alpacaAccount.user.deletedAt
             } : undefined,
           role: prop.alpacaAccount.user.role !== undefined ? {
               set: prop.alpacaAccount.user.role
@@ -3817,6 +3845,7 @@ import { logger } from './utils/logger';
           email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
           emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
           image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          deletedAt: prop.alpacaAccount.user.deletedAt !== undefined ? prop.alpacaAccount.user.deletedAt : undefined,
           role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
           bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
           jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? prop.alpacaAccount.user.jobTitle : undefined,
@@ -4041,6 +4070,7 @@ import { logger } from './utils/logger';
         firstReducedTrailPercentage100: prop.alpacaAccount.firstReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.firstReducedTrailPercentage100 : undefined,
         secondReducedTrailPercentage100: prop.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: prop.alpacaAccount.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.minimumPriceChangePercent100 : undefined,
+        deletedAt: prop.alpacaAccount.deletedAt !== undefined ? prop.alpacaAccount.deletedAt : undefined,
     allocation: prop.alpacaAccount.allocation ? 
       typeof prop.alpacaAccount.allocation === 'object' && Object.keys(prop.alpacaAccount.allocation).length === 1 && Object.keys(prop.alpacaAccount.allocation)[0] === 'id'
     ? { connect: {
@@ -4083,6 +4113,7 @@ import { logger } from './utils/logger';
           email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
           emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
           image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          deletedAt: prop.alpacaAccount.user.deletedAt !== undefined ? prop.alpacaAccount.user.deletedAt : undefined,
           role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
           bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
           jobTitle: prop.alpacaAccount.user.jobTitle !== undefined ? prop.alpacaAccount.user.jobTitle : undefined,

@@ -15,6 +15,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
+import { createAuditLogPlugin } from './middleware/audit-logger';
 import { jwtSecret } from './config/jwtConfig';
 import prisma from './prismaClient';
 import { createHealthRouter } from './health';
@@ -84,7 +85,10 @@ const startServer = async () => {
   const server = new ApolloServer({
     schema,
     introspection: true,
-    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      createAuditLogPlugin(),
+    ],
     formatError: (err) => {
       logger.error('GraphQL Error', { graphqlError: err });
 

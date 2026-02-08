@@ -37,6 +37,7 @@ import { logger } from './utils/logger';
       image
       createdAt
       updatedAt
+      deletedAt
       role
       bio
       jobTitle
@@ -119,6 +120,7 @@ id
         userId
         createdAt
         updatedAt
+        deletedAt
         alerts {
 id
         }
@@ -254,6 +256,7 @@ id
           email: props.waitlistEntry.reviewedBy.email !== undefined ? props.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: props.waitlistEntry.reviewedBy.emailVerified !== undefined ? props.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? props.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? props.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? props.waitlistEntry.reviewedBy.role : undefined,
           bio: props.waitlistEntry.reviewedBy.bio !== undefined ? props.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: props.waitlistEntry.reviewedBy.jobTitle !== undefined ? props.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -399,6 +402,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -755,6 +759,9 @@ id
           image: props.waitlistEntry.reviewedBy.image !== undefined ? {
               set: props.waitlistEntry.reviewedBy.image
             } : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.deletedAt
+            } : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? {
               set: props.waitlistEntry.reviewedBy.role
             } : undefined,
@@ -1046,6 +1053,9 @@ id
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
                 set: item.minimumPriceChangePercent100
               } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -1073,6 +1083,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -1208,6 +1219,7 @@ id
           email: props.waitlistEntry.reviewedBy.email !== undefined ? props.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: props.waitlistEntry.reviewedBy.emailVerified !== undefined ? props.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? props.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? props.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? props.waitlistEntry.reviewedBy.role : undefined,
           bio: props.waitlistEntry.reviewedBy.bio !== undefined ? props.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: props.waitlistEntry.reviewedBy.jobTitle !== undefined ? props.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -1353,6 +1365,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -1453,6 +1466,7 @@ id
           email: props.waitlistEntry.reviewedBy.email !== undefined ? props.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: props.waitlistEntry.reviewedBy.emailVerified !== undefined ? props.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? props.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? props.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? props.waitlistEntry.reviewedBy.role : undefined,
           bio: props.waitlistEntry.reviewedBy.bio !== undefined ? props.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: props.waitlistEntry.reviewedBy.jobTitle !== undefined ? props.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -1598,6 +1612,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -1804,6 +1819,7 @@ id
           email: props.waitlistEntry.reviewedBy.email !== undefined ? props.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: props.waitlistEntry.reviewedBy.emailVerified !== undefined ? props.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? props.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? props.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? props.waitlistEntry.reviewedBy.role : undefined,
           bio: props.waitlistEntry.reviewedBy.bio !== undefined ? props.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: props.waitlistEntry.reviewedBy.jobTitle !== undefined ? props.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -1949,6 +1965,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -2124,6 +2141,9 @@ id
             } : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? {
               set: props.waitlistEntry.reviewedBy.image
+            } : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.deletedAt
             } : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? {
               set: props.waitlistEntry.reviewedBy.role
@@ -2416,6 +2436,9 @@ id
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
                 set: item.minimumPriceChangePercent100
               } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -2443,6 +2466,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -2578,6 +2602,7 @@ id
           email: props.waitlistEntry.reviewedBy.email !== undefined ? props.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: props.waitlistEntry.reviewedBy.emailVerified !== undefined ? props.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? props.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? props.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? props.waitlistEntry.reviewedBy.role : undefined,
           bio: props.waitlistEntry.reviewedBy.bio !== undefined ? props.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: props.waitlistEntry.reviewedBy.jobTitle !== undefined ? props.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -2723,6 +2748,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -2823,6 +2849,7 @@ id
           email: props.waitlistEntry.reviewedBy.email !== undefined ? props.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: props.waitlistEntry.reviewedBy.emailVerified !== undefined ? props.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: props.waitlistEntry.reviewedBy.image !== undefined ? props.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: props.waitlistEntry.reviewedBy.deletedAt !== undefined ? props.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: props.waitlistEntry.reviewedBy.role !== undefined ? props.waitlistEntry.reviewedBy.role : undefined,
           bio: props.waitlistEntry.reviewedBy.bio !== undefined ? props.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: props.waitlistEntry.reviewedBy.jobTitle !== undefined ? props.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -2968,6 +2995,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -3236,6 +3264,9 @@ id
             } : undefined,
           image: prop.waitlistEntry.reviewedBy.image !== undefined ? {
               set: prop.waitlistEntry.reviewedBy.image
+            } : undefined,
+          deletedAt: prop.waitlistEntry.reviewedBy.deletedAt !== undefined ? {
+              set: prop.waitlistEntry.reviewedBy.deletedAt
             } : undefined,
           role: prop.waitlistEntry.reviewedBy.role !== undefined ? {
               set: prop.waitlistEntry.reviewedBy.role
@@ -3528,6 +3559,9 @@ id
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
                 set: item.minimumPriceChangePercent100
               } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -3555,6 +3589,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -3690,6 +3725,7 @@ id
           email: prop.waitlistEntry.reviewedBy.email !== undefined ? prop.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: prop.waitlistEntry.reviewedBy.emailVerified !== undefined ? prop.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: prop.waitlistEntry.reviewedBy.image !== undefined ? prop.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: prop.waitlistEntry.reviewedBy.deletedAt !== undefined ? prop.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: prop.waitlistEntry.reviewedBy.role !== undefined ? prop.waitlistEntry.reviewedBy.role : undefined,
           bio: prop.waitlistEntry.reviewedBy.bio !== undefined ? prop.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: prop.waitlistEntry.reviewedBy.jobTitle !== undefined ? prop.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -3835,6 +3871,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -3935,6 +3972,7 @@ id
           email: prop.waitlistEntry.reviewedBy.email !== undefined ? prop.waitlistEntry.reviewedBy.email : undefined,
           emailVerified: prop.waitlistEntry.reviewedBy.emailVerified !== undefined ? prop.waitlistEntry.reviewedBy.emailVerified : undefined,
           image: prop.waitlistEntry.reviewedBy.image !== undefined ? prop.waitlistEntry.reviewedBy.image : undefined,
+          deletedAt: prop.waitlistEntry.reviewedBy.deletedAt !== undefined ? prop.waitlistEntry.reviewedBy.deletedAt : undefined,
           role: prop.waitlistEntry.reviewedBy.role !== undefined ? prop.waitlistEntry.reviewedBy.role : undefined,
           bio: prop.waitlistEntry.reviewedBy.bio !== undefined ? prop.waitlistEntry.reviewedBy.bio : undefined,
           jobTitle: prop.waitlistEntry.reviewedBy.jobTitle !== undefined ? prop.waitlistEntry.reviewedBy.jobTitle : undefined,
@@ -4080,6 +4118,7 @@ id
             firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,

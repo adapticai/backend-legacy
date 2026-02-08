@@ -20,6 +20,7 @@ import { logger } from './utils/logger';
   status
   createdAt
   updatedAt
+  deletedAt
   alpacaOrderId
 
   `;
@@ -73,6 +74,7 @@ import { logger } from './utils/logger';
   primary: props.primary !== undefined ? props.primary : undefined,
   note: props.note !== undefined ? props.note : undefined,
   status: props.status !== undefined ? props.status : undefined,
+  deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   trade: props.trade ? 
     typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && Object.keys(props.trade)[0] === 'id'
@@ -99,6 +101,7 @@ import { logger } from './utils/logger';
         confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
+        deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
@@ -206,6 +209,7 @@ import { logger } from './utils/logger';
   primary: prop.primary !== undefined ? prop.primary : undefined,
   note: prop.note !== undefined ? prop.note : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
+  deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
       })),
         };
@@ -319,6 +323,9 @@ import { logger } from './utils/logger';
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
+  deletedAt: props.deletedAt !== undefined ? {
+            set: props.deletedAt 
+           } : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? {
             set: props.alpacaOrderId 
            } : undefined,
@@ -367,6 +374,9 @@ import { logger } from './utils/logger';
           } : undefined,
         status: props.trade.status !== undefined ? {
             set: props.trade.status
+          } : undefined,
+        deletedAt: props.trade.deletedAt !== undefined ? {
+            set: props.trade.deletedAt
           } : undefined,
         symbol: props.trade.symbol !== undefined ? {
             set: props.trade.symbol
@@ -426,6 +436,7 @@ import { logger } from './utils/logger';
         confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
+        deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
@@ -538,6 +549,7 @@ import { logger } from './utils/logger';
   primary: props.primary !== undefined ? props.primary : undefined,
   note: props.note !== undefined ? props.note : undefined,
   status: props.status !== undefined ? props.status : undefined,
+  deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   trade: props.trade ? 
     typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && Object.keys(props.trade)[0] === 'id'
@@ -564,6 +576,7 @@ import { logger } from './utils/logger';
         confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
+        deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
@@ -599,6 +612,9 @@ import { logger } from './utils/logger';
            } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
+           } : undefined,
+  deletedAt: props.deletedAt !== undefined ? {
+            set: props.deletedAt 
            } : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? {
             set: props.alpacaOrderId 
@@ -648,6 +664,9 @@ import { logger } from './utils/logger';
           } : undefined,
         status: props.trade.status !== undefined ? {
             set: props.trade.status
+          } : undefined,
+        deletedAt: props.trade.deletedAt !== undefined ? {
+            set: props.trade.deletedAt
           } : undefined,
         symbol: props.trade.symbol !== undefined ? {
             set: props.trade.symbol
@@ -707,6 +726,7 @@ import { logger } from './utils/logger';
         confidence: props.trade.confidence !== undefined ? props.trade.confidence : undefined,
         timestamp: props.trade.timestamp !== undefined ? props.trade.timestamp : undefined,
         status: props.trade.status !== undefined ? props.trade.status : undefined,
+        deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
@@ -839,6 +859,9 @@ import { logger } from './utils/logger';
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,
+  deletedAt: prop.deletedAt !== undefined ? {
+            set: prop.deletedAt 
+           } : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? {
             set: prop.alpacaOrderId 
            } : undefined,
@@ -887,6 +910,9 @@ import { logger } from './utils/logger';
           } : undefined,
         status: prop.trade.status !== undefined ? {
             set: prop.trade.status
+          } : undefined,
+        deletedAt: prop.trade.deletedAt !== undefined ? {
+            set: prop.trade.deletedAt
           } : undefined,
         symbol: prop.trade.symbol !== undefined ? {
             set: prop.trade.symbol
@@ -946,6 +972,7 @@ import { logger } from './utils/logger';
         confidence: prop.trade.confidence !== undefined ? prop.trade.confidence : undefined,
         timestamp: prop.trade.timestamp !== undefined ? prop.trade.timestamp : undefined,
         status: prop.trade.status !== undefined ? prop.trade.status : undefined,
+        deletedAt: prop.trade.deletedAt !== undefined ? prop.trade.deletedAt : undefined,
         symbol: prop.trade.symbol !== undefined ? prop.trade.symbol : undefined,
         entryPrice: prop.trade.entryPrice !== undefined ? prop.trade.entryPrice : undefined,
         exitPrice: prop.trade.exitPrice !== undefined ? prop.trade.exitPrice : undefined,

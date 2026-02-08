@@ -1,9 +1,8 @@
 /**
- * Input Validation Middleware
+ * Middleware Index
  *
- * Provides GraphQL mutation input validation through:
- * 1. Manual validation functions for custom resolvers
- * 2. Automatic validation plugin for pattern-based rules
+ * Provides GraphQL mutation input validation, audit logging,
+ * soft-delete handling, and authentication middleware.
  */
 
 // Export validation functions
@@ -30,6 +29,26 @@ export {
   authMiddleware,
   AuthenticatedRequest,
 } from './auth';
+
+// Export audit logging plugin
+export {
+  createAuditLogPlugin,
+  parseMutationOperation,
+  extractUserId,
+  extractRecordId,
+  extractChangedFields,
+} from './audit-logger';
+
+// Export soft-delete utilities
+export {
+  SOFT_DELETE_MODELS,
+  softDeleteFilter,
+  deletedOnlyFilter,
+  isSoftDeleteModel,
+  softDeleteRecord,
+  restoreRecord,
+  hardDelete,
+} from './soft-delete';
 
 // Export example validators for reference
 export { CustomValidators } from './validation-examples';

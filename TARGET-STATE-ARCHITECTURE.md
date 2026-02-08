@@ -229,65 +229,67 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 
 ### P2 - Medium Priority (Institutional Readiness)
 
-#### 19. Audit Logging - NOT STARTED
+#### 19. Audit Logging - IMPLEMENTED
 
-**Status:** NOT STARTED
+**Status:** IMPLEMENTED (2026-02-08)
 
-**Current state:** No audit trail for data mutations. Cannot answer "who changed what, when."
-
-**Target state:**
-- All mutations logged with:
-  - User ID (from JWT)
-  - Timestamp
-  - Operation type (create, update, delete)
-  - Model name
-  - Changed fields (before and after values for updates)
-- Audit logs stored in a separate database table
-- Audit logs immutable (append-only, no updates or deletes)
-- Queryable via admin GraphQL endpoint
-
-**Files to change:** New Prisma model for audit logs, middleware for automatic capture, new migration
-
----
-
-#### 20. Soft Deletes - NOT STARTED
-
-**Status:** NOT STARTED
-
-**Current state:** All deletes are hard deletes. Deleted data is unrecoverable.
-
-**Target state:**
-- `deletedAt` (DateTime?) field added to critical models:
-  - User
-  - AlpacaAccount
-  - Trade
-  - Position
-  - Order
-  - Action
-- Default queries filter out soft-deleted records
-- Admin endpoint to view and restore soft-deleted records
-- Hard delete available as a separate privileged operation
-- Cascading soft deletes for related records
-
-**Files to change:** `prisma/schema.prisma` (new migration), CRUD function generators, resolver middleware
-
----
-
-#### 21. Database Constraints - PARTIALLY DONE
-
-**Status:** PARTIALLY DONE (allocation validation added, broader constraints remaining)
-
-**Current state:** Allocation validation constraints added via migration. Most other validation is application-level only.
+**Resolution:**
+- `AuditLog` Prisma model added to `prisma/schema.prisma` with fields: userId, operationType (CREATE/UPDATE/DELETE), modelName, recordId, changedFields (JSON), operationName, ipAddress, metadata
+- `AuditOperationType` enum added (CREATE, UPDATE, DELETE)
+- Apollo Server plugin (`src/middleware/audit-logger.ts`) intercepts all GraphQL mutations and writes audit entries
+- Plugin parses TypeGraphQL-Prisma mutation names (createOne/updateOne/deleteOne/Many/upsert)
+- Excluded models: AuditLog, Session, VerificationToken, Authenticator
+- Audit log failures do not break the main request (fail-open for availability)
+- Database indexes on: timestamp, userId+timestamp, modelName+timestamp, recordId, operationType+timestamp
+- Migration: `20260208100000_add_audit_log_and_soft_deletes`
+- 25 unit tests in `src/middleware/__tests__/audit-logger.test.ts`
 
 **Remaining work:**
-- CHECK constraints for:
-  - Percentages: 0 <= value <= 100 (confidence scores where applicable)
-  - Positive values: quantities, prices, amounts > 0 where required
-  - Non-empty strings: names, identifiers that must not be blank
-  - Enum validation: status fields match allowed values
-- Constraints documented in schema comments
+- Admin GraphQL query endpoint for browsing audit logs
+- Append-only enforcement via database role permissions (SQL REVOKE commented in migration)
 
-**Files to change:** `prisma/schema.prisma` (new migration), raw SQL for CHECK constraints not supported by Prisma declaratively
+---
+
+#### 20. Soft Deletes - IMPLEMENTED
+
+**Status:** IMPLEMENTED (2026-02-08)
+
+**Resolution:**
+- `deletedAt DateTime?` field added to 4 critical models: User, AlpacaAccount, Trade, Action
+- Note: Position and Order do not exist as standalone Prisma models (managed via Alpaca API); removed from scope
+- Soft-delete utility module at `src/middleware/soft-delete.ts` provides:
+  - `softDeleteFilter(includeDeleted?)` - where clause helper that excludes deleted records by default
+  - `deletedOnlyFilter()` - where clause helper for viewing only deleted records
+  - `isSoftDeleteModel(modelName)` - checks if a model supports soft deletion
+  - `softDeleteRecord(delegate, id, modelName)` - sets deletedAt on a record
+  - `restoreRecord(delegate, id, modelName)` - clears deletedAt to restore a record
+  - `hardDelete(prisma, model, id)` - permanently removes a record via raw SQL
+- Database indexes on deletedAt for each model for efficient filtering
+- Migration: `20260208100000_add_audit_log_and_soft_deletes`
+- 21 unit tests in `src/middleware/__tests__/soft-delete.test.ts`
+
+**Remaining work:**
+- Integrate soft-delete utilities into TypeGraphQL-generated resolvers
+- Admin GraphQL endpoint for viewing and restoring soft-deleted records
+- Cascading soft deletes for related records
+
+---
+
+#### 21. Database Constraints - IMPLEMENTED
+
+**Status:** IMPLEMENTED (2026-02-08)
+
+**Resolution:**
+- Raw SQL migration `20260208100001_add_database_constraints` adds CHECK constraints:
+  - **Percentage ranges (0-100):** Trade confidence (0-1), AlpacaAccount tradeAllocationPct, cryptoTradeAllocationPct, all Allocation fields (equities, optionsContracts, futures, etfs, forex, crypto)
+  - **Positive values:** Trade entryPrice, exitPrice, entryQty, exitQty, entryValue, exitValue; OptionsPosition quantity, entryPrice; OptionsTradeExecution quantity, executionPrice
+  - **Non-negative values:** Trade durationMinutes; AlpacaAccount volumeThreshold, minPercentageChange, portfolioTrailPercent, portfolioProfitThresholdPercent; Action sequence; Alert retryCount
+  - **Non-empty strings:** Trade symbol, analysis, summary; Asset symbol, name; AlpacaAccount APIKey, APISecret; Action note
+- All constraints named with descriptive `chk_` prefix for easy identification
+- Constraints complement existing application-level validation in `src/middleware/input-validator.ts`
+
+**Remaining work:**
+- Enum validation constraints (status fields) - lower priority since Prisma already enforces enum types
 
 ---
 
@@ -320,36 +322,38 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 
 ---
 
-#### 24. Align dotenv Version - NOT STARTED
+#### 24. Align dotenv Version - RESOLVED
 
-**Status:** NOT STARTED
+**Status:** RESOLVED (2026-02-08)
 
-**Current state:** backend-legacy uses dotenv 16.x. Other packages (lumic-utils) are on 17.x.
-
-**Target state:**
-- Align dotenv version across packages (target 17.x)
-- Test that all environment variable loading works after upgrade
-- Coordinate with engine and lumic-utils upgrades
-
-**Files to change:** `package.json`
+**Resolution:**
+- dotenv upgraded from `^16.4.7` to `^17.0.0` in `package.json`
+- Installed version: 17.2.4, aligning with lumic-utils
+- Build and all 162 tests pass after upgrade
+- No breaking changes; dotenv 17.x is backwards compatible for standard `dotenv.config()` usage
 
 ---
 
-#### 25. Connection Pool Tuning
+#### 25. Connection Pool Tuning - IMPLEMENTED
 
-**Current state:** Default Prisma connection pool settings. No environment-specific tuning.
+**Status:** IMPLEMENTED (2026-02-08)
 
-**Target state:**
-- Connection pool size configurable via environment variable
-- Defaults tuned per deployment tier:
-  - Development: 5 connections
-  - Staging: 10 connections
-  - Production: 20 connections (adjustable based on load testing)
-- Connection timeout configured
-- Pool exhaustion logged as error
-- Prisma Accelerate settings reviewed and optimized
+**Resolution:**
+- `src/prismaClient.ts` rewritten with environment-aware connection pool configuration:
+  - `DATABASE_POOL_SIZE` environment variable for explicit override
+  - Tier defaults: development=5, staging=10, production=20
+  - `DATABASE_POOL_TIMEOUT_MS` environment variable (default: 10000ms)
+  - Pool parameters appended to DATABASE_URL as `connection_limit` and `pool_timeout`
+- Pool exhaustion detection via Prisma event-based logging:
+  - Error events checked for pool/connection/timeout keywords
+  - Logged at error level with pool size context
+  - Warning events forwarded to structured logger
+- Invalid environment variable values logged as warnings with fallback to defaults
+- 10 unit tests in `src/tests/connection-pool.test.ts`
 
-**Files to change:** `src/prismaClient.ts`, environment variable documentation
+**Remaining work:**
+- Document DATABASE_POOL_SIZE and DATABASE_POOL_TIMEOUT_MS in `.env.example`
+- Load testing to validate optimal pool sizes per tier
 
 ---
 
@@ -506,13 +510,23 @@ Upgrade TypeGraphQL to stable release when available.
 
 ---
 
-### Phase 4: Institutional Readiness (P2)
+### Phase 4: Institutional Readiness (P2) - MOSTLY COMPLETE
 
 Audit logging, soft deletes, database constraints, observability, dependency alignment.
 
-**Estimated effort:** 3-4 weeks
-**Dependencies:** Phase 2 complete (tests and quality gates in place before adding complexity)
-**Items:** Audit logging, soft deletes, database constraints, OpenTelemetry tracing, Prometheus metrics, dotenv alignment, connection pool tuning, persisted queries
+**Status:** 5 of 8 items completed (Wave 5, 2026-02-08)
+
+**Completed:**
+- Audit logging (item 19, Wave 5)
+- Soft deletes (item 20, Wave 5)
+- Database constraints (item 21, Wave 5)
+- dotenv alignment (item 24, Wave 5)
+- Connection pool tuning (item 25, Wave 5)
+
+**Remaining:**
+- OpenTelemetry tracing (item 22)
+- Prometheus metrics (item 23)
+- GraphQL persisted queries (item 26)
 
 ---
 
@@ -531,7 +545,7 @@ Query complexity analysis, test coverage reporting, CI generated code verificati
 |---|---|---|---|
 | P0 | 10 | 10 | 0 (git history cleanup is manual) |
 | P1 | 8 | 7 | 1 (TypeGraphQL waiting on release) |
-| P2 | 8 | 0 | 8 (1 partially done) |
+| P2 | 8 | 5 | 3 (OpenTelemetry, Prometheus, Persisted Queries) |
 | P3 | 3 | 0 | 3 |
 
 **P0 Items Resolved (Wave 4, 2026-02-08):**
@@ -549,3 +563,15 @@ Query complexity analysis, test coverage reporting, CI generated code verificati
 
 **P1 Items Remaining:**
 - Item 15: TypeGraphQL upgrade (waiting on stable 2.0.0 release)
+
+**P2 Items Resolved (Wave 5, 2026-02-08):**
+- Item 19: Audit logging (AuditLog model + Apollo plugin + 25 tests)
+- Item 20: Soft deletes (deletedAt on 4 models + utility functions + 21 tests)
+- Item 21: Database constraints (CHECK constraints for prices, quantities, strings + migration)
+- Item 24: dotenv alignment (upgraded to ^17.0.0, installed 17.2.4)
+- Item 25: Connection pool tuning (tier-based defaults + env overrides + pool exhaustion logging + 10 tests)
+
+**P2 Items Remaining:**
+- Item 22: OpenTelemetry tracing
+- Item 23: Prometheus metrics
+- Item 26: GraphQL persisted queries

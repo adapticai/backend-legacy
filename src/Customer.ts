@@ -29,6 +29,7 @@ import { logger } from './utils/logger';
     image
     createdAt
     updatedAt
+    deletedAt
     role
     bio
     jobTitle
@@ -113,6 +114,7 @@ id
       userId
       createdAt
       updatedAt
+      deletedAt
       alerts {
         id
         alpacaAccountId
@@ -264,6 +266,7 @@ id
         email: item.email !== undefined ? item.email : undefined,
         emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
         image: item.image !== undefined ? item.image : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
@@ -377,6 +380,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -792,6 +796,9 @@ id
         image: item.image !== undefined ? {
             set: item.image
           } : undefined,
+        deletedAt: item.deletedAt !== undefined ? {
+            set: item.deletedAt
+          } : undefined,
         role: item.role !== undefined ? {
             set: item.role
           } : undefined,
@@ -1022,6 +1029,9 @@ id
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
               set: item.minimumPriceChangePercent100
             } : undefined,
+          deletedAt: item.deletedAt !== undefined ? {
+              set: item.deletedAt
+            } : undefined,
       allocation: item.allocation ? 
       typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
 ? {
@@ -1177,6 +1187,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -1495,6 +1506,7 @@ id
         email: item.email !== undefined ? item.email : undefined,
         emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
         image: item.image !== undefined ? item.image : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
@@ -1608,6 +1620,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -1901,6 +1914,7 @@ id
         email: item.email !== undefined ? item.email : undefined,
         emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
         image: item.image !== undefined ? item.image : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
@@ -2014,6 +2028,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -2240,6 +2255,9 @@ id
           } : undefined,
         image: item.image !== undefined ? {
             set: item.image
+          } : undefined,
+        deletedAt: item.deletedAt !== undefined ? {
+            set: item.deletedAt
           } : undefined,
         role: item.role !== undefined ? {
             set: item.role
@@ -2471,6 +2489,9 @@ id
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
               set: item.minimumPriceChangePercent100
             } : undefined,
+          deletedAt: item.deletedAt !== undefined ? {
+              set: item.deletedAt
+            } : undefined,
       allocation: item.allocation ? 
       typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
 ? {
@@ -2626,6 +2647,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -2944,6 +2966,7 @@ id
         email: item.email !== undefined ? item.email : undefined,
         emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
         image: item.image !== undefined ? item.image : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
@@ -3057,6 +3080,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -3384,6 +3408,9 @@ id
         image: item.image !== undefined ? {
             set: item.image
           } : undefined,
+        deletedAt: item.deletedAt !== undefined ? {
+            set: item.deletedAt
+          } : undefined,
         role: item.role !== undefined ? {
             set: item.role
           } : undefined,
@@ -3614,6 +3641,9 @@ id
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
               set: item.minimumPriceChangePercent100
             } : undefined,
+          deletedAt: item.deletedAt !== undefined ? {
+              set: item.deletedAt
+            } : undefined,
       allocation: item.allocation ? 
       typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && (Object.keys(item.allocation)[0] === 'id' || Object.keys(item.allocation)[0] === 'symbol')
 ? {
@@ -3769,6 +3799,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {
@@ -4087,6 +4118,7 @@ id
         email: item.email !== undefined ? item.email : undefined,
         emailVerified: item.emailVerified !== undefined ? item.emailVerified : undefined,
         image: item.image !== undefined ? item.image : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         role: item.role !== undefined ? item.role : undefined,
         bio: item.bio !== undefined ? item.bio : undefined,
         jobTitle: item.jobTitle !== undefined ? item.jobTitle : undefined,
@@ -4200,6 +4232,7 @@ id
           firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
           secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       allocation: item.allocation ? 
         typeof item.allocation === 'object' && Object.keys(item.allocation).length === 1 && Object.keys(item.allocation)[0] === 'id'
     ? { connect: {

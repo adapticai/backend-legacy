@@ -942,6 +942,9 @@ model User {
   /// Timestamp when the user account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
+  /// Timestamp when the user was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
   /// The role assigned to the user, determining permissions.
   role UserRole @default(USER)
 
@@ -1184,6 +1187,9 @@ model AlpacaAccount {
 
   /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
+
+  /// Timestamp when the Alpaca account was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
 
   /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   alerts Alert[]
@@ -1598,6 +1604,9 @@ model Trade {
   /// Current status of the trade.
   status TradeStatus @default(PENDING)
 
+  /// Timestamp when the trade was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
   /// The symbol of the asset associated with this trade.
   symbol String
 
@@ -1686,6 +1695,9 @@ model Action {
 
   /// Timestamp when the action was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
+
+  /// Timestamp when the action was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
 
   /// alpacaOrderId for the Alpaca order associated with this action. TYPESTRING.SKIP=true
   alpacaOrderId String? @unique @db.Uuid
@@ -4406,4 +4418,59 @@ model InviteToken {
 
   @@index([waitlistEntryId])
   @@map(name: "invite_tokens")
+}
+
+/// ### Audit Logging
+
+// Enum for the type of mutation operation being audited
+enum AuditOperationType {
+  /// A new record was created.
+  CREATE
+
+  /// An existing record was updated.
+  UPDATE
+
+  /// A record was deleted (soft or hard).
+  DELETE
+}
+
+// Append-only audit log for tracking all data mutations in the system.
+// This table is immutable -- rows are only inserted, never updated or deleted.
+model AuditLog {
+  /// Unique identifier for the audit log entry. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Timestamp when the mutation occurred. TYPESTRING.SKIP=true
+  timestamp DateTime @default(now())
+
+  /// ID of the user who performed the mutation (from JWT context). Null for system operations.
+  userId String? @db.Uuid
+
+  /// The type of mutation operation performed.
+  operationType AuditOperationType
+
+  /// The name of the Prisma model that was mutated.
+  modelName String @db.VarChar(100)
+
+  /// The primary key of the record that was mutated.
+  recordId String @db.VarChar(255)
+
+  /// JSON snapshot of the fields that were changed. For creates: all fields. For updates: changed fields with before/after values. For deletes: all fields at time of deletion.
+  changedFields Json
+
+  /// The GraphQL operation name that triggered the mutation, if available.
+  operationName String? @db.VarChar(255)
+
+  /// IP address of the request origin, if available. TYPESTRING.SKIP=true
+  ipAddress String? @db.VarChar(45)
+
+  /// Additional metadata about the mutation context. TYPESTRING.SKIP=true
+  metadata Json?
+
+  @@index([timestamp])
+  @@index([userId, timestamp])
+  @@index([modelName, timestamp])
+  @@index([recordId])
+  @@index([operationType, timestamp])
+  @@map(name: "audit_logs")
 }

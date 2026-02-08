@@ -38,6 +38,7 @@ import { AlpacaAccount } from './AlpacaAccount';
 import { AnalyticsConfiguration } from './AnalyticsConfiguration';
 import { AnalyticsSnapshot } from './AnalyticsSnapshot';
 import { Asset } from './Asset';
+import { AuditLog } from './AuditLog';
 import { Authenticator } from './Authenticator';
 import { Configuration } from './Configuration';
 import { ConflictEvent } from './ConflictEvent';
@@ -94,6 +95,7 @@ const adaptic = {
   analyticsConfiguration: AnalyticsConfiguration,
   analyticsSnapshot: AnalyticsSnapshot,
   asset: Asset,
+  auditLog: AuditLog,
   authenticator: Authenticator,
   configuration: Configuration,
   conflictEvent: ConflictEvent,

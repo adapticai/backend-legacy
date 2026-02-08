@@ -22,6 +22,7 @@ import { logger } from './utils/logger';
   createdAt
   updatedAt
   status
+  deletedAt
   symbol
   actions {
     id
@@ -33,6 +34,7 @@ import { logger } from './utils/logger';
     status
     createdAt
     updatedAt
+    deletedAt
     alpacaOrderId
   }
   entryPrice
@@ -105,6 +107,7 @@ import { logger } from './utils/logger';
   confidence: props.confidence !== undefined ? props.confidence : undefined,
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   status: props.status !== undefined ? props.status : undefined,
+  deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
   exitPrice: props.exitPrice !== undefined ? props.exitPrice : undefined,
@@ -141,6 +144,7 @@ import { logger } from './utils/logger';
         primary: item.primary !== undefined ? item.primary : undefined,
         note: item.note !== undefined ? item.note : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
       },
     }))
@@ -235,6 +239,7 @@ import { logger } from './utils/logger';
   confidence: prop.confidence !== undefined ? prop.confidence : undefined,
   timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
+  deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
   symbol: prop.symbol !== undefined ? prop.symbol : undefined,
   entryPrice: prop.entryPrice !== undefined ? prop.entryPrice : undefined,
   exitPrice: prop.exitPrice !== undefined ? prop.exitPrice : undefined,
@@ -374,6 +379,9 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
+  deletedAt: props.deletedAt !== undefined ? {
+            set: props.deletedAt 
+           } : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
            } : undefined,
@@ -454,6 +462,9 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
+        deletedAt: item.deletedAt !== undefined ? {
+            set: item.deletedAt
+          } : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? {
             set: item.alpacaOrderId
           } : undefined,
@@ -464,6 +475,7 @@ import { logger } from './utils/logger';
         primary: item.primary !== undefined ? item.primary : undefined,
         note: item.note !== undefined ? item.note : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
       },
     }))
@@ -566,6 +578,7 @@ import { logger } from './utils/logger';
   confidence: props.confidence !== undefined ? props.confidence : undefined,
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   status: props.status !== undefined ? props.status : undefined,
+  deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
   exitPrice: props.exitPrice !== undefined ? props.exitPrice : undefined,
@@ -602,6 +615,7 @@ import { logger } from './utils/logger';
         primary: item.primary !== undefined ? item.primary : undefined,
         note: item.note !== undefined ? item.note : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
       },
     }))
@@ -631,6 +645,9 @@ import { logger } from './utils/logger';
            } : undefined,
   status: props.status !== undefined ? {
             set: props.status 
+           } : undefined,
+  deletedAt: props.deletedAt !== undefined ? {
+            set: props.deletedAt 
            } : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
@@ -712,6 +729,9 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
+        deletedAt: item.deletedAt !== undefined ? {
+            set: item.deletedAt
+          } : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? {
             set: item.alpacaOrderId
           } : undefined,
@@ -722,6 +742,7 @@ import { logger } from './utils/logger';
         primary: item.primary !== undefined ? item.primary : undefined,
         note: item.note !== undefined ? item.note : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
       },
     }))
@@ -850,6 +871,9 @@ import { logger } from './utils/logger';
   status: prop.status !== undefined ? {
             set: prop.status 
            } : undefined,
+  deletedAt: prop.deletedAt !== undefined ? {
+            set: prop.deletedAt 
+           } : undefined,
   symbol: prop.symbol !== undefined ? {
             set: prop.symbol 
            } : undefined,
@@ -930,6 +954,9 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
+        deletedAt: item.deletedAt !== undefined ? {
+            set: item.deletedAt
+          } : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? {
             set: item.alpacaOrderId
           } : undefined,
@@ -940,6 +967,7 @@ import { logger } from './utils/logger';
         primary: item.primary !== undefined ? item.primary : undefined,
         note: item.note !== undefined ? item.note : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
       },
     }))
