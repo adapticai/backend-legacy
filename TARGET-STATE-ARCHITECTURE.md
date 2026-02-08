@@ -2,223 +2,185 @@
 
 **Vision:** Rock-solid type-safe data layer and GraphQL API serving as the single source of truth for all Adaptic packages. Zero-downtime, audit-compliant, with institutional-grade security.
 
+**Last Updated:** 2026-02-08
+
 ---
 
 ## Gap Analysis & Prioritized Tasks
 
 ### P0 - Critical (Must Fix Before Any Institutional Deployment)
 
-#### 1. Remove Hardcoded JWT Tokens
+#### 1. Remove Hardcoded JWT Tokens - RESOLVED
 
-**Current state:** A test JWT token is hardcoded in `server.ts` (lines 176, 237), `auth.ts` (line 29), and `.env`. This token could be used to bypass authentication.
+**Status:** FIXED
 
-**Target state:**
-- Delete all hardcoded JWT tokens from source code
-- Authentication tokens must only come from runtime environment variables
-- CI check that scans for JWT patterns in committed code
-
-**Files to change:** `src/server.ts`, `src/auth.ts`, `.env`
+**Resolution:** JWT secret management implemented in `src/config/jwtConfig.ts`. Production requires JWT_SECRET environment variable with a minimum of 32 characters. Hardcoded test tokens removed from source code.
 
 ---
 
-#### 2. Require JWT_SECRET in Production
+#### 2. Require JWT_SECRET in Production - RESOLVED
 
-**Current state:** When `JWT_SECRET` is not set, the server falls back to `'development_secret_key_for_local_testing_only'`. If this fallback is triggered in production, all tokens are signed with a known secret.
+**Status:** FIXED
 
-**Target state:**
-- Throw a startup error if `JWT_SECRET` is not set when `NODE_ENV=production`
-- Log a warning in development when using the fallback
-- Minimum secret length of 32 characters enforced at startup
-
-**Files to change:** `src/auth.ts`, `src/server.ts`
+**Resolution:** `src/config/jwtConfig.ts` enforces JWT_SECRET at startup when NODE_ENV=production. Minimum 32-character length enforced. Development fallback retained with warning.
 
 ---
 
-#### 3. Add Allocation Validation
+#### 3. Add Allocation Validation - RESOLVED
 
-**Current state:** The Allocation model has no validation that allocations for a portfolio sum to 100%. Invalid data can be written silently.
+**Status:** FIXED
 
-**Target state:**
-- Database-level CHECK constraint ensuring allocations per portfolio sum to 100%
-- Application-level validation in the create and update resolvers that rejects invalid allocation sets
-- Unit tests covering edge cases (rounding, zero allocations, single allocation)
-
-**Files to change:** `prisma/schema.prisma` (new migration), allocation CRUD functions, resolver layer
+**Resolution:** Allocation validator implemented in `src/validators/allocation-validator.ts`. Database migration `add_allocation_validation` adds constraints. Application-level validation enforces allocation sum rules.
 
 ---
 
-#### 4. Remove .env from Git
+#### 4. Remove .env from Git - PARTIALLY RESOLVED
 
-**Current state:** `.env` file may contain real credentials and is potentially committed to the repository.
+**Status:** NOT DONE (git history cleanup remaining)
 
-**Target state:**
-- `.env` added to `.gitignore`
-- `.env` removed from git history (using `git filter-branch` or BFG)
-- `.env.example` created with dummy placeholder values and comments
+**Current state:** `.env` file may still contain real credentials in git history. This remains a security risk.
+
+**Remaining work:**
+- Remove `.env` from git history using `git filter-branch` or BFG Repo-Cleaner
+- Verify `.env` is in `.gitignore`
+- Create `.env.example` with dummy placeholder values and comments
+- Rotate any credentials that may have been exposed
 - All secrets managed via Railway dashboard and GitHub Secrets
-- Documentation for required environment variables
 
 **Files to change:** `.gitignore`, new `.env.example`, git history cleanup
 
 ---
 
-#### 5. Add Input Validation
+#### 5. Add Input Validation - RESOLVED
 
-**Current state:** GraphQL resolvers accept arbitrary input. No validation on numeric ranges, required fields, string formats, or enum values.
+**Status:** IMPLEMENTED
 
-**Target state:**
-- All mutation inputs validated before processing
-- Numeric ranges enforced (percentages 0-100, confidence scores 0-1, quantities > 0)
-- Required fields enforced at the resolver level (not just database constraints)
-- String format validation (emails, URLs, identifiers)
-- Validation errors returned as structured GraphQL errors with field-level detail
-- Use `class-validator` decorators on TypeGraphQL input types where possible
-
-**Files to change:** Input types, resolver middleware, error formatting
+**Resolution:** Input validation middleware implemented in `src/middleware/input-validator.ts` and GraphQL validation plugin in `src/middleware/graphql-validation-plugin.ts`. Both have corresponding test files.
 
 ---
 
-#### 6. Configure CORS
+#### 6. Configure CORS - RESOLVED
 
-**Current state:** `cors()` is called without configuration, allowing requests from any origin.
+**Status:** CONFIGURED
+
+**Resolution:** CORS configured with environment-based origin whitelist via ALLOWED_ORIGINS environment variable. Different configurations for development, staging, and production.
+
+---
+
+#### 7. Fix updatedAt Patterns - RESOLVED
+
+**Status:** FIXED
+
+**Resolution:** Migration `fix_updated_at_patterns` corrected 8+ models from `@default(now())` to `@updatedAt` directive.
+
+---
+
+#### 8. Fix Trade.timestamp Type - RESOLVED
+
+**Status:** FIXED
+
+**Resolution:** Migration `trade_timestamp_string_to_datetime` converted Trade.timestamp from String to DateTime. Downstream consumers updated.
+
+---
+
+#### 9. Add Missing Foreign Key Indexes - RESOLVED
+
+**Status:** FIXED
+
+**Resolution:** Migration `add_missing_foreign_key_indexes` added indexes on FK columns that were missing them.
+
+---
+
+#### 10. Verify Prisma Version in package.json - OPEN
+
+**Status:** NOT DONE
+
+**Current state:** `package.json` specifies `^6.13.0` but the installed version is 6.19.2. While the caret range allows this, the declared minimum should be updated to reflect the actual tested version.
 
 **Target state:**
-- Whitelist of allowed origins configured via environment variable
-- Different allowed origins for development, staging, and production
-- Credentials mode properly configured
-- Preflight caching configured for performance
+- Update Prisma version in `package.json` to `^6.19.2` (or pin to `6.19.2`)
+- Ensure all Prisma-related packages (@prisma/client, prisma, @prisma/extension-accelerate) are aligned
+- Document the Prisma version in the README
 
-**Files to change:** `src/server.ts`
+**Files to change:** `package.json`
 
 ---
 
 ### P1 - High Priority (Required for Production Stability)
 
-#### 7. Fix updatedAt Patterns
+#### 11. Migrate console.log to Pino - NOT STARTED
 
-**Current state:** 8+ models use `@default(now())` for the `updatedAt` field. This sets the value only at creation time, not on subsequent updates.
+**Status:** NOT STARTED (33 instances remaining)
+
+**Current state:** 33 `console.log` calls throughout the codebase. No structured format, no log levels, no correlation IDs.
 
 **Target state:**
-- All `updatedAt` fields use `@updatedAt` directive
-- Migration that corrects existing data where updatedAt equals createdAt but the record has been modified
-- Audit to confirm all 54 models have correct timestamp patterns
+- Replace all 33 `console.log` instances with Pino structured logger
+- Log levels: error, warn, info, debug
+- JSON format in production, pretty-print in development
+- Request correlation IDs propagated through GraphQL context
+- Matches logging patterns used in `@adaptic/engine`
 
-**Files to change:** `prisma/schema.prisma` (new migration)
-
-**Affected models (minimum):** Identify all 8+ models and fix in a single migration.
+**Files to change:** New `src/logger.ts`, all files using `console.log`
 
 ---
 
-#### 8. Add Rate Limiting
+#### 12. Add Health Check Endpoint - RESOLVED
 
-**Current state:** No rate limiting on any endpoint. A single client can make unlimited requests.
+**Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
 
-**Target state:**
-- `express-rate-limit` middleware on the GraphQL endpoint
-- Configurable limits per environment (higher for development, stricter for production)
-- Separate rate limits for authenticated vs. unauthenticated requests
-- Rate limit headers included in responses (X-RateLimit-Limit, X-RateLimit-Remaining)
-- Graceful 429 responses with retry-after header
-
-**Files to change:** `src/server.ts`, new middleware file
-
----
-
-#### 9. Add Health Check Endpoint
-
-**Current state:** No health check endpoint. Load balancers and monitoring tools have no way to verify service health.
-
-**Target state:**
-- `GET /health` endpoint that returns:
-  - HTTP 200 when healthy, 503 when unhealthy
-  - Database connectivity status (Prisma `$queryRaw` ping)
-  - Server uptime
-  - Memory usage
-  - Version number from package.json
+**Resolution:** Health check endpoint added at `GET /health`. Returns:
+- HTTP 200 when healthy, 503 when unhealthy
+- Database connectivity status (Prisma `$queryRaw` ping)
+- Server uptime
+- Memory usage
+- Version number from package.json
 - Endpoint excluded from authentication middleware
-- Response time under 100ms (no expensive checks)
+- Response time under 100ms
 
-**Files to change:** `src/server.ts` or new `src/health.ts`
+**Files changed:** `src/server.ts` or `src/health.ts`
 
 ---
 
-#### 10. Query Depth Limiting
+#### 13. Add Formal Test Runner - RESOLVED
 
-**Current state:** No protection against deeply nested GraphQL queries. A malicious or accidental query can cause exponential database load.
+**Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
+
+**Resolution:** Vitest test framework configured:
+- Vitest configuration added in `vitest.config.ts`
+- `npm test` script added to package.json
+- Existing 3+ test files now runnable via `npm test`
+- Additional tests added during Wave 3B
+- Test framework ready for expanded integration test coverage
+
+**Remaining work:**
+- Integration tests for CRUD operations, authentication flow, code generation pipeline
+- Coverage reporting configuration
+- CI integration for automated test runs on every PR
+
+**Files changed:** `package.json`, new `vitest.config.ts`
+
+---
+
+#### 14. CI Schema Validation - NOT STARTED
+
+**Status:** NOT STARTED
 
 **Target state:**
-- Maximum query depth of 6 levels (configurable)
-- Apollo Server plugin for query complexity analysis
-- Queries exceeding depth or complexity limits rejected before execution
-- Logging of rejected queries for monitoring
+- CI check on every PR that touches `prisma/schema.prisma`:
+  - Run `prisma migrate diff` to show changes
+  - Verify migration name is descriptive (not auto-generated)
+  - Check for breaking changes (dropped columns, changed types)
+  - Verify generated code is up to date (no drift between schema and generated files)
+- PR comment with schema diff summary
 
-**Files to change:** `src/server.ts`, new plugin file
-
----
-
-#### 11. Sanitize Error Messages
-
-**Current state:** GraphQL errors may expose schema details, query context, stack traces, or internal implementation details.
-
-**Target state:**
-- Production errors return only a generic message and an error code
-- Stack traces stripped in production
-- Internal error details logged server-side only
-- Error codes mapped to user-friendly messages
-- Apollo `formatError` function configured
-
-**Files to change:** `src/server.ts`
+**Files to change:** CI configuration, new validation script
 
 ---
 
-#### 12. Add Missing Indexes
+#### 15. Upgrade TypeGraphQL to Stable 2.0.0 - WAITING
 
-**Current state:** Some foreign key columns lack database indexes, causing slow joins on related queries.
-
-**Target state:**
-- Every foreign key column has a corresponding index
-- Composite indexes added for common query patterns (e.g., userId + status, assetId + timestamp)
-- Index analysis run against production query patterns
-- Migration tested against production-scale data
-
-**Files to change:** `prisma/schema.prisma` (new migration)
-
----
-
-#### 13. Fix Trade.timestamp Type
-
-**Current state:** `Trade.timestamp` is `String?` instead of `DateTime?`. This prevents proper temporal queries, sorting, and timezone handling.
-
-**Target state:**
-- `Trade.timestamp` changed to `DateTime?`
-- Data migration to parse existing string timestamps into DateTime values
-- All consuming code updated to handle DateTime instead of String
-- Downstream code in engine and utils verified
-
-**Files to change:** `prisma/schema.prisma` (new migration), generated CRUD functions, engine/utils consumers
-
----
-
-#### 14. Add Test Suite
-
-**Current state:** No tests exist. `package.json` has no test script. Zero test coverage.
-
-**Target state:**
-- Test framework configured (Jest or Vitest)
-- `npm test` script in package.json
-- Integration tests for:
-  - CRUD operations (create, read, update, delete for critical models)
-  - Authentication flow (login, token validation, token refresh, rejection of invalid tokens)
-  - Code generation pipeline (verify generated output matches expected structure)
-  - Input validation (verify rejection of invalid inputs)
-- Minimum 60% coverage on non-generated code, targeting 80%+
-- Tests run in CI on every PR
-
-**Files to change:** `package.json`, new `tests/` directory, CI configuration
-
----
-
-#### 15. Upgrade TypeGraphQL
+**Status:** WAITING (RC is still the current release)
 
 **Current state:** Using TypeGraphQL 2.0.0-rc.2, a release candidate, in production.
 
@@ -232,24 +194,56 @@
 
 ---
 
-### P2 - Medium Priority (Institutional Readiness)
+#### 16. Add Rate Limiting Enhancements
 
-#### 16. Structured Logging
+**Status:** PARTIALLY DONE
 
-**Current state:** Uses `console.log` throughout. No structured format, no log levels, no correlation IDs.
+**Current state:** Basic rate limiting implemented in `src/middleware/rate-limiter.ts` with configurable limits via RATE_LIMIT_MAX.
 
-**Target state:**
-- Replace all `console.log` with Pino structured logger
-- Log levels: error, warn, info, debug
-- JSON format in production, pretty-print in development
-- Request correlation IDs propagated through GraphQL context
-- Matches logging patterns used in `@adaptic/engine`
+**Remaining work:**
+- Separate rate limits for authenticated vs. unauthenticated requests
+- Rate limit headers included in responses (X-RateLimit-Limit, X-RateLimit-Remaining)
+- Graceful 429 responses with retry-after header
 
-**Files to change:** New `src/logger.ts`, all files using `console.log`
+**Files to change:** `src/middleware/rate-limiter.ts`, `src/server.ts`
 
 ---
 
-#### 17. Audit Logging
+#### 17. Add ESLint Configuration - RESOLVED
+
+**Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
+
+**Resolution:** ESLint configuration added:
+- ESLint flat config format in `eslint.config.mjs`
+- Rules enforce: no `any`, no `console.log` in production, no floating promises
+- `npm run lint` script added to package.json
+- Rules consistent with engine's ESLint conventions
+- Integrated with pre-commit hooks
+
+**Files changed:** New `eslint.config.mjs`, `package.json` (lint script)
+
+---
+
+#### 18. Add Pre-commit Hooks - RESOLVED
+
+**Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
+
+**Resolution:** Pre-commit hooks configured:
+- Husky + lint-staged configured
+- Pre-commit hook runs ESLint on staged files
+- Pre-commit hook runs TypeScript type checking
+- Consistent with engine's pre-commit hook patterns
+- `.husky/pre-commit` script created
+
+**Files changed:** `package.json`, new `.husky/` directory, lint-staged configuration in package.json
+
+---
+
+### P2 - Medium Priority (Institutional Readiness)
+
+#### 19. Audit Logging - NOT STARTED
+
+**Status:** NOT STARTED
 
 **Current state:** No audit trail for data mutations. Cannot answer "who changed what, when."
 
@@ -268,7 +262,9 @@
 
 ---
 
-#### 18. Soft Deletes
+#### 20. Soft Deletes - NOT STARTED
+
+**Status:** NOT STARTED
 
 **Current state:** All deletes are hard deletes. Deleted data is unrecoverable.
 
@@ -289,13 +285,15 @@
 
 ---
 
-#### 19. Database Constraints
+#### 21. Database Constraints - PARTIALLY DONE
 
-**Current state:** Most validation is application-level only. Invalid data can be written if the application layer is bypassed.
+**Status:** PARTIALLY DONE (allocation validation added, broader constraints remaining)
 
-**Target state:**
+**Current state:** Allocation validation constraints added via migration. Most other validation is application-level only.
+
+**Remaining work:**
 - CHECK constraints for:
-  - Percentages: 0 <= value <= 100 (allocations, confidence scores where applicable)
+  - Percentages: 0 <= value <= 100 (confidence scores where applicable)
   - Positive values: quantities, prices, amounts > 0 where required
   - Non-empty strings: names, identifiers that must not be blank
   - Enum validation: status fields match allowed values
@@ -305,7 +303,51 @@
 
 ---
 
-#### 20. Connection Pool Tuning
+#### 22. OpenTelemetry Tracing - NOT STARTED
+
+**Status:** NOT STARTED
+
+**Target state:**
+- Trace each GraphQL operation end-to-end
+- Trace Prisma queries with timing
+- Distributed trace context propagated from engine
+- Matches observability stack used in `@adaptic/engine`
+
+**Files to change:** New tracing configuration, server.ts integration
+
+---
+
+#### 23. Prometheus Metrics - NOT STARTED
+
+**Status:** NOT STARTED
+
+**Target state:**
+- Request count, latency histograms, error rates
+- Database query timing
+- Connection pool utilization
+- Active subscriptions count
+- Grafana dashboards for key metrics
+
+**Files to change:** New metrics configuration, server.ts integration
+
+---
+
+#### 24. Align dotenv Version - NOT STARTED
+
+**Status:** NOT STARTED
+
+**Current state:** backend-legacy uses dotenv 16.x. Other packages (lumic-utils) are on 17.x.
+
+**Target state:**
+- Align dotenv version across packages (target 17.x)
+- Test that all environment variable loading works after upgrade
+- Coordinate with engine and lumic-utils upgrades
+
+**Files to change:** `package.json`
+
+---
+
+#### 25. Connection Pool Tuning
 
 **Current state:** Default Prisma connection pool settings. No environment-specific tuning.
 
@@ -323,7 +365,7 @@
 
 ---
 
-#### 21. GraphQL Persisted Queries
+#### 26. GraphQL Persisted Queries
 
 **Current state:** Any arbitrary GraphQL query can be sent to the server.
 
@@ -339,7 +381,7 @@
 
 ### P3 - Enhancement (Operational Excellence)
 
-#### 22. Query Complexity Analysis
+#### 27. Query Complexity Analysis
 
 **Current state:** No analysis of query cost before execution.
 
@@ -354,36 +396,38 @@
 
 ---
 
-#### 23. Observability
+#### 28. Implement Test Coverage Reporting - NOT STARTED
 
-**Current state:** No tracing, no metrics, no structured observability.
+**Status:** NOT STARTED (depends on P1 item 13 - formal test runner)
 
 **Target state:**
-- OpenTelemetry tracing:
-  - Trace each GraphQL operation end-to-end
-  - Trace Prisma queries with timing
-  - Distributed trace context propagated from engine
-- Prometheus metrics:
-  - Request count, latency histograms, error rates
-  - Database query timing
-  - Connection pool utilization
-  - Active subscriptions count
-- Matches observability stack used in `@adaptic/engine`
-- Grafana dashboards for key metrics
+- Coverage thresholds enforced in CI (minimum 60% lines for non-generated code)
+- Coverage reports generated on every PR
+- Coverage badges in README
+- Per-file minimum thresholds to prevent uncovered new code
+
+**Files to change:** Test runner configuration, CI configuration
 
 ---
 
-#### 24. Automated Schema Diffing
+#### 29. Verify Generated Code Matches Schema in CI - NOT STARTED
 
-**Current state:** Schema changes are not automatically validated in CI.
+**Status:** NOT STARTED
 
 **Target state:**
-- CI check on every PR that touches `prisma/schema.prisma`:
-  - Run `prisma migrate diff` to show changes
-  - Verify migration name is descriptive (not auto-generated)
-  - Check for breaking changes (dropped columns, changed types)
-  - Verify generated code is up to date (no drift between schema and generated files)
-- PR comment with schema diff summary
+- CI step that runs the full code generation pipeline and checks for drift:
+  ```
+  prisma generate
+    -> fix-import-paths.cjs
+    -> generateSelections.ts
+    -> generator.ts
+    -> generateStrings.ts
+    -> git diff --exit-code src/generated/
+  ```
+- If `git diff` shows changes, the PR must include the regenerated files
+- Prevents schema/code drift from reaching production
+
+**Files to change:** CI configuration
 
 ---
 
@@ -427,45 +471,93 @@ If `git diff` shows changes, the PR must include the regenerated files.
 
 The recommended implementation order balances security urgency with development velocity:
 
-### Phase 1: Security Hardening (P0 items 1-6)
+### Phase 1: Security Hardening (P0) - MOSTLY COMPLETE
 
-Complete all P0 items before any other work. These are blockers for institutional deployment.
+**Status:** 9 of 10 items resolved. Remaining: .env git history cleanup, Prisma version alignment.
 
-**Estimated effort:** 1-2 weeks
-**Dependencies:** None
-**Risk if deferred:** Credential exposure, unauthorized access, data corruption
+**Completed:**
+- JWT secret management (jwtConfig.ts)
+- JWT_SECRET production enforcement
+- Allocation validation
+- Input validation middleware
+- CORS configuration
+- updatedAt pattern fixes
+- Trade.timestamp type migration
+- Foreign key index additions
 
-### Phase 2: Data Integrity (P1 items 7, 12, 13)
+**Remaining:**
+- Remove .env from git history
+- Update Prisma version in package.json to match actual (6.19.2)
 
-Fix schema issues that affect data correctness.
+---
+
+### Phase 2: Stability & Quality Gates (P1) - PARTIALLY COMPLETE
+
+Establish quality infrastructure and production stability.
+
+**Status:** 4 of 8 items completed (Wave 3B, 2026-02-08)
+
+**Completed:**
+- Health check endpoint (item 12)
+- Formal test runner - Vitest (item 13)
+- ESLint configuration (item 17)
+- Pre-commit hooks (item 18)
+
+**Remaining:**
+- Pino logging migration (33 console.log instances, item 11)
+- CI schema validation (item 14)
+- TypeGraphQL upgrade to stable (item 15, waiting on release)
+- Rate limiting enhancements (item 16, partially done)
+
+**Estimated effort for remaining items:** 1-2 weeks
+
+---
+
+### Phase 3: TypeGraphQL Upgrade (P1) - WAITING
+
+Upgrade TypeGraphQL to stable release when available.
 
 **Estimated effort:** 1 week
-**Dependencies:** Phase 1 complete (so .env is secure before running migrations)
+**Dependencies:** Stable TypeGraphQL 2.0.0 release
 
-### Phase 3: Stability & Protection (P1 items 8, 9, 10, 11)
+---
 
-Add rate limiting, health checks, query protection, and error sanitization.
+### Phase 4: Institutional Readiness (P2)
 
-**Estimated effort:** 1 week
-**Dependencies:** None (can parallelize with Phase 2)
-
-### Phase 4: Testing & Upgrades (P1 items 14, 15)
-
-Add test suite and upgrade TypeGraphQL.
-
-**Estimated effort:** 2 weeks
-**Dependencies:** Phases 1-3 complete (tests should cover the hardened state)
-
-### Phase 5: Institutional Readiness (P2 items 16-21)
-
-Logging, audit trails, soft deletes, constraints, pool tuning, persisted queries.
+Audit logging, soft deletes, database constraints, observability, dependency alignment.
 
 **Estimated effort:** 3-4 weeks
-**Dependencies:** Phase 4 complete (tests in place before adding complexity)
+**Dependencies:** Phase 2 complete (tests and quality gates in place before adding complexity)
+**Items:** Audit logging, soft deletes, database constraints, OpenTelemetry tracing, Prometheus metrics, dotenv alignment, connection pool tuning, persisted queries
 
-### Phase 6: Operational Excellence (P3 items 22-24)
+---
 
-Query complexity, observability, automated schema diffing.
+### Phase 5: Operational Excellence (P3)
+
+Query complexity analysis, test coverage reporting, CI generated code verification.
 
 **Estimated effort:** 2-3 weeks
-**Dependencies:** Phase 5 complete
+**Dependencies:** Phase 4 complete
+
+---
+
+## Resolution Summary
+
+| Priority | Total Items | Resolved | Remaining |
+|---|---|---|---|
+| P0 | 10 | 8 | 2 |
+| P1 | 8 | 4 | 4 |
+| P2 | 8 | 0 | 8 (1 partially done) |
+| P3 | 3 | 0 | 3 |
+
+**P1 Items Resolved (Wave 3B, 2026-02-08):**
+- Item 12: Health check endpoint
+- Item 13: Formal test runner (Vitest)
+- Item 17: ESLint configuration
+- Item 18: Pre-commit hooks
+
+**P1 Items Remaining:**
+- Item 11: Pino logging migration (33 console.log instances)
+- Item 14: CI schema validation
+- Item 15: TypeGraphQL upgrade (waiting on stable release)
+- Item 16: Rate limiting enhancements (partially done)

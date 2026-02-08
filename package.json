@@ -29,12 +29,18 @@
     "generate:strings": "ts-node src/modules/generateStrings.ts",
     "generate:selections": "ts-node src/modules/generateSelections.ts",
     "fix-imports": "node fix-import-paths.cjs",
-    "prepare-package-folder": "node prepare-package.mjs"
+    "prepare-package-folder": "node prepare-package.mjs",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "Adaptic Team",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.18.0",
     "@types/body-parser": "^1.19.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^4.17.23",
@@ -43,20 +49,26 @@
     "@types/node": "^22.17.0",
     "@types/pluralize": "^0.0.33",
     "@types/ws": "^8.18.1",
+    "@typescript-eslint/eslint-plugin": "^8.22.0",
+    "@typescript-eslint/parser": "^8.22.0",
+    "eslint": "^9.18.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.3",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "vitest": "^3.0.4"
   },
   "dependencies": {
     "@apollo/client": "^3.13.9",
     "@apollo/server": "^5.0.0",
     "@as-integrations/express4": "^1.1.2",
-    "@prisma/client": "^6.13.0",
+    "@prisma/client": "^6.19.2",
     "@prisma/extension-accelerate": "^2.0.2",
     "@prisma/extension-pulse": "^1.2.2",
-    "@prisma/generator-helper": "^6.13.0",
-    "@prisma/internals": "^6.13.0",
+    "@prisma/generator-helper": "^6.19.2",
+    "@prisma/internals": "^6.19.2",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -67,7 +79,7 @@
     "graphql-ws": "^5.16.2",
     "jsonwebtoken": "^9.0.2",
     "pluralize": "^8.0.0",
-    "prisma": "^6.13.0",
+    "prisma": "^6.19.2",
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
     "typegraphql-prisma": "^0.28.0",
@@ -77,9 +89,12 @@
     "@aws-sdk/client-lambda": "^3.859.0"
   },
   "overrides": {
-    "@prisma/client": "^6.13.0",
-    "prisma": "^6.13.0",
+    "@prisma/client": "^6.19.2",
+    "prisma": "^6.19.2",
     "@types/express": "^4.17.23"
+  },
+  "lint-staged": {
+    "*.ts": "eslint"
   },
   "engines": {
     "node": ">=20.0.0"

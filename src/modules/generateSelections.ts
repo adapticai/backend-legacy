@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { getDMMF } from '@prisma/internals';
 import { DMMF } from '@prisma/generator-helper';
+import { logger } from '../utils/logger';
 
 const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
 const OUTPUT_DIR = path.join(__dirname, '../../src/generated/selectionSets');
@@ -185,7 +186,7 @@ ${dmmf.datamodel.models.map(model => `  ${model.name},`).join('\n')}
     await fs.writeFile(INDEX_FILE, `${imports}\n\n${exports}`, 'utf-8');
 
   } catch (error) {
-    console.error('Error generating selection sets:', error);
+    logger.error('Error generating selection sets', { error: String(error) });
     process.exit(1);
   }
 };

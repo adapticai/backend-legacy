@@ -3,6 +3,7 @@ import path from 'path';
 import { getDMMF } from '@prisma/internals';
 import { DMMF } from '@prisma/generator-helper';
 import pluralize from 'pluralize';
+import { logger } from '../utils/logger';
 
 const SCHEMA_PATH = path.join(__dirname, '../../prisma/schema.prisma');
 const OUTPUT_DIR = path.join(__dirname, '../../src/generated/typeStrings');
@@ -184,7 +185,7 @@ const generateTypeString = (
           field.name.toLowerCase() === singularTypeName.toLowerCase() ||
           field.name.toLowerCase() === pluralTypeName.toLowerCase()
         ) {
-          console.log(
+          logger.info(
             `Skipping field "${field.name}" in model "${model.name}" as it references the ancestor "${field.type}".`
           );
           continue;
@@ -221,7 +222,7 @@ const generateTypeString = (
                   nestedTsType = prismaFieldToTsType(nestedField, includedEnums, enums);
                 } else if (nestedField.kind === 'object') {
                   if (ancestors.has(nestedField.type)) {
-                    console.log(
+                    logger.info(
                       `Skipping nested field "${nestedField.name}" in model "${relatedModel.name}" as it references the ancestor "${nestedField.type}".`
                     );
                     return '';
@@ -359,7 +360,7 @@ const generateTypeStrings = async () => {
 
       const fileContent = `export const ${constName} = \`\n${escapedTypeString}\`;\n`;
       await fs.writeFile(filePath, fileContent, 'utf-8');
-      console.log(`Generated ${fileName}`);
+      logger.info(`Generated ${fileName}`);
 
       const exportName = modelName.charAt(0).toLowerCase() + modelName.slice(1);
       exportStatements.push(`  ${exportName}: ${constName},`);
@@ -374,9 +375,9 @@ const generateTypeStrings = async () => {
       `\n} as const;\n\nexport default typeStrings;`;
 
     await fs.writeFile(INDEX_FILE, indexContent, 'utf-8');
-    console.log('Generated index.ts');
+    logger.info('Generated index.ts');
   } catch (error) {
-    console.error('Error generating type strings:', error);
+    logger.error('Error generating type strings', { error: String(error) });
   }
 };
 

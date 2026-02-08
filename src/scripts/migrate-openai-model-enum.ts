@@ -1,9 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../utils/logger';
 
 const prisma = new PrismaClient();
 
 async function migrateOpenaiModelEnum() {
-  console.log('Starting OpenaiModel enum migration...');
+  logger.info('Starting OpenaiModel enum migration...');
 
   try {
     // Check which models are currently in use in the users table
@@ -17,13 +18,13 @@ async function migrateOpenaiModelEnum() {
     `;
 
     if (currentModels.length > 0) {
-      console.log('Found users with deprecated model values:');
+      logger.info('Found users with deprecated model values:');
       currentModels.forEach((record) => {
-        console.log(`  - ${record.openaiModel}: ${record.count} users`);
+        logger.info(`  - ${record.openaiModel}: ${record.count} users`);
       });
     } else {
-      console.log('No users found with deprecated model values.');
-      console.log('Migration not needed, but will proceed anyway for safety.');
+      logger.info('No users found with deprecated model values.');
+      logger.info('Migration not needed, but will proceed anyway for safety.');
     }
 
     // Update all deprecated model values to NULL temporarily
@@ -34,10 +35,10 @@ async function migrateOpenaiModelEnum() {
       WHERE "openaiModel" IN ('GPT_4O', 'GPT_4O_MINI', 'O1_PREVIEW', 'O1_MINI', 'O1', 'O3_MINI')
     `;
 
-    console.log(`Updated ${result} users to NULL (will be set to GPT_5_MINI after schema migration)`);
-    console.log('Migration completed successfully!');
+    logger.info(`Updated ${result} users to NULL (will be set to GPT_5_MINI after schema migration)`);
+    logger.info('Migration completed successfully!');
   } catch (error) {
-    console.error('Migration failed:', error);
+    logger.error('Migration failed', { error: String(error) });
     throw error;
   } finally {
     await prisma.$disconnect();
@@ -47,10 +48,10 @@ async function migrateOpenaiModelEnum() {
 // Run the migration
 migrateOpenaiModelEnum()
   .then(() => {
-    console.log('Script finished successfully');
+    logger.info('Script finished successfully');
     process.exit(0);
   })
   .catch((error) => {
-    console.error('Script failed:', error);
+    logger.error('Script failed', { error: String(error) });
     process.exit(1);
   });

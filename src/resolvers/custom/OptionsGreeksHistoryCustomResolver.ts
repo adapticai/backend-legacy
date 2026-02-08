@@ -1,7 +1,13 @@
 import * as TypeGraphQL from 'type-graphql';
+import type { PrismaClient } from '@prisma/client';
 import { PortfolioGreeksHistory } from '../../generated/typegraphql-prisma/models/PortfolioGreeksHistory';
 import { OptionsGreeksHistorySystemSummary } from './OptionsGreeksHistorySystemSummary';
 import { getPrismaFromContext } from '../../generated/typegraphql-prisma/helpers';
+
+/** GraphQL resolver context containing the Prisma client instance */
+interface GraphQLContext {
+  prisma: PrismaClient;
+}
 
 /**
  * Custom resolver for PortfolioGreeksHistory aggregation queries
@@ -19,7 +25,7 @@ export class OptionsGreeksHistoryCustomResolver {
     description: 'Get system-wide summary statistics for Greeks history data',
   })
   async optionsGreeksHistorySystemSummary(
-    @TypeGraphQL.Ctx() ctx: any,
+    @TypeGraphQL.Ctx() ctx: GraphQLContext,
   ): Promise<OptionsGreeksHistorySystemSummary> {
     const prisma = getPrismaFromContext(ctx);
 

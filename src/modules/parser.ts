@@ -6,6 +6,7 @@ import { FieldDefinition, FieldType } from './types';
 import { URL } from 'url';
 import { capitalizeFirstLetter } from './utils';
 import path from 'path';
+import { logger } from '../utils/logger';
 
 export function isScalarType(typeName: string): boolean {
   if (typeName.startsWith('Enum')) return true;
@@ -170,7 +171,7 @@ const updatedScalars = updateGraphQLScalars(schemaPath);
 
 export function getInputTypeDefinition(typeFilePath: string | number | Buffer | URL): FieldDefinition[] {
   if (!fs.existsSync(typeFilePath as string)) {
-    console.warn(`Warning: Input type file does not exist: ${typeFilePath}`);
+    logger.warn(`Warning: Input type file does not exist: ${typeFilePath}`);
     return [];
   }
 
@@ -183,7 +184,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
 
   const visitor = (node: ts.Node, depth = 0) => {
     if (depth > MAX_RECURSION_DEPTH) {
-      console.warn(`Max recursion depth exceeded for node: ${node.getText(sourceFile)} `);
+      logger.warn(`Max recursion depth exceeded for node: ${node.getText(sourceFile)} `);
       return;
     }
 
@@ -220,7 +221,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     depth = 0
   ): FieldType | null {
     if (depth > MAX_RECURSION_DEPTH) {
-      console.warn(`Max recursion depth exceeded for node: ${typeNode.getText(sf)}`);
+      logger.warn(`Max recursion depth exceeded for node: ${typeNode.getText(sf)}`);
       return null;
     }
 
@@ -489,7 +490,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
   try {
     ts.forEachChild(sourceFile, (child) => visitor(child));
   } catch (e) {
-    console.error('Error processing AST: ', e);
+    logger.error('Error processing AST', { error: String(e) });
   }
 
   return fields;

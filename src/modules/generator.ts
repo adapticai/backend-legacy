@@ -5,6 +5,7 @@ import { FieldDefinition, InputTypePaths } from './types';
 import { capitalizeFirstLetter, lowerCaseFirstLetter } from './utils';
 import { getInputTypeDefinition } from './parser';
 import { selectionSets } from '../generated/selectionSets';
+import { logger } from '../utils/logger';
 
 type ModelName = keyof typeof selectionSets;
 
@@ -42,7 +43,7 @@ const constructVariablesObject = (
     if (fs.existsSync(inputPath)) {
       fields = getInputTypeDefinition(inputPath);
     } else {
-      console.warn(`Warning: Model file does not exist: ${inputPath}`);
+      logger.warn(`Warning: Model file does not exist: ${inputPath}`);
       return '';
     }
   }
@@ -144,7 +145,7 @@ const handleCreateOperation = (
     const nestedInputTypePath = path.join(inputsPath || '', `${nestedInputTypeName}.ts`);
 
     if (!fs.existsSync(nestedInputTypePath)) {
-      console.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
+      logger.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
       return '';
     }
 
@@ -153,7 +154,7 @@ const handleCreateOperation = (
     // Try to find 'connectOrCreate' field
     const connectOrCreateField = nestedItems.find((item) => item.name === 'connectOrCreate');
     if (!connectOrCreateField) {
-      console.warn(`No 'connectOrCreate' field found in ${nestedInputTypePath}`);
+      logger.warn(`No 'connectOrCreate' field found in ${nestedInputTypePath}`);
       return '';
     }
 
@@ -167,7 +168,7 @@ const handleCreateOperation = (
     const createField = operationInputItems.find((item) => item.name === 'create') || operationInputItems.find((item) => item.name === 'data');
 
     if (!whereField || !createField) {
-      console.warn(`Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`);
+      logger.warn(`Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`);
       return '';
     }
 
@@ -180,7 +181,7 @@ const handleCreateOperation = (
     const createFields = getInputTypeDefinition(createInputTypePath);
 
     if (createFields.length === 0 || !createFields || !whereFields || whereFields.length === 0) {
-      console.warn(`No fields found in create input type: ${createInputTypePath}`);
+      logger.warn(`No fields found in create input type: ${createInputTypePath}`);
       return '';
     }
 
@@ -285,7 +286,7 @@ const handleUpdateOperation = (
     const nestedInputTypePath = path.join(inputsPath || '', `${nestedInputTypeName}.ts`);
 
     if (!fs.existsSync(nestedInputTypePath)) {
-      console.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
+      logger.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
       return '';
     }
 
@@ -294,7 +295,7 @@ const handleUpdateOperation = (
     // Try to find 'upsert' field
     const upsertField = nestedItems.find((item) => item.name === 'upsert');
     if (!upsertField) {
-      console.warn(`No 'upsert' field found in ${nestedInputTypePath}`);
+      logger.warn(`No 'upsert' field found in ${nestedInputTypePath}`);
       return '';
     }
 
@@ -309,7 +310,7 @@ const handleUpdateOperation = (
     const createField = operationInputItems.find((item) => item.name === 'create') || operationInputItems.find((item) => item.name === 'data');
 
     if (!whereField || !updateField) {
-      console.warn(`Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`);
+      logger.warn(`Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`);
       return '';
     }
 
@@ -330,7 +331,7 @@ const handleUpdateOperation = (
       !createFields || createFields.length === 0 ||
       !whereFields || whereFields.length === 0
     ) {
-      console.warn(`No fields found in update input type: ${updateInputTypePath}`);
+      logger.warn(`No fields found in update input type: ${updateInputTypePath}`);
       return '';
     }
 
@@ -493,14 +494,14 @@ const handleWhereOperation = (
     const nestedFilterTypePath = path.join(inputsPath || '', `${nestedFilterTypeName}.ts`);
 
     if (!fs.existsSync(nestedFilterTypePath)) {
-      console.warn(`Nested filter type file does not exist: ${nestedFilterTypePath}`);
+      logger.warn(`Nested filter type file does not exist: ${nestedFilterTypePath}`);
       return '';
     }
 
     const nestedFilterFields = getInputTypeDefinition(nestedFilterTypePath);
 
     if (nestedFilterFields.length === 0) {
-      console.warn(`No fields found in nested filter type: ${nestedFilterTypePath}`);
+      logger.warn(`No fields found in nested filter type: ${nestedFilterTypePath}`);
       return '';
     }
 
@@ -629,6 +630,7 @@ export const generateModelFunctions = (
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
+import { logger } from './utils/logger';
 ${allocationValidationImport}  `;
 
   const operations = `
@@ -735,13 +737,13 @@ ${allocationValidationImport}  `;
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            console.warn("Database connection error, retrying...");
+            logger.warn("Database connection error, retrying...");
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
 
           // Log the error and rethrow
-          console.error("Database error occurred:", error);
+          logger.error("Database error occurred", { error: String(error) });
           throw error;
         }
       }
@@ -823,13 +825,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -930,13 +932,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1036,13 +1038,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1135,13 +1137,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1217,13 +1219,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1305,13 +1307,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1377,13 +1379,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1470,13 +1472,13 @@ ${allocationValidationImport}  `;
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1492,7 +1494,7 @@ ${allocationValidationImport}  `;
   try {
     fs.writeFileSync(outputFilePath, operations, 'utf-8');
   } catch (error) {
-    console.error(`Failed to write functions for model ${modelName}:`, error);
+    logger.error(`Failed to write functions for model ${modelName}`, { error: String(error) });
     return null;
   }
 

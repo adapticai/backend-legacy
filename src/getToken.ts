@@ -2,6 +2,7 @@ import { IncomingHttpHeaders } from 'http';
 import { Buffer } from 'buffer';
 import * as crypto from 'crypto';
 import { jwtSecret } from './config/jwtConfig';
+import { logger } from './utils/logger';
 
 /**
  * Default maximum age for JWT (30 days)
@@ -202,8 +203,8 @@ interface LoggerInstance {
  * Default Logger using Console
  */
 const defaultLogger: LoggerInstance = {
-  info: console.info,
-  error: console.error
+  info: (message: string) => logger.info(message),
+  error: (message: string) => logger.error(message),
 };
 
 /**

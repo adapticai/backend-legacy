@@ -4,6 +4,7 @@
 **Registry:** NPM (published)
 **Language:** TypeScript (strict mode)
 **Target:** ES2018
+**Last Audit:** 2026-02-08
 
 ---
 
@@ -13,17 +14,30 @@ backend-legacy is the core data layer and GraphQL API for the Adaptic platform. 
 
 ---
 
+## Build Status
+
+**PASSING** - All 8 pipeline steps succeed (verified 2026-02-08):
+
+```
+clean -> generate -> fix-imports -> generate:selections -> generate:functions -> generate:strings -> tsc -> build:server
+```
+
+**Wave 1 Completion (2026-02-08):** 674 TypeScript compilation errors fixed, build now passes cleanly.
+
+---
+
 ## Core Technology Stack
 
 | Layer | Technology | Version |
 |---|---|---|
-| HTTP Server | Express | - |
+| HTTP Server | Express | 4 |
 | GraphQL | Apollo Server | 5 |
 | Schema Generation | TypeGraphQL | 2.0.0-rc.2 |
-| ORM | Prisma | 6.13.0 |
+| ORM | Prisma | 6.19.2 |
 | Database | PostgreSQL | via Prisma Accelerate |
 | Auth | JWT + Google OAuth | - |
 | Subscriptions | graphql-ws | WebSocket transport |
+| TypeScript | | 5.9.3 |
 
 ---
 
@@ -32,7 +46,9 @@ backend-legacy is the core data layer and GraphQL API for the Adaptic platform. 
 ### Scale
 
 - **54 Prisma models**
-- **134 migrations** (healthy history, no squash needed)
+- **53 enums**
+- **139 migrations** (healthy history, no squash needed)
+- **~121 KB schema file**
 - **50+ indexes**
 - **13 cascading delete relations**
 - **~15 unique constraints**
@@ -53,7 +69,33 @@ backend-legacy is the core data layer and GraphQL API for the Adaptic platform. 
 
 ### Schema File
 
-- `prisma/schema.prisma` - Single schema file containing all 54 models
+- `prisma/schema.prisma` - Single schema file containing all 54 models, 53 enums
+
+### Recent Migrations (Feb 6, 2026)
+
+| Migration | Purpose |
+|---|---|
+| `trade_timestamp_string_to_datetime` | Converted Trade.timestamp from String to DateTime |
+| `add_allocation_validation` | Added allocation sum validation constraints |
+| `fix_updated_at_patterns` | Corrected @default(now()) to @updatedAt on 8+ models |
+| `add_missing_foreign_key_indexes` | Added indexes on FK columns lacking them |
+
+---
+
+## Security Hardening (Recently Completed)
+
+The following security measures were implemented as part of the P0 audit remediation:
+
+| Feature | Location | Details |
+|---|---|---|
+| JWT secret management | `src/config/jwtConfig.ts` | Production requires JWT_SECRET env var, minimum 32 characters |
+| Input validation middleware | `src/middleware/input-validator.ts` | Validates mutation inputs before processing |
+| GraphQL validation plugin | `src/middleware/graphql-validation-plugin.ts` | Validates GraphQL operations at the schema level |
+| Query depth limiter | `src/plugins/query-depth-limiter.ts` | Configurable via GRAPHQL_MAX_DEPTH env var |
+| Error sanitizer | `src/plugins/error-sanitizer.ts` | Strips stack traces and internal details in production |
+| Rate limiting | `src/middleware/rate-limiter.ts` | Configurable via RATE_LIMIT_MAX env var |
+| CORS configuration | `src/server.ts` | Environment-based origin whitelist via ALLOWED_ORIGINS |
+| Allocation validator | `src/validators/allocation-validator.ts` | Ensures allocation sums are valid |
 
 ---
 
@@ -184,51 +226,79 @@ Direct Prisma client access with Accelerate extension.
 |---|---|
 | `src/server.ts` | Apollo GraphQL server setup with Express |
 | `src/auth.ts` | JWT authentication middleware |
+| `src/config/jwtConfig.ts` | JWT secret management (production enforcement) |
 | `src/client.ts` | Apollo Client factory (singleton, retries, Prisma Accelerate) |
 | `src/prismaClient.ts` | Prisma singleton with Accelerate extension |
-| `prisma/schema.prisma` | Database schema (all 54 models) |
+| `prisma/schema.prisma` | Database schema (all 54 models, 53 enums) |
 | `src/modules/` | Code generators (generateSelections, generator, generateStrings) |
 | `fix-import-paths.cjs` | Post-generation import path correction |
+| `src/middleware/input-validator.ts` | Input validation middleware |
+| `src/middleware/graphql-validation-plugin.ts` | GraphQL validation plugin |
+| `src/middleware/rate-limiter.ts` | Rate limiting middleware |
+| `src/plugins/query-depth-limiter.ts` | Query depth limiting plugin |
+| `src/plugins/error-sanitizer.ts` | Error sanitization plugin |
+| `src/validators/allocation-validator.ts` | Allocation validation logic |
 
 ---
 
 ## Authentication
 
 - **JWT tokens** validated on every GraphQL request
+- **JWT secret management** via `src/config/jwtConfig.ts` (production requires JWT_SECRET, min 32 chars)
 - **Google OAuth** integration for user login
 - **Token refresh** mechanism for session continuity
 - **Custom token provider** support for programmatic access
 
 ---
 
-## Current Issues (from Audit)
+## Code Quality
+
+| Metric | Status |
+|---|---|
+| `any` types in source code | **Zero** (only present in generated vendor code) |
+| eslint-disable comments | **Zero** |
+| TODO/FIXME in production code | **Zero** |
+| console.log instances | **33** (needs Pino migration) |
+| Formal ESLint config | **Configured** (flat config, eslint.config.mjs) |
+| Pre-commit hooks | **Configured** (Husky + lint-staged) |
+| Formal test runner | **Vitest** (npm test script configured) |
+
+### Tests
+
+- **Vitest configured** (vitest.config.ts, `npm test` script)
+- **3+ files with actual tests:**
+  - `graphql-validation-plugin` tests
+  - `input-validator` tests
+  - `allocation-validator` tests
+  - Additional tests added during Wave 3B
+- **2 empty test templates:** generator, parser
+
+---
+
+## Current Issues
 
 ### CRITICAL - Security
 
-| Issue | Location | Detail |
-|---|---|---|
-| Hardcoded test JWT token | server.ts (lines 176, 237), auth.ts (line 29), .env | Test JWT token is committed to source code |
-| Default JWT secret fallback | Development mode | Falls back to `'development_secret_key_for_local_testing_only'` |
-| .env may contain real credentials | .env | Environment file potentially committed with real secrets |
-| No input validation | GraphQL resolvers | Mutations accept arbitrary input without validation |
-| CORS unrestricted | server.ts | `cors()` called without origin configuration |
-| No rate limiting | Express middleware | No protection against abuse or DoS |
+| Issue | Detail |
+|---|---|
+| .env may contain real credentials | Environment file potentially committed with real secrets; needs removal from git history |
 
-### HIGH - Data Integrity
+### HIGH - Stability & Quality
 
 | Issue | Detail |
 |---|---|
-| updatedAt pattern incorrect | 8+ models use `@default(now())` instead of `@updatedAt` |
-| Trade.timestamp is String? | Should be DateTime? for proper temporal operations |
-| Allocation no sum validation | No constraint ensuring allocations sum to 100% |
-| Missing foreign key indexes | Some FK columns lack indexes, causing slow joins |
+| TypeGraphQL RC in production | Using 2.0.0-rc.2 (release candidate, not stable) |
+| 33 console.log calls | Need migration to Pino structured logging |
+| ~~No formal ESLint config~~ | **RESOLVED** - ESLint flat config added (eslint.config.mjs) with rules matching engine conventions |
+| ~~No pre-commit hooks~~ | **RESOLVED** - Husky + lint-staged configured, runs ESLint and TypeScript type checking on staged files |
+| ~~No formal test runner~~ | **RESOLVED** - Vitest configured with npm test script, existing tests runnable |
+| Prisma version drift | package.json specifies ^6.13.0 but actual installed version is 6.19.2 |
 
-### MEDIUM - Stability & Quality
+### MEDIUM - Operations
 
 | Issue | Detail |
 |---|---|
-| TypeGraphQL RC in production | Using 2.0.0-rc.2 (release candidate) |
-| No test script | package.json has no test command; zero test coverage |
+| ~~No health check endpoint~~ | **RESOLVED** - GET /health endpoint added, returns database connectivity status, server uptime, memory usage, version number |
 | Database restart uses exec() | Railway CLI invoked via exec() for DB restarts (fragile) |
 
 ---
@@ -238,5 +308,8 @@ Direct Prisma client access with Accelerate extension.
 - Hosted on Railway
 - Prisma Accelerate for connection pooling and edge caching
 - Environment variables managed via Railway dashboard
-- No health check endpoint
-- No structured logging (uses console.log)
+- CORS configured via ALLOWED_ORIGINS environment variable
+- Rate limiting configured via RATE_LIMIT_MAX environment variable
+- Query depth configured via GRAPHQL_MAX_DEPTH environment variable
+- Health check endpoint available at GET /health (database connectivity, uptime, memory, version)
+- No structured logging (uses console.log; 33 instances)

@@ -1,9 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { logger } from '../utils/logger';
 
 const prisma = new PrismaClient();
 
 async function setDefaultOpenaiModel() {
-  console.log('Setting default OpenaiModel to GPT_5_MINI for users...');
+  logger.info('Setting default OpenaiModel to GPT_5_MINI for users...');
 
   try {
     // Update all users with NULL openaiModel to GPT_5_MINI
@@ -13,10 +14,10 @@ async function setDefaultOpenaiModel() {
       WHERE "openaiModel" IS NULL
     `;
 
-    console.log(`Updated ${result} users to GPT_5_MINI`);
-    console.log('Default model set successfully!');
+    logger.info(`Updated ${result} users to GPT_5_MINI`);
+    logger.info('Default model set successfully!');
   } catch (error) {
-    console.error('Failed to set default model:', error);
+    logger.error('Failed to set default model', { error: String(error) });
     throw error;
   } finally {
     await prisma.$disconnect();
@@ -26,10 +27,10 @@ async function setDefaultOpenaiModel() {
 // Run the script
 setDefaultOpenaiModel()
   .then(() => {
-    console.log('Script finished successfully');
+    logger.info('Script finished successfully');
     process.exit(0);
   })
   .catch((error) => {
-    console.error('Script failed:', error);
+    logger.error('Script failed', { error: String(error) });
     process.exit(1);
   });

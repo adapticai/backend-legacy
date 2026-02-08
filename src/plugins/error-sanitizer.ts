@@ -26,6 +26,7 @@
  */
 
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { logger } from '../utils/logger';
 
 interface ErrorContext {
   prisma?: unknown;
@@ -112,15 +113,15 @@ function logError(error: GraphQLError, isProduction: boolean): void {
 
   // In development, include the full error details
   if (!isProduction) {
-    console.error('[GraphQL Error]', {
+    logger.error('[GraphQL Error]', {
       ...logData,
-      extensions,
-      originalError: error.originalError,
+      extensions: extensions as Record<string, unknown>,
+      originalError: String(error.originalError),
       stack: error.originalError?.stack,
     });
   } else {
     // In production, log full details but without stack traces in some cases
-    console.error('[GraphQL Error]', {
+    logger.error('[GraphQL Error]', {
       ...logData,
       // Only include stack for internal errors (not validation)
       stack: isSafeError(extensions?.code as string)
@@ -188,7 +189,7 @@ export function createErrorSanitizer() {
 
     if (!graphqlError) {
       // If it's not a GraphQL error, log and sanitize
-      console.error('[Non-GraphQL Error]', error);
+      logger.error('[Non-GraphQL Error]', { error: String(error) });
 
       return {
         message: isProduction

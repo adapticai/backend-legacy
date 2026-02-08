@@ -1,5 +1,7 @@
 // client.ts
 
+import { logger } from './utils/logger';
+
 // === Export type definitions (statically) ===
 import type {
   ApolloClient as ApolloClientType,
@@ -78,7 +80,7 @@ async function loadApolloModules(): Promise<ApolloModules> {
  */
 export function configureConnectionPool(config: Partial<ConnectionPoolConfig>): void {
   poolConfig = { ...poolConfig, ...config };
-  console.log(`Apollo client connection pool configured: ${JSON.stringify(poolConfig)}`);
+  logger.info('Apollo client connection pool configured', { poolConfig: JSON.stringify(poolConfig) });
 }
 
 /**
@@ -98,7 +100,7 @@ export function setTokenProvider(provider: TokenProvider): void {
   customTokenProvider = provider;
   // Reset the client so it picks up the new token provider
   if (apolloClient) {
-    console.log('Token provider updated, Apollo client will be recreated on next request');
+    logger.info('Token provider updated, Apollo client will be recreated on next request');
     apolloClient = undefined;
   }
 }
@@ -128,7 +130,7 @@ async function getAuthToken(): Promise<string> {
     try {
       token = await Promise.resolve(customTokenProvider());
     } catch (error) {
-      console.error('[Apollo Client] Error getting token from custom provider:', error);
+      logger.error('[Apollo Client] Error getting token from custom provider', { error: String(error) });
     }
   }
 
@@ -145,7 +147,7 @@ async function getAuthToken(): Promise<string> {
       return token;
     }
 
-    console.warn(
+    logger.warn(
       '[Apollo Client] Token does not appear to be a valid JWT format. ' +
       'Expected format: header.payload.signature (three base64url-encoded parts). ' +
       'Token will not be sent. Please check your NEXT_PUBLIC_SERVER_AUTH_TOKEN or SERVER_AUTH_TOKEN environment variable.'
@@ -165,7 +167,7 @@ function processQueue(): void {
     const operation = operationQueue.shift();
     if (operation) {
       pendingOperations++;
-      operation().finally(() => {
+      void operation().finally(() => {
         pendingOperations--;
         processQueue(); // Process next item after an operation completes
       });
@@ -188,7 +190,7 @@ async function enqueueOperation<T>(operation: () => Promise<T>, attempt = 0): Pr
             error instanceof Error && error.message.includes("code: 1016"))) {
           // Only retry specific database connection errors
           const delay = poolConfig.retryDelay * Math.pow(2, attempt); // Exponential backoff
-          console.warn(`Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`);
+          logger.warn(`Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`);
           setTimeout(() => {
             enqueueOperation(operation, attempt + 1)
               .then(resolve)
@@ -251,16 +253,16 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
     });
 
     // Create the error handling link with retry logic.
-    const errorLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
         graphQLErrors.forEach(({ message, locations, path }: any) => {
-          console.error(
+          logger.error(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
           );
         });
       }
       if (networkError) {
-        console.error(`[Network error]: ${networkError}`);
+        logger.error(`[Network error]: ${networkError}`);
       }
     });
 
@@ -308,7 +310,7 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
 
     return apolloClient;
   } catch (error) {
-    console.error('Error initializing Apollo Client:', error);
+    logger.error('Error initializing Apollo Client', { error: String(error) });
     throw error;
   }
 }

@@ -23,6 +23,7 @@
  */
 
 import { ApolloServerPlugin, GraphQLRequestListener } from '@apollo/server';
+import { logger } from '../utils/logger';
 import {
   DocumentNode,
   FieldNode,
@@ -31,7 +32,6 @@ import {
   InlineFragmentNode,
   OperationDefinitionNode,
   SelectionNode,
-  visit,
 } from 'graphql';
 import { GraphQLError } from 'graphql';
 
@@ -192,14 +192,13 @@ export function queryDepthLimiterPlugin(
             const requestId = contextValue?.req?.headers?.['x-request-id'] || 'unknown';
 
             // Log the rejected query
-            console.error('[QueryDepthLimiter] Query rejected', {
+            logger.error('[QueryDepthLimiter] Query rejected', {
               depth,
               maxDepth,
               queryName,
               userId,
               requestId,
               query: truncatedQuery,
-              timestamp: new Date().toISOString(),
             });
 
             throw new GraphQLError(

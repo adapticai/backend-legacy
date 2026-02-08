@@ -17,21 +17,32 @@ import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import { jwtSecret } from './config/jwtConfig';
 import prisma from './prismaClient';
+import { createHealthRouter } from './health';
 import { exec } from 'child_process';
+import { logger } from './utils/logger';
 
 import { Request } from 'express';
 import { CorsOptions } from 'cors';
+import { JwtPayload } from 'jsonwebtoken';
+
+/** Represents the decoded user payload attached to authenticated requests */
+interface AuthUser {
+  sub?: string;
+  name?: string;
+  role?: string;
+  provider?: string;
+  token?: string;
+}
 
 interface AuthenticatedRequest extends Request {
-  // Add any additional properties that are specific to authenticated requests
-  user: any; // Replace 'any' with the actual type of the user object
+  user: JwtPayload | AuthUser | string;
 }
 
 let dbUnreachableCount = 0;
 let lastRestartAttempt = 0;
-async function restartDatabase() {
+async function restartDatabase(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    console.log("Attempting to redeploy the Railway Postgres service in production...");
+    logger.info('Attempting to redeploy the Railway Postgres service in production');
 
     // Check for both types of tokens
     const projectToken = process.env.RAILWAY_TOKEN;
@@ -49,13 +60,11 @@ async function restartDatabase() {
       shell: '/bin/sh'
     }, (error, stdout, stderr) => {
       if (error) {
-        console.error('Failed to redeploy DB via Railway CLI:', error);
-        console.error('Command output:', stdout);
-        console.error('Command errors:', stderr);
+        logger.error('Failed to redeploy DB via Railway CLI', { error: String(error), stdout, stderr });
         return reject(error);
       }
 
-      console.log('Railway deployment output:', stdout);
+      logger.info('Railway deployment output', { stdout });
       resolve();
     });
   });
@@ -77,13 +86,13 @@ const startServer = async () => {
     introspection: true,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     formatError: (err) => {
-      console.error('GraphQL Error:', JSON.stringify(err, null, 2));
+      logger.error('GraphQL Error', { graphqlError: err });
 
       // Check if this error is due to unreachable DB
       const message = err.message || '';
       if (message.includes("Can't reach database server")) {
         dbUnreachableCount += 1;
-        console.log(`DB unreachable count: ${dbUnreachableCount}`);
+        logger.warn('Database unreachable', { dbUnreachableCount });
 
         // If we've hit 3 (for example) attempts
         if (dbUnreachableCount >= 3) {
@@ -92,21 +101,21 @@ const startServer = async () => {
           if (now - lastRestartAttempt > 5 * 60 * 1000) {
             lastRestartAttempt = now;
             try {
-              restartDatabase();
+              void restartDatabase();
               // Reset the counter after attempting a restart
               dbUnreachableCount = 0;
             } catch (restartError) {
-              console.error('Error trying to restart DB:', restartError);
+              logger.error('Error trying to restart DB', { restartError: String(restartError) });
               // If the restart fails, we can try again after a delay
               const backoffTime = Math.min(30000, 1000 * Math.pow(2, dbUnreachableCount - 3)); // Exponential backoff with a max of 30 seconds
-              console.log(`Waiting for ${backoffTime / 1000} seconds before next restart attempt...`);
+              logger.info('Waiting before next restart attempt', { backoffSeconds: backoffTime / 1000 });
               setTimeout(() => {
                 restartDatabase()
                   .then(() => {
                     dbUnreachableCount = 0; // Reset the counter after a successful restart
                   })
                   .catch((restartError) => {
-                    console.error('Error trying to restart DB:', restartError);
+                    logger.error('Error trying to restart DB', { restartError: String(restartError) });
                     // We do not reset the counter here if the restart fails,
                     // so it can try again next time.
                   });
@@ -133,6 +142,9 @@ const startServer = async () => {
   });
 
   await server.start();
+
+  // Health check endpoint - mounted before Apollo middleware so it's not behind GraphQL or auth
+  app.use(createHealthRouter());
 
   // Configure CORS with allowed origins
   const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001').split(',').map(o => o.trim());
@@ -161,7 +173,7 @@ const startServer = async () => {
       context: async ({ req }: { req: Request }) => {
         // Ensure we're using the global prisma instance and never disconnecting it between requests
         if (!global.prisma) {
-          console.warn('Prisma client not found in global scope, reinitializing');
+          logger.warn('Prisma client not found in global scope, reinitializing');
           global.prisma = prisma;
         }
 
@@ -183,7 +195,7 @@ const startServer = async () => {
             if (tokenParts.length !== 3) {
               // Log only once per unique malformed token to avoid log spam
               const tokenPreview = token.length > 20 ? `${token.substring(0, 20)}...` : token;
-              console.warn(`[Auth] Received malformed token (not a valid JWT format): ${tokenPreview}`);
+              logger.warn('Received malformed token (not a valid JWT format)', { tokenPreview });
               // Continue without authentication - don't fail the request
               return { prisma: global.prisma, req, authError: 'Malformed token: expected JWT format (header.payload.signature)' };
             }
@@ -200,7 +212,7 @@ const startServer = async () => {
             } catch (e) {
               // Only log verification failures at warn level with minimal info
               const errorMessage = e instanceof Error ? e.message : 'Unknown error';
-              console.warn(`[Auth] JWT verification failed: ${errorMessage}`);
+              logger.warn('JWT verification failed', { errorMessage });
               return { prisma: global.prisma, req, authError: 'Invalid token' };
             }
           }
@@ -211,13 +223,13 @@ const startServer = async () => {
   );
 
   // Custom error handling middleware for express
-  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.error('Express error:', err);
+  app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    logger.error('Express error', { error: err.message, stack: err.stack });
     res.status(500).json({ error: 'An internal server error occurred' });
   });
 
   app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    logger.debug('Incoming request', { method: req.method, url: req.url });
     next();
   });
 
@@ -229,22 +241,22 @@ const startServer = async () => {
   useServer(
     {
       schema,
-      context: async (ctx, msg, args) => {
+      context: async (ctx, _msg, _args) => {
         // Ensure we're using the global prisma instance for WebSocket connections too
         if (!global.prisma) {
-          console.warn('Prisma client not found in global scope for WebSocket context, reinitializing');
+          logger.warn('Prisma client not found in global scope for WebSocket context, reinitializing');
           global.prisma = prisma;
         }
 
         const authHeader = (ctx.connectionParams as { authorization?: string })?.authorization || '';
         const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : '';
-        
+
         let user = null;
         if (token) {
           // Check if token is a Google OAuth token (starts with ya29.)
           if (token.startsWith('ya29.')) {
             // For Google OAuth tokens, we should validate differently or pass them through
-            console.log('Detected Google OAuth token in WebSocket, skipping JWT verification');
+            logger.info('Detected Google OAuth token in WebSocket, skipping JWT verification');
             user = { provider: 'google', token };
           } else {
             // For regular JWT tokens, verify using the centralized secret
@@ -258,7 +270,7 @@ const startServer = async () => {
               }
             } catch (e) {
               const errorMessage = e instanceof Error ? e.message : 'Unknown error';
-              console.warn(`[Auth] WebSocket JWT verification failed: ${errorMessage}`);
+              logger.warn('WebSocket JWT verification failed', { errorMessage });
               return { prisma: global.prisma, authError: 'Invalid token' };
             }
           }
@@ -271,52 +283,44 @@ const startServer = async () => {
 
   const PORT = process.env.PORT || 4000;
   httpServer.listen(PORT, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
-    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}/subscriptions`);
+    logger.info('Server ready', { graphql: `http://localhost:${PORT}/graphql`, health: `http://localhost:${PORT}/health` });
+    logger.info('Subscriptions ready', { endpoint: `ws://localhost:${PORT}/subscriptions` });
   });
 };
 
 startServer().catch((error) => {
-  console.error('Error starting the server', error);
+  logger.error('Error starting the server', { error: error instanceof Error ? error.message : String(error) });
   process.exit(1);
 });
 
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+process.on('unhandledRejection', (reason, _promise) => {
+  logger.error('Unhandled Rejection', { reason: reason instanceof Error ? reason.message : String(reason) });
 });
 
 process.on('uncaughtException', (error) => {
-  console.error('Uncaught Exception:', error);
+  logger.error('Uncaught Exception', { error: error.message, stack: error.stack });
 });
 
 // Only disconnect Prisma when the process is truly shutting down
 process.on('SIGINT', async () => {
-  console.log('Gracefully shutting down and closing database connections...');
+  logger.info('Gracefully shutting down and closing database connections');
   try {
     await global.prisma?.$disconnect();
-    console.log('Database connections closed successfully');
+    logger.info('Database connections closed successfully');
   } catch (e) {
-    console.error('Error disconnecting from database:', e);
+    logger.error('Error disconnecting from database', { error: e instanceof Error ? e.message : String(e) });
   }
   process.exit(0);
 });
 
 // Also handle SIGTERM for containerized environments
 process.on('SIGTERM', async () => {
-  console.log('Received SIGTERM, gracefully shutting down...');
+  logger.info('Received SIGTERM, gracefully shutting down');
   try {
     await global.prisma?.$disconnect();
-    console.log('Database connections closed successfully');
+    logger.info('Database connections closed successfully');
   } catch (e) {
-    console.error('Error disconnecting from database:', e);
+    logger.error('Error disconnecting from database', { error: e instanceof Error ? e.message : String(e) });
   }
   process.exit(0);
 });
-
-
-// // run restartDatabase() function
-// restartDatabase().then(() => {
-//   console.log('Database restarted successfully');
-// }).catch((error) => {
-//   console.error('Error restarting database:', error);
-// });

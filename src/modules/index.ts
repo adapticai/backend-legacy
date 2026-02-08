@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { generateModelFunctions } from './generator';
 import { exit } from 'process';
+import { logger } from '../utils/logger';
 
 // Define paths
 const MODELS_PATH = path.join(__dirname, '../generated/typegraphql-prisma/models');
@@ -17,7 +18,7 @@ if (!fs.existsSync(FUNCTIONS_OUTPUT_PATH)) {
 // Delete all files within the output directory (excluding the server.ts and utils.ts files, and ignore directories)
 const files = fs.readdirSync(FUNCTIONS_OUTPUT_PATH);
 for (const file of files) {
-  if (file !== 'server.ts' && file !== 'utils.ts' && file !== 'client.ts' && file !== 'apollo-client.client.ts' && file !== 'apollo-client.server.ts' && file !== 'prismaClient.ts' && file !== 'getToken.ts') {
+  if (file !== 'server.ts' && file !== 'utils.ts' && file !== 'client.ts' && file !== 'apollo-client.client.ts' && file !== 'apollo-client.server.ts' && file !== 'prismaClient.ts' && file !== 'getToken.ts' && file !== 'health.ts') {
     const filePath = path.join(FUNCTIONS_OUTPUT_PATH, file);
     const stat = fs.statSync(filePath as fs.PathLike);
     if (stat.isFile()) {
@@ -72,8 +73,8 @@ try {
       .filter((file) => file.endsWith('.ts') && file !== 'index.ts');
   } else {
     // If models directory doesn't exist, use previously generated files
-    console.warn(`Models directory at ${MODELS_PATH} does not exist.`);
-    console.warn('Using existing generated files or trying alternative approach.');
+    logger.warn(`Models directory at ${MODELS_PATH} does not exist.`);
+    logger.warn('Using existing generated files or trying alternative approach.');
     
     // Try looking for model references in the Prisma schema
     const schemaPath = path.join(__dirname, '../../prisma/schema.prisma');
@@ -88,7 +89,7 @@ try {
     }
   }
 } catch (error) {
-  console.error(`Error accessing model information:`, error);
+  logger.error('Error accessing model information', { error: String(error) });
 }
 
 // If we still don't have model files, try an alternative approach
@@ -104,13 +105,13 @@ if (modelFiles.length === 0) {
     
     if (existingFiles.length > 0) {
       modelFiles = existingFiles;
-      console.warn(`Using ${existingFiles.length} existing model files from the output directory.`);
+      logger.warn(`Using ${existingFiles.length} existing model files from the output directory.`);
     } else {
-      console.error('No model files found or extractable from schema.');
+      logger.error('No model files found or extractable from schema.');
       // Don't exit, just continue with an empty set
     }
   } catch (error) {
-    console.error(`Error reading output directory:`, error);
+    logger.error('Error reading output directory', { error: String(error) });
   }
 }
 
@@ -147,7 +148,7 @@ const indexFilePath = path.join(FUNCTIONS_OUTPUT_PATH, 'index.ts');
 try {
   fs.writeFileSync(indexFilePath, indexContent, 'utf-8');
 } catch (error) {
-  console.error('Failed to write index.ts:', error);
+  logger.error('Failed to write index.ts', { error: String(error) });
 }
 
-console.log('Function generation completed successfully.');
+logger.info('Function generation completed successfully.');

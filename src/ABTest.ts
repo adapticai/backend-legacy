@@ -3,6 +3,7 @@
 import { ABTest as ABTestType } from './generated/typegraphql-prisma/models/ABTest';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
+import { logger } from './utils/logger';
   
   /**
    * CRUD operations for the ABTest model.
@@ -1712,13 +1713,13 @@ id
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            console.warn("Database connection error, retrying...");
+            logger.warn("Database connection error, retrying...");
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
 
           // Log the error and rethrow
-          console.error("Database error occurred:", error);
+          logger.error("Database error occurred", { error: String(error) });
           throw error;
         }
       }
@@ -1818,13 +1819,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -8028,13 +8029,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -15638,13 +15639,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -21850,13 +21851,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -21932,13 +21933,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -22023,13 +22024,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -22095,13 +22096,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -22193,13 +22194,13 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          console.warn("Database connection error, retrying...");
+          logger.warn("Database connection error, retrying...");
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        console.error("Database error occurred:", error);
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }

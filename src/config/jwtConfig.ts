@@ -9,6 +9,8 @@
  * misconfiguration is caught immediately rather than at the first request.
  */
 
+import { logger } from '../utils/logger';
+
 const MINIMUM_SECRET_LENGTH = 32;
 const DEV_FALLBACK_SECRET = 'development_secret_key_for_local_testing_only_do_not_use_in_production';
 
@@ -19,7 +21,7 @@ function resolveJwtSecret(): string {
 
   if (!secret) {
     if (isProduction) {
-      console.error(
+      logger.error(
         '[SECURITY] FATAL: JWT_SECRET environment variable is not set. ' +
         'The server cannot start in production without a valid JWT_SECRET. ' +
         'Set JWT_SECRET to a cryptographically random string of at least ' +
@@ -30,7 +32,7 @@ function resolveJwtSecret(): string {
       );
     }
 
-    console.warn(
+    logger.warn(
       '[SECURITY] WARNING: JWT_SECRET is not set. Using an insecure development ' +
       'fallback. This is acceptable for local development only. ' +
       'Do NOT deploy to production without setting JWT_SECRET.'
@@ -40,7 +42,7 @@ function resolveJwtSecret(): string {
 
   if (secret.length < MINIMUM_SECRET_LENGTH) {
     if (isProduction) {
-      console.error(
+      logger.error(
         `[SECURITY] FATAL: JWT_SECRET is too short (${secret.length} characters). ` +
         `A minimum of ${MINIMUM_SECRET_LENGTH} characters is required in production.`
       );
@@ -50,7 +52,7 @@ function resolveJwtSecret(): string {
       );
     }
 
-    console.warn(
+    logger.warn(
       `[SECURITY] WARNING: JWT_SECRET is only ${secret.length} characters. ` +
       `A minimum of ${MINIMUM_SECRET_LENGTH} characters is recommended. ` +
       'This warning will become a fatal error in production.'
