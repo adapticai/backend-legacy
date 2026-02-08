@@ -30,6 +30,7 @@
     "generate:selections": "ts-node src/modules/generateSelections.ts",
     "fix-imports": "node fix-import-paths.cjs",
     "prepare-package-folder": "node prepare-package.mjs",
+    "validate:schema": "bash scripts/validate-schema.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
