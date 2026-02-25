@@ -150,22 +150,22 @@ ALTER TABLE "actions"
   CHECK ("sequence" >= 0);
 
 -- OptionsPosition: quantity must be positive
-ALTER TABLE "OptionsPosition"
+ALTER TABLE "options_positions"
   ADD CONSTRAINT "chk_options_position_quantity_positive"
   CHECK ("quantity" > 0);
 
 -- OptionsPosition: entry price must be non-negative
-ALTER TABLE "OptionsPosition"
+ALTER TABLE "options_positions"
   ADD CONSTRAINT "chk_options_position_entry_price_non_negative"
   CHECK ("entryPrice" >= 0);
 
 -- OptionsTradeExecution: quantity must be positive
-ALTER TABLE "OptionsTradeExecution"
+ALTER TABLE "options_trade_executions"
   ADD CONSTRAINT "chk_options_execution_quantity_positive"
   CHECK ("quantity" > 0);
 
 -- OptionsTradeExecution: execution price must be non-negative
-ALTER TABLE "OptionsTradeExecution"
+ALTER TABLE "options_trade_executions"
   ADD CONSTRAINT "chk_options_execution_price_non_negative"
   CHECK ("executionPrice" >= 0);
 

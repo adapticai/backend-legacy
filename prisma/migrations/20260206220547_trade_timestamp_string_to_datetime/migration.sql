@@ -8,7 +8,7 @@
 -- SELECT id, timestamp FROM "Trade" WHERE timestamp IS NOT NULL AND timestamp !~ '^\d{4}-\d{2}-\d{2}';
 
 -- AlterTable
-ALTER TABLE "Trade" ALTER COLUMN "timestamp" TYPE TIMESTAMP(3)
+ALTER TABLE "trades" ALTER COLUMN "timestamp" TYPE TIMESTAMP(3)
   USING CASE
     WHEN "timestamp" IS NULL THEN NULL
     WHEN "timestamp" ~ '^\d{4}-\d{2}-\d{2}' THEN "timestamp"::timestamptz
