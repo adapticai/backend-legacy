@@ -709,6 +709,119 @@ export const client = Promise.resolve(null);
 }
 
 // -----------------------------------------------------------------------------
-// Step 9: Finalize Build
+// Step 9: Comprehensive ESM import fix — resolve all remaining bare imports
+// This catches anything missed by the specific fixes above, especially:
+//   - Directory imports that need /index.mjs (not .mjs)
+//   - export * from patterns
+//   - export type patterns
+//   - Any other from "./X" without proper extension
+// -----------------------------------------------------------------------------
+
+/**
+ * Resolves an import path against the filesystem to determine the correct
+ * .mjs extension or /index.mjs suffix.
+ * @param {string} importPath - The relative import path from the source file.
+ * @param {string} fileDir - The directory containing the importing file.
+ * @returns {string} - The corrected import path.
+ */
+function resolveEsmImportPath(importPath, fileDir) {
+  // Already has a recognized extension — check if it's correct
+  if (/\.(mjs|js|cjs|json)$/.test(importPath)) {
+    // Check for misapplied extension: ./foo.mjs where ./foo/ is actually a directory
+    const withoutExt = importPath.replace(/\.(mjs|js|cjs)$/, '');
+    const resolvedDir = path.resolve(fileDir, withoutExt);
+    if (fs.existsSync(resolvedDir) && fs.statSync(resolvedDir).isDirectory()) {
+      // The base path is a directory — fix to /index.mjs
+      return `${withoutExt}/index.mjs`;
+    }
+    return importPath;
+  }
+
+  // No extension — resolve against filesystem
+  const resolvedPath = path.resolve(fileDir, importPath);
+
+  // Check if it's a directory
+  if (fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory()) {
+    return `${importPath}/index.mjs`;
+  }
+
+  // It's a file — add .mjs extension
+  return `${importPath}.mjs`;
+}
+
+/**
+ * Fix all relative import/export paths in a single .mjs file.
+ * Handles: import, export, export *, export * as, export type, re-exports.
+ * @param {string} filePath - Absolute path to the .mjs file.
+ * @returns {boolean} - Whether any changes were made.
+ */
+function fixMjsFileImports(filePath) {
+  const fileDir = path.dirname(filePath);
+  let content = fs.readFileSync(filePath, 'utf8');
+  const before = content;
+
+  // Fix all from "..." patterns with double quotes
+  content = content.replace(
+    /from "(\.\.?\/[^"]+)"/g,
+    (match, importPath) => {
+      const fixed = resolveEsmImportPath(importPath, fileDir);
+      return fixed === importPath ? match : `from "${fixed}"`;
+    }
+  );
+
+  // Fix all from '...' patterns with single quotes
+  content = content.replace(
+    /from '(\.\.?\/[^']+)'/g,
+    (match, importPath) => {
+      const fixed = resolveEsmImportPath(importPath, fileDir);
+      return fixed === importPath ? match : `from '${fixed}'`;
+    }
+  );
+
+  if (content !== before) {
+    fs.writeFileSync(filePath, content, 'utf8');
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Recursively walk a directory and fix all .mjs file imports.
+ * @param {string} dirPath - Directory to process.
+ * @returns {number} - Number of files that were modified.
+ */
+function fixAllEsmImports(dirPath) {
+  if (!fs.existsSync(dirPath)) return 0;
+  let fixedCount = 0;
+
+  function walkDir(dir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walkDir(fullPath);
+      } else if (entry.name.endsWith('.mjs')) {
+        if (fixMjsFileImports(fullPath)) {
+          fixedCount++;
+        }
+      }
+    }
+  }
+
+  walkDir(dirPath);
+  return fixedCount;
+}
+
+try {
+  console.log('Running comprehensive ESM import fix on all .mjs files...');
+  const fixedFileCount = fixAllEsmImports(esmDir);
+  console.log(`Comprehensive ESM import fix: ${fixedFileCount} files updated.`);
+} catch (err) {
+  console.error('Error during comprehensive ESM import fix:', err);
+  process.exit(1);
+}
+
+// -----------------------------------------------------------------------------
+// Step 10: Finalize Build
 // -----------------------------------------------------------------------------
 console.log('Package preparation completed successfully.');
