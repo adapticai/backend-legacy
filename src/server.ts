@@ -151,7 +151,9 @@ const startServer = async () => {
   app.use(createHealthRouter());
 
   // Configure CORS with allowed origins
-  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:3001').split(',').map(o => o.trim());
+  const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://adaptic.ai', 'https://api.adaptic.ai'];
+  const envOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()) : [];
+  const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
 
   const corsOptions: CorsOptions = {
     origin: (origin, callback) => {
