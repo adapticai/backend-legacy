@@ -1,18 +1,15 @@
+
+  
 import { SignalPriorityQueue as SignalPriorityQueueType } from './generated/typegraphql-prisma/models/SignalPriorityQueue';
-import {
-  client as importedClient,
-  ApolloClientType,
-  NormalizedCacheObject,
-  getApolloModules,
-} from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
+  
+  /**
+   * CRUD operations for the SignalPriorityQueue model.
+   */
 
-/**
- * CRUD operations for the SignalPriorityQueue model.
- */
-
-const selectionSet = `
+  const selectionSet = `
     
   id
   timestamp
@@ -37,41 +34,41 @@ const selectionSet = `
 
   `;
 
-export const SignalPriorityQueue = {
-  /**
-   * Create a new SignalPriorityQueue record.
-   * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
-   * @returns The created SignalPriorityQueue or null.
-   */
+  export const SignalPriorityQueue = {
 
-  /**
-   * Create a new SignalPriorityQueue record.
-   * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Properties for the new record.
-   * @param globalClient - Apollo Client instance.
-   * @returns The created SignalPriorityQueue or null.
-   */
-  async create(
-    props: SignalPriorityQueueType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<SignalPriorityQueueType> {
-    // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
-    let retryCount = 0;
-    let lastError: any = null;
+    /**
+     * Create a new SignalPriorityQueue record.
+     * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
+     * @returns The created SignalPriorityQueue or null.
+     */
 
-    // Retry loop to handle potential database connection issues
-    while (retryCount < MAX_RETRIES) {
-      try {
-        const [modules, client] = await Promise.all([
-          getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
-        ]);
+    /**
+     * Create a new SignalPriorityQueue record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created SignalPriorityQueue or null.
+     */
+    async create(props: SignalPriorityQueueType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalPriorityQueueType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-        const { gql, ApolloError } = modules;
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-        const CREATE_ONE_SIGNALPRIORITYQUEUE = gql`
+          const { gql, ApolloError } = modules;
+
+          const CREATE_ONE_SIGNALPRIORITYQUEUE = gql`
               mutation createOneSignalPriorityQueue($data: SignalPriorityQueueCreateInput!) {
                 createOneSignalPriorityQueue(data: $data) {
                   ${selectionSet}
@@ -79,96 +76,69 @@ export const SignalPriorityQueue = {
               }
            `;
 
-        const variables = {
-          data: {
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            signalId: props.signalId !== undefined ? props.signalId : undefined,
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
-            signalType:
-              props.signalType !== undefined ? props.signalType : undefined,
-            generatorSource:
-              props.generatorSource !== undefined
-                ? props.generatorSource
-                : undefined,
-            priorityTier:
-              props.priorityTier !== undefined ? props.priorityTier : undefined,
-            scoreComponents:
-              props.scoreComponents !== undefined
-                ? props.scoreComponents
-                : undefined,
-            queuePosition:
-              props.queuePosition !== undefined
-                ? props.queuePosition
-                : undefined,
-            status: props.status !== undefined ? props.status : undefined,
-            queuedAt: props.queuedAt !== undefined ? props.queuedAt : undefined,
-            processingStartedAt:
-              props.processingStartedAt !== undefined
-                ? props.processingStartedAt
-                : undefined,
-            processingCompletedAt:
-              props.processingCompletedAt !== undefined
-                ? props.processingCompletedAt
-                : undefined,
-            timeInQueueMs:
-              props.timeInQueueMs !== undefined
-                ? props.timeInQueueMs
-                : undefined,
-            signalData:
-              props.signalData !== undefined ? props.signalData : undefined,
-          },
-        };
+          const variables = {
+            data: {
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  signalType: props.signalType !== undefined ? props.signalType : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  priorityTier: props.priorityTier !== undefined ? props.priorityTier : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? props.scoreComponents : undefined,
+  queuePosition: props.queuePosition !== undefined ? props.queuePosition : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  queuedAt: props.queuedAt !== undefined ? props.queuedAt : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? props.processingStartedAt : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? props.processingCompletedAt : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? props.timeInQueueMs : undefined,
+  signalData: props.signalData !== undefined ? props.signalData : undefined,
 
-        const filteredVariables = removeUndefinedProps(variables);
+            },
+          };
 
-        const response = await client.mutate({
-          mutation: CREATE_ONE_SIGNALPRIORITYQUEUE,
-          variables: filteredVariables,
-          // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
-        });
+          const filteredVariables = removeUndefinedProps(variables);
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createOneSignalPriorityQueue
-        ) {
-          return response.data.createOneSignalPriorityQueue;
-        } else {
-          return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_SIGNALPRIORITYQUEUE,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneSignalPriorityQueue) {
+            return response.data.createOneSignalPriorityQueue;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            logger.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          logger.error("Database error occurred", { error: String(error) });
+          throw error;
         }
-      } catch (error: any) {
-        lastError = error;
-
-        // Check if this is a database connection error that we should retry
-        const isConnectionError =
-          error.message?.includes('Server has closed the connection') ||
-          error.message?.includes('Cannot reach database server') ||
-          error.message?.includes('Connection timed out') ||
-          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
-
-        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-          retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
-          continue;
-        }
-
-        // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
-        throw error;
       }
-    }
 
-    // If we exhausted retries, throw the last error
-    throw lastError;
-  },
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple SignalPriorityQueue records.
@@ -177,10 +147,7 @@ export const SignalPriorityQueue = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(
-    props: SignalPriorityQueueType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async createMany(props: SignalPriorityQueueType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -191,56 +158,37 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_SIGNALPRIORITYQUEUE = gql`
-          mutation createManySignalPriorityQueue(
-            $data: [SignalPriorityQueueCreateManyInput!]!
-          ) {
+          mutation createManySignalPriorityQueue($data: [SignalPriorityQueueCreateManyInput!]!) {
             createManySignalPriorityQueue(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
         const variables = {
-          data: props.map((prop) => ({
-            timestamp:
-              prop.timestamp !== undefined ? prop.timestamp : undefined,
-            signalId: prop.signalId !== undefined ? prop.signalId : undefined,
-            symbol: prop.symbol !== undefined ? prop.symbol : undefined,
-            signalType:
-              prop.signalType !== undefined ? prop.signalType : undefined,
-            generatorSource:
-              prop.generatorSource !== undefined
-                ? prop.generatorSource
-                : undefined,
-            priorityTier:
-              prop.priorityTier !== undefined ? prop.priorityTier : undefined,
-            scoreComponents:
-              prop.scoreComponents !== undefined
-                ? prop.scoreComponents
-                : undefined,
-            queuePosition:
-              prop.queuePosition !== undefined ? prop.queuePosition : undefined,
-            status: prop.status !== undefined ? prop.status : undefined,
-            queuedAt: prop.queuedAt !== undefined ? prop.queuedAt : undefined,
-            processingStartedAt:
-              prop.processingStartedAt !== undefined
-                ? prop.processingStartedAt
-                : undefined,
-            processingCompletedAt:
-              prop.processingCompletedAt !== undefined
-                ? prop.processingCompletedAt
-                : undefined,
-            timeInQueueMs:
-              prop.timeInQueueMs !== undefined ? prop.timeInQueueMs : undefined,
-            signalData:
-              prop.signalData !== undefined ? prop.signalData : undefined,
-          })),
+          data: props.map(prop => ({
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  signalType: prop.signalType !== undefined ? prop.signalType : undefined,
+  generatorSource: prop.generatorSource !== undefined ? prop.generatorSource : undefined,
+  priorityTier: prop.priorityTier !== undefined ? prop.priorityTier : undefined,
+  scoreComponents: prop.scoreComponents !== undefined ? prop.scoreComponents : undefined,
+  queuePosition: prop.queuePosition !== undefined ? prop.queuePosition : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
+  queuedAt: prop.queuedAt !== undefined ? prop.queuedAt : undefined,
+  processingStartedAt: prop.processingStartedAt !== undefined ? prop.processingStartedAt : undefined,
+  processingCompletedAt: prop.processingCompletedAt !== undefined ? prop.processingCompletedAt : undefined,
+  timeInQueueMs: prop.timeInQueueMs !== undefined ? prop.timeInQueueMs : undefined,
+  signalData: prop.signalData !== undefined ? prop.signalData : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -249,16 +197,11 @@ export const SignalPriorityQueue = {
           mutation: CREATE_MANY_SIGNALPRIORITYQUEUE,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createManySignalPriorityQueue
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManySignalPriorityQueue) {
           return response.data.createManySignalPriorityQueue;
         } else {
           return null as any;
@@ -272,19 +215,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -300,10 +242,7 @@ export const SignalPriorityQueue = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated SignalPriorityQueue or null.
    */
-  async update(
-    props: SignalPriorityQueueType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<SignalPriorityQueueType> {
+  async update(props: SignalPriorityQueueType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalPriorityQueueType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -314,7 +253,9 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -329,136 +270,73 @@ export const SignalPriorityQueue = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            signalId: props.signalId !== undefined ? props.signalId : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    equals: props.symbol,
-                  }
-                : undefined,
-          },
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           data: {
-            id:
-              props.id !== undefined
-                ? {
-                    set: props.id,
-                  }
-                : undefined,
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            signalId:
-              props.signalId !== undefined
-                ? {
-                    set: props.signalId,
-                  }
-                : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    set: props.symbol,
-                  }
-                : undefined,
-            signalType:
-              props.signalType !== undefined
-                ? {
-                    set: props.signalType,
-                  }
-                : undefined,
-            generatorSource:
-              props.generatorSource !== undefined
-                ? {
-                    set: props.generatorSource,
-                  }
-                : undefined,
-            priorityScore:
-              props.priorityScore !== undefined
-                ? {
-                    set: props.priorityScore,
-                  }
-                : undefined,
-            generatorWinRate:
-              props.generatorWinRate !== undefined
-                ? {
-                    set: props.generatorWinRate,
-                  }
-                : undefined,
-            generatorSharpe:
-              props.generatorSharpe !== undefined
-                ? {
-                    set: props.generatorSharpe,
-                  }
-                : undefined,
-            priorityTier:
-              props.priorityTier !== undefined
-                ? {
-                    set: props.priorityTier,
-                  }
-                : undefined,
-            scoreComponents:
-              props.scoreComponents !== undefined
-                ? {
-                    set: props.scoreComponents,
-                  }
-                : undefined,
-            queuePosition:
-              props.queuePosition !== undefined
-                ? {
-                    set: props.queuePosition,
-                  }
-                : undefined,
-            status:
-              props.status !== undefined
-                ? {
-                    set: props.status,
-                  }
-                : undefined,
-            queuedAt:
-              props.queuedAt !== undefined
-                ? {
-                    set: props.queuedAt,
-                  }
-                : undefined,
-            processingStartedAt:
-              props.processingStartedAt !== undefined
-                ? {
-                    set: props.processingStartedAt,
-                  }
-                : undefined,
-            processingCompletedAt:
-              props.processingCompletedAt !== undefined
-                ? {
-                    set: props.processingCompletedAt,
-                  }
-                : undefined,
-            timeInQueueMs:
-              props.timeInQueueMs !== undefined
-                ? {
-                    set: props.timeInQueueMs,
-                  }
-                : undefined,
-            signalConfidence:
-              props.signalConfidence !== undefined
-                ? {
-                    set: props.signalConfidence,
-                  }
-                : undefined,
-            signalData:
-              props.signalData !== undefined
-                ? {
-                    set: props.signalData,
-                  }
-                : undefined,
-            updatedAt:
-              props.updatedAt !== undefined
-                ? {
-                    set: props.updatedAt,
-                  }
-                : undefined,
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  signalType: props.signalType !== undefined ? {
+            set: props.signalType 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  priorityScore: props.priorityScore !== undefined ? {
+            set: props.priorityScore 
+           } : undefined,
+  generatorWinRate: props.generatorWinRate !== undefined ? {
+            set: props.generatorWinRate 
+           } : undefined,
+  generatorSharpe: props.generatorSharpe !== undefined ? {
+            set: props.generatorSharpe 
+           } : undefined,
+  priorityTier: props.priorityTier !== undefined ? {
+            set: props.priorityTier 
+           } : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? {
+            set: props.scoreComponents 
+           } : undefined,
+  queuePosition: props.queuePosition !== undefined ? {
+            set: props.queuePosition 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+  queuedAt: props.queuedAt !== undefined ? {
+            set: props.queuedAt 
+           } : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? {
+            set: props.processingStartedAt 
+           } : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? {
+            set: props.processingCompletedAt 
+           } : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? {
+            set: props.timeInQueueMs 
+           } : undefined,
+  signalConfidence: props.signalConfidence !== undefined ? {
+            set: props.signalConfidence 
+           } : undefined,
+  signalData: props.signalData !== undefined ? {
+            set: props.signalData 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -467,16 +345,11 @@ export const SignalPriorityQueue = {
           mutation: UPDATE_ONE_SIGNALPRIORITYQUEUE,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateOneSignalPriorityQueue
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneSignalPriorityQueue) {
           return response.data.updateOneSignalPriorityQueue;
         } else {
           return null as any;
@@ -490,19 +363,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -518,10 +390,7 @@ export const SignalPriorityQueue = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated SignalPriorityQueue or null.
    */
-  async upsert(
-    props: SignalPriorityQueueType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<SignalPriorityQueueType> {
+  async upsert(props: SignalPriorityQueueType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalPriorityQueueType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -532,7 +401,9 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -547,162 +418,83 @@ export const SignalPriorityQueue = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            signalId: props.signalId !== undefined ? props.signalId : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    equals: props.symbol,
-                  }
-                : undefined,
-          },
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           create: {
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            signalId: props.signalId !== undefined ? props.signalId : undefined,
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
-            signalType:
-              props.signalType !== undefined ? props.signalType : undefined,
-            generatorSource:
-              props.generatorSource !== undefined
-                ? props.generatorSource
-                : undefined,
-            priorityTier:
-              props.priorityTier !== undefined ? props.priorityTier : undefined,
-            scoreComponents:
-              props.scoreComponents !== undefined
-                ? props.scoreComponents
-                : undefined,
-            queuePosition:
-              props.queuePosition !== undefined
-                ? props.queuePosition
-                : undefined,
-            status: props.status !== undefined ? props.status : undefined,
-            queuedAt: props.queuedAt !== undefined ? props.queuedAt : undefined,
-            processingStartedAt:
-              props.processingStartedAt !== undefined
-                ? props.processingStartedAt
-                : undefined,
-            processingCompletedAt:
-              props.processingCompletedAt !== undefined
-                ? props.processingCompletedAt
-                : undefined,
-            timeInQueueMs:
-              props.timeInQueueMs !== undefined
-                ? props.timeInQueueMs
-                : undefined,
-            signalData:
-              props.signalData !== undefined ? props.signalData : undefined,
-          },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  signalType: props.signalType !== undefined ? props.signalType : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  priorityTier: props.priorityTier !== undefined ? props.priorityTier : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? props.scoreComponents : undefined,
+  queuePosition: props.queuePosition !== undefined ? props.queuePosition : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  queuedAt: props.queuedAt !== undefined ? props.queuedAt : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? props.processingStartedAt : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? props.processingCompletedAt : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? props.timeInQueueMs : undefined,
+  signalData: props.signalData !== undefined ? props.signalData : undefined,
+      },
           update: {
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            signalId:
-              props.signalId !== undefined
-                ? {
-                    set: props.signalId,
-                  }
-                : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    set: props.symbol,
-                  }
-                : undefined,
-            signalType:
-              props.signalType !== undefined
-                ? {
-                    set: props.signalType,
-                  }
-                : undefined,
-            generatorSource:
-              props.generatorSource !== undefined
-                ? {
-                    set: props.generatorSource,
-                  }
-                : undefined,
-            priorityScore:
-              props.priorityScore !== undefined
-                ? {
-                    set: props.priorityScore,
-                  }
-                : undefined,
-            generatorWinRate:
-              props.generatorWinRate !== undefined
-                ? {
-                    set: props.generatorWinRate,
-                  }
-                : undefined,
-            generatorSharpe:
-              props.generatorSharpe !== undefined
-                ? {
-                    set: props.generatorSharpe,
-                  }
-                : undefined,
-            priorityTier:
-              props.priorityTier !== undefined
-                ? {
-                    set: props.priorityTier,
-                  }
-                : undefined,
-            scoreComponents:
-              props.scoreComponents !== undefined
-                ? {
-                    set: props.scoreComponents,
-                  }
-                : undefined,
-            queuePosition:
-              props.queuePosition !== undefined
-                ? {
-                    set: props.queuePosition,
-                  }
-                : undefined,
-            status:
-              props.status !== undefined
-                ? {
-                    set: props.status,
-                  }
-                : undefined,
-            queuedAt:
-              props.queuedAt !== undefined
-                ? {
-                    set: props.queuedAt,
-                  }
-                : undefined,
-            processingStartedAt:
-              props.processingStartedAt !== undefined
-                ? {
-                    set: props.processingStartedAt,
-                  }
-                : undefined,
-            processingCompletedAt:
-              props.processingCompletedAt !== undefined
-                ? {
-                    set: props.processingCompletedAt,
-                  }
-                : undefined,
-            timeInQueueMs:
-              props.timeInQueueMs !== undefined
-                ? {
-                    set: props.timeInQueueMs,
-                  }
-                : undefined,
-            signalConfidence:
-              props.signalConfidence !== undefined
-                ? {
-                    set: props.signalConfidence,
-                  }
-                : undefined,
-            signalData:
-              props.signalData !== undefined
-                ? {
-                    set: props.signalData,
-                  }
-                : undefined,
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  signalType: props.signalType !== undefined ? {
+            set: props.signalType 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  priorityScore: props.priorityScore !== undefined ? {
+            set: props.priorityScore 
+           } : undefined,
+  generatorWinRate: props.generatorWinRate !== undefined ? {
+            set: props.generatorWinRate 
+           } : undefined,
+  generatorSharpe: props.generatorSharpe !== undefined ? {
+            set: props.generatorSharpe 
+           } : undefined,
+  priorityTier: props.priorityTier !== undefined ? {
+            set: props.priorityTier 
+           } : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? {
+            set: props.scoreComponents 
+           } : undefined,
+  queuePosition: props.queuePosition !== undefined ? {
+            set: props.queuePosition 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+  queuedAt: props.queuedAt !== undefined ? {
+            set: props.queuedAt 
+           } : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? {
+            set: props.processingStartedAt 
+           } : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? {
+            set: props.processingCompletedAt 
+           } : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? {
+            set: props.timeInQueueMs 
+           } : undefined,
+  signalConfidence: props.signalConfidence !== undefined ? {
+            set: props.signalConfidence 
+           } : undefined,
+  signalData: props.signalData !== undefined ? {
+            set: props.signalData 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -711,16 +503,11 @@ export const SignalPriorityQueue = {
           mutation: UPSERT_ONE_SIGNALPRIORITYQUEUE,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.upsertOneSignalPriorityQueue
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneSignalPriorityQueue) {
           return response.data.upsertOneSignalPriorityQueue;
         } else {
           return null as any;
@@ -734,19 +521,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -762,10 +548,7 @@ export const SignalPriorityQueue = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(
-    props: SignalPriorityQueueType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async updateMany(props: SignalPriorityQueueType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -776,153 +559,91 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const UPDATE_MANY_SIGNALPRIORITYQUEUE = gql`
-          mutation updateManySignalPriorityQueue(
-            $data: [SignalPriorityQueueCreateManyInput!]!
-          ) {
+          mutation updateManySignalPriorityQueue($data: [SignalPriorityQueueCreateManyInput!]!) {
             updateManySignalPriorityQueue(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
-        const variables = props.map((prop) => ({
+        const variables = props.map(prop => ({
           where: {
-            id: prop.id !== undefined ? prop.id : undefined,
-            signalId: prop.signalId !== undefined ? prop.signalId : undefined,
-            symbol:
-              prop.symbol !== undefined
-                ? {
-                    equals: prop.symbol,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? prop.id : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+
           },
           data: {
-            id:
-              prop.id !== undefined
-                ? {
-                    set: prop.id,
-                  }
-                : undefined,
-            timestamp:
-              prop.timestamp !== undefined
-                ? {
-                    set: prop.timestamp,
-                  }
-                : undefined,
-            signalId:
-              prop.signalId !== undefined
-                ? {
-                    set: prop.signalId,
-                  }
-                : undefined,
-            symbol:
-              prop.symbol !== undefined
-                ? {
-                    set: prop.symbol,
-                  }
-                : undefined,
-            signalType:
-              prop.signalType !== undefined
-                ? {
-                    set: prop.signalType,
-                  }
-                : undefined,
-            generatorSource:
-              prop.generatorSource !== undefined
-                ? {
-                    set: prop.generatorSource,
-                  }
-                : undefined,
-            priorityScore:
-              prop.priorityScore !== undefined
-                ? {
-                    set: prop.priorityScore,
-                  }
-                : undefined,
-            generatorWinRate:
-              prop.generatorWinRate !== undefined
-                ? {
-                    set: prop.generatorWinRate,
-                  }
-                : undefined,
-            generatorSharpe:
-              prop.generatorSharpe !== undefined
-                ? {
-                    set: prop.generatorSharpe,
-                  }
-                : undefined,
-            priorityTier:
-              prop.priorityTier !== undefined
-                ? {
-                    set: prop.priorityTier,
-                  }
-                : undefined,
-            scoreComponents:
-              prop.scoreComponents !== undefined
-                ? {
-                    set: prop.scoreComponents,
-                  }
-                : undefined,
-            queuePosition:
-              prop.queuePosition !== undefined
-                ? {
-                    set: prop.queuePosition,
-                  }
-                : undefined,
-            status:
-              prop.status !== undefined
-                ? {
-                    set: prop.status,
-                  }
-                : undefined,
-            queuedAt:
-              prop.queuedAt !== undefined
-                ? {
-                    set: prop.queuedAt,
-                  }
-                : undefined,
-            processingStartedAt:
-              prop.processingStartedAt !== undefined
-                ? {
-                    set: prop.processingStartedAt,
-                  }
-                : undefined,
-            processingCompletedAt:
-              prop.processingCompletedAt !== undefined
-                ? {
-                    set: prop.processingCompletedAt,
-                  }
-                : undefined,
-            timeInQueueMs:
-              prop.timeInQueueMs !== undefined
-                ? {
-                    set: prop.timeInQueueMs,
-                  }
-                : undefined,
-            signalConfidence:
-              prop.signalConfidence !== undefined
-                ? {
-                    set: prop.signalConfidence,
-                  }
-                : undefined,
-            signalData:
-              prop.signalData !== undefined
-                ? {
-                    set: prop.signalData,
-                  }
-                : undefined,
-            updatedAt:
-              prop.updatedAt !== undefined
-                ? {
-                    set: prop.updatedAt,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  signalId: prop.signalId !== undefined ? {
+            set: prop.signalId 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  signalType: prop.signalType !== undefined ? {
+            set: prop.signalType 
+           } : undefined,
+  generatorSource: prop.generatorSource !== undefined ? {
+            set: prop.generatorSource 
+           } : undefined,
+  priorityScore: prop.priorityScore !== undefined ? {
+            set: prop.priorityScore 
+           } : undefined,
+  generatorWinRate: prop.generatorWinRate !== undefined ? {
+            set: prop.generatorWinRate 
+           } : undefined,
+  generatorSharpe: prop.generatorSharpe !== undefined ? {
+            set: prop.generatorSharpe 
+           } : undefined,
+  priorityTier: prop.priorityTier !== undefined ? {
+            set: prop.priorityTier 
+           } : undefined,
+  scoreComponents: prop.scoreComponents !== undefined ? {
+            set: prop.scoreComponents 
+           } : undefined,
+  queuePosition: prop.queuePosition !== undefined ? {
+            set: prop.queuePosition 
+           } : undefined,
+  status: prop.status !== undefined ? {
+            set: prop.status 
+           } : undefined,
+  queuedAt: prop.queuedAt !== undefined ? {
+            set: prop.queuedAt 
+           } : undefined,
+  processingStartedAt: prop.processingStartedAt !== undefined ? {
+            set: prop.processingStartedAt 
+           } : undefined,
+  processingCompletedAt: prop.processingCompletedAt !== undefined ? {
+            set: prop.processingCompletedAt 
+           } : undefined,
+  timeInQueueMs: prop.timeInQueueMs !== undefined ? {
+            set: prop.timeInQueueMs 
+           } : undefined,
+  signalConfidence: prop.signalConfidence !== undefined ? {
+            set: prop.signalConfidence 
+           } : undefined,
+  signalData: prop.signalData !== undefined ? {
+            set: prop.signalData 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+
           },
         }));
 
@@ -932,16 +653,11 @@ export const SignalPriorityQueue = {
           mutation: UPDATE_MANY_SIGNALPRIORITYQUEUE,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateManySignalPriorityQueue
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManySignalPriorityQueue) {
           return response.data.updateManySignalPriorityQueue;
         } else {
           return null as any;
@@ -955,19 +671,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -983,10 +698,7 @@ export const SignalPriorityQueue = {
    * @param globalClient - Apollo Client instance.
    * @returns The deleted SignalPriorityQueue or null.
    */
-  async delete(
-    props: SignalPriorityQueueType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<SignalPriorityQueueType> {
+  async delete(props: SignalPriorityQueueType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalPriorityQueueType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -997,25 +709,24 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const DELETE_ONE_SIGNALPRIORITYQUEUE = gql`
-          mutation deleteOneSignalPriorityQueue(
-            $where: SignalPriorityQueueWhereUniqueInput!
-          ) {
+          mutation deleteOneSignalPriorityQueue($where: SignalPriorityQueueWhereUniqueInput!) {
             deleteOneSignalPriorityQueue(where: $where) {
               id
             }
-          }
-        `;
+          }`;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          },
+          }
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1024,16 +735,11 @@ export const SignalPriorityQueue = {
           mutation: DELETE_ONE_SIGNALPRIORITYQUEUE,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.deleteOneSignalPriorityQueue
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneSignalPriorityQueue) {
           return response.data.deleteOneSignalPriorityQueue;
         } else {
           return null as any;
@@ -1047,19 +753,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1076,11 +781,7 @@ export const SignalPriorityQueue = {
    * @param whereInput - Optional custom where input.
    * @returns The retrieved SignalPriorityQueue or null.
    */
-  async get(
-    props: SignalPriorityQueueType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<SignalPriorityQueueType | null> {
+  async get(props: SignalPriorityQueueType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SignalPriorityQueueType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1091,7 +792,9 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1104,19 +807,13 @@ export const SignalPriorityQueue = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id: props.id !== undefined ? props.id : undefined,
-                signalId:
-                  props.signalId !== undefined ? props.signalId : undefined,
-                symbol:
-                  props.symbol !== undefined
-                    ? {
-                        equals: props.symbol,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -1126,8 +823,7 @@ export const SignalPriorityQueue = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getSignalPriorityQueue ?? null;
       } catch (error: any) {
         lastError = error;
@@ -1143,19 +839,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1170,9 +865,7 @@ export const SignalPriorityQueue = {
    * @param globalClient - Apollo Client instance.
    * @returns An array of SignalPriorityQueue records or null.
    */
-  async getAll(
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<SignalPriorityQueueType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalPriorityQueueType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1183,7 +876,9 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1200,8 +895,7 @@ export const SignalPriorityQueue = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.signalPriorityQueues ?? null;
       } catch (error: any) {
         lastError = error;
@@ -1217,19 +911,18 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1246,11 +939,7 @@ export const SignalPriorityQueue = {
    * @param whereInput - Optional custom where input.
    * @returns An array of found SignalPriorityQueue records or null.
    */
-  async findMany(
-    props: SignalPriorityQueueType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<SignalPriorityQueueType[] | null> {
+  async findMany(props: SignalPriorityQueueType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SignalPriorityQueueType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1261,7 +950,9 @@ export const SignalPriorityQueue = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1274,28 +965,17 @@ export const SignalPriorityQueue = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id:
-                  props.id !== undefined
-                    ? {
-                        equals: props.id,
-                      }
-                    : undefined,
-                signalId:
-                  props.signalId !== undefined
-                    ? {
-                        equals: props.signalId,
-                      }
-                    : undefined,
-                symbol:
-                  props.symbol !== undefined
-                    ? {
-                        equals: props.symbol,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1306,8 +986,7 @@ export const SignalPriorityQueue = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.signalpriorityqueues) {
           return response.data.signalPriorityQueues;
         } else {
@@ -1327,24 +1006,23 @@ export const SignalPriorityQueue = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  },
+  }
 };

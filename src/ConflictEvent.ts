@@ -1,18 +1,15 @@
+
+  
 import { ConflictEvent as ConflictEventType } from './generated/typegraphql-prisma/models/ConflictEvent';
-import {
-  client as importedClient,
-  ApolloClientType,
-  NormalizedCacheObject,
-  getApolloModules,
-} from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
+  
+  /**
+   * CRUD operations for the ConflictEvent model.
+   */
 
-/**
- * CRUD operations for the ConflictEvent model.
- */
-
-const selectionSet = `
+  const selectionSet = `
     
   id
   timestamp
@@ -27,41 +24,41 @@ const selectionSet = `
 
   `;
 
-export const ConflictEvent = {
-  /**
-   * Create a new ConflictEvent record.
-   * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
-   * @returns The created ConflictEvent or null.
-   */
+  export const ConflictEvent = {
 
-  /**
-   * Create a new ConflictEvent record.
-   * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Properties for the new record.
-   * @param globalClient - Apollo Client instance.
-   * @returns The created ConflictEvent or null.
-   */
-  async create(
-    props: ConflictEventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<ConflictEventType> {
-    // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
-    let retryCount = 0;
-    let lastError: any = null;
+    /**
+     * Create a new ConflictEvent record.
+     * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
+     * @returns The created ConflictEvent or null.
+     */
 
-    // Retry loop to handle potential database connection issues
-    while (retryCount < MAX_RETRIES) {
-      try {
-        const [modules, client] = await Promise.all([
-          getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
-        ]);
+    /**
+     * Create a new ConflictEvent record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created ConflictEvent or null.
+     */
+    async create(props: ConflictEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ConflictEventType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-        const { gql, ApolloError } = modules;
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-        const CREATE_ONE_CONFLICTEVENT = gql`
+          const { gql, ApolloError } = modules;
+
+          const CREATE_ONE_CONFLICTEVENT = gql`
               mutation createOneConflictEvent($data: ConflictEventCreateInput!) {
                 createOneConflictEvent(data: $data) {
                   ${selectionSet}
@@ -69,77 +66,64 @@ export const ConflictEvent = {
               }
            `;
 
-        const variables = {
-          data: {
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            entityType:
-              props.entityType !== undefined ? props.entityType : undefined,
-            entityId: props.entityId !== undefined ? props.entityId : undefined,
-            serverVersion:
-              props.serverVersion !== undefined
-                ? props.serverVersion
-                : undefined,
-            clientVersion:
-              props.clientVersion !== undefined
-                ? props.clientVersion
-                : undefined,
-            strategy: props.strategy !== undefined ? props.strategy : undefined,
-            resolved: props.resolved !== undefined ? props.resolved : undefined,
-            resolution:
-              props.resolution !== undefined ? props.resolution : undefined,
-            resolutionTime:
-              props.resolutionTime !== undefined
-                ? props.resolutionTime
-                : undefined,
-          },
-        };
+          const variables = {
+            data: {
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  entityType: props.entityType !== undefined ? props.entityType : undefined,
+  entityId: props.entityId !== undefined ? props.entityId : undefined,
+  serverVersion: props.serverVersion !== undefined ? props.serverVersion : undefined,
+  clientVersion: props.clientVersion !== undefined ? props.clientVersion : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  resolved: props.resolved !== undefined ? props.resolved : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? props.resolutionTime : undefined,
 
-        const filteredVariables = removeUndefinedProps(variables);
+            },
+          };
 
-        const response = await client.mutate({
-          mutation: CREATE_ONE_CONFLICTEVENT,
-          variables: filteredVariables,
-          // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
-        });
+          const filteredVariables = removeUndefinedProps(variables);
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createOneConflictEvent) {
-          return response.data.createOneConflictEvent;
-        } else {
-          return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_CONFLICTEVENT,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneConflictEvent) {
+            return response.data.createOneConflictEvent;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            logger.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          logger.error("Database error occurred", { error: String(error) });
+          throw error;
         }
-      } catch (error: any) {
-        lastError = error;
-
-        // Check if this is a database connection error that we should retry
-        const isConnectionError =
-          error.message?.includes('Server has closed the connection') ||
-          error.message?.includes('Cannot reach database server') ||
-          error.message?.includes('Connection timed out') ||
-          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
-
-        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-          retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
-          continue;
-        }
-
-        // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
-        throw error;
       }
-    }
 
-    // If we exhausted retries, throw the last error
-    throw lastError;
-  },
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple ConflictEvent records.
@@ -148,10 +132,7 @@ export const ConflictEvent = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(
-    props: ConflictEventType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async createMany(props: ConflictEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -162,41 +143,32 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_CONFLICTEVENT = gql`
-          mutation createManyConflictEvent(
-            $data: [ConflictEventCreateManyInput!]!
-          ) {
+          mutation createManyConflictEvent($data: [ConflictEventCreateManyInput!]!) {
             createManyConflictEvent(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
         const variables = {
-          data: props.map((prop) => ({
-            timestamp:
-              prop.timestamp !== undefined ? prop.timestamp : undefined,
-            entityType:
-              prop.entityType !== undefined ? prop.entityType : undefined,
-            entityId: prop.entityId !== undefined ? prop.entityId : undefined,
-            serverVersion:
-              prop.serverVersion !== undefined ? prop.serverVersion : undefined,
-            clientVersion:
-              prop.clientVersion !== undefined ? prop.clientVersion : undefined,
-            strategy: prop.strategy !== undefined ? prop.strategy : undefined,
-            resolved: prop.resolved !== undefined ? prop.resolved : undefined,
-            resolution:
-              prop.resolution !== undefined ? prop.resolution : undefined,
-            resolutionTime:
-              prop.resolutionTime !== undefined
-                ? prop.resolutionTime
-                : undefined,
-          })),
+          data: props.map(prop => ({
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  entityType: prop.entityType !== undefined ? prop.entityType : undefined,
+  entityId: prop.entityId !== undefined ? prop.entityId : undefined,
+  serverVersion: prop.serverVersion !== undefined ? prop.serverVersion : undefined,
+  clientVersion: prop.clientVersion !== undefined ? prop.clientVersion : undefined,
+  strategy: prop.strategy !== undefined ? prop.strategy : undefined,
+  resolved: prop.resolved !== undefined ? prop.resolved : undefined,
+  resolution: prop.resolution !== undefined ? prop.resolution : undefined,
+  resolutionTime: prop.resolutionTime !== undefined ? prop.resolutionTime : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -205,16 +177,11 @@ export const ConflictEvent = {
           mutation: CREATE_MANY_CONFLICTEVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createManyConflictEvent
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyConflictEvent) {
           return response.data.createManyConflictEvent;
         } else {
           return null as any;
@@ -228,19 +195,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -256,10 +222,7 @@ export const ConflictEvent = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated ConflictEvent or null.
    */
-  async update(
-    props: ConflictEventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<ConflictEventType> {
+  async update(props: ConflictEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ConflictEventType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -270,7 +233,9 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -285,75 +250,42 @@ export const ConflictEvent = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            entityId:
-              props.entityId !== undefined
-                ? {
-                    equals: props.entityId,
-                  }
-                : undefined,
-          },
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+      },
           data: {
-            id:
-              props.id !== undefined
-                ? {
-                    set: props.id,
-                  }
-                : undefined,
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            entityType:
-              props.entityType !== undefined
-                ? {
-                    set: props.entityType,
-                  }
-                : undefined,
-            entityId:
-              props.entityId !== undefined
-                ? {
-                    set: props.entityId,
-                  }
-                : undefined,
-            serverVersion:
-              props.serverVersion !== undefined
-                ? {
-                    set: props.serverVersion,
-                  }
-                : undefined,
-            clientVersion:
-              props.clientVersion !== undefined
-                ? {
-                    set: props.clientVersion,
-                  }
-                : undefined,
-            strategy:
-              props.strategy !== undefined
-                ? {
-                    set: props.strategy,
-                  }
-                : undefined,
-            resolved:
-              props.resolved !== undefined
-                ? {
-                    set: props.resolved,
-                  }
-                : undefined,
-            resolution:
-              props.resolution !== undefined
-                ? {
-                    set: props.resolution,
-                  }
-                : undefined,
-            resolutionTime:
-              props.resolutionTime !== undefined
-                ? {
-                    set: props.resolutionTime,
-                  }
-                : undefined,
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  entityType: props.entityType !== undefined ? {
+            set: props.entityType 
+           } : undefined,
+  entityId: props.entityId !== undefined ? {
+            set: props.entityId 
+           } : undefined,
+  serverVersion: props.serverVersion !== undefined ? {
+            set: props.serverVersion 
+           } : undefined,
+  clientVersion: props.clientVersion !== undefined ? {
+            set: props.clientVersion 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  resolved: props.resolved !== undefined ? {
+            set: props.resolved 
+           } : undefined,
+  resolution: props.resolution !== undefined ? {
+            set: props.resolution 
+           } : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? {
+            set: props.resolutionTime 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -362,11 +294,10 @@ export const ConflictEvent = {
           mutation: UPDATE_ONE_CONFLICTEVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.updateOneConflictEvent) {
           return response.data.updateOneConflictEvent;
         } else {
@@ -381,19 +312,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -409,10 +339,7 @@ export const ConflictEvent = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated ConflictEvent or null.
    */
-  async upsert(
-    props: ConflictEventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<ConflictEventType> {
+  async upsert(props: ConflictEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ConflictEventType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -423,7 +350,9 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -438,92 +367,50 @@ export const ConflictEvent = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            entityId:
-              props.entityId !== undefined
-                ? {
-                    equals: props.entityId,
-                  }
-                : undefined,
-          },
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+      },
           create: {
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            entityType:
-              props.entityType !== undefined ? props.entityType : undefined,
-            entityId: props.entityId !== undefined ? props.entityId : undefined,
-            serverVersion:
-              props.serverVersion !== undefined
-                ? props.serverVersion
-                : undefined,
-            clientVersion:
-              props.clientVersion !== undefined
-                ? props.clientVersion
-                : undefined,
-            strategy: props.strategy !== undefined ? props.strategy : undefined,
-            resolved: props.resolved !== undefined ? props.resolved : undefined,
-            resolution:
-              props.resolution !== undefined ? props.resolution : undefined,
-            resolutionTime:
-              props.resolutionTime !== undefined
-                ? props.resolutionTime
-                : undefined,
-          },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  entityType: props.entityType !== undefined ? props.entityType : undefined,
+  entityId: props.entityId !== undefined ? props.entityId : undefined,
+  serverVersion: props.serverVersion !== undefined ? props.serverVersion : undefined,
+  clientVersion: props.clientVersion !== undefined ? props.clientVersion : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  resolved: props.resolved !== undefined ? props.resolved : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? props.resolutionTime : undefined,
+      },
           update: {
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            entityType:
-              props.entityType !== undefined
-                ? {
-                    set: props.entityType,
-                  }
-                : undefined,
-            entityId:
-              props.entityId !== undefined
-                ? {
-                    set: props.entityId,
-                  }
-                : undefined,
-            serverVersion:
-              props.serverVersion !== undefined
-                ? {
-                    set: props.serverVersion,
-                  }
-                : undefined,
-            clientVersion:
-              props.clientVersion !== undefined
-                ? {
-                    set: props.clientVersion,
-                  }
-                : undefined,
-            strategy:
-              props.strategy !== undefined
-                ? {
-                    set: props.strategy,
-                  }
-                : undefined,
-            resolved:
-              props.resolved !== undefined
-                ? {
-                    set: props.resolved,
-                  }
-                : undefined,
-            resolution:
-              props.resolution !== undefined
-                ? {
-                    set: props.resolution,
-                  }
-                : undefined,
-            resolutionTime:
-              props.resolutionTime !== undefined
-                ? {
-                    set: props.resolutionTime,
-                  }
-                : undefined,
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  entityType: props.entityType !== undefined ? {
+            set: props.entityType 
+           } : undefined,
+  entityId: props.entityId !== undefined ? {
+            set: props.entityId 
+           } : undefined,
+  serverVersion: props.serverVersion !== undefined ? {
+            set: props.serverVersion 
+           } : undefined,
+  clientVersion: props.clientVersion !== undefined ? {
+            set: props.clientVersion 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  resolved: props.resolved !== undefined ? {
+            set: props.resolved 
+           } : undefined,
+  resolution: props.resolution !== undefined ? {
+            set: props.resolution 
+           } : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? {
+            set: props.resolutionTime 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -532,11 +419,10 @@ export const ConflictEvent = {
           mutation: UPSERT_ONE_CONFLICTEVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.upsertOneConflictEvent) {
           return response.data.upsertOneConflictEvent;
         } else {
@@ -551,19 +437,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -579,10 +464,7 @@ export const ConflictEvent = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(
-    props: ConflictEventType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async updateMany(props: ConflictEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -593,92 +475,60 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const UPDATE_MANY_CONFLICTEVENT = gql`
-          mutation updateManyConflictEvent(
-            $data: [ConflictEventCreateManyInput!]!
-          ) {
+          mutation updateManyConflictEvent($data: [ConflictEventCreateManyInput!]!) {
             updateManyConflictEvent(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
-        const variables = props.map((prop) => ({
+        const variables = props.map(prop => ({
           where: {
-            id: prop.id !== undefined ? prop.id : undefined,
-            entityId:
-              prop.entityId !== undefined
-                ? {
-                    equals: prop.entityId,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? prop.id : undefined,
+  entityId: prop.entityId !== undefined ? {
+    equals: prop.entityId 
+  } : undefined,
+
           },
           data: {
-            id:
-              prop.id !== undefined
-                ? {
-                    set: prop.id,
-                  }
-                : undefined,
-            timestamp:
-              prop.timestamp !== undefined
-                ? {
-                    set: prop.timestamp,
-                  }
-                : undefined,
-            entityType:
-              prop.entityType !== undefined
-                ? {
-                    set: prop.entityType,
-                  }
-                : undefined,
-            entityId:
-              prop.entityId !== undefined
-                ? {
-                    set: prop.entityId,
-                  }
-                : undefined,
-            serverVersion:
-              prop.serverVersion !== undefined
-                ? {
-                    set: prop.serverVersion,
-                  }
-                : undefined,
-            clientVersion:
-              prop.clientVersion !== undefined
-                ? {
-                    set: prop.clientVersion,
-                  }
-                : undefined,
-            strategy:
-              prop.strategy !== undefined
-                ? {
-                    set: prop.strategy,
-                  }
-                : undefined,
-            resolved:
-              prop.resolved !== undefined
-                ? {
-                    set: prop.resolved,
-                  }
-                : undefined,
-            resolution:
-              prop.resolution !== undefined
-                ? {
-                    set: prop.resolution,
-                  }
-                : undefined,
-            resolutionTime:
-              prop.resolutionTime !== undefined
-                ? {
-                    set: prop.resolutionTime,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  entityType: prop.entityType !== undefined ? {
+            set: prop.entityType 
+           } : undefined,
+  entityId: prop.entityId !== undefined ? {
+            set: prop.entityId 
+           } : undefined,
+  serverVersion: prop.serverVersion !== undefined ? {
+            set: prop.serverVersion 
+           } : undefined,
+  clientVersion: prop.clientVersion !== undefined ? {
+            set: prop.clientVersion 
+           } : undefined,
+  strategy: prop.strategy !== undefined ? {
+            set: prop.strategy 
+           } : undefined,
+  resolved: prop.resolved !== undefined ? {
+            set: prop.resolved 
+           } : undefined,
+  resolution: prop.resolution !== undefined ? {
+            set: prop.resolution 
+           } : undefined,
+  resolutionTime: prop.resolutionTime !== undefined ? {
+            set: prop.resolutionTime 
+           } : undefined,
+
           },
         }));
 
@@ -688,16 +538,11 @@ export const ConflictEvent = {
           mutation: UPDATE_MANY_CONFLICTEVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateManyConflictEvent
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyConflictEvent) {
           return response.data.updateManyConflictEvent;
         } else {
           return null as any;
@@ -711,19 +556,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -739,10 +583,7 @@ export const ConflictEvent = {
    * @param globalClient - Apollo Client instance.
    * @returns The deleted ConflictEvent or null.
    */
-  async delete(
-    props: ConflictEventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<ConflictEventType> {
+  async delete(props: ConflictEventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ConflictEventType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -753,25 +594,24 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const DELETE_ONE_CONFLICTEVENT = gql`
-          mutation deleteOneConflictEvent(
-            $where: ConflictEventWhereUniqueInput!
-          ) {
+          mutation deleteOneConflictEvent($where: ConflictEventWhereUniqueInput!) {
             deleteOneConflictEvent(where: $where) {
               id
             }
-          }
-        `;
+          }`;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          },
+          }
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -780,11 +620,10 @@ export const ConflictEvent = {
           mutation: DELETE_ONE_CONFLICTEVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.deleteOneConflictEvent) {
           return response.data.deleteOneConflictEvent;
         } else {
@@ -799,19 +638,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -828,11 +666,7 @@ export const ConflictEvent = {
    * @param whereInput - Optional custom where input.
    * @returns The retrieved ConflictEvent or null.
    */
-  async get(
-    props: ConflictEventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<ConflictEventType | null> {
+  async get(props: ConflictEventType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ConflictEventType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -843,7 +677,9 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -856,17 +692,12 @@ export const ConflictEvent = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id: props.id !== undefined ? props.id : undefined,
-                entityId:
-                  props.entityId !== undefined
-                    ? {
-                        equals: props.entityId,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -876,8 +707,7 @@ export const ConflictEvent = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getConflictEvent ?? null;
       } catch (error: any) {
         lastError = error;
@@ -893,19 +723,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -920,9 +749,7 @@ export const ConflictEvent = {
    * @param globalClient - Apollo Client instance.
    * @returns An array of ConflictEvent records or null.
    */
-  async getAll(
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<ConflictEventType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ConflictEventType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -933,7 +760,9 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -950,8 +779,7 @@ export const ConflictEvent = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.conflictEvents ?? null;
       } catch (error: any) {
         lastError = error;
@@ -967,19 +795,18 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -996,11 +823,7 @@ export const ConflictEvent = {
    * @param whereInput - Optional custom where input.
    * @returns An array of found ConflictEvent records or null.
    */
-  async findMany(
-    props: ConflictEventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<ConflictEventType[] | null> {
+  async findMany(props: ConflictEventType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ConflictEventType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1011,7 +834,9 @@ export const ConflictEvent = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1024,22 +849,14 @@ export const ConflictEvent = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id:
-                  props.id !== undefined
-                    ? {
-                        equals: props.id,
-                      }
-                    : undefined,
-                entityId:
-                  props.entityId !== undefined
-                    ? {
-                        equals: props.entityId,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1050,8 +867,7 @@ export const ConflictEvent = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.conflictevents) {
           return response.data.conflictEvents;
         } else {
@@ -1071,24 +887,23 @@ export const ConflictEvent = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  },
+  }
 };

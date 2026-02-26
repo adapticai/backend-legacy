@@ -1,18 +1,15 @@
+
+  
 import { Event as EventType } from './generated/typegraphql-prisma/models/Event';
-import {
-  client as importedClient,
-  ApolloClientType,
-  NormalizedCacheObject,
-  getApolloModules,
-} from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
+  
+  /**
+   * CRUD operations for the Event model.
+   */
 
-/**
- * CRUD operations for the Event model.
- */
-
-const selectionSet = `
+  const selectionSet = `
     
   id
   eventId
@@ -42,41 +39,41 @@ const selectionSet = `
 
   `;
 
-export const Event = {
-  /**
-   * Create a new Event record.
-   * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
-   * @returns The created Event or null.
-   */
+  export const Event = {
 
-  /**
-   * Create a new Event record.
-   * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Properties for the new record.
-   * @param globalClient - Apollo Client instance.
-   * @returns The created Event or null.
-   */
-  async create(
-    props: EventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<EventType> {
-    // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
-    let retryCount = 0;
-    let lastError: any = null;
+    /**
+     * Create a new Event record.
+     * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
+     * @returns The created Event or null.
+     */
 
-    // Retry loop to handle potential database connection issues
-    while (retryCount < MAX_RETRIES) {
-      try {
-        const [modules, client] = await Promise.all([
-          getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
-        ]);
+    /**
+     * Create a new Event record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created Event or null.
+     */
+    async create(props: EventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EventType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-        const { gql, ApolloError } = modules;
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-        const CREATE_ONE_EVENT = gql`
+          const { gql, ApolloError } = modules;
+
+          const CREATE_ONE_EVENT = gql`
               mutation createOneEvent($data: EventCreateInput!) {
                 createOneEvent(data: $data) {
                   ${selectionSet}
@@ -84,93 +81,77 @@ export const Event = {
               }
            `;
 
-        const variables = {
-          data: {
-            eventId: props.eventId !== undefined ? props.eventId : undefined,
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            category: props.category !== undefined ? props.category : undefined,
-            eventType:
-              props.eventType !== undefined ? props.eventType : undefined,
-            severity: props.severity !== undefined ? props.severity : undefined,
-            source: props.source !== undefined ? props.source : undefined,
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
-            accountId:
-              props.accountId !== undefined ? props.accountId : undefined,
-            tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
-            signalId: props.signalId !== undefined ? props.signalId : undefined,
-            orderId: props.orderId !== undefined ? props.orderId : undefined,
-            userId: props.userId !== undefined ? props.userId : undefined,
-            aggregateId:
-              props.aggregateId !== undefined ? props.aggregateId : undefined,
-            aggregateType:
-              props.aggregateType !== undefined
-                ? props.aggregateType
-                : undefined,
-            version: props.version !== undefined ? props.version : undefined,
-            eventData:
-              props.eventData !== undefined ? props.eventData : undefined,
-            metadata: props.metadata !== undefined ? props.metadata : undefined,
-            signature:
-              props.signature !== undefined ? props.signature : undefined,
-            retentionPolicyId:
-              props.retentionPolicyId !== undefined
-                ? props.retentionPolicyId
-                : undefined,
-            retentionExpiresAt:
-              props.retentionExpiresAt !== undefined
-                ? props.retentionExpiresAt
-                : undefined,
-            archived: props.archived !== undefined ? props.archived : undefined,
-            tags: props.tags !== undefined ? props.tags : undefined,
-          },
-        };
+          const variables = {
+            data: {
+                eventId: props.eventId !== undefined ? props.eventId : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  category: props.category !== undefined ? props.category : undefined,
+  eventType: props.eventType !== undefined ? props.eventType : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  source: props.source !== undefined ? props.source : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  accountId: props.accountId !== undefined ? props.accountId : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  orderId: props.orderId !== undefined ? props.orderId : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  aggregateId: props.aggregateId !== undefined ? props.aggregateId : undefined,
+  aggregateType: props.aggregateType !== undefined ? props.aggregateType : undefined,
+  version: props.version !== undefined ? props.version : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  signature: props.signature !== undefined ? props.signature : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? props.retentionPolicyId : undefined,
+  retentionExpiresAt: props.retentionExpiresAt !== undefined ? props.retentionExpiresAt : undefined,
+  archived: props.archived !== undefined ? props.archived : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
 
-        const filteredVariables = removeUndefinedProps(variables);
+            },
+          };
 
-        const response = await client.mutate({
-          mutation: CREATE_ONE_EVENT,
-          variables: filteredVariables,
-          // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
-        });
+          const filteredVariables = removeUndefinedProps(variables);
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createOneEvent) {
-          return response.data.createOneEvent;
-        } else {
-          return null as any;
+          const response = await client.mutate({
+            mutation: CREATE_ONE_EVENT,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneEvent) {
+            return response.data.createOneEvent;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            logger.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          logger.error("Database error occurred", { error: String(error) });
+          throw error;
         }
-      } catch (error: any) {
-        lastError = error;
-
-        // Check if this is a database connection error that we should retry
-        const isConnectionError =
-          error.message?.includes('Server has closed the connection') ||
-          error.message?.includes('Cannot reach database server') ||
-          error.message?.includes('Connection timed out') ||
-          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
-
-        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-          retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
-          continue;
-        }
-
-        // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
-        throw error;
       }
-    }
 
-    // If we exhausted retries, throw the last error
-    throw lastError;
-  },
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple Event records.
@@ -179,10 +160,7 @@ export const Event = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(
-    props: EventType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async createMany(props: EventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -193,7 +171,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -203,47 +183,33 @@ export const Event = {
             createManyEvent(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
         const variables = {
-          data: props.map((prop) => ({
-            eventId: prop.eventId !== undefined ? prop.eventId : undefined,
-            timestamp:
-              prop.timestamp !== undefined ? prop.timestamp : undefined,
-            category: prop.category !== undefined ? prop.category : undefined,
-            eventType:
-              prop.eventType !== undefined ? prop.eventType : undefined,
-            severity: prop.severity !== undefined ? prop.severity : undefined,
-            source: prop.source !== undefined ? prop.source : undefined,
-            symbol: prop.symbol !== undefined ? prop.symbol : undefined,
-            accountId:
-              prop.accountId !== undefined ? prop.accountId : undefined,
-            tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
-            signalId: prop.signalId !== undefined ? prop.signalId : undefined,
-            orderId: prop.orderId !== undefined ? prop.orderId : undefined,
-            userId: prop.userId !== undefined ? prop.userId : undefined,
-            aggregateId:
-              prop.aggregateId !== undefined ? prop.aggregateId : undefined,
-            aggregateType:
-              prop.aggregateType !== undefined ? prop.aggregateType : undefined,
-            version: prop.version !== undefined ? prop.version : undefined,
-            eventData:
-              prop.eventData !== undefined ? prop.eventData : undefined,
-            metadata: prop.metadata !== undefined ? prop.metadata : undefined,
-            signature:
-              prop.signature !== undefined ? prop.signature : undefined,
-            retentionPolicyId:
-              prop.retentionPolicyId !== undefined
-                ? prop.retentionPolicyId
-                : undefined,
-            retentionExpiresAt:
-              prop.retentionExpiresAt !== undefined
-                ? prop.retentionExpiresAt
-                : undefined,
-            archived: prop.archived !== undefined ? prop.archived : undefined,
-            tags: prop.tags !== undefined ? prop.tags : undefined,
-          })),
+          data: props.map(prop => ({
+      eventId: prop.eventId !== undefined ? prop.eventId : undefined,
+  timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  category: prop.category !== undefined ? prop.category : undefined,
+  eventType: prop.eventType !== undefined ? prop.eventType : undefined,
+  severity: prop.severity !== undefined ? prop.severity : undefined,
+  source: prop.source !== undefined ? prop.source : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  accountId: prop.accountId !== undefined ? prop.accountId : undefined,
+  tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  orderId: prop.orderId !== undefined ? prop.orderId : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  aggregateId: prop.aggregateId !== undefined ? prop.aggregateId : undefined,
+  aggregateType: prop.aggregateType !== undefined ? prop.aggregateType : undefined,
+  version: prop.version !== undefined ? prop.version : undefined,
+  eventData: prop.eventData !== undefined ? prop.eventData : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
+  signature: prop.signature !== undefined ? prop.signature : undefined,
+  retentionPolicyId: prop.retentionPolicyId !== undefined ? prop.retentionPolicyId : undefined,
+  retentionExpiresAt: prop.retentionExpiresAt !== undefined ? prop.retentionExpiresAt : undefined,
+  archived: prop.archived !== undefined ? prop.archived : undefined,
+  tags: prop.tags !== undefined ? prop.tags : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -252,11 +218,10 @@ export const Event = {
           mutation: CREATE_MANY_EVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.createManyEvent) {
           return response.data.createManyEvent;
         } else {
@@ -271,19 +236,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -299,10 +263,7 @@ export const Event = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated Event or null.
    */
-  async update(
-    props: EventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<EventType> {
+  async update(props: EventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EventType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -313,7 +274,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -328,208 +291,109 @@ export const Event = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            eventId: props.eventId !== undefined ? props.eventId : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    equals: props.symbol,
-                  }
-                : undefined,
-            accountId:
-              props.accountId !== undefined
-                ? {
-                    equals: props.accountId,
-                  }
-                : undefined,
-            tradeId:
-              props.tradeId !== undefined
-                ? {
-                    equals: props.tradeId,
-                  }
-                : undefined,
-            signalId:
-              props.signalId !== undefined
-                ? {
-                    equals: props.signalId,
-                  }
-                : undefined,
-            orderId:
-              props.orderId !== undefined
-                ? {
-                    equals: props.orderId,
-                  }
-                : undefined,
-            userId:
-              props.userId !== undefined
-                ? {
-                    equals: props.userId,
-                  }
-                : undefined,
-            aggregateId:
-              props.aggregateId !== undefined
-                ? {
-                    equals: props.aggregateId,
-                  }
-                : undefined,
-            retentionPolicyId:
-              props.retentionPolicyId !== undefined
-                ? {
-                    equals: props.retentionPolicyId,
-                  }
-                : undefined,
-          },
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  aggregateId: props.aggregateId !== undefined ? {
+    equals: props.aggregateId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+      },
           data: {
-            id:
-              props.id !== undefined
-                ? {
-                    set: props.id,
-                  }
-                : undefined,
-            eventId:
-              props.eventId !== undefined
-                ? {
-                    set: props.eventId,
-                  }
-                : undefined,
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            category:
-              props.category !== undefined
-                ? {
-                    set: props.category,
-                  }
-                : undefined,
-            eventType:
-              props.eventType !== undefined
-                ? {
-                    set: props.eventType,
-                  }
-                : undefined,
-            severity:
-              props.severity !== undefined
-                ? {
-                    set: props.severity,
-                  }
-                : undefined,
-            source:
-              props.source !== undefined
-                ? {
-                    set: props.source,
-                  }
-                : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    set: props.symbol,
-                  }
-                : undefined,
-            accountId:
-              props.accountId !== undefined
-                ? {
-                    set: props.accountId,
-                  }
-                : undefined,
-            tradeId:
-              props.tradeId !== undefined
-                ? {
-                    set: props.tradeId,
-                  }
-                : undefined,
-            signalId:
-              props.signalId !== undefined
-                ? {
-                    set: props.signalId,
-                  }
-                : undefined,
-            orderId:
-              props.orderId !== undefined
-                ? {
-                    set: props.orderId,
-                  }
-                : undefined,
-            userId:
-              props.userId !== undefined
-                ? {
-                    set: props.userId,
-                  }
-                : undefined,
-            aggregateId:
-              props.aggregateId !== undefined
-                ? {
-                    set: props.aggregateId,
-                  }
-                : undefined,
-            aggregateType:
-              props.aggregateType !== undefined
-                ? {
-                    set: props.aggregateType,
-                  }
-                : undefined,
-            version:
-              props.version !== undefined
-                ? {
-                    set: props.version,
-                  }
-                : undefined,
-            eventData:
-              props.eventData !== undefined
-                ? {
-                    set: props.eventData,
-                  }
-                : undefined,
-            metadata:
-              props.metadata !== undefined
-                ? {
-                    set: props.metadata,
-                  }
-                : undefined,
-            signature:
-              props.signature !== undefined
-                ? {
-                    set: props.signature,
-                  }
-                : undefined,
-            retentionPolicyId:
-              props.retentionPolicyId !== undefined
-                ? {
-                    set: props.retentionPolicyId,
-                  }
-                : undefined,
-            retentionExpiresAt:
-              props.retentionExpiresAt !== undefined
-                ? {
-                    set: props.retentionExpiresAt,
-                  }
-                : undefined,
-            archived:
-              props.archived !== undefined
-                ? {
-                    set: props.archived,
-                  }
-                : undefined,
-            tags:
-              props.tags !== undefined
-                ? {
-                    set: props.tags,
-                  }
-                : undefined,
-            createdAt:
-              props.createdAt !== undefined
-                ? {
-                    set: props.createdAt,
-                  }
-                : undefined,
-            updatedAt:
-              props.updatedAt !== undefined
-                ? {
-                    set: props.updatedAt,
-                  }
-                : undefined,
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  eventId: props.eventId !== undefined ? {
+            set: props.eventId 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  category: props.category !== undefined ? {
+            set: props.category 
+           } : undefined,
+  eventType: props.eventType !== undefined ? {
+            set: props.eventType 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+            set: props.tradeId 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  orderId: props.orderId !== undefined ? {
+            set: props.orderId 
+           } : undefined,
+  userId: props.userId !== undefined ? {
+            set: props.userId 
+           } : undefined,
+  aggregateId: props.aggregateId !== undefined ? {
+            set: props.aggregateId 
+           } : undefined,
+  aggregateType: props.aggregateType !== undefined ? {
+            set: props.aggregateType 
+           } : undefined,
+  version: props.version !== undefined ? {
+            set: props.version 
+           } : undefined,
+  eventData: props.eventData !== undefined ? {
+            set: props.eventData 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  signature: props.signature !== undefined ? {
+            set: props.signature 
+           } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+            set: props.retentionPolicyId 
+           } : undefined,
+  retentionExpiresAt: props.retentionExpiresAt !== undefined ? {
+            set: props.retentionExpiresAt 
+           } : undefined,
+  archived: props.archived !== undefined ? {
+            set: props.archived 
+           } : undefined,
+  tags: props.tags !== undefined ? {
+            set: props.tags 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -538,11 +402,10 @@ export const Event = {
           mutation: UPDATE_ONE_EVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.updateOneEvent) {
           return response.data.updateOneEvent;
         } else {
@@ -557,19 +420,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -585,10 +447,7 @@ export const Event = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated Event or null.
    */
-  async upsert(
-    props: EventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<EventType> {
+  async upsert(props: EventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EventType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -599,7 +458,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -614,229 +475,124 @@ export const Event = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            eventId: props.eventId !== undefined ? props.eventId : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    equals: props.symbol,
-                  }
-                : undefined,
-            accountId:
-              props.accountId !== undefined
-                ? {
-                    equals: props.accountId,
-                  }
-                : undefined,
-            tradeId:
-              props.tradeId !== undefined
-                ? {
-                    equals: props.tradeId,
-                  }
-                : undefined,
-            signalId:
-              props.signalId !== undefined
-                ? {
-                    equals: props.signalId,
-                  }
-                : undefined,
-            orderId:
-              props.orderId !== undefined
-                ? {
-                    equals: props.orderId,
-                  }
-                : undefined,
-            userId:
-              props.userId !== undefined
-                ? {
-                    equals: props.userId,
-                  }
-                : undefined,
-            aggregateId:
-              props.aggregateId !== undefined
-                ? {
-                    equals: props.aggregateId,
-                  }
-                : undefined,
-            retentionPolicyId:
-              props.retentionPolicyId !== undefined
-                ? {
-                    equals: props.retentionPolicyId,
-                  }
-                : undefined,
-          },
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  aggregateId: props.aggregateId !== undefined ? {
+    equals: props.aggregateId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+      },
           create: {
-            eventId: props.eventId !== undefined ? props.eventId : undefined,
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            category: props.category !== undefined ? props.category : undefined,
-            eventType:
-              props.eventType !== undefined ? props.eventType : undefined,
-            severity: props.severity !== undefined ? props.severity : undefined,
-            source: props.source !== undefined ? props.source : undefined,
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
-            accountId:
-              props.accountId !== undefined ? props.accountId : undefined,
-            tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
-            signalId: props.signalId !== undefined ? props.signalId : undefined,
-            orderId: props.orderId !== undefined ? props.orderId : undefined,
-            userId: props.userId !== undefined ? props.userId : undefined,
-            aggregateId:
-              props.aggregateId !== undefined ? props.aggregateId : undefined,
-            aggregateType:
-              props.aggregateType !== undefined
-                ? props.aggregateType
-                : undefined,
-            version: props.version !== undefined ? props.version : undefined,
-            eventData:
-              props.eventData !== undefined ? props.eventData : undefined,
-            metadata: props.metadata !== undefined ? props.metadata : undefined,
-            signature:
-              props.signature !== undefined ? props.signature : undefined,
-            retentionPolicyId:
-              props.retentionPolicyId !== undefined
-                ? props.retentionPolicyId
-                : undefined,
-            retentionExpiresAt:
-              props.retentionExpiresAt !== undefined
-                ? props.retentionExpiresAt
-                : undefined,
-            archived: props.archived !== undefined ? props.archived : undefined,
-            tags: props.tags !== undefined ? props.tags : undefined,
-          },
+        eventId: props.eventId !== undefined ? props.eventId : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  category: props.category !== undefined ? props.category : undefined,
+  eventType: props.eventType !== undefined ? props.eventType : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  source: props.source !== undefined ? props.source : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  accountId: props.accountId !== undefined ? props.accountId : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  orderId: props.orderId !== undefined ? props.orderId : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  aggregateId: props.aggregateId !== undefined ? props.aggregateId : undefined,
+  aggregateType: props.aggregateType !== undefined ? props.aggregateType : undefined,
+  version: props.version !== undefined ? props.version : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  signature: props.signature !== undefined ? props.signature : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? props.retentionPolicyId : undefined,
+  retentionExpiresAt: props.retentionExpiresAt !== undefined ? props.retentionExpiresAt : undefined,
+  archived: props.archived !== undefined ? props.archived : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
+      },
           update: {
-            eventId:
-              props.eventId !== undefined
-                ? {
-                    set: props.eventId,
-                  }
-                : undefined,
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            category:
-              props.category !== undefined
-                ? {
-                    set: props.category,
-                  }
-                : undefined,
-            eventType:
-              props.eventType !== undefined
-                ? {
-                    set: props.eventType,
-                  }
-                : undefined,
-            severity:
-              props.severity !== undefined
-                ? {
-                    set: props.severity,
-                  }
-                : undefined,
-            source:
-              props.source !== undefined
-                ? {
-                    set: props.source,
-                  }
-                : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    set: props.symbol,
-                  }
-                : undefined,
-            accountId:
-              props.accountId !== undefined
-                ? {
-                    set: props.accountId,
-                  }
-                : undefined,
-            tradeId:
-              props.tradeId !== undefined
-                ? {
-                    set: props.tradeId,
-                  }
-                : undefined,
-            signalId:
-              props.signalId !== undefined
-                ? {
-                    set: props.signalId,
-                  }
-                : undefined,
-            orderId:
-              props.orderId !== undefined
-                ? {
-                    set: props.orderId,
-                  }
-                : undefined,
-            userId:
-              props.userId !== undefined
-                ? {
-                    set: props.userId,
-                  }
-                : undefined,
-            aggregateId:
-              props.aggregateId !== undefined
-                ? {
-                    set: props.aggregateId,
-                  }
-                : undefined,
-            aggregateType:
-              props.aggregateType !== undefined
-                ? {
-                    set: props.aggregateType,
-                  }
-                : undefined,
-            version:
-              props.version !== undefined
-                ? {
-                    set: props.version,
-                  }
-                : undefined,
-            eventData:
-              props.eventData !== undefined
-                ? {
-                    set: props.eventData,
-                  }
-                : undefined,
-            metadata:
-              props.metadata !== undefined
-                ? {
-                    set: props.metadata,
-                  }
-                : undefined,
-            signature:
-              props.signature !== undefined
-                ? {
-                    set: props.signature,
-                  }
-                : undefined,
-            retentionPolicyId:
-              props.retentionPolicyId !== undefined
-                ? {
-                    set: props.retentionPolicyId,
-                  }
-                : undefined,
-            retentionExpiresAt:
-              props.retentionExpiresAt !== undefined
-                ? {
-                    set: props.retentionExpiresAt,
-                  }
-                : undefined,
-            archived:
-              props.archived !== undefined
-                ? {
-                    set: props.archived,
-                  }
-                : undefined,
-            tags:
-              props.tags !== undefined
-                ? {
-                    set: props.tags,
-                  }
-                : undefined,
-          },
+      eventId: props.eventId !== undefined ? {
+            set: props.eventId 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  category: props.category !== undefined ? {
+            set: props.category 
+           } : undefined,
+  eventType: props.eventType !== undefined ? {
+            set: props.eventType 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+            set: props.tradeId 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  orderId: props.orderId !== undefined ? {
+            set: props.orderId 
+           } : undefined,
+  userId: props.userId !== undefined ? {
+            set: props.userId 
+           } : undefined,
+  aggregateId: props.aggregateId !== undefined ? {
+            set: props.aggregateId 
+           } : undefined,
+  aggregateType: props.aggregateType !== undefined ? {
+            set: props.aggregateType 
+           } : undefined,
+  version: props.version !== undefined ? {
+            set: props.version 
+           } : undefined,
+  eventData: props.eventData !== undefined ? {
+            set: props.eventData 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  signature: props.signature !== undefined ? {
+            set: props.signature 
+           } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+            set: props.retentionPolicyId 
+           } : undefined,
+  retentionExpiresAt: props.retentionExpiresAt !== undefined ? {
+            set: props.retentionExpiresAt 
+           } : undefined,
+  archived: props.archived !== undefined ? {
+            set: props.archived 
+           } : undefined,
+  tags: props.tags !== undefined ? {
+            set: props.tags 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -845,11 +601,10 @@ export const Event = {
           mutation: UPSERT_ONE_EVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.upsertOneEvent) {
           return response.data.upsertOneEvent;
         } else {
@@ -864,19 +619,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -892,10 +646,7 @@ export const Event = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(
-    props: EventType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async updateMany(props: EventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -906,7 +657,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -916,213 +669,115 @@ export const Event = {
             updateManyEvent(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
-        const variables = props.map((prop) => ({
+        const variables = props.map(prop => ({
           where: {
-            id: prop.id !== undefined ? prop.id : undefined,
-            eventId: prop.eventId !== undefined ? prop.eventId : undefined,
-            symbol:
-              prop.symbol !== undefined
-                ? {
-                    equals: prop.symbol,
-                  }
-                : undefined,
-            accountId:
-              prop.accountId !== undefined
-                ? {
-                    equals: prop.accountId,
-                  }
-                : undefined,
-            tradeId:
-              prop.tradeId !== undefined
-                ? {
-                    equals: prop.tradeId,
-                  }
-                : undefined,
-            signalId:
-              prop.signalId !== undefined
-                ? {
-                    equals: prop.signalId,
-                  }
-                : undefined,
-            orderId:
-              prop.orderId !== undefined
-                ? {
-                    equals: prop.orderId,
-                  }
-                : undefined,
-            userId:
-              prop.userId !== undefined
-                ? {
-                    equals: prop.userId,
-                  }
-                : undefined,
-            aggregateId:
-              prop.aggregateId !== undefined
-                ? {
-                    equals: prop.aggregateId,
-                  }
-                : undefined,
-            retentionPolicyId:
-              prop.retentionPolicyId !== undefined
-                ? {
-                    equals: prop.retentionPolicyId,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? prop.id : undefined,
+  eventId: prop.eventId !== undefined ? prop.eventId : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+  accountId: prop.accountId !== undefined ? {
+    equals: prop.accountId 
+  } : undefined,
+  tradeId: prop.tradeId !== undefined ? {
+    equals: prop.tradeId 
+  } : undefined,
+  signalId: prop.signalId !== undefined ? {
+    equals: prop.signalId 
+  } : undefined,
+  orderId: prop.orderId !== undefined ? {
+    equals: prop.orderId 
+  } : undefined,
+  userId: prop.userId !== undefined ? {
+    equals: prop.userId 
+  } : undefined,
+  aggregateId: prop.aggregateId !== undefined ? {
+    equals: prop.aggregateId 
+  } : undefined,
+  retentionPolicyId: prop.retentionPolicyId !== undefined ? {
+    equals: prop.retentionPolicyId 
+  } : undefined,
+
           },
           data: {
-            id:
-              prop.id !== undefined
-                ? {
-                    set: prop.id,
-                  }
-                : undefined,
-            eventId:
-              prop.eventId !== undefined
-                ? {
-                    set: prop.eventId,
-                  }
-                : undefined,
-            timestamp:
-              prop.timestamp !== undefined
-                ? {
-                    set: prop.timestamp,
-                  }
-                : undefined,
-            category:
-              prop.category !== undefined
-                ? {
-                    set: prop.category,
-                  }
-                : undefined,
-            eventType:
-              prop.eventType !== undefined
-                ? {
-                    set: prop.eventType,
-                  }
-                : undefined,
-            severity:
-              prop.severity !== undefined
-                ? {
-                    set: prop.severity,
-                  }
-                : undefined,
-            source:
-              prop.source !== undefined
-                ? {
-                    set: prop.source,
-                  }
-                : undefined,
-            symbol:
-              prop.symbol !== undefined
-                ? {
-                    set: prop.symbol,
-                  }
-                : undefined,
-            accountId:
-              prop.accountId !== undefined
-                ? {
-                    set: prop.accountId,
-                  }
-                : undefined,
-            tradeId:
-              prop.tradeId !== undefined
-                ? {
-                    set: prop.tradeId,
-                  }
-                : undefined,
-            signalId:
-              prop.signalId !== undefined
-                ? {
-                    set: prop.signalId,
-                  }
-                : undefined,
-            orderId:
-              prop.orderId !== undefined
-                ? {
-                    set: prop.orderId,
-                  }
-                : undefined,
-            userId:
-              prop.userId !== undefined
-                ? {
-                    set: prop.userId,
-                  }
-                : undefined,
-            aggregateId:
-              prop.aggregateId !== undefined
-                ? {
-                    set: prop.aggregateId,
-                  }
-                : undefined,
-            aggregateType:
-              prop.aggregateType !== undefined
-                ? {
-                    set: prop.aggregateType,
-                  }
-                : undefined,
-            version:
-              prop.version !== undefined
-                ? {
-                    set: prop.version,
-                  }
-                : undefined,
-            eventData:
-              prop.eventData !== undefined
-                ? {
-                    set: prop.eventData,
-                  }
-                : undefined,
-            metadata:
-              prop.metadata !== undefined
-                ? {
-                    set: prop.metadata,
-                  }
-                : undefined,
-            signature:
-              prop.signature !== undefined
-                ? {
-                    set: prop.signature,
-                  }
-                : undefined,
-            retentionPolicyId:
-              prop.retentionPolicyId !== undefined
-                ? {
-                    set: prop.retentionPolicyId,
-                  }
-                : undefined,
-            retentionExpiresAt:
-              prop.retentionExpiresAt !== undefined
-                ? {
-                    set: prop.retentionExpiresAt,
-                  }
-                : undefined,
-            archived:
-              prop.archived !== undefined
-                ? {
-                    set: prop.archived,
-                  }
-                : undefined,
-            tags:
-              prop.tags !== undefined
-                ? {
-                    set: prop.tags,
-                  }
-                : undefined,
-            createdAt:
-              prop.createdAt !== undefined
-                ? {
-                    set: prop.createdAt,
-                  }
-                : undefined,
-            updatedAt:
-              prop.updatedAt !== undefined
-                ? {
-                    set: prop.updatedAt,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  eventId: prop.eventId !== undefined ? {
+            set: prop.eventId 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  category: prop.category !== undefined ? {
+            set: prop.category 
+           } : undefined,
+  eventType: prop.eventType !== undefined ? {
+            set: prop.eventType 
+           } : undefined,
+  severity: prop.severity !== undefined ? {
+            set: prop.severity 
+           } : undefined,
+  source: prop.source !== undefined ? {
+            set: prop.source 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  accountId: prop.accountId !== undefined ? {
+            set: prop.accountId 
+           } : undefined,
+  tradeId: prop.tradeId !== undefined ? {
+            set: prop.tradeId 
+           } : undefined,
+  signalId: prop.signalId !== undefined ? {
+            set: prop.signalId 
+           } : undefined,
+  orderId: prop.orderId !== undefined ? {
+            set: prop.orderId 
+           } : undefined,
+  userId: prop.userId !== undefined ? {
+            set: prop.userId 
+           } : undefined,
+  aggregateId: prop.aggregateId !== undefined ? {
+            set: prop.aggregateId 
+           } : undefined,
+  aggregateType: prop.aggregateType !== undefined ? {
+            set: prop.aggregateType 
+           } : undefined,
+  version: prop.version !== undefined ? {
+            set: prop.version 
+           } : undefined,
+  eventData: prop.eventData !== undefined ? {
+            set: prop.eventData 
+           } : undefined,
+  metadata: prop.metadata !== undefined ? {
+            set: prop.metadata 
+           } : undefined,
+  signature: prop.signature !== undefined ? {
+            set: prop.signature 
+           } : undefined,
+  retentionPolicyId: prop.retentionPolicyId !== undefined ? {
+            set: prop.retentionPolicyId 
+           } : undefined,
+  retentionExpiresAt: prop.retentionExpiresAt !== undefined ? {
+            set: prop.retentionExpiresAt 
+           } : undefined,
+  archived: prop.archived !== undefined ? {
+            set: prop.archived 
+           } : undefined,
+  tags: prop.tags !== undefined ? {
+            set: prop.tags 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+
           },
         }));
 
@@ -1132,11 +787,10 @@ export const Event = {
           mutation: UPDATE_MANY_EVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.updateManyEvent) {
           return response.data.updateManyEvent;
         } else {
@@ -1151,19 +805,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1179,10 +832,7 @@ export const Event = {
    * @param globalClient - Apollo Client instance.
    * @returns The deleted Event or null.
    */
-  async delete(
-    props: EventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<EventType> {
+  async delete(props: EventType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EventType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1193,7 +843,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1203,13 +855,12 @@ export const Event = {
             deleteOneEvent(where: $where) {
               id
             }
-          }
-        `;
+          }`;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          },
+          }
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1218,11 +869,10 @@ export const Event = {
           mutation: DELETE_ONE_EVENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.deleteOneEvent) {
           return response.data.deleteOneEvent;
         } else {
@@ -1237,19 +887,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1266,11 +915,7 @@ export const Event = {
    * @param whereInput - Optional custom where input.
    * @returns The retrieved Event or null.
    */
-  async get(
-    props: EventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<EventType | null> {
+  async get(props: EventType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<EventType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1281,7 +926,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1294,61 +941,34 @@ export const Event = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id: props.id !== undefined ? props.id : undefined,
-                eventId:
-                  props.eventId !== undefined ? props.eventId : undefined,
-                symbol:
-                  props.symbol !== undefined
-                    ? {
-                        equals: props.symbol,
-                      }
-                    : undefined,
-                accountId:
-                  props.accountId !== undefined
-                    ? {
-                        equals: props.accountId,
-                      }
-                    : undefined,
-                tradeId:
-                  props.tradeId !== undefined
-                    ? {
-                        equals: props.tradeId,
-                      }
-                    : undefined,
-                signalId:
-                  props.signalId !== undefined
-                    ? {
-                        equals: props.signalId,
-                      }
-                    : undefined,
-                orderId:
-                  props.orderId !== undefined
-                    ? {
-                        equals: props.orderId,
-                      }
-                    : undefined,
-                userId:
-                  props.userId !== undefined
-                    ? {
-                        equals: props.userId,
-                      }
-                    : undefined,
-                aggregateId:
-                  props.aggregateId !== undefined
-                    ? {
-                        equals: props.aggregateId,
-                      }
-                    : undefined,
-                retentionPolicyId:
-                  props.retentionPolicyId !== undefined
-                    ? {
-                        equals: props.retentionPolicyId,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  aggregateId: props.aggregateId !== undefined ? {
+    equals: props.aggregateId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -1358,8 +978,7 @@ export const Event = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getEvent ?? null;
       } catch (error: any) {
         lastError = error;
@@ -1375,19 +994,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1402,9 +1020,7 @@ export const Event = {
    * @param globalClient - Apollo Client instance.
    * @returns An array of Event records or null.
    */
-  async getAll(
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<EventType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<EventType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1415,7 +1031,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1432,8 +1050,7 @@ export const Event = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.events ?? null;
       } catch (error: any) {
         lastError = error;
@@ -1449,19 +1066,18 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1478,11 +1094,7 @@ export const Event = {
    * @param whereInput - Optional custom where input.
    * @returns An array of found Event records or null.
    */
-  async findMany(
-    props: EventType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<EventType[] | null> {
+  async findMany(props: EventType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<EventType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1493,7 +1105,9 @@ export const Event = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1506,70 +1120,38 @@ export const Event = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id:
-                  props.id !== undefined
-                    ? {
-                        equals: props.id,
-                      }
-                    : undefined,
-                eventId:
-                  props.eventId !== undefined
-                    ? {
-                        equals: props.eventId,
-                      }
-                    : undefined,
-                symbol:
-                  props.symbol !== undefined
-                    ? {
-                        equals: props.symbol,
-                      }
-                    : undefined,
-                accountId:
-                  props.accountId !== undefined
-                    ? {
-                        equals: props.accountId,
-                      }
-                    : undefined,
-                tradeId:
-                  props.tradeId !== undefined
-                    ? {
-                        equals: props.tradeId,
-                      }
-                    : undefined,
-                signalId:
-                  props.signalId !== undefined
-                    ? {
-                        equals: props.signalId,
-                      }
-                    : undefined,
-                orderId:
-                  props.orderId !== undefined
-                    ? {
-                        equals: props.orderId,
-                      }
-                    : undefined,
-                userId:
-                  props.userId !== undefined
-                    ? {
-                        equals: props.userId,
-                      }
-                    : undefined,
-                aggregateId:
-                  props.aggregateId !== undefined
-                    ? {
-                        equals: props.aggregateId,
-                      }
-                    : undefined,
-                retentionPolicyId:
-                  props.retentionPolicyId !== undefined
-                    ? {
-                        equals: props.retentionPolicyId,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  eventId: props.eventId !== undefined ? {
+    equals: props.eventId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  aggregateId: props.aggregateId !== undefined ? {
+    equals: props.aggregateId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1580,8 +1162,7 @@ export const Event = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.events) {
           return response.data.events;
         } else {
@@ -1601,24 +1182,23 @@ export const Event = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  },
+  }
 };

@@ -1,18 +1,15 @@
+
+  
 import { OptionsGreeksHistory as OptionsGreeksHistoryType } from './generated/typegraphql-prisma/models/OptionsGreeksHistory';
-import {
-  client as importedClient,
-  ApolloClientType,
-  NormalizedCacheObject,
-  getApolloModules,
-} from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
+  
+  /**
+   * CRUD operations for the OptionsGreeksHistory model.
+   */
 
-/**
- * CRUD operations for the OptionsGreeksHistory model.
- */
-
-const selectionSet = `
+  const selectionSet = `
     
   id
   contractId
@@ -203,41 +200,41 @@ id
 
   `;
 
-export const OptionsGreeksHistory = {
-  /**
-   * Create a new OptionsGreeksHistory record.
-   * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
-   * @returns The created OptionsGreeksHistory or null.
-   */
+  export const OptionsGreeksHistory = {
 
-  /**
-   * Create a new OptionsGreeksHistory record.
-   * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Properties for the new record.
-   * @param globalClient - Apollo Client instance.
-   * @returns The created OptionsGreeksHistory or null.
-   */
-  async create(
-    props: OptionsGreeksHistoryType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsGreeksHistoryType> {
-    // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
-    let retryCount = 0;
-    let lastError: any = null;
+    /**
+     * Create a new OptionsGreeksHistory record.
+     * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
+     * @returns The created OptionsGreeksHistory or null.
+     */
 
-    // Retry loop to handle potential database connection issues
-    while (retryCount < MAX_RETRIES) {
-      try {
-        const [modules, client] = await Promise.all([
-          getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
-        ]);
+    /**
+     * Create a new OptionsGreeksHistory record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created OptionsGreeksHistory or null.
+     */
+    async create(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsGreeksHistoryType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-        const { gql, ApolloError } = modules;
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-        const CREATE_ONE_OPTIONSGREEKSHISTORY = gql`
+          const { gql, ApolloError } = modules;
+
+          const CREATE_ONE_OPTIONSGREEKSHISTORY = gql`
               mutation createOneOptionsGreeksHistory($data: OptionsGreeksHistoryCreateInput!) {
                 createOneOptionsGreeksHistory(data: $data) {
                   ${selectionSet}
@@ -245,543 +242,223 @@ export const OptionsGreeksHistory = {
               }
            `;
 
-        const variables = {
-          data: {
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            volume: props.volume !== undefined ? props.volume : undefined,
-            openInterest:
-              props.openInterest !== undefined ? props.openInterest : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? props.daysToExpiration
-                : undefined,
-            metadata: props.metadata !== undefined ? props.metadata : undefined,
-            contract: props.contract
-              ? typeof props.contract === 'object' &&
-                Object.keys(props.contract).length === 1 &&
-                Object.keys(props.contract)[0] === 'id'
-                ? {
-                    connect: {
-                      id: props.contract.id,
-                    },
-                  }
-                : {
-                    connectOrCreate: {
-                      where: {
-                        id:
-                          props.contract.id !== undefined
-                            ? props.contract.id
-                            : undefined,
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? {
-                                equals: props.contract.symbol,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? props.contract.symbol
-                            : undefined,
-                        contractSymbol:
-                          props.contract.contractSymbol !== undefined
-                            ? props.contract.contractSymbol
-                            : undefined,
-                        optionType:
-                          props.contract.optionType !== undefined
-                            ? props.contract.optionType
-                            : undefined,
-                        expirationDate:
-                          props.contract.expirationDate !== undefined
-                            ? props.contract.expirationDate
-                            : undefined,
-                        daysToExpiration:
-                          props.contract.daysToExpiration !== undefined
-                            ? props.contract.daysToExpiration
-                            : undefined,
-                        bidSize:
-                          props.contract.bidSize !== undefined
-                            ? props.contract.bidSize
-                            : undefined,
-                        askSize:
-                          props.contract.askSize !== undefined
-                            ? props.contract.askSize
-                            : undefined,
-                        volume:
-                          props.contract.volume !== undefined
-                            ? props.contract.volume
-                            : undefined,
-                        openInterest:
-                          props.contract.openInterest !== undefined
-                            ? props.contract.openInterest
-                            : undefined,
-                        inTheMoney:
-                          props.contract.inTheMoney !== undefined
-                            ? props.contract.inTheMoney
-                            : undefined,
-                        metadata:
-                          props.contract.metadata !== undefined
-                            ? props.contract.metadata
-                            : undefined,
-                        dataTimestamp:
-                          props.contract.dataTimestamp !== undefined
-                            ? props.contract.dataTimestamp
-                            : undefined,
-                        positions: props.contract.positions
-                          ? Array.isArray(props.contract.positions) &&
-                            props.contract.positions.length > 0 &&
-                            props.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: props.contract.executions
-                          ? Array.isArray(props.contract.executions) &&
-                            props.contract.executions.length > 0 &&
-                            props.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    },
-                  }
-              : undefined,
-          },
-        };
-
-        const filteredVariables = removeUndefinedProps(variables);
-
-        const response = await client.mutate({
-          mutation: CREATE_ONE_OPTIONSGREEKSHISTORY,
-          variables: filteredVariables,
-          // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
-        });
-
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createOneOptionsGreeksHistory
-        ) {
-          return response.data.createOneOptionsGreeksHistory;
-        } else {
-          return null as any;
+          const variables = {
+            data: {
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  volume: props.volume !== undefined ? props.volume : undefined,
+  openInterest: props.openInterest !== undefined ? props.openInterest : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? props.daysToExpiration : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  contract: props.contract ? 
+    typeof props.contract === 'object' && Object.keys(props.contract).length === 1 && Object.keys(props.contract)[0] === 'id'
+    ? { connect: {
+        id: props.contract.id
         }
-      } catch (error: any) {
-        lastError = error;
-
-        // Check if this is a database connection error that we should retry
-        const isConnectionError =
-          error.message?.includes('Server has closed the connection') ||
-          error.message?.includes('Cannot reach database server') ||
-          error.message?.includes('Connection timed out') ||
-          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
-
-        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-          retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
-          continue;
-        }
-
-        // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
-        throw error;
       }
+    : { connectOrCreate: {
+      where: {
+        id: props.contract.id !== undefined ? props.contract.id : undefined,
+        symbol: props.contract.symbol !== undefined ? {
+            equals: props.contract.symbol 
+           } : undefined,
+      },
+      create: {
+        symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
+        contractSymbol: props.contract.contractSymbol !== undefined ? props.contract.contractSymbol : undefined,
+        optionType: props.contract.optionType !== undefined ? props.contract.optionType : undefined,
+        expirationDate: props.contract.expirationDate !== undefined ? props.contract.expirationDate : undefined,
+        daysToExpiration: props.contract.daysToExpiration !== undefined ? props.contract.daysToExpiration : undefined,
+        bidSize: props.contract.bidSize !== undefined ? props.contract.bidSize : undefined,
+        askSize: props.contract.askSize !== undefined ? props.contract.askSize : undefined,
+        volume: props.contract.volume !== undefined ? props.contract.volume : undefined,
+        openInterest: props.contract.openInterest !== undefined ? props.contract.openInterest : undefined,
+        inTheMoney: props.contract.inTheMoney !== undefined ? props.contract.inTheMoney : undefined,
+        metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
+        dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
+    positions: props.contract.positions ? 
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: props.contract.executions ? 
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
     }
+  } : undefined,
 
-    // If we exhausted retries, throw the last error
-    throw lastError;
-  },
+            },
+          };
+
+          const filteredVariables = removeUndefinedProps(variables);
+
+          const response = await client.mutate({
+            mutation: CREATE_ONE_OPTIONSGREEKSHISTORY,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneOptionsGreeksHistory) {
+            return response.data.createOneOptionsGreeksHistory;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            logger.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          logger.error("Database error occurred", { error: String(error) });
+          throw error;
+        }
+      }
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple OptionsGreeksHistory records.
@@ -790,10 +467,7 @@ export const OptionsGreeksHistory = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(
-    props: OptionsGreeksHistoryType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async createMany(props: OptionsGreeksHistoryType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -804,36 +478,29 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_OPTIONSGREEKSHISTORY = gql`
-          mutation createManyOptionsGreeksHistory(
-            $data: [OptionsGreeksHistoryCreateManyInput!]!
-          ) {
+          mutation createManyOptionsGreeksHistory($data: [OptionsGreeksHistoryCreateManyInput!]!) {
             createManyOptionsGreeksHistory(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
         const variables = {
-          data: props.map((prop) => ({
-            contractId:
-              prop.contractId !== undefined ? prop.contractId : undefined,
-            timestamp:
-              prop.timestamp !== undefined ? prop.timestamp : undefined,
-            volume: prop.volume !== undefined ? prop.volume : undefined,
-            openInterest:
-              prop.openInterest !== undefined ? prop.openInterest : undefined,
-            daysToExpiration:
-              prop.daysToExpiration !== undefined
-                ? prop.daysToExpiration
-                : undefined,
-            metadata: prop.metadata !== undefined ? prop.metadata : undefined,
-          })),
+          data: props.map(prop => ({
+      contractId: prop.contractId !== undefined ? prop.contractId : undefined,
+  timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  volume: prop.volume !== undefined ? prop.volume : undefined,
+  openInterest: prop.openInterest !== undefined ? prop.openInterest : undefined,
+  daysToExpiration: prop.daysToExpiration !== undefined ? prop.daysToExpiration : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -842,16 +509,11 @@ export const OptionsGreeksHistory = {
           mutation: CREATE_MANY_OPTIONSGREEKSHISTORY,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createManyOptionsGreeksHistory
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyOptionsGreeksHistory) {
           return response.data.createManyOptionsGreeksHistory;
         } else {
           return null as any;
@@ -865,19 +527,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -893,10 +554,7 @@ export const OptionsGreeksHistory = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated OptionsGreeksHistory or null.
    */
-  async update(
-    props: OptionsGreeksHistoryType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsGreeksHistoryType> {
+  async update(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsGreeksHistoryType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -907,7 +565,9 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -922,2143 +582,852 @@ export const OptionsGreeksHistory = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            contractId:
-              props.contractId !== undefined
-                ? {
-                    equals: props.contractId,
-                  }
-                : undefined,
-          },
+  contractId: props.contractId !== undefined ? {
+    equals: props.contractId 
+  } : undefined,
+      },
           data: {
-            id:
-              props.id !== undefined
-                ? {
-                    set: props.id,
-                  }
-                : undefined,
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            underlyingPrice:
-              props.underlyingPrice !== undefined
-                ? {
-                    set: props.underlyingPrice,
-                  }
-                : undefined,
-            optionPrice:
-              props.optionPrice !== undefined
-                ? {
-                    set: props.optionPrice,
-                  }
-                : undefined,
-            bidPrice:
-              props.bidPrice !== undefined
-                ? {
-                    set: props.bidPrice,
-                  }
-                : undefined,
-            askPrice:
-              props.askPrice !== undefined
-                ? {
-                    set: props.askPrice,
-                  }
-                : undefined,
-            impliedVolatility:
-              props.impliedVolatility !== undefined
-                ? {
-                    set: props.impliedVolatility,
-                  }
-                : undefined,
-            delta:
-              props.delta !== undefined
-                ? {
-                    set: props.delta,
-                  }
-                : undefined,
-            gamma:
-              props.gamma !== undefined
-                ? {
-                    set: props.gamma,
-                  }
-                : undefined,
-            theta:
-              props.theta !== undefined
-                ? {
-                    set: props.theta,
-                  }
-                : undefined,
-            vega:
-              props.vega !== undefined
-                ? {
-                    set: props.vega,
-                  }
-                : undefined,
-            rho:
-              props.rho !== undefined
-                ? {
-                    set: props.rho,
-                  }
-                : undefined,
-            volume:
-              props.volume !== undefined
-                ? {
-                    set: props.volume,
-                  }
-                : undefined,
-            openInterest:
-              props.openInterest !== undefined
-                ? {
-                    set: props.openInterest,
-                  }
-                : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? {
-                    set: props.daysToExpiration,
-                  }
-                : undefined,
-            intrinsicValue:
-              props.intrinsicValue !== undefined
-                ? {
-                    set: props.intrinsicValue,
-                  }
-                : undefined,
-            extrinsicValue:
-              props.extrinsicValue !== undefined
-                ? {
-                    set: props.extrinsicValue,
-                  }
-                : undefined,
-            metadata:
-              props.metadata !== undefined
-                ? {
-                    set: props.metadata,
-                  }
-                : undefined,
-            createdAt:
-              props.createdAt !== undefined
-                ? {
-                    set: props.createdAt,
-                  }
-                : undefined,
-            contract: props.contract
-              ? typeof props.contract === 'object' &&
-                Object.keys(props.contract).length === 1 &&
-                (Object.keys(props.contract)[0] === 'id' ||
-                  Object.keys(props.contract)[0] === 'symbol')
-                ? {
-                    connect: {
-                      id: props.contract.id,
-                    },
-                  }
-                : {
-                    upsert: {
-                      where: {
-                        id:
-                          props.contract.id !== undefined
-                            ? {
-                                equals: props.contract.id,
-                              }
-                            : undefined,
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? {
-                                equals: props.contract.symbol,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          props.contract.id !== undefined
-                            ? {
-                                set: props.contract.id,
-                              }
-                            : undefined,
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? {
-                                set: props.contract.symbol,
-                              }
-                            : undefined,
-                        contractSymbol:
-                          props.contract.contractSymbol !== undefined
-                            ? {
-                                set: props.contract.contractSymbol,
-                              }
-                            : undefined,
-                        optionType:
-                          props.contract.optionType !== undefined
-                            ? {
-                                set: props.contract.optionType,
-                              }
-                            : undefined,
-                        strikePrice:
-                          props.contract.strikePrice !== undefined
-                            ? {
-                                set: props.contract.strikePrice,
-                              }
-                            : undefined,
-                        expirationDate:
-                          props.contract.expirationDate !== undefined
-                            ? {
-                                set: props.contract.expirationDate,
-                              }
-                            : undefined,
-                        daysToExpiration:
-                          props.contract.daysToExpiration !== undefined
-                            ? {
-                                set: props.contract.daysToExpiration,
-                              }
-                            : undefined,
-                        lastPrice:
-                          props.contract.lastPrice !== undefined
-                            ? {
-                                set: props.contract.lastPrice,
-                              }
-                            : undefined,
-                        bidPrice:
-                          props.contract.bidPrice !== undefined
-                            ? {
-                                set: props.contract.bidPrice,
-                              }
-                            : undefined,
-                        askPrice:
-                          props.contract.askPrice !== undefined
-                            ? {
-                                set: props.contract.askPrice,
-                              }
-                            : undefined,
-                        midPrice:
-                          props.contract.midPrice !== undefined
-                            ? {
-                                set: props.contract.midPrice,
-                              }
-                            : undefined,
-                        bidSize:
-                          props.contract.bidSize !== undefined
-                            ? {
-                                set: props.contract.bidSize,
-                              }
-                            : undefined,
-                        askSize:
-                          props.contract.askSize !== undefined
-                            ? {
-                                set: props.contract.askSize,
-                              }
-                            : undefined,
-                        volume:
-                          props.contract.volume !== undefined
-                            ? {
-                                set: props.contract.volume,
-                              }
-                            : undefined,
-                        openInterest:
-                          props.contract.openInterest !== undefined
-                            ? {
-                                set: props.contract.openInterest,
-                              }
-                            : undefined,
-                        impliedVolatility:
-                          props.contract.impliedVolatility !== undefined
-                            ? {
-                                set: props.contract.impliedVolatility,
-                              }
-                            : undefined,
-                        delta:
-                          props.contract.delta !== undefined
-                            ? {
-                                set: props.contract.delta,
-                              }
-                            : undefined,
-                        gamma:
-                          props.contract.gamma !== undefined
-                            ? {
-                                set: props.contract.gamma,
-                              }
-                            : undefined,
-                        theta:
-                          props.contract.theta !== undefined
-                            ? {
-                                set: props.contract.theta,
-                              }
-                            : undefined,
-                        vega:
-                          props.contract.vega !== undefined
-                            ? {
-                                set: props.contract.vega,
-                              }
-                            : undefined,
-                        rho:
-                          props.contract.rho !== undefined
-                            ? {
-                                set: props.contract.rho,
-                              }
-                            : undefined,
-                        inTheMoney:
-                          props.contract.inTheMoney !== undefined
-                            ? {
-                                set: props.contract.inTheMoney,
-                              }
-                            : undefined,
-                        intrinsicValue:
-                          props.contract.intrinsicValue !== undefined
-                            ? {
-                                set: props.contract.intrinsicValue,
-                              }
-                            : undefined,
-                        extrinsicValue:
-                          props.contract.extrinsicValue !== undefined
-                            ? {
-                                set: props.contract.extrinsicValue,
-                              }
-                            : undefined,
-                        theoreticalPrice:
-                          props.contract.theoreticalPrice !== undefined
-                            ? {
-                                set: props.contract.theoreticalPrice,
-                              }
-                            : undefined,
-                        underlyingPrice:
-                          props.contract.underlyingPrice !== undefined
-                            ? {
-                                set: props.contract.underlyingPrice,
-                              }
-                            : undefined,
-                        metadata:
-                          props.contract.metadata !== undefined
-                            ? {
-                                set: props.contract.metadata,
-                              }
-                            : undefined,
-                        dataTimestamp:
-                          props.contract.dataTimestamp !== undefined
-                            ? {
-                                set: props.contract.dataTimestamp,
-                              }
-                            : undefined,
-                        positions: props.contract.positions
-                          ? Array.isArray(props.contract.positions) &&
-                            props.contract.positions.length > 0 &&
-                            props.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                upsert: props.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? {
-                                              equals: item.tradeId,
-                                            }
-                                          : undefined,
-                                    },
-                                    update: {
-                                      id:
-                                        item.id !== undefined
-                                          ? {
-                                              set: item.id,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              set: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? {
-                                              set: item.status,
-                                            }
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? {
-                                              set: item.openingSide,
-                                            }
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? {
-                                              set: item.quantity,
-                                            }
-                                          : undefined,
-                                      entryPrice:
-                                        item.entryPrice !== undefined
-                                          ? {
-                                              set: item.entryPrice,
-                                            }
-                                          : undefined,
-                                      entryCost:
-                                        item.entryCost !== undefined
-                                          ? {
-                                              set: item.entryCost,
-                                            }
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? {
-                                              set: item.entryTime,
-                                            }
-                                          : undefined,
-                                      exitPrice:
-                                        item.exitPrice !== undefined
-                                          ? {
-                                              set: item.exitPrice,
-                                            }
-                                          : undefined,
-                                      exitValue:
-                                        item.exitValue !== undefined
-                                          ? {
-                                              set: item.exitValue,
-                                            }
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? {
-                                              set: item.exitTime,
-                                            }
-                                          : undefined,
-                                      currentPrice:
-                                        item.currentPrice !== undefined
-                                          ? {
-                                              set: item.currentPrice,
-                                            }
-                                          : undefined,
-                                      currentValue:
-                                        item.currentValue !== undefined
-                                          ? {
-                                              set: item.currentValue,
-                                            }
-                                          : undefined,
-                                      unrealizedPnL:
-                                        item.unrealizedPnL !== undefined
-                                          ? {
-                                              set: item.unrealizedPnL,
-                                            }
-                                          : undefined,
-                                      unrealizedPnLPercent:
-                                        item.unrealizedPnLPercent !== undefined
-                                          ? {
-                                              set: item.unrealizedPnLPercent,
-                                            }
-                                          : undefined,
-                                      realizedPnL:
-                                        item.realizedPnL !== undefined
-                                          ? {
-                                              set: item.realizedPnL,
-                                            }
-                                          : undefined,
-                                      realizedPnLPercent:
-                                        item.realizedPnLPercent !== undefined
-                                          ? {
-                                              set: item.realizedPnLPercent,
-                                            }
-                                          : undefined,
-                                      totalFees:
-                                        item.totalFees !== undefined
-                                          ? {
-                                              set: item.totalFees,
-                                            }
-                                          : undefined,
-                                      currentDelta:
-                                        item.currentDelta !== undefined
-                                          ? {
-                                              set: item.currentDelta,
-                                            }
-                                          : undefined,
-                                      currentGamma:
-                                        item.currentGamma !== undefined
-                                          ? {
-                                              set: item.currentGamma,
-                                            }
-                                          : undefined,
-                                      currentTheta:
-                                        item.currentTheta !== undefined
-                                          ? {
-                                              set: item.currentTheta,
-                                            }
-                                          : undefined,
-                                      currentVega:
-                                        item.currentVega !== undefined
-                                          ? {
-                                              set: item.currentVega,
-                                            }
-                                          : undefined,
-                                      currentRho:
-                                        item.currentRho !== undefined
-                                          ? {
-                                              set: item.currentRho,
-                                            }
-                                          : undefined,
-                                      currentImpliedVolatility:
-                                        item.currentImpliedVolatility !==
-                                        undefined
-                                          ? {
-                                              set: item.currentImpliedVolatility,
-                                            }
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? {
-                                              set: item.daysHeld,
-                                            }
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? {
-                                              set: item.exitReason,
-                                            }
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? {
-                                              set: item.strategyType,
-                                            }
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? {
-                                              set: item.tradeId,
-                                            }
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? {
-                                              set: item.metadata,
-                                            }
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              ('id' in item ||
-                                                'symbol' in item) &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              upsert: item.executions.map(
-                                                (item: any) => ({
-                                                  where: {
-                                                    id:
-                                                      item.id !== undefined
-                                                        ? item.id
-                                                        : undefined,
-                                                    positionId:
-                                                      item.positionId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.positionId,
-                                                          }
-                                                        : undefined,
-                                                    contractId:
-                                                      item.contractId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.contractId,
-                                                          }
-                                                        : undefined,
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.alpacaAccountId,
-                                                          }
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.brokerOrderId,
-                                                          }
-                                                        : undefined,
-                                                  },
-                                                  update: {
-                                                    id:
-                                                      item.id !== undefined
-                                                        ? {
-                                                            set: item.id,
-                                                          }
-                                                        : undefined,
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.alpacaAccountId,
-                                                          }
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.brokerOrderId,
-                                                          }
-                                                        : undefined,
-                                                    executionSide:
-                                                      item.executionSide !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionSide,
-                                                          }
-                                                        : undefined,
-                                                    quantity:
-                                                      item.quantity !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.quantity,
-                                                          }
-                                                        : undefined,
-                                                    executionPrice:
-                                                      item.executionPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionPrice,
-                                                          }
-                                                        : undefined,
-                                                    executionValue:
-                                                      item.executionValue !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionValue,
-                                                          }
-                                                        : undefined,
-                                                    fees:
-                                                      item.fees !== undefined
-                                                        ? {
-                                                            set: item.fees,
-                                                          }
-                                                        : undefined,
-                                                    executionTime:
-                                                      item.executionTime !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionTime,
-                                                          }
-                                                        : undefined,
-                                                    underlyingPriceAtExecution:
-                                                      item.underlyingPriceAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.underlyingPriceAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    deltaAtExecution:
-                                                      item.deltaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.deltaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    gammaAtExecution:
-                                                      item.gammaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.gammaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    thetaAtExecution:
-                                                      item.thetaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.thetaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    vegaAtExecution:
-                                                      item.vegaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.vegaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    rhoAtExecution:
-                                                      item.rhoAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.rhoAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    impliedVolatilityAtExecution:
-                                                      item.impliedVolatilityAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.impliedVolatilityAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    orderType:
-                                                      item.orderType !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.orderType,
-                                                          }
-                                                        : undefined,
-                                                    limitPrice:
-                                                      item.limitPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.limitPrice,
-                                                          }
-                                                        : undefined,
-                                                    stopPrice:
-                                                      item.stopPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.stopPrice,
-                                                          }
-                                                        : undefined,
-                                                    timeInForce:
-                                                      item.timeInForce !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.timeInForce,
-                                                          }
-                                                        : undefined,
-                                                    venue:
-                                                      item.venue !== undefined
-                                                        ? {
-                                                            set: item.venue,
-                                                          }
-                                                        : undefined,
-                                                    slippage:
-                                                      item.slippage !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.slippage,
-                                                          }
-                                                        : undefined,
-                                                    notes:
-                                                      item.notes !== undefined
-                                                        ? {
-                                                            set: item.notes,
-                                                          }
-                                                        : undefined,
-                                                    metadata:
-                                                      item.metadata !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.metadata,
-                                                          }
-                                                        : undefined,
-                                                  },
-                                                  create: {
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? item.alpacaAccountId
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? item.brokerOrderId
-                                                        : undefined,
-                                                    executionSide:
-                                                      item.executionSide !==
-                                                      undefined
-                                                        ? item.executionSide
-                                                        : undefined,
-                                                    quantity:
-                                                      item.quantity !==
-                                                      undefined
-                                                        ? item.quantity
-                                                        : undefined,
-                                                    executionTime:
-                                                      item.executionTime !==
-                                                      undefined
-                                                        ? item.executionTime
-                                                        : undefined,
-                                                    orderType:
-                                                      item.orderType !==
-                                                      undefined
-                                                        ? item.orderType
-                                                        : undefined,
-                                                    timeInForce:
-                                                      item.timeInForce !==
-                                                      undefined
-                                                        ? item.timeInForce
-                                                        : undefined,
-                                                    venue:
-                                                      item.venue !== undefined
-                                                        ? item.venue
-                                                        : undefined,
-                                                    notes:
-                                                      item.notes !== undefined
-                                                        ? item.notes
-                                                        : undefined,
-                                                    metadata:
-                                                      item.metadata !==
-                                                      undefined
-                                                        ? item.metadata
-                                                        : undefined,
-                                                  },
-                                                })
-                                              ),
-                                            }
-                                        : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: props.contract.executions
-                          ? Array.isArray(props.contract.executions) &&
-                            props.contract.executions.length > 0 &&
-                            props.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                upsert: props.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    update: {
-                                      id:
-                                        item.id !== undefined
-                                          ? {
-                                              set: item.id,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              set: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              set: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? {
-                                              set: item.executionSide,
-                                            }
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? {
-                                              set: item.quantity,
-                                            }
-                                          : undefined,
-                                      executionPrice:
-                                        item.executionPrice !== undefined
-                                          ? {
-                                              set: item.executionPrice,
-                                            }
-                                          : undefined,
-                                      executionValue:
-                                        item.executionValue !== undefined
-                                          ? {
-                                              set: item.executionValue,
-                                            }
-                                          : undefined,
-                                      fees:
-                                        item.fees !== undefined
-                                          ? {
-                                              set: item.fees,
-                                            }
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? {
-                                              set: item.executionTime,
-                                            }
-                                          : undefined,
-                                      underlyingPriceAtExecution:
-                                        item.underlyingPriceAtExecution !==
-                                        undefined
-                                          ? {
-                                              set: item.underlyingPriceAtExecution,
-                                            }
-                                          : undefined,
-                                      deltaAtExecution:
-                                        item.deltaAtExecution !== undefined
-                                          ? {
-                                              set: item.deltaAtExecution,
-                                            }
-                                          : undefined,
-                                      gammaAtExecution:
-                                        item.gammaAtExecution !== undefined
-                                          ? {
-                                              set: item.gammaAtExecution,
-                                            }
-                                          : undefined,
-                                      thetaAtExecution:
-                                        item.thetaAtExecution !== undefined
-                                          ? {
-                                              set: item.thetaAtExecution,
-                                            }
-                                          : undefined,
-                                      vegaAtExecution:
-                                        item.vegaAtExecution !== undefined
-                                          ? {
-                                              set: item.vegaAtExecution,
-                                            }
-                                          : undefined,
-                                      rhoAtExecution:
-                                        item.rhoAtExecution !== undefined
-                                          ? {
-                                              set: item.rhoAtExecution,
-                                            }
-                                          : undefined,
-                                      impliedVolatilityAtExecution:
-                                        item.impliedVolatilityAtExecution !==
-                                        undefined
-                                          ? {
-                                              set: item.impliedVolatilityAtExecution,
-                                            }
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? {
-                                              set: item.orderType,
-                                            }
-                                          : undefined,
-                                      limitPrice:
-                                        item.limitPrice !== undefined
-                                          ? {
-                                              set: item.limitPrice,
-                                            }
-                                          : undefined,
-                                      stopPrice:
-                                        item.stopPrice !== undefined
-                                          ? {
-                                              set: item.stopPrice,
-                                            }
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? {
-                                              set: item.timeInForce,
-                                            }
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? {
-                                              set: item.venue,
-                                            }
-                                          : undefined,
-                                      slippage:
-                                        item.slippage !== undefined
-                                          ? {
-                                              set: item.slippage,
-                                            }
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? {
-                                              set: item.notes,
-                                            }
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? {
-                                              set: item.metadata,
-                                            }
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          (Object.keys(item.position)[0] ===
-                                            'id' ||
-                                            Object.keys(item.position)[0] ===
-                                              'symbol')
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              upsert: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position.id,
-                                                        }
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .tradeId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                update: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position.id,
-                                                        }
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .status,
-                                                        }
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .openingSide,
-                                                        }
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .quantity,
-                                                        }
-                                                      : undefined,
-                                                  entryPrice:
-                                                    item.position.entryPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryPrice,
-                                                        }
-                                                      : undefined,
-                                                  entryCost:
-                                                    item.position.entryCost !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryCost,
-                                                        }
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryTime,
-                                                        }
-                                                      : undefined,
-                                                  exitPrice:
-                                                    item.position.exitPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitPrice,
-                                                        }
-                                                      : undefined,
-                                                  exitValue:
-                                                    item.position.exitValue !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitValue,
-                                                        }
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitTime,
-                                                        }
-                                                      : undefined,
-                                                  currentPrice:
-                                                    item.position
-                                                      .currentPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentPrice,
-                                                        }
-                                                      : undefined,
-                                                  currentValue:
-                                                    item.position
-                                                      .currentValue !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentValue,
-                                                        }
-                                                      : undefined,
-                                                  unrealizedPnL:
-                                                    item.position
-                                                      .unrealizedPnL !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .unrealizedPnL,
-                                                        }
-                                                      : undefined,
-                                                  unrealizedPnLPercent:
-                                                    item.position
-                                                      .unrealizedPnLPercent !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .unrealizedPnLPercent,
-                                                        }
-                                                      : undefined,
-                                                  realizedPnL:
-                                                    item.position
-                                                      .realizedPnL !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .realizedPnL,
-                                                        }
-                                                      : undefined,
-                                                  realizedPnLPercent:
-                                                    item.position
-                                                      .realizedPnLPercent !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .realizedPnLPercent,
-                                                        }
-                                                      : undefined,
-                                                  totalFees:
-                                                    item.position.totalFees !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .totalFees,
-                                                        }
-                                                      : undefined,
-                                                  currentDelta:
-                                                    item.position
-                                                      .currentDelta !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentDelta,
-                                                        }
-                                                      : undefined,
-                                                  currentGamma:
-                                                    item.position
-                                                      .currentGamma !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentGamma,
-                                                        }
-                                                      : undefined,
-                                                  currentTheta:
-                                                    item.position
-                                                      .currentTheta !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentTheta,
-                                                        }
-                                                      : undefined,
-                                                  currentVega:
-                                                    item.position
-                                                      .currentVega !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentVega,
-                                                        }
-                                                      : undefined,
-                                                  currentRho:
-                                                    item.position.currentRho !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentRho,
-                                                        }
-                                                      : undefined,
-                                                  currentImpliedVolatility:
-                                                    item.position
-                                                      .currentImpliedVolatility !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentImpliedVolatility,
-                                                        }
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .daysHeld,
-                                                        }
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitReason,
-                                                        }
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .strategyType,
-                                                        }
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .tradeId,
-                                                        }
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .metadata,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? props.contract.symbol
-                            : undefined,
-                        contractSymbol:
-                          props.contract.contractSymbol !== undefined
-                            ? props.contract.contractSymbol
-                            : undefined,
-                        optionType:
-                          props.contract.optionType !== undefined
-                            ? props.contract.optionType
-                            : undefined,
-                        expirationDate:
-                          props.contract.expirationDate !== undefined
-                            ? props.contract.expirationDate
-                            : undefined,
-                        daysToExpiration:
-                          props.contract.daysToExpiration !== undefined
-                            ? props.contract.daysToExpiration
-                            : undefined,
-                        bidSize:
-                          props.contract.bidSize !== undefined
-                            ? props.contract.bidSize
-                            : undefined,
-                        askSize:
-                          props.contract.askSize !== undefined
-                            ? props.contract.askSize
-                            : undefined,
-                        volume:
-                          props.contract.volume !== undefined
-                            ? props.contract.volume
-                            : undefined,
-                        openInterest:
-                          props.contract.openInterest !== undefined
-                            ? props.contract.openInterest
-                            : undefined,
-                        inTheMoney:
-                          props.contract.inTheMoney !== undefined
-                            ? props.contract.inTheMoney
-                            : undefined,
-                        metadata:
-                          props.contract.metadata !== undefined
-                            ? props.contract.metadata
-                            : undefined,
-                        dataTimestamp:
-                          props.contract.dataTimestamp !== undefined
-                            ? props.contract.dataTimestamp
-                            : undefined,
-                        positions: props.contract.positions
-                          ? Array.isArray(props.contract.positions) &&
-                            props.contract.positions.length > 0 &&
-                            props.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: props.contract.executions
-                          ? Array.isArray(props.contract.executions) &&
-                            props.contract.executions.length > 0 &&
-                            props.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    },
-                  }
-              : undefined,
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  underlyingPrice: props.underlyingPrice !== undefined ? {
+            set: props.underlyingPrice 
+           } : undefined,
+  optionPrice: props.optionPrice !== undefined ? {
+            set: props.optionPrice 
+           } : undefined,
+  bidPrice: props.bidPrice !== undefined ? {
+            set: props.bidPrice 
+           } : undefined,
+  askPrice: props.askPrice !== undefined ? {
+            set: props.askPrice 
+           } : undefined,
+  impliedVolatility: props.impliedVolatility !== undefined ? {
+            set: props.impliedVolatility 
+           } : undefined,
+  delta: props.delta !== undefined ? {
+            set: props.delta 
+           } : undefined,
+  gamma: props.gamma !== undefined ? {
+            set: props.gamma 
+           } : undefined,
+  theta: props.theta !== undefined ? {
+            set: props.theta 
+           } : undefined,
+  vega: props.vega !== undefined ? {
+            set: props.vega 
+           } : undefined,
+  rho: props.rho !== undefined ? {
+            set: props.rho 
+           } : undefined,
+  volume: props.volume !== undefined ? {
+            set: props.volume 
+           } : undefined,
+  openInterest: props.openInterest !== undefined ? {
+            set: props.openInterest 
+           } : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? {
+            set: props.daysToExpiration 
+           } : undefined,
+  intrinsicValue: props.intrinsicValue !== undefined ? {
+            set: props.intrinsicValue 
+           } : undefined,
+  extrinsicValue: props.extrinsicValue !== undefined ? {
+            set: props.extrinsicValue 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  contract: props.contract ? 
+  typeof props.contract === 'object' && Object.keys(props.contract).length === 1 && (Object.keys(props.contract)[0] === 'id' || Object.keys(props.contract)[0] === 'symbol')
+? {
+  connect: {
+    id: props.contract.id
+  }
+} : { upsert: {
+      where: {
+        id: props.contract.id !== undefined ? {
+            equals: props.contract.id
+          } : undefined,
+        symbol: props.contract.symbol !== undefined ? {
+            equals: props.contract.symbol
+          } : undefined,
+      },
+      update: {
+        id: props.contract.id !== undefined ? {
+            set: props.contract.id
+          } : undefined,
+        symbol: props.contract.symbol !== undefined ? {
+            set: props.contract.symbol
+          } : undefined,
+        contractSymbol: props.contract.contractSymbol !== undefined ? {
+            set: props.contract.contractSymbol
+          } : undefined,
+        optionType: props.contract.optionType !== undefined ? {
+            set: props.contract.optionType
+          } : undefined,
+        strikePrice: props.contract.strikePrice !== undefined ? {
+            set: props.contract.strikePrice
+          } : undefined,
+        expirationDate: props.contract.expirationDate !== undefined ? {
+            set: props.contract.expirationDate
+          } : undefined,
+        daysToExpiration: props.contract.daysToExpiration !== undefined ? {
+            set: props.contract.daysToExpiration
+          } : undefined,
+        lastPrice: props.contract.lastPrice !== undefined ? {
+            set: props.contract.lastPrice
+          } : undefined,
+        bidPrice: props.contract.bidPrice !== undefined ? {
+            set: props.contract.bidPrice
+          } : undefined,
+        askPrice: props.contract.askPrice !== undefined ? {
+            set: props.contract.askPrice
+          } : undefined,
+        midPrice: props.contract.midPrice !== undefined ? {
+            set: props.contract.midPrice
+          } : undefined,
+        bidSize: props.contract.bidSize !== undefined ? {
+            set: props.contract.bidSize
+          } : undefined,
+        askSize: props.contract.askSize !== undefined ? {
+            set: props.contract.askSize
+          } : undefined,
+        volume: props.contract.volume !== undefined ? {
+            set: props.contract.volume
+          } : undefined,
+        openInterest: props.contract.openInterest !== undefined ? {
+            set: props.contract.openInterest
+          } : undefined,
+        impliedVolatility: props.contract.impliedVolatility !== undefined ? {
+            set: props.contract.impliedVolatility
+          } : undefined,
+        delta: props.contract.delta !== undefined ? {
+            set: props.contract.delta
+          } : undefined,
+        gamma: props.contract.gamma !== undefined ? {
+            set: props.contract.gamma
+          } : undefined,
+        theta: props.contract.theta !== undefined ? {
+            set: props.contract.theta
+          } : undefined,
+        vega: props.contract.vega !== undefined ? {
+            set: props.contract.vega
+          } : undefined,
+        rho: props.contract.rho !== undefined ? {
+            set: props.contract.rho
+          } : undefined,
+        inTheMoney: props.contract.inTheMoney !== undefined ? {
+            set: props.contract.inTheMoney
+          } : undefined,
+        intrinsicValue: props.contract.intrinsicValue !== undefined ? {
+            set: props.contract.intrinsicValue
+          } : undefined,
+        extrinsicValue: props.contract.extrinsicValue !== undefined ? {
+            set: props.contract.extrinsicValue
+          } : undefined,
+        theoreticalPrice: props.contract.theoreticalPrice !== undefined ? {
+            set: props.contract.theoreticalPrice
+          } : undefined,
+        underlyingPrice: props.contract.underlyingPrice !== undefined ? {
+            set: props.contract.underlyingPrice
+          } : undefined,
+        metadata: props.contract.metadata !== undefined ? {
+            set: props.contract.metadata
+          } : undefined,
+        dataTimestamp: props.contract.dataTimestamp !== undefined ? {
+            set: props.contract.dataTimestamp
+          } : undefined,
+    positions: props.contract.positions ? 
+    Array.isArray(props.contract.positions) && props.contract.positions.length > 0 && props.contract.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.positions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          openingSide: item.openingSide !== undefined ? {
+              set: item.openingSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          entryPrice: item.entryPrice !== undefined ? {
+              set: item.entryPrice
+            } : undefined,
+          entryCost: item.entryCost !== undefined ? {
+              set: item.entryCost
+            } : undefined,
+          entryTime: item.entryTime !== undefined ? {
+              set: item.entryTime
+            } : undefined,
+          exitPrice: item.exitPrice !== undefined ? {
+              set: item.exitPrice
+            } : undefined,
+          exitValue: item.exitValue !== undefined ? {
+              set: item.exitValue
+            } : undefined,
+          exitTime: item.exitTime !== undefined ? {
+              set: item.exitTime
+            } : undefined,
+          currentPrice: item.currentPrice !== undefined ? {
+              set: item.currentPrice
+            } : undefined,
+          currentValue: item.currentValue !== undefined ? {
+              set: item.currentValue
+            } : undefined,
+          unrealizedPnL: item.unrealizedPnL !== undefined ? {
+              set: item.unrealizedPnL
+            } : undefined,
+          unrealizedPnLPercent: item.unrealizedPnLPercent !== undefined ? {
+              set: item.unrealizedPnLPercent
+            } : undefined,
+          realizedPnL: item.realizedPnL !== undefined ? {
+              set: item.realizedPnL
+            } : undefined,
+          realizedPnLPercent: item.realizedPnLPercent !== undefined ? {
+              set: item.realizedPnLPercent
+            } : undefined,
+          totalFees: item.totalFees !== undefined ? {
+              set: item.totalFees
+            } : undefined,
+          currentDelta: item.currentDelta !== undefined ? {
+              set: item.currentDelta
+            } : undefined,
+          currentGamma: item.currentGamma !== undefined ? {
+              set: item.currentGamma
+            } : undefined,
+          currentTheta: item.currentTheta !== undefined ? {
+              set: item.currentTheta
+            } : undefined,
+          currentVega: item.currentVega !== undefined ? {
+              set: item.currentVega
+            } : undefined,
+          currentRho: item.currentRho !== undefined ? {
+              set: item.currentRho
+            } : undefined,
+          currentImpliedVolatility: item.currentImpliedVolatility !== undefined ? {
+              set: item.currentImpliedVolatility
+            } : undefined,
+          daysHeld: item.daysHeld !== undefined ? {
+              set: item.daysHeld
+            } : undefined,
+          exitReason: item.exitReason !== undefined ? {
+              set: item.exitReason
+            } : undefined,
+          strategyType: item.strategyType !== undefined ? {
+              set: item.strategyType
+            } : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              set: item.tradeId
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.executions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId
+              } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId
+              } : undefined,
           },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                set: item.alpacaAccountId
+              } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                set: item.brokerOrderId
+              } : undefined,
+            executionSide: item.executionSide !== undefined ? {
+                set: item.executionSide
+              } : undefined,
+            quantity: item.quantity !== undefined ? {
+                set: item.quantity
+              } : undefined,
+            executionPrice: item.executionPrice !== undefined ? {
+                set: item.executionPrice
+              } : undefined,
+            executionValue: item.executionValue !== undefined ? {
+                set: item.executionValue
+              } : undefined,
+            fees: item.fees !== undefined ? {
+                set: item.fees
+              } : undefined,
+            executionTime: item.executionTime !== undefined ? {
+                set: item.executionTime
+              } : undefined,
+            underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+                set: item.underlyingPriceAtExecution
+              } : undefined,
+            deltaAtExecution: item.deltaAtExecution !== undefined ? {
+                set: item.deltaAtExecution
+              } : undefined,
+            gammaAtExecution: item.gammaAtExecution !== undefined ? {
+                set: item.gammaAtExecution
+              } : undefined,
+            thetaAtExecution: item.thetaAtExecution !== undefined ? {
+                set: item.thetaAtExecution
+              } : undefined,
+            vegaAtExecution: item.vegaAtExecution !== undefined ? {
+                set: item.vegaAtExecution
+              } : undefined,
+            rhoAtExecution: item.rhoAtExecution !== undefined ? {
+                set: item.rhoAtExecution
+              } : undefined,
+            impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+                set: item.impliedVolatilityAtExecution
+              } : undefined,
+            orderType: item.orderType !== undefined ? {
+                set: item.orderType
+              } : undefined,
+            limitPrice: item.limitPrice !== undefined ? {
+                set: item.limitPrice
+              } : undefined,
+            stopPrice: item.stopPrice !== undefined ? {
+                set: item.stopPrice
+              } : undefined,
+            timeInForce: item.timeInForce !== undefined ? {
+                set: item.timeInForce
+              } : undefined,
+            venue: item.venue !== undefined ? {
+                set: item.venue
+              } : undefined,
+            slippage: item.slippage !== undefined ? {
+                set: item.slippage
+              } : undefined,
+            notes: item.notes !== undefined ? {
+                set: item.notes
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: props.contract.executions ? 
+    Array.isArray(props.contract.executions) && props.contract.executions.length > 0 && props.contract.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.executions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              set: item.brokerOrderId
+            } : undefined,
+          executionSide: item.executionSide !== undefined ? {
+              set: item.executionSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          executionPrice: item.executionPrice !== undefined ? {
+              set: item.executionPrice
+            } : undefined,
+          executionValue: item.executionValue !== undefined ? {
+              set: item.executionValue
+            } : undefined,
+          fees: item.fees !== undefined ? {
+              set: item.fees
+            } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime
+            } : undefined,
+          underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+              set: item.underlyingPriceAtExecution
+            } : undefined,
+          deltaAtExecution: item.deltaAtExecution !== undefined ? {
+              set: item.deltaAtExecution
+            } : undefined,
+          gammaAtExecution: item.gammaAtExecution !== undefined ? {
+              set: item.gammaAtExecution
+            } : undefined,
+          thetaAtExecution: item.thetaAtExecution !== undefined ? {
+              set: item.thetaAtExecution
+            } : undefined,
+          vegaAtExecution: item.vegaAtExecution !== undefined ? {
+              set: item.vegaAtExecution
+            } : undefined,
+          rhoAtExecution: item.rhoAtExecution !== undefined ? {
+              set: item.rhoAtExecution
+            } : undefined,
+          impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+              set: item.impliedVolatilityAtExecution
+            } : undefined,
+          orderType: item.orderType !== undefined ? {
+              set: item.orderType
+            } : undefined,
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice
+            } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice
+            } : undefined,
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce
+            } : undefined,
+          venue: item.venue !== undefined ? {
+              set: item.venue
+            } : undefined,
+          slippage: item.slippage !== undefined ? {
+              set: item.slippage
+            } : undefined,
+          notes: item.notes !== undefined ? {
+              set: item.notes
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
+? {
+      connect: {
+        id: item.position.id
+      }
+} : { upsert: {
+          where: {
+            id: item.position.id !== undefined ? {
+                equals: item.position.id
+              } : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId
+              } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId
+              } : undefined,
+            tradeId: item.position.tradeId !== undefined ? {
+                equals: item.position.tradeId
+              } : undefined,
+          },
+          update: {
+            id: item.position.id !== undefined ? {
+                set: item.position.id
+              } : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                set: item.position.alpacaAccountId
+              } : undefined,
+            status: item.position.status !== undefined ? {
+                set: item.position.status
+              } : undefined,
+            openingSide: item.position.openingSide !== undefined ? {
+                set: item.position.openingSide
+              } : undefined,
+            quantity: item.position.quantity !== undefined ? {
+                set: item.position.quantity
+              } : undefined,
+            entryPrice: item.position.entryPrice !== undefined ? {
+                set: item.position.entryPrice
+              } : undefined,
+            entryCost: item.position.entryCost !== undefined ? {
+                set: item.position.entryCost
+              } : undefined,
+            entryTime: item.position.entryTime !== undefined ? {
+                set: item.position.entryTime
+              } : undefined,
+            exitPrice: item.position.exitPrice !== undefined ? {
+                set: item.position.exitPrice
+              } : undefined,
+            exitValue: item.position.exitValue !== undefined ? {
+                set: item.position.exitValue
+              } : undefined,
+            exitTime: item.position.exitTime !== undefined ? {
+                set: item.position.exitTime
+              } : undefined,
+            currentPrice: item.position.currentPrice !== undefined ? {
+                set: item.position.currentPrice
+              } : undefined,
+            currentValue: item.position.currentValue !== undefined ? {
+                set: item.position.currentValue
+              } : undefined,
+            unrealizedPnL: item.position.unrealizedPnL !== undefined ? {
+                set: item.position.unrealizedPnL
+              } : undefined,
+            unrealizedPnLPercent: item.position.unrealizedPnLPercent !== undefined ? {
+                set: item.position.unrealizedPnLPercent
+              } : undefined,
+            realizedPnL: item.position.realizedPnL !== undefined ? {
+                set: item.position.realizedPnL
+              } : undefined,
+            realizedPnLPercent: item.position.realizedPnLPercent !== undefined ? {
+                set: item.position.realizedPnLPercent
+              } : undefined,
+            totalFees: item.position.totalFees !== undefined ? {
+                set: item.position.totalFees
+              } : undefined,
+            currentDelta: item.position.currentDelta !== undefined ? {
+                set: item.position.currentDelta
+              } : undefined,
+            currentGamma: item.position.currentGamma !== undefined ? {
+                set: item.position.currentGamma
+              } : undefined,
+            currentTheta: item.position.currentTheta !== undefined ? {
+                set: item.position.currentTheta
+              } : undefined,
+            currentVega: item.position.currentVega !== undefined ? {
+                set: item.position.currentVega
+              } : undefined,
+            currentRho: item.position.currentRho !== undefined ? {
+                set: item.position.currentRho
+              } : undefined,
+            currentImpliedVolatility: item.position.currentImpliedVolatility !== undefined ? {
+                set: item.position.currentImpliedVolatility
+              } : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? {
+                set: item.position.daysHeld
+              } : undefined,
+            exitReason: item.position.exitReason !== undefined ? {
+                set: item.position.exitReason
+              } : undefined,
+            strategyType: item.position.strategyType !== undefined ? {
+                set: item.position.strategyType
+              } : undefined,
+            tradeId: item.position.tradeId !== undefined ? {
+                set: item.position.tradeId
+              } : undefined,
+            metadata: item.position.metadata !== undefined ? {
+                set: item.position.metadata
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
+        contractSymbol: props.contract.contractSymbol !== undefined ? props.contract.contractSymbol : undefined,
+        optionType: props.contract.optionType !== undefined ? props.contract.optionType : undefined,
+        expirationDate: props.contract.expirationDate !== undefined ? props.contract.expirationDate : undefined,
+        daysToExpiration: props.contract.daysToExpiration !== undefined ? props.contract.daysToExpiration : undefined,
+        bidSize: props.contract.bidSize !== undefined ? props.contract.bidSize : undefined,
+        askSize: props.contract.askSize !== undefined ? props.contract.askSize : undefined,
+        volume: props.contract.volume !== undefined ? props.contract.volume : undefined,
+        openInterest: props.contract.openInterest !== undefined ? props.contract.openInterest : undefined,
+        inTheMoney: props.contract.inTheMoney !== undefined ? props.contract.inTheMoney : undefined,
+        metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
+        dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
+    positions: props.contract.positions ? 
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: props.contract.executions ? 
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -3067,16 +1436,11 @@ export const OptionsGreeksHistory = {
           mutation: UPDATE_ONE_OPTIONSGREEKSHISTORY,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateOneOptionsGreeksHistory
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneOptionsGreeksHistory) {
           return response.data.updateOneOptionsGreeksHistory;
         } else {
           return null as any;
@@ -3090,19 +1454,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -3118,10 +1481,7 @@ export const OptionsGreeksHistory = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated OptionsGreeksHistory or null.
    */
-  async upsert(
-    props: OptionsGreeksHistoryType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsGreeksHistoryType> {
+  async upsert(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsGreeksHistoryType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3132,7 +1492,9 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -3147,2616 +1509,1016 @@ export const OptionsGreeksHistory = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            contractId:
-              props.contractId !== undefined
-                ? {
-                    equals: props.contractId,
-                  }
-                : undefined,
+  contractId: props.contractId !== undefined ? {
+    equals: props.contractId 
+  } : undefined,
+      },
+          create: {
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  volume: props.volume !== undefined ? props.volume : undefined,
+  openInterest: props.openInterest !== undefined ? props.openInterest : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? props.daysToExpiration : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  contract: props.contract ? 
+    typeof props.contract === 'object' && Object.keys(props.contract).length === 1 && Object.keys(props.contract)[0] === 'id'
+    ? { connect: {
+        id: props.contract.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.contract.id !== undefined ? props.contract.id : undefined,
+        symbol: props.contract.symbol !== undefined ? {
+            equals: props.contract.symbol 
+           } : undefined,
+      },
+      create: {
+        symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
+        contractSymbol: props.contract.contractSymbol !== undefined ? props.contract.contractSymbol : undefined,
+        optionType: props.contract.optionType !== undefined ? props.contract.optionType : undefined,
+        expirationDate: props.contract.expirationDate !== undefined ? props.contract.expirationDate : undefined,
+        daysToExpiration: props.contract.daysToExpiration !== undefined ? props.contract.daysToExpiration : undefined,
+        bidSize: props.contract.bidSize !== undefined ? props.contract.bidSize : undefined,
+        askSize: props.contract.askSize !== undefined ? props.contract.askSize : undefined,
+        volume: props.contract.volume !== undefined ? props.contract.volume : undefined,
+        openInterest: props.contract.openInterest !== undefined ? props.contract.openInterest : undefined,
+        inTheMoney: props.contract.inTheMoney !== undefined ? props.contract.inTheMoney : undefined,
+        metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
+        dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
+    positions: props.contract.positions ? 
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
           },
           create: {
-            timestamp:
-              props.timestamp !== undefined ? props.timestamp : undefined,
-            volume: props.volume !== undefined ? props.volume : undefined,
-            openInterest:
-              props.openInterest !== undefined ? props.openInterest : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? props.daysToExpiration
-                : undefined,
-            metadata: props.metadata !== undefined ? props.metadata : undefined,
-            contract: props.contract
-              ? typeof props.contract === 'object' &&
-                Object.keys(props.contract).length === 1 &&
-                Object.keys(props.contract)[0] === 'id'
-                ? {
-                    connect: {
-                      id: props.contract.id,
-                    },
-                  }
-                : {
-                    connectOrCreate: {
-                      where: {
-                        id:
-                          props.contract.id !== undefined
-                            ? props.contract.id
-                            : undefined,
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? {
-                                equals: props.contract.symbol,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? props.contract.symbol
-                            : undefined,
-                        contractSymbol:
-                          props.contract.contractSymbol !== undefined
-                            ? props.contract.contractSymbol
-                            : undefined,
-                        optionType:
-                          props.contract.optionType !== undefined
-                            ? props.contract.optionType
-                            : undefined,
-                        expirationDate:
-                          props.contract.expirationDate !== undefined
-                            ? props.contract.expirationDate
-                            : undefined,
-                        daysToExpiration:
-                          props.contract.daysToExpiration !== undefined
-                            ? props.contract.daysToExpiration
-                            : undefined,
-                        bidSize:
-                          props.contract.bidSize !== undefined
-                            ? props.contract.bidSize
-                            : undefined,
-                        askSize:
-                          props.contract.askSize !== undefined
-                            ? props.contract.askSize
-                            : undefined,
-                        volume:
-                          props.contract.volume !== undefined
-                            ? props.contract.volume
-                            : undefined,
-                        openInterest:
-                          props.contract.openInterest !== undefined
-                            ? props.contract.openInterest
-                            : undefined,
-                        inTheMoney:
-                          props.contract.inTheMoney !== undefined
-                            ? props.contract.inTheMoney
-                            : undefined,
-                        metadata:
-                          props.contract.metadata !== undefined
-                            ? props.contract.metadata
-                            : undefined,
-                        dataTimestamp:
-                          props.contract.dataTimestamp !== undefined
-                            ? props.contract.dataTimestamp
-                            : undefined,
-                        positions: props.contract.positions
-                          ? Array.isArray(props.contract.positions) &&
-                            props.contract.positions.length > 0 &&
-                            props.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: props.contract.executions
-                          ? Array.isArray(props.contract.executions) &&
-                            props.contract.executions.length > 0 &&
-                            props.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    },
-                  }
-              : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: props.contract.executions ? 
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+      },
+          update: {
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  underlyingPrice: props.underlyingPrice !== undefined ? {
+            set: props.underlyingPrice 
+           } : undefined,
+  optionPrice: props.optionPrice !== undefined ? {
+            set: props.optionPrice 
+           } : undefined,
+  bidPrice: props.bidPrice !== undefined ? {
+            set: props.bidPrice 
+           } : undefined,
+  askPrice: props.askPrice !== undefined ? {
+            set: props.askPrice 
+           } : undefined,
+  impliedVolatility: props.impliedVolatility !== undefined ? {
+            set: props.impliedVolatility 
+           } : undefined,
+  delta: props.delta !== undefined ? {
+            set: props.delta 
+           } : undefined,
+  gamma: props.gamma !== undefined ? {
+            set: props.gamma 
+           } : undefined,
+  theta: props.theta !== undefined ? {
+            set: props.theta 
+           } : undefined,
+  vega: props.vega !== undefined ? {
+            set: props.vega 
+           } : undefined,
+  rho: props.rho !== undefined ? {
+            set: props.rho 
+           } : undefined,
+  volume: props.volume !== undefined ? {
+            set: props.volume 
+           } : undefined,
+  openInterest: props.openInterest !== undefined ? {
+            set: props.openInterest 
+           } : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? {
+            set: props.daysToExpiration 
+           } : undefined,
+  intrinsicValue: props.intrinsicValue !== undefined ? {
+            set: props.intrinsicValue 
+           } : undefined,
+  extrinsicValue: props.extrinsicValue !== undefined ? {
+            set: props.extrinsicValue 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  contract: props.contract ? 
+  typeof props.contract === 'object' && Object.keys(props.contract).length === 1 && (Object.keys(props.contract)[0] === 'id' || Object.keys(props.contract)[0] === 'symbol')
+? {
+  connect: {
+    id: props.contract.id
+  }
+} : { upsert: {
+      where: {
+        id: props.contract.id !== undefined ? {
+            equals: props.contract.id
+          } : undefined,
+        symbol: props.contract.symbol !== undefined ? {
+            equals: props.contract.symbol
+          } : undefined,
+      },
+      update: {
+        id: props.contract.id !== undefined ? {
+            set: props.contract.id
+          } : undefined,
+        symbol: props.contract.symbol !== undefined ? {
+            set: props.contract.symbol
+          } : undefined,
+        contractSymbol: props.contract.contractSymbol !== undefined ? {
+            set: props.contract.contractSymbol
+          } : undefined,
+        optionType: props.contract.optionType !== undefined ? {
+            set: props.contract.optionType
+          } : undefined,
+        strikePrice: props.contract.strikePrice !== undefined ? {
+            set: props.contract.strikePrice
+          } : undefined,
+        expirationDate: props.contract.expirationDate !== undefined ? {
+            set: props.contract.expirationDate
+          } : undefined,
+        daysToExpiration: props.contract.daysToExpiration !== undefined ? {
+            set: props.contract.daysToExpiration
+          } : undefined,
+        lastPrice: props.contract.lastPrice !== undefined ? {
+            set: props.contract.lastPrice
+          } : undefined,
+        bidPrice: props.contract.bidPrice !== undefined ? {
+            set: props.contract.bidPrice
+          } : undefined,
+        askPrice: props.contract.askPrice !== undefined ? {
+            set: props.contract.askPrice
+          } : undefined,
+        midPrice: props.contract.midPrice !== undefined ? {
+            set: props.contract.midPrice
+          } : undefined,
+        bidSize: props.contract.bidSize !== undefined ? {
+            set: props.contract.bidSize
+          } : undefined,
+        askSize: props.contract.askSize !== undefined ? {
+            set: props.contract.askSize
+          } : undefined,
+        volume: props.contract.volume !== undefined ? {
+            set: props.contract.volume
+          } : undefined,
+        openInterest: props.contract.openInterest !== undefined ? {
+            set: props.contract.openInterest
+          } : undefined,
+        impliedVolatility: props.contract.impliedVolatility !== undefined ? {
+            set: props.contract.impliedVolatility
+          } : undefined,
+        delta: props.contract.delta !== undefined ? {
+            set: props.contract.delta
+          } : undefined,
+        gamma: props.contract.gamma !== undefined ? {
+            set: props.contract.gamma
+          } : undefined,
+        theta: props.contract.theta !== undefined ? {
+            set: props.contract.theta
+          } : undefined,
+        vega: props.contract.vega !== undefined ? {
+            set: props.contract.vega
+          } : undefined,
+        rho: props.contract.rho !== undefined ? {
+            set: props.contract.rho
+          } : undefined,
+        inTheMoney: props.contract.inTheMoney !== undefined ? {
+            set: props.contract.inTheMoney
+          } : undefined,
+        intrinsicValue: props.contract.intrinsicValue !== undefined ? {
+            set: props.contract.intrinsicValue
+          } : undefined,
+        extrinsicValue: props.contract.extrinsicValue !== undefined ? {
+            set: props.contract.extrinsicValue
+          } : undefined,
+        theoreticalPrice: props.contract.theoreticalPrice !== undefined ? {
+            set: props.contract.theoreticalPrice
+          } : undefined,
+        underlyingPrice: props.contract.underlyingPrice !== undefined ? {
+            set: props.contract.underlyingPrice
+          } : undefined,
+        metadata: props.contract.metadata !== undefined ? {
+            set: props.contract.metadata
+          } : undefined,
+        dataTimestamp: props.contract.dataTimestamp !== undefined ? {
+            set: props.contract.dataTimestamp
+          } : undefined,
+    positions: props.contract.positions ? 
+    Array.isArray(props.contract.positions) && props.contract.positions.length > 0 && props.contract.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.positions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          openingSide: item.openingSide !== undefined ? {
+              set: item.openingSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          entryPrice: item.entryPrice !== undefined ? {
+              set: item.entryPrice
+            } : undefined,
+          entryCost: item.entryCost !== undefined ? {
+              set: item.entryCost
+            } : undefined,
+          entryTime: item.entryTime !== undefined ? {
+              set: item.entryTime
+            } : undefined,
+          exitPrice: item.exitPrice !== undefined ? {
+              set: item.exitPrice
+            } : undefined,
+          exitValue: item.exitValue !== undefined ? {
+              set: item.exitValue
+            } : undefined,
+          exitTime: item.exitTime !== undefined ? {
+              set: item.exitTime
+            } : undefined,
+          currentPrice: item.currentPrice !== undefined ? {
+              set: item.currentPrice
+            } : undefined,
+          currentValue: item.currentValue !== undefined ? {
+              set: item.currentValue
+            } : undefined,
+          unrealizedPnL: item.unrealizedPnL !== undefined ? {
+              set: item.unrealizedPnL
+            } : undefined,
+          unrealizedPnLPercent: item.unrealizedPnLPercent !== undefined ? {
+              set: item.unrealizedPnLPercent
+            } : undefined,
+          realizedPnL: item.realizedPnL !== undefined ? {
+              set: item.realizedPnL
+            } : undefined,
+          realizedPnLPercent: item.realizedPnLPercent !== undefined ? {
+              set: item.realizedPnLPercent
+            } : undefined,
+          totalFees: item.totalFees !== undefined ? {
+              set: item.totalFees
+            } : undefined,
+          currentDelta: item.currentDelta !== undefined ? {
+              set: item.currentDelta
+            } : undefined,
+          currentGamma: item.currentGamma !== undefined ? {
+              set: item.currentGamma
+            } : undefined,
+          currentTheta: item.currentTheta !== undefined ? {
+              set: item.currentTheta
+            } : undefined,
+          currentVega: item.currentVega !== undefined ? {
+              set: item.currentVega
+            } : undefined,
+          currentRho: item.currentRho !== undefined ? {
+              set: item.currentRho
+            } : undefined,
+          currentImpliedVolatility: item.currentImpliedVolatility !== undefined ? {
+              set: item.currentImpliedVolatility
+            } : undefined,
+          daysHeld: item.daysHeld !== undefined ? {
+              set: item.daysHeld
+            } : undefined,
+          exitReason: item.exitReason !== undefined ? {
+              set: item.exitReason
+            } : undefined,
+          strategyType: item.strategyType !== undefined ? {
+              set: item.strategyType
+            } : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              set: item.tradeId
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.executions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId
+              } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId
+              } : undefined,
           },
           update: {
-            timestamp:
-              props.timestamp !== undefined
-                ? {
-                    set: props.timestamp,
-                  }
-                : undefined,
-            underlyingPrice:
-              props.underlyingPrice !== undefined
-                ? {
-                    set: props.underlyingPrice,
-                  }
-                : undefined,
-            optionPrice:
-              props.optionPrice !== undefined
-                ? {
-                    set: props.optionPrice,
-                  }
-                : undefined,
-            bidPrice:
-              props.bidPrice !== undefined
-                ? {
-                    set: props.bidPrice,
-                  }
-                : undefined,
-            askPrice:
-              props.askPrice !== undefined
-                ? {
-                    set: props.askPrice,
-                  }
-                : undefined,
-            impliedVolatility:
-              props.impliedVolatility !== undefined
-                ? {
-                    set: props.impliedVolatility,
-                  }
-                : undefined,
-            delta:
-              props.delta !== undefined
-                ? {
-                    set: props.delta,
-                  }
-                : undefined,
-            gamma:
-              props.gamma !== undefined
-                ? {
-                    set: props.gamma,
-                  }
-                : undefined,
-            theta:
-              props.theta !== undefined
-                ? {
-                    set: props.theta,
-                  }
-                : undefined,
-            vega:
-              props.vega !== undefined
-                ? {
-                    set: props.vega,
-                  }
-                : undefined,
-            rho:
-              props.rho !== undefined
-                ? {
-                    set: props.rho,
-                  }
-                : undefined,
-            volume:
-              props.volume !== undefined
-                ? {
-                    set: props.volume,
-                  }
-                : undefined,
-            openInterest:
-              props.openInterest !== undefined
-                ? {
-                    set: props.openInterest,
-                  }
-                : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? {
-                    set: props.daysToExpiration,
-                  }
-                : undefined,
-            intrinsicValue:
-              props.intrinsicValue !== undefined
-                ? {
-                    set: props.intrinsicValue,
-                  }
-                : undefined,
-            extrinsicValue:
-              props.extrinsicValue !== undefined
-                ? {
-                    set: props.extrinsicValue,
-                  }
-                : undefined,
-            metadata:
-              props.metadata !== undefined
-                ? {
-                    set: props.metadata,
-                  }
-                : undefined,
-            contract: props.contract
-              ? typeof props.contract === 'object' &&
-                Object.keys(props.contract).length === 1 &&
-                (Object.keys(props.contract)[0] === 'id' ||
-                  Object.keys(props.contract)[0] === 'symbol')
-                ? {
-                    connect: {
-                      id: props.contract.id,
-                    },
-                  }
-                : {
-                    upsert: {
-                      where: {
-                        id:
-                          props.contract.id !== undefined
-                            ? {
-                                equals: props.contract.id,
-                              }
-                            : undefined,
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? {
-                                equals: props.contract.symbol,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          props.contract.id !== undefined
-                            ? {
-                                set: props.contract.id,
-                              }
-                            : undefined,
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? {
-                                set: props.contract.symbol,
-                              }
-                            : undefined,
-                        contractSymbol:
-                          props.contract.contractSymbol !== undefined
-                            ? {
-                                set: props.contract.contractSymbol,
-                              }
-                            : undefined,
-                        optionType:
-                          props.contract.optionType !== undefined
-                            ? {
-                                set: props.contract.optionType,
-                              }
-                            : undefined,
-                        strikePrice:
-                          props.contract.strikePrice !== undefined
-                            ? {
-                                set: props.contract.strikePrice,
-                              }
-                            : undefined,
-                        expirationDate:
-                          props.contract.expirationDate !== undefined
-                            ? {
-                                set: props.contract.expirationDate,
-                              }
-                            : undefined,
-                        daysToExpiration:
-                          props.contract.daysToExpiration !== undefined
-                            ? {
-                                set: props.contract.daysToExpiration,
-                              }
-                            : undefined,
-                        lastPrice:
-                          props.contract.lastPrice !== undefined
-                            ? {
-                                set: props.contract.lastPrice,
-                              }
-                            : undefined,
-                        bidPrice:
-                          props.contract.bidPrice !== undefined
-                            ? {
-                                set: props.contract.bidPrice,
-                              }
-                            : undefined,
-                        askPrice:
-                          props.contract.askPrice !== undefined
-                            ? {
-                                set: props.contract.askPrice,
-                              }
-                            : undefined,
-                        midPrice:
-                          props.contract.midPrice !== undefined
-                            ? {
-                                set: props.contract.midPrice,
-                              }
-                            : undefined,
-                        bidSize:
-                          props.contract.bidSize !== undefined
-                            ? {
-                                set: props.contract.bidSize,
-                              }
-                            : undefined,
-                        askSize:
-                          props.contract.askSize !== undefined
-                            ? {
-                                set: props.contract.askSize,
-                              }
-                            : undefined,
-                        volume:
-                          props.contract.volume !== undefined
-                            ? {
-                                set: props.contract.volume,
-                              }
-                            : undefined,
-                        openInterest:
-                          props.contract.openInterest !== undefined
-                            ? {
-                                set: props.contract.openInterest,
-                              }
-                            : undefined,
-                        impliedVolatility:
-                          props.contract.impliedVolatility !== undefined
-                            ? {
-                                set: props.contract.impliedVolatility,
-                              }
-                            : undefined,
-                        delta:
-                          props.contract.delta !== undefined
-                            ? {
-                                set: props.contract.delta,
-                              }
-                            : undefined,
-                        gamma:
-                          props.contract.gamma !== undefined
-                            ? {
-                                set: props.contract.gamma,
-                              }
-                            : undefined,
-                        theta:
-                          props.contract.theta !== undefined
-                            ? {
-                                set: props.contract.theta,
-                              }
-                            : undefined,
-                        vega:
-                          props.contract.vega !== undefined
-                            ? {
-                                set: props.contract.vega,
-                              }
-                            : undefined,
-                        rho:
-                          props.contract.rho !== undefined
-                            ? {
-                                set: props.contract.rho,
-                              }
-                            : undefined,
-                        inTheMoney:
-                          props.contract.inTheMoney !== undefined
-                            ? {
-                                set: props.contract.inTheMoney,
-                              }
-                            : undefined,
-                        intrinsicValue:
-                          props.contract.intrinsicValue !== undefined
-                            ? {
-                                set: props.contract.intrinsicValue,
-                              }
-                            : undefined,
-                        extrinsicValue:
-                          props.contract.extrinsicValue !== undefined
-                            ? {
-                                set: props.contract.extrinsicValue,
-                              }
-                            : undefined,
-                        theoreticalPrice:
-                          props.contract.theoreticalPrice !== undefined
-                            ? {
-                                set: props.contract.theoreticalPrice,
-                              }
-                            : undefined,
-                        underlyingPrice:
-                          props.contract.underlyingPrice !== undefined
-                            ? {
-                                set: props.contract.underlyingPrice,
-                              }
-                            : undefined,
-                        metadata:
-                          props.contract.metadata !== undefined
-                            ? {
-                                set: props.contract.metadata,
-                              }
-                            : undefined,
-                        dataTimestamp:
-                          props.contract.dataTimestamp !== undefined
-                            ? {
-                                set: props.contract.dataTimestamp,
-                              }
-                            : undefined,
-                        positions: props.contract.positions
-                          ? Array.isArray(props.contract.positions) &&
-                            props.contract.positions.length > 0 &&
-                            props.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                upsert: props.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? {
-                                              equals: item.tradeId,
-                                            }
-                                          : undefined,
-                                    },
-                                    update: {
-                                      id:
-                                        item.id !== undefined
-                                          ? {
-                                              set: item.id,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              set: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? {
-                                              set: item.status,
-                                            }
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? {
-                                              set: item.openingSide,
-                                            }
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? {
-                                              set: item.quantity,
-                                            }
-                                          : undefined,
-                                      entryPrice:
-                                        item.entryPrice !== undefined
-                                          ? {
-                                              set: item.entryPrice,
-                                            }
-                                          : undefined,
-                                      entryCost:
-                                        item.entryCost !== undefined
-                                          ? {
-                                              set: item.entryCost,
-                                            }
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? {
-                                              set: item.entryTime,
-                                            }
-                                          : undefined,
-                                      exitPrice:
-                                        item.exitPrice !== undefined
-                                          ? {
-                                              set: item.exitPrice,
-                                            }
-                                          : undefined,
-                                      exitValue:
-                                        item.exitValue !== undefined
-                                          ? {
-                                              set: item.exitValue,
-                                            }
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? {
-                                              set: item.exitTime,
-                                            }
-                                          : undefined,
-                                      currentPrice:
-                                        item.currentPrice !== undefined
-                                          ? {
-                                              set: item.currentPrice,
-                                            }
-                                          : undefined,
-                                      currentValue:
-                                        item.currentValue !== undefined
-                                          ? {
-                                              set: item.currentValue,
-                                            }
-                                          : undefined,
-                                      unrealizedPnL:
-                                        item.unrealizedPnL !== undefined
-                                          ? {
-                                              set: item.unrealizedPnL,
-                                            }
-                                          : undefined,
-                                      unrealizedPnLPercent:
-                                        item.unrealizedPnLPercent !== undefined
-                                          ? {
-                                              set: item.unrealizedPnLPercent,
-                                            }
-                                          : undefined,
-                                      realizedPnL:
-                                        item.realizedPnL !== undefined
-                                          ? {
-                                              set: item.realizedPnL,
-                                            }
-                                          : undefined,
-                                      realizedPnLPercent:
-                                        item.realizedPnLPercent !== undefined
-                                          ? {
-                                              set: item.realizedPnLPercent,
-                                            }
-                                          : undefined,
-                                      totalFees:
-                                        item.totalFees !== undefined
-                                          ? {
-                                              set: item.totalFees,
-                                            }
-                                          : undefined,
-                                      currentDelta:
-                                        item.currentDelta !== undefined
-                                          ? {
-                                              set: item.currentDelta,
-                                            }
-                                          : undefined,
-                                      currentGamma:
-                                        item.currentGamma !== undefined
-                                          ? {
-                                              set: item.currentGamma,
-                                            }
-                                          : undefined,
-                                      currentTheta:
-                                        item.currentTheta !== undefined
-                                          ? {
-                                              set: item.currentTheta,
-                                            }
-                                          : undefined,
-                                      currentVega:
-                                        item.currentVega !== undefined
-                                          ? {
-                                              set: item.currentVega,
-                                            }
-                                          : undefined,
-                                      currentRho:
-                                        item.currentRho !== undefined
-                                          ? {
-                                              set: item.currentRho,
-                                            }
-                                          : undefined,
-                                      currentImpliedVolatility:
-                                        item.currentImpliedVolatility !==
-                                        undefined
-                                          ? {
-                                              set: item.currentImpliedVolatility,
-                                            }
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? {
-                                              set: item.daysHeld,
-                                            }
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? {
-                                              set: item.exitReason,
-                                            }
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? {
-                                              set: item.strategyType,
-                                            }
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? {
-                                              set: item.tradeId,
-                                            }
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? {
-                                              set: item.metadata,
-                                            }
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              ('id' in item ||
-                                                'symbol' in item) &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              upsert: item.executions.map(
-                                                (item: any) => ({
-                                                  where: {
-                                                    id:
-                                                      item.id !== undefined
-                                                        ? item.id
-                                                        : undefined,
-                                                    positionId:
-                                                      item.positionId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.positionId,
-                                                          }
-                                                        : undefined,
-                                                    contractId:
-                                                      item.contractId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.contractId,
-                                                          }
-                                                        : undefined,
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.alpacaAccountId,
-                                                          }
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.brokerOrderId,
-                                                          }
-                                                        : undefined,
-                                                  },
-                                                  update: {
-                                                    id:
-                                                      item.id !== undefined
-                                                        ? {
-                                                            set: item.id,
-                                                          }
-                                                        : undefined,
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.alpacaAccountId,
-                                                          }
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.brokerOrderId,
-                                                          }
-                                                        : undefined,
-                                                    executionSide:
-                                                      item.executionSide !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionSide,
-                                                          }
-                                                        : undefined,
-                                                    quantity:
-                                                      item.quantity !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.quantity,
-                                                          }
-                                                        : undefined,
-                                                    executionPrice:
-                                                      item.executionPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionPrice,
-                                                          }
-                                                        : undefined,
-                                                    executionValue:
-                                                      item.executionValue !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionValue,
-                                                          }
-                                                        : undefined,
-                                                    fees:
-                                                      item.fees !== undefined
-                                                        ? {
-                                                            set: item.fees,
-                                                          }
-                                                        : undefined,
-                                                    executionTime:
-                                                      item.executionTime !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionTime,
-                                                          }
-                                                        : undefined,
-                                                    underlyingPriceAtExecution:
-                                                      item.underlyingPriceAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.underlyingPriceAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    deltaAtExecution:
-                                                      item.deltaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.deltaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    gammaAtExecution:
-                                                      item.gammaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.gammaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    thetaAtExecution:
-                                                      item.thetaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.thetaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    vegaAtExecution:
-                                                      item.vegaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.vegaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    rhoAtExecution:
-                                                      item.rhoAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.rhoAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    impliedVolatilityAtExecution:
-                                                      item.impliedVolatilityAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.impliedVolatilityAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    orderType:
-                                                      item.orderType !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.orderType,
-                                                          }
-                                                        : undefined,
-                                                    limitPrice:
-                                                      item.limitPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.limitPrice,
-                                                          }
-                                                        : undefined,
-                                                    stopPrice:
-                                                      item.stopPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.stopPrice,
-                                                          }
-                                                        : undefined,
-                                                    timeInForce:
-                                                      item.timeInForce !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.timeInForce,
-                                                          }
-                                                        : undefined,
-                                                    venue:
-                                                      item.venue !== undefined
-                                                        ? {
-                                                            set: item.venue,
-                                                          }
-                                                        : undefined,
-                                                    slippage:
-                                                      item.slippage !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.slippage,
-                                                          }
-                                                        : undefined,
-                                                    notes:
-                                                      item.notes !== undefined
-                                                        ? {
-                                                            set: item.notes,
-                                                          }
-                                                        : undefined,
-                                                    metadata:
-                                                      item.metadata !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.metadata,
-                                                          }
-                                                        : undefined,
-                                                  },
-                                                  create: {
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? item.alpacaAccountId
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? item.brokerOrderId
-                                                        : undefined,
-                                                    executionSide:
-                                                      item.executionSide !==
-                                                      undefined
-                                                        ? item.executionSide
-                                                        : undefined,
-                                                    quantity:
-                                                      item.quantity !==
-                                                      undefined
-                                                        ? item.quantity
-                                                        : undefined,
-                                                    executionTime:
-                                                      item.executionTime !==
-                                                      undefined
-                                                        ? item.executionTime
-                                                        : undefined,
-                                                    orderType:
-                                                      item.orderType !==
-                                                      undefined
-                                                        ? item.orderType
-                                                        : undefined,
-                                                    timeInForce:
-                                                      item.timeInForce !==
-                                                      undefined
-                                                        ? item.timeInForce
-                                                        : undefined,
-                                                    venue:
-                                                      item.venue !== undefined
-                                                        ? item.venue
-                                                        : undefined,
-                                                    notes:
-                                                      item.notes !== undefined
-                                                        ? item.notes
-                                                        : undefined,
-                                                    metadata:
-                                                      item.metadata !==
-                                                      undefined
-                                                        ? item.metadata
-                                                        : undefined,
-                                                  },
-                                                })
-                                              ),
-                                            }
-                                        : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: props.contract.executions
-                          ? Array.isArray(props.contract.executions) &&
-                            props.contract.executions.length > 0 &&
-                            props.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                upsert: props.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    update: {
-                                      id:
-                                        item.id !== undefined
-                                          ? {
-                                              set: item.id,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              set: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              set: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? {
-                                              set: item.executionSide,
-                                            }
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? {
-                                              set: item.quantity,
-                                            }
-                                          : undefined,
-                                      executionPrice:
-                                        item.executionPrice !== undefined
-                                          ? {
-                                              set: item.executionPrice,
-                                            }
-                                          : undefined,
-                                      executionValue:
-                                        item.executionValue !== undefined
-                                          ? {
-                                              set: item.executionValue,
-                                            }
-                                          : undefined,
-                                      fees:
-                                        item.fees !== undefined
-                                          ? {
-                                              set: item.fees,
-                                            }
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? {
-                                              set: item.executionTime,
-                                            }
-                                          : undefined,
-                                      underlyingPriceAtExecution:
-                                        item.underlyingPriceAtExecution !==
-                                        undefined
-                                          ? {
-                                              set: item.underlyingPriceAtExecution,
-                                            }
-                                          : undefined,
-                                      deltaAtExecution:
-                                        item.deltaAtExecution !== undefined
-                                          ? {
-                                              set: item.deltaAtExecution,
-                                            }
-                                          : undefined,
-                                      gammaAtExecution:
-                                        item.gammaAtExecution !== undefined
-                                          ? {
-                                              set: item.gammaAtExecution,
-                                            }
-                                          : undefined,
-                                      thetaAtExecution:
-                                        item.thetaAtExecution !== undefined
-                                          ? {
-                                              set: item.thetaAtExecution,
-                                            }
-                                          : undefined,
-                                      vegaAtExecution:
-                                        item.vegaAtExecution !== undefined
-                                          ? {
-                                              set: item.vegaAtExecution,
-                                            }
-                                          : undefined,
-                                      rhoAtExecution:
-                                        item.rhoAtExecution !== undefined
-                                          ? {
-                                              set: item.rhoAtExecution,
-                                            }
-                                          : undefined,
-                                      impliedVolatilityAtExecution:
-                                        item.impliedVolatilityAtExecution !==
-                                        undefined
-                                          ? {
-                                              set: item.impliedVolatilityAtExecution,
-                                            }
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? {
-                                              set: item.orderType,
-                                            }
-                                          : undefined,
-                                      limitPrice:
-                                        item.limitPrice !== undefined
-                                          ? {
-                                              set: item.limitPrice,
-                                            }
-                                          : undefined,
-                                      stopPrice:
-                                        item.stopPrice !== undefined
-                                          ? {
-                                              set: item.stopPrice,
-                                            }
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? {
-                                              set: item.timeInForce,
-                                            }
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? {
-                                              set: item.venue,
-                                            }
-                                          : undefined,
-                                      slippage:
-                                        item.slippage !== undefined
-                                          ? {
-                                              set: item.slippage,
-                                            }
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? {
-                                              set: item.notes,
-                                            }
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? {
-                                              set: item.metadata,
-                                            }
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          (Object.keys(item.position)[0] ===
-                                            'id' ||
-                                            Object.keys(item.position)[0] ===
-                                              'symbol')
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              upsert: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position.id,
-                                                        }
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .tradeId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                update: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position.id,
-                                                        }
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .status,
-                                                        }
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .openingSide,
-                                                        }
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .quantity,
-                                                        }
-                                                      : undefined,
-                                                  entryPrice:
-                                                    item.position.entryPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryPrice,
-                                                        }
-                                                      : undefined,
-                                                  entryCost:
-                                                    item.position.entryCost !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryCost,
-                                                        }
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryTime,
-                                                        }
-                                                      : undefined,
-                                                  exitPrice:
-                                                    item.position.exitPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitPrice,
-                                                        }
-                                                      : undefined,
-                                                  exitValue:
-                                                    item.position.exitValue !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitValue,
-                                                        }
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitTime,
-                                                        }
-                                                      : undefined,
-                                                  currentPrice:
-                                                    item.position
-                                                      .currentPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentPrice,
-                                                        }
-                                                      : undefined,
-                                                  currentValue:
-                                                    item.position
-                                                      .currentValue !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentValue,
-                                                        }
-                                                      : undefined,
-                                                  unrealizedPnL:
-                                                    item.position
-                                                      .unrealizedPnL !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .unrealizedPnL,
-                                                        }
-                                                      : undefined,
-                                                  unrealizedPnLPercent:
-                                                    item.position
-                                                      .unrealizedPnLPercent !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .unrealizedPnLPercent,
-                                                        }
-                                                      : undefined,
-                                                  realizedPnL:
-                                                    item.position
-                                                      .realizedPnL !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .realizedPnL,
-                                                        }
-                                                      : undefined,
-                                                  realizedPnLPercent:
-                                                    item.position
-                                                      .realizedPnLPercent !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .realizedPnLPercent,
-                                                        }
-                                                      : undefined,
-                                                  totalFees:
-                                                    item.position.totalFees !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .totalFees,
-                                                        }
-                                                      : undefined,
-                                                  currentDelta:
-                                                    item.position
-                                                      .currentDelta !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentDelta,
-                                                        }
-                                                      : undefined,
-                                                  currentGamma:
-                                                    item.position
-                                                      .currentGamma !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentGamma,
-                                                        }
-                                                      : undefined,
-                                                  currentTheta:
-                                                    item.position
-                                                      .currentTheta !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentTheta,
-                                                        }
-                                                      : undefined,
-                                                  currentVega:
-                                                    item.position
-                                                      .currentVega !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentVega,
-                                                        }
-                                                      : undefined,
-                                                  currentRho:
-                                                    item.position.currentRho !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentRho,
-                                                        }
-                                                      : undefined,
-                                                  currentImpliedVolatility:
-                                                    item.position
-                                                      .currentImpliedVolatility !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentImpliedVolatility,
-                                                        }
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .daysHeld,
-                                                        }
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitReason,
-                                                        }
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .strategyType,
-                                                        }
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .tradeId,
-                                                        }
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .metadata,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        symbol:
-                          props.contract.symbol !== undefined
-                            ? props.contract.symbol
-                            : undefined,
-                        contractSymbol:
-                          props.contract.contractSymbol !== undefined
-                            ? props.contract.contractSymbol
-                            : undefined,
-                        optionType:
-                          props.contract.optionType !== undefined
-                            ? props.contract.optionType
-                            : undefined,
-                        expirationDate:
-                          props.contract.expirationDate !== undefined
-                            ? props.contract.expirationDate
-                            : undefined,
-                        daysToExpiration:
-                          props.contract.daysToExpiration !== undefined
-                            ? props.contract.daysToExpiration
-                            : undefined,
-                        bidSize:
-                          props.contract.bidSize !== undefined
-                            ? props.contract.bidSize
-                            : undefined,
-                        askSize:
-                          props.contract.askSize !== undefined
-                            ? props.contract.askSize
-                            : undefined,
-                        volume:
-                          props.contract.volume !== undefined
-                            ? props.contract.volume
-                            : undefined,
-                        openInterest:
-                          props.contract.openInterest !== undefined
-                            ? props.contract.openInterest
-                            : undefined,
-                        inTheMoney:
-                          props.contract.inTheMoney !== undefined
-                            ? props.contract.inTheMoney
-                            : undefined,
-                        metadata:
-                          props.contract.metadata !== undefined
-                            ? props.contract.metadata
-                            : undefined,
-                        dataTimestamp:
-                          props.contract.dataTimestamp !== undefined
-                            ? props.contract.dataTimestamp
-                            : undefined,
-                        positions: props.contract.positions
-                          ? Array.isArray(props.contract.positions) &&
-                            props.contract.positions.length > 0 &&
-                            props.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: props.contract.executions
-                          ? Array.isArray(props.contract.executions) &&
-                            props.contract.executions.length > 0 &&
-                            props.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: props.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: props.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    },
-                  }
-              : undefined,
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                set: item.alpacaAccountId
+              } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                set: item.brokerOrderId
+              } : undefined,
+            executionSide: item.executionSide !== undefined ? {
+                set: item.executionSide
+              } : undefined,
+            quantity: item.quantity !== undefined ? {
+                set: item.quantity
+              } : undefined,
+            executionPrice: item.executionPrice !== undefined ? {
+                set: item.executionPrice
+              } : undefined,
+            executionValue: item.executionValue !== undefined ? {
+                set: item.executionValue
+              } : undefined,
+            fees: item.fees !== undefined ? {
+                set: item.fees
+              } : undefined,
+            executionTime: item.executionTime !== undefined ? {
+                set: item.executionTime
+              } : undefined,
+            underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+                set: item.underlyingPriceAtExecution
+              } : undefined,
+            deltaAtExecution: item.deltaAtExecution !== undefined ? {
+                set: item.deltaAtExecution
+              } : undefined,
+            gammaAtExecution: item.gammaAtExecution !== undefined ? {
+                set: item.gammaAtExecution
+              } : undefined,
+            thetaAtExecution: item.thetaAtExecution !== undefined ? {
+                set: item.thetaAtExecution
+              } : undefined,
+            vegaAtExecution: item.vegaAtExecution !== undefined ? {
+                set: item.vegaAtExecution
+              } : undefined,
+            rhoAtExecution: item.rhoAtExecution !== undefined ? {
+                set: item.rhoAtExecution
+              } : undefined,
+            impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+                set: item.impliedVolatilityAtExecution
+              } : undefined,
+            orderType: item.orderType !== undefined ? {
+                set: item.orderType
+              } : undefined,
+            limitPrice: item.limitPrice !== undefined ? {
+                set: item.limitPrice
+              } : undefined,
+            stopPrice: item.stopPrice !== undefined ? {
+                set: item.stopPrice
+              } : undefined,
+            timeInForce: item.timeInForce !== undefined ? {
+                set: item.timeInForce
+              } : undefined,
+            venue: item.venue !== undefined ? {
+                set: item.venue
+              } : undefined,
+            slippage: item.slippage !== undefined ? {
+                set: item.slippage
+              } : undefined,
+            notes: item.notes !== undefined ? {
+                set: item.notes
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
           },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: props.contract.executions ? 
+    Array.isArray(props.contract.executions) && props.contract.executions.length > 0 && props.contract.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.executions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              set: item.brokerOrderId
+            } : undefined,
+          executionSide: item.executionSide !== undefined ? {
+              set: item.executionSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          executionPrice: item.executionPrice !== undefined ? {
+              set: item.executionPrice
+            } : undefined,
+          executionValue: item.executionValue !== undefined ? {
+              set: item.executionValue
+            } : undefined,
+          fees: item.fees !== undefined ? {
+              set: item.fees
+            } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime
+            } : undefined,
+          underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+              set: item.underlyingPriceAtExecution
+            } : undefined,
+          deltaAtExecution: item.deltaAtExecution !== undefined ? {
+              set: item.deltaAtExecution
+            } : undefined,
+          gammaAtExecution: item.gammaAtExecution !== undefined ? {
+              set: item.gammaAtExecution
+            } : undefined,
+          thetaAtExecution: item.thetaAtExecution !== undefined ? {
+              set: item.thetaAtExecution
+            } : undefined,
+          vegaAtExecution: item.vegaAtExecution !== undefined ? {
+              set: item.vegaAtExecution
+            } : undefined,
+          rhoAtExecution: item.rhoAtExecution !== undefined ? {
+              set: item.rhoAtExecution
+            } : undefined,
+          impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+              set: item.impliedVolatilityAtExecution
+            } : undefined,
+          orderType: item.orderType !== undefined ? {
+              set: item.orderType
+            } : undefined,
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice
+            } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice
+            } : undefined,
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce
+            } : undefined,
+          venue: item.venue !== undefined ? {
+              set: item.venue
+            } : undefined,
+          slippage: item.slippage !== undefined ? {
+              set: item.slippage
+            } : undefined,
+          notes: item.notes !== undefined ? {
+              set: item.notes
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
+? {
+      connect: {
+        id: item.position.id
+      }
+} : { upsert: {
+          where: {
+            id: item.position.id !== undefined ? {
+                equals: item.position.id
+              } : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId
+              } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId
+              } : undefined,
+            tradeId: item.position.tradeId !== undefined ? {
+                equals: item.position.tradeId
+              } : undefined,
+          },
+          update: {
+            id: item.position.id !== undefined ? {
+                set: item.position.id
+              } : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                set: item.position.alpacaAccountId
+              } : undefined,
+            status: item.position.status !== undefined ? {
+                set: item.position.status
+              } : undefined,
+            openingSide: item.position.openingSide !== undefined ? {
+                set: item.position.openingSide
+              } : undefined,
+            quantity: item.position.quantity !== undefined ? {
+                set: item.position.quantity
+              } : undefined,
+            entryPrice: item.position.entryPrice !== undefined ? {
+                set: item.position.entryPrice
+              } : undefined,
+            entryCost: item.position.entryCost !== undefined ? {
+                set: item.position.entryCost
+              } : undefined,
+            entryTime: item.position.entryTime !== undefined ? {
+                set: item.position.entryTime
+              } : undefined,
+            exitPrice: item.position.exitPrice !== undefined ? {
+                set: item.position.exitPrice
+              } : undefined,
+            exitValue: item.position.exitValue !== undefined ? {
+                set: item.position.exitValue
+              } : undefined,
+            exitTime: item.position.exitTime !== undefined ? {
+                set: item.position.exitTime
+              } : undefined,
+            currentPrice: item.position.currentPrice !== undefined ? {
+                set: item.position.currentPrice
+              } : undefined,
+            currentValue: item.position.currentValue !== undefined ? {
+                set: item.position.currentValue
+              } : undefined,
+            unrealizedPnL: item.position.unrealizedPnL !== undefined ? {
+                set: item.position.unrealizedPnL
+              } : undefined,
+            unrealizedPnLPercent: item.position.unrealizedPnLPercent !== undefined ? {
+                set: item.position.unrealizedPnLPercent
+              } : undefined,
+            realizedPnL: item.position.realizedPnL !== undefined ? {
+                set: item.position.realizedPnL
+              } : undefined,
+            realizedPnLPercent: item.position.realizedPnLPercent !== undefined ? {
+                set: item.position.realizedPnLPercent
+              } : undefined,
+            totalFees: item.position.totalFees !== undefined ? {
+                set: item.position.totalFees
+              } : undefined,
+            currentDelta: item.position.currentDelta !== undefined ? {
+                set: item.position.currentDelta
+              } : undefined,
+            currentGamma: item.position.currentGamma !== undefined ? {
+                set: item.position.currentGamma
+              } : undefined,
+            currentTheta: item.position.currentTheta !== undefined ? {
+                set: item.position.currentTheta
+              } : undefined,
+            currentVega: item.position.currentVega !== undefined ? {
+                set: item.position.currentVega
+              } : undefined,
+            currentRho: item.position.currentRho !== undefined ? {
+                set: item.position.currentRho
+              } : undefined,
+            currentImpliedVolatility: item.position.currentImpliedVolatility !== undefined ? {
+                set: item.position.currentImpliedVolatility
+              } : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? {
+                set: item.position.daysHeld
+              } : undefined,
+            exitReason: item.position.exitReason !== undefined ? {
+                set: item.position.exitReason
+              } : undefined,
+            strategyType: item.position.strategyType !== undefined ? {
+                set: item.position.strategyType
+              } : undefined,
+            tradeId: item.position.tradeId !== undefined ? {
+                set: item.position.tradeId
+              } : undefined,
+            metadata: item.position.metadata !== undefined ? {
+                set: item.position.metadata
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        symbol: props.contract.symbol !== undefined ? props.contract.symbol : undefined,
+        contractSymbol: props.contract.contractSymbol !== undefined ? props.contract.contractSymbol : undefined,
+        optionType: props.contract.optionType !== undefined ? props.contract.optionType : undefined,
+        expirationDate: props.contract.expirationDate !== undefined ? props.contract.expirationDate : undefined,
+        daysToExpiration: props.contract.daysToExpiration !== undefined ? props.contract.daysToExpiration : undefined,
+        bidSize: props.contract.bidSize !== undefined ? props.contract.bidSize : undefined,
+        askSize: props.contract.askSize !== undefined ? props.contract.askSize : undefined,
+        volume: props.contract.volume !== undefined ? props.contract.volume : undefined,
+        openInterest: props.contract.openInterest !== undefined ? props.contract.openInterest : undefined,
+        inTheMoney: props.contract.inTheMoney !== undefined ? props.contract.inTheMoney : undefined,
+        metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
+        dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
+    positions: props.contract.positions ? 
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: props.contract.executions ? 
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -5765,16 +2527,11 @@ export const OptionsGreeksHistory = {
           mutation: UPSERT_ONE_OPTIONSGREEKSHISTORY,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.upsertOneOptionsGreeksHistory
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneOptionsGreeksHistory) {
           return response.data.upsertOneOptionsGreeksHistory;
         } else {
           return null as any;
@@ -5788,19 +2545,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -5816,10 +2572,7 @@ export const OptionsGreeksHistory = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(
-    props: OptionsGreeksHistoryType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async updateMany(props: OptionsGreeksHistoryType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -5830,2160 +2583,870 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const UPDATE_MANY_OPTIONSGREEKSHISTORY = gql`
-          mutation updateManyOptionsGreeksHistory(
-            $data: [OptionsGreeksHistoryCreateManyInput!]!
-          ) {
+          mutation updateManyOptionsGreeksHistory($data: [OptionsGreeksHistoryCreateManyInput!]!) {
             updateManyOptionsGreeksHistory(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
-        const variables = props.map((prop) => ({
+        const variables = props.map(prop => ({
           where: {
-            id: prop.id !== undefined ? prop.id : undefined,
-            contractId:
-              prop.contractId !== undefined
-                ? {
-                    equals: prop.contractId,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? prop.id : undefined,
+  contractId: prop.contractId !== undefined ? {
+    equals: prop.contractId 
+  } : undefined,
+
           },
           data: {
-            id:
-              prop.id !== undefined
-                ? {
-                    set: prop.id,
-                  }
-                : undefined,
-            timestamp:
-              prop.timestamp !== undefined
-                ? {
-                    set: prop.timestamp,
-                  }
-                : undefined,
-            underlyingPrice:
-              prop.underlyingPrice !== undefined
-                ? {
-                    set: prop.underlyingPrice,
-                  }
-                : undefined,
-            optionPrice:
-              prop.optionPrice !== undefined
-                ? {
-                    set: prop.optionPrice,
-                  }
-                : undefined,
-            bidPrice:
-              prop.bidPrice !== undefined
-                ? {
-                    set: prop.bidPrice,
-                  }
-                : undefined,
-            askPrice:
-              prop.askPrice !== undefined
-                ? {
-                    set: prop.askPrice,
-                  }
-                : undefined,
-            impliedVolatility:
-              prop.impliedVolatility !== undefined
-                ? {
-                    set: prop.impliedVolatility,
-                  }
-                : undefined,
-            delta:
-              prop.delta !== undefined
-                ? {
-                    set: prop.delta,
-                  }
-                : undefined,
-            gamma:
-              prop.gamma !== undefined
-                ? {
-                    set: prop.gamma,
-                  }
-                : undefined,
-            theta:
-              prop.theta !== undefined
-                ? {
-                    set: prop.theta,
-                  }
-                : undefined,
-            vega:
-              prop.vega !== undefined
-                ? {
-                    set: prop.vega,
-                  }
-                : undefined,
-            rho:
-              prop.rho !== undefined
-                ? {
-                    set: prop.rho,
-                  }
-                : undefined,
-            volume:
-              prop.volume !== undefined
-                ? {
-                    set: prop.volume,
-                  }
-                : undefined,
-            openInterest:
-              prop.openInterest !== undefined
-                ? {
-                    set: prop.openInterest,
-                  }
-                : undefined,
-            daysToExpiration:
-              prop.daysToExpiration !== undefined
-                ? {
-                    set: prop.daysToExpiration,
-                  }
-                : undefined,
-            intrinsicValue:
-              prop.intrinsicValue !== undefined
-                ? {
-                    set: prop.intrinsicValue,
-                  }
-                : undefined,
-            extrinsicValue:
-              prop.extrinsicValue !== undefined
-                ? {
-                    set: prop.extrinsicValue,
-                  }
-                : undefined,
-            metadata:
-              prop.metadata !== undefined
-                ? {
-                    set: prop.metadata,
-                  }
-                : undefined,
-            createdAt:
-              prop.createdAt !== undefined
-                ? {
-                    set: prop.createdAt,
-                  }
-                : undefined,
-            contract: prop.contract
-              ? typeof prop.contract === 'object' &&
-                Object.keys(prop.contract).length === 1 &&
-                (Object.keys(prop.contract)[0] === 'id' ||
-                  Object.keys(prop.contract)[0] === 'symbol')
-                ? {
-                    connect: {
-                      id: prop.contract.id,
-                    },
-                  }
-                : {
-                    upsert: {
-                      where: {
-                        id:
-                          prop.contract.id !== undefined
-                            ? {
-                                equals: prop.contract.id,
-                              }
-                            : undefined,
-                        symbol:
-                          prop.contract.symbol !== undefined
-                            ? {
-                                equals: prop.contract.symbol,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          prop.contract.id !== undefined
-                            ? {
-                                set: prop.contract.id,
-                              }
-                            : undefined,
-                        symbol:
-                          prop.contract.symbol !== undefined
-                            ? {
-                                set: prop.contract.symbol,
-                              }
-                            : undefined,
-                        contractSymbol:
-                          prop.contract.contractSymbol !== undefined
-                            ? {
-                                set: prop.contract.contractSymbol,
-                              }
-                            : undefined,
-                        optionType:
-                          prop.contract.optionType !== undefined
-                            ? {
-                                set: prop.contract.optionType,
-                              }
-                            : undefined,
-                        strikePrice:
-                          prop.contract.strikePrice !== undefined
-                            ? {
-                                set: prop.contract.strikePrice,
-                              }
-                            : undefined,
-                        expirationDate:
-                          prop.contract.expirationDate !== undefined
-                            ? {
-                                set: prop.contract.expirationDate,
-                              }
-                            : undefined,
-                        daysToExpiration:
-                          prop.contract.daysToExpiration !== undefined
-                            ? {
-                                set: prop.contract.daysToExpiration,
-                              }
-                            : undefined,
-                        lastPrice:
-                          prop.contract.lastPrice !== undefined
-                            ? {
-                                set: prop.contract.lastPrice,
-                              }
-                            : undefined,
-                        bidPrice:
-                          prop.contract.bidPrice !== undefined
-                            ? {
-                                set: prop.contract.bidPrice,
-                              }
-                            : undefined,
-                        askPrice:
-                          prop.contract.askPrice !== undefined
-                            ? {
-                                set: prop.contract.askPrice,
-                              }
-                            : undefined,
-                        midPrice:
-                          prop.contract.midPrice !== undefined
-                            ? {
-                                set: prop.contract.midPrice,
-                              }
-                            : undefined,
-                        bidSize:
-                          prop.contract.bidSize !== undefined
-                            ? {
-                                set: prop.contract.bidSize,
-                              }
-                            : undefined,
-                        askSize:
-                          prop.contract.askSize !== undefined
-                            ? {
-                                set: prop.contract.askSize,
-                              }
-                            : undefined,
-                        volume:
-                          prop.contract.volume !== undefined
-                            ? {
-                                set: prop.contract.volume,
-                              }
-                            : undefined,
-                        openInterest:
-                          prop.contract.openInterest !== undefined
-                            ? {
-                                set: prop.contract.openInterest,
-                              }
-                            : undefined,
-                        impliedVolatility:
-                          prop.contract.impliedVolatility !== undefined
-                            ? {
-                                set: prop.contract.impliedVolatility,
-                              }
-                            : undefined,
-                        delta:
-                          prop.contract.delta !== undefined
-                            ? {
-                                set: prop.contract.delta,
-                              }
-                            : undefined,
-                        gamma:
-                          prop.contract.gamma !== undefined
-                            ? {
-                                set: prop.contract.gamma,
-                              }
-                            : undefined,
-                        theta:
-                          prop.contract.theta !== undefined
-                            ? {
-                                set: prop.contract.theta,
-                              }
-                            : undefined,
-                        vega:
-                          prop.contract.vega !== undefined
-                            ? {
-                                set: prop.contract.vega,
-                              }
-                            : undefined,
-                        rho:
-                          prop.contract.rho !== undefined
-                            ? {
-                                set: prop.contract.rho,
-                              }
-                            : undefined,
-                        inTheMoney:
-                          prop.contract.inTheMoney !== undefined
-                            ? {
-                                set: prop.contract.inTheMoney,
-                              }
-                            : undefined,
-                        intrinsicValue:
-                          prop.contract.intrinsicValue !== undefined
-                            ? {
-                                set: prop.contract.intrinsicValue,
-                              }
-                            : undefined,
-                        extrinsicValue:
-                          prop.contract.extrinsicValue !== undefined
-                            ? {
-                                set: prop.contract.extrinsicValue,
-                              }
-                            : undefined,
-                        theoreticalPrice:
-                          prop.contract.theoreticalPrice !== undefined
-                            ? {
-                                set: prop.contract.theoreticalPrice,
-                              }
-                            : undefined,
-                        underlyingPrice:
-                          prop.contract.underlyingPrice !== undefined
-                            ? {
-                                set: prop.contract.underlyingPrice,
-                              }
-                            : undefined,
-                        metadata:
-                          prop.contract.metadata !== undefined
-                            ? {
-                                set: prop.contract.metadata,
-                              }
-                            : undefined,
-                        dataTimestamp:
-                          prop.contract.dataTimestamp !== undefined
-                            ? {
-                                set: prop.contract.dataTimestamp,
-                              }
-                            : undefined,
-                        positions: prop.contract.positions
-                          ? Array.isArray(prop.contract.positions) &&
-                            prop.contract.positions.length > 0 &&
-                            prop.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: prop.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                upsert: prop.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? {
-                                              equals: item.tradeId,
-                                            }
-                                          : undefined,
-                                    },
-                                    update: {
-                                      id:
-                                        item.id !== undefined
-                                          ? {
-                                              set: item.id,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              set: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? {
-                                              set: item.status,
-                                            }
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? {
-                                              set: item.openingSide,
-                                            }
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? {
-                                              set: item.quantity,
-                                            }
-                                          : undefined,
-                                      entryPrice:
-                                        item.entryPrice !== undefined
-                                          ? {
-                                              set: item.entryPrice,
-                                            }
-                                          : undefined,
-                                      entryCost:
-                                        item.entryCost !== undefined
-                                          ? {
-                                              set: item.entryCost,
-                                            }
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? {
-                                              set: item.entryTime,
-                                            }
-                                          : undefined,
-                                      exitPrice:
-                                        item.exitPrice !== undefined
-                                          ? {
-                                              set: item.exitPrice,
-                                            }
-                                          : undefined,
-                                      exitValue:
-                                        item.exitValue !== undefined
-                                          ? {
-                                              set: item.exitValue,
-                                            }
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? {
-                                              set: item.exitTime,
-                                            }
-                                          : undefined,
-                                      currentPrice:
-                                        item.currentPrice !== undefined
-                                          ? {
-                                              set: item.currentPrice,
-                                            }
-                                          : undefined,
-                                      currentValue:
-                                        item.currentValue !== undefined
-                                          ? {
-                                              set: item.currentValue,
-                                            }
-                                          : undefined,
-                                      unrealizedPnL:
-                                        item.unrealizedPnL !== undefined
-                                          ? {
-                                              set: item.unrealizedPnL,
-                                            }
-                                          : undefined,
-                                      unrealizedPnLPercent:
-                                        item.unrealizedPnLPercent !== undefined
-                                          ? {
-                                              set: item.unrealizedPnLPercent,
-                                            }
-                                          : undefined,
-                                      realizedPnL:
-                                        item.realizedPnL !== undefined
-                                          ? {
-                                              set: item.realizedPnL,
-                                            }
-                                          : undefined,
-                                      realizedPnLPercent:
-                                        item.realizedPnLPercent !== undefined
-                                          ? {
-                                              set: item.realizedPnLPercent,
-                                            }
-                                          : undefined,
-                                      totalFees:
-                                        item.totalFees !== undefined
-                                          ? {
-                                              set: item.totalFees,
-                                            }
-                                          : undefined,
-                                      currentDelta:
-                                        item.currentDelta !== undefined
-                                          ? {
-                                              set: item.currentDelta,
-                                            }
-                                          : undefined,
-                                      currentGamma:
-                                        item.currentGamma !== undefined
-                                          ? {
-                                              set: item.currentGamma,
-                                            }
-                                          : undefined,
-                                      currentTheta:
-                                        item.currentTheta !== undefined
-                                          ? {
-                                              set: item.currentTheta,
-                                            }
-                                          : undefined,
-                                      currentVega:
-                                        item.currentVega !== undefined
-                                          ? {
-                                              set: item.currentVega,
-                                            }
-                                          : undefined,
-                                      currentRho:
-                                        item.currentRho !== undefined
-                                          ? {
-                                              set: item.currentRho,
-                                            }
-                                          : undefined,
-                                      currentImpliedVolatility:
-                                        item.currentImpliedVolatility !==
-                                        undefined
-                                          ? {
-                                              set: item.currentImpliedVolatility,
-                                            }
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? {
-                                              set: item.daysHeld,
-                                            }
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? {
-                                              set: item.exitReason,
-                                            }
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? {
-                                              set: item.strategyType,
-                                            }
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? {
-                                              set: item.tradeId,
-                                            }
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? {
-                                              set: item.metadata,
-                                            }
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              ('id' in item ||
-                                                'symbol' in item) &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              upsert: item.executions.map(
-                                                (item: any) => ({
-                                                  where: {
-                                                    id:
-                                                      item.id !== undefined
-                                                        ? item.id
-                                                        : undefined,
-                                                    positionId:
-                                                      item.positionId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.positionId,
-                                                          }
-                                                        : undefined,
-                                                    contractId:
-                                                      item.contractId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.contractId,
-                                                          }
-                                                        : undefined,
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.alpacaAccountId,
-                                                          }
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? {
-                                                            equals:
-                                                              item.brokerOrderId,
-                                                          }
-                                                        : undefined,
-                                                  },
-                                                  update: {
-                                                    id:
-                                                      item.id !== undefined
-                                                        ? {
-                                                            set: item.id,
-                                                          }
-                                                        : undefined,
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.alpacaAccountId,
-                                                          }
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.brokerOrderId,
-                                                          }
-                                                        : undefined,
-                                                    executionSide:
-                                                      item.executionSide !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionSide,
-                                                          }
-                                                        : undefined,
-                                                    quantity:
-                                                      item.quantity !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.quantity,
-                                                          }
-                                                        : undefined,
-                                                    executionPrice:
-                                                      item.executionPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionPrice,
-                                                          }
-                                                        : undefined,
-                                                    executionValue:
-                                                      item.executionValue !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionValue,
-                                                          }
-                                                        : undefined,
-                                                    fees:
-                                                      item.fees !== undefined
-                                                        ? {
-                                                            set: item.fees,
-                                                          }
-                                                        : undefined,
-                                                    executionTime:
-                                                      item.executionTime !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.executionTime,
-                                                          }
-                                                        : undefined,
-                                                    underlyingPriceAtExecution:
-                                                      item.underlyingPriceAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.underlyingPriceAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    deltaAtExecution:
-                                                      item.deltaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.deltaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    gammaAtExecution:
-                                                      item.gammaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.gammaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    thetaAtExecution:
-                                                      item.thetaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.thetaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    vegaAtExecution:
-                                                      item.vegaAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.vegaAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    rhoAtExecution:
-                                                      item.rhoAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.rhoAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    impliedVolatilityAtExecution:
-                                                      item.impliedVolatilityAtExecution !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.impliedVolatilityAtExecution,
-                                                          }
-                                                        : undefined,
-                                                    orderType:
-                                                      item.orderType !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.orderType,
-                                                          }
-                                                        : undefined,
-                                                    limitPrice:
-                                                      item.limitPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.limitPrice,
-                                                          }
-                                                        : undefined,
-                                                    stopPrice:
-                                                      item.stopPrice !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.stopPrice,
-                                                          }
-                                                        : undefined,
-                                                    timeInForce:
-                                                      item.timeInForce !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.timeInForce,
-                                                          }
-                                                        : undefined,
-                                                    venue:
-                                                      item.venue !== undefined
-                                                        ? {
-                                                            set: item.venue,
-                                                          }
-                                                        : undefined,
-                                                    slippage:
-                                                      item.slippage !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.slippage,
-                                                          }
-                                                        : undefined,
-                                                    notes:
-                                                      item.notes !== undefined
-                                                        ? {
-                                                            set: item.notes,
-                                                          }
-                                                        : undefined,
-                                                    metadata:
-                                                      item.metadata !==
-                                                      undefined
-                                                        ? {
-                                                            set: item.metadata,
-                                                          }
-                                                        : undefined,
-                                                  },
-                                                  create: {
-                                                    alpacaAccountId:
-                                                      item.alpacaAccountId !==
-                                                      undefined
-                                                        ? item.alpacaAccountId
-                                                        : undefined,
-                                                    brokerOrderId:
-                                                      item.brokerOrderId !==
-                                                      undefined
-                                                        ? item.brokerOrderId
-                                                        : undefined,
-                                                    executionSide:
-                                                      item.executionSide !==
-                                                      undefined
-                                                        ? item.executionSide
-                                                        : undefined,
-                                                    quantity:
-                                                      item.quantity !==
-                                                      undefined
-                                                        ? item.quantity
-                                                        : undefined,
-                                                    executionTime:
-                                                      item.executionTime !==
-                                                      undefined
-                                                        ? item.executionTime
-                                                        : undefined,
-                                                    orderType:
-                                                      item.orderType !==
-                                                      undefined
-                                                        ? item.orderType
-                                                        : undefined,
-                                                    timeInForce:
-                                                      item.timeInForce !==
-                                                      undefined
-                                                        ? item.timeInForce
-                                                        : undefined,
-                                                    venue:
-                                                      item.venue !== undefined
-                                                        ? item.venue
-                                                        : undefined,
-                                                    notes:
-                                                      item.notes !== undefined
-                                                        ? item.notes
-                                                        : undefined,
-                                                    metadata:
-                                                      item.metadata !==
-                                                      undefined
-                                                        ? item.metadata
-                                                        : undefined,
-                                                  },
-                                                })
-                                              ),
-                                            }
-                                        : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: prop.contract.executions
-                          ? Array.isArray(prop.contract.executions) &&
-                            prop.contract.executions.length > 0 &&
-                            prop.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: prop.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                upsert: prop.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    update: {
-                                      id:
-                                        item.id !== undefined
-                                          ? {
-                                              set: item.id,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              set: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              set: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? {
-                                              set: item.executionSide,
-                                            }
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? {
-                                              set: item.quantity,
-                                            }
-                                          : undefined,
-                                      executionPrice:
-                                        item.executionPrice !== undefined
-                                          ? {
-                                              set: item.executionPrice,
-                                            }
-                                          : undefined,
-                                      executionValue:
-                                        item.executionValue !== undefined
-                                          ? {
-                                              set: item.executionValue,
-                                            }
-                                          : undefined,
-                                      fees:
-                                        item.fees !== undefined
-                                          ? {
-                                              set: item.fees,
-                                            }
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? {
-                                              set: item.executionTime,
-                                            }
-                                          : undefined,
-                                      underlyingPriceAtExecution:
-                                        item.underlyingPriceAtExecution !==
-                                        undefined
-                                          ? {
-                                              set: item.underlyingPriceAtExecution,
-                                            }
-                                          : undefined,
-                                      deltaAtExecution:
-                                        item.deltaAtExecution !== undefined
-                                          ? {
-                                              set: item.deltaAtExecution,
-                                            }
-                                          : undefined,
-                                      gammaAtExecution:
-                                        item.gammaAtExecution !== undefined
-                                          ? {
-                                              set: item.gammaAtExecution,
-                                            }
-                                          : undefined,
-                                      thetaAtExecution:
-                                        item.thetaAtExecution !== undefined
-                                          ? {
-                                              set: item.thetaAtExecution,
-                                            }
-                                          : undefined,
-                                      vegaAtExecution:
-                                        item.vegaAtExecution !== undefined
-                                          ? {
-                                              set: item.vegaAtExecution,
-                                            }
-                                          : undefined,
-                                      rhoAtExecution:
-                                        item.rhoAtExecution !== undefined
-                                          ? {
-                                              set: item.rhoAtExecution,
-                                            }
-                                          : undefined,
-                                      impliedVolatilityAtExecution:
-                                        item.impliedVolatilityAtExecution !==
-                                        undefined
-                                          ? {
-                                              set: item.impliedVolatilityAtExecution,
-                                            }
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? {
-                                              set: item.orderType,
-                                            }
-                                          : undefined,
-                                      limitPrice:
-                                        item.limitPrice !== undefined
-                                          ? {
-                                              set: item.limitPrice,
-                                            }
-                                          : undefined,
-                                      stopPrice:
-                                        item.stopPrice !== undefined
-                                          ? {
-                                              set: item.stopPrice,
-                                            }
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? {
-                                              set: item.timeInForce,
-                                            }
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? {
-                                              set: item.venue,
-                                            }
-                                          : undefined,
-                                      slippage:
-                                        item.slippage !== undefined
-                                          ? {
-                                              set: item.slippage,
-                                            }
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? {
-                                              set: item.notes,
-                                            }
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? {
-                                              set: item.metadata,
-                                            }
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          (Object.keys(item.position)[0] ===
-                                            'id' ||
-                                            Object.keys(item.position)[0] ===
-                                              'symbol')
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              upsert: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position.id,
-                                                        }
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .tradeId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                update: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position.id,
-                                                        }
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .status,
-                                                        }
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .openingSide,
-                                                        }
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .quantity,
-                                                        }
-                                                      : undefined,
-                                                  entryPrice:
-                                                    item.position.entryPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryPrice,
-                                                        }
-                                                      : undefined,
-                                                  entryCost:
-                                                    item.position.entryCost !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryCost,
-                                                        }
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .entryTime,
-                                                        }
-                                                      : undefined,
-                                                  exitPrice:
-                                                    item.position.exitPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitPrice,
-                                                        }
-                                                      : undefined,
-                                                  exitValue:
-                                                    item.position.exitValue !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitValue,
-                                                        }
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitTime,
-                                                        }
-                                                      : undefined,
-                                                  currentPrice:
-                                                    item.position
-                                                      .currentPrice !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentPrice,
-                                                        }
-                                                      : undefined,
-                                                  currentValue:
-                                                    item.position
-                                                      .currentValue !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentValue,
-                                                        }
-                                                      : undefined,
-                                                  unrealizedPnL:
-                                                    item.position
-                                                      .unrealizedPnL !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .unrealizedPnL,
-                                                        }
-                                                      : undefined,
-                                                  unrealizedPnLPercent:
-                                                    item.position
-                                                      .unrealizedPnLPercent !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .unrealizedPnLPercent,
-                                                        }
-                                                      : undefined,
-                                                  realizedPnL:
-                                                    item.position
-                                                      .realizedPnL !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .realizedPnL,
-                                                        }
-                                                      : undefined,
-                                                  realizedPnLPercent:
-                                                    item.position
-                                                      .realizedPnLPercent !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .realizedPnLPercent,
-                                                        }
-                                                      : undefined,
-                                                  totalFees:
-                                                    item.position.totalFees !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .totalFees,
-                                                        }
-                                                      : undefined,
-                                                  currentDelta:
-                                                    item.position
-                                                      .currentDelta !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentDelta,
-                                                        }
-                                                      : undefined,
-                                                  currentGamma:
-                                                    item.position
-                                                      .currentGamma !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentGamma,
-                                                        }
-                                                      : undefined,
-                                                  currentTheta:
-                                                    item.position
-                                                      .currentTheta !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentTheta,
-                                                        }
-                                                      : undefined,
-                                                  currentVega:
-                                                    item.position
-                                                      .currentVega !== undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentVega,
-                                                        }
-                                                      : undefined,
-                                                  currentRho:
-                                                    item.position.currentRho !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentRho,
-                                                        }
-                                                      : undefined,
-                                                  currentImpliedVolatility:
-                                                    item.position
-                                                      .currentImpliedVolatility !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .currentImpliedVolatility,
-                                                        }
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .daysHeld,
-                                                        }
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .exitReason,
-                                                        }
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .strategyType,
-                                                        }
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .tradeId,
-                                                        }
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? {
-                                                          set: item.position
-                                                            .metadata,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        symbol:
-                          prop.contract.symbol !== undefined
-                            ? prop.contract.symbol
-                            : undefined,
-                        contractSymbol:
-                          prop.contract.contractSymbol !== undefined
-                            ? prop.contract.contractSymbol
-                            : undefined,
-                        optionType:
-                          prop.contract.optionType !== undefined
-                            ? prop.contract.optionType
-                            : undefined,
-                        expirationDate:
-                          prop.contract.expirationDate !== undefined
-                            ? prop.contract.expirationDate
-                            : undefined,
-                        daysToExpiration:
-                          prop.contract.daysToExpiration !== undefined
-                            ? prop.contract.daysToExpiration
-                            : undefined,
-                        bidSize:
-                          prop.contract.bidSize !== undefined
-                            ? prop.contract.bidSize
-                            : undefined,
-                        askSize:
-                          prop.contract.askSize !== undefined
-                            ? prop.contract.askSize
-                            : undefined,
-                        volume:
-                          prop.contract.volume !== undefined
-                            ? prop.contract.volume
-                            : undefined,
-                        openInterest:
-                          prop.contract.openInterest !== undefined
-                            ? prop.contract.openInterest
-                            : undefined,
-                        inTheMoney:
-                          prop.contract.inTheMoney !== undefined
-                            ? prop.contract.inTheMoney
-                            : undefined,
-                        metadata:
-                          prop.contract.metadata !== undefined
-                            ? prop.contract.metadata
-                            : undefined,
-                        dataTimestamp:
-                          prop.contract.dataTimestamp !== undefined
-                            ? prop.contract.dataTimestamp
-                            : undefined,
-                        positions: prop.contract.positions
-                          ? Array.isArray(prop.contract.positions) &&
-                            prop.contract.positions.length > 0 &&
-                            prop.contract.positions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: prop.contract.positions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: prop.contract.positions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      status:
-                                        item.status !== undefined
-                                          ? item.status
-                                          : undefined,
-                                      openingSide:
-                                        item.openingSide !== undefined
-                                          ? item.openingSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      entryTime:
-                                        item.entryTime !== undefined
-                                          ? item.entryTime
-                                          : undefined,
-                                      exitTime:
-                                        item.exitTime !== undefined
-                                          ? item.exitTime
-                                          : undefined,
-                                      daysHeld:
-                                        item.daysHeld !== undefined
-                                          ? item.daysHeld
-                                          : undefined,
-                                      exitReason:
-                                        item.exitReason !== undefined
-                                          ? item.exitReason
-                                          : undefined,
-                                      strategyType:
-                                        item.strategyType !== undefined
-                                          ? item.strategyType
-                                          : undefined,
-                                      tradeId:
-                                        item.tradeId !== undefined
-                                          ? item.tradeId
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      executions: item.executions
-                                        ? Array.isArray(item.executions) &&
-                                          item.executions.length > 0 &&
-                                          item.executions.every(
-                                            (item: any) =>
-                                              typeof item === 'object' &&
-                                              'id' in item &&
-                                              Object.keys(item).length === 1
-                                          )
-                                          ? {
-                                              connect: item.executions.map(
-                                                (item: any) => ({
-                                                  id: item.id,
-                                                })
-                                              ),
-                                            }
-                                          : {
-                                              connectOrCreate:
-                                                item.executions.map(
-                                                  (item: any) => ({
-                                                    where: {
-                                                      id:
-                                                        item.id !== undefined
-                                                          ? item.id
-                                                          : undefined,
-                                                      positionId:
-                                                        item.positionId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.positionId,
-                                                            }
-                                                          : undefined,
-                                                      contractId:
-                                                        item.contractId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.contractId,
-                                                            }
-                                                          : undefined,
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.alpacaAccountId,
-                                                            }
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? {
-                                                              equals:
-                                                                item.brokerOrderId,
-                                                            }
-                                                          : undefined,
-                                                    },
-                                                    create: {
-                                                      alpacaAccountId:
-                                                        item.alpacaAccountId !==
-                                                        undefined
-                                                          ? item.alpacaAccountId
-                                                          : undefined,
-                                                      brokerOrderId:
-                                                        item.brokerOrderId !==
-                                                        undefined
-                                                          ? item.brokerOrderId
-                                                          : undefined,
-                                                      executionSide:
-                                                        item.executionSide !==
-                                                        undefined
-                                                          ? item.executionSide
-                                                          : undefined,
-                                                      quantity:
-                                                        item.quantity !==
-                                                        undefined
-                                                          ? item.quantity
-                                                          : undefined,
-                                                      executionTime:
-                                                        item.executionTime !==
-                                                        undefined
-                                                          ? item.executionTime
-                                                          : undefined,
-                                                      orderType:
-                                                        item.orderType !==
-                                                        undefined
-                                                          ? item.orderType
-                                                          : undefined,
-                                                      timeInForce:
-                                                        item.timeInForce !==
-                                                        undefined
-                                                          ? item.timeInForce
-                                                          : undefined,
-                                                      venue:
-                                                        item.venue !== undefined
-                                                          ? item.venue
-                                                          : undefined,
-                                                      notes:
-                                                        item.notes !== undefined
-                                                          ? item.notes
-                                                          : undefined,
-                                                      metadata:
-                                                        item.metadata !==
-                                                        undefined
-                                                          ? item.metadata
-                                                          : undefined,
-                                                    },
-                                                  })
-                                                ),
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                        executions: prop.contract.executions
-                          ? Array.isArray(prop.contract.executions) &&
-                            prop.contract.executions.length > 0 &&
-                            prop.contract.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: prop.contract.executions.map(
-                                  (item: any) => ({
-                                    id: item.id,
-                                  })
-                                ),
-                              }
-                            : {
-                                connectOrCreate: prop.contract.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      position: item.position
-                                        ? typeof item.position === 'object' &&
-                                          Object.keys(item.position).length ===
-                                            1 &&
-                                          Object.keys(item.position)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.position.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.position.id !==
-                                                    undefined
-                                                      ? item.position.id
-                                                      : undefined,
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .alpacaAccountId,
-                                                        }
-                                                      : undefined,
-                                                  contractId:
-                                                    item.position.contractId !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.position
-                                                              .contractId,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  alpacaAccountId:
-                                                    item.position
-                                                      .alpacaAccountId !==
-                                                    undefined
-                                                      ? item.position
-                                                          .alpacaAccountId
-                                                      : undefined,
-                                                  status:
-                                                    item.position.status !==
-                                                    undefined
-                                                      ? item.position.status
-                                                      : undefined,
-                                                  openingSide:
-                                                    item.position
-                                                      .openingSide !== undefined
-                                                      ? item.position
-                                                          .openingSide
-                                                      : undefined,
-                                                  quantity:
-                                                    item.position.quantity !==
-                                                    undefined
-                                                      ? item.position.quantity
-                                                      : undefined,
-                                                  entryTime:
-                                                    item.position.entryTime !==
-                                                    undefined
-                                                      ? item.position.entryTime
-                                                      : undefined,
-                                                  exitTime:
-                                                    item.position.exitTime !==
-                                                    undefined
-                                                      ? item.position.exitTime
-                                                      : undefined,
-                                                  daysHeld:
-                                                    item.position.daysHeld !==
-                                                    undefined
-                                                      ? item.position.daysHeld
-                                                      : undefined,
-                                                  exitReason:
-                                                    item.position.exitReason !==
-                                                    undefined
-                                                      ? item.position.exitReason
-                                                      : undefined,
-                                                  strategyType:
-                                                    item.position
-                                                      .strategyType !==
-                                                    undefined
-                                                      ? item.position
-                                                          .strategyType
-                                                      : undefined,
-                                                  tradeId:
-                                                    item.position.tradeId !==
-                                                    undefined
-                                                      ? item.position.tradeId
-                                                      : undefined,
-                                                  metadata:
-                                                    item.position.metadata !==
-                                                    undefined
-                                                      ? item.position.metadata
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    },
-                  }
-              : undefined,
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  underlyingPrice: prop.underlyingPrice !== undefined ? {
+            set: prop.underlyingPrice 
+           } : undefined,
+  optionPrice: prop.optionPrice !== undefined ? {
+            set: prop.optionPrice 
+           } : undefined,
+  bidPrice: prop.bidPrice !== undefined ? {
+            set: prop.bidPrice 
+           } : undefined,
+  askPrice: prop.askPrice !== undefined ? {
+            set: prop.askPrice 
+           } : undefined,
+  impliedVolatility: prop.impliedVolatility !== undefined ? {
+            set: prop.impliedVolatility 
+           } : undefined,
+  delta: prop.delta !== undefined ? {
+            set: prop.delta 
+           } : undefined,
+  gamma: prop.gamma !== undefined ? {
+            set: prop.gamma 
+           } : undefined,
+  theta: prop.theta !== undefined ? {
+            set: prop.theta 
+           } : undefined,
+  vega: prop.vega !== undefined ? {
+            set: prop.vega 
+           } : undefined,
+  rho: prop.rho !== undefined ? {
+            set: prop.rho 
+           } : undefined,
+  volume: prop.volume !== undefined ? {
+            set: prop.volume 
+           } : undefined,
+  openInterest: prop.openInterest !== undefined ? {
+            set: prop.openInterest 
+           } : undefined,
+  daysToExpiration: prop.daysToExpiration !== undefined ? {
+            set: prop.daysToExpiration 
+           } : undefined,
+  intrinsicValue: prop.intrinsicValue !== undefined ? {
+            set: prop.intrinsicValue 
+           } : undefined,
+  extrinsicValue: prop.extrinsicValue !== undefined ? {
+            set: prop.extrinsicValue 
+           } : undefined,
+  metadata: prop.metadata !== undefined ? {
+            set: prop.metadata 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  contract: prop.contract ? 
+  typeof prop.contract === 'object' && Object.keys(prop.contract).length === 1 && (Object.keys(prop.contract)[0] === 'id' || Object.keys(prop.contract)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.contract.id
+  }
+} : { upsert: {
+      where: {
+        id: prop.contract.id !== undefined ? {
+            equals: prop.contract.id
+          } : undefined,
+        symbol: prop.contract.symbol !== undefined ? {
+            equals: prop.contract.symbol
+          } : undefined,
+      },
+      update: {
+        id: prop.contract.id !== undefined ? {
+            set: prop.contract.id
+          } : undefined,
+        symbol: prop.contract.symbol !== undefined ? {
+            set: prop.contract.symbol
+          } : undefined,
+        contractSymbol: prop.contract.contractSymbol !== undefined ? {
+            set: prop.contract.contractSymbol
+          } : undefined,
+        optionType: prop.contract.optionType !== undefined ? {
+            set: prop.contract.optionType
+          } : undefined,
+        strikePrice: prop.contract.strikePrice !== undefined ? {
+            set: prop.contract.strikePrice
+          } : undefined,
+        expirationDate: prop.contract.expirationDate !== undefined ? {
+            set: prop.contract.expirationDate
+          } : undefined,
+        daysToExpiration: prop.contract.daysToExpiration !== undefined ? {
+            set: prop.contract.daysToExpiration
+          } : undefined,
+        lastPrice: prop.contract.lastPrice !== undefined ? {
+            set: prop.contract.lastPrice
+          } : undefined,
+        bidPrice: prop.contract.bidPrice !== undefined ? {
+            set: prop.contract.bidPrice
+          } : undefined,
+        askPrice: prop.contract.askPrice !== undefined ? {
+            set: prop.contract.askPrice
+          } : undefined,
+        midPrice: prop.contract.midPrice !== undefined ? {
+            set: prop.contract.midPrice
+          } : undefined,
+        bidSize: prop.contract.bidSize !== undefined ? {
+            set: prop.contract.bidSize
+          } : undefined,
+        askSize: prop.contract.askSize !== undefined ? {
+            set: prop.contract.askSize
+          } : undefined,
+        volume: prop.contract.volume !== undefined ? {
+            set: prop.contract.volume
+          } : undefined,
+        openInterest: prop.contract.openInterest !== undefined ? {
+            set: prop.contract.openInterest
+          } : undefined,
+        impliedVolatility: prop.contract.impliedVolatility !== undefined ? {
+            set: prop.contract.impliedVolatility
+          } : undefined,
+        delta: prop.contract.delta !== undefined ? {
+            set: prop.contract.delta
+          } : undefined,
+        gamma: prop.contract.gamma !== undefined ? {
+            set: prop.contract.gamma
+          } : undefined,
+        theta: prop.contract.theta !== undefined ? {
+            set: prop.contract.theta
+          } : undefined,
+        vega: prop.contract.vega !== undefined ? {
+            set: prop.contract.vega
+          } : undefined,
+        rho: prop.contract.rho !== undefined ? {
+            set: prop.contract.rho
+          } : undefined,
+        inTheMoney: prop.contract.inTheMoney !== undefined ? {
+            set: prop.contract.inTheMoney
+          } : undefined,
+        intrinsicValue: prop.contract.intrinsicValue !== undefined ? {
+            set: prop.contract.intrinsicValue
+          } : undefined,
+        extrinsicValue: prop.contract.extrinsicValue !== undefined ? {
+            set: prop.contract.extrinsicValue
+          } : undefined,
+        theoreticalPrice: prop.contract.theoreticalPrice !== undefined ? {
+            set: prop.contract.theoreticalPrice
+          } : undefined,
+        underlyingPrice: prop.contract.underlyingPrice !== undefined ? {
+            set: prop.contract.underlyingPrice
+          } : undefined,
+        metadata: prop.contract.metadata !== undefined ? {
+            set: prop.contract.metadata
+          } : undefined,
+        dataTimestamp: prop.contract.dataTimestamp !== undefined ? {
+            set: prop.contract.dataTimestamp
+          } : undefined,
+    positions: prop.contract.positions ? 
+    Array.isArray(prop.contract.positions) && prop.contract.positions.length > 0 && prop.contract.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.contract.positions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              equals: item.tradeId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          openingSide: item.openingSide !== undefined ? {
+              set: item.openingSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          entryPrice: item.entryPrice !== undefined ? {
+              set: item.entryPrice
+            } : undefined,
+          entryCost: item.entryCost !== undefined ? {
+              set: item.entryCost
+            } : undefined,
+          entryTime: item.entryTime !== undefined ? {
+              set: item.entryTime
+            } : undefined,
+          exitPrice: item.exitPrice !== undefined ? {
+              set: item.exitPrice
+            } : undefined,
+          exitValue: item.exitValue !== undefined ? {
+              set: item.exitValue
+            } : undefined,
+          exitTime: item.exitTime !== undefined ? {
+              set: item.exitTime
+            } : undefined,
+          currentPrice: item.currentPrice !== undefined ? {
+              set: item.currentPrice
+            } : undefined,
+          currentValue: item.currentValue !== undefined ? {
+              set: item.currentValue
+            } : undefined,
+          unrealizedPnL: item.unrealizedPnL !== undefined ? {
+              set: item.unrealizedPnL
+            } : undefined,
+          unrealizedPnLPercent: item.unrealizedPnLPercent !== undefined ? {
+              set: item.unrealizedPnLPercent
+            } : undefined,
+          realizedPnL: item.realizedPnL !== undefined ? {
+              set: item.realizedPnL
+            } : undefined,
+          realizedPnLPercent: item.realizedPnLPercent !== undefined ? {
+              set: item.realizedPnLPercent
+            } : undefined,
+          totalFees: item.totalFees !== undefined ? {
+              set: item.totalFees
+            } : undefined,
+          currentDelta: item.currentDelta !== undefined ? {
+              set: item.currentDelta
+            } : undefined,
+          currentGamma: item.currentGamma !== undefined ? {
+              set: item.currentGamma
+            } : undefined,
+          currentTheta: item.currentTheta !== undefined ? {
+              set: item.currentTheta
+            } : undefined,
+          currentVega: item.currentVega !== undefined ? {
+              set: item.currentVega
+            } : undefined,
+          currentRho: item.currentRho !== undefined ? {
+              set: item.currentRho
+            } : undefined,
+          currentImpliedVolatility: item.currentImpliedVolatility !== undefined ? {
+              set: item.currentImpliedVolatility
+            } : undefined,
+          daysHeld: item.daysHeld !== undefined ? {
+              set: item.daysHeld
+            } : undefined,
+          exitReason: item.exitReason !== undefined ? {
+              set: item.exitReason
+            } : undefined,
+          strategyType: item.strategyType !== undefined ? {
+              set: item.strategyType
+            } : undefined,
+          tradeId: item.tradeId !== undefined ? {
+              set: item.tradeId
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.executions.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId
+              } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                set: item.alpacaAccountId
+              } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                set: item.brokerOrderId
+              } : undefined,
+            executionSide: item.executionSide !== undefined ? {
+                set: item.executionSide
+              } : undefined,
+            quantity: item.quantity !== undefined ? {
+                set: item.quantity
+              } : undefined,
+            executionPrice: item.executionPrice !== undefined ? {
+                set: item.executionPrice
+              } : undefined,
+            executionValue: item.executionValue !== undefined ? {
+                set: item.executionValue
+              } : undefined,
+            fees: item.fees !== undefined ? {
+                set: item.fees
+              } : undefined,
+            executionTime: item.executionTime !== undefined ? {
+                set: item.executionTime
+              } : undefined,
+            underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+                set: item.underlyingPriceAtExecution
+              } : undefined,
+            deltaAtExecution: item.deltaAtExecution !== undefined ? {
+                set: item.deltaAtExecution
+              } : undefined,
+            gammaAtExecution: item.gammaAtExecution !== undefined ? {
+                set: item.gammaAtExecution
+              } : undefined,
+            thetaAtExecution: item.thetaAtExecution !== undefined ? {
+                set: item.thetaAtExecution
+              } : undefined,
+            vegaAtExecution: item.vegaAtExecution !== undefined ? {
+                set: item.vegaAtExecution
+              } : undefined,
+            rhoAtExecution: item.rhoAtExecution !== undefined ? {
+                set: item.rhoAtExecution
+              } : undefined,
+            impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+                set: item.impliedVolatilityAtExecution
+              } : undefined,
+            orderType: item.orderType !== undefined ? {
+                set: item.orderType
+              } : undefined,
+            limitPrice: item.limitPrice !== undefined ? {
+                set: item.limitPrice
+              } : undefined,
+            stopPrice: item.stopPrice !== undefined ? {
+                set: item.stopPrice
+              } : undefined,
+            timeInForce: item.timeInForce !== undefined ? {
+                set: item.timeInForce
+              } : undefined,
+            venue: item.venue !== undefined ? {
+                set: item.venue
+              } : undefined,
+            slippage: item.slippage !== undefined ? {
+                set: item.slippage
+              } : undefined,
+            notes: item.notes !== undefined ? {
+                set: item.notes
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: prop.contract.executions ? 
+    Array.isArray(prop.contract.executions) && prop.contract.executions.length > 0 && prop.contract.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.contract.executions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              set: item.brokerOrderId
+            } : undefined,
+          executionSide: item.executionSide !== undefined ? {
+              set: item.executionSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          executionPrice: item.executionPrice !== undefined ? {
+              set: item.executionPrice
+            } : undefined,
+          executionValue: item.executionValue !== undefined ? {
+              set: item.executionValue
+            } : undefined,
+          fees: item.fees !== undefined ? {
+              set: item.fees
+            } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime
+            } : undefined,
+          underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+              set: item.underlyingPriceAtExecution
+            } : undefined,
+          deltaAtExecution: item.deltaAtExecution !== undefined ? {
+              set: item.deltaAtExecution
+            } : undefined,
+          gammaAtExecution: item.gammaAtExecution !== undefined ? {
+              set: item.gammaAtExecution
+            } : undefined,
+          thetaAtExecution: item.thetaAtExecution !== undefined ? {
+              set: item.thetaAtExecution
+            } : undefined,
+          vegaAtExecution: item.vegaAtExecution !== undefined ? {
+              set: item.vegaAtExecution
+            } : undefined,
+          rhoAtExecution: item.rhoAtExecution !== undefined ? {
+              set: item.rhoAtExecution
+            } : undefined,
+          impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+              set: item.impliedVolatilityAtExecution
+            } : undefined,
+          orderType: item.orderType !== undefined ? {
+              set: item.orderType
+            } : undefined,
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice
+            } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice
+            } : undefined,
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce
+            } : undefined,
+          venue: item.venue !== undefined ? {
+              set: item.venue
+            } : undefined,
+          slippage: item.slippage !== undefined ? {
+              set: item.slippage
+            } : undefined,
+          notes: item.notes !== undefined ? {
+              set: item.notes
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
+? {
+      connect: {
+        id: item.position.id
+      }
+} : { upsert: {
+          where: {
+            id: item.position.id !== undefined ? {
+                equals: item.position.id
+              } : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId
+              } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId
+              } : undefined,
+            tradeId: item.position.tradeId !== undefined ? {
+                equals: item.position.tradeId
+              } : undefined,
+          },
+          update: {
+            id: item.position.id !== undefined ? {
+                set: item.position.id
+              } : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                set: item.position.alpacaAccountId
+              } : undefined,
+            status: item.position.status !== undefined ? {
+                set: item.position.status
+              } : undefined,
+            openingSide: item.position.openingSide !== undefined ? {
+                set: item.position.openingSide
+              } : undefined,
+            quantity: item.position.quantity !== undefined ? {
+                set: item.position.quantity
+              } : undefined,
+            entryPrice: item.position.entryPrice !== undefined ? {
+                set: item.position.entryPrice
+              } : undefined,
+            entryCost: item.position.entryCost !== undefined ? {
+                set: item.position.entryCost
+              } : undefined,
+            entryTime: item.position.entryTime !== undefined ? {
+                set: item.position.entryTime
+              } : undefined,
+            exitPrice: item.position.exitPrice !== undefined ? {
+                set: item.position.exitPrice
+              } : undefined,
+            exitValue: item.position.exitValue !== undefined ? {
+                set: item.position.exitValue
+              } : undefined,
+            exitTime: item.position.exitTime !== undefined ? {
+                set: item.position.exitTime
+              } : undefined,
+            currentPrice: item.position.currentPrice !== undefined ? {
+                set: item.position.currentPrice
+              } : undefined,
+            currentValue: item.position.currentValue !== undefined ? {
+                set: item.position.currentValue
+              } : undefined,
+            unrealizedPnL: item.position.unrealizedPnL !== undefined ? {
+                set: item.position.unrealizedPnL
+              } : undefined,
+            unrealizedPnLPercent: item.position.unrealizedPnLPercent !== undefined ? {
+                set: item.position.unrealizedPnLPercent
+              } : undefined,
+            realizedPnL: item.position.realizedPnL !== undefined ? {
+                set: item.position.realizedPnL
+              } : undefined,
+            realizedPnLPercent: item.position.realizedPnLPercent !== undefined ? {
+                set: item.position.realizedPnLPercent
+              } : undefined,
+            totalFees: item.position.totalFees !== undefined ? {
+                set: item.position.totalFees
+              } : undefined,
+            currentDelta: item.position.currentDelta !== undefined ? {
+                set: item.position.currentDelta
+              } : undefined,
+            currentGamma: item.position.currentGamma !== undefined ? {
+                set: item.position.currentGamma
+              } : undefined,
+            currentTheta: item.position.currentTheta !== undefined ? {
+                set: item.position.currentTheta
+              } : undefined,
+            currentVega: item.position.currentVega !== undefined ? {
+                set: item.position.currentVega
+              } : undefined,
+            currentRho: item.position.currentRho !== undefined ? {
+                set: item.position.currentRho
+              } : undefined,
+            currentImpliedVolatility: item.position.currentImpliedVolatility !== undefined ? {
+                set: item.position.currentImpliedVolatility
+              } : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? {
+                set: item.position.daysHeld
+              } : undefined,
+            exitReason: item.position.exitReason !== undefined ? {
+                set: item.position.exitReason
+              } : undefined,
+            strategyType: item.position.strategyType !== undefined ? {
+                set: item.position.strategyType
+              } : undefined,
+            tradeId: item.position.tradeId !== undefined ? {
+                set: item.position.tradeId
+              } : undefined,
+            metadata: item.position.metadata !== undefined ? {
+                set: item.position.metadata
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        symbol: prop.contract.symbol !== undefined ? prop.contract.symbol : undefined,
+        contractSymbol: prop.contract.contractSymbol !== undefined ? prop.contract.contractSymbol : undefined,
+        optionType: prop.contract.optionType !== undefined ? prop.contract.optionType : undefined,
+        expirationDate: prop.contract.expirationDate !== undefined ? prop.contract.expirationDate : undefined,
+        daysToExpiration: prop.contract.daysToExpiration !== undefined ? prop.contract.daysToExpiration : undefined,
+        bidSize: prop.contract.bidSize !== undefined ? prop.contract.bidSize : undefined,
+        askSize: prop.contract.askSize !== undefined ? prop.contract.askSize : undefined,
+        volume: prop.contract.volume !== undefined ? prop.contract.volume : undefined,
+        openInterest: prop.contract.openInterest !== undefined ? prop.contract.openInterest : undefined,
+        inTheMoney: prop.contract.inTheMoney !== undefined ? prop.contract.inTheMoney : undefined,
+        metadata: prop.contract.metadata !== undefined ? prop.contract.metadata : undefined,
+        dataTimestamp: prop.contract.dataTimestamp !== undefined ? prop.contract.dataTimestamp : undefined,
+    positions: prop.contract.positions ? 
+      Array.isArray(prop.contract.positions) && prop.contract.positions.length > 0 &&  prop.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.contract.positions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.contract.positions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+          exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+          daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+          exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+          strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+          tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      executions: item.executions ? 
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+            contractId: item.contractId !== undefined ? {
+                equals: item.contractId 
+               } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? {
+                equals: item.brokerOrderId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+            executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+            quantity: item.quantity !== undefined ? item.quantity : undefined,
+            executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+            orderType: item.orderType !== undefined ? item.orderType : undefined,
+            timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+            venue: item.venue !== undefined ? item.venue : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
+    executions: prop.contract.executions ? 
+      Array.isArray(prop.contract.executions) && prop.contract.executions.length > 0 &&  prop.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.contract.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.contract.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      position: item.position ? 
+        typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+            id: item.position.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.id !== undefined ? item.position.id : undefined,
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+                equals: item.position.alpacaAccountId 
+               } : undefined,
+            contractId: item.position.contractId !== undefined ? {
+                equals: item.position.contractId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+            status: item.position.status !== undefined ? item.position.status : undefined,
+            openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+            quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+            entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+            exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+            daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+            exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+            strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+            tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+
           },
         }));
 
@@ -7993,16 +3456,11 @@ export const OptionsGreeksHistory = {
           mutation: UPDATE_MANY_OPTIONSGREEKSHISTORY,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateManyOptionsGreeksHistory
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyOptionsGreeksHistory) {
           return response.data.updateManyOptionsGreeksHistory;
         } else {
           return null as any;
@@ -8016,19 +3474,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -8044,10 +3501,7 @@ export const OptionsGreeksHistory = {
    * @param globalClient - Apollo Client instance.
    * @returns The deleted OptionsGreeksHistory or null.
    */
-  async delete(
-    props: OptionsGreeksHistoryType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsGreeksHistoryType> {
+  async delete(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsGreeksHistoryType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -8058,25 +3512,24 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const DELETE_ONE_OPTIONSGREEKSHISTORY = gql`
-          mutation deleteOneOptionsGreeksHistory(
-            $where: OptionsGreeksHistoryWhereUniqueInput!
-          ) {
+          mutation deleteOneOptionsGreeksHistory($where: OptionsGreeksHistoryWhereUniqueInput!) {
             deleteOneOptionsGreeksHistory(where: $where) {
               id
             }
-          }
-        `;
+          }`;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          },
+          }
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -8085,16 +3538,11 @@ export const OptionsGreeksHistory = {
           mutation: DELETE_ONE_OPTIONSGREEKSHISTORY,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.deleteOneOptionsGreeksHistory
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneOptionsGreeksHistory) {
           return response.data.deleteOneOptionsGreeksHistory;
         } else {
           return null as any;
@@ -8108,19 +3556,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -8137,11 +3584,7 @@ export const OptionsGreeksHistory = {
    * @param whereInput - Optional custom where input.
    * @returns The retrieved OptionsGreeksHistory or null.
    */
-  async get(
-    props: OptionsGreeksHistoryType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<OptionsGreeksHistoryType | null> {
+  async get(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OptionsGreeksHistoryType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -8152,7 +3595,9 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -8165,17 +3610,12 @@ export const OptionsGreeksHistory = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id: props.id !== undefined ? props.id : undefined,
-                contractId:
-                  props.contractId !== undefined
-                    ? {
-                        equals: props.contractId,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
+  contractId: props.contractId !== undefined ? {
+    equals: props.contractId 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -8185,8 +3625,7 @@ export const OptionsGreeksHistory = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getOptionsGreeksHistory ?? null;
       } catch (error: any) {
         lastError = error;
@@ -8202,19 +3641,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -8229,9 +3667,7 @@ export const OptionsGreeksHistory = {
    * @param globalClient - Apollo Client instance.
    * @returns An array of OptionsGreeksHistory records or null.
    */
-  async getAll(
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsGreeksHistoryType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsGreeksHistoryType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -8242,7 +3678,9 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -8259,8 +3697,7 @@ export const OptionsGreeksHistory = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.optionsGreeksHistories ?? null;
       } catch (error: any) {
         lastError = error;
@@ -8276,19 +3713,18 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -8305,11 +3741,7 @@ export const OptionsGreeksHistory = {
    * @param whereInput - Optional custom where input.
    * @returns An array of found OptionsGreeksHistory records or null.
    */
-  async findMany(
-    props: OptionsGreeksHistoryType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<OptionsGreeksHistoryType[] | null> {
+  async findMany(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OptionsGreeksHistoryType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -8320,7 +3752,9 @@ export const OptionsGreeksHistory = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -8333,22 +3767,14 @@ export const OptionsGreeksHistory = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id:
-                  props.id !== undefined
-                    ? {
-                        equals: props.id,
-                      }
-                    : undefined,
-                contractId:
-                  props.contractId !== undefined
-                    ? {
-                        equals: props.contractId,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  contractId: props.contractId !== undefined ? {
+    equals: props.contractId 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -8359,8 +3785,7 @@ export const OptionsGreeksHistory = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.optionsgreekshistories) {
           return response.data.optionsGreeksHistories;
         } else {
@@ -8380,24 +3805,23 @@ export const OptionsGreeksHistory = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  },
+  }
 };

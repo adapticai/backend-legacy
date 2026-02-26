@@ -1,18 +1,15 @@
+
+  
 import { OptionsContract as OptionsContractType } from './generated/typegraphql-prisma/models/OptionsContract';
-import {
-  client as importedClient,
-  ApolloClientType,
-  NormalizedCacheObject,
-  getApolloModules,
-} from './client';
+import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
+  
+  /**
+   * CRUD operations for the OptionsContract model.
+   */
 
-/**
- * CRUD operations for the OptionsContract model.
- */
-
-const selectionSet = `
+  const selectionSet = `
     
   id
   symbol
@@ -203,41 +200,41 @@ id
 
   `;
 
-export const OptionsContract = {
-  /**
-   * Create a new OptionsContract record.
-   * @param props - Properties for the new record.
-   * @param client - Apollo Client instance.
-   * @returns The created OptionsContract or null.
-   */
+  export const OptionsContract = {
 
-  /**
-   * Create a new OptionsContract record.
-   * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Properties for the new record.
-   * @param globalClient - Apollo Client instance.
-   * @returns The created OptionsContract or null.
-   */
-  async create(
-    props: OptionsContractType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsContractType> {
-    // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
-    let retryCount = 0;
-    let lastError: any = null;
+    /**
+     * Create a new OptionsContract record.
+     * @param props - Properties for the new record.
+     * @param client - Apollo Client instance.
+     * @returns The created OptionsContract or null.
+     */
 
-    // Retry loop to handle potential database connection issues
-    while (retryCount < MAX_RETRIES) {
-      try {
-        const [modules, client] = await Promise.all([
-          getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
-        ]);
+    /**
+     * Create a new OptionsContract record.
+     * Enhanced with connection resilience against Prisma connection errors.
+     * @param props - Properties for the new record.
+     * @param globalClient - Apollo Client instance.
+     * @returns The created OptionsContract or null.
+     */
+    async create(props: OptionsContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsContractType> {
+      // Maximum number of retries for database connection issues
+      const MAX_RETRIES = 3;
+      let retryCount = 0;
+      let lastError: any = null;
 
-        const { gql, ApolloError } = modules;
+      // Retry loop to handle potential database connection issues
+      while (retryCount < MAX_RETRIES) {
+        try {
+          const [modules, client] = await Promise.all([
+            getApolloModules(),
+            globalClient
+              ? Promise.resolve(globalClient)
+              : importedClient
+          ]);
 
-        const CREATE_ONE_OPTIONSCONTRACT = gql`
+          const { gql, ApolloError } = modules;
+
+          const CREATE_ONE_OPTIONSCONTRACT = gql`
               mutation createOneOptionsContract($data: OptionsContractCreateInput!) {
                 createOneOptionsContract(data: $data) {
                   ${selectionSet}
@@ -245,683 +242,281 @@ export const OptionsContract = {
               }
            `;
 
-        const variables = {
-          data: {
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
-            contractSymbol:
-              props.contractSymbol !== undefined
-                ? props.contractSymbol
-                : undefined,
-            optionType:
-              props.optionType !== undefined ? props.optionType : undefined,
-            expirationDate:
-              props.expirationDate !== undefined
-                ? props.expirationDate
-                : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? props.daysToExpiration
-                : undefined,
-            bidSize: props.bidSize !== undefined ? props.bidSize : undefined,
-            askSize: props.askSize !== undefined ? props.askSize : undefined,
-            volume: props.volume !== undefined ? props.volume : undefined,
-            openInterest:
-              props.openInterest !== undefined ? props.openInterest : undefined,
-            inTheMoney:
-              props.inTheMoney !== undefined ? props.inTheMoney : undefined,
-            metadata: props.metadata !== undefined ? props.metadata : undefined,
-            dataTimestamp:
-              props.dataTimestamp !== undefined
-                ? props.dataTimestamp
-                : undefined,
-            positions: props.positions
-              ? Array.isArray(props.positions) &&
-                props.positions.length > 0 &&
-                props.positions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    'id' in item &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.positions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    connectOrCreate: props.positions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        status:
-                          item.status !== undefined ? item.status : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? item.openingSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? item.entryTime
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? item.exitTime
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? item.daysHeld
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? item.exitReason
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? item.strategyType
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined ? item.tradeId : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                connectOrCreate: item.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      contract: item.contract
-                                        ? typeof item.contract === 'object' &&
-                                          Object.keys(item.contract).length ===
-                                            1 &&
-                                          Object.keys(item.contract)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.contract.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.contract.id !==
-                                                    undefined
-                                                      ? item.contract.id
-                                                      : undefined,
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.contract
-                                                              .symbol,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? item.contract.symbol
-                                                      : undefined,
-                                                  contractSymbol:
-                                                    item.contract
-                                                      .contractSymbol !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .contractSymbol
-                                                      : undefined,
-                                                  optionType:
-                                                    item.contract.optionType !==
-                                                    undefined
-                                                      ? item.contract.optionType
-                                                      : undefined,
-                                                  expirationDate:
-                                                    item.contract
-                                                      .expirationDate !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .expirationDate
-                                                      : undefined,
-                                                  daysToExpiration:
-                                                    item.contract
-                                                      .daysToExpiration !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .daysToExpiration
-                                                      : undefined,
-                                                  bidSize:
-                                                    item.contract.bidSize !==
-                                                    undefined
-                                                      ? item.contract.bidSize
-                                                      : undefined,
-                                                  askSize:
-                                                    item.contract.askSize !==
-                                                    undefined
-                                                      ? item.contract.askSize
-                                                      : undefined,
-                                                  volume:
-                                                    item.contract.volume !==
-                                                    undefined
-                                                      ? item.contract.volume
-                                                      : undefined,
-                                                  openInterest:
-                                                    item.contract
-                                                      .openInterest !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .openInterest
-                                                      : undefined,
-                                                  inTheMoney:
-                                                    item.contract.inTheMoney !==
-                                                    undefined
-                                                      ? item.contract.inTheMoney
-                                                      : undefined,
-                                                  metadata:
-                                                    item.contract.metadata !==
-                                                    undefined
-                                                      ? item.contract.metadata
-                                                      : undefined,
-                                                  dataTimestamp:
-                                                    item.contract
-                                                      .dataTimestamp !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .dataTimestamp
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            greeksHistory: props.greeksHistory
-              ? Array.isArray(props.greeksHistory) &&
-                props.greeksHistory.length > 0 &&
-                props.greeksHistory.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    'id' in item &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.greeksHistory.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    connectOrCreate: props.greeksHistory.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? item.timestamp
-                            : undefined,
-                        volume:
-                          item.volume !== undefined ? item.volume : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? item.openInterest
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? item.daysToExpiration
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            executions: props.executions
-              ? Array.isArray(props.executions) &&
-                props.executions.length > 0 &&
-                props.executions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    'id' in item &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.executions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    connectOrCreate: props.executions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        positionId:
-                          item.positionId !== undefined
-                            ? {
-                                equals: item.positionId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                equals: item.brokerOrderId,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? item.brokerOrderId
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? item.executionSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? item.executionTime
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? item.orderType
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? item.timeInForce
-                            : undefined,
-                        venue:
-                          item.venue !== undefined ? item.venue : undefined,
-                        notes:
-                          item.notes !== undefined ? item.notes : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            Object.keys(item.position)[0] === 'id'
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                connectOrCreate: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? item.position.id
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
+          const variables = {
+            data: {
+                symbol: props.symbol !== undefined ? props.symbol : undefined,
+  contractSymbol: props.contractSymbol !== undefined ? props.contractSymbol : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? props.daysToExpiration : undefined,
+  bidSize: props.bidSize !== undefined ? props.bidSize : undefined,
+  askSize: props.askSize !== undefined ? props.askSize : undefined,
+  volume: props.volume !== undefined ? props.volume : undefined,
+  openInterest: props.openInterest !== undefined ? props.openInterest : undefined,
+  inTheMoney: props.inTheMoney !== undefined ? props.inTheMoney : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  dataTimestamp: props.dataTimestamp !== undefined ? props.dataTimestamp : undefined,
+  positions: props.positions ? 
+    Array.isArray(props.positions) && props.positions.length > 0 &&  props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.positions.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.positions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
+           } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+        exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+        daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+        exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+        strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+        tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
           },
-        };
-
-        const filteredVariables = removeUndefinedProps(variables);
-
-        const response = await client.mutate({
-          mutation: CREATE_ONE_OPTIONSCONTRACT,
-          variables: filteredVariables,
-          // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
-        });
-
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createOneOptionsContract
-        ) {
-          return response.data.createOneOptionsContract;
-        } else {
-          return null as any;
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
         }
-      } catch (error: any) {
-        lastError = error;
-
-        // Check if this is a database connection error that we should retry
-        const isConnectionError =
-          error.message?.includes('Server has closed the connection') ||
-          error.message?.includes('Cannot reach database server') ||
-          error.message?.includes('Connection timed out') ||
-          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
-
-        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-          retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
-          continue;
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  greeksHistory: props.greeksHistory ? 
+    Array.isArray(props.greeksHistory) && props.greeksHistory.length > 0 &&  props.greeksHistory.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.greeksHistory.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.greeksHistory.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
+           } : undefined,
+      },
+      create: {
+        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+        volume: item.volume !== undefined ? item.volume : undefined,
+        openInterest: item.openInterest !== undefined ? item.openInterest : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? item.daysToExpiration : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  executions: props.executions ? 
+    Array.isArray(props.executions) && props.executions.length > 0 &&  props.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.executions.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.executions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        positionId: item.positionId !== undefined ? {
+            equals: item.positionId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
+           } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId 
+           } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            equals: item.brokerOrderId 
+           } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+        executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+        orderType: item.orderType !== undefined ? item.orderType : undefined,
+        timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+        venue: item.venue !== undefined ? item.venue : undefined,
+        notes: item.notes !== undefined ? item.notes : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+          id: item.position.id
+          }
         }
-
-        // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
-        throw error;
+    : { connectOrCreate: {
+        where: {
+          id: item.position.id !== undefined ? item.position.id : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId 
+             } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
       }
-    }
+    } : undefined,
+      },
+    }))
+  } : undefined,
 
-    // If we exhausted retries, throw the last error
-    throw lastError;
-  },
+            },
+          };
+
+          const filteredVariables = removeUndefinedProps(variables);
+
+          const response = await client.mutate({
+            mutation: CREATE_ONE_OPTIONSCONTRACT,
+            variables: filteredVariables,
+            // Don't cache mutations, but ensure we're using the freshest context
+            fetchPolicy: 'no-cache'
+          });
+
+          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+          if (response && response.data && response.data.createOneOptionsContract) {
+            return response.data.createOneOptionsContract;
+          } else {
+            return null as any;
+          }
+        } catch (error: any) {
+          lastError = error;
+
+          // Check if this is a database connection error that we should retry
+          const isConnectionError =
+            error.message?.includes('Server has closed the connection') ||
+            error.message?.includes('Cannot reach database server') ||
+            error.message?.includes('Connection timed out') ||
+            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+
+          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+            retryCount++;
+            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
+            logger.warn("Database connection error, retrying...");
+            await new Promise(resolve => setTimeout(resolve, delay));
+            continue;
+          }
+
+          // Log the error and rethrow
+          logger.error("Database error occurred", { error: String(error) });
+          throw error;
+        }
+      }
+
+      // If we exhausted retries, throw the last error
+      throw lastError;
+    },
 
   /**
    * Create multiple OptionsContract records.
@@ -930,10 +525,7 @@ export const OptionsContract = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(
-    props: OptionsContractType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async createMany(props: OptionsContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -944,49 +536,35 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_OPTIONSCONTRACT = gql`
-          mutation createManyOptionsContract(
-            $data: [OptionsContractCreateManyInput!]!
-          ) {
+          mutation createManyOptionsContract($data: [OptionsContractCreateManyInput!]!) {
             createManyOptionsContract(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
         const variables = {
-          data: props.map((prop) => ({
-            symbol: prop.symbol !== undefined ? prop.symbol : undefined,
-            contractSymbol:
-              prop.contractSymbol !== undefined
-                ? prop.contractSymbol
-                : undefined,
-            optionType:
-              prop.optionType !== undefined ? prop.optionType : undefined,
-            expirationDate:
-              prop.expirationDate !== undefined
-                ? prop.expirationDate
-                : undefined,
-            daysToExpiration:
-              prop.daysToExpiration !== undefined
-                ? prop.daysToExpiration
-                : undefined,
-            bidSize: prop.bidSize !== undefined ? prop.bidSize : undefined,
-            askSize: prop.askSize !== undefined ? prop.askSize : undefined,
-            volume: prop.volume !== undefined ? prop.volume : undefined,
-            openInterest:
-              prop.openInterest !== undefined ? prop.openInterest : undefined,
-            inTheMoney:
-              prop.inTheMoney !== undefined ? prop.inTheMoney : undefined,
-            metadata: prop.metadata !== undefined ? prop.metadata : undefined,
-            dataTimestamp:
-              prop.dataTimestamp !== undefined ? prop.dataTimestamp : undefined,
-          })),
+          data: props.map(prop => ({
+      symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  contractSymbol: prop.contractSymbol !== undefined ? prop.contractSymbol : undefined,
+  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
+  expirationDate: prop.expirationDate !== undefined ? prop.expirationDate : undefined,
+  daysToExpiration: prop.daysToExpiration !== undefined ? prop.daysToExpiration : undefined,
+  bidSize: prop.bidSize !== undefined ? prop.bidSize : undefined,
+  askSize: prop.askSize !== undefined ? prop.askSize : undefined,
+  volume: prop.volume !== undefined ? prop.volume : undefined,
+  openInterest: prop.openInterest !== undefined ? prop.openInterest : undefined,
+  inTheMoney: prop.inTheMoney !== undefined ? prop.inTheMoney : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
+  dataTimestamp: prop.dataTimestamp !== undefined ? prop.dataTimestamp : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -995,16 +573,11 @@ export const OptionsContract = {
           mutation: CREATE_MANY_OPTIONSCONTRACT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.createManyOptionsContract
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createManyOptionsContract) {
           return response.data.createManyOptionsContract;
         } else {
           return null as any;
@@ -1018,19 +591,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -1046,10 +618,7 @@ export const OptionsContract = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated OptionsContract or null.
    */
-  async update(
-    props: OptionsContractType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsContractType> {
+  async update(props: OptionsContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsContractType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1060,7 +629,9 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1075,2646 +646,1061 @@ export const OptionsContract = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    equals: props.symbol,
-                  }
-                : undefined,
-          },
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           data: {
-            id:
-              props.id !== undefined
-                ? {
-                    set: props.id,
-                  }
-                : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    set: props.symbol,
-                  }
-                : undefined,
-            contractSymbol:
-              props.contractSymbol !== undefined
-                ? {
-                    set: props.contractSymbol,
-                  }
-                : undefined,
-            optionType:
-              props.optionType !== undefined
-                ? {
-                    set: props.optionType,
-                  }
-                : undefined,
-            strikePrice:
-              props.strikePrice !== undefined
-                ? {
-                    set: props.strikePrice,
-                  }
-                : undefined,
-            expirationDate:
-              props.expirationDate !== undefined
-                ? {
-                    set: props.expirationDate,
-                  }
-                : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? {
-                    set: props.daysToExpiration,
-                  }
-                : undefined,
-            lastPrice:
-              props.lastPrice !== undefined
-                ? {
-                    set: props.lastPrice,
-                  }
-                : undefined,
-            bidPrice:
-              props.bidPrice !== undefined
-                ? {
-                    set: props.bidPrice,
-                  }
-                : undefined,
-            askPrice:
-              props.askPrice !== undefined
-                ? {
-                    set: props.askPrice,
-                  }
-                : undefined,
-            midPrice:
-              props.midPrice !== undefined
-                ? {
-                    set: props.midPrice,
-                  }
-                : undefined,
-            bidSize:
-              props.bidSize !== undefined
-                ? {
-                    set: props.bidSize,
-                  }
-                : undefined,
-            askSize:
-              props.askSize !== undefined
-                ? {
-                    set: props.askSize,
-                  }
-                : undefined,
-            volume:
-              props.volume !== undefined
-                ? {
-                    set: props.volume,
-                  }
-                : undefined,
-            openInterest:
-              props.openInterest !== undefined
-                ? {
-                    set: props.openInterest,
-                  }
-                : undefined,
-            impliedVolatility:
-              props.impliedVolatility !== undefined
-                ? {
-                    set: props.impliedVolatility,
-                  }
-                : undefined,
-            delta:
-              props.delta !== undefined
-                ? {
-                    set: props.delta,
-                  }
-                : undefined,
-            gamma:
-              props.gamma !== undefined
-                ? {
-                    set: props.gamma,
-                  }
-                : undefined,
-            theta:
-              props.theta !== undefined
-                ? {
-                    set: props.theta,
-                  }
-                : undefined,
-            vega:
-              props.vega !== undefined
-                ? {
-                    set: props.vega,
-                  }
-                : undefined,
-            rho:
-              props.rho !== undefined
-                ? {
-                    set: props.rho,
-                  }
-                : undefined,
-            inTheMoney:
-              props.inTheMoney !== undefined
-                ? {
-                    set: props.inTheMoney,
-                  }
-                : undefined,
-            intrinsicValue:
-              props.intrinsicValue !== undefined
-                ? {
-                    set: props.intrinsicValue,
-                  }
-                : undefined,
-            extrinsicValue:
-              props.extrinsicValue !== undefined
-                ? {
-                    set: props.extrinsicValue,
-                  }
-                : undefined,
-            theoreticalPrice:
-              props.theoreticalPrice !== undefined
-                ? {
-                    set: props.theoreticalPrice,
-                  }
-                : undefined,
-            underlyingPrice:
-              props.underlyingPrice !== undefined
-                ? {
-                    set: props.underlyingPrice,
-                  }
-                : undefined,
-            metadata:
-              props.metadata !== undefined
-                ? {
-                    set: props.metadata,
-                  }
-                : undefined,
-            dataTimestamp:
-              props.dataTimestamp !== undefined
-                ? {
-                    set: props.dataTimestamp,
-                  }
-                : undefined,
-            createdAt:
-              props.createdAt !== undefined
-                ? {
-                    set: props.createdAt,
-                  }
-                : undefined,
-            updatedAt:
-              props.updatedAt !== undefined
-                ? {
-                    set: props.updatedAt,
-                  }
-                : undefined,
-            positions: props.positions
-              ? Array.isArray(props.positions) &&
-                props.positions.length > 0 &&
-                props.positions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.positions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: props.positions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined
-                            ? {
-                                equals: item.tradeId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                set: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        status:
-                          item.status !== undefined
-                            ? {
-                                set: item.status,
-                              }
-                            : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? {
-                                set: item.openingSide,
-                              }
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? {
-                                set: item.quantity,
-                              }
-                            : undefined,
-                        entryPrice:
-                          item.entryPrice !== undefined
-                            ? {
-                                set: item.entryPrice,
-                              }
-                            : undefined,
-                        entryCost:
-                          item.entryCost !== undefined
-                            ? {
-                                set: item.entryCost,
-                              }
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? {
-                                set: item.entryTime,
-                              }
-                            : undefined,
-                        exitPrice:
-                          item.exitPrice !== undefined
-                            ? {
-                                set: item.exitPrice,
-                              }
-                            : undefined,
-                        exitValue:
-                          item.exitValue !== undefined
-                            ? {
-                                set: item.exitValue,
-                              }
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? {
-                                set: item.exitTime,
-                              }
-                            : undefined,
-                        currentPrice:
-                          item.currentPrice !== undefined
-                            ? {
-                                set: item.currentPrice,
-                              }
-                            : undefined,
-                        currentValue:
-                          item.currentValue !== undefined
-                            ? {
-                                set: item.currentValue,
-                              }
-                            : undefined,
-                        unrealizedPnL:
-                          item.unrealizedPnL !== undefined
-                            ? {
-                                set: item.unrealizedPnL,
-                              }
-                            : undefined,
-                        unrealizedPnLPercent:
-                          item.unrealizedPnLPercent !== undefined
-                            ? {
-                                set: item.unrealizedPnLPercent,
-                              }
-                            : undefined,
-                        realizedPnL:
-                          item.realizedPnL !== undefined
-                            ? {
-                                set: item.realizedPnL,
-                              }
-                            : undefined,
-                        realizedPnLPercent:
-                          item.realizedPnLPercent !== undefined
-                            ? {
-                                set: item.realizedPnLPercent,
-                              }
-                            : undefined,
-                        totalFees:
-                          item.totalFees !== undefined
-                            ? {
-                                set: item.totalFees,
-                              }
-                            : undefined,
-                        currentDelta:
-                          item.currentDelta !== undefined
-                            ? {
-                                set: item.currentDelta,
-                              }
-                            : undefined,
-                        currentGamma:
-                          item.currentGamma !== undefined
-                            ? {
-                                set: item.currentGamma,
-                              }
-                            : undefined,
-                        currentTheta:
-                          item.currentTheta !== undefined
-                            ? {
-                                set: item.currentTheta,
-                              }
-                            : undefined,
-                        currentVega:
-                          item.currentVega !== undefined
-                            ? {
-                                set: item.currentVega,
-                              }
-                            : undefined,
-                        currentRho:
-                          item.currentRho !== undefined
-                            ? {
-                                set: item.currentRho,
-                              }
-                            : undefined,
-                        currentImpliedVolatility:
-                          item.currentImpliedVolatility !== undefined
-                            ? {
-                                set: item.currentImpliedVolatility,
-                              }
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? {
-                                set: item.daysHeld,
-                              }
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? {
-                                set: item.exitReason,
-                              }
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? {
-                                set: item.strategyType,
-                              }
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined
-                            ? {
-                                set: item.tradeId,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                upsert: item.executions.map((item: any) => ({
-                                  where: {
-                                    id:
-                                      item.id !== undefined
-                                        ? item.id
-                                        : undefined,
-                                    positionId:
-                                      item.positionId !== undefined
-                                        ? {
-                                            equals: item.positionId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.contractId !== undefined
-                                        ? {
-                                            equals: item.contractId,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? {
-                                            equals: item.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? {
-                                            equals: item.brokerOrderId,
-                                          }
-                                        : undefined,
-                                  },
-                                  update: {
-                                    id:
-                                      item.id !== undefined
-                                        ? {
-                                            set: item.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? {
-                                            set: item.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? {
-                                            set: item.brokerOrderId,
-                                          }
-                                        : undefined,
-                                    executionSide:
-                                      item.executionSide !== undefined
-                                        ? {
-                                            set: item.executionSide,
-                                          }
-                                        : undefined,
-                                    quantity:
-                                      item.quantity !== undefined
-                                        ? {
-                                            set: item.quantity,
-                                          }
-                                        : undefined,
-                                    executionPrice:
-                                      item.executionPrice !== undefined
-                                        ? {
-                                            set: item.executionPrice,
-                                          }
-                                        : undefined,
-                                    executionValue:
-                                      item.executionValue !== undefined
-                                        ? {
-                                            set: item.executionValue,
-                                          }
-                                        : undefined,
-                                    fees:
-                                      item.fees !== undefined
-                                        ? {
-                                            set: item.fees,
-                                          }
-                                        : undefined,
-                                    executionTime:
-                                      item.executionTime !== undefined
-                                        ? {
-                                            set: item.executionTime,
-                                          }
-                                        : undefined,
-                                    underlyingPriceAtExecution:
-                                      item.underlyingPriceAtExecution !==
-                                      undefined
-                                        ? {
-                                            set: item.underlyingPriceAtExecution,
-                                          }
-                                        : undefined,
-                                    deltaAtExecution:
-                                      item.deltaAtExecution !== undefined
-                                        ? {
-                                            set: item.deltaAtExecution,
-                                          }
-                                        : undefined,
-                                    gammaAtExecution:
-                                      item.gammaAtExecution !== undefined
-                                        ? {
-                                            set: item.gammaAtExecution,
-                                          }
-                                        : undefined,
-                                    thetaAtExecution:
-                                      item.thetaAtExecution !== undefined
-                                        ? {
-                                            set: item.thetaAtExecution,
-                                          }
-                                        : undefined,
-                                    vegaAtExecution:
-                                      item.vegaAtExecution !== undefined
-                                        ? {
-                                            set: item.vegaAtExecution,
-                                          }
-                                        : undefined,
-                                    rhoAtExecution:
-                                      item.rhoAtExecution !== undefined
-                                        ? {
-                                            set: item.rhoAtExecution,
-                                          }
-                                        : undefined,
-                                    impliedVolatilityAtExecution:
-                                      item.impliedVolatilityAtExecution !==
-                                      undefined
-                                        ? {
-                                            set: item.impliedVolatilityAtExecution,
-                                          }
-                                        : undefined,
-                                    orderType:
-                                      item.orderType !== undefined
-                                        ? {
-                                            set: item.orderType,
-                                          }
-                                        : undefined,
-                                    limitPrice:
-                                      item.limitPrice !== undefined
-                                        ? {
-                                            set: item.limitPrice,
-                                          }
-                                        : undefined,
-                                    stopPrice:
-                                      item.stopPrice !== undefined
-                                        ? {
-                                            set: item.stopPrice,
-                                          }
-                                        : undefined,
-                                    timeInForce:
-                                      item.timeInForce !== undefined
-                                        ? {
-                                            set: item.timeInForce,
-                                          }
-                                        : undefined,
-                                    venue:
-                                      item.venue !== undefined
-                                        ? {
-                                            set: item.venue,
-                                          }
-                                        : undefined,
-                                    slippage:
-                                      item.slippage !== undefined
-                                        ? {
-                                            set: item.slippage,
-                                          }
-                                        : undefined,
-                                    notes:
-                                      item.notes !== undefined
-                                        ? {
-                                            set: item.notes,
-                                          }
-                                        : undefined,
-                                    metadata:
-                                      item.metadata !== undefined
-                                        ? {
-                                            set: item.metadata,
-                                          }
-                                        : undefined,
-                                    contract: item.contract
-                                      ? typeof item.contract === 'object' &&
-                                        Object.keys(item.contract).length ===
-                                          1 &&
-                                        (Object.keys(item.contract)[0] ===
-                                          'id' ||
-                                          Object.keys(item.contract)[0] ===
-                                            'symbol')
-                                        ? {
-                                            connect: {
-                                              id: item.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            upsert: {
-                                              where: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              update: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? {
-                                                        set: item.contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .symbol,
-                                                      }
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .contractSymbol,
-                                                      }
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .optionType,
-                                                      }
-                                                    : undefined,
-                                                strikePrice:
-                                                  item.contract.strikePrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .strikePrice,
-                                                      }
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .expirationDate,
-                                                      }
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .daysToExpiration,
-                                                      }
-                                                    : undefined,
-                                                lastPrice:
-                                                  item.contract.lastPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .lastPrice,
-                                                      }
-                                                    : undefined,
-                                                bidPrice:
-                                                  item.contract.bidPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .bidPrice,
-                                                      }
-                                                    : undefined,
-                                                askPrice:
-                                                  item.contract.askPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .askPrice,
-                                                      }
-                                                    : undefined,
-                                                midPrice:
-                                                  item.contract.midPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .midPrice,
-                                                      }
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .bidSize,
-                                                      }
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .askSize,
-                                                      }
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .volume,
-                                                      }
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .openInterest,
-                                                      }
-                                                    : undefined,
-                                                impliedVolatility:
-                                                  item.contract
-                                                    .impliedVolatility !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .impliedVolatility,
-                                                      }
-                                                    : undefined,
-                                                delta:
-                                                  item.contract.delta !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .delta,
-                                                      }
-                                                    : undefined,
-                                                gamma:
-                                                  item.contract.gamma !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .gamma,
-                                                      }
-                                                    : undefined,
-                                                theta:
-                                                  item.contract.theta !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .theta,
-                                                      }
-                                                    : undefined,
-                                                vega:
-                                                  item.contract.vega !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract.vega,
-                                                      }
-                                                    : undefined,
-                                                rho:
-                                                  item.contract.rho !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract.rho,
-                                                      }
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .inTheMoney,
-                                                      }
-                                                    : undefined,
-                                                intrinsicValue:
-                                                  item.contract
-                                                    .intrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .intrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                extrinsicValue:
-                                                  item.contract
-                                                    .extrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .extrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                theoreticalPrice:
-                                                  item.contract
-                                                    .theoreticalPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .theoreticalPrice,
-                                                      }
-                                                    : undefined,
-                                                underlyingPrice:
-                                                  item.contract
-                                                    .underlyingPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .underlyingPrice,
-                                                      }
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .metadata,
-                                                      }
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .dataTimestamp,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? item.contract.symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? item.contract.optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? item.contract.bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? item.contract.askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? item.contract.volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? item.contract.openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? item.contract.inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? item.contract.metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? item.alpacaAccountId
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? item.brokerOrderId
-                                        : undefined,
-                                    executionSide:
-                                      item.executionSide !== undefined
-                                        ? item.executionSide
-                                        : undefined,
-                                    quantity:
-                                      item.quantity !== undefined
-                                        ? item.quantity
-                                        : undefined,
-                                    executionTime:
-                                      item.executionTime !== undefined
-                                        ? item.executionTime
-                                        : undefined,
-                                    orderType:
-                                      item.orderType !== undefined
-                                        ? item.orderType
-                                        : undefined,
-                                    timeInForce:
-                                      item.timeInForce !== undefined
-                                        ? item.timeInForce
-                                        : undefined,
-                                    venue:
-                                      item.venue !== undefined
-                                        ? item.venue
-                                        : undefined,
-                                    notes:
-                                      item.notes !== undefined
-                                        ? item.notes
-                                        : undefined,
-                                    metadata:
-                                      item.metadata !== undefined
-                                        ? item.metadata
-                                        : undefined,
-                                    contract: item.contract
-                                      ? typeof item.contract === 'object' &&
-                                        Object.keys(item.contract).length ===
-                                          1 &&
-                                        Object.keys(item.contract)[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? item.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? item.contract.symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? item.contract.optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? item.contract.bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? item.contract.askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? item.contract.volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? item.contract.openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? item.contract.inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? item.contract.metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                })),
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        status:
-                          item.status !== undefined ? item.status : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? item.openingSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? item.entryTime
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? item.exitTime
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? item.daysHeld
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? item.exitReason
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? item.strategyType
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined ? item.tradeId : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                connectOrCreate: item.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      contract: item.contract
-                                        ? typeof item.contract === 'object' &&
-                                          Object.keys(item.contract).length ===
-                                            1 &&
-                                          Object.keys(item.contract)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.contract.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.contract.id !==
-                                                    undefined
-                                                      ? item.contract.id
-                                                      : undefined,
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.contract
-                                                              .symbol,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? item.contract.symbol
-                                                      : undefined,
-                                                  contractSymbol:
-                                                    item.contract
-                                                      .contractSymbol !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .contractSymbol
-                                                      : undefined,
-                                                  optionType:
-                                                    item.contract.optionType !==
-                                                    undefined
-                                                      ? item.contract.optionType
-                                                      : undefined,
-                                                  expirationDate:
-                                                    item.contract
-                                                      .expirationDate !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .expirationDate
-                                                      : undefined,
-                                                  daysToExpiration:
-                                                    item.contract
-                                                      .daysToExpiration !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .daysToExpiration
-                                                      : undefined,
-                                                  bidSize:
-                                                    item.contract.bidSize !==
-                                                    undefined
-                                                      ? item.contract.bidSize
-                                                      : undefined,
-                                                  askSize:
-                                                    item.contract.askSize !==
-                                                    undefined
-                                                      ? item.contract.askSize
-                                                      : undefined,
-                                                  volume:
-                                                    item.contract.volume !==
-                                                    undefined
-                                                      ? item.contract.volume
-                                                      : undefined,
-                                                  openInterest:
-                                                    item.contract
-                                                      .openInterest !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .openInterest
-                                                      : undefined,
-                                                  inTheMoney:
-                                                    item.contract.inTheMoney !==
-                                                    undefined
-                                                      ? item.contract.inTheMoney
-                                                      : undefined,
-                                                  metadata:
-                                                    item.contract.metadata !==
-                                                    undefined
-                                                      ? item.contract.metadata
-                                                      : undefined,
-                                                  dataTimestamp:
-                                                    item.contract
-                                                      .dataTimestamp !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .dataTimestamp
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            greeksHistory: props.greeksHistory
-              ? Array.isArray(props.greeksHistory) &&
-                props.greeksHistory.length > 0 &&
-                props.greeksHistory.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.greeksHistory.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: props.greeksHistory.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? {
-                                set: item.timestamp,
-                              }
-                            : undefined,
-                        underlyingPrice:
-                          item.underlyingPrice !== undefined
-                            ? {
-                                set: item.underlyingPrice,
-                              }
-                            : undefined,
-                        optionPrice:
-                          item.optionPrice !== undefined
-                            ? {
-                                set: item.optionPrice,
-                              }
-                            : undefined,
-                        bidPrice:
-                          item.bidPrice !== undefined
-                            ? {
-                                set: item.bidPrice,
-                              }
-                            : undefined,
-                        askPrice:
-                          item.askPrice !== undefined
-                            ? {
-                                set: item.askPrice,
-                              }
-                            : undefined,
-                        impliedVolatility:
-                          item.impliedVolatility !== undefined
-                            ? {
-                                set: item.impliedVolatility,
-                              }
-                            : undefined,
-                        delta:
-                          item.delta !== undefined
-                            ? {
-                                set: item.delta,
-                              }
-                            : undefined,
-                        gamma:
-                          item.gamma !== undefined
-                            ? {
-                                set: item.gamma,
-                              }
-                            : undefined,
-                        theta:
-                          item.theta !== undefined
-                            ? {
-                                set: item.theta,
-                              }
-                            : undefined,
-                        vega:
-                          item.vega !== undefined
-                            ? {
-                                set: item.vega,
-                              }
-                            : undefined,
-                        rho:
-                          item.rho !== undefined
-                            ? {
-                                set: item.rho,
-                              }
-                            : undefined,
-                        volume:
-                          item.volume !== undefined
-                            ? {
-                                set: item.volume,
-                              }
-                            : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? {
-                                set: item.openInterest,
-                              }
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? {
-                                set: item.daysToExpiration,
-                              }
-                            : undefined,
-                        intrinsicValue:
-                          item.intrinsicValue !== undefined
-                            ? {
-                                set: item.intrinsicValue,
-                              }
-                            : undefined,
-                        extrinsicValue:
-                          item.extrinsicValue !== undefined
-                            ? {
-                                set: item.extrinsicValue,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? item.timestamp
-                            : undefined,
-                        volume:
-                          item.volume !== undefined ? item.volume : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? item.openInterest
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? item.daysToExpiration
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            executions: props.executions
-              ? Array.isArray(props.executions) &&
-                props.executions.length > 0 &&
-                props.executions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.executions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: props.executions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        positionId:
-                          item.positionId !== undefined
-                            ? {
-                                equals: item.positionId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                equals: item.brokerOrderId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                set: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                set: item.brokerOrderId,
-                              }
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? {
-                                set: item.executionSide,
-                              }
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? {
-                                set: item.quantity,
-                              }
-                            : undefined,
-                        executionPrice:
-                          item.executionPrice !== undefined
-                            ? {
-                                set: item.executionPrice,
-                              }
-                            : undefined,
-                        executionValue:
-                          item.executionValue !== undefined
-                            ? {
-                                set: item.executionValue,
-                              }
-                            : undefined,
-                        fees:
-                          item.fees !== undefined
-                            ? {
-                                set: item.fees,
-                              }
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? {
-                                set: item.executionTime,
-                              }
-                            : undefined,
-                        underlyingPriceAtExecution:
-                          item.underlyingPriceAtExecution !== undefined
-                            ? {
-                                set: item.underlyingPriceAtExecution,
-                              }
-                            : undefined,
-                        deltaAtExecution:
-                          item.deltaAtExecution !== undefined
-                            ? {
-                                set: item.deltaAtExecution,
-                              }
-                            : undefined,
-                        gammaAtExecution:
-                          item.gammaAtExecution !== undefined
-                            ? {
-                                set: item.gammaAtExecution,
-                              }
-                            : undefined,
-                        thetaAtExecution:
-                          item.thetaAtExecution !== undefined
-                            ? {
-                                set: item.thetaAtExecution,
-                              }
-                            : undefined,
-                        vegaAtExecution:
-                          item.vegaAtExecution !== undefined
-                            ? {
-                                set: item.vegaAtExecution,
-                              }
-                            : undefined,
-                        rhoAtExecution:
-                          item.rhoAtExecution !== undefined
-                            ? {
-                                set: item.rhoAtExecution,
-                              }
-                            : undefined,
-                        impliedVolatilityAtExecution:
-                          item.impliedVolatilityAtExecution !== undefined
-                            ? {
-                                set: item.impliedVolatilityAtExecution,
-                              }
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? {
-                                set: item.orderType,
-                              }
-                            : undefined,
-                        limitPrice:
-                          item.limitPrice !== undefined
-                            ? {
-                                set: item.limitPrice,
-                              }
-                            : undefined,
-                        stopPrice:
-                          item.stopPrice !== undefined
-                            ? {
-                                set: item.stopPrice,
-                              }
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? {
-                                set: item.timeInForce,
-                              }
-                            : undefined,
-                        venue:
-                          item.venue !== undefined
-                            ? {
-                                set: item.venue,
-                              }
-                            : undefined,
-                        slippage:
-                          item.slippage !== undefined
-                            ? {
-                                set: item.slippage,
-                              }
-                            : undefined,
-                        notes:
-                          item.notes !== undefined
-                            ? {
-                                set: item.notes,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            (Object.keys(item.position)[0] === 'id' ||
-                              Object.keys(item.position)[0] === 'symbol')
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                upsert: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? {
-                                            equals: item.position.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? {
-                                            equals: item.position.tradeId,
-                                          }
-                                        : undefined,
-                                  },
-                                  update: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? {
-                                            set: item.position.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            set: item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? {
-                                            set: item.position.status,
-                                          }
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? {
-                                            set: item.position.openingSide,
-                                          }
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? {
-                                            set: item.position.quantity,
-                                          }
-                                        : undefined,
-                                    entryPrice:
-                                      item.position.entryPrice !== undefined
-                                        ? {
-                                            set: item.position.entryPrice,
-                                          }
-                                        : undefined,
-                                    entryCost:
-                                      item.position.entryCost !== undefined
-                                        ? {
-                                            set: item.position.entryCost,
-                                          }
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? {
-                                            set: item.position.entryTime,
-                                          }
-                                        : undefined,
-                                    exitPrice:
-                                      item.position.exitPrice !== undefined
-                                        ? {
-                                            set: item.position.exitPrice,
-                                          }
-                                        : undefined,
-                                    exitValue:
-                                      item.position.exitValue !== undefined
-                                        ? {
-                                            set: item.position.exitValue,
-                                          }
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? {
-                                            set: item.position.exitTime,
-                                          }
-                                        : undefined,
-                                    currentPrice:
-                                      item.position.currentPrice !== undefined
-                                        ? {
-                                            set: item.position.currentPrice,
-                                          }
-                                        : undefined,
-                                    currentValue:
-                                      item.position.currentValue !== undefined
-                                        ? {
-                                            set: item.position.currentValue,
-                                          }
-                                        : undefined,
-                                    unrealizedPnL:
-                                      item.position.unrealizedPnL !== undefined
-                                        ? {
-                                            set: item.position.unrealizedPnL,
-                                          }
-                                        : undefined,
-                                    unrealizedPnLPercent:
-                                      item.position.unrealizedPnLPercent !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .unrealizedPnLPercent,
-                                          }
-                                        : undefined,
-                                    realizedPnL:
-                                      item.position.realizedPnL !== undefined
-                                        ? {
-                                            set: item.position.realizedPnL,
-                                          }
-                                        : undefined,
-                                    realizedPnLPercent:
-                                      item.position.realizedPnLPercent !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .realizedPnLPercent,
-                                          }
-                                        : undefined,
-                                    totalFees:
-                                      item.position.totalFees !== undefined
-                                        ? {
-                                            set: item.position.totalFees,
-                                          }
-                                        : undefined,
-                                    currentDelta:
-                                      item.position.currentDelta !== undefined
-                                        ? {
-                                            set: item.position.currentDelta,
-                                          }
-                                        : undefined,
-                                    currentGamma:
-                                      item.position.currentGamma !== undefined
-                                        ? {
-                                            set: item.position.currentGamma,
-                                          }
-                                        : undefined,
-                                    currentTheta:
-                                      item.position.currentTheta !== undefined
-                                        ? {
-                                            set: item.position.currentTheta,
-                                          }
-                                        : undefined,
-                                    currentVega:
-                                      item.position.currentVega !== undefined
-                                        ? {
-                                            set: item.position.currentVega,
-                                          }
-                                        : undefined,
-                                    currentRho:
-                                      item.position.currentRho !== undefined
-                                        ? {
-                                            set: item.position.currentRho,
-                                          }
-                                        : undefined,
-                                    currentImpliedVolatility:
-                                      item.position.currentImpliedVolatility !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .currentImpliedVolatility,
-                                          }
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? {
-                                            set: item.position.daysHeld,
-                                          }
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? {
-                                            set: item.position.exitReason,
-                                          }
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? {
-                                            set: item.position.strategyType,
-                                          }
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? {
-                                            set: item.position.tradeId,
-                                          }
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? {
-                                            set: item.position.metadata,
-                                          }
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        (Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id' ||
-                                          Object.keys(
-                                            item.position.contract
-                                          )[0] === 'symbol')
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            upsert: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              update: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.symbol,
-                                                      }
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .contractSymbol,
-                                                      }
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.optionType,
-                                                      }
-                                                    : undefined,
-                                                strikePrice:
-                                                  item.position.contract
-                                                    .strikePrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.strikePrice,
-                                                      }
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .expirationDate,
-                                                      }
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .daysToExpiration,
-                                                      }
-                                                    : undefined,
-                                                lastPrice:
-                                                  item.position.contract
-                                                    .lastPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.lastPrice,
-                                                      }
-                                                    : undefined,
-                                                bidPrice:
-                                                  item.position.contract
-                                                    .bidPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.bidPrice,
-                                                      }
-                                                    : undefined,
-                                                askPrice:
-                                                  item.position.contract
-                                                    .askPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.askPrice,
-                                                      }
-                                                    : undefined,
-                                                midPrice:
-                                                  item.position.contract
-                                                    .midPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.midPrice,
-                                                      }
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.bidSize,
-                                                      }
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.askSize,
-                                                      }
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.volume,
-                                                      }
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .openInterest,
-                                                      }
-                                                    : undefined,
-                                                impliedVolatility:
-                                                  item.position.contract
-                                                    .impliedVolatility !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .impliedVolatility,
-                                                      }
-                                                    : undefined,
-                                                delta:
-                                                  item.position.contract
-                                                    .delta !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.delta,
-                                                      }
-                                                    : undefined,
-                                                gamma:
-                                                  item.position.contract
-                                                    .gamma !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.gamma,
-                                                      }
-                                                    : undefined,
-                                                theta:
-                                                  item.position.contract
-                                                    .theta !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.theta,
-                                                      }
-                                                    : undefined,
-                                                vega:
-                                                  item.position.contract
-                                                    .vega !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.vega,
-                                                      }
-                                                    : undefined,
-                                                rho:
-                                                  item.position.contract.rho !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.rho,
-                                                      }
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.inTheMoney,
-                                                      }
-                                                    : undefined,
-                                                intrinsicValue:
-                                                  item.position.contract
-                                                    .intrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .intrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                extrinsicValue:
-                                                  item.position.contract
-                                                    .extrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .extrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                theoreticalPrice:
-                                                  item.position.contract
-                                                    .theoreticalPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .theoreticalPrice,
-                                                      }
-                                                    : undefined,
-                                                underlyingPrice:
-                                                  item.position.contract
-                                                    .underlyingPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .underlyingPrice,
-                                                      }
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.metadata,
-                                                      }
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .dataTimestamp,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? item.brokerOrderId
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? item.executionSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? item.executionTime
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? item.orderType
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? item.timeInForce
-                            : undefined,
-                        venue:
-                          item.venue !== undefined ? item.venue : undefined,
-                        notes:
-                          item.notes !== undefined ? item.notes : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            Object.keys(item.position)[0] === 'id'
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                connectOrCreate: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? item.position.id
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  contractSymbol: props.contractSymbol !== undefined ? {
+            set: props.contractSymbol 
+           } : undefined,
+  optionType: props.optionType !== undefined ? {
+            set: props.optionType 
+           } : undefined,
+  strikePrice: props.strikePrice !== undefined ? {
+            set: props.strikePrice 
+           } : undefined,
+  expirationDate: props.expirationDate !== undefined ? {
+            set: props.expirationDate 
+           } : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? {
+            set: props.daysToExpiration 
+           } : undefined,
+  lastPrice: props.lastPrice !== undefined ? {
+            set: props.lastPrice 
+           } : undefined,
+  bidPrice: props.bidPrice !== undefined ? {
+            set: props.bidPrice 
+           } : undefined,
+  askPrice: props.askPrice !== undefined ? {
+            set: props.askPrice 
+           } : undefined,
+  midPrice: props.midPrice !== undefined ? {
+            set: props.midPrice 
+           } : undefined,
+  bidSize: props.bidSize !== undefined ? {
+            set: props.bidSize 
+           } : undefined,
+  askSize: props.askSize !== undefined ? {
+            set: props.askSize 
+           } : undefined,
+  volume: props.volume !== undefined ? {
+            set: props.volume 
+           } : undefined,
+  openInterest: props.openInterest !== undefined ? {
+            set: props.openInterest 
+           } : undefined,
+  impliedVolatility: props.impliedVolatility !== undefined ? {
+            set: props.impliedVolatility 
+           } : undefined,
+  delta: props.delta !== undefined ? {
+            set: props.delta 
+           } : undefined,
+  gamma: props.gamma !== undefined ? {
+            set: props.gamma 
+           } : undefined,
+  theta: props.theta !== undefined ? {
+            set: props.theta 
+           } : undefined,
+  vega: props.vega !== undefined ? {
+            set: props.vega 
+           } : undefined,
+  rho: props.rho !== undefined ? {
+            set: props.rho 
+           } : undefined,
+  inTheMoney: props.inTheMoney !== undefined ? {
+            set: props.inTheMoney 
+           } : undefined,
+  intrinsicValue: props.intrinsicValue !== undefined ? {
+            set: props.intrinsicValue 
+           } : undefined,
+  extrinsicValue: props.extrinsicValue !== undefined ? {
+            set: props.extrinsicValue 
+           } : undefined,
+  theoreticalPrice: props.theoreticalPrice !== undefined ? {
+            set: props.theoreticalPrice 
+           } : undefined,
+  underlyingPrice: props.underlyingPrice !== undefined ? {
+            set: props.underlyingPrice 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  dataTimestamp: props.dataTimestamp !== undefined ? {
+            set: props.dataTimestamp 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+  positions: props.positions ? 
+  Array.isArray(props.positions) && props.positions.length > 0 && props.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.positions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.positions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+        tradeId: item.tradeId !== undefined ? {
+            equals: item.tradeId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            set: item.alpacaAccountId
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        openingSide: item.openingSide !== undefined ? {
+            set: item.openingSide
+          } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity
+          } : undefined,
+        entryPrice: item.entryPrice !== undefined ? {
+            set: item.entryPrice
+          } : undefined,
+        entryCost: item.entryCost !== undefined ? {
+            set: item.entryCost
+          } : undefined,
+        entryTime: item.entryTime !== undefined ? {
+            set: item.entryTime
+          } : undefined,
+        exitPrice: item.exitPrice !== undefined ? {
+            set: item.exitPrice
+          } : undefined,
+        exitValue: item.exitValue !== undefined ? {
+            set: item.exitValue
+          } : undefined,
+        exitTime: item.exitTime !== undefined ? {
+            set: item.exitTime
+          } : undefined,
+        currentPrice: item.currentPrice !== undefined ? {
+            set: item.currentPrice
+          } : undefined,
+        currentValue: item.currentValue !== undefined ? {
+            set: item.currentValue
+          } : undefined,
+        unrealizedPnL: item.unrealizedPnL !== undefined ? {
+            set: item.unrealizedPnL
+          } : undefined,
+        unrealizedPnLPercent: item.unrealizedPnLPercent !== undefined ? {
+            set: item.unrealizedPnLPercent
+          } : undefined,
+        realizedPnL: item.realizedPnL !== undefined ? {
+            set: item.realizedPnL
+          } : undefined,
+        realizedPnLPercent: item.realizedPnLPercent !== undefined ? {
+            set: item.realizedPnLPercent
+          } : undefined,
+        totalFees: item.totalFees !== undefined ? {
+            set: item.totalFees
+          } : undefined,
+        currentDelta: item.currentDelta !== undefined ? {
+            set: item.currentDelta
+          } : undefined,
+        currentGamma: item.currentGamma !== undefined ? {
+            set: item.currentGamma
+          } : undefined,
+        currentTheta: item.currentTheta !== undefined ? {
+            set: item.currentTheta
+          } : undefined,
+        currentVega: item.currentVega !== undefined ? {
+            set: item.currentVega
+          } : undefined,
+        currentRho: item.currentRho !== undefined ? {
+            set: item.currentRho
+          } : undefined,
+        currentImpliedVolatility: item.currentImpliedVolatility !== undefined ? {
+            set: item.currentImpliedVolatility
+          } : undefined,
+        daysHeld: item.daysHeld !== undefined ? {
+            set: item.daysHeld
+          } : undefined,
+        exitReason: item.exitReason !== undefined ? {
+            set: item.exitReason
+          } : undefined,
+        strategyType: item.strategyType !== undefined ? {
+            set: item.strategyType
+          } : undefined,
+        tradeId: item.tradeId !== undefined ? {
+            set: item.tradeId
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+    executions: item.executions ? 
+    Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.executions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              set: item.brokerOrderId
+            } : undefined,
+          executionSide: item.executionSide !== undefined ? {
+              set: item.executionSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          executionPrice: item.executionPrice !== undefined ? {
+              set: item.executionPrice
+            } : undefined,
+          executionValue: item.executionValue !== undefined ? {
+              set: item.executionValue
+            } : undefined,
+          fees: item.fees !== undefined ? {
+              set: item.fees
+            } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime
+            } : undefined,
+          underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+              set: item.underlyingPriceAtExecution
+            } : undefined,
+          deltaAtExecution: item.deltaAtExecution !== undefined ? {
+              set: item.deltaAtExecution
+            } : undefined,
+          gammaAtExecution: item.gammaAtExecution !== undefined ? {
+              set: item.gammaAtExecution
+            } : undefined,
+          thetaAtExecution: item.thetaAtExecution !== undefined ? {
+              set: item.thetaAtExecution
+            } : undefined,
+          vegaAtExecution: item.vegaAtExecution !== undefined ? {
+              set: item.vegaAtExecution
+            } : undefined,
+          rhoAtExecution: item.rhoAtExecution !== undefined ? {
+              set: item.rhoAtExecution
+            } : undefined,
+          impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+              set: item.impliedVolatilityAtExecution
+            } : undefined,
+          orderType: item.orderType !== undefined ? {
+              set: item.orderType
+            } : undefined,
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice
+            } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice
+            } : undefined,
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce
+            } : undefined,
+          venue: item.venue !== undefined ? {
+              set: item.venue
+            } : undefined,
+          slippage: item.slippage !== undefined ? {
+              set: item.slippage
+            } : undefined,
+          notes: item.notes !== undefined ? {
+              set: item.notes
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      contract: item.contract ? 
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
+? {
+      connect: {
+        id: item.contract.id
+      }
+} : { upsert: {
+          where: {
+            id: item.contract.id !== undefined ? {
+                equals: item.contract.id
+              } : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol
+              } : undefined,
           },
+          update: {
+            id: item.contract.id !== undefined ? {
+                set: item.contract.id
+              } : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                set: item.contract.symbol
+              } : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? {
+                set: item.contract.contractSymbol
+              } : undefined,
+            optionType: item.contract.optionType !== undefined ? {
+                set: item.contract.optionType
+              } : undefined,
+            strikePrice: item.contract.strikePrice !== undefined ? {
+                set: item.contract.strikePrice
+              } : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? {
+                set: item.contract.expirationDate
+              } : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? {
+                set: item.contract.daysToExpiration
+              } : undefined,
+            lastPrice: item.contract.lastPrice !== undefined ? {
+                set: item.contract.lastPrice
+              } : undefined,
+            bidPrice: item.contract.bidPrice !== undefined ? {
+                set: item.contract.bidPrice
+              } : undefined,
+            askPrice: item.contract.askPrice !== undefined ? {
+                set: item.contract.askPrice
+              } : undefined,
+            midPrice: item.contract.midPrice !== undefined ? {
+                set: item.contract.midPrice
+              } : undefined,
+            bidSize: item.contract.bidSize !== undefined ? {
+                set: item.contract.bidSize
+              } : undefined,
+            askSize: item.contract.askSize !== undefined ? {
+                set: item.contract.askSize
+              } : undefined,
+            volume: item.contract.volume !== undefined ? {
+                set: item.contract.volume
+              } : undefined,
+            openInterest: item.contract.openInterest !== undefined ? {
+                set: item.contract.openInterest
+              } : undefined,
+            impliedVolatility: item.contract.impliedVolatility !== undefined ? {
+                set: item.contract.impliedVolatility
+              } : undefined,
+            delta: item.contract.delta !== undefined ? {
+                set: item.contract.delta
+              } : undefined,
+            gamma: item.contract.gamma !== undefined ? {
+                set: item.contract.gamma
+              } : undefined,
+            theta: item.contract.theta !== undefined ? {
+                set: item.contract.theta
+              } : undefined,
+            vega: item.contract.vega !== undefined ? {
+                set: item.contract.vega
+              } : undefined,
+            rho: item.contract.rho !== undefined ? {
+                set: item.contract.rho
+              } : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? {
+                set: item.contract.inTheMoney
+              } : undefined,
+            intrinsicValue: item.contract.intrinsicValue !== undefined ? {
+                set: item.contract.intrinsicValue
+              } : undefined,
+            extrinsicValue: item.contract.extrinsicValue !== undefined ? {
+                set: item.contract.extrinsicValue
+              } : undefined,
+            theoreticalPrice: item.contract.theoreticalPrice !== undefined ? {
+                set: item.contract.theoreticalPrice
+              } : undefined,
+            underlyingPrice: item.contract.underlyingPrice !== undefined ? {
+                set: item.contract.underlyingPrice
+              } : undefined,
+            metadata: item.contract.metadata !== undefined ? {
+                set: item.contract.metadata
+              } : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? {
+                set: item.contract.dataTimestamp
+              } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+        exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+        daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+        exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+        strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+        tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  greeksHistory: props.greeksHistory ? 
+  Array.isArray(props.greeksHistory) && props.greeksHistory.length > 0 && props.greeksHistory.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.greeksHistory.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.greeksHistory.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        timestamp: item.timestamp !== undefined ? {
+            set: item.timestamp
+          } : undefined,
+        underlyingPrice: item.underlyingPrice !== undefined ? {
+            set: item.underlyingPrice
+          } : undefined,
+        optionPrice: item.optionPrice !== undefined ? {
+            set: item.optionPrice
+          } : undefined,
+        bidPrice: item.bidPrice !== undefined ? {
+            set: item.bidPrice
+          } : undefined,
+        askPrice: item.askPrice !== undefined ? {
+            set: item.askPrice
+          } : undefined,
+        impliedVolatility: item.impliedVolatility !== undefined ? {
+            set: item.impliedVolatility
+          } : undefined,
+        delta: item.delta !== undefined ? {
+            set: item.delta
+          } : undefined,
+        gamma: item.gamma !== undefined ? {
+            set: item.gamma
+          } : undefined,
+        theta: item.theta !== undefined ? {
+            set: item.theta
+          } : undefined,
+        vega: item.vega !== undefined ? {
+            set: item.vega
+          } : undefined,
+        rho: item.rho !== undefined ? {
+            set: item.rho
+          } : undefined,
+        volume: item.volume !== undefined ? {
+            set: item.volume
+          } : undefined,
+        openInterest: item.openInterest !== undefined ? {
+            set: item.openInterest
+          } : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? {
+            set: item.daysToExpiration
+          } : undefined,
+        intrinsicValue: item.intrinsicValue !== undefined ? {
+            set: item.intrinsicValue
+          } : undefined,
+        extrinsicValue: item.extrinsicValue !== undefined ? {
+            set: item.extrinsicValue
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+      },
+      create: {
+        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+        volume: item.volume !== undefined ? item.volume : undefined,
+        openInterest: item.openInterest !== undefined ? item.openInterest : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? item.daysToExpiration : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  executions: props.executions ? 
+  Array.isArray(props.executions) && props.executions.length > 0 && props.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.executions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.executions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        positionId: item.positionId !== undefined ? {
+            equals: item.positionId
+          } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            equals: item.brokerOrderId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            set: item.alpacaAccountId
+          } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            set: item.brokerOrderId
+          } : undefined,
+        executionSide: item.executionSide !== undefined ? {
+            set: item.executionSide
+          } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity
+          } : undefined,
+        executionPrice: item.executionPrice !== undefined ? {
+            set: item.executionPrice
+          } : undefined,
+        executionValue: item.executionValue !== undefined ? {
+            set: item.executionValue
+          } : undefined,
+        fees: item.fees !== undefined ? {
+            set: item.fees
+          } : undefined,
+        executionTime: item.executionTime !== undefined ? {
+            set: item.executionTime
+          } : undefined,
+        underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+            set: item.underlyingPriceAtExecution
+          } : undefined,
+        deltaAtExecution: item.deltaAtExecution !== undefined ? {
+            set: item.deltaAtExecution
+          } : undefined,
+        gammaAtExecution: item.gammaAtExecution !== undefined ? {
+            set: item.gammaAtExecution
+          } : undefined,
+        thetaAtExecution: item.thetaAtExecution !== undefined ? {
+            set: item.thetaAtExecution
+          } : undefined,
+        vegaAtExecution: item.vegaAtExecution !== undefined ? {
+            set: item.vegaAtExecution
+          } : undefined,
+        rhoAtExecution: item.rhoAtExecution !== undefined ? {
+            set: item.rhoAtExecution
+          } : undefined,
+        impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+            set: item.impliedVolatilityAtExecution
+          } : undefined,
+        orderType: item.orderType !== undefined ? {
+            set: item.orderType
+          } : undefined,
+        limitPrice: item.limitPrice !== undefined ? {
+            set: item.limitPrice
+          } : undefined,
+        stopPrice: item.stopPrice !== undefined ? {
+            set: item.stopPrice
+          } : undefined,
+        timeInForce: item.timeInForce !== undefined ? {
+            set: item.timeInForce
+          } : undefined,
+        venue: item.venue !== undefined ? {
+            set: item.venue
+          } : undefined,
+        slippage: item.slippage !== undefined ? {
+            set: item.slippage
+          } : undefined,
+        notes: item.notes !== undefined ? {
+            set: item.notes
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+    position: item.position ? 
+    typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
+? {
+    connect: {
+      id: item.position.id
+    }
+} : { upsert: {
+        where: {
+          id: item.position.id !== undefined ? {
+              equals: item.position.id
+            } : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId
+            } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId
+            } : undefined,
+          tradeId: item.position.tradeId !== undefined ? {
+              equals: item.position.tradeId
+            } : undefined,
+        },
+        update: {
+          id: item.position.id !== undefined ? {
+              set: item.position.id
+            } : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              set: item.position.alpacaAccountId
+            } : undefined,
+          status: item.position.status !== undefined ? {
+              set: item.position.status
+            } : undefined,
+          openingSide: item.position.openingSide !== undefined ? {
+              set: item.position.openingSide
+            } : undefined,
+          quantity: item.position.quantity !== undefined ? {
+              set: item.position.quantity
+            } : undefined,
+          entryPrice: item.position.entryPrice !== undefined ? {
+              set: item.position.entryPrice
+            } : undefined,
+          entryCost: item.position.entryCost !== undefined ? {
+              set: item.position.entryCost
+            } : undefined,
+          entryTime: item.position.entryTime !== undefined ? {
+              set: item.position.entryTime
+            } : undefined,
+          exitPrice: item.position.exitPrice !== undefined ? {
+              set: item.position.exitPrice
+            } : undefined,
+          exitValue: item.position.exitValue !== undefined ? {
+              set: item.position.exitValue
+            } : undefined,
+          exitTime: item.position.exitTime !== undefined ? {
+              set: item.position.exitTime
+            } : undefined,
+          currentPrice: item.position.currentPrice !== undefined ? {
+              set: item.position.currentPrice
+            } : undefined,
+          currentValue: item.position.currentValue !== undefined ? {
+              set: item.position.currentValue
+            } : undefined,
+          unrealizedPnL: item.position.unrealizedPnL !== undefined ? {
+              set: item.position.unrealizedPnL
+            } : undefined,
+          unrealizedPnLPercent: item.position.unrealizedPnLPercent !== undefined ? {
+              set: item.position.unrealizedPnLPercent
+            } : undefined,
+          realizedPnL: item.position.realizedPnL !== undefined ? {
+              set: item.position.realizedPnL
+            } : undefined,
+          realizedPnLPercent: item.position.realizedPnLPercent !== undefined ? {
+              set: item.position.realizedPnLPercent
+            } : undefined,
+          totalFees: item.position.totalFees !== undefined ? {
+              set: item.position.totalFees
+            } : undefined,
+          currentDelta: item.position.currentDelta !== undefined ? {
+              set: item.position.currentDelta
+            } : undefined,
+          currentGamma: item.position.currentGamma !== undefined ? {
+              set: item.position.currentGamma
+            } : undefined,
+          currentTheta: item.position.currentTheta !== undefined ? {
+              set: item.position.currentTheta
+            } : undefined,
+          currentVega: item.position.currentVega !== undefined ? {
+              set: item.position.currentVega
+            } : undefined,
+          currentRho: item.position.currentRho !== undefined ? {
+              set: item.position.currentRho
+            } : undefined,
+          currentImpliedVolatility: item.position.currentImpliedVolatility !== undefined ? {
+              set: item.position.currentImpliedVolatility
+            } : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? {
+              set: item.position.daysHeld
+            } : undefined,
+          exitReason: item.position.exitReason !== undefined ? {
+              set: item.position.exitReason
+            } : undefined,
+          strategyType: item.position.strategyType !== undefined ? {
+              set: item.position.strategyType
+            } : undefined,
+          tradeId: item.position.tradeId !== undefined ? {
+              set: item.position.tradeId
+            } : undefined,
+          metadata: item.position.metadata !== undefined ? {
+              set: item.position.metadata
+            } : undefined,
+      contract: item.position.contract ? 
+      typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && (Object.keys(item.position.contract)[0] === 'id' || Object.keys(item.position.contract)[0] === 'symbol')
+? {
+      connect: {
+        id: item.position.contract.id
+      }
+} : { upsert: {
+          where: {
+            id: item.position.contract.id !== undefined ? {
+                equals: item.position.contract.id
+              } : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.position.contract.id !== undefined ? {
+                set: item.position.contract.id
+              } : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                set: item.position.contract.symbol
+              } : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? {
+                set: item.position.contract.contractSymbol
+              } : undefined,
+            optionType: item.position.contract.optionType !== undefined ? {
+                set: item.position.contract.optionType
+              } : undefined,
+            strikePrice: item.position.contract.strikePrice !== undefined ? {
+                set: item.position.contract.strikePrice
+              } : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? {
+                set: item.position.contract.expirationDate
+              } : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? {
+                set: item.position.contract.daysToExpiration
+              } : undefined,
+            lastPrice: item.position.contract.lastPrice !== undefined ? {
+                set: item.position.contract.lastPrice
+              } : undefined,
+            bidPrice: item.position.contract.bidPrice !== undefined ? {
+                set: item.position.contract.bidPrice
+              } : undefined,
+            askPrice: item.position.contract.askPrice !== undefined ? {
+                set: item.position.contract.askPrice
+              } : undefined,
+            midPrice: item.position.contract.midPrice !== undefined ? {
+                set: item.position.contract.midPrice
+              } : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? {
+                set: item.position.contract.bidSize
+              } : undefined,
+            askSize: item.position.contract.askSize !== undefined ? {
+                set: item.position.contract.askSize
+              } : undefined,
+            volume: item.position.contract.volume !== undefined ? {
+                set: item.position.contract.volume
+              } : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? {
+                set: item.position.contract.openInterest
+              } : undefined,
+            impliedVolatility: item.position.contract.impliedVolatility !== undefined ? {
+                set: item.position.contract.impliedVolatility
+              } : undefined,
+            delta: item.position.contract.delta !== undefined ? {
+                set: item.position.contract.delta
+              } : undefined,
+            gamma: item.position.contract.gamma !== undefined ? {
+                set: item.position.contract.gamma
+              } : undefined,
+            theta: item.position.contract.theta !== undefined ? {
+                set: item.position.contract.theta
+              } : undefined,
+            vega: item.position.contract.vega !== undefined ? {
+                set: item.position.contract.vega
+              } : undefined,
+            rho: item.position.contract.rho !== undefined ? {
+                set: item.position.contract.rho
+              } : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? {
+                set: item.position.contract.inTheMoney
+              } : undefined,
+            intrinsicValue: item.position.contract.intrinsicValue !== undefined ? {
+                set: item.position.contract.intrinsicValue
+              } : undefined,
+            extrinsicValue: item.position.contract.extrinsicValue !== undefined ? {
+                set: item.position.contract.extrinsicValue
+              } : undefined,
+            theoreticalPrice: item.position.contract.theoreticalPrice !== undefined ? {
+                set: item.position.contract.theoreticalPrice
+              } : undefined,
+            underlyingPrice: item.position.contract.underlyingPrice !== undefined ? {
+                set: item.position.contract.underlyingPrice
+              } : undefined,
+            metadata: item.position.contract.metadata !== undefined ? {
+                set: item.position.contract.metadata
+              } : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? {
+                set: item.position.contract.dataTimestamp
+              } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+        executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+        orderType: item.orderType !== undefined ? item.orderType : undefined,
+        timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+        venue: item.venue !== undefined ? item.venue : undefined,
+        notes: item.notes !== undefined ? item.notes : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+          id: item.position.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.position.id !== undefined ? item.position.id : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId 
+             } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -3723,16 +1709,11 @@ export const OptionsContract = {
           mutation: UPDATE_ONE_OPTIONSCONTRACT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateOneOptionsContract
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateOneOptionsContract) {
           return response.data.updateOneOptionsContract;
         } else {
           return null as any;
@@ -3746,19 +1727,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -3774,10 +1754,7 @@ export const OptionsContract = {
    * @param globalClient - Apollo Client instance.
    * @returns The updated OptionsContract or null.
    */
-  async upsert(
-    props: OptionsContractType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsContractType> {
+  async upsert(props: OptionsContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsContractType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3788,7 +1765,9 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -3803,3253 +1782,1280 @@ export const OptionsContract = {
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    equals: props.symbol,
-                  }
-                : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
+          create: {
+        symbol: props.symbol !== undefined ? props.symbol : undefined,
+  contractSymbol: props.contractSymbol !== undefined ? props.contractSymbol : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? props.daysToExpiration : undefined,
+  bidSize: props.bidSize !== undefined ? props.bidSize : undefined,
+  askSize: props.askSize !== undefined ? props.askSize : undefined,
+  volume: props.volume !== undefined ? props.volume : undefined,
+  openInterest: props.openInterest !== undefined ? props.openInterest : undefined,
+  inTheMoney: props.inTheMoney !== undefined ? props.inTheMoney : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  dataTimestamp: props.dataTimestamp !== undefined ? props.dataTimestamp : undefined,
+  positions: props.positions ? 
+    Array.isArray(props.positions) && props.positions.length > 0 &&  props.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.positions.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.positions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
+           } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+        exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+        daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+        exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+        strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+        tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
           },
           create: {
-            symbol: props.symbol !== undefined ? props.symbol : undefined,
-            contractSymbol:
-              props.contractSymbol !== undefined
-                ? props.contractSymbol
-                : undefined,
-            optionType:
-              props.optionType !== undefined ? props.optionType : undefined,
-            expirationDate:
-              props.expirationDate !== undefined
-                ? props.expirationDate
-                : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? props.daysToExpiration
-                : undefined,
-            bidSize: props.bidSize !== undefined ? props.bidSize : undefined,
-            askSize: props.askSize !== undefined ? props.askSize : undefined,
-            volume: props.volume !== undefined ? props.volume : undefined,
-            openInterest:
-              props.openInterest !== undefined ? props.openInterest : undefined,
-            inTheMoney:
-              props.inTheMoney !== undefined ? props.inTheMoney : undefined,
-            metadata: props.metadata !== undefined ? props.metadata : undefined,
-            dataTimestamp:
-              props.dataTimestamp !== undefined
-                ? props.dataTimestamp
-                : undefined,
-            positions: props.positions
-              ? Array.isArray(props.positions) &&
-                props.positions.length > 0 &&
-                props.positions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    'id' in item &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.positions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    connectOrCreate: props.positions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        status:
-                          item.status !== undefined ? item.status : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? item.openingSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? item.entryTime
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? item.exitTime
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? item.daysHeld
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? item.exitReason
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? item.strategyType
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined ? item.tradeId : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                connectOrCreate: item.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      contract: item.contract
-                                        ? typeof item.contract === 'object' &&
-                                          Object.keys(item.contract).length ===
-                                            1 &&
-                                          Object.keys(item.contract)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.contract.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.contract.id !==
-                                                    undefined
-                                                      ? item.contract.id
-                                                      : undefined,
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.contract
-                                                              .symbol,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? item.contract.symbol
-                                                      : undefined,
-                                                  contractSymbol:
-                                                    item.contract
-                                                      .contractSymbol !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .contractSymbol
-                                                      : undefined,
-                                                  optionType:
-                                                    item.contract.optionType !==
-                                                    undefined
-                                                      ? item.contract.optionType
-                                                      : undefined,
-                                                  expirationDate:
-                                                    item.contract
-                                                      .expirationDate !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .expirationDate
-                                                      : undefined,
-                                                  daysToExpiration:
-                                                    item.contract
-                                                      .daysToExpiration !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .daysToExpiration
-                                                      : undefined,
-                                                  bidSize:
-                                                    item.contract.bidSize !==
-                                                    undefined
-                                                      ? item.contract.bidSize
-                                                      : undefined,
-                                                  askSize:
-                                                    item.contract.askSize !==
-                                                    undefined
-                                                      ? item.contract.askSize
-                                                      : undefined,
-                                                  volume:
-                                                    item.contract.volume !==
-                                                    undefined
-                                                      ? item.contract.volume
-                                                      : undefined,
-                                                  openInterest:
-                                                    item.contract
-                                                      .openInterest !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .openInterest
-                                                      : undefined,
-                                                  inTheMoney:
-                                                    item.contract.inTheMoney !==
-                                                    undefined
-                                                      ? item.contract.inTheMoney
-                                                      : undefined,
-                                                  metadata:
-                                                    item.contract.metadata !==
-                                                    undefined
-                                                      ? item.contract.metadata
-                                                      : undefined,
-                                                  dataTimestamp:
-                                                    item.contract
-                                                      .dataTimestamp !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .dataTimestamp
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            greeksHistory: props.greeksHistory
-              ? Array.isArray(props.greeksHistory) &&
-                props.greeksHistory.length > 0 &&
-                props.greeksHistory.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    'id' in item &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.greeksHistory.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    connectOrCreate: props.greeksHistory.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? item.timestamp
-                            : undefined,
-                        volume:
-                          item.volume !== undefined ? item.volume : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? item.openInterest
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? item.daysToExpiration
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            executions: props.executions
-              ? Array.isArray(props.executions) &&
-                props.executions.length > 0 &&
-                props.executions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    'id' in item &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.executions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    connectOrCreate: props.executions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        positionId:
-                          item.positionId !== undefined
-                            ? {
-                                equals: item.positionId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                equals: item.brokerOrderId,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? item.brokerOrderId
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? item.executionSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? item.executionTime
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? item.orderType
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? item.timeInForce
-                            : undefined,
-                        venue:
-                          item.venue !== undefined ? item.venue : undefined,
-                        notes:
-                          item.notes !== undefined ? item.notes : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            Object.keys(item.position)[0] === 'id'
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                connectOrCreate: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? item.position.id
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  greeksHistory: props.greeksHistory ? 
+    Array.isArray(props.greeksHistory) && props.greeksHistory.length > 0 &&  props.greeksHistory.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.greeksHistory.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.greeksHistory.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
+           } : undefined,
+      },
+      create: {
+        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+        volume: item.volume !== undefined ? item.volume : undefined,
+        openInterest: item.openInterest !== undefined ? item.openInterest : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? item.daysToExpiration : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  executions: props.executions ? 
+    Array.isArray(props.executions) && props.executions.length > 0 &&  props.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.executions.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.executions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        positionId: item.positionId !== undefined ? {
+            equals: item.positionId 
+           } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId 
+           } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId 
+           } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            equals: item.brokerOrderId 
+           } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+        executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+        orderType: item.orderType !== undefined ? item.orderType : undefined,
+        timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+        venue: item.venue !== undefined ? item.venue : undefined,
+        notes: item.notes !== undefined ? item.notes : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+          id: item.position.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.position.id !== undefined ? item.position.id : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId 
+             } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+      },
+          update: {
+      symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  contractSymbol: props.contractSymbol !== undefined ? {
+            set: props.contractSymbol 
+           } : undefined,
+  optionType: props.optionType !== undefined ? {
+            set: props.optionType 
+           } : undefined,
+  strikePrice: props.strikePrice !== undefined ? {
+            set: props.strikePrice 
+           } : undefined,
+  expirationDate: props.expirationDate !== undefined ? {
+            set: props.expirationDate 
+           } : undefined,
+  daysToExpiration: props.daysToExpiration !== undefined ? {
+            set: props.daysToExpiration 
+           } : undefined,
+  lastPrice: props.lastPrice !== undefined ? {
+            set: props.lastPrice 
+           } : undefined,
+  bidPrice: props.bidPrice !== undefined ? {
+            set: props.bidPrice 
+           } : undefined,
+  askPrice: props.askPrice !== undefined ? {
+            set: props.askPrice 
+           } : undefined,
+  midPrice: props.midPrice !== undefined ? {
+            set: props.midPrice 
+           } : undefined,
+  bidSize: props.bidSize !== undefined ? {
+            set: props.bidSize 
+           } : undefined,
+  askSize: props.askSize !== undefined ? {
+            set: props.askSize 
+           } : undefined,
+  volume: props.volume !== undefined ? {
+            set: props.volume 
+           } : undefined,
+  openInterest: props.openInterest !== undefined ? {
+            set: props.openInterest 
+           } : undefined,
+  impliedVolatility: props.impliedVolatility !== undefined ? {
+            set: props.impliedVolatility 
+           } : undefined,
+  delta: props.delta !== undefined ? {
+            set: props.delta 
+           } : undefined,
+  gamma: props.gamma !== undefined ? {
+            set: props.gamma 
+           } : undefined,
+  theta: props.theta !== undefined ? {
+            set: props.theta 
+           } : undefined,
+  vega: props.vega !== undefined ? {
+            set: props.vega 
+           } : undefined,
+  rho: props.rho !== undefined ? {
+            set: props.rho 
+           } : undefined,
+  inTheMoney: props.inTheMoney !== undefined ? {
+            set: props.inTheMoney 
+           } : undefined,
+  intrinsicValue: props.intrinsicValue !== undefined ? {
+            set: props.intrinsicValue 
+           } : undefined,
+  extrinsicValue: props.extrinsicValue !== undefined ? {
+            set: props.extrinsicValue 
+           } : undefined,
+  theoreticalPrice: props.theoreticalPrice !== undefined ? {
+            set: props.theoreticalPrice 
+           } : undefined,
+  underlyingPrice: props.underlyingPrice !== undefined ? {
+            set: props.underlyingPrice 
+           } : undefined,
+  metadata: props.metadata !== undefined ? {
+            set: props.metadata 
+           } : undefined,
+  dataTimestamp: props.dataTimestamp !== undefined ? {
+            set: props.dataTimestamp 
+           } : undefined,
+  positions: props.positions ? 
+  Array.isArray(props.positions) && props.positions.length > 0 && props.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.positions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.positions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+        tradeId: item.tradeId !== undefined ? {
+            equals: item.tradeId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            set: item.alpacaAccountId
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        openingSide: item.openingSide !== undefined ? {
+            set: item.openingSide
+          } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity
+          } : undefined,
+        entryPrice: item.entryPrice !== undefined ? {
+            set: item.entryPrice
+          } : undefined,
+        entryCost: item.entryCost !== undefined ? {
+            set: item.entryCost
+          } : undefined,
+        entryTime: item.entryTime !== undefined ? {
+            set: item.entryTime
+          } : undefined,
+        exitPrice: item.exitPrice !== undefined ? {
+            set: item.exitPrice
+          } : undefined,
+        exitValue: item.exitValue !== undefined ? {
+            set: item.exitValue
+          } : undefined,
+        exitTime: item.exitTime !== undefined ? {
+            set: item.exitTime
+          } : undefined,
+        currentPrice: item.currentPrice !== undefined ? {
+            set: item.currentPrice
+          } : undefined,
+        currentValue: item.currentValue !== undefined ? {
+            set: item.currentValue
+          } : undefined,
+        unrealizedPnL: item.unrealizedPnL !== undefined ? {
+            set: item.unrealizedPnL
+          } : undefined,
+        unrealizedPnLPercent: item.unrealizedPnLPercent !== undefined ? {
+            set: item.unrealizedPnLPercent
+          } : undefined,
+        realizedPnL: item.realizedPnL !== undefined ? {
+            set: item.realizedPnL
+          } : undefined,
+        realizedPnLPercent: item.realizedPnLPercent !== undefined ? {
+            set: item.realizedPnLPercent
+          } : undefined,
+        totalFees: item.totalFees !== undefined ? {
+            set: item.totalFees
+          } : undefined,
+        currentDelta: item.currentDelta !== undefined ? {
+            set: item.currentDelta
+          } : undefined,
+        currentGamma: item.currentGamma !== undefined ? {
+            set: item.currentGamma
+          } : undefined,
+        currentTheta: item.currentTheta !== undefined ? {
+            set: item.currentTheta
+          } : undefined,
+        currentVega: item.currentVega !== undefined ? {
+            set: item.currentVega
+          } : undefined,
+        currentRho: item.currentRho !== undefined ? {
+            set: item.currentRho
+          } : undefined,
+        currentImpliedVolatility: item.currentImpliedVolatility !== undefined ? {
+            set: item.currentImpliedVolatility
+          } : undefined,
+        daysHeld: item.daysHeld !== undefined ? {
+            set: item.daysHeld
+          } : undefined,
+        exitReason: item.exitReason !== undefined ? {
+            set: item.exitReason
+          } : undefined,
+        strategyType: item.strategyType !== undefined ? {
+            set: item.strategyType
+          } : undefined,
+        tradeId: item.tradeId !== undefined ? {
+            set: item.tradeId
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+    executions: item.executions ? 
+    Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.executions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              set: item.brokerOrderId
+            } : undefined,
+          executionSide: item.executionSide !== undefined ? {
+              set: item.executionSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          executionPrice: item.executionPrice !== undefined ? {
+              set: item.executionPrice
+            } : undefined,
+          executionValue: item.executionValue !== undefined ? {
+              set: item.executionValue
+            } : undefined,
+          fees: item.fees !== undefined ? {
+              set: item.fees
+            } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime
+            } : undefined,
+          underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+              set: item.underlyingPriceAtExecution
+            } : undefined,
+          deltaAtExecution: item.deltaAtExecution !== undefined ? {
+              set: item.deltaAtExecution
+            } : undefined,
+          gammaAtExecution: item.gammaAtExecution !== undefined ? {
+              set: item.gammaAtExecution
+            } : undefined,
+          thetaAtExecution: item.thetaAtExecution !== undefined ? {
+              set: item.thetaAtExecution
+            } : undefined,
+          vegaAtExecution: item.vegaAtExecution !== undefined ? {
+              set: item.vegaAtExecution
+            } : undefined,
+          rhoAtExecution: item.rhoAtExecution !== undefined ? {
+              set: item.rhoAtExecution
+            } : undefined,
+          impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+              set: item.impliedVolatilityAtExecution
+            } : undefined,
+          orderType: item.orderType !== undefined ? {
+              set: item.orderType
+            } : undefined,
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice
+            } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice
+            } : undefined,
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce
+            } : undefined,
+          venue: item.venue !== undefined ? {
+              set: item.venue
+            } : undefined,
+          slippage: item.slippage !== undefined ? {
+              set: item.slippage
+            } : undefined,
+          notes: item.notes !== undefined ? {
+              set: item.notes
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      contract: item.contract ? 
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
+? {
+      connect: {
+        id: item.contract.id
+      }
+} : { upsert: {
+          where: {
+            id: item.contract.id !== undefined ? {
+                equals: item.contract.id
+              } : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol
+              } : undefined,
           },
           update: {
-            symbol:
-              props.symbol !== undefined
-                ? {
-                    set: props.symbol,
-                  }
-                : undefined,
-            contractSymbol:
-              props.contractSymbol !== undefined
-                ? {
-                    set: props.contractSymbol,
-                  }
-                : undefined,
-            optionType:
-              props.optionType !== undefined
-                ? {
-                    set: props.optionType,
-                  }
-                : undefined,
-            strikePrice:
-              props.strikePrice !== undefined
-                ? {
-                    set: props.strikePrice,
-                  }
-                : undefined,
-            expirationDate:
-              props.expirationDate !== undefined
-                ? {
-                    set: props.expirationDate,
-                  }
-                : undefined,
-            daysToExpiration:
-              props.daysToExpiration !== undefined
-                ? {
-                    set: props.daysToExpiration,
-                  }
-                : undefined,
-            lastPrice:
-              props.lastPrice !== undefined
-                ? {
-                    set: props.lastPrice,
-                  }
-                : undefined,
-            bidPrice:
-              props.bidPrice !== undefined
-                ? {
-                    set: props.bidPrice,
-                  }
-                : undefined,
-            askPrice:
-              props.askPrice !== undefined
-                ? {
-                    set: props.askPrice,
-                  }
-                : undefined,
-            midPrice:
-              props.midPrice !== undefined
-                ? {
-                    set: props.midPrice,
-                  }
-                : undefined,
-            bidSize:
-              props.bidSize !== undefined
-                ? {
-                    set: props.bidSize,
-                  }
-                : undefined,
-            askSize:
-              props.askSize !== undefined
-                ? {
-                    set: props.askSize,
-                  }
-                : undefined,
-            volume:
-              props.volume !== undefined
-                ? {
-                    set: props.volume,
-                  }
-                : undefined,
-            openInterest:
-              props.openInterest !== undefined
-                ? {
-                    set: props.openInterest,
-                  }
-                : undefined,
-            impliedVolatility:
-              props.impliedVolatility !== undefined
-                ? {
-                    set: props.impliedVolatility,
-                  }
-                : undefined,
-            delta:
-              props.delta !== undefined
-                ? {
-                    set: props.delta,
-                  }
-                : undefined,
-            gamma:
-              props.gamma !== undefined
-                ? {
-                    set: props.gamma,
-                  }
-                : undefined,
-            theta:
-              props.theta !== undefined
-                ? {
-                    set: props.theta,
-                  }
-                : undefined,
-            vega:
-              props.vega !== undefined
-                ? {
-                    set: props.vega,
-                  }
-                : undefined,
-            rho:
-              props.rho !== undefined
-                ? {
-                    set: props.rho,
-                  }
-                : undefined,
-            inTheMoney:
-              props.inTheMoney !== undefined
-                ? {
-                    set: props.inTheMoney,
-                  }
-                : undefined,
-            intrinsicValue:
-              props.intrinsicValue !== undefined
-                ? {
-                    set: props.intrinsicValue,
-                  }
-                : undefined,
-            extrinsicValue:
-              props.extrinsicValue !== undefined
-                ? {
-                    set: props.extrinsicValue,
-                  }
-                : undefined,
-            theoreticalPrice:
-              props.theoreticalPrice !== undefined
-                ? {
-                    set: props.theoreticalPrice,
-                  }
-                : undefined,
-            underlyingPrice:
-              props.underlyingPrice !== undefined
-                ? {
-                    set: props.underlyingPrice,
-                  }
-                : undefined,
-            metadata:
-              props.metadata !== undefined
-                ? {
-                    set: props.metadata,
-                  }
-                : undefined,
-            dataTimestamp:
-              props.dataTimestamp !== undefined
-                ? {
-                    set: props.dataTimestamp,
-                  }
-                : undefined,
-            positions: props.positions
-              ? Array.isArray(props.positions) &&
-                props.positions.length > 0 &&
-                props.positions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.positions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: props.positions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined
-                            ? {
-                                equals: item.tradeId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                set: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        status:
-                          item.status !== undefined
-                            ? {
-                                set: item.status,
-                              }
-                            : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? {
-                                set: item.openingSide,
-                              }
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? {
-                                set: item.quantity,
-                              }
-                            : undefined,
-                        entryPrice:
-                          item.entryPrice !== undefined
-                            ? {
-                                set: item.entryPrice,
-                              }
-                            : undefined,
-                        entryCost:
-                          item.entryCost !== undefined
-                            ? {
-                                set: item.entryCost,
-                              }
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? {
-                                set: item.entryTime,
-                              }
-                            : undefined,
-                        exitPrice:
-                          item.exitPrice !== undefined
-                            ? {
-                                set: item.exitPrice,
-                              }
-                            : undefined,
-                        exitValue:
-                          item.exitValue !== undefined
-                            ? {
-                                set: item.exitValue,
-                              }
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? {
-                                set: item.exitTime,
-                              }
-                            : undefined,
-                        currentPrice:
-                          item.currentPrice !== undefined
-                            ? {
-                                set: item.currentPrice,
-                              }
-                            : undefined,
-                        currentValue:
-                          item.currentValue !== undefined
-                            ? {
-                                set: item.currentValue,
-                              }
-                            : undefined,
-                        unrealizedPnL:
-                          item.unrealizedPnL !== undefined
-                            ? {
-                                set: item.unrealizedPnL,
-                              }
-                            : undefined,
-                        unrealizedPnLPercent:
-                          item.unrealizedPnLPercent !== undefined
-                            ? {
-                                set: item.unrealizedPnLPercent,
-                              }
-                            : undefined,
-                        realizedPnL:
-                          item.realizedPnL !== undefined
-                            ? {
-                                set: item.realizedPnL,
-                              }
-                            : undefined,
-                        realizedPnLPercent:
-                          item.realizedPnLPercent !== undefined
-                            ? {
-                                set: item.realizedPnLPercent,
-                              }
-                            : undefined,
-                        totalFees:
-                          item.totalFees !== undefined
-                            ? {
-                                set: item.totalFees,
-                              }
-                            : undefined,
-                        currentDelta:
-                          item.currentDelta !== undefined
-                            ? {
-                                set: item.currentDelta,
-                              }
-                            : undefined,
-                        currentGamma:
-                          item.currentGamma !== undefined
-                            ? {
-                                set: item.currentGamma,
-                              }
-                            : undefined,
-                        currentTheta:
-                          item.currentTheta !== undefined
-                            ? {
-                                set: item.currentTheta,
-                              }
-                            : undefined,
-                        currentVega:
-                          item.currentVega !== undefined
-                            ? {
-                                set: item.currentVega,
-                              }
-                            : undefined,
-                        currentRho:
-                          item.currentRho !== undefined
-                            ? {
-                                set: item.currentRho,
-                              }
-                            : undefined,
-                        currentImpliedVolatility:
-                          item.currentImpliedVolatility !== undefined
-                            ? {
-                                set: item.currentImpliedVolatility,
-                              }
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? {
-                                set: item.daysHeld,
-                              }
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? {
-                                set: item.exitReason,
-                              }
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? {
-                                set: item.strategyType,
-                              }
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined
-                            ? {
-                                set: item.tradeId,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                upsert: item.executions.map((item: any) => ({
-                                  where: {
-                                    id:
-                                      item.id !== undefined
-                                        ? item.id
-                                        : undefined,
-                                    positionId:
-                                      item.positionId !== undefined
-                                        ? {
-                                            equals: item.positionId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.contractId !== undefined
-                                        ? {
-                                            equals: item.contractId,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? {
-                                            equals: item.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? {
-                                            equals: item.brokerOrderId,
-                                          }
-                                        : undefined,
-                                  },
-                                  update: {
-                                    id:
-                                      item.id !== undefined
-                                        ? {
-                                            set: item.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? {
-                                            set: item.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? {
-                                            set: item.brokerOrderId,
-                                          }
-                                        : undefined,
-                                    executionSide:
-                                      item.executionSide !== undefined
-                                        ? {
-                                            set: item.executionSide,
-                                          }
-                                        : undefined,
-                                    quantity:
-                                      item.quantity !== undefined
-                                        ? {
-                                            set: item.quantity,
-                                          }
-                                        : undefined,
-                                    executionPrice:
-                                      item.executionPrice !== undefined
-                                        ? {
-                                            set: item.executionPrice,
-                                          }
-                                        : undefined,
-                                    executionValue:
-                                      item.executionValue !== undefined
-                                        ? {
-                                            set: item.executionValue,
-                                          }
-                                        : undefined,
-                                    fees:
-                                      item.fees !== undefined
-                                        ? {
-                                            set: item.fees,
-                                          }
-                                        : undefined,
-                                    executionTime:
-                                      item.executionTime !== undefined
-                                        ? {
-                                            set: item.executionTime,
-                                          }
-                                        : undefined,
-                                    underlyingPriceAtExecution:
-                                      item.underlyingPriceAtExecution !==
-                                      undefined
-                                        ? {
-                                            set: item.underlyingPriceAtExecution,
-                                          }
-                                        : undefined,
-                                    deltaAtExecution:
-                                      item.deltaAtExecution !== undefined
-                                        ? {
-                                            set: item.deltaAtExecution,
-                                          }
-                                        : undefined,
-                                    gammaAtExecution:
-                                      item.gammaAtExecution !== undefined
-                                        ? {
-                                            set: item.gammaAtExecution,
-                                          }
-                                        : undefined,
-                                    thetaAtExecution:
-                                      item.thetaAtExecution !== undefined
-                                        ? {
-                                            set: item.thetaAtExecution,
-                                          }
-                                        : undefined,
-                                    vegaAtExecution:
-                                      item.vegaAtExecution !== undefined
-                                        ? {
-                                            set: item.vegaAtExecution,
-                                          }
-                                        : undefined,
-                                    rhoAtExecution:
-                                      item.rhoAtExecution !== undefined
-                                        ? {
-                                            set: item.rhoAtExecution,
-                                          }
-                                        : undefined,
-                                    impliedVolatilityAtExecution:
-                                      item.impliedVolatilityAtExecution !==
-                                      undefined
-                                        ? {
-                                            set: item.impliedVolatilityAtExecution,
-                                          }
-                                        : undefined,
-                                    orderType:
-                                      item.orderType !== undefined
-                                        ? {
-                                            set: item.orderType,
-                                          }
-                                        : undefined,
-                                    limitPrice:
-                                      item.limitPrice !== undefined
-                                        ? {
-                                            set: item.limitPrice,
-                                          }
-                                        : undefined,
-                                    stopPrice:
-                                      item.stopPrice !== undefined
-                                        ? {
-                                            set: item.stopPrice,
-                                          }
-                                        : undefined,
-                                    timeInForce:
-                                      item.timeInForce !== undefined
-                                        ? {
-                                            set: item.timeInForce,
-                                          }
-                                        : undefined,
-                                    venue:
-                                      item.venue !== undefined
-                                        ? {
-                                            set: item.venue,
-                                          }
-                                        : undefined,
-                                    slippage:
-                                      item.slippage !== undefined
-                                        ? {
-                                            set: item.slippage,
-                                          }
-                                        : undefined,
-                                    notes:
-                                      item.notes !== undefined
-                                        ? {
-                                            set: item.notes,
-                                          }
-                                        : undefined,
-                                    metadata:
-                                      item.metadata !== undefined
-                                        ? {
-                                            set: item.metadata,
-                                          }
-                                        : undefined,
-                                    contract: item.contract
-                                      ? typeof item.contract === 'object' &&
-                                        Object.keys(item.contract).length ===
-                                          1 &&
-                                        (Object.keys(item.contract)[0] ===
-                                          'id' ||
-                                          Object.keys(item.contract)[0] ===
-                                            'symbol')
-                                        ? {
-                                            connect: {
-                                              id: item.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            upsert: {
-                                              where: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              update: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? {
-                                                        set: item.contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .symbol,
-                                                      }
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .contractSymbol,
-                                                      }
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .optionType,
-                                                      }
-                                                    : undefined,
-                                                strikePrice:
-                                                  item.contract.strikePrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .strikePrice,
-                                                      }
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .expirationDate,
-                                                      }
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .daysToExpiration,
-                                                      }
-                                                    : undefined,
-                                                lastPrice:
-                                                  item.contract.lastPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .lastPrice,
-                                                      }
-                                                    : undefined,
-                                                bidPrice:
-                                                  item.contract.bidPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .bidPrice,
-                                                      }
-                                                    : undefined,
-                                                askPrice:
-                                                  item.contract.askPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .askPrice,
-                                                      }
-                                                    : undefined,
-                                                midPrice:
-                                                  item.contract.midPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .midPrice,
-                                                      }
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .bidSize,
-                                                      }
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .askSize,
-                                                      }
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .volume,
-                                                      }
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .openInterest,
-                                                      }
-                                                    : undefined,
-                                                impliedVolatility:
-                                                  item.contract
-                                                    .impliedVolatility !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .impliedVolatility,
-                                                      }
-                                                    : undefined,
-                                                delta:
-                                                  item.contract.delta !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .delta,
-                                                      }
-                                                    : undefined,
-                                                gamma:
-                                                  item.contract.gamma !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .gamma,
-                                                      }
-                                                    : undefined,
-                                                theta:
-                                                  item.contract.theta !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .theta,
-                                                      }
-                                                    : undefined,
-                                                vega:
-                                                  item.contract.vega !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract.vega,
-                                                      }
-                                                    : undefined,
-                                                rho:
-                                                  item.contract.rho !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract.rho,
-                                                      }
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .inTheMoney,
-                                                      }
-                                                    : undefined,
-                                                intrinsicValue:
-                                                  item.contract
-                                                    .intrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .intrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                extrinsicValue:
-                                                  item.contract
-                                                    .extrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .extrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                theoreticalPrice:
-                                                  item.contract
-                                                    .theoreticalPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .theoreticalPrice,
-                                                      }
-                                                    : undefined,
-                                                underlyingPrice:
-                                                  item.contract
-                                                    .underlyingPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .underlyingPrice,
-                                                      }
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .metadata,
-                                                      }
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .dataTimestamp,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? item.contract.symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? item.contract.optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? item.contract.bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? item.contract.askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? item.contract.volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? item.contract.openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? item.contract.inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? item.contract.metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? item.alpacaAccountId
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? item.brokerOrderId
-                                        : undefined,
-                                    executionSide:
-                                      item.executionSide !== undefined
-                                        ? item.executionSide
-                                        : undefined,
-                                    quantity:
-                                      item.quantity !== undefined
-                                        ? item.quantity
-                                        : undefined,
-                                    executionTime:
-                                      item.executionTime !== undefined
-                                        ? item.executionTime
-                                        : undefined,
-                                    orderType:
-                                      item.orderType !== undefined
-                                        ? item.orderType
-                                        : undefined,
-                                    timeInForce:
-                                      item.timeInForce !== undefined
-                                        ? item.timeInForce
-                                        : undefined,
-                                    venue:
-                                      item.venue !== undefined
-                                        ? item.venue
-                                        : undefined,
-                                    notes:
-                                      item.notes !== undefined
-                                        ? item.notes
-                                        : undefined,
-                                    metadata:
-                                      item.metadata !== undefined
-                                        ? item.metadata
-                                        : undefined,
-                                    contract: item.contract
-                                      ? typeof item.contract === 'object' &&
-                                        Object.keys(item.contract).length ===
-                                          1 &&
-                                        Object.keys(item.contract)[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? item.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? item.contract.symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? item.contract.optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? item.contract.bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? item.contract.askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? item.contract.volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? item.contract.openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? item.contract.inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? item.contract.metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                })),
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        status:
-                          item.status !== undefined ? item.status : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? item.openingSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? item.entryTime
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? item.exitTime
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? item.daysHeld
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? item.exitReason
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? item.strategyType
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined ? item.tradeId : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                connectOrCreate: item.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      contract: item.contract
-                                        ? typeof item.contract === 'object' &&
-                                          Object.keys(item.contract).length ===
-                                            1 &&
-                                          Object.keys(item.contract)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.contract.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.contract.id !==
-                                                    undefined
-                                                      ? item.contract.id
-                                                      : undefined,
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.contract
-                                                              .symbol,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? item.contract.symbol
-                                                      : undefined,
-                                                  contractSymbol:
-                                                    item.contract
-                                                      .contractSymbol !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .contractSymbol
-                                                      : undefined,
-                                                  optionType:
-                                                    item.contract.optionType !==
-                                                    undefined
-                                                      ? item.contract.optionType
-                                                      : undefined,
-                                                  expirationDate:
-                                                    item.contract
-                                                      .expirationDate !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .expirationDate
-                                                      : undefined,
-                                                  daysToExpiration:
-                                                    item.contract
-                                                      .daysToExpiration !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .daysToExpiration
-                                                      : undefined,
-                                                  bidSize:
-                                                    item.contract.bidSize !==
-                                                    undefined
-                                                      ? item.contract.bidSize
-                                                      : undefined,
-                                                  askSize:
-                                                    item.contract.askSize !==
-                                                    undefined
-                                                      ? item.contract.askSize
-                                                      : undefined,
-                                                  volume:
-                                                    item.contract.volume !==
-                                                    undefined
-                                                      ? item.contract.volume
-                                                      : undefined,
-                                                  openInterest:
-                                                    item.contract
-                                                      .openInterest !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .openInterest
-                                                      : undefined,
-                                                  inTheMoney:
-                                                    item.contract.inTheMoney !==
-                                                    undefined
-                                                      ? item.contract.inTheMoney
-                                                      : undefined,
-                                                  metadata:
-                                                    item.contract.metadata !==
-                                                    undefined
-                                                      ? item.contract.metadata
-                                                      : undefined,
-                                                  dataTimestamp:
-                                                    item.contract
-                                                      .dataTimestamp !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .dataTimestamp
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            greeksHistory: props.greeksHistory
-              ? Array.isArray(props.greeksHistory) &&
-                props.greeksHistory.length > 0 &&
-                props.greeksHistory.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.greeksHistory.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: props.greeksHistory.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? {
-                                set: item.timestamp,
-                              }
-                            : undefined,
-                        underlyingPrice:
-                          item.underlyingPrice !== undefined
-                            ? {
-                                set: item.underlyingPrice,
-                              }
-                            : undefined,
-                        optionPrice:
-                          item.optionPrice !== undefined
-                            ? {
-                                set: item.optionPrice,
-                              }
-                            : undefined,
-                        bidPrice:
-                          item.bidPrice !== undefined
-                            ? {
-                                set: item.bidPrice,
-                              }
-                            : undefined,
-                        askPrice:
-                          item.askPrice !== undefined
-                            ? {
-                                set: item.askPrice,
-                              }
-                            : undefined,
-                        impliedVolatility:
-                          item.impliedVolatility !== undefined
-                            ? {
-                                set: item.impliedVolatility,
-                              }
-                            : undefined,
-                        delta:
-                          item.delta !== undefined
-                            ? {
-                                set: item.delta,
-                              }
-                            : undefined,
-                        gamma:
-                          item.gamma !== undefined
-                            ? {
-                                set: item.gamma,
-                              }
-                            : undefined,
-                        theta:
-                          item.theta !== undefined
-                            ? {
-                                set: item.theta,
-                              }
-                            : undefined,
-                        vega:
-                          item.vega !== undefined
-                            ? {
-                                set: item.vega,
-                              }
-                            : undefined,
-                        rho:
-                          item.rho !== undefined
-                            ? {
-                                set: item.rho,
-                              }
-                            : undefined,
-                        volume:
-                          item.volume !== undefined
-                            ? {
-                                set: item.volume,
-                              }
-                            : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? {
-                                set: item.openInterest,
-                              }
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? {
-                                set: item.daysToExpiration,
-                              }
-                            : undefined,
-                        intrinsicValue:
-                          item.intrinsicValue !== undefined
-                            ? {
-                                set: item.intrinsicValue,
-                              }
-                            : undefined,
-                        extrinsicValue:
-                          item.extrinsicValue !== undefined
-                            ? {
-                                set: item.extrinsicValue,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? item.timestamp
-                            : undefined,
-                        volume:
-                          item.volume !== undefined ? item.volume : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? item.openInterest
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? item.daysToExpiration
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            executions: props.executions
-              ? Array.isArray(props.executions) &&
-                props.executions.length > 0 &&
-                props.executions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: props.executions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: props.executions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        positionId:
-                          item.positionId !== undefined
-                            ? {
-                                equals: item.positionId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                equals: item.brokerOrderId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                set: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                set: item.brokerOrderId,
-                              }
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? {
-                                set: item.executionSide,
-                              }
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? {
-                                set: item.quantity,
-                              }
-                            : undefined,
-                        executionPrice:
-                          item.executionPrice !== undefined
-                            ? {
-                                set: item.executionPrice,
-                              }
-                            : undefined,
-                        executionValue:
-                          item.executionValue !== undefined
-                            ? {
-                                set: item.executionValue,
-                              }
-                            : undefined,
-                        fees:
-                          item.fees !== undefined
-                            ? {
-                                set: item.fees,
-                              }
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? {
-                                set: item.executionTime,
-                              }
-                            : undefined,
-                        underlyingPriceAtExecution:
-                          item.underlyingPriceAtExecution !== undefined
-                            ? {
-                                set: item.underlyingPriceAtExecution,
-                              }
-                            : undefined,
-                        deltaAtExecution:
-                          item.deltaAtExecution !== undefined
-                            ? {
-                                set: item.deltaAtExecution,
-                              }
-                            : undefined,
-                        gammaAtExecution:
-                          item.gammaAtExecution !== undefined
-                            ? {
-                                set: item.gammaAtExecution,
-                              }
-                            : undefined,
-                        thetaAtExecution:
-                          item.thetaAtExecution !== undefined
-                            ? {
-                                set: item.thetaAtExecution,
-                              }
-                            : undefined,
-                        vegaAtExecution:
-                          item.vegaAtExecution !== undefined
-                            ? {
-                                set: item.vegaAtExecution,
-                              }
-                            : undefined,
-                        rhoAtExecution:
-                          item.rhoAtExecution !== undefined
-                            ? {
-                                set: item.rhoAtExecution,
-                              }
-                            : undefined,
-                        impliedVolatilityAtExecution:
-                          item.impliedVolatilityAtExecution !== undefined
-                            ? {
-                                set: item.impliedVolatilityAtExecution,
-                              }
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? {
-                                set: item.orderType,
-                              }
-                            : undefined,
-                        limitPrice:
-                          item.limitPrice !== undefined
-                            ? {
-                                set: item.limitPrice,
-                              }
-                            : undefined,
-                        stopPrice:
-                          item.stopPrice !== undefined
-                            ? {
-                                set: item.stopPrice,
-                              }
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? {
-                                set: item.timeInForce,
-                              }
-                            : undefined,
-                        venue:
-                          item.venue !== undefined
-                            ? {
-                                set: item.venue,
-                              }
-                            : undefined,
-                        slippage:
-                          item.slippage !== undefined
-                            ? {
-                                set: item.slippage,
-                              }
-                            : undefined,
-                        notes:
-                          item.notes !== undefined
-                            ? {
-                                set: item.notes,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            (Object.keys(item.position)[0] === 'id' ||
-                              Object.keys(item.position)[0] === 'symbol')
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                upsert: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? {
-                                            equals: item.position.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? {
-                                            equals: item.position.tradeId,
-                                          }
-                                        : undefined,
-                                  },
-                                  update: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? {
-                                            set: item.position.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            set: item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? {
-                                            set: item.position.status,
-                                          }
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? {
-                                            set: item.position.openingSide,
-                                          }
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? {
-                                            set: item.position.quantity,
-                                          }
-                                        : undefined,
-                                    entryPrice:
-                                      item.position.entryPrice !== undefined
-                                        ? {
-                                            set: item.position.entryPrice,
-                                          }
-                                        : undefined,
-                                    entryCost:
-                                      item.position.entryCost !== undefined
-                                        ? {
-                                            set: item.position.entryCost,
-                                          }
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? {
-                                            set: item.position.entryTime,
-                                          }
-                                        : undefined,
-                                    exitPrice:
-                                      item.position.exitPrice !== undefined
-                                        ? {
-                                            set: item.position.exitPrice,
-                                          }
-                                        : undefined,
-                                    exitValue:
-                                      item.position.exitValue !== undefined
-                                        ? {
-                                            set: item.position.exitValue,
-                                          }
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? {
-                                            set: item.position.exitTime,
-                                          }
-                                        : undefined,
-                                    currentPrice:
-                                      item.position.currentPrice !== undefined
-                                        ? {
-                                            set: item.position.currentPrice,
-                                          }
-                                        : undefined,
-                                    currentValue:
-                                      item.position.currentValue !== undefined
-                                        ? {
-                                            set: item.position.currentValue,
-                                          }
-                                        : undefined,
-                                    unrealizedPnL:
-                                      item.position.unrealizedPnL !== undefined
-                                        ? {
-                                            set: item.position.unrealizedPnL,
-                                          }
-                                        : undefined,
-                                    unrealizedPnLPercent:
-                                      item.position.unrealizedPnLPercent !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .unrealizedPnLPercent,
-                                          }
-                                        : undefined,
-                                    realizedPnL:
-                                      item.position.realizedPnL !== undefined
-                                        ? {
-                                            set: item.position.realizedPnL,
-                                          }
-                                        : undefined,
-                                    realizedPnLPercent:
-                                      item.position.realizedPnLPercent !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .realizedPnLPercent,
-                                          }
-                                        : undefined,
-                                    totalFees:
-                                      item.position.totalFees !== undefined
-                                        ? {
-                                            set: item.position.totalFees,
-                                          }
-                                        : undefined,
-                                    currentDelta:
-                                      item.position.currentDelta !== undefined
-                                        ? {
-                                            set: item.position.currentDelta,
-                                          }
-                                        : undefined,
-                                    currentGamma:
-                                      item.position.currentGamma !== undefined
-                                        ? {
-                                            set: item.position.currentGamma,
-                                          }
-                                        : undefined,
-                                    currentTheta:
-                                      item.position.currentTheta !== undefined
-                                        ? {
-                                            set: item.position.currentTheta,
-                                          }
-                                        : undefined,
-                                    currentVega:
-                                      item.position.currentVega !== undefined
-                                        ? {
-                                            set: item.position.currentVega,
-                                          }
-                                        : undefined,
-                                    currentRho:
-                                      item.position.currentRho !== undefined
-                                        ? {
-                                            set: item.position.currentRho,
-                                          }
-                                        : undefined,
-                                    currentImpliedVolatility:
-                                      item.position.currentImpliedVolatility !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .currentImpliedVolatility,
-                                          }
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? {
-                                            set: item.position.daysHeld,
-                                          }
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? {
-                                            set: item.position.exitReason,
-                                          }
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? {
-                                            set: item.position.strategyType,
-                                          }
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? {
-                                            set: item.position.tradeId,
-                                          }
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? {
-                                            set: item.position.metadata,
-                                          }
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        (Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id' ||
-                                          Object.keys(
-                                            item.position.contract
-                                          )[0] === 'symbol')
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            upsert: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              update: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.symbol,
-                                                      }
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .contractSymbol,
-                                                      }
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.optionType,
-                                                      }
-                                                    : undefined,
-                                                strikePrice:
-                                                  item.position.contract
-                                                    .strikePrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.strikePrice,
-                                                      }
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .expirationDate,
-                                                      }
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .daysToExpiration,
-                                                      }
-                                                    : undefined,
-                                                lastPrice:
-                                                  item.position.contract
-                                                    .lastPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.lastPrice,
-                                                      }
-                                                    : undefined,
-                                                bidPrice:
-                                                  item.position.contract
-                                                    .bidPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.bidPrice,
-                                                      }
-                                                    : undefined,
-                                                askPrice:
-                                                  item.position.contract
-                                                    .askPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.askPrice,
-                                                      }
-                                                    : undefined,
-                                                midPrice:
-                                                  item.position.contract
-                                                    .midPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.midPrice,
-                                                      }
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.bidSize,
-                                                      }
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.askSize,
-                                                      }
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.volume,
-                                                      }
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .openInterest,
-                                                      }
-                                                    : undefined,
-                                                impliedVolatility:
-                                                  item.position.contract
-                                                    .impliedVolatility !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .impliedVolatility,
-                                                      }
-                                                    : undefined,
-                                                delta:
-                                                  item.position.contract
-                                                    .delta !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.delta,
-                                                      }
-                                                    : undefined,
-                                                gamma:
-                                                  item.position.contract
-                                                    .gamma !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.gamma,
-                                                      }
-                                                    : undefined,
-                                                theta:
-                                                  item.position.contract
-                                                    .theta !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.theta,
-                                                      }
-                                                    : undefined,
-                                                vega:
-                                                  item.position.contract
-                                                    .vega !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.vega,
-                                                      }
-                                                    : undefined,
-                                                rho:
-                                                  item.position.contract.rho !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.rho,
-                                                      }
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.inTheMoney,
-                                                      }
-                                                    : undefined,
-                                                intrinsicValue:
-                                                  item.position.contract
-                                                    .intrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .intrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                extrinsicValue:
-                                                  item.position.contract
-                                                    .extrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .extrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                theoreticalPrice:
-                                                  item.position.contract
-                                                    .theoreticalPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .theoreticalPrice,
-                                                      }
-                                                    : undefined,
-                                                underlyingPrice:
-                                                  item.position.contract
-                                                    .underlyingPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .underlyingPrice,
-                                                      }
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.metadata,
-                                                      }
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .dataTimestamp,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? item.brokerOrderId
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? item.executionSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? item.executionTime
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? item.orderType
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? item.timeInForce
-                            : undefined,
-                        venue:
-                          item.venue !== undefined ? item.venue : undefined,
-                        notes:
-                          item.notes !== undefined ? item.notes : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            Object.keys(item.position)[0] === 'id'
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                connectOrCreate: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? item.position.id
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
+            id: item.contract.id !== undefined ? {
+                set: item.contract.id
+              } : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                set: item.contract.symbol
+              } : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? {
+                set: item.contract.contractSymbol
+              } : undefined,
+            optionType: item.contract.optionType !== undefined ? {
+                set: item.contract.optionType
+              } : undefined,
+            strikePrice: item.contract.strikePrice !== undefined ? {
+                set: item.contract.strikePrice
+              } : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? {
+                set: item.contract.expirationDate
+              } : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? {
+                set: item.contract.daysToExpiration
+              } : undefined,
+            lastPrice: item.contract.lastPrice !== undefined ? {
+                set: item.contract.lastPrice
+              } : undefined,
+            bidPrice: item.contract.bidPrice !== undefined ? {
+                set: item.contract.bidPrice
+              } : undefined,
+            askPrice: item.contract.askPrice !== undefined ? {
+                set: item.contract.askPrice
+              } : undefined,
+            midPrice: item.contract.midPrice !== undefined ? {
+                set: item.contract.midPrice
+              } : undefined,
+            bidSize: item.contract.bidSize !== undefined ? {
+                set: item.contract.bidSize
+              } : undefined,
+            askSize: item.contract.askSize !== undefined ? {
+                set: item.contract.askSize
+              } : undefined,
+            volume: item.contract.volume !== undefined ? {
+                set: item.contract.volume
+              } : undefined,
+            openInterest: item.contract.openInterest !== undefined ? {
+                set: item.contract.openInterest
+              } : undefined,
+            impliedVolatility: item.contract.impliedVolatility !== undefined ? {
+                set: item.contract.impliedVolatility
+              } : undefined,
+            delta: item.contract.delta !== undefined ? {
+                set: item.contract.delta
+              } : undefined,
+            gamma: item.contract.gamma !== undefined ? {
+                set: item.contract.gamma
+              } : undefined,
+            theta: item.contract.theta !== undefined ? {
+                set: item.contract.theta
+              } : undefined,
+            vega: item.contract.vega !== undefined ? {
+                set: item.contract.vega
+              } : undefined,
+            rho: item.contract.rho !== undefined ? {
+                set: item.contract.rho
+              } : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? {
+                set: item.contract.inTheMoney
+              } : undefined,
+            intrinsicValue: item.contract.intrinsicValue !== undefined ? {
+                set: item.contract.intrinsicValue
+              } : undefined,
+            extrinsicValue: item.contract.extrinsicValue !== undefined ? {
+                set: item.contract.extrinsicValue
+              } : undefined,
+            theoreticalPrice: item.contract.theoreticalPrice !== undefined ? {
+                set: item.contract.theoreticalPrice
+              } : undefined,
+            underlyingPrice: item.contract.underlyingPrice !== undefined ? {
+                set: item.contract.underlyingPrice
+              } : undefined,
+            metadata: item.contract.metadata !== undefined ? {
+                set: item.contract.metadata
+              } : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? {
+                set: item.contract.dataTimestamp
+              } : undefined,
           },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+        exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+        daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+        exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+        strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+        tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  greeksHistory: props.greeksHistory ? 
+  Array.isArray(props.greeksHistory) && props.greeksHistory.length > 0 && props.greeksHistory.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.greeksHistory.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.greeksHistory.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        timestamp: item.timestamp !== undefined ? {
+            set: item.timestamp
+          } : undefined,
+        underlyingPrice: item.underlyingPrice !== undefined ? {
+            set: item.underlyingPrice
+          } : undefined,
+        optionPrice: item.optionPrice !== undefined ? {
+            set: item.optionPrice
+          } : undefined,
+        bidPrice: item.bidPrice !== undefined ? {
+            set: item.bidPrice
+          } : undefined,
+        askPrice: item.askPrice !== undefined ? {
+            set: item.askPrice
+          } : undefined,
+        impliedVolatility: item.impliedVolatility !== undefined ? {
+            set: item.impliedVolatility
+          } : undefined,
+        delta: item.delta !== undefined ? {
+            set: item.delta
+          } : undefined,
+        gamma: item.gamma !== undefined ? {
+            set: item.gamma
+          } : undefined,
+        theta: item.theta !== undefined ? {
+            set: item.theta
+          } : undefined,
+        vega: item.vega !== undefined ? {
+            set: item.vega
+          } : undefined,
+        rho: item.rho !== undefined ? {
+            set: item.rho
+          } : undefined,
+        volume: item.volume !== undefined ? {
+            set: item.volume
+          } : undefined,
+        openInterest: item.openInterest !== undefined ? {
+            set: item.openInterest
+          } : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? {
+            set: item.daysToExpiration
+          } : undefined,
+        intrinsicValue: item.intrinsicValue !== undefined ? {
+            set: item.intrinsicValue
+          } : undefined,
+        extrinsicValue: item.extrinsicValue !== undefined ? {
+            set: item.extrinsicValue
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+      },
+      create: {
+        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+        volume: item.volume !== undefined ? item.volume : undefined,
+        openInterest: item.openInterest !== undefined ? item.openInterest : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? item.daysToExpiration : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  executions: props.executions ? 
+  Array.isArray(props.executions) && props.executions.length > 0 && props.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.executions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.executions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        positionId: item.positionId !== undefined ? {
+            equals: item.positionId
+          } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            equals: item.brokerOrderId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            set: item.alpacaAccountId
+          } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            set: item.brokerOrderId
+          } : undefined,
+        executionSide: item.executionSide !== undefined ? {
+            set: item.executionSide
+          } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity
+          } : undefined,
+        executionPrice: item.executionPrice !== undefined ? {
+            set: item.executionPrice
+          } : undefined,
+        executionValue: item.executionValue !== undefined ? {
+            set: item.executionValue
+          } : undefined,
+        fees: item.fees !== undefined ? {
+            set: item.fees
+          } : undefined,
+        executionTime: item.executionTime !== undefined ? {
+            set: item.executionTime
+          } : undefined,
+        underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+            set: item.underlyingPriceAtExecution
+          } : undefined,
+        deltaAtExecution: item.deltaAtExecution !== undefined ? {
+            set: item.deltaAtExecution
+          } : undefined,
+        gammaAtExecution: item.gammaAtExecution !== undefined ? {
+            set: item.gammaAtExecution
+          } : undefined,
+        thetaAtExecution: item.thetaAtExecution !== undefined ? {
+            set: item.thetaAtExecution
+          } : undefined,
+        vegaAtExecution: item.vegaAtExecution !== undefined ? {
+            set: item.vegaAtExecution
+          } : undefined,
+        rhoAtExecution: item.rhoAtExecution !== undefined ? {
+            set: item.rhoAtExecution
+          } : undefined,
+        impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+            set: item.impliedVolatilityAtExecution
+          } : undefined,
+        orderType: item.orderType !== undefined ? {
+            set: item.orderType
+          } : undefined,
+        limitPrice: item.limitPrice !== undefined ? {
+            set: item.limitPrice
+          } : undefined,
+        stopPrice: item.stopPrice !== undefined ? {
+            set: item.stopPrice
+          } : undefined,
+        timeInForce: item.timeInForce !== undefined ? {
+            set: item.timeInForce
+          } : undefined,
+        venue: item.venue !== undefined ? {
+            set: item.venue
+          } : undefined,
+        slippage: item.slippage !== undefined ? {
+            set: item.slippage
+          } : undefined,
+        notes: item.notes !== undefined ? {
+            set: item.notes
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+    position: item.position ? 
+    typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
+? {
+    connect: {
+      id: item.position.id
+    }
+} : { upsert: {
+        where: {
+          id: item.position.id !== undefined ? {
+              equals: item.position.id
+            } : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId
+            } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId
+            } : undefined,
+          tradeId: item.position.tradeId !== undefined ? {
+              equals: item.position.tradeId
+            } : undefined,
+        },
+        update: {
+          id: item.position.id !== undefined ? {
+              set: item.position.id
+            } : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              set: item.position.alpacaAccountId
+            } : undefined,
+          status: item.position.status !== undefined ? {
+              set: item.position.status
+            } : undefined,
+          openingSide: item.position.openingSide !== undefined ? {
+              set: item.position.openingSide
+            } : undefined,
+          quantity: item.position.quantity !== undefined ? {
+              set: item.position.quantity
+            } : undefined,
+          entryPrice: item.position.entryPrice !== undefined ? {
+              set: item.position.entryPrice
+            } : undefined,
+          entryCost: item.position.entryCost !== undefined ? {
+              set: item.position.entryCost
+            } : undefined,
+          entryTime: item.position.entryTime !== undefined ? {
+              set: item.position.entryTime
+            } : undefined,
+          exitPrice: item.position.exitPrice !== undefined ? {
+              set: item.position.exitPrice
+            } : undefined,
+          exitValue: item.position.exitValue !== undefined ? {
+              set: item.position.exitValue
+            } : undefined,
+          exitTime: item.position.exitTime !== undefined ? {
+              set: item.position.exitTime
+            } : undefined,
+          currentPrice: item.position.currentPrice !== undefined ? {
+              set: item.position.currentPrice
+            } : undefined,
+          currentValue: item.position.currentValue !== undefined ? {
+              set: item.position.currentValue
+            } : undefined,
+          unrealizedPnL: item.position.unrealizedPnL !== undefined ? {
+              set: item.position.unrealizedPnL
+            } : undefined,
+          unrealizedPnLPercent: item.position.unrealizedPnLPercent !== undefined ? {
+              set: item.position.unrealizedPnLPercent
+            } : undefined,
+          realizedPnL: item.position.realizedPnL !== undefined ? {
+              set: item.position.realizedPnL
+            } : undefined,
+          realizedPnLPercent: item.position.realizedPnLPercent !== undefined ? {
+              set: item.position.realizedPnLPercent
+            } : undefined,
+          totalFees: item.position.totalFees !== undefined ? {
+              set: item.position.totalFees
+            } : undefined,
+          currentDelta: item.position.currentDelta !== undefined ? {
+              set: item.position.currentDelta
+            } : undefined,
+          currentGamma: item.position.currentGamma !== undefined ? {
+              set: item.position.currentGamma
+            } : undefined,
+          currentTheta: item.position.currentTheta !== undefined ? {
+              set: item.position.currentTheta
+            } : undefined,
+          currentVega: item.position.currentVega !== undefined ? {
+              set: item.position.currentVega
+            } : undefined,
+          currentRho: item.position.currentRho !== undefined ? {
+              set: item.position.currentRho
+            } : undefined,
+          currentImpliedVolatility: item.position.currentImpliedVolatility !== undefined ? {
+              set: item.position.currentImpliedVolatility
+            } : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? {
+              set: item.position.daysHeld
+            } : undefined,
+          exitReason: item.position.exitReason !== undefined ? {
+              set: item.position.exitReason
+            } : undefined,
+          strategyType: item.position.strategyType !== undefined ? {
+              set: item.position.strategyType
+            } : undefined,
+          tradeId: item.position.tradeId !== undefined ? {
+              set: item.position.tradeId
+            } : undefined,
+          metadata: item.position.metadata !== undefined ? {
+              set: item.position.metadata
+            } : undefined,
+      contract: item.position.contract ? 
+      typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && (Object.keys(item.position.contract)[0] === 'id' || Object.keys(item.position.contract)[0] === 'symbol')
+? {
+      connect: {
+        id: item.position.contract.id
+      }
+} : { upsert: {
+          where: {
+            id: item.position.contract.id !== undefined ? {
+                equals: item.position.contract.id
+              } : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.position.contract.id !== undefined ? {
+                set: item.position.contract.id
+              } : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                set: item.position.contract.symbol
+              } : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? {
+                set: item.position.contract.contractSymbol
+              } : undefined,
+            optionType: item.position.contract.optionType !== undefined ? {
+                set: item.position.contract.optionType
+              } : undefined,
+            strikePrice: item.position.contract.strikePrice !== undefined ? {
+                set: item.position.contract.strikePrice
+              } : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? {
+                set: item.position.contract.expirationDate
+              } : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? {
+                set: item.position.contract.daysToExpiration
+              } : undefined,
+            lastPrice: item.position.contract.lastPrice !== undefined ? {
+                set: item.position.contract.lastPrice
+              } : undefined,
+            bidPrice: item.position.contract.bidPrice !== undefined ? {
+                set: item.position.contract.bidPrice
+              } : undefined,
+            askPrice: item.position.contract.askPrice !== undefined ? {
+                set: item.position.contract.askPrice
+              } : undefined,
+            midPrice: item.position.contract.midPrice !== undefined ? {
+                set: item.position.contract.midPrice
+              } : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? {
+                set: item.position.contract.bidSize
+              } : undefined,
+            askSize: item.position.contract.askSize !== undefined ? {
+                set: item.position.contract.askSize
+              } : undefined,
+            volume: item.position.contract.volume !== undefined ? {
+                set: item.position.contract.volume
+              } : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? {
+                set: item.position.contract.openInterest
+              } : undefined,
+            impliedVolatility: item.position.contract.impliedVolatility !== undefined ? {
+                set: item.position.contract.impliedVolatility
+              } : undefined,
+            delta: item.position.contract.delta !== undefined ? {
+                set: item.position.contract.delta
+              } : undefined,
+            gamma: item.position.contract.gamma !== undefined ? {
+                set: item.position.contract.gamma
+              } : undefined,
+            theta: item.position.contract.theta !== undefined ? {
+                set: item.position.contract.theta
+              } : undefined,
+            vega: item.position.contract.vega !== undefined ? {
+                set: item.position.contract.vega
+              } : undefined,
+            rho: item.position.contract.rho !== undefined ? {
+                set: item.position.contract.rho
+              } : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? {
+                set: item.position.contract.inTheMoney
+              } : undefined,
+            intrinsicValue: item.position.contract.intrinsicValue !== undefined ? {
+                set: item.position.contract.intrinsicValue
+              } : undefined,
+            extrinsicValue: item.position.contract.extrinsicValue !== undefined ? {
+                set: item.position.contract.extrinsicValue
+              } : undefined,
+            theoreticalPrice: item.position.contract.theoreticalPrice !== undefined ? {
+                set: item.position.contract.theoreticalPrice
+              } : undefined,
+            underlyingPrice: item.position.contract.underlyingPrice !== undefined ? {
+                set: item.position.contract.underlyingPrice
+              } : undefined,
+            metadata: item.position.contract.metadata !== undefined ? {
+                set: item.position.contract.metadata
+              } : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? {
+                set: item.position.contract.dataTimestamp
+              } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+        executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+        orderType: item.orderType !== undefined ? item.orderType : undefined,
+        timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+        venue: item.venue !== undefined ? item.venue : undefined,
+        notes: item.notes !== undefined ? item.notes : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+          id: item.position.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.position.id !== undefined ? item.position.id : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId 
+             } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -7058,16 +3064,11 @@ export const OptionsContract = {
           mutation: UPSERT_ONE_OPTIONSCONTRACT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.upsertOneOptionsContract
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.upsertOneOptionsContract) {
           return response.data.upsertOneOptionsContract;
         } else {
           return null as any;
@@ -7081,19 +3082,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -7109,10 +3109,7 @@ export const OptionsContract = {
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(
-    props: OptionsContractType[],
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<{ count: number } | null> {
+  async updateMany(props: OptionsContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -7123,2663 +3120,1079 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const UPDATE_MANY_OPTIONSCONTRACT = gql`
-          mutation updateManyOptionsContract(
-            $data: [OptionsContractCreateManyInput!]!
-          ) {
+          mutation updateManyOptionsContract($data: [OptionsContractCreateManyInput!]!) {
             updateManyOptionsContract(data: $data) {
               count
             }
-          }
-        `;
+          }`;
 
-        const variables = props.map((prop) => ({
+        const variables = props.map(prop => ({
           where: {
-            id: prop.id !== undefined ? prop.id : undefined,
-            symbol:
-              prop.symbol !== undefined
-                ? {
-                    equals: prop.symbol,
-                  }
-                : undefined,
+              id: prop.id !== undefined ? prop.id : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+
           },
           data: {
-            id:
-              prop.id !== undefined
-                ? {
-                    set: prop.id,
-                  }
-                : undefined,
-            symbol:
-              prop.symbol !== undefined
-                ? {
-                    set: prop.symbol,
-                  }
-                : undefined,
-            contractSymbol:
-              prop.contractSymbol !== undefined
-                ? {
-                    set: prop.contractSymbol,
-                  }
-                : undefined,
-            optionType:
-              prop.optionType !== undefined
-                ? {
-                    set: prop.optionType,
-                  }
-                : undefined,
-            strikePrice:
-              prop.strikePrice !== undefined
-                ? {
-                    set: prop.strikePrice,
-                  }
-                : undefined,
-            expirationDate:
-              prop.expirationDate !== undefined
-                ? {
-                    set: prop.expirationDate,
-                  }
-                : undefined,
-            daysToExpiration:
-              prop.daysToExpiration !== undefined
-                ? {
-                    set: prop.daysToExpiration,
-                  }
-                : undefined,
-            lastPrice:
-              prop.lastPrice !== undefined
-                ? {
-                    set: prop.lastPrice,
-                  }
-                : undefined,
-            bidPrice:
-              prop.bidPrice !== undefined
-                ? {
-                    set: prop.bidPrice,
-                  }
-                : undefined,
-            askPrice:
-              prop.askPrice !== undefined
-                ? {
-                    set: prop.askPrice,
-                  }
-                : undefined,
-            midPrice:
-              prop.midPrice !== undefined
-                ? {
-                    set: prop.midPrice,
-                  }
-                : undefined,
-            bidSize:
-              prop.bidSize !== undefined
-                ? {
-                    set: prop.bidSize,
-                  }
-                : undefined,
-            askSize:
-              prop.askSize !== undefined
-                ? {
-                    set: prop.askSize,
-                  }
-                : undefined,
-            volume:
-              prop.volume !== undefined
-                ? {
-                    set: prop.volume,
-                  }
-                : undefined,
-            openInterest:
-              prop.openInterest !== undefined
-                ? {
-                    set: prop.openInterest,
-                  }
-                : undefined,
-            impliedVolatility:
-              prop.impliedVolatility !== undefined
-                ? {
-                    set: prop.impliedVolatility,
-                  }
-                : undefined,
-            delta:
-              prop.delta !== undefined
-                ? {
-                    set: prop.delta,
-                  }
-                : undefined,
-            gamma:
-              prop.gamma !== undefined
-                ? {
-                    set: prop.gamma,
-                  }
-                : undefined,
-            theta:
-              prop.theta !== undefined
-                ? {
-                    set: prop.theta,
-                  }
-                : undefined,
-            vega:
-              prop.vega !== undefined
-                ? {
-                    set: prop.vega,
-                  }
-                : undefined,
-            rho:
-              prop.rho !== undefined
-                ? {
-                    set: prop.rho,
-                  }
-                : undefined,
-            inTheMoney:
-              prop.inTheMoney !== undefined
-                ? {
-                    set: prop.inTheMoney,
-                  }
-                : undefined,
-            intrinsicValue:
-              prop.intrinsicValue !== undefined
-                ? {
-                    set: prop.intrinsicValue,
-                  }
-                : undefined,
-            extrinsicValue:
-              prop.extrinsicValue !== undefined
-                ? {
-                    set: prop.extrinsicValue,
-                  }
-                : undefined,
-            theoreticalPrice:
-              prop.theoreticalPrice !== undefined
-                ? {
-                    set: prop.theoreticalPrice,
-                  }
-                : undefined,
-            underlyingPrice:
-              prop.underlyingPrice !== undefined
-                ? {
-                    set: prop.underlyingPrice,
-                  }
-                : undefined,
-            metadata:
-              prop.metadata !== undefined
-                ? {
-                    set: prop.metadata,
-                  }
-                : undefined,
-            dataTimestamp:
-              prop.dataTimestamp !== undefined
-                ? {
-                    set: prop.dataTimestamp,
-                  }
-                : undefined,
-            createdAt:
-              prop.createdAt !== undefined
-                ? {
-                    set: prop.createdAt,
-                  }
-                : undefined,
-            updatedAt:
-              prop.updatedAt !== undefined
-                ? {
-                    set: prop.updatedAt,
-                  }
-                : undefined,
-            positions: prop.positions
-              ? Array.isArray(prop.positions) &&
-                prop.positions.length > 0 &&
-                prop.positions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: prop.positions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: prop.positions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined
-                            ? {
-                                equals: item.tradeId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                set: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        status:
-                          item.status !== undefined
-                            ? {
-                                set: item.status,
-                              }
-                            : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? {
-                                set: item.openingSide,
-                              }
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? {
-                                set: item.quantity,
-                              }
-                            : undefined,
-                        entryPrice:
-                          item.entryPrice !== undefined
-                            ? {
-                                set: item.entryPrice,
-                              }
-                            : undefined,
-                        entryCost:
-                          item.entryCost !== undefined
-                            ? {
-                                set: item.entryCost,
-                              }
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? {
-                                set: item.entryTime,
-                              }
-                            : undefined,
-                        exitPrice:
-                          item.exitPrice !== undefined
-                            ? {
-                                set: item.exitPrice,
-                              }
-                            : undefined,
-                        exitValue:
-                          item.exitValue !== undefined
-                            ? {
-                                set: item.exitValue,
-                              }
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? {
-                                set: item.exitTime,
-                              }
-                            : undefined,
-                        currentPrice:
-                          item.currentPrice !== undefined
-                            ? {
-                                set: item.currentPrice,
-                              }
-                            : undefined,
-                        currentValue:
-                          item.currentValue !== undefined
-                            ? {
-                                set: item.currentValue,
-                              }
-                            : undefined,
-                        unrealizedPnL:
-                          item.unrealizedPnL !== undefined
-                            ? {
-                                set: item.unrealizedPnL,
-                              }
-                            : undefined,
-                        unrealizedPnLPercent:
-                          item.unrealizedPnLPercent !== undefined
-                            ? {
-                                set: item.unrealizedPnLPercent,
-                              }
-                            : undefined,
-                        realizedPnL:
-                          item.realizedPnL !== undefined
-                            ? {
-                                set: item.realizedPnL,
-                              }
-                            : undefined,
-                        realizedPnLPercent:
-                          item.realizedPnLPercent !== undefined
-                            ? {
-                                set: item.realizedPnLPercent,
-                              }
-                            : undefined,
-                        totalFees:
-                          item.totalFees !== undefined
-                            ? {
-                                set: item.totalFees,
-                              }
-                            : undefined,
-                        currentDelta:
-                          item.currentDelta !== undefined
-                            ? {
-                                set: item.currentDelta,
-                              }
-                            : undefined,
-                        currentGamma:
-                          item.currentGamma !== undefined
-                            ? {
-                                set: item.currentGamma,
-                              }
-                            : undefined,
-                        currentTheta:
-                          item.currentTheta !== undefined
-                            ? {
-                                set: item.currentTheta,
-                              }
-                            : undefined,
-                        currentVega:
-                          item.currentVega !== undefined
-                            ? {
-                                set: item.currentVega,
-                              }
-                            : undefined,
-                        currentRho:
-                          item.currentRho !== undefined
-                            ? {
-                                set: item.currentRho,
-                              }
-                            : undefined,
-                        currentImpliedVolatility:
-                          item.currentImpliedVolatility !== undefined
-                            ? {
-                                set: item.currentImpliedVolatility,
-                              }
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? {
-                                set: item.daysHeld,
-                              }
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? {
-                                set: item.exitReason,
-                              }
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? {
-                                set: item.strategyType,
-                              }
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined
-                            ? {
-                                set: item.tradeId,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                ('id' in item || 'symbol' in item) &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                upsert: item.executions.map((item: any) => ({
-                                  where: {
-                                    id:
-                                      item.id !== undefined
-                                        ? item.id
-                                        : undefined,
-                                    positionId:
-                                      item.positionId !== undefined
-                                        ? {
-                                            equals: item.positionId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.contractId !== undefined
-                                        ? {
-                                            equals: item.contractId,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? {
-                                            equals: item.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? {
-                                            equals: item.brokerOrderId,
-                                          }
-                                        : undefined,
-                                  },
-                                  update: {
-                                    id:
-                                      item.id !== undefined
-                                        ? {
-                                            set: item.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? {
-                                            set: item.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? {
-                                            set: item.brokerOrderId,
-                                          }
-                                        : undefined,
-                                    executionSide:
-                                      item.executionSide !== undefined
-                                        ? {
-                                            set: item.executionSide,
-                                          }
-                                        : undefined,
-                                    quantity:
-                                      item.quantity !== undefined
-                                        ? {
-                                            set: item.quantity,
-                                          }
-                                        : undefined,
-                                    executionPrice:
-                                      item.executionPrice !== undefined
-                                        ? {
-                                            set: item.executionPrice,
-                                          }
-                                        : undefined,
-                                    executionValue:
-                                      item.executionValue !== undefined
-                                        ? {
-                                            set: item.executionValue,
-                                          }
-                                        : undefined,
-                                    fees:
-                                      item.fees !== undefined
-                                        ? {
-                                            set: item.fees,
-                                          }
-                                        : undefined,
-                                    executionTime:
-                                      item.executionTime !== undefined
-                                        ? {
-                                            set: item.executionTime,
-                                          }
-                                        : undefined,
-                                    underlyingPriceAtExecution:
-                                      item.underlyingPriceAtExecution !==
-                                      undefined
-                                        ? {
-                                            set: item.underlyingPriceAtExecution,
-                                          }
-                                        : undefined,
-                                    deltaAtExecution:
-                                      item.deltaAtExecution !== undefined
-                                        ? {
-                                            set: item.deltaAtExecution,
-                                          }
-                                        : undefined,
-                                    gammaAtExecution:
-                                      item.gammaAtExecution !== undefined
-                                        ? {
-                                            set: item.gammaAtExecution,
-                                          }
-                                        : undefined,
-                                    thetaAtExecution:
-                                      item.thetaAtExecution !== undefined
-                                        ? {
-                                            set: item.thetaAtExecution,
-                                          }
-                                        : undefined,
-                                    vegaAtExecution:
-                                      item.vegaAtExecution !== undefined
-                                        ? {
-                                            set: item.vegaAtExecution,
-                                          }
-                                        : undefined,
-                                    rhoAtExecution:
-                                      item.rhoAtExecution !== undefined
-                                        ? {
-                                            set: item.rhoAtExecution,
-                                          }
-                                        : undefined,
-                                    impliedVolatilityAtExecution:
-                                      item.impliedVolatilityAtExecution !==
-                                      undefined
-                                        ? {
-                                            set: item.impliedVolatilityAtExecution,
-                                          }
-                                        : undefined,
-                                    orderType:
-                                      item.orderType !== undefined
-                                        ? {
-                                            set: item.orderType,
-                                          }
-                                        : undefined,
-                                    limitPrice:
-                                      item.limitPrice !== undefined
-                                        ? {
-                                            set: item.limitPrice,
-                                          }
-                                        : undefined,
-                                    stopPrice:
-                                      item.stopPrice !== undefined
-                                        ? {
-                                            set: item.stopPrice,
-                                          }
-                                        : undefined,
-                                    timeInForce:
-                                      item.timeInForce !== undefined
-                                        ? {
-                                            set: item.timeInForce,
-                                          }
-                                        : undefined,
-                                    venue:
-                                      item.venue !== undefined
-                                        ? {
-                                            set: item.venue,
-                                          }
-                                        : undefined,
-                                    slippage:
-                                      item.slippage !== undefined
-                                        ? {
-                                            set: item.slippage,
-                                          }
-                                        : undefined,
-                                    notes:
-                                      item.notes !== undefined
-                                        ? {
-                                            set: item.notes,
-                                          }
-                                        : undefined,
-                                    metadata:
-                                      item.metadata !== undefined
-                                        ? {
-                                            set: item.metadata,
-                                          }
-                                        : undefined,
-                                    contract: item.contract
-                                      ? typeof item.contract === 'object' &&
-                                        Object.keys(item.contract).length ===
-                                          1 &&
-                                        (Object.keys(item.contract)[0] ===
-                                          'id' ||
-                                          Object.keys(item.contract)[0] ===
-                                            'symbol')
-                                        ? {
-                                            connect: {
-                                              id: item.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            upsert: {
-                                              where: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              update: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? {
-                                                        set: item.contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .symbol,
-                                                      }
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .contractSymbol,
-                                                      }
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .optionType,
-                                                      }
-                                                    : undefined,
-                                                strikePrice:
-                                                  item.contract.strikePrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .strikePrice,
-                                                      }
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .expirationDate,
-                                                      }
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .daysToExpiration,
-                                                      }
-                                                    : undefined,
-                                                lastPrice:
-                                                  item.contract.lastPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .lastPrice,
-                                                      }
-                                                    : undefined,
-                                                bidPrice:
-                                                  item.contract.bidPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .bidPrice,
-                                                      }
-                                                    : undefined,
-                                                askPrice:
-                                                  item.contract.askPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .askPrice,
-                                                      }
-                                                    : undefined,
-                                                midPrice:
-                                                  item.contract.midPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .midPrice,
-                                                      }
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .bidSize,
-                                                      }
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .askSize,
-                                                      }
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .volume,
-                                                      }
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .openInterest,
-                                                      }
-                                                    : undefined,
-                                                impliedVolatility:
-                                                  item.contract
-                                                    .impliedVolatility !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .impliedVolatility,
-                                                      }
-                                                    : undefined,
-                                                delta:
-                                                  item.contract.delta !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .delta,
-                                                      }
-                                                    : undefined,
-                                                gamma:
-                                                  item.contract.gamma !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .gamma,
-                                                      }
-                                                    : undefined,
-                                                theta:
-                                                  item.contract.theta !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .theta,
-                                                      }
-                                                    : undefined,
-                                                vega:
-                                                  item.contract.vega !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract.vega,
-                                                      }
-                                                    : undefined,
-                                                rho:
-                                                  item.contract.rho !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract.rho,
-                                                      }
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .inTheMoney,
-                                                      }
-                                                    : undefined,
-                                                intrinsicValue:
-                                                  item.contract
-                                                    .intrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .intrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                extrinsicValue:
-                                                  item.contract
-                                                    .extrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .extrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                theoreticalPrice:
-                                                  item.contract
-                                                    .theoreticalPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .theoreticalPrice,
-                                                      }
-                                                    : undefined,
-                                                underlyingPrice:
-                                                  item.contract
-                                                    .underlyingPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .underlyingPrice,
-                                                      }
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .metadata,
-                                                      }
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? {
-                                                        set: item.contract
-                                                          .dataTimestamp,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? item.contract.symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? item.contract.optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? item.contract.bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? item.contract.askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? item.contract.volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? item.contract.openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? item.contract.inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? item.contract.metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.alpacaAccountId !== undefined
-                                        ? item.alpacaAccountId
-                                        : undefined,
-                                    brokerOrderId:
-                                      item.brokerOrderId !== undefined
-                                        ? item.brokerOrderId
-                                        : undefined,
-                                    executionSide:
-                                      item.executionSide !== undefined
-                                        ? item.executionSide
-                                        : undefined,
-                                    quantity:
-                                      item.quantity !== undefined
-                                        ? item.quantity
-                                        : undefined,
-                                    executionTime:
-                                      item.executionTime !== undefined
-                                        ? item.executionTime
-                                        : undefined,
-                                    orderType:
-                                      item.orderType !== undefined
-                                        ? item.orderType
-                                        : undefined,
-                                    timeInForce:
-                                      item.timeInForce !== undefined
-                                        ? item.timeInForce
-                                        : undefined,
-                                    venue:
-                                      item.venue !== undefined
-                                        ? item.venue
-                                        : undefined,
-                                    notes:
-                                      item.notes !== undefined
-                                        ? item.notes
-                                        : undefined,
-                                    metadata:
-                                      item.metadata !== undefined
-                                        ? item.metadata
-                                        : undefined,
-                                    contract: item.contract
-                                      ? typeof item.contract === 'object' &&
-                                        Object.keys(item.contract).length ===
-                                          1 &&
-                                        Object.keys(item.contract)[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.contract.id !== undefined
-                                                    ? item.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.contract.symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.contract.symbol !==
-                                                  undefined
-                                                    ? item.contract.symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.contract.optionType !==
-                                                  undefined
-                                                    ? item.contract.optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.contract.bidSize !==
-                                                  undefined
-                                                    ? item.contract.bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.contract.askSize !==
-                                                  undefined
-                                                    ? item.contract.askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.contract.volume !==
-                                                  undefined
-                                                    ? item.contract.volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.contract.openInterest !==
-                                                  undefined
-                                                    ? item.contract.openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.contract.inTheMoney !==
-                                                  undefined
-                                                    ? item.contract.inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.contract.metadata !==
-                                                  undefined
-                                                    ? item.contract.metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                })),
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        status:
-                          item.status !== undefined ? item.status : undefined,
-                        openingSide:
-                          item.openingSide !== undefined
-                            ? item.openingSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        entryTime:
-                          item.entryTime !== undefined
-                            ? item.entryTime
-                            : undefined,
-                        exitTime:
-                          item.exitTime !== undefined
-                            ? item.exitTime
-                            : undefined,
-                        daysHeld:
-                          item.daysHeld !== undefined
-                            ? item.daysHeld
-                            : undefined,
-                        exitReason:
-                          item.exitReason !== undefined
-                            ? item.exitReason
-                            : undefined,
-                        strategyType:
-                          item.strategyType !== undefined
-                            ? item.strategyType
-                            : undefined,
-                        tradeId:
-                          item.tradeId !== undefined ? item.tradeId : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        executions: item.executions
-                          ? Array.isArray(item.executions) &&
-                            item.executions.length > 0 &&
-                            item.executions.every(
-                              (item: any) =>
-                                typeof item === 'object' &&
-                                'id' in item &&
-                                Object.keys(item).length === 1
-                            )
-                            ? {
-                                connect: item.executions.map((item: any) => ({
-                                  id: item.id,
-                                })),
-                              }
-                            : {
-                                connectOrCreate: item.executions.map(
-                                  (item: any) => ({
-                                    where: {
-                                      id:
-                                        item.id !== undefined
-                                          ? item.id
-                                          : undefined,
-                                      positionId:
-                                        item.positionId !== undefined
-                                          ? {
-                                              equals: item.positionId,
-                                            }
-                                          : undefined,
-                                      contractId:
-                                        item.contractId !== undefined
-                                          ? {
-                                              equals: item.contractId,
-                                            }
-                                          : undefined,
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? {
-                                              equals: item.alpacaAccountId,
-                                            }
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? {
-                                              equals: item.brokerOrderId,
-                                            }
-                                          : undefined,
-                                    },
-                                    create: {
-                                      alpacaAccountId:
-                                        item.alpacaAccountId !== undefined
-                                          ? item.alpacaAccountId
-                                          : undefined,
-                                      brokerOrderId:
-                                        item.brokerOrderId !== undefined
-                                          ? item.brokerOrderId
-                                          : undefined,
-                                      executionSide:
-                                        item.executionSide !== undefined
-                                          ? item.executionSide
-                                          : undefined,
-                                      quantity:
-                                        item.quantity !== undefined
-                                          ? item.quantity
-                                          : undefined,
-                                      executionTime:
-                                        item.executionTime !== undefined
-                                          ? item.executionTime
-                                          : undefined,
-                                      orderType:
-                                        item.orderType !== undefined
-                                          ? item.orderType
-                                          : undefined,
-                                      timeInForce:
-                                        item.timeInForce !== undefined
-                                          ? item.timeInForce
-                                          : undefined,
-                                      venue:
-                                        item.venue !== undefined
-                                          ? item.venue
-                                          : undefined,
-                                      notes:
-                                        item.notes !== undefined
-                                          ? item.notes
-                                          : undefined,
-                                      metadata:
-                                        item.metadata !== undefined
-                                          ? item.metadata
-                                          : undefined,
-                                      contract: item.contract
-                                        ? typeof item.contract === 'object' &&
-                                          Object.keys(item.contract).length ===
-                                            1 &&
-                                          Object.keys(item.contract)[0] === 'id'
-                                          ? {
-                                              connect: {
-                                                id: item.contract.id,
-                                              },
-                                            }
-                                          : {
-                                              connectOrCreate: {
-                                                where: {
-                                                  id:
-                                                    item.contract.id !==
-                                                    undefined
-                                                      ? item.contract.id
-                                                      : undefined,
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? {
-                                                          equals:
-                                                            item.contract
-                                                              .symbol,
-                                                        }
-                                                      : undefined,
-                                                },
-                                                create: {
-                                                  symbol:
-                                                    item.contract.symbol !==
-                                                    undefined
-                                                      ? item.contract.symbol
-                                                      : undefined,
-                                                  contractSymbol:
-                                                    item.contract
-                                                      .contractSymbol !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .contractSymbol
-                                                      : undefined,
-                                                  optionType:
-                                                    item.contract.optionType !==
-                                                    undefined
-                                                      ? item.contract.optionType
-                                                      : undefined,
-                                                  expirationDate:
-                                                    item.contract
-                                                      .expirationDate !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .expirationDate
-                                                      : undefined,
-                                                  daysToExpiration:
-                                                    item.contract
-                                                      .daysToExpiration !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .daysToExpiration
-                                                      : undefined,
-                                                  bidSize:
-                                                    item.contract.bidSize !==
-                                                    undefined
-                                                      ? item.contract.bidSize
-                                                      : undefined,
-                                                  askSize:
-                                                    item.contract.askSize !==
-                                                    undefined
-                                                      ? item.contract.askSize
-                                                      : undefined,
-                                                  volume:
-                                                    item.contract.volume !==
-                                                    undefined
-                                                      ? item.contract.volume
-                                                      : undefined,
-                                                  openInterest:
-                                                    item.contract
-                                                      .openInterest !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .openInterest
-                                                      : undefined,
-                                                  inTheMoney:
-                                                    item.contract.inTheMoney !==
-                                                    undefined
-                                                      ? item.contract.inTheMoney
-                                                      : undefined,
-                                                  metadata:
-                                                    item.contract.metadata !==
-                                                    undefined
-                                                      ? item.contract.metadata
-                                                      : undefined,
-                                                  dataTimestamp:
-                                                    item.contract
-                                                      .dataTimestamp !==
-                                                    undefined
-                                                      ? item.contract
-                                                          .dataTimestamp
-                                                      : undefined,
-                                                },
-                                              },
-                                            }
-                                        : undefined,
-                                    },
-                                  })
-                                ),
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            greeksHistory: prop.greeksHistory
-              ? Array.isArray(prop.greeksHistory) &&
-                prop.greeksHistory.length > 0 &&
-                prop.greeksHistory.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: prop.greeksHistory.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: prop.greeksHistory.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? {
-                                set: item.timestamp,
-                              }
-                            : undefined,
-                        underlyingPrice:
-                          item.underlyingPrice !== undefined
-                            ? {
-                                set: item.underlyingPrice,
-                              }
-                            : undefined,
-                        optionPrice:
-                          item.optionPrice !== undefined
-                            ? {
-                                set: item.optionPrice,
-                              }
-                            : undefined,
-                        bidPrice:
-                          item.bidPrice !== undefined
-                            ? {
-                                set: item.bidPrice,
-                              }
-                            : undefined,
-                        askPrice:
-                          item.askPrice !== undefined
-                            ? {
-                                set: item.askPrice,
-                              }
-                            : undefined,
-                        impliedVolatility:
-                          item.impliedVolatility !== undefined
-                            ? {
-                                set: item.impliedVolatility,
-                              }
-                            : undefined,
-                        delta:
-                          item.delta !== undefined
-                            ? {
-                                set: item.delta,
-                              }
-                            : undefined,
-                        gamma:
-                          item.gamma !== undefined
-                            ? {
-                                set: item.gamma,
-                              }
-                            : undefined,
-                        theta:
-                          item.theta !== undefined
-                            ? {
-                                set: item.theta,
-                              }
-                            : undefined,
-                        vega:
-                          item.vega !== undefined
-                            ? {
-                                set: item.vega,
-                              }
-                            : undefined,
-                        rho:
-                          item.rho !== undefined
-                            ? {
-                                set: item.rho,
-                              }
-                            : undefined,
-                        volume:
-                          item.volume !== undefined
-                            ? {
-                                set: item.volume,
-                              }
-                            : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? {
-                                set: item.openInterest,
-                              }
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? {
-                                set: item.daysToExpiration,
-                              }
-                            : undefined,
-                        intrinsicValue:
-                          item.intrinsicValue !== undefined
-                            ? {
-                                set: item.intrinsicValue,
-                              }
-                            : undefined,
-                        extrinsicValue:
-                          item.extrinsicValue !== undefined
-                            ? {
-                                set: item.extrinsicValue,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                      },
-                      create: {
-                        timestamp:
-                          item.timestamp !== undefined
-                            ? item.timestamp
-                            : undefined,
-                        volume:
-                          item.volume !== undefined ? item.volume : undefined,
-                        openInterest:
-                          item.openInterest !== undefined
-                            ? item.openInterest
-                            : undefined,
-                        daysToExpiration:
-                          item.daysToExpiration !== undefined
-                            ? item.daysToExpiration
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
-            executions: prop.executions
-              ? Array.isArray(prop.executions) &&
-                prop.executions.length > 0 &&
-                prop.executions.every(
-                  (item: any) =>
-                    typeof item === 'object' &&
-                    ('id' in item || 'symbol' in item) &&
-                    Object.keys(item).length === 1
-                )
-                ? {
-                    connect: prop.executions.map((item: any) => ({
-                      id: item.id,
-                    })),
-                  }
-                : {
-                    upsert: prop.executions.map((item: any) => ({
-                      where: {
-                        id: item.id !== undefined ? item.id : undefined,
-                        positionId:
-                          item.positionId !== undefined
-                            ? {
-                                equals: item.positionId,
-                              }
-                            : undefined,
-                        contractId:
-                          item.contractId !== undefined
-                            ? {
-                                equals: item.contractId,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                equals: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                equals: item.brokerOrderId,
-                              }
-                            : undefined,
-                      },
-                      update: {
-                        id:
-                          item.id !== undefined
-                            ? {
-                                set: item.id,
-                              }
-                            : undefined,
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? {
-                                set: item.alpacaAccountId,
-                              }
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? {
-                                set: item.brokerOrderId,
-                              }
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? {
-                                set: item.executionSide,
-                              }
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? {
-                                set: item.quantity,
-                              }
-                            : undefined,
-                        executionPrice:
-                          item.executionPrice !== undefined
-                            ? {
-                                set: item.executionPrice,
-                              }
-                            : undefined,
-                        executionValue:
-                          item.executionValue !== undefined
-                            ? {
-                                set: item.executionValue,
-                              }
-                            : undefined,
-                        fees:
-                          item.fees !== undefined
-                            ? {
-                                set: item.fees,
-                              }
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? {
-                                set: item.executionTime,
-                              }
-                            : undefined,
-                        underlyingPriceAtExecution:
-                          item.underlyingPriceAtExecution !== undefined
-                            ? {
-                                set: item.underlyingPriceAtExecution,
-                              }
-                            : undefined,
-                        deltaAtExecution:
-                          item.deltaAtExecution !== undefined
-                            ? {
-                                set: item.deltaAtExecution,
-                              }
-                            : undefined,
-                        gammaAtExecution:
-                          item.gammaAtExecution !== undefined
-                            ? {
-                                set: item.gammaAtExecution,
-                              }
-                            : undefined,
-                        thetaAtExecution:
-                          item.thetaAtExecution !== undefined
-                            ? {
-                                set: item.thetaAtExecution,
-                              }
-                            : undefined,
-                        vegaAtExecution:
-                          item.vegaAtExecution !== undefined
-                            ? {
-                                set: item.vegaAtExecution,
-                              }
-                            : undefined,
-                        rhoAtExecution:
-                          item.rhoAtExecution !== undefined
-                            ? {
-                                set: item.rhoAtExecution,
-                              }
-                            : undefined,
-                        impliedVolatilityAtExecution:
-                          item.impliedVolatilityAtExecution !== undefined
-                            ? {
-                                set: item.impliedVolatilityAtExecution,
-                              }
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? {
-                                set: item.orderType,
-                              }
-                            : undefined,
-                        limitPrice:
-                          item.limitPrice !== undefined
-                            ? {
-                                set: item.limitPrice,
-                              }
-                            : undefined,
-                        stopPrice:
-                          item.stopPrice !== undefined
-                            ? {
-                                set: item.stopPrice,
-                              }
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? {
-                                set: item.timeInForce,
-                              }
-                            : undefined,
-                        venue:
-                          item.venue !== undefined
-                            ? {
-                                set: item.venue,
-                              }
-                            : undefined,
-                        slippage:
-                          item.slippage !== undefined
-                            ? {
-                                set: item.slippage,
-                              }
-                            : undefined,
-                        notes:
-                          item.notes !== undefined
-                            ? {
-                                set: item.notes,
-                              }
-                            : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? {
-                                set: item.metadata,
-                              }
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            (Object.keys(item.position)[0] === 'id' ||
-                              Object.keys(item.position)[0] === 'symbol')
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                upsert: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? {
-                                            equals: item.position.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? {
-                                            equals: item.position.tradeId,
-                                          }
-                                        : undefined,
-                                  },
-                                  update: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? {
-                                            set: item.position.id,
-                                          }
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            set: item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? {
-                                            set: item.position.status,
-                                          }
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? {
-                                            set: item.position.openingSide,
-                                          }
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? {
-                                            set: item.position.quantity,
-                                          }
-                                        : undefined,
-                                    entryPrice:
-                                      item.position.entryPrice !== undefined
-                                        ? {
-                                            set: item.position.entryPrice,
-                                          }
-                                        : undefined,
-                                    entryCost:
-                                      item.position.entryCost !== undefined
-                                        ? {
-                                            set: item.position.entryCost,
-                                          }
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? {
-                                            set: item.position.entryTime,
-                                          }
-                                        : undefined,
-                                    exitPrice:
-                                      item.position.exitPrice !== undefined
-                                        ? {
-                                            set: item.position.exitPrice,
-                                          }
-                                        : undefined,
-                                    exitValue:
-                                      item.position.exitValue !== undefined
-                                        ? {
-                                            set: item.position.exitValue,
-                                          }
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? {
-                                            set: item.position.exitTime,
-                                          }
-                                        : undefined,
-                                    currentPrice:
-                                      item.position.currentPrice !== undefined
-                                        ? {
-                                            set: item.position.currentPrice,
-                                          }
-                                        : undefined,
-                                    currentValue:
-                                      item.position.currentValue !== undefined
-                                        ? {
-                                            set: item.position.currentValue,
-                                          }
-                                        : undefined,
-                                    unrealizedPnL:
-                                      item.position.unrealizedPnL !== undefined
-                                        ? {
-                                            set: item.position.unrealizedPnL,
-                                          }
-                                        : undefined,
-                                    unrealizedPnLPercent:
-                                      item.position.unrealizedPnLPercent !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .unrealizedPnLPercent,
-                                          }
-                                        : undefined,
-                                    realizedPnL:
-                                      item.position.realizedPnL !== undefined
-                                        ? {
-                                            set: item.position.realizedPnL,
-                                          }
-                                        : undefined,
-                                    realizedPnLPercent:
-                                      item.position.realizedPnLPercent !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .realizedPnLPercent,
-                                          }
-                                        : undefined,
-                                    totalFees:
-                                      item.position.totalFees !== undefined
-                                        ? {
-                                            set: item.position.totalFees,
-                                          }
-                                        : undefined,
-                                    currentDelta:
-                                      item.position.currentDelta !== undefined
-                                        ? {
-                                            set: item.position.currentDelta,
-                                          }
-                                        : undefined,
-                                    currentGamma:
-                                      item.position.currentGamma !== undefined
-                                        ? {
-                                            set: item.position.currentGamma,
-                                          }
-                                        : undefined,
-                                    currentTheta:
-                                      item.position.currentTheta !== undefined
-                                        ? {
-                                            set: item.position.currentTheta,
-                                          }
-                                        : undefined,
-                                    currentVega:
-                                      item.position.currentVega !== undefined
-                                        ? {
-                                            set: item.position.currentVega,
-                                          }
-                                        : undefined,
-                                    currentRho:
-                                      item.position.currentRho !== undefined
-                                        ? {
-                                            set: item.position.currentRho,
-                                          }
-                                        : undefined,
-                                    currentImpliedVolatility:
-                                      item.position.currentImpliedVolatility !==
-                                      undefined
-                                        ? {
-                                            set: item.position
-                                              .currentImpliedVolatility,
-                                          }
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? {
-                                            set: item.position.daysHeld,
-                                          }
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? {
-                                            set: item.position.exitReason,
-                                          }
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? {
-                                            set: item.position.strategyType,
-                                          }
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? {
-                                            set: item.position.tradeId,
-                                          }
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? {
-                                            set: item.position.metadata,
-                                          }
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        (Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id' ||
-                                          Object.keys(
-                                            item.position.contract
-                                          )[0] === 'symbol')
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            upsert: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              update: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.id,
-                                                      }
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.symbol,
-                                                      }
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .contractSymbol,
-                                                      }
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.optionType,
-                                                      }
-                                                    : undefined,
-                                                strikePrice:
-                                                  item.position.contract
-                                                    .strikePrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.strikePrice,
-                                                      }
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .expirationDate,
-                                                      }
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .daysToExpiration,
-                                                      }
-                                                    : undefined,
-                                                lastPrice:
-                                                  item.position.contract
-                                                    .lastPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.lastPrice,
-                                                      }
-                                                    : undefined,
-                                                bidPrice:
-                                                  item.position.contract
-                                                    .bidPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.bidPrice,
-                                                      }
-                                                    : undefined,
-                                                askPrice:
-                                                  item.position.contract
-                                                    .askPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.askPrice,
-                                                      }
-                                                    : undefined,
-                                                midPrice:
-                                                  item.position.contract
-                                                    .midPrice !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.midPrice,
-                                                      }
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.bidSize,
-                                                      }
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.askSize,
-                                                      }
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.volume,
-                                                      }
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .openInterest,
-                                                      }
-                                                    : undefined,
-                                                impliedVolatility:
-                                                  item.position.contract
-                                                    .impliedVolatility !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .impliedVolatility,
-                                                      }
-                                                    : undefined,
-                                                delta:
-                                                  item.position.contract
-                                                    .delta !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.delta,
-                                                      }
-                                                    : undefined,
-                                                gamma:
-                                                  item.position.contract
-                                                    .gamma !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.gamma,
-                                                      }
-                                                    : undefined,
-                                                theta:
-                                                  item.position.contract
-                                                    .theta !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.theta,
-                                                      }
-                                                    : undefined,
-                                                vega:
-                                                  item.position.contract
-                                                    .vega !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.vega,
-                                                      }
-                                                    : undefined,
-                                                rho:
-                                                  item.position.contract.rho !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.rho,
-                                                      }
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.inTheMoney,
-                                                      }
-                                                    : undefined,
-                                                intrinsicValue:
-                                                  item.position.contract
-                                                    .intrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .intrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                extrinsicValue:
-                                                  item.position.contract
-                                                    .extrinsicValue !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .extrinsicValue,
-                                                      }
-                                                    : undefined,
-                                                theoreticalPrice:
-                                                  item.position.contract
-                                                    .theoreticalPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .theoreticalPrice,
-                                                      }
-                                                    : undefined,
-                                                underlyingPrice:
-                                                  item.position.contract
-                                                    .underlyingPrice !==
-                                                  undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .underlyingPrice,
-                                                      }
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract.metadata,
-                                                      }
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? {
-                                                        set: item.position
-                                                          .contract
-                                                          .dataTimestamp,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                      create: {
-                        alpacaAccountId:
-                          item.alpacaAccountId !== undefined
-                            ? item.alpacaAccountId
-                            : undefined,
-                        brokerOrderId:
-                          item.brokerOrderId !== undefined
-                            ? item.brokerOrderId
-                            : undefined,
-                        executionSide:
-                          item.executionSide !== undefined
-                            ? item.executionSide
-                            : undefined,
-                        quantity:
-                          item.quantity !== undefined
-                            ? item.quantity
-                            : undefined,
-                        executionTime:
-                          item.executionTime !== undefined
-                            ? item.executionTime
-                            : undefined,
-                        orderType:
-                          item.orderType !== undefined
-                            ? item.orderType
-                            : undefined,
-                        timeInForce:
-                          item.timeInForce !== undefined
-                            ? item.timeInForce
-                            : undefined,
-                        venue:
-                          item.venue !== undefined ? item.venue : undefined,
-                        notes:
-                          item.notes !== undefined ? item.notes : undefined,
-                        metadata:
-                          item.metadata !== undefined
-                            ? item.metadata
-                            : undefined,
-                        position: item.position
-                          ? typeof item.position === 'object' &&
-                            Object.keys(item.position).length === 1 &&
-                            Object.keys(item.position)[0] === 'id'
-                            ? {
-                                connect: {
-                                  id: item.position.id,
-                                },
-                              }
-                            : {
-                                connectOrCreate: {
-                                  where: {
-                                    id:
-                                      item.position.id !== undefined
-                                        ? item.position.id
-                                        : undefined,
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? {
-                                            equals:
-                                              item.position.alpacaAccountId,
-                                          }
-                                        : undefined,
-                                    contractId:
-                                      item.position.contractId !== undefined
-                                        ? {
-                                            equals: item.position.contractId,
-                                          }
-                                        : undefined,
-                                  },
-                                  create: {
-                                    alpacaAccountId:
-                                      item.position.alpacaAccountId !==
-                                      undefined
-                                        ? item.position.alpacaAccountId
-                                        : undefined,
-                                    status:
-                                      item.position.status !== undefined
-                                        ? item.position.status
-                                        : undefined,
-                                    openingSide:
-                                      item.position.openingSide !== undefined
-                                        ? item.position.openingSide
-                                        : undefined,
-                                    quantity:
-                                      item.position.quantity !== undefined
-                                        ? item.position.quantity
-                                        : undefined,
-                                    entryTime:
-                                      item.position.entryTime !== undefined
-                                        ? item.position.entryTime
-                                        : undefined,
-                                    exitTime:
-                                      item.position.exitTime !== undefined
-                                        ? item.position.exitTime
-                                        : undefined,
-                                    daysHeld:
-                                      item.position.daysHeld !== undefined
-                                        ? item.position.daysHeld
-                                        : undefined,
-                                    exitReason:
-                                      item.position.exitReason !== undefined
-                                        ? item.position.exitReason
-                                        : undefined,
-                                    strategyType:
-                                      item.position.strategyType !== undefined
-                                        ? item.position.strategyType
-                                        : undefined,
-                                    tradeId:
-                                      item.position.tradeId !== undefined
-                                        ? item.position.tradeId
-                                        : undefined,
-                                    metadata:
-                                      item.position.metadata !== undefined
-                                        ? item.position.metadata
-                                        : undefined,
-                                    contract: item.position.contract
-                                      ? typeof item.position.contract ===
-                                          'object' &&
-                                        Object.keys(item.position.contract)
-                                          .length === 1 &&
-                                        Object.keys(
-                                          item.position.contract
-                                        )[0] === 'id'
-                                        ? {
-                                            connect: {
-                                              id: item.position.contract.id,
-                                            },
-                                          }
-                                        : {
-                                            connectOrCreate: {
-                                              where: {
-                                                id:
-                                                  item.position.contract.id !==
-                                                  undefined
-                                                    ? item.position.contract.id
-                                                    : undefined,
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? {
-                                                        equals:
-                                                          item.position.contract
-                                                            .symbol,
-                                                      }
-                                                    : undefined,
-                                              },
-                                              create: {
-                                                symbol:
-                                                  item.position.contract
-                                                    .symbol !== undefined
-                                                    ? item.position.contract
-                                                        .symbol
-                                                    : undefined,
-                                                contractSymbol:
-                                                  item.position.contract
-                                                    .contractSymbol !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .contractSymbol
-                                                    : undefined,
-                                                optionType:
-                                                  item.position.contract
-                                                    .optionType !== undefined
-                                                    ? item.position.contract
-                                                        .optionType
-                                                    : undefined,
-                                                expirationDate:
-                                                  item.position.contract
-                                                    .expirationDate !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .expirationDate
-                                                    : undefined,
-                                                daysToExpiration:
-                                                  item.position.contract
-                                                    .daysToExpiration !==
-                                                  undefined
-                                                    ? item.position.contract
-                                                        .daysToExpiration
-                                                    : undefined,
-                                                bidSize:
-                                                  item.position.contract
-                                                    .bidSize !== undefined
-                                                    ? item.position.contract
-                                                        .bidSize
-                                                    : undefined,
-                                                askSize:
-                                                  item.position.contract
-                                                    .askSize !== undefined
-                                                    ? item.position.contract
-                                                        .askSize
-                                                    : undefined,
-                                                volume:
-                                                  item.position.contract
-                                                    .volume !== undefined
-                                                    ? item.position.contract
-                                                        .volume
-                                                    : undefined,
-                                                openInterest:
-                                                  item.position.contract
-                                                    .openInterest !== undefined
-                                                    ? item.position.contract
-                                                        .openInterest
-                                                    : undefined,
-                                                inTheMoney:
-                                                  item.position.contract
-                                                    .inTheMoney !== undefined
-                                                    ? item.position.contract
-                                                        .inTheMoney
-                                                    : undefined,
-                                                metadata:
-                                                  item.position.contract
-                                                    .metadata !== undefined
-                                                    ? item.position.contract
-                                                        .metadata
-                                                    : undefined,
-                                                dataTimestamp:
-                                                  item.position.contract
-                                                    .dataTimestamp !== undefined
-                                                    ? item.position.contract
-                                                        .dataTimestamp
-                                                    : undefined,
-                                              },
-                                            },
-                                          }
-                                      : undefined,
-                                  },
-                                },
-                              }
-                          : undefined,
-                      },
-                    })),
-                  }
-              : undefined,
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  contractSymbol: prop.contractSymbol !== undefined ? {
+            set: prop.contractSymbol 
+           } : undefined,
+  optionType: prop.optionType !== undefined ? {
+            set: prop.optionType 
+           } : undefined,
+  strikePrice: prop.strikePrice !== undefined ? {
+            set: prop.strikePrice 
+           } : undefined,
+  expirationDate: prop.expirationDate !== undefined ? {
+            set: prop.expirationDate 
+           } : undefined,
+  daysToExpiration: prop.daysToExpiration !== undefined ? {
+            set: prop.daysToExpiration 
+           } : undefined,
+  lastPrice: prop.lastPrice !== undefined ? {
+            set: prop.lastPrice 
+           } : undefined,
+  bidPrice: prop.bidPrice !== undefined ? {
+            set: prop.bidPrice 
+           } : undefined,
+  askPrice: prop.askPrice !== undefined ? {
+            set: prop.askPrice 
+           } : undefined,
+  midPrice: prop.midPrice !== undefined ? {
+            set: prop.midPrice 
+           } : undefined,
+  bidSize: prop.bidSize !== undefined ? {
+            set: prop.bidSize 
+           } : undefined,
+  askSize: prop.askSize !== undefined ? {
+            set: prop.askSize 
+           } : undefined,
+  volume: prop.volume !== undefined ? {
+            set: prop.volume 
+           } : undefined,
+  openInterest: prop.openInterest !== undefined ? {
+            set: prop.openInterest 
+           } : undefined,
+  impliedVolatility: prop.impliedVolatility !== undefined ? {
+            set: prop.impliedVolatility 
+           } : undefined,
+  delta: prop.delta !== undefined ? {
+            set: prop.delta 
+           } : undefined,
+  gamma: prop.gamma !== undefined ? {
+            set: prop.gamma 
+           } : undefined,
+  theta: prop.theta !== undefined ? {
+            set: prop.theta 
+           } : undefined,
+  vega: prop.vega !== undefined ? {
+            set: prop.vega 
+           } : undefined,
+  rho: prop.rho !== undefined ? {
+            set: prop.rho 
+           } : undefined,
+  inTheMoney: prop.inTheMoney !== undefined ? {
+            set: prop.inTheMoney 
+           } : undefined,
+  intrinsicValue: prop.intrinsicValue !== undefined ? {
+            set: prop.intrinsicValue 
+           } : undefined,
+  extrinsicValue: prop.extrinsicValue !== undefined ? {
+            set: prop.extrinsicValue 
+           } : undefined,
+  theoreticalPrice: prop.theoreticalPrice !== undefined ? {
+            set: prop.theoreticalPrice 
+           } : undefined,
+  underlyingPrice: prop.underlyingPrice !== undefined ? {
+            set: prop.underlyingPrice 
+           } : undefined,
+  metadata: prop.metadata !== undefined ? {
+            set: prop.metadata 
+           } : undefined,
+  dataTimestamp: prop.dataTimestamp !== undefined ? {
+            set: prop.dataTimestamp 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+  positions: prop.positions ? 
+  Array.isArray(prop.positions) && prop.positions.length > 0 && prop.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.positions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.positions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+        tradeId: item.tradeId !== undefined ? {
+            equals: item.tradeId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            set: item.alpacaAccountId
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        openingSide: item.openingSide !== undefined ? {
+            set: item.openingSide
+          } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity
+          } : undefined,
+        entryPrice: item.entryPrice !== undefined ? {
+            set: item.entryPrice
+          } : undefined,
+        entryCost: item.entryCost !== undefined ? {
+            set: item.entryCost
+          } : undefined,
+        entryTime: item.entryTime !== undefined ? {
+            set: item.entryTime
+          } : undefined,
+        exitPrice: item.exitPrice !== undefined ? {
+            set: item.exitPrice
+          } : undefined,
+        exitValue: item.exitValue !== undefined ? {
+            set: item.exitValue
+          } : undefined,
+        exitTime: item.exitTime !== undefined ? {
+            set: item.exitTime
+          } : undefined,
+        currentPrice: item.currentPrice !== undefined ? {
+            set: item.currentPrice
+          } : undefined,
+        currentValue: item.currentValue !== undefined ? {
+            set: item.currentValue
+          } : undefined,
+        unrealizedPnL: item.unrealizedPnL !== undefined ? {
+            set: item.unrealizedPnL
+          } : undefined,
+        unrealizedPnLPercent: item.unrealizedPnLPercent !== undefined ? {
+            set: item.unrealizedPnLPercent
+          } : undefined,
+        realizedPnL: item.realizedPnL !== undefined ? {
+            set: item.realizedPnL
+          } : undefined,
+        realizedPnLPercent: item.realizedPnLPercent !== undefined ? {
+            set: item.realizedPnLPercent
+          } : undefined,
+        totalFees: item.totalFees !== undefined ? {
+            set: item.totalFees
+          } : undefined,
+        currentDelta: item.currentDelta !== undefined ? {
+            set: item.currentDelta
+          } : undefined,
+        currentGamma: item.currentGamma !== undefined ? {
+            set: item.currentGamma
+          } : undefined,
+        currentTheta: item.currentTheta !== undefined ? {
+            set: item.currentTheta
+          } : undefined,
+        currentVega: item.currentVega !== undefined ? {
+            set: item.currentVega
+          } : undefined,
+        currentRho: item.currentRho !== undefined ? {
+            set: item.currentRho
+          } : undefined,
+        currentImpliedVolatility: item.currentImpliedVolatility !== undefined ? {
+            set: item.currentImpliedVolatility
+          } : undefined,
+        daysHeld: item.daysHeld !== undefined ? {
+            set: item.daysHeld
+          } : undefined,
+        exitReason: item.exitReason !== undefined ? {
+            set: item.exitReason
+          } : undefined,
+        strategyType: item.strategyType !== undefined ? {
+            set: item.strategyType
+          } : undefined,
+        tradeId: item.tradeId !== undefined ? {
+            set: item.tradeId
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+    executions: item.executions ? 
+    Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.executions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              set: item.alpacaAccountId
+            } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              set: item.brokerOrderId
+            } : undefined,
+          executionSide: item.executionSide !== undefined ? {
+              set: item.executionSide
+            } : undefined,
+          quantity: item.quantity !== undefined ? {
+              set: item.quantity
+            } : undefined,
+          executionPrice: item.executionPrice !== undefined ? {
+              set: item.executionPrice
+            } : undefined,
+          executionValue: item.executionValue !== undefined ? {
+              set: item.executionValue
+            } : undefined,
+          fees: item.fees !== undefined ? {
+              set: item.fees
+            } : undefined,
+          executionTime: item.executionTime !== undefined ? {
+              set: item.executionTime
+            } : undefined,
+          underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+              set: item.underlyingPriceAtExecution
+            } : undefined,
+          deltaAtExecution: item.deltaAtExecution !== undefined ? {
+              set: item.deltaAtExecution
+            } : undefined,
+          gammaAtExecution: item.gammaAtExecution !== undefined ? {
+              set: item.gammaAtExecution
+            } : undefined,
+          thetaAtExecution: item.thetaAtExecution !== undefined ? {
+              set: item.thetaAtExecution
+            } : undefined,
+          vegaAtExecution: item.vegaAtExecution !== undefined ? {
+              set: item.vegaAtExecution
+            } : undefined,
+          rhoAtExecution: item.rhoAtExecution !== undefined ? {
+              set: item.rhoAtExecution
+            } : undefined,
+          impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+              set: item.impliedVolatilityAtExecution
+            } : undefined,
+          orderType: item.orderType !== undefined ? {
+              set: item.orderType
+            } : undefined,
+          limitPrice: item.limitPrice !== undefined ? {
+              set: item.limitPrice
+            } : undefined,
+          stopPrice: item.stopPrice !== undefined ? {
+              set: item.stopPrice
+            } : undefined,
+          timeInForce: item.timeInForce !== undefined ? {
+              set: item.timeInForce
+            } : undefined,
+          venue: item.venue !== undefined ? {
+              set: item.venue
+            } : undefined,
+          slippage: item.slippage !== undefined ? {
+              set: item.slippage
+            } : undefined,
+          notes: item.notes !== undefined ? {
+              set: item.notes
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+      contract: item.contract ? 
+      typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
+? {
+      connect: {
+        id: item.contract.id
+      }
+} : { upsert: {
+          where: {
+            id: item.contract.id !== undefined ? {
+                equals: item.contract.id
+              } : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.contract.id !== undefined ? {
+                set: item.contract.id
+              } : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                set: item.contract.symbol
+              } : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? {
+                set: item.contract.contractSymbol
+              } : undefined,
+            optionType: item.contract.optionType !== undefined ? {
+                set: item.contract.optionType
+              } : undefined,
+            strikePrice: item.contract.strikePrice !== undefined ? {
+                set: item.contract.strikePrice
+              } : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? {
+                set: item.contract.expirationDate
+              } : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? {
+                set: item.contract.daysToExpiration
+              } : undefined,
+            lastPrice: item.contract.lastPrice !== undefined ? {
+                set: item.contract.lastPrice
+              } : undefined,
+            bidPrice: item.contract.bidPrice !== undefined ? {
+                set: item.contract.bidPrice
+              } : undefined,
+            askPrice: item.contract.askPrice !== undefined ? {
+                set: item.contract.askPrice
+              } : undefined,
+            midPrice: item.contract.midPrice !== undefined ? {
+                set: item.contract.midPrice
+              } : undefined,
+            bidSize: item.contract.bidSize !== undefined ? {
+                set: item.contract.bidSize
+              } : undefined,
+            askSize: item.contract.askSize !== undefined ? {
+                set: item.contract.askSize
+              } : undefined,
+            volume: item.contract.volume !== undefined ? {
+                set: item.contract.volume
+              } : undefined,
+            openInterest: item.contract.openInterest !== undefined ? {
+                set: item.contract.openInterest
+              } : undefined,
+            impliedVolatility: item.contract.impliedVolatility !== undefined ? {
+                set: item.contract.impliedVolatility
+              } : undefined,
+            delta: item.contract.delta !== undefined ? {
+                set: item.contract.delta
+              } : undefined,
+            gamma: item.contract.gamma !== undefined ? {
+                set: item.contract.gamma
+              } : undefined,
+            theta: item.contract.theta !== undefined ? {
+                set: item.contract.theta
+              } : undefined,
+            vega: item.contract.vega !== undefined ? {
+                set: item.contract.vega
+              } : undefined,
+            rho: item.contract.rho !== undefined ? {
+                set: item.contract.rho
+              } : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? {
+                set: item.contract.inTheMoney
+              } : undefined,
+            intrinsicValue: item.contract.intrinsicValue !== undefined ? {
+                set: item.contract.intrinsicValue
+              } : undefined,
+            extrinsicValue: item.contract.extrinsicValue !== undefined ? {
+                set: item.contract.extrinsicValue
+              } : undefined,
+            theoreticalPrice: item.contract.theoreticalPrice !== undefined ? {
+                set: item.contract.theoreticalPrice
+              } : undefined,
+            underlyingPrice: item.contract.underlyingPrice !== undefined ? {
+                set: item.contract.underlyingPrice
+              } : undefined,
+            metadata: item.contract.metadata !== undefined ? {
+                set: item.contract.metadata
+              } : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? {
+                set: item.contract.dataTimestamp
+              } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        openingSide: item.openingSide !== undefined ? item.openingSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+        exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+        daysHeld: item.daysHeld !== undefined ? item.daysHeld : undefined,
+        exitReason: item.exitReason !== undefined ? item.exitReason : undefined,
+        strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
+        tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    executions: item.executions ? 
+      Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.executions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.executions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+          contractId: item.contractId !== undefined ? {
+              equals: item.contractId 
+             } : undefined,
+          alpacaAccountId: item.alpacaAccountId !== undefined ? {
+              equals: item.alpacaAccountId 
+             } : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? {
+              equals: item.brokerOrderId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+          brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+          executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+          quantity: item.quantity !== undefined ? item.quantity : undefined,
+          executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+          orderType: item.orderType !== undefined ? item.orderType : undefined,
+          timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+          venue: item.venue !== undefined ? item.venue : undefined,
+          notes: item.notes !== undefined ? item.notes : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+      contract: item.contract ? 
+        typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && Object.keys(item.contract)[0] === 'id'
+    ? { connect: {
+            id: item.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.contract.id !== undefined ? item.contract.id : undefined,
+            symbol: item.contract.symbol !== undefined ? {
+                equals: item.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.contract.symbol !== undefined ? item.contract.symbol : undefined,
+            contractSymbol: item.contract.contractSymbol !== undefined ? item.contract.contractSymbol : undefined,
+            optionType: item.contract.optionType !== undefined ? item.contract.optionType : undefined,
+            expirationDate: item.contract.expirationDate !== undefined ? item.contract.expirationDate : undefined,
+            daysToExpiration: item.contract.daysToExpiration !== undefined ? item.contract.daysToExpiration : undefined,
+            bidSize: item.contract.bidSize !== undefined ? item.contract.bidSize : undefined,
+            askSize: item.contract.askSize !== undefined ? item.contract.askSize : undefined,
+            volume: item.contract.volume !== undefined ? item.contract.volume : undefined,
+            openInterest: item.contract.openInterest !== undefined ? item.contract.openInterest : undefined,
+            inTheMoney: item.contract.inTheMoney !== undefined ? item.contract.inTheMoney : undefined,
+            metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
+            dataTimestamp: item.contract.dataTimestamp !== undefined ? item.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  greeksHistory: prop.greeksHistory ? 
+  Array.isArray(prop.greeksHistory) && prop.greeksHistory.length > 0 && prop.greeksHistory.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.greeksHistory.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.greeksHistory.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        timestamp: item.timestamp !== undefined ? {
+            set: item.timestamp
+          } : undefined,
+        underlyingPrice: item.underlyingPrice !== undefined ? {
+            set: item.underlyingPrice
+          } : undefined,
+        optionPrice: item.optionPrice !== undefined ? {
+            set: item.optionPrice
+          } : undefined,
+        bidPrice: item.bidPrice !== undefined ? {
+            set: item.bidPrice
+          } : undefined,
+        askPrice: item.askPrice !== undefined ? {
+            set: item.askPrice
+          } : undefined,
+        impliedVolatility: item.impliedVolatility !== undefined ? {
+            set: item.impliedVolatility
+          } : undefined,
+        delta: item.delta !== undefined ? {
+            set: item.delta
+          } : undefined,
+        gamma: item.gamma !== undefined ? {
+            set: item.gamma
+          } : undefined,
+        theta: item.theta !== undefined ? {
+            set: item.theta
+          } : undefined,
+        vega: item.vega !== undefined ? {
+            set: item.vega
+          } : undefined,
+        rho: item.rho !== undefined ? {
+            set: item.rho
+          } : undefined,
+        volume: item.volume !== undefined ? {
+            set: item.volume
+          } : undefined,
+        openInterest: item.openInterest !== undefined ? {
+            set: item.openInterest
+          } : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? {
+            set: item.daysToExpiration
+          } : undefined,
+        intrinsicValue: item.intrinsicValue !== undefined ? {
+            set: item.intrinsicValue
+          } : undefined,
+        extrinsicValue: item.extrinsicValue !== undefined ? {
+            set: item.extrinsicValue
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+      },
+      create: {
+        timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+        volume: item.volume !== undefined ? item.volume : undefined,
+        openInterest: item.openInterest !== undefined ? item.openInterest : undefined,
+        daysToExpiration: item.daysToExpiration !== undefined ? item.daysToExpiration : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  executions: prop.executions ? 
+  Array.isArray(prop.executions) && prop.executions.length > 0 && prop.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.executions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.executions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        positionId: item.positionId !== undefined ? {
+            equals: item.positionId
+          } : undefined,
+        contractId: item.contractId !== undefined ? {
+            equals: item.contractId
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            equals: item.brokerOrderId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            set: item.alpacaAccountId
+          } : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? {
+            set: item.brokerOrderId
+          } : undefined,
+        executionSide: item.executionSide !== undefined ? {
+            set: item.executionSide
+          } : undefined,
+        quantity: item.quantity !== undefined ? {
+            set: item.quantity
+          } : undefined,
+        executionPrice: item.executionPrice !== undefined ? {
+            set: item.executionPrice
+          } : undefined,
+        executionValue: item.executionValue !== undefined ? {
+            set: item.executionValue
+          } : undefined,
+        fees: item.fees !== undefined ? {
+            set: item.fees
+          } : undefined,
+        executionTime: item.executionTime !== undefined ? {
+            set: item.executionTime
+          } : undefined,
+        underlyingPriceAtExecution: item.underlyingPriceAtExecution !== undefined ? {
+            set: item.underlyingPriceAtExecution
+          } : undefined,
+        deltaAtExecution: item.deltaAtExecution !== undefined ? {
+            set: item.deltaAtExecution
+          } : undefined,
+        gammaAtExecution: item.gammaAtExecution !== undefined ? {
+            set: item.gammaAtExecution
+          } : undefined,
+        thetaAtExecution: item.thetaAtExecution !== undefined ? {
+            set: item.thetaAtExecution
+          } : undefined,
+        vegaAtExecution: item.vegaAtExecution !== undefined ? {
+            set: item.vegaAtExecution
+          } : undefined,
+        rhoAtExecution: item.rhoAtExecution !== undefined ? {
+            set: item.rhoAtExecution
+          } : undefined,
+        impliedVolatilityAtExecution: item.impliedVolatilityAtExecution !== undefined ? {
+            set: item.impliedVolatilityAtExecution
+          } : undefined,
+        orderType: item.orderType !== undefined ? {
+            set: item.orderType
+          } : undefined,
+        limitPrice: item.limitPrice !== undefined ? {
+            set: item.limitPrice
+          } : undefined,
+        stopPrice: item.stopPrice !== undefined ? {
+            set: item.stopPrice
+          } : undefined,
+        timeInForce: item.timeInForce !== undefined ? {
+            set: item.timeInForce
+          } : undefined,
+        venue: item.venue !== undefined ? {
+            set: item.venue
+          } : undefined,
+        slippage: item.slippage !== undefined ? {
+            set: item.slippage
+          } : undefined,
+        notes: item.notes !== undefined ? {
+            set: item.notes
+          } : undefined,
+        metadata: item.metadata !== undefined ? {
+            set: item.metadata
+          } : undefined,
+    position: item.position ? 
+    typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
+? {
+    connect: {
+      id: item.position.id
+    }
+} : { upsert: {
+        where: {
+          id: item.position.id !== undefined ? {
+              equals: item.position.id
+            } : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId
+            } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId
+            } : undefined,
+          tradeId: item.position.tradeId !== undefined ? {
+              equals: item.position.tradeId
+            } : undefined,
+        },
+        update: {
+          id: item.position.id !== undefined ? {
+              set: item.position.id
+            } : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              set: item.position.alpacaAccountId
+            } : undefined,
+          status: item.position.status !== undefined ? {
+              set: item.position.status
+            } : undefined,
+          openingSide: item.position.openingSide !== undefined ? {
+              set: item.position.openingSide
+            } : undefined,
+          quantity: item.position.quantity !== undefined ? {
+              set: item.position.quantity
+            } : undefined,
+          entryPrice: item.position.entryPrice !== undefined ? {
+              set: item.position.entryPrice
+            } : undefined,
+          entryCost: item.position.entryCost !== undefined ? {
+              set: item.position.entryCost
+            } : undefined,
+          entryTime: item.position.entryTime !== undefined ? {
+              set: item.position.entryTime
+            } : undefined,
+          exitPrice: item.position.exitPrice !== undefined ? {
+              set: item.position.exitPrice
+            } : undefined,
+          exitValue: item.position.exitValue !== undefined ? {
+              set: item.position.exitValue
+            } : undefined,
+          exitTime: item.position.exitTime !== undefined ? {
+              set: item.position.exitTime
+            } : undefined,
+          currentPrice: item.position.currentPrice !== undefined ? {
+              set: item.position.currentPrice
+            } : undefined,
+          currentValue: item.position.currentValue !== undefined ? {
+              set: item.position.currentValue
+            } : undefined,
+          unrealizedPnL: item.position.unrealizedPnL !== undefined ? {
+              set: item.position.unrealizedPnL
+            } : undefined,
+          unrealizedPnLPercent: item.position.unrealizedPnLPercent !== undefined ? {
+              set: item.position.unrealizedPnLPercent
+            } : undefined,
+          realizedPnL: item.position.realizedPnL !== undefined ? {
+              set: item.position.realizedPnL
+            } : undefined,
+          realizedPnLPercent: item.position.realizedPnLPercent !== undefined ? {
+              set: item.position.realizedPnLPercent
+            } : undefined,
+          totalFees: item.position.totalFees !== undefined ? {
+              set: item.position.totalFees
+            } : undefined,
+          currentDelta: item.position.currentDelta !== undefined ? {
+              set: item.position.currentDelta
+            } : undefined,
+          currentGamma: item.position.currentGamma !== undefined ? {
+              set: item.position.currentGamma
+            } : undefined,
+          currentTheta: item.position.currentTheta !== undefined ? {
+              set: item.position.currentTheta
+            } : undefined,
+          currentVega: item.position.currentVega !== undefined ? {
+              set: item.position.currentVega
+            } : undefined,
+          currentRho: item.position.currentRho !== undefined ? {
+              set: item.position.currentRho
+            } : undefined,
+          currentImpliedVolatility: item.position.currentImpliedVolatility !== undefined ? {
+              set: item.position.currentImpliedVolatility
+            } : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? {
+              set: item.position.daysHeld
+            } : undefined,
+          exitReason: item.position.exitReason !== undefined ? {
+              set: item.position.exitReason
+            } : undefined,
+          strategyType: item.position.strategyType !== undefined ? {
+              set: item.position.strategyType
+            } : undefined,
+          tradeId: item.position.tradeId !== undefined ? {
+              set: item.position.tradeId
+            } : undefined,
+          metadata: item.position.metadata !== undefined ? {
+              set: item.position.metadata
+            } : undefined,
+      contract: item.position.contract ? 
+      typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && (Object.keys(item.position.contract)[0] === 'id' || Object.keys(item.position.contract)[0] === 'symbol')
+? {
+      connect: {
+        id: item.position.contract.id
+      }
+} : { upsert: {
+          where: {
+            id: item.position.contract.id !== undefined ? {
+                equals: item.position.contract.id
+              } : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol
+              } : undefined,
+          },
+          update: {
+            id: item.position.contract.id !== undefined ? {
+                set: item.position.contract.id
+              } : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                set: item.position.contract.symbol
+              } : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? {
+                set: item.position.contract.contractSymbol
+              } : undefined,
+            optionType: item.position.contract.optionType !== undefined ? {
+                set: item.position.contract.optionType
+              } : undefined,
+            strikePrice: item.position.contract.strikePrice !== undefined ? {
+                set: item.position.contract.strikePrice
+              } : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? {
+                set: item.position.contract.expirationDate
+              } : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? {
+                set: item.position.contract.daysToExpiration
+              } : undefined,
+            lastPrice: item.position.contract.lastPrice !== undefined ? {
+                set: item.position.contract.lastPrice
+              } : undefined,
+            bidPrice: item.position.contract.bidPrice !== undefined ? {
+                set: item.position.contract.bidPrice
+              } : undefined,
+            askPrice: item.position.contract.askPrice !== undefined ? {
+                set: item.position.contract.askPrice
+              } : undefined,
+            midPrice: item.position.contract.midPrice !== undefined ? {
+                set: item.position.contract.midPrice
+              } : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? {
+                set: item.position.contract.bidSize
+              } : undefined,
+            askSize: item.position.contract.askSize !== undefined ? {
+                set: item.position.contract.askSize
+              } : undefined,
+            volume: item.position.contract.volume !== undefined ? {
+                set: item.position.contract.volume
+              } : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? {
+                set: item.position.contract.openInterest
+              } : undefined,
+            impliedVolatility: item.position.contract.impliedVolatility !== undefined ? {
+                set: item.position.contract.impliedVolatility
+              } : undefined,
+            delta: item.position.contract.delta !== undefined ? {
+                set: item.position.contract.delta
+              } : undefined,
+            gamma: item.position.contract.gamma !== undefined ? {
+                set: item.position.contract.gamma
+              } : undefined,
+            theta: item.position.contract.theta !== undefined ? {
+                set: item.position.contract.theta
+              } : undefined,
+            vega: item.position.contract.vega !== undefined ? {
+                set: item.position.contract.vega
+              } : undefined,
+            rho: item.position.contract.rho !== undefined ? {
+                set: item.position.contract.rho
+              } : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? {
+                set: item.position.contract.inTheMoney
+              } : undefined,
+            intrinsicValue: item.position.contract.intrinsicValue !== undefined ? {
+                set: item.position.contract.intrinsicValue
+              } : undefined,
+            extrinsicValue: item.position.contract.extrinsicValue !== undefined ? {
+                set: item.position.contract.extrinsicValue
+              } : undefined,
+            theoreticalPrice: item.position.contract.theoreticalPrice !== undefined ? {
+                set: item.position.contract.theoreticalPrice
+              } : undefined,
+            underlyingPrice: item.position.contract.underlyingPrice !== undefined ? {
+                set: item.position.contract.underlyingPrice
+              } : undefined,
+            metadata: item.position.contract.metadata !== undefined ? {
+                set: item.position.contract.metadata
+              } : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? {
+                set: item.position.contract.dataTimestamp
+              } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+        brokerOrderId: item.brokerOrderId !== undefined ? item.brokerOrderId : undefined,
+        executionSide: item.executionSide !== undefined ? item.executionSide : undefined,
+        quantity: item.quantity !== undefined ? item.quantity : undefined,
+        executionTime: item.executionTime !== undefined ? item.executionTime : undefined,
+        orderType: item.orderType !== undefined ? item.orderType : undefined,
+        timeInForce: item.timeInForce !== undefined ? item.timeInForce : undefined,
+        venue: item.venue !== undefined ? item.venue : undefined,
+        notes: item.notes !== undefined ? item.notes : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
+    position: item.position ? 
+      typeof item.position === 'object' && Object.keys(item.position).length === 1 && Object.keys(item.position)[0] === 'id'
+    ? { connect: {
+          id: item.position.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.position.id !== undefined ? item.position.id : undefined,
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? {
+              equals: item.position.alpacaAccountId 
+             } : undefined,
+          contractId: item.position.contractId !== undefined ? {
+              equals: item.position.contractId 
+             } : undefined,
+        },
+        create: {
+          alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
+          status: item.position.status !== undefined ? item.position.status : undefined,
+          openingSide: item.position.openingSide !== undefined ? item.position.openingSide : undefined,
+          quantity: item.position.quantity !== undefined ? item.position.quantity : undefined,
+          entryTime: item.position.entryTime !== undefined ? item.position.entryTime : undefined,
+          exitTime: item.position.exitTime !== undefined ? item.position.exitTime : undefined,
+          daysHeld: item.position.daysHeld !== undefined ? item.position.daysHeld : undefined,
+          exitReason: item.position.exitReason !== undefined ? item.position.exitReason : undefined,
+          strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
+          tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
+          metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+      contract: item.position.contract ? 
+        typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
+    ? { connect: {
+            id: item.position.contract.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.position.contract.id !== undefined ? item.position.contract.id : undefined,
+            symbol: item.position.contract.symbol !== undefined ? {
+                equals: item.position.contract.symbol 
+               } : undefined,
+          },
+          create: {
+            symbol: item.position.contract.symbol !== undefined ? item.position.contract.symbol : undefined,
+            contractSymbol: item.position.contract.contractSymbol !== undefined ? item.position.contract.contractSymbol : undefined,
+            optionType: item.position.contract.optionType !== undefined ? item.position.contract.optionType : undefined,
+            expirationDate: item.position.contract.expirationDate !== undefined ? item.position.contract.expirationDate : undefined,
+            daysToExpiration: item.position.contract.daysToExpiration !== undefined ? item.position.contract.daysToExpiration : undefined,
+            bidSize: item.position.contract.bidSize !== undefined ? item.position.contract.bidSize : undefined,
+            askSize: item.position.contract.askSize !== undefined ? item.position.contract.askSize : undefined,
+            volume: item.position.contract.volume !== undefined ? item.position.contract.volume : undefined,
+            openInterest: item.position.contract.openInterest !== undefined ? item.position.contract.openInterest : undefined,
+            inTheMoney: item.position.contract.inTheMoney !== undefined ? item.position.contract.inTheMoney : undefined,
+            metadata: item.position.contract.metadata !== undefined ? item.position.contract.metadata : undefined,
+            dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+
           },
         }));
 
@@ -9789,16 +4202,11 @@ export const OptionsContract = {
           mutation: UPDATE_MANY_OPTIONSCONTRACT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.updateManyOptionsContract
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.updateManyOptionsContract) {
           return response.data.updateManyOptionsContract;
         } else {
           return null as any;
@@ -9812,19 +4220,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -9840,10 +4247,7 @@ export const OptionsContract = {
    * @param globalClient - Apollo Client instance.
    * @returns The deleted OptionsContract or null.
    */
-  async delete(
-    props: OptionsContractType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsContractType> {
+  async delete(props: OptionsContractType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsContractType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -9854,25 +4258,24 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
 
         const DELETE_ONE_OPTIONSCONTRACT = gql`
-          mutation deleteOneOptionsContract(
-            $where: OptionsContractWhereUniqueInput!
-          ) {
+          mutation deleteOneOptionsContract($where: OptionsContractWhereUniqueInput!) {
             deleteOneOptionsContract(where: $where) {
               id
             }
-          }
-        `;
+          }`;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          },
+          }
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -9881,16 +4284,11 @@ export const OptionsContract = {
           mutation: DELETE_ONE_OPTIONSCONTRACT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache',
+          fetchPolicy: 'no-cache'
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
-        if (
-          response &&
-          response.data &&
-          response.data.deleteOneOptionsContract
-        ) {
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.deleteOneOptionsContract) {
           return response.data.deleteOneOptionsContract;
         } else {
           return null as any;
@@ -9904,19 +4302,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -9933,11 +4330,7 @@ export const OptionsContract = {
    * @param whereInput - Optional custom where input.
    * @returns The retrieved OptionsContract or null.
    */
-  async get(
-    props: OptionsContractType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<OptionsContractType | null> {
+  async get(props: OptionsContractType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OptionsContractType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -9948,7 +4341,9 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -9961,17 +4356,12 @@ export const OptionsContract = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id: props.id !== undefined ? props.id : undefined,
-                symbol:
-                  props.symbol !== undefined
-                    ? {
-                        equals: props.symbol,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+            id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -9981,8 +4371,7 @@ export const OptionsContract = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getOptionsContract ?? null;
       } catch (error: any) {
         lastError = error;
@@ -9998,19 +4387,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -10025,9 +4413,7 @@ export const OptionsContract = {
    * @param globalClient - Apollo Client instance.
    * @returns An array of OptionsContract records or null.
    */
-  async getAll(
-    globalClient?: ApolloClientType<NormalizedCacheObject>
-  ): Promise<OptionsContractType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OptionsContractType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -10038,7 +4424,9 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -10055,8 +4443,7 @@ export const OptionsContract = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.optionsContracts ?? null;
       } catch (error: any) {
         lastError = error;
@@ -10072,19 +4459,18 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
@@ -10101,11 +4487,7 @@ export const OptionsContract = {
    * @param whereInput - Optional custom where input.
    * @returns An array of found OptionsContract records or null.
    */
-  async findMany(
-    props: OptionsContractType,
-    globalClient?: ApolloClientType<NormalizedCacheObject>,
-    whereInput?: any
-  ): Promise<OptionsContractType[] | null> {
+  async findMany(props: OptionsContractType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OptionsContractType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -10116,7 +4498,9 @@ export const OptionsContract = {
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient ? Promise.resolve(globalClient) : importedClient,
+          globalClient
+            ? Promise.resolve(globalClient)
+            : importedClient
         ]);
 
         const { gql, ApolloError } = modules;
@@ -10129,22 +4513,14 @@ export const OptionsContract = {
           }`;
 
         const variables = {
-          where: whereInput
-            ? whereInput
-            : {
-                id:
-                  props.id !== undefined
-                    ? {
-                        equals: props.id,
-                      }
-                    : undefined,
-                symbol:
-                  props.symbol !== undefined
-                    ? {
-                        equals: props.symbol,
-                      }
-                    : undefined,
-              },
+          where: whereInput ? whereInput : {
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -10155,8 +4531,7 @@ export const OptionsContract = {
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0)
-          throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         if (response && response.data && response.data.optionscontracts) {
           return response.data.optionsContracts;
         } else {
@@ -10176,24 +4551,23 @@ export const OptionsContract = {
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError &&
-            error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn('Database connection error, retrying...');
-          await new Promise((resolve) => setTimeout(resolve, delay));
+          logger.warn("Database connection error, retrying...");
+          await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error('Database error occurred', { error: String(error) });
+        logger.error("Database error occurred", { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  },
+  }
 };
